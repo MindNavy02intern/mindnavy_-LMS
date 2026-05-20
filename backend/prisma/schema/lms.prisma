@@ -1,0 +1,74 @@
+enum CourseStatus {
+  draft
+  pending_approval
+  published
+  rejected
+  archived
+
+  @@map("course_status")
+}
+
+enum ApprovalStatus {
+  pending
+  approved
+  rejected
+  needs_changes
+
+  @@map("approval_status")
+}
+
+model Course {
+  id          String       @id @default(uuid()) @db.Uuid
+  title       String
+  description String?
+  price       Float        @default(0)
+  status      CourseStatus @default(draft)
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  approvals CourseApproval[]
+
+  @@index([status])
+  @@map("courses")
+}
+
+model CourseApproval {
+  id        String         @id @default(uuid()) @db.Uuid
+  courseId  String         @map("course_id") @db.Uuid
+  status    ApprovalStatus @default(pending)
+  note      String?
+  createdAt DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@map("course_approvals")
+}
+
+model DashboardTask {
+  id          String    @id @default(uuid()) @db.Uuid
+  title       String
+  description String?
+  priority    String    @default("normal")
+  status      String    @default("pending")
+  dueAt       DateTime? @map("due_at") @db.Timestamptz
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([status])
+  @@map("dashboard_tasks")
+}
+
+model Notification {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String
+  message   String
+  type      String
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@index([type])
+  @@index([isRead])
+  @@map("notifications")
+}

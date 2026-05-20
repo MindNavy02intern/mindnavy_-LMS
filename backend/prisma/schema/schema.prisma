@@ -1,8 +1,8 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["prismaSchemaFolder"] // 👈 ب
+  previewFeatures = ["prismaSchemaFolder"] 
 }
 
 datasource db {
-  provider = "postgresql" // 👈 l
+  provider = "postgresql" // 👈
 }
