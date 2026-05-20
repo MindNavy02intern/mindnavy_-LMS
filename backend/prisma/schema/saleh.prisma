@@ -1,5 +1,0 @@
-model Bilal {
-  id        String   @id @default(uuid())
-  testName  String
-  createdAt DateTime @default(now())
-}
