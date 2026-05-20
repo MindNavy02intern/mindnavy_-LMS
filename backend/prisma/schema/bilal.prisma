@@ -1,0 +1,7 @@
+model BilalExperiment {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
