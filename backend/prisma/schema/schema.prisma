@@ -1,15 +1,8 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"] // 👈 ب
 }
 
 datasource db {
-  provider = "postgresql"
-}
-
-model Course {
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  price       Float    @default(0)
-  createdAt   DateTime @default(now())
+  provider = "postgresql" // 👈 l
 }
