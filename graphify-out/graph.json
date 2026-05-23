@@ -1,0 +1,5291 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "settings.local.json",
+      "file_type": "code",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L1",
+      "community": 11,
+      "norm_label": "settings.local.json",
+      "id": "claude_settings_local_json"
+    },
+    {
+      "label": "permissions",
+      "file_type": "code",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L2",
+      "community": 11,
+      "norm_label": "permissions",
+      "id": "claude_settings_local_permissions"
+    },
+    {
+      "label": "allow",
+      "file_type": "code",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L3",
+      "community": 11,
+      "norm_label": "allow",
+      "id": "claude_settings_local_permissions_allow"
+    },
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L1",
+      "community": 4,
+      "norm_label": "package.json",
+      "id": "backend_package_json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L2",
+      "community": 4,
+      "norm_label": "name",
+      "id": "backend_package_name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L3",
+      "community": 4,
+      "norm_label": "version",
+      "id": "backend_package_version"
+    },
+    {
+      "label": "description",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L4",
+      "community": 4,
+      "norm_label": "description",
+      "id": "backend_package_description"
+    },
+    {
+      "label": "main",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L5",
+      "community": 4,
+      "norm_label": "main",
+      "id": "backend_package_main"
+    },
+    {
+      "label": "scripts",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L6",
+      "community": 4,
+      "norm_label": "scripts",
+      "id": "backend_package_scripts"
+    },
+    {
+      "label": "start",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L7",
+      "community": 4,
+      "norm_label": "start",
+      "id": "backend_package_scripts_start"
+    },
+    {
+      "label": "dev",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L8",
+      "community": 4,
+      "norm_label": "dev",
+      "id": "backend_package_scripts_dev"
+    },
+    {
+      "label": "test",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L9",
+      "community": 4,
+      "norm_label": "test",
+      "id": "backend_package_scripts_test"
+    },
+    {
+      "label": "keywords",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L11",
+      "community": 4,
+      "norm_label": "keywords",
+      "id": "backend_package_keywords"
+    },
+    {
+      "label": "author",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L12",
+      "community": 4,
+      "norm_label": "author",
+      "id": "backend_package_author"
+    },
+    {
+      "label": "license",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L13",
+      "community": 4,
+      "norm_label": "license",
+      "id": "backend_package_license"
+    },
+    {
+      "label": "type",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L14",
+      "community": 4,
+      "norm_label": "type",
+      "id": "backend_package_type"
+    },
+    {
+      "label": "dependencies",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L15",
+      "community": 4,
+      "norm_label": "dependencies",
+      "id": "backend_package_dependencies"
+    },
+    {
+      "label": "@prisma/client",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L16",
+      "community": 4,
+      "norm_label": "@prisma/client",
+      "id": "backend_package_dependencies_prisma_client"
+    },
+    {
+      "label": "cors",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L17",
+      "community": 4,
+      "norm_label": "cors",
+      "id": "backend_package_dependencies_cors"
+    },
+    {
+      "label": "dotenv",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L18",
+      "community": 4,
+      "norm_label": "dotenv",
+      "id": "backend_package_dependencies_dotenv"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L19",
+      "community": 4,
+      "norm_label": "express",
+      "id": "backend_package_dependencies_express"
+    },
+    {
+      "label": "devDependencies",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L21",
+      "community": 4,
+      "norm_label": "devdependencies",
+      "id": "backend_package_devdependencies"
+    },
+    {
+      "label": "nodemon",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L22",
+      "community": 4,
+      "norm_label": "nodemon",
+      "id": "backend_package_devdependencies_nodemon"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L23",
+      "community": 4,
+      "norm_label": "prisma",
+      "id": "backend_package_devdependencies_prisma"
+    },
+    {
+      "label": "prisma.config.ts",
+      "file_type": "code",
+      "source_file": "backend/prisma.config.ts",
+      "source_location": "L1",
+      "community": 14,
+      "norm_label": "prisma.config.ts",
+      "id": "backend_prisma_config_ts"
+    },
+    {
+      "label": "server.js",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L1",
+      "community": 10,
+      "norm_label": "server.js",
+      "id": "backend_server_js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L1",
+      "community": 10,
+      "norm_label": "express",
+      "id": "backend_server_express"
+    },
+    {
+      "label": "app",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L2",
+      "community": 10,
+      "norm_label": "app",
+      "id": "backend_server_app"
+    },
+    {
+      "label": "eslint.config.js",
+      "file_type": "code",
+      "source_file": "frontend/eslint.config.js",
+      "source_location": "L1",
+      "community": 15,
+      "norm_label": "eslint.config.js",
+      "id": "frontend_eslint_config_js"
+    },
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L1",
+      "community": 7,
+      "norm_label": "package.json",
+      "id": "frontend_package_json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L2",
+      "community": 7,
+      "norm_label": "name",
+      "id": "frontend_package_name"
+    },
+    {
+      "label": "private",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L3",
+      "community": 7,
+      "norm_label": "private",
+      "id": "frontend_package_private"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L4",
+      "community": 7,
+      "norm_label": "version",
+      "id": "frontend_package_version"
+    },
+    {
+      "label": "type",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L5",
+      "community": 7,
+      "norm_label": "type",
+      "id": "frontend_package_type"
+    },
+    {
+      "label": "scripts",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L6",
+      "community": 7,
+      "norm_label": "scripts",
+      "id": "frontend_package_scripts"
+    },
+    {
+      "label": "dev",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L7",
+      "community": 7,
+      "norm_label": "dev",
+      "id": "frontend_package_scripts_dev"
+    },
+    {
+      "label": "build",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L8",
+      "community": 7,
+      "norm_label": "build",
+      "id": "frontend_package_scripts_build"
+    },
+    {
+      "label": "lint",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L9",
+      "community": 7,
+      "norm_label": "lint",
+      "id": "frontend_package_scripts_lint"
+    },
+    {
+      "label": "preview",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L10",
+      "community": 7,
+      "norm_label": "preview",
+      "id": "frontend_package_scripts_preview"
+    },
+    {
+      "label": "dependencies",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L12",
+      "community": 7,
+      "norm_label": "dependencies",
+      "id": "frontend_package_dependencies"
+    },
+    {
+      "label": "@supabase/supabase-js",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L13",
+      "community": 7,
+      "norm_label": "@supabase/supabase-js",
+      "id": "frontend_package_dependencies_supabase_supabase_js"
+    },
+    {
+      "label": "bootstrap",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L14",
+      "community": 7,
+      "norm_label": "bootstrap",
+      "id": "frontend_package_dependencies_bootstrap"
+    },
+    {
+      "label": "react",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L15",
+      "community": 7,
+      "norm_label": "react",
+      "id": "frontend_package_dependencies_react"
+    },
+    {
+      "label": "react-dom",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L16",
+      "community": 7,
+      "norm_label": "react-dom",
+      "id": "frontend_package_dependencies_react_dom"
+    },
+    {
+      "label": "react-router-dom",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L17",
+      "community": 7,
+      "norm_label": "react-router-dom",
+      "id": "frontend_package_dependencies_react_router_dom"
+    },
+    {
+      "label": "devDependencies",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L19",
+      "community": 8,
+      "norm_label": "devdependencies",
+      "id": "frontend_package_devdependencies"
+    },
+    {
+      "label": "@eslint/js",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L20",
+      "community": 8,
+      "norm_label": "@eslint/js",
+      "id": "frontend_package_devdependencies_eslint_js"
+    },
+    {
+      "label": "@types/node",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L21",
+      "community": 8,
+      "norm_label": "@types/node",
+      "id": "frontend_package_devdependencies_types_node"
+    },
+    {
+      "label": "@types/react",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L22",
+      "community": 8,
+      "norm_label": "@types/react",
+      "id": "frontend_package_devdependencies_types_react"
+    },
+    {
+      "label": "@types/react-dom",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L23",
+      "community": 8,
+      "norm_label": "@types/react-dom",
+      "id": "frontend_package_devdependencies_types_react_dom"
+    },
+    {
+      "label": "@vitejs/plugin-react",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L24",
+      "community": 8,
+      "norm_label": "@vitejs/plugin-react",
+      "id": "frontend_package_devdependencies_vitejs_plugin_react"
+    },
+    {
+      "label": "eslint",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L25",
+      "community": 8,
+      "norm_label": "eslint",
+      "id": "frontend_package_devdependencies_eslint"
+    },
+    {
+      "label": "eslint-plugin-react-hooks",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L26",
+      "community": 8,
+      "norm_label": "eslint-plugin-react-hooks",
+      "id": "frontend_package_devdependencies_eslint_plugin_react_hooks"
+    },
+    {
+      "label": "eslint-plugin-react-refresh",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L27",
+      "community": 8,
+      "norm_label": "eslint-plugin-react-refresh",
+      "id": "frontend_package_devdependencies_eslint_plugin_react_refresh"
+    },
+    {
+      "label": "globals",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L28",
+      "community": 8,
+      "norm_label": "globals",
+      "id": "frontend_package_devdependencies_globals"
+    },
+    {
+      "label": "typescript",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L29",
+      "community": 8,
+      "norm_label": "typescript",
+      "id": "frontend_package_devdependencies_typescript"
+    },
+    {
+      "label": "typescript-eslint",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L30",
+      "community": 8,
+      "norm_label": "typescript-eslint",
+      "id": "frontend_package_devdependencies_typescript_eslint"
+    },
+    {
+      "label": "vite",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L31",
+      "community": 8,
+      "norm_label": "vite",
+      "id": "frontend_package_devdependencies_vite"
+    },
+    {
+      "label": "tsconfig.app.json",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L1",
+      "community": 5,
+      "norm_label": "tsconfig.app.json",
+      "id": "frontend_tsconfig_app_json"
+    },
+    {
+      "label": "compilerOptions",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L2",
+      "community": 5,
+      "norm_label": "compileroptions",
+      "id": "frontend_tsconfig_app_compileroptions"
+    },
+    {
+      "label": "tsBuildInfoFile",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L3",
+      "community": 5,
+      "norm_label": "tsbuildinfofile",
+      "id": "frontend_tsconfig_app_compileroptions_tsbuildinfofile"
+    },
+    {
+      "label": "target",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L4",
+      "community": 5,
+      "norm_label": "target",
+      "id": "frontend_tsconfig_app_compileroptions_target"
+    },
+    {
+      "label": "lib",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L5",
+      "community": 5,
+      "norm_label": "lib",
+      "id": "frontend_tsconfig_app_compileroptions_lib"
+    },
+    {
+      "label": "module",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L6",
+      "community": 5,
+      "norm_label": "module",
+      "id": "frontend_tsconfig_app_compileroptions_module"
+    },
+    {
+      "label": "types",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L7",
+      "community": 5,
+      "norm_label": "types",
+      "id": "frontend_tsconfig_app_compileroptions_types"
+    },
+    {
+      "label": "skipLibCheck",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L8",
+      "community": 5,
+      "norm_label": "skiplibcheck",
+      "id": "frontend_tsconfig_app_compileroptions_skiplibcheck"
+    },
+    {
+      "label": "moduleResolution",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L11",
+      "community": 5,
+      "norm_label": "moduleresolution",
+      "id": "frontend_tsconfig_app_compileroptions_moduleresolution"
+    },
+    {
+      "label": "allowImportingTsExtensions",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L12",
+      "community": 5,
+      "norm_label": "allowimportingtsextensions",
+      "id": "frontend_tsconfig_app_compileroptions_allowimportingtsextensions"
+    },
+    {
+      "label": "verbatimModuleSyntax",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L13",
+      "community": 5,
+      "norm_label": "verbatimmodulesyntax",
+      "id": "frontend_tsconfig_app_compileroptions_verbatimmodulesyntax"
+    },
+    {
+      "label": "moduleDetection",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L14",
+      "community": 5,
+      "norm_label": "moduledetection",
+      "id": "frontend_tsconfig_app_compileroptions_moduledetection"
+    },
+    {
+      "label": "noEmit",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L15",
+      "community": 5,
+      "norm_label": "noemit",
+      "id": "frontend_tsconfig_app_compileroptions_noemit"
+    },
+    {
+      "label": "jsx",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L16",
+      "community": 5,
+      "norm_label": "jsx",
+      "id": "frontend_tsconfig_app_compileroptions_jsx"
+    },
+    {
+      "label": "noUnusedLocals",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L19",
+      "community": 5,
+      "norm_label": "nounusedlocals",
+      "id": "frontend_tsconfig_app_compileroptions_nounusedlocals"
+    },
+    {
+      "label": "noUnusedParameters",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L20",
+      "community": 5,
+      "norm_label": "nounusedparameters",
+      "id": "frontend_tsconfig_app_compileroptions_nounusedparameters"
+    },
+    {
+      "label": "erasableSyntaxOnly",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L21",
+      "community": 5,
+      "norm_label": "erasablesyntaxonly",
+      "id": "frontend_tsconfig_app_compileroptions_erasablesyntaxonly"
+    },
+    {
+      "label": "noFallthroughCasesInSwitch",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L22",
+      "community": 5,
+      "norm_label": "nofallthroughcasesinswitch",
+      "id": "frontend_tsconfig_app_compileroptions_nofallthroughcasesinswitch"
+    },
+    {
+      "label": "include",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L24",
+      "community": 5,
+      "norm_label": "include",
+      "id": "frontend_tsconfig_app_include"
+    },
+    {
+      "label": "tsconfig.json",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L1",
+      "community": 13,
+      "norm_label": "tsconfig.json",
+      "id": "frontend_tsconfig_json"
+    },
+    {
+      "label": "files",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L2",
+      "community": 13,
+      "norm_label": "files",
+      "id": "frontend_tsconfig_files"
+    },
+    {
+      "label": "references",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L3",
+      "community": 13,
+      "norm_label": "references",
+      "id": "frontend_tsconfig_references"
+    },
+    {
+      "label": "tsconfig.node.json",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L1",
+      "community": 6,
+      "norm_label": "tsconfig.node.json",
+      "id": "frontend_tsconfig_node_json"
+    },
+    {
+      "label": "compilerOptions",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L2",
+      "community": 6,
+      "norm_label": "compileroptions",
+      "id": "frontend_tsconfig_node_compileroptions"
+    },
+    {
+      "label": "tsBuildInfoFile",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L3",
+      "community": 6,
+      "norm_label": "tsbuildinfofile",
+      "id": "frontend_tsconfig_node_compileroptions_tsbuildinfofile"
+    },
+    {
+      "label": "target",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L4",
+      "community": 6,
+      "norm_label": "target",
+      "id": "frontend_tsconfig_node_compileroptions_target"
+    },
+    {
+      "label": "lib",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L5",
+      "community": 6,
+      "norm_label": "lib",
+      "id": "frontend_tsconfig_node_compileroptions_lib"
+    },
+    {
+      "label": "module",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L6",
+      "community": 6,
+      "norm_label": "module",
+      "id": "frontend_tsconfig_node_compileroptions_module"
+    },
+    {
+      "label": "types",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L7",
+      "community": 6,
+      "norm_label": "types",
+      "id": "frontend_tsconfig_node_compileroptions_types"
+    },
+    {
+      "label": "skipLibCheck",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L8",
+      "community": 6,
+      "norm_label": "skiplibcheck",
+      "id": "frontend_tsconfig_node_compileroptions_skiplibcheck"
+    },
+    {
+      "label": "moduleResolution",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L11",
+      "community": 6,
+      "norm_label": "moduleresolution",
+      "id": "frontend_tsconfig_node_compileroptions_moduleresolution"
+    },
+    {
+      "label": "allowImportingTsExtensions",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L12",
+      "community": 6,
+      "norm_label": "allowimportingtsextensions",
+      "id": "frontend_tsconfig_node_compileroptions_allowimportingtsextensions"
+    },
+    {
+      "label": "verbatimModuleSyntax",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L13",
+      "community": 6,
+      "norm_label": "verbatimmodulesyntax",
+      "id": "frontend_tsconfig_node_compileroptions_verbatimmodulesyntax"
+    },
+    {
+      "label": "moduleDetection",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L14",
+      "community": 6,
+      "norm_label": "moduledetection",
+      "id": "frontend_tsconfig_node_compileroptions_moduledetection"
+    },
+    {
+      "label": "noEmit",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L15",
+      "community": 6,
+      "norm_label": "noemit",
+      "id": "frontend_tsconfig_node_compileroptions_noemit"
+    },
+    {
+      "label": "noUnusedLocals",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L18",
+      "community": 6,
+      "norm_label": "nounusedlocals",
+      "id": "frontend_tsconfig_node_compileroptions_nounusedlocals"
+    },
+    {
+      "label": "noUnusedParameters",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L19",
+      "community": 6,
+      "norm_label": "nounusedparameters",
+      "id": "frontend_tsconfig_node_compileroptions_nounusedparameters"
+    },
+    {
+      "label": "erasableSyntaxOnly",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L20",
+      "community": 6,
+      "norm_label": "erasablesyntaxonly",
+      "id": "frontend_tsconfig_node_compileroptions_erasablesyntaxonly"
+    },
+    {
+      "label": "noFallthroughCasesInSwitch",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L21",
+      "community": 6,
+      "norm_label": "nofallthroughcasesinswitch",
+      "id": "frontend_tsconfig_node_compileroptions_nofallthroughcasesinswitch"
+    },
+    {
+      "label": "include",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L23",
+      "community": 6,
+      "norm_label": "include",
+      "id": "frontend_tsconfig_node_include"
+    },
+    {
+      "label": "vite.config.ts",
+      "file_type": "code",
+      "source_file": "frontend/vite.config.ts",
+      "source_location": "L1",
+      "community": 16,
+      "norm_label": "vite.config.ts",
+      "id": "frontend_vite_config_ts"
+    },
+    {
+      "label": "App.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "app.tsx",
+      "id": "frontend_src_app_tsx"
+    },
+    {
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L12",
+      "community": 3,
+      "norm_label": "app()",
+      "id": "src_app_app"
+    },
+    {
+      "label": "AuthContext.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "authcontext.tsx",
+      "id": "frontend_src_authcontext_tsx"
+    },
+    {
+      "label": "AuthContextType",
+      "file_type": "code",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L6",
+      "community": 0,
+      "norm_label": "authcontexttype",
+      "id": "src_authcontext_authcontexttype"
+    },
+    {
+      "label": "AuthContext",
+      "file_type": "code",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L17",
+      "community": 0,
+      "norm_label": "authcontext",
+      "id": "src_authcontext_authcontext"
+    },
+    {
+      "label": "DEMO_USER",
+      "file_type": "code",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L27",
+      "community": 0,
+      "norm_label": "demo_user",
+      "id": "src_authcontext_demo_user"
+    },
+    {
+      "label": "DEMO_PROFILE",
+      "file_type": "code",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L37",
+      "community": 0,
+      "norm_label": "demo_profile",
+      "id": "src_authcontext_demo_profile"
+    },
+    {
+      "label": "AuthProvider()",
+      "file_type": "code",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L45",
+      "community": 0,
+      "norm_label": "authprovider()",
+      "id": "src_authcontext_authprovider"
+    },
+    {
+      "label": "useAuth()",
+      "file_type": "code",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L146",
+      "community": 0,
+      "norm_label": "useauth()",
+      "id": "src_authcontext_useauth"
+    },
+    {
+      "label": "main.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/main.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "main.tsx",
+      "id": "frontend_src_main_tsx"
+    },
+    {
+      "label": "supabase.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/supabase.ts",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "supabase.ts",
+      "id": "frontend_src_supabase_ts"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "frontend/src/supabase.ts",
+      "source_location": "L10",
+      "community": 3,
+      "norm_label": "supabase",
+      "id": "src_supabase_supabase"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/api/index.ts",
+      "source_location": "L1",
+      "community": 12,
+      "norm_label": "index.ts",
+      "id": "frontend_src_api_index_ts"
+    },
+    {
+      "label": "apiFetch()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/index.ts",
+      "source_location": "L4",
+      "community": 12,
+      "norm_label": "apifetch()",
+      "id": "api_index_apifetch"
+    },
+    {
+      "label": "api",
+      "file_type": "code",
+      "source_file": "frontend/src/api/index.ts",
+      "source_location": "L21",
+      "community": 12,
+      "norm_label": "api",
+      "id": "api_index_api"
+    },
+    {
+      "label": "passwordRecovery.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/api/passwordRecovery.ts",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "passwordrecovery.ts",
+      "id": "frontend_src_api_passwordrecovery_ts"
+    },
+    {
+      "label": "requestPasswordReset()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/passwordRecovery.ts",
+      "source_location": "L26",
+      "community": 3,
+      "norm_label": "requestpasswordreset()",
+      "id": "api_passwordrecovery_requestpasswordreset"
+    },
+    {
+      "label": "updatePassword()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/passwordRecovery.ts",
+      "source_location": "L59",
+      "community": 2,
+      "norm_label": "updatepassword()",
+      "id": "api_passwordrecovery_updatepassword"
+    },
+    {
+      "label": "trustedDevices.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L1",
+      "community": 1,
+      "norm_label": "trusteddevices.ts",
+      "id": "frontend_src_api_trusteddevices_ts"
+    },
+    {
+      "label": "delay()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L22",
+      "community": 1,
+      "norm_label": "delay()",
+      "id": "api_trusteddevices_delay"
+    },
+    {
+      "label": "MOCK_DEVICES",
+      "file_type": "code",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L27",
+      "community": 1,
+      "norm_label": "mock_devices",
+      "id": "api_trusteddevices_mock_devices"
+    },
+    {
+      "label": "mockDeviceStore",
+      "file_type": "code",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L83",
+      "community": 1,
+      "norm_label": "mockdevicestore",
+      "id": "api_trusteddevices_mockdevicestore"
+    },
+    {
+      "label": "getTrustedDevices()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L94",
+      "community": 1,
+      "norm_label": "gettrusteddevices()",
+      "id": "api_trusteddevices_gettrusteddevices"
+    },
+    {
+      "label": "revokeDevice()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L107",
+      "community": 1,
+      "norm_label": "revokedevice()",
+      "id": "api_trusteddevices_revokedevice"
+    },
+    {
+      "label": "sendOtp()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L121",
+      "community": 1,
+      "norm_label": "sendotp()",
+      "id": "api_trusteddevices_sendotp"
+    },
+    {
+      "label": "verifyOtp()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L136",
+      "community": 1,
+      "norm_label": "verifyotp()",
+      "id": "api_trusteddevices_verifyotp"
+    },
+    {
+      "label": "ForgotPasswordForm.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "forgotpasswordform.tsx",
+      "id": "frontend_src_components_auth_forgotpasswordform_tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L6",
+      "community": 3,
+      "norm_label": "props",
+      "id": "auth_forgotpasswordform_props"
+    },
+    {
+      "label": "isValidEmail()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L12",
+      "community": 3,
+      "norm_label": "isvalidemail()",
+      "id": "auth_forgotpasswordform_isvalidemail"
+    },
+    {
+      "label": "ForgotPasswordForm()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L16",
+      "community": 3,
+      "norm_label": "forgotpasswordform()",
+      "id": "auth_forgotpasswordform_forgotpasswordform"
+    },
+    {
+      "label": "LoginForm.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "loginform.tsx",
+      "id": "frontend_src_components_auth_loginform_tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L5",
+      "community": 3,
+      "norm_label": "props",
+      "id": "auth_loginform_props"
+    },
+    {
+      "label": "LoginForm()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L9",
+      "community": 3,
+      "norm_label": "loginform()",
+      "id": "auth_loginform_loginform"
+    },
+    {
+      "label": "OtpVerificationModal.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L1",
+      "community": 1,
+      "norm_label": "otpverificationmodal.tsx",
+      "id": "frontend_src_components_auth_otpverificationmodal_tsx"
+    },
+    {
+      "label": "IconShield()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L12",
+      "community": 1,
+      "norm_label": "iconshield()",
+      "id": "auth_otpverificationmodal_iconshield"
+    },
+    {
+      "label": "IconCheck()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L20",
+      "community": 1,
+      "norm_label": "iconcheck()",
+      "id": "auth_otpverificationmodal_iconcheck"
+    },
+    {
+      "label": "IconX()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L28",
+      "community": 1,
+      "norm_label": "iconx()",
+      "id": "auth_otpverificationmodal_iconx"
+    },
+    {
+      "label": "OtpVerificationModal()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L39",
+      "community": 1,
+      "norm_label": "otpverificationmodal()",
+      "id": "auth_otpverificationmodal_otpverificationmodal"
+    },
+    {
+      "label": "PasswordStrengthMeter.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L1",
+      "community": 2,
+      "norm_label": "passwordstrengthmeter.tsx",
+      "id": "frontend_src_components_auth_passwordstrengthmeter_tsx"
+    },
+    {
+      "label": "getPasswordStrength()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L10",
+      "community": 2,
+      "norm_label": "getpasswordstrength()",
+      "id": "auth_passwordstrengthmeter_getpasswordstrength"
+    },
+    {
+      "label": "REQUIREMENTS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L59",
+      "community": 2,
+      "norm_label": "requirements",
+      "id": "auth_passwordstrengthmeter_requirements"
+    },
+    {
+      "label": "CheckIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L67",
+      "community": 2,
+      "norm_label": "checkicon()",
+      "id": "auth_passwordstrengthmeter_checkicon"
+    },
+    {
+      "label": "CrossIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L75",
+      "community": 2,
+      "norm_label": "crossicon()",
+      "id": "auth_passwordstrengthmeter_crossicon"
+    },
+    {
+      "label": "PasswordStrengthMeter()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L84",
+      "community": 2,
+      "norm_label": "passwordstrengthmeter()",
+      "id": "auth_passwordstrengthmeter_passwordstrengthmeter"
+    },
+    {
+      "label": "ResetPasswordForm.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L1",
+      "community": 2,
+      "norm_label": "resetpasswordform.tsx",
+      "id": "frontend_src_components_auth_resetpasswordform_tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L6",
+      "community": 2,
+      "norm_label": "props",
+      "id": "auth_resetpasswordform_props"
+    },
+    {
+      "label": "EyeIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L12",
+      "community": 2,
+      "norm_label": "eyeicon()",
+      "id": "auth_resetpasswordform_eyeicon"
+    },
+    {
+      "label": "EyeOffIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L21",
+      "community": 2,
+      "norm_label": "eyeofficon()",
+      "id": "auth_resetpasswordform_eyeofficon"
+    },
+    {
+      "label": "MatchOkIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L31",
+      "community": 2,
+      "norm_label": "matchokicon()",
+      "id": "auth_resetpasswordform_matchokicon"
+    },
+    {
+      "label": "ResetPasswordForm()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L41",
+      "community": 2,
+      "norm_label": "resetpasswordform()",
+      "id": "auth_resetpasswordform_resetpasswordform"
+    },
+    {
+      "label": "SignupForm.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "signupform.tsx",
+      "id": "frontend_src_components_auth_signupform_tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L5",
+      "community": 3,
+      "norm_label": "props",
+      "id": "auth_signupform_props"
+    },
+    {
+      "label": "SignupForm()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L9",
+      "community": 3,
+      "norm_label": "signupform()",
+      "id": "auth_signupform_signupform"
+    },
+    {
+      "label": "LoadingSpinner.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "loadingspinner.tsx",
+      "id": "frontend_src_components_ui_loadingspinner_tsx"
+    },
+    {
+      "label": "LoadingSpinner()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "loadingspinner()",
+      "id": "ui_loadingspinner_loadingspinner"
+    },
+    {
+      "label": "AdminLayout.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "adminlayout.tsx",
+      "id": "frontend_src_layouts_adminlayout_tsx"
+    },
+    {
+      "label": "IconGrid()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L7",
+      "community": 0,
+      "norm_label": "icongrid()",
+      "id": "layouts_adminlayout_icongrid"
+    },
+    {
+      "label": "IconBook()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L18",
+      "community": 0,
+      "norm_label": "iconbook()",
+      "id": "layouts_adminlayout_iconbook"
+    },
+    {
+      "label": "IconUsers()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L27",
+      "community": 0,
+      "norm_label": "iconusers()",
+      "id": "layouts_adminlayout_iconusers"
+    },
+    {
+      "label": "IconSettings()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L38",
+      "community": 0,
+      "norm_label": "iconsettings()",
+      "id": "layouts_adminlayout_iconsettings"
+    },
+    {
+      "label": "IconShield()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L47",
+      "community": 0,
+      "norm_label": "iconshield()",
+      "id": "layouts_adminlayout_iconshield"
+    },
+    {
+      "label": "IconMenu()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L55",
+      "community": 0,
+      "norm_label": "iconmenu()",
+      "id": "layouts_adminlayout_iconmenu"
+    },
+    {
+      "label": "NAV",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L67",
+      "community": 0,
+      "norm_label": "nav",
+      "id": "layouts_adminlayout_nav"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L77",
+      "community": 0,
+      "norm_label": "props",
+      "id": "layouts_adminlayout_props"
+    },
+    {
+      "label": "AdminLayout()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L82",
+      "community": 0,
+      "norm_label": "adminlayout()",
+      "id": "layouts_adminlayout_adminlayout"
+    },
+    {
+      "label": "DashboardPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "dashboardpage.tsx",
+      "id": "frontend_src_pages_dashboardpage_tsx"
+    },
+    {
+      "label": "IconBook()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L6",
+      "community": 0,
+      "norm_label": "iconbook()",
+      "id": "pages_dashboardpage_iconbook"
+    },
+    {
+      "label": "IconCheck()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L15",
+      "community": 0,
+      "norm_label": "iconcheck()",
+      "id": "pages_dashboardpage_iconcheck"
+    },
+    {
+      "label": "IconStar()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L24",
+      "community": 0,
+      "norm_label": "iconstar()",
+      "id": "pages_dashboardpage_iconstar"
+    },
+    {
+      "label": "IconAward()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L32",
+      "community": 0,
+      "norm_label": "iconaward()",
+      "id": "pages_dashboardpage_iconaward"
+    },
+    {
+      "label": "StatProps",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L43",
+      "community": 0,
+      "norm_label": "statprops",
+      "id": "pages_dashboardpage_statprops"
+    },
+    {
+      "label": "StatCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L50",
+      "community": 0,
+      "norm_label": "statcard()",
+      "id": "pages_dashboardpage_statcard"
+    },
+    {
+      "label": "DashboardPage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L62",
+      "community": 0,
+      "norm_label": "dashboardpage()",
+      "id": "pages_dashboardpage_dashboardpage"
+    },
+    {
+      "label": "ForgotPasswordPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "forgotpasswordpage.tsx",
+      "id": "frontend_src_pages_forgotpasswordpage_tsx"
+    },
+    {
+      "label": "IconArrowLeft()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
+      "source_location": "L7",
+      "community": 3,
+      "norm_label": "iconarrowleft()",
+      "id": "pages_forgotpasswordpage_iconarrowleft"
+    },
+    {
+      "label": "IconMail()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
+      "source_location": "L16",
+      "community": 3,
+      "norm_label": "iconmail()",
+      "id": "pages_forgotpasswordpage_iconmail"
+    },
+    {
+      "label": "ForgotPasswordPage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
+      "source_location": "L27",
+      "community": 3,
+      "norm_label": "forgotpasswordpage()",
+      "id": "pages_forgotpasswordpage_forgotpasswordpage"
+    },
+    {
+      "label": "LoginPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/LoginPage.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "loginpage.tsx",
+      "id": "frontend_src_pages_loginpage_tsx"
+    },
+    {
+      "label": "LoginPage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/LoginPage.tsx",
+      "source_location": "L6",
+      "community": 0,
+      "norm_label": "loginpage()",
+      "id": "pages_loginpage_loginpage"
+    },
+    {
+      "label": "NotFoundPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/NotFoundPage.tsx",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "notfoundpage.tsx",
+      "id": "frontend_src_pages_notfoundpage_tsx"
+    },
+    {
+      "label": "NotFoundPage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/NotFoundPage.tsx",
+      "source_location": "L3",
+      "community": 3,
+      "norm_label": "notfoundpage()",
+      "id": "pages_notfoundpage_notfoundpage"
+    },
+    {
+      "label": "ResetPasswordPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L1",
+      "community": 2,
+      "norm_label": "resetpasswordpage.tsx",
+      "id": "frontend_src_pages_resetpasswordpage_tsx"
+    },
+    {
+      "label": "IconShieldCheck()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L10",
+      "community": 2,
+      "norm_label": "iconshieldcheck()",
+      "id": "pages_resetpasswordpage_iconshieldcheck"
+    },
+    {
+      "label": "IconAlertTriangle()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L19",
+      "community": 2,
+      "norm_label": "iconalerttriangle()",
+      "id": "pages_resetpasswordpage_iconalerttriangle"
+    },
+    {
+      "label": "AuthShell()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L31",
+      "community": 2,
+      "norm_label": "authshell()",
+      "id": "pages_resetpasswordpage_authshell"
+    },
+    {
+      "label": "ResetPasswordPage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L47",
+      "community": 2,
+      "norm_label": "resetpasswordpage()",
+      "id": "pages_resetpasswordpage_resetpasswordpage"
+    },
+    {
+      "label": "SignupPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/SignupPage.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "signuppage.tsx",
+      "id": "frontend_src_pages_signuppage_tsx"
+    },
+    {
+      "label": "SignupPage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/SignupPage.tsx",
+      "source_location": "L6",
+      "community": 0,
+      "norm_label": "signuppage()",
+      "id": "pages_signuppage_signuppage"
+    },
+    {
+      "label": "TrustedDevicesPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L1",
+      "community": 1,
+      "norm_label": "trusteddevicespage.tsx",
+      "id": "frontend_src_pages_trusteddevicespage_tsx"
+    },
+    {
+      "label": "IconWindows()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L10",
+      "community": 1,
+      "norm_label": "iconwindows()",
+      "id": "pages_trusteddevicespage_iconwindows"
+    },
+    {
+      "label": "IconApple()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L21",
+      "community": 1,
+      "norm_label": "iconapple()",
+      "id": "pages_trusteddevicespage_iconapple"
+    },
+    {
+      "label": "IconPhone()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L29",
+      "community": 1,
+      "norm_label": "iconphone()",
+      "id": "pages_trusteddevicespage_iconphone"
+    },
+    {
+      "label": "IconAndroid()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L38",
+      "community": 1,
+      "norm_label": "iconandroid()",
+      "id": "pages_trusteddevicespage_iconandroid"
+    },
+    {
+      "label": "IconLinux()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L46",
+      "community": 1,
+      "norm_label": "iconlinux()",
+      "id": "pages_trusteddevicespage_iconlinux"
+    },
+    {
+      "label": "IconMonitor()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L54",
+      "community": 1,
+      "norm_label": "iconmonitor()",
+      "id": "pages_trusteddevicespage_iconmonitor"
+    },
+    {
+      "label": "PlatformIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L64",
+      "community": 1,
+      "norm_label": "platformicon()",
+      "id": "pages_trusteddevicespage_platformicon"
+    },
+    {
+      "label": "formatRelative()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L77",
+      "community": 1,
+      "norm_label": "formatrelative()",
+      "id": "pages_trusteddevicespage_formatrelative"
+    },
+    {
+      "label": "formatDate()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L91",
+      "community": 1,
+      "norm_label": "formatdate()",
+      "id": "pages_trusteddevicespage_formatdate"
+    },
+    {
+      "label": "DeviceCardProps",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L101",
+      "community": 1,
+      "norm_label": "devicecardprops",
+      "id": "pages_trusteddevicespage_devicecardprops"
+    },
+    {
+      "label": "DeviceCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L107",
+      "community": 1,
+      "norm_label": "devicecard()",
+      "id": "pages_trusteddevicespage_devicecard"
+    },
+    {
+      "label": "TrustedDevicesPage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L185",
+      "community": 0,
+      "norm_label": "trusteddevicespage()",
+      "id": "pages_trusteddevicespage_trusteddevicespage"
+    },
+    {
+      "label": "VerifyDevicePage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "verifydevicepage.tsx",
+      "id": "frontend_src_pages_verifydevicepage_tsx"
+    },
+    {
+      "label": "VerifyDevicePage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
+      "source_location": "L22",
+      "community": 0,
+      "norm_label": "verifydevicepage()",
+      "id": "pages_verifydevicepage_verifydevicepage"
+    },
+    {
+      "label": "ProtectedRoute.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "protectedroute.tsx",
+      "id": "frontend_src_routes_protectedroute_tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L6",
+      "community": 0,
+      "norm_label": "props",
+      "id": "routes_protectedroute_props"
+    },
+    {
+      "label": "ProtectedRoute()",
+      "file_type": "code",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L12",
+      "community": 0,
+      "norm_label": "protectedroute()",
+      "id": "routes_protectedroute_protectedroute"
+    },
+    {
+      "label": "auth.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/types/auth.ts",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "auth.ts",
+      "id": "frontend_src_types_auth_ts"
+    },
+    {
+      "label": "Profile",
+      "file_type": "code",
+      "source_file": "frontend/src/types/auth.ts",
+      "source_location": "L1",
+      "community": 0,
+      "norm_label": "profile",
+      "id": "types_auth_profile"
+    },
+    {
+      "label": "UserRole",
+      "file_type": "code",
+      "source_file": "frontend/src/types/auth.ts",
+      "source_location": "L8",
+      "community": 0,
+      "norm_label": "userrole",
+      "id": "types_auth_userrole"
+    },
+    {
+      "label": "device.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L1",
+      "community": 1,
+      "norm_label": "device.ts",
+      "id": "frontend_src_types_device_ts"
+    },
+    {
+      "label": "DeviceStatus",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L8",
+      "community": 1,
+      "norm_label": "devicestatus",
+      "id": "types_device_devicestatus"
+    },
+    {
+      "label": "DevicePlatform",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L11",
+      "community": 1,
+      "norm_label": "deviceplatform",
+      "id": "types_device_deviceplatform"
+    },
+    {
+      "label": "TrustedDevice",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L23",
+      "community": 1,
+      "norm_label": "trusteddevice",
+      "id": "types_device_trusteddevice"
+    },
+    {
+      "label": "OtpStatus",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L49",
+      "community": 1,
+      "norm_label": "otpstatus",
+      "id": "types_device_otpstatus"
+    },
+    {
+      "label": "OtpVerificationProps",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L52",
+      "community": 1,
+      "norm_label": "otpverificationprops",
+      "id": "types_device_otpverificationprops"
+    },
+    {
+      "label": "SendOtpRequest",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L62",
+      "community": 1,
+      "norm_label": "sendotprequest",
+      "id": "types_device_sendotprequest"
+    },
+    {
+      "label": "VerifyOtpRequest",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L67",
+      "community": 1,
+      "norm_label": "verifyotprequest",
+      "id": "types_device_verifyotprequest"
+    },
+    {
+      "label": "VerifyOtpResponse",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L75",
+      "community": 1,
+      "norm_label": "verifyotpresponse",
+      "id": "types_device_verifyotpresponse"
+    },
+    {
+      "label": "RevokeDeviceRequest",
+      "file_type": "code",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L82",
+      "community": 1,
+      "norm_label": "revokedevicerequest",
+      "id": "types_device_revokedevicerequest"
+    },
+    {
+      "label": "passwordRecovery.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L1",
+      "community": 2,
+      "norm_label": "passwordrecovery.ts",
+      "id": "frontend_src_types_passwordrecovery_ts"
+    },
+    {
+      "label": "ForgotPasswordStep",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L7",
+      "community": 2,
+      "norm_label": "forgotpasswordstep",
+      "id": "types_passwordrecovery_forgotpasswordstep"
+    },
+    {
+      "label": "ResetPasswordStep",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L14",
+      "community": 2,
+      "norm_label": "resetpasswordstep",
+      "id": "types_passwordrecovery_resetpasswordstep"
+    },
+    {
+      "label": "PasswordStrengthScore",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L26",
+      "community": 2,
+      "norm_label": "passwordstrengthscore",
+      "id": "types_passwordrecovery_passwordstrengthscore"
+    },
+    {
+      "label": "PasswordChecks",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L29",
+      "community": 2,
+      "norm_label": "passwordchecks",
+      "id": "types_passwordrecovery_passwordchecks"
+    },
+    {
+      "label": "PasswordStrengthResult",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L38",
+      "community": 2,
+      "norm_label": "passwordstrengthresult",
+      "id": "types_passwordrecovery_passwordstrengthresult"
+    },
+    {
+      "label": "PasswordResetRequest",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L46",
+      "community": 2,
+      "norm_label": "passwordresetrequest",
+      "id": "types_passwordrecovery_passwordresetrequest"
+    },
+    {
+      "label": "PasswordResetConfirm",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L51",
+      "community": 2,
+      "norm_label": "passwordresetconfirm",
+      "id": "types_passwordrecovery_passwordresetconfirm"
+    },
+    {
+      "label": "PasswordStrengthMeterProps",
+      "file_type": "code",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L59",
+      "community": 2,
+      "norm_label": "passwordstrengthmeterprops",
+      "id": "types_passwordrecovery_passwordstrengthmeterprops"
+    },
+    {
+      "label": "authErrors.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/authErrors.ts",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "autherrors.ts",
+      "id": "frontend_src_utils_autherrors_ts"
+    },
+    {
+      "label": "getAuthErrorMessage()",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/authErrors.ts",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "getautherrormessage()",
+      "id": "utils_autherrors_getautherrormessage"
+    },
+    {
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "community": 17,
+      "norm_label": "claude.md",
+      "id": "claude_md"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "frontend/README.md",
+      "source_location": "L1",
+      "community": 9,
+      "norm_label": "readme.md",
+      "id": "frontend_readme_md"
+    },
+    {
+      "label": "React + TypeScript + Vite",
+      "file_type": "document",
+      "source_file": "frontend/README.md",
+      "source_location": "L1",
+      "community": 9,
+      "norm_label": "react + typescript + vite",
+      "id": "frontend_readme_react_typescript_vite"
+    },
+    {
+      "label": "React Compiler",
+      "file_type": "document",
+      "source_file": "frontend/README.md",
+      "source_location": "L10",
+      "community": 9,
+      "norm_label": "react compiler",
+      "id": "frontend_readme_react_compiler"
+    },
+    {
+      "label": "Expanding the ESLint configuration",
+      "file_type": "document",
+      "source_file": "frontend/README.md",
+      "source_location": "L14",
+      "community": 9,
+      "norm_label": "expanding the eslint configuration",
+      "id": "frontend_readme_expanding_the_eslint_configuration"
+    },
+    {
+      "label": "code:js (export default defineConfig([)",
+      "file_type": "document",
+      "source_file": "frontend/README.md",
+      "source_location": "L18",
+      "community": 9,
+      "norm_label": "code:js (export default defineconfig([)",
+      "id": "frontend_readme_codeblock_1"
+    },
+    {
+      "label": "code:js (// eslint.config.js)",
+      "file_type": "document",
+      "source_file": "frontend/README.md",
+      "source_location": "L48",
+      "community": 9,
+      "norm_label": "code:js (// eslint.config.js)",
+      "id": "frontend_readme_codeblock_2"
+    },
+    {
+      "label": "Profile",
+      "file_type": "code",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L5",
+      "community": 0,
+      "norm_label": "profile",
+      "id": "src_authcontext_profile"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_settings_local_json",
+      "target": "claude_settings_local_permissions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_settings_local_permissions",
+      "target": "claude_settings_local_permissions_allow"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_name"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_version"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_description"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_main"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_scripts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_keywords"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_author"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_license"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_type"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_dependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_json",
+      "target": "backend_package_devdependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_start"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_dev"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_test"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_prisma_client"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_cors"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_dotenv"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_express"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_nodemon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_prisma"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_server_express"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_server_app"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_name"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_private"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_version"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_type"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_scripts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_dependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_devdependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_scripts",
+      "target": "frontend_package_scripts_dev"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_scripts",
+      "target": "frontend_package_scripts_build"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_scripts",
+      "target": "frontend_package_scripts_lint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_scripts",
+      "target": "frontend_package_scripts_preview"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_supabase_supabase_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_bootstrap"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_react"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_react_dom"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_react_router_dom"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_eslint_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_types_node"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_types_react"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_types_react_dom"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_vitejs_plugin_react"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_eslint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_eslint_plugin_react_hooks"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_eslint_plugin_react_refresh"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_globals"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_typescript"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_typescript_eslint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_vite"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_json",
+      "target": "frontend_tsconfig_app_compileroptions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_json",
+      "target": "frontend_tsconfig_app_include"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_tsbuildinfofile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_target"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_lib"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_module"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_types"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_skiplibcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_moduleresolution"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_allowimportingtsextensions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_verbatimmodulesyntax"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_moduledetection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_noemit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_jsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_nounusedlocals"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_nounusedparameters"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_erasablesyntaxonly"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.app.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_app_compileroptions",
+      "target": "frontend_tsconfig_app_compileroptions_nofallthroughcasesinswitch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_json",
+      "target": "frontend_tsconfig_files"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_json",
+      "target": "frontend_tsconfig_references"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_json",
+      "target": "frontend_tsconfig_node_compileroptions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_json",
+      "target": "frontend_tsconfig_node_include"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_tsbuildinfofile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_target"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_lib"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_module"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_types"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_skiplibcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_moduleresolution"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_allowimportingtsextensions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_verbatimmodulesyntax"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_moduledetection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_noemit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_nounusedlocals"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_nounusedparameters"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_erasablesyntaxonly"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.node.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tsconfig_node_compileroptions",
+      "target": "frontend_tsconfig_node_compileroptions_nofallthroughcasesinswitch"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_loginpage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_signuppage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_forgotpasswordpage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_resetpasswordpage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_dashboardpage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_trusteddevicespage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_verifydevicepage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_notfoundpage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_routes_protectedroute_tsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "src_app_app"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/main.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_main_tsx",
+      "target": "frontend_src_app_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_supabase_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "src_supabase_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "frontend_src_supabase_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "src_supabase_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "frontend_src_types_auth_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "types_auth_profile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "src_authcontext_authcontexttype"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "src_authcontext_authcontext"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "src_authcontext_demo_user"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "src_authcontext_demo_profile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "src_authcontext_authprovider"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L87",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/main.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_main_tsx",
+      "target": "frontend_src_authcontext_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "frontend_src_authcontext_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "frontend_src_authcontext_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/LoginPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_loginpage_tsx",
+      "target": "frontend_src_authcontext_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/SignupPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_signuppage_tsx",
+      "target": "frontend_src_authcontext_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "frontend_src_authcontext_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_verifydevicepage_tsx",
+      "target": "frontend_src_authcontext_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_routes_protectedroute_tsx",
+      "target": "frontend_src_authcontext_tsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/AuthContext.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_authcontext_tsx",
+      "target": "src_authcontext_profile"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/main.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_main_tsx",
+      "target": "src_authcontext_authprovider"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/LoginPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_loginpage_tsx",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/SignupPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_signuppage_tsx",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_verifydevicepage_tsx",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_routes_protectedroute_tsx",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "layouts_adminlayout_adminlayout",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "pages_dashboardpage_dashboardpage",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/pages/LoginPage.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "pages_loginpage_loginpage",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/pages/SignupPage.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "pages_signuppage_signuppage",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "pages_trusteddevicespage_trusteddevicespage",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "pages_verifydevicepage_verifydevicepage",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "routes_protectedroute_protectedroute",
+      "target": "src_authcontext_useauth"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/supabase.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_supabase_ts",
+      "target": "src_supabase_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/passwordRecovery.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_passwordrecovery_ts",
+      "target": "frontend_src_supabase_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_loginform_tsx",
+      "target": "frontend_src_supabase_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_signupform_tsx",
+      "target": "frontend_src_supabase_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "frontend_src_supabase_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/passwordRecovery.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_passwordrecovery_ts",
+      "target": "src_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_loginform_tsx",
+      "target": "src_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_signupform_tsx",
+      "target": "src_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "src_supabase_supabase"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_index_ts",
+      "target": "api_index_apifetch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/index.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_index_ts",
+      "target": "api_index_api"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/passwordRecovery.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_passwordrecovery_ts",
+      "target": "api_passwordrecovery_requestpasswordreset"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/passwordRecovery.ts",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_passwordrecovery_ts",
+      "target": "api_passwordrecovery_updatepassword"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "frontend_src_api_passwordrecovery_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "frontend_src_api_passwordrecovery_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "api_passwordrecovery_requestpasswordreset"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "api_passwordrecovery_updatepassword"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "frontend_src_types_device_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "types_device_trusteddevice"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "types_device_sendotprequest"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "types_device_verifyotprequest"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "types_device_verifyotpresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "api_trusteddevices_delay"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "api_trusteddevices_mock_devices"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L83",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "api_trusteddevices_mockdevicestore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L94",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "api_trusteddevices_gettrusteddevices"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L107",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "api_trusteddevices_revokedevice"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L121",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "api_trusteddevices_sendotp"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L136",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_trusteddevices_ts",
+      "target": "api_trusteddevices_verifyotp"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "frontend_src_api_trusteddevices_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "frontend_src_api_trusteddevices_ts"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L95",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_trusteddevices_gettrusteddevices",
+      "target": "api_trusteddevices_delay"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L108",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_trusteddevices_revokedevice",
+      "target": "api_trusteddevices_delay"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L122",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_trusteddevices_sendotp",
+      "target": "api_trusteddevices_delay"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/trustedDevices.ts",
+      "source_location": "L139",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_trusteddevices_verifyotp",
+      "target": "api_trusteddevices_delay"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "api_trusteddevices_gettrusteddevices"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "api_trusteddevices_revokedevice"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "api_trusteddevices_sendotp"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "api_trusteddevices_verifyotp"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "frontend_src_utils_autherrors_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "utils_autherrors_getautherrormessage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "frontend_src_types_passwordrecovery_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "types_passwordrecovery_forgotpasswordstep"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "auth_forgotpasswordform_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "auth_forgotpasswordform_isvalidemail"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_forgotpasswordform_tsx",
+      "target": "auth_forgotpasswordform_forgotpasswordform"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_forgotpasswordpage_tsx",
+      "target": "frontend_src_components_auth_forgotpasswordform_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_loginform_tsx",
+      "target": "frontend_src_utils_autherrors_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_loginform_tsx",
+      "target": "utils_autherrors_getautherrormessage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_loginform_tsx",
+      "target": "auth_loginform_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/LoginForm.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_loginform_tsx",
+      "target": "auth_loginform_loginform"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/LoginPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_loginpage_tsx",
+      "target": "frontend_src_components_auth_loginform_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "frontend_src_types_device_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "types_device_otpstatus"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "types_device_otpverificationprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "auth_otpverificationmodal_iconshield"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "auth_otpverificationmodal_iconcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "auth_otpverificationmodal_iconx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/OtpVerificationModal.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_otpverificationmodal_tsx",
+      "target": "auth_otpverificationmodal_otpverificationmodal"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "frontend_src_components_auth_otpverificationmodal_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_verifydevicepage_tsx",
+      "target": "frontend_src_components_auth_otpverificationmodal_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "frontend_src_types_passwordrecovery_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "types_passwordrecovery_passwordchecks"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "types_passwordrecovery_passwordstrengthmeterprops"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "types_passwordrecovery_passwordstrengthresult"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "types_passwordrecovery_passwordstrengthscore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "auth_passwordstrengthmeter_getpasswordstrength"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "auth_passwordstrengthmeter_requirements"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "auth_passwordstrengthmeter_checkicon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L75",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "auth_passwordstrengthmeter_crossicon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L84",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_passwordstrengthmeter_tsx",
+      "target": "auth_passwordstrengthmeter_passwordstrengthmeter"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "frontend_src_components_auth_passwordstrengthmeter_tsx"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/PasswordStrengthMeter.tsx",
+      "source_location": "L85",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "auth_passwordstrengthmeter_passwordstrengthmeter",
+      "target": "auth_passwordstrengthmeter_getpasswordstrength"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "auth_passwordstrengthmeter_getpasswordstrength"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "auth_resetpasswordform_resetpasswordform",
+      "target": "auth_passwordstrengthmeter_getpasswordstrength"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "frontend_src_utils_autherrors_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "utils_autherrors_getautherrormessage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "auth_resetpasswordform_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "auth_resetpasswordform_eyeicon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "auth_resetpasswordform_eyeofficon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "auth_resetpasswordform_matchokicon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_resetpasswordform_tsx",
+      "target": "auth_resetpasswordform_resetpasswordform"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "frontend_src_components_auth_resetpasswordform_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_signupform_tsx",
+      "target": "frontend_src_utils_autherrors_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_signupform_tsx",
+      "target": "utils_autherrors_getautherrormessage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_signupform_tsx",
+      "target": "auth_signupform_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/auth/SignupForm.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_auth_signupform_tsx",
+      "target": "auth_signupform_signupform"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/SignupPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_signuppage_tsx",
+      "target": "frontend_src_components_auth_signupform_tsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_ui_loadingspinner_tsx",
+      "target": "ui_loadingspinner_loadingspinner"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "frontend_src_components_ui_loadingspinner_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_routes_protectedroute_tsx",
+      "target": "frontend_src_components_ui_loadingspinner_tsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_icongrid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_iconbook"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_iconusers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_iconsettings"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_iconshield"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_iconmenu"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_nav"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L82",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_adminlayout"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "frontend_src_layouts_adminlayout_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "frontend_src_layouts_adminlayout_tsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_iconbook"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_iconcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_iconstar"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_iconaward"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L43",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_statprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L50",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_statcard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_dashboardpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_forgotpasswordpage_tsx",
+      "target": "pages_forgotpasswordpage_iconarrowleft"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_forgotpasswordpage_tsx",
+      "target": "pages_forgotpasswordpage_iconmail"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_forgotpasswordpage_tsx",
+      "target": "pages_forgotpasswordpage_forgotpasswordpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/LoginPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_loginpage_tsx",
+      "target": "pages_loginpage_loginpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/NotFoundPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_notfoundpage_tsx",
+      "target": "pages_notfoundpage_notfoundpage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "frontend_src_types_passwordrecovery_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "types_passwordrecovery_resetpasswordstep"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "pages_resetpasswordpage_iconshieldcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "pages_resetpasswordpage_iconalerttriangle"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "pages_resetpasswordpage_authshell"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_resetpasswordpage_tsx",
+      "target": "pages_resetpasswordpage_resetpasswordpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/SignupPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_signuppage_tsx",
+      "target": "pages_signuppage_signuppage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "frontend_src_types_device_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "types_device_trusteddevice"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "types_device_deviceplatform"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_iconwindows"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_iconapple"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_iconphone"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_iconandroid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_iconlinux"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_iconmonitor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L64",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_platformicon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_formatrelative"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L91",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_formatdate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L101",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_devicecardprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L107",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_devicecard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L185",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "pages_trusteddevicespage_trusteddevicespage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L131",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_trusteddevicespage_devicecard",
+      "target": "pages_trusteddevicespage_formatrelative"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
+      "source_location": "L133",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_trusteddevicespage_devicecard",
+      "target": "pages_trusteddevicespage_formatdate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_verifydevicepage_tsx",
+      "target": "pages_verifydevicepage_verifydevicepage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_routes_protectedroute_tsx",
+      "target": "frontend_src_types_auth_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_routes_protectedroute_tsx",
+      "target": "types_auth_userrole"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_routes_protectedroute_tsx",
+      "target": "routes_protectedroute_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/routes/ProtectedRoute.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_routes_protectedroute_tsx",
+      "target": "routes_protectedroute_protectedroute"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/auth.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_auth_ts",
+      "target": "types_auth_profile"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/auth.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_auth_ts",
+      "target": "types_auth_userrole"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_devicestatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_deviceplatform"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_trusteddevice"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_otpstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_otpverificationprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_sendotprequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_verifyotprequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_verifyotpresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/device.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_device_ts",
+      "target": "types_device_revokedevicerequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_passwordrecovery_ts",
+      "target": "types_passwordrecovery_forgotpasswordstep"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_passwordrecovery_ts",
+      "target": "types_passwordrecovery_resetpasswordstep"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_passwordrecovery_ts",
+      "target": "types_passwordrecovery_passwordstrengthscore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_passwordrecovery_ts",
+      "target": "types_passwordrecovery_passwordchecks"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_passwordrecovery_ts",
+      "target": "types_passwordrecovery_passwordstrengthresult"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L46",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_passwordrecovery_ts",
+      "target": "types_passwordrecovery_passwordresetrequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_passwordrecovery_ts",
+      "target": "types_passwordrecovery_passwordresetconfirm"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/passwordRecovery.ts",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_passwordrecovery_ts",
+      "target": "types_passwordrecovery_passwordstrengthmeterprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/authErrors.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_utils_autherrors_ts",
+      "target": "utils_autherrors_getautherrormessage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_readme_md",
+      "target": "frontend_readme_react_typescript_vite"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/README.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_readme_react_typescript_vite",
+      "target": "frontend_readme_react_compiler"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/README.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_readme_react_typescript_vite",
+      "target": "frontend_readme_expanding_the_eslint_configuration"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/README.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_readme_expanding_the_eslint_configuration",
+      "target": "frontend_readme_codeblock_1"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/README.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_readme_expanding_the_eslint_configuration",
+      "target": "frontend_readme_codeblock_2"
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "b5e9248deca28f7623c0adaabdf2d74dfee804be"
+}
