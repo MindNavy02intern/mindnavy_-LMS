@@ -74,9 +74,30 @@ body {
 
 a { color: inherit; }
 
-@keyframes mn-spin     { to { transform: rotate(360deg); } }
-@keyframes mn-fade-in  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-@keyframes mn-progress { from { width: 0%; } to { width: 100%; } }
+@keyframes mn-spin       { to { transform: rotate(360deg); } }
+@keyframes mn-fade-in    { from { opacity: 0; transform: translateY(8px); }   to { opacity: 1; transform: none; } }
+@keyframes mn-progress   { from { width: 0%; } to { width: 100%; } }
+@keyframes mn-slide-up   { from { opacity: 0; transform: translateY(22px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes mn-slide-in   { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes mn-scale-in   { from { opacity: 0; transform: scale(0.92); }       to { opacity: 1; transform: scale(1); } }
+@keyframes mn-modal-spring {
+  0%   { opacity: 0; transform: scale(0.88) translateY(28px); }
+  60%  { transform: scale(1.02) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes mn-bar-grow {
+  from { transform: scaleY(0); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+@keyframes mn-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+  50%       { box-shadow: 0 0 28px 6px rgba(14, 165, 233, 0.12); }
+}
+@keyframes mn-notification-ping {
+  0%   { transform: scale(1); opacity: 1; }
+  75%  { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
 
 /* ── Auth Pages ─────────────────────────────────────────────── */
 .mn-auth-page {
@@ -1181,6 +1202,449 @@ a { color: inherit; }
   }
 
   .mn-otp-grid { gap: 0.35rem; }
+}
+
+/* ── Stagger animation helpers ──────────────────────────────── */
+/* Wrap a list in .mn-stagger to auto-animate children in sequence */
+
+.mn-stagger > * {
+  animation: mn-slide-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mn-stagger > *:nth-child(1) { animation-delay: 0.04s; }
+.mn-stagger > *:nth-child(2) { animation-delay: 0.09s; }
+.mn-stagger > *:nth-child(3) { animation-delay: 0.14s; }
+.mn-stagger > *:nth-child(4) { animation-delay: 0.19s; }
+.mn-stagger > *:nth-child(5) { animation-delay: 0.24s; }
+.mn-stagger > *:nth-child(6) { animation-delay: 0.29s; }
+
+/* ── Enhanced card interactions ─────────────────────────────── */
+
+.mn-card {
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.mn-card:hover {
+  border-color: rgba(14, 165, 233, 0.22);
+  box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.07), 0 12px 36px rgba(0, 0, 0, 0.32);
+  transform: translateY(-2px);
+}
+
+/* ── Enhanced stat cards ────────────────────────────────────── */
+
+.mn-stat {
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.mn-stat:hover {
+  box-shadow: 0 0 24px rgba(14, 165, 233, 0.1), 0 12px 36px rgba(0, 0, 0, 0.32);
+  transform: translateY(-3px);
+}
+
+/* Coloured glow on hover per accent */
+.mn-stat.blue:hover   { box-shadow: 0 0 24px rgba(14,  165, 233, 0.15), 0 12px 36px rgba(0,0,0,0.3); }
+.mn-stat.teal:hover   { box-shadow: 0 0 24px rgba(6,   182, 212, 0.15), 0 12px 36px rgba(0,0,0,0.3); }
+.mn-stat.purple:hover { box-shadow: 0 0 24px rgba(139, 92,  246, 0.15), 0 12px 36px rgba(0,0,0,0.3); }
+.mn-stat.green:hover  { box-shadow: 0 0 24px rgba(16,  185, 129, 0.15), 0 12px 36px rgba(0,0,0,0.3); }
+
+/* ── Enhanced button interactions ───────────────────────────── */
+
+.mn-btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.mn-btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 0 28px rgba(14, 165, 233, 0.3), 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.mn-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ── Modal spring animation ─────────────────────────────────── */
+
+.mn-modal {
+  animation: mn-modal-spring 0.38s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+}
+
+/* ── Enhanced sidebar nav active state ──────────────────────── */
+
+.mn-nav-link {
+  position: relative;
+}
+
+.mn-nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: -0.75rem;
+  top: 20%;
+  height: 60%;
+  width: 3px;
+  background: var(--mn-blue-500);
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 10px var(--mn-blue-500);
+}
+
+.mn-nav-link.active {
+  box-shadow: inset 0 0 20px rgba(14, 165, 233, 0.05);
+}
+
+/* ── Nav badge (notification count) ────────────────────────── */
+
+.mn-nav-badge {
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--mn-blue-500);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
+}
+
+/* ── Topbar search (decorative) ─────────────────────────────── */
+
+.mn-topbar-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--mn-border);
+  border-radius: var(--mn-r-sm);
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: var(--mn-t);
+  color: var(--mn-text-600);
+  font-size: 0.8rem;
+}
+
+.mn-topbar-search:hover {
+  border-color: var(--mn-border-hover);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--mn-text-400);
+}
+
+.mn-topbar-search kbd {
+  font-size: 0.65rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--mn-border-hover);
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+  color: var(--mn-text-800);
+  font-family: inherit;
+  margin-left: 0.25rem;
+}
+
+/* ── Topbar icon button (notification bell etc.) ────────────── */
+
+.mn-topbar-icon-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--mn-r-sm);
+  background: transparent;
+  border: 1px solid var(--mn-border);
+  color: var(--mn-text-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--mn-t);
+  flex-shrink: 0;
+}
+
+.mn-topbar-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--mn-border-hover);
+  color: var(--mn-text-200);
+}
+
+.mn-notif-dot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 1.5px solid var(--mn-950);
+}
+
+.mn-notif-dot::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.4);
+  animation: mn-notification-ping 1.8s ease-in-out infinite;
+}
+
+/* ── Dashboard layout ───────────────────────────────────────── */
+
+/* 4-column KPI grid */
+.mn-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 2-column chart row */
+.mn-chart-row {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Bottom 2-column row */
+.mn-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+  .mn-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .mn-chart-row  { grid-template-columns: 1fr; }
+  .mn-bottom-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .mn-kpi-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── KPI card (dashboard widget) ────────────────────────────── */
+
+.mn-kpi-card {
+  background: var(--mn-800);
+  border: 1px solid var(--mn-border);
+  border-radius: var(--mn-r-md);
+  padding: 1.25rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  animation: mn-slide-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.mn-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.mn-kpi-card.blue::before   { background: linear-gradient(90deg, var(--mn-blue-600), var(--mn-blue-400)); }
+.mn-kpi-card.teal::before   { background: linear-gradient(90deg, var(--mn-teal-500), var(--mn-teal-400)); }
+.mn-kpi-card.purple::before { background: linear-gradient(90deg, var(--mn-purple-500), var(--mn-purple-400)); }
+.mn-kpi-card.green::before  { background: linear-gradient(90deg, var(--mn-green-500), var(--mn-green-400)); }
+
+.mn-kpi-card:hover {
+  border-color: rgba(14, 165, 233, 0.22);
+  transform: translateY(-3px);
+}
+
+.mn-kpi-card.blue:hover   { box-shadow: 0 0 24px rgba(14,165,233,0.12), 0 12px 28px rgba(0,0,0,0.3); }
+.mn-kpi-card.teal:hover   { box-shadow: 0 0 24px rgba(6,182,212,0.12), 0 12px 28px rgba(0,0,0,0.3); }
+.mn-kpi-card.purple:hover { box-shadow: 0 0 24px rgba(139,92,246,0.12), 0 12px 28px rgba(0,0,0,0.3); }
+.mn-kpi-card.green:hover  { box-shadow: 0 0 24px rgba(16,185,129,0.12), 0 12px 28px rgba(0,0,0,0.3); }
+
+.mn-kpi-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.mn-kpi-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--mn-text-100);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.mn-kpi-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mn-text-600);
+}
+
+.mn-kpi-trend {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.mn-kpi-trend.up   { color: #22c55e; }
+.mn-kpi-trend.down { color: #ef4444; }
+
+/* ── Chart card ─────────────────────────────────────────────── */
+
+.mn-chart-card {
+  background: var(--mn-800);
+  border: 1px solid var(--mn-border);
+  border-radius: var(--mn-r-md);
+  padding: 1.4rem 1.5rem;
+  animation: mn-slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+  transition: border-color 0.22s ease;
+}
+
+.mn-chart-card:hover { border-color: var(--mn-border-hover); }
+
+.mn-chart-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--mn-text-100);
+  margin-bottom: 0.25rem;
+}
+
+.mn-chart-subtitle {
+  font-size: 0.75rem;
+  color: var(--mn-text-600);
+  margin-bottom: 1.25rem;
+}
+
+/* ── Chart legend ────────────────────────────────────────────── */
+
+.mn-legend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.mn-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--mn-text-600);
+}
+
+.mn-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Trend indicators ────────────────────────────────────────── */
+
+.mn-trend-up   { color: #22c55e; font-size: 0.75rem; font-weight: 600; }
+.mn-trend-down { color: #ef4444; font-size: 0.75rem; font-weight: 600; }
+
+/* ── SVG bar chart bars ──────────────────────────────────────── */
+
+.mn-chart-bar {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: mn-bar-grow 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Welcome / greeting section ─────────────────────────────── */
+
+.mn-welcome {
+  background: linear-gradient(135deg, var(--mn-700) 0%, var(--mn-600) 60%, rgba(14,165,233,0.08) 100%);
+  border: 1px solid var(--mn-border);
+  border-radius: var(--mn-r-md);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  animation: mn-fade-in 0.4s ease both;
+}
+
+.mn-welcome::after {
+  content: '';
+  position: absolute;
+  right: -80px; top: -80px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.mn-welcome-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--mn-text-100);
+  margin-bottom: 0.2rem;
+}
+
+.mn-welcome-sub {
+  font-size: 0.82rem;
+  color: var(--mn-text-400);
+}
+
+/* ── Donut chart wrapper ────────────────────────────────────── */
+
+.mn-donut-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1rem 0;
+}
+
+/* ── Filter / time-period buttons ───────────────────────────── */
+
+.mn-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.mn-filter-btn {
+  background: transparent;
+  border: 1px solid var(--mn-border);
+  border-radius: var(--mn-r-sm);
+  color: var(--mn-text-600);
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: var(--mn-t);
+}
+
+.mn-filter-btn:hover {
+  border-color: var(--mn-border-hover);
+  color: var(--mn-text-200);
+  background: rgba(255,255,255,0.04);
+}
+
+.mn-filter-btn.active {
+  background: var(--mn-blue-glow);
+  border-color: rgba(14,165,233,0.25);
+  color: var(--mn-blue-400);
+}
+
+/* ── Auth page animation ─────────────────────────────────────── */
+
+.mn-auth-card {
+  animation: mn-scale-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both !important;
 }
 
 /* ── Dev-only demo mode ─────────────────────────────────────── */
