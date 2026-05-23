@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma:generate": "prisma generate",
     "prisma:validate": "prisma validate",
-    "create:first-admin": "node src/scripts/createFirstAdmin.js"
+    "create:first-admin": "node src/scripts/createFirstAdmin.js",
+    "reset:first-admin-password": "node src/scripts/resetFirstAdminPassword.js"
   },
   "keywords": [],
   "author": "",
