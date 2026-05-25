@@ -2,7 +2,7 @@ import { defineConfig } from '@prisma/config'
 import 'dotenv/config'
 
 export default defineConfig({
-  schema: './prisma/schema/schema.prisma',
+ schema: './prisma/schema',
 
   datasource: {
     url: process.env.DIRECT_URL!,
