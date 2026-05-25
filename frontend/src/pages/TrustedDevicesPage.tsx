@@ -3,7 +3,7 @@ import AdminLayout from '../layouts/AdminLayout';
 import OtpVerificationModal from '../components/auth/OtpVerificationModal';
 import { getTrustedDevices, revokeDevice } from '../api/trustedDevices';
 import { useAuth } from '../AuthContext';
-import type { TrustedDevice, DevicePlatform } from '../types/device';
+import type { TrustedDevice } from '../types/device';
 
 // ── Platform SVG icons ────────────────────────────────────────────────────────
 
@@ -61,15 +61,14 @@ function IconMonitor() {
   );
 }
 
-function PlatformIcon({ platform }: { platform: DevicePlatform }) {
-  switch (platform) {
-    case 'windows': return <IconWindows />;
-    case 'macos':   return <IconApple />;
-    case 'ios':     return <IconPhone />;
-    case 'android': return <IconAndroid />;
-    case 'linux':   return <IconLinux />;
-    default:        return <IconMonitor />;
-  }
+function PlatformIcon({ userAgent }: { userAgent: string | null }) {
+  const ua = (userAgent ?? '').toLowerCase();
+  if (ua.includes('iphone') || ua.includes('ipad')) return <IconPhone />;
+  if (ua.includes('android'))  return <IconAndroid />;
+  if (ua.includes('mac'))      return <IconApple />;
+  if (ua.includes('linux'))    return <IconLinux />;
+  if (ua.includes('windows'))  return <IconWindows />;
+  return <IconMonitor />;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -108,45 +107,39 @@ function DeviceCard({ device, onRevoke, isRevoking }: DeviceCardProps) {
   const [confirming, setConfirming] = useState(false);
 
   return (
-    <div className={`mn-device-card${device.isCurrent ? ' current-device' : ''}`}>
-      {/* Platform icon */}
+    <div className="mn-device-card">
+      {/* Platform icon derived from userAgent */}
       <div className="mn-device-icon-wrap">
-        <PlatformIcon platform={device.platform} />
+        <PlatformIcon userAgent={device.userAgent} />
       </div>
 
       {/* Device info */}
       <div>
-        <div className="mn-device-name">
-          {device.deviceName}
-          {device.isCurrent && (
-            <span className="mn-badge current">This device</span>
-          )}
-        </div>
+        <div className="mn-device-name">{device.deviceName}</div>
         <div className="mn-device-meta">
-          <span>{device.browser}</span>
-          {' · '}
-          <span>{device.ipAddress}</span>
-          {device.location && <span>{' · '}{device.location}</span>}
+          {device.ipAddress && <span>{device.ipAddress}</span>}
+          {device.userAgent && (
+            <>
+              {device.ipAddress && ' · '}
+              <span>
+                {device.userAgent.length > 60
+                  ? device.userAgent.slice(0, 60) + '…'
+                  : device.userAgent}
+              </span>
+            </>
+          )}
           <br />
-          <span>Last seen {formatRelative(device.lastSeenAt)}</span>
-          {' · '}
+          {device.lastUsedAt && (
+            <span>Last seen {formatRelative(device.lastUsedAt)}</span>
+          )}
+          {device.lastUsedAt && ' · '}
           <span>Trusted {formatDate(device.trustedAt)}</span>
         </div>
       </div>
 
       {/* Actions */}
       <div className="mn-device-actions">
-        {device.isCurrent ? (
-          <span
-            style={{
-              fontSize: '0.72rem',
-              color: 'var(--mn-text-800)',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            Current session
-          </span>
-        ) : confirming ? (
+        {confirming ? (
           <div className="mn-confirm-row">
             <span className="mn-confirm-label">Remove this device?</span>
             <div className="mn-confirm-btns">
@@ -232,7 +225,7 @@ export default function TrustedDevicesPage() {
 
   // ── Render ──────────────────────────────────────────────────
 
-  const trustedCount = devices.filter((d) => d.status === 'trusted').length;
+  const trustedCount = devices.length;
 
   return (
     <AdminLayout pageTitle="Trusted Devices">

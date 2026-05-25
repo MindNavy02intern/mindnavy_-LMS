@@ -1,14 +1,22 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import type { User } from '@supabase/supabase-js';
-import { supabase } from './supabase';
+import {
+  type AdminUser,
+  apiGetMe,
+  apiLogin,
+  apiLogout,
+  getStoredToken,
+  removeToken,
+  storeToken,
+} from './api/adminAuth';
 import type { Profile } from './types/auth';
 
 interface AuthContextType {
-  user: User | null;
+  user: AdminUser | null;
   profile: Profile | null;
   loading: boolean;
   /** True when the demo admin session is active (DEV only). */
   isDemoMode: boolean;
+  login: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   /** Activates the mock admin session for frontend testing (DEV only, no-op in production). */
   enterDemoMode: () => void;
@@ -17,22 +25,18 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DEV-ONLY: Mock session for frontend testing without a real backend / database.
-// This entire block is dead code in production builds because import.meta.env.DEV
-// is statically replaced with `false` by Vite, so tree-shaking removes it.
-// DO NOT use DEMO_USER or DEMO_PROFILE outside of development guards.
+// DEV-ONLY: Mock session for frontend testing without a real backend.
+// import.meta.env.DEV is replaced with `false` at build time so Vite
+// tree-shakes all demo code out of production bundles.
 // ─────────────────────────────────────────────────────────────────────────────
 const DEMO_STORAGE_KEY = 'mn_demo_mode';
 
-const DEMO_USER = {
+const DEMO_USER: AdminUser = {
   id: 'demo-admin-00000000-0000-0000-0000-000000000000',
   email: 'demo.admin@mindnavy.local',
-  app_metadata: {},
-  user_metadata: { full_name: 'Demo Admin' },
-  aud: 'authenticated',
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
-} as unknown as User;
+  name: 'Demo Admin',
+  role: 'super_admin',
+};
 
 const DEMO_PROFILE: Profile = {
   id: 'demo-admin-00000000-0000-0000-0000-000000000000',
@@ -42,77 +46,83 @@ const DEMO_PROFILE: Profile = {
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
+function mapAdminToProfile(admin: AdminUser): Profile {
+  return {
+    id: admin.id,
+    full_name: admin.name,
+    avatar_url: null,
+    role: (admin.role as Profile['role']) ?? 'admin',
+  };
+}
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AdminUser | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [isDemoMode, setIsDemoMode] = useState(false);
 
-  // Ref so the Supabase subscription callback can read the latest demo state
-  // without needing to be recreated every time isDemoMode changes.
+  // Ref so the demo flag is readable inside async callbacks without stale closure
   const isDemoRef = useRef(false);
 
-  const fetchProfile = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
-
-      if (error) throw error;
-      setProfile(data as Profile);
-    } catch (err) {
-      console.error('Error fetching user profile:', err);
-    }
-  };
-
+  // ── On mount: restore session from localStorage ───────────────────────────
   useEffect(() => {
-    // DEV-ONLY: Restore a demo session that was saved in sessionStorage
-    // (sessionStorage clears automatically when the browser tab is closed)
+    // DEV-ONLY: Restore demo session saved in sessionStorage
     if (import.meta.env.DEV && sessionStorage.getItem(DEMO_STORAGE_KEY) === '1') {
       isDemoRef.current = true;
       setUser(DEMO_USER);
       setProfile(DEMO_PROFILE);
       setIsDemoMode(true);
       setLoading(false);
-      return; // Skip Supabase entirely while demo is active
+      return;
     }
 
-    const getInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        await fetchProfile(session.user.id);
-      }
+    const token = getStoredToken();
+    if (!token) {
       setLoading(false);
-    };
+      return;
+    }
 
-    getInitialSession();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        // Guard: do not let Supabase state changes overwrite an active demo session
-        if (isDemoRef.current) return;
-
-        const currentUser = session?.user ?? null;
-        setUser(currentUser);
-        if (currentUser) {
-          await fetchProfile(currentUser.id);
-        } else {
-          setProfile(null);
-        }
-        setLoading(false);
-      },
-    );
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    // Verify the stored token is still valid and restore user state
+    apiGetMe(token)
+      .then(({ admin }) => {
+        setUser(admin);
+        setProfile(mapAdminToProfile(admin));
+      })
+      .catch(() => {
+        // Token expired or invalid — clear it; ProtectedRoute will redirect to /login
+        removeToken();
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  // DEV-ONLY: Activates the mock admin session.
-  // In production, import.meta.env.DEV is false so this is a no-op.
+  // ── login ─────────────────────────────────────────────────────────────────
+  const login = async (email: string, password: string): Promise<void> => {
+    const { token, admin } = await apiLogin(email, password);
+    storeToken(token);
+    setUser(admin);
+    setProfile(mapAdminToProfile(admin));
+  };
+
+  // ── signOut ───────────────────────────────────────────────────────────────
+  const signOut = async (): Promise<void> => {
+    if (isDemoMode) {
+      // DEV-ONLY: Clear the mock session instead of calling the backend
+      sessionStorage.removeItem(DEMO_STORAGE_KEY);
+      isDemoRef.current = false;
+      setUser(null);
+      setProfile(null);
+      setIsDemoMode(false);
+      return;
+    }
+
+    const token = getStoredToken();
+    if (token) await apiLogout(token);
+    removeToken();
+    setUser(null);
+    setProfile(null);
+  };
+
+  // ── DEV-ONLY: enterDemoMode ───────────────────────────────────────────────
   const enterDemoMode = () => {
     if (!import.meta.env.DEV) return;
     sessionStorage.setItem(DEMO_STORAGE_KEY, '1');
@@ -123,21 +133,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(false);
   };
 
-  const signOut = async (): Promise<void> => {
-    if (isDemoMode) {
-      // DEV-ONLY: Clear the demo session instead of calling Supabase
-      sessionStorage.removeItem(DEMO_STORAGE_KEY);
-      isDemoRef.current = false;
-      setUser(null);
-      setProfile(null);
-      setIsDemoMode(false);
-      return;
-    }
-    await supabase.auth.signOut();
-  };
-
   return (
-    <AuthContext.Provider value={{ user, profile, loading, isDemoMode, signOut, enterDemoMode }}>
+    <AuthContext.Provider value={{ user, profile, loading, isDemoMode, login, signOut, enterDemoMode }}>
       {!loading && children}
     </AuthContext.Provider>
   );

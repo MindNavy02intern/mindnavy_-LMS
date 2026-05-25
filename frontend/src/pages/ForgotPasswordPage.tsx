@@ -65,7 +65,7 @@ export default function ForgotPasswordPage() {
             }}
           >
             If <strong style={{ color: 'var(--mn-text-200)' }}>{sentTo}</strong> is
-            registered, you'll receive a password reset link shortly.
+            registered, you'll receive a password reset code shortly.
           </p>
           <p
             style={{
@@ -85,7 +85,14 @@ export default function ForgotPasswordPage() {
             .
           </p>
 
-          <Link to="/login" className="mn-btn-primary" style={{ textDecoration: 'none', display: 'block' }}>
+          <Link
+            to={`/reset-password?email=${encodeURIComponent(sentTo)}`}
+            className="mn-btn-primary"
+            style={{ textDecoration: 'none', display: 'block', marginBottom: '0.75rem' }}
+          >
+            Enter Reset Code
+          </Link>
+          <Link to="/login" style={{ display: 'block', fontSize: '0.82rem', color: 'var(--mn-text-600)', textDecoration: 'none', textAlign: 'center' }}>
             Back to Sign In
           </Link>
         </div>
@@ -126,7 +133,7 @@ export default function ForgotPasswordPage() {
             Reset your password
           </h1>
           <p style={{ fontSize: '0.85rem', color: 'var(--mn-text-400)', margin: 0 }}>
-            Enter your email address and we'll send you a link to reset your password.
+            Enter your email address and we'll send you a code to reset your password.
           </p>
         </div>
 

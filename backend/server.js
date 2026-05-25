@@ -5,10 +5,16 @@ require("dotenv").config();
 const adminRoutes = require("./src/routes/admin.routes");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middlewares
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 app.use(express.json());
 
 // Health check route
@@ -35,6 +41,11 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is alive on http://localhost:${PORT}`);
+});
+
+server.on("error", (error) => {
+  console.error("Server failed to start:", error.message);
+  process.exit(1);
 });

@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { supabase } from '../../supabase';
-import { getAuthErrorMessage } from '../../utils/authErrors';
+import { useAuth } from '../../AuthContext';
 
 interface Props {
   onSuccess: () => void;
 }
 
 export default function LoginForm({ onSuccess }: Props) {
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -18,14 +18,10 @@ export default function LoginForm({ onSuccess }: Props) {
     setLoading(true);
 
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (authError) throw authError;
+      await login(email, password);
       onSuccess();
     } catch (err) {
-      setError(getAuthErrorMessage(err));
+      setError(err instanceof Error ? err.message : 'Sign-in failed. Please try again.');
     } finally {
       setLoading(false);
     }

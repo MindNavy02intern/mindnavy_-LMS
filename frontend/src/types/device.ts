@@ -17,30 +17,17 @@ export type DevicePlatform =
   | 'unknown';
 
 /**
- * A single trusted device record returned by the backend.
- * Stored in the `trusted_devices` table on the server.
+ * A single trusted device record as returned by GET /trusted-devices.
  */
 export interface TrustedDevice {
-  /** Unique device record ID (UUID from the backend) */
   id: string;
-  /** The user this device belongs to */
-  userId: string;
-  /** Human-readable label, e.g. "Chrome on Windows" */
   deviceName: string;
-  platform: DevicePlatform;
-  /** Browser name and version, e.g. "Chrome 124" */
-  browser: string;
-  /** IP address of the device when it was last seen */
-  ipAddress: string;
-  /** Approximate location derived from IP, e.g. "Riyadh, SA" — null if unavailable */
-  location: string | null;
-  /** ISO 8601 — when was this device last used to log in */
-  lastSeenAt: string;
-  /** ISO 8601 — when the user first marked this device as trusted */
+  ipAddress: string | null;
+  userAgent: string | null;
   trustedAt: string;
-  /** True if this record represents the device making the current HTTP request */
-  isCurrent: boolean;
-  status: DeviceStatus;
+  lastUsedAt: string | null;
+  expiresAt: string;
+  createdAt: string;
 }
 
 // ── OTP verification ──────────────────────────────────────────────────────────

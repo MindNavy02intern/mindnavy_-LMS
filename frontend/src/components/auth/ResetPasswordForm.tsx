@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { updatePassword } from '../../api/passwordRecovery';
-import { getAuthErrorMessage } from '../../utils/authErrors';
 import PasswordStrengthMeter, { getPasswordStrength } from './PasswordStrengthMeter';
 
 interface Props {
+  /** Pre-filled email from the forgot-password success screen (URL query param) */
+  initialEmail?: string;
   onSuccess: () => void;
 }
 
-// ── Eye / EyeOff icons ────────────────────────────────────────────────────────
+// ── Icons ─────────────────────────────────────────────────────────────────────
 
 function EyeIcon() {
   return (
@@ -38,7 +39,9 @@ function MatchOkIcon() {
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export default function ResetPasswordForm({ onSuccess }: Props) {
+export default function ResetPasswordForm({ initialEmail = '', onSuccess }: Props) {
+  const [email, setEmail]               = useState(initialEmail);
+  const [code, setCode]                 = useState('');
   const [password, setPassword]         = useState('');
   const [confirm, setConfirm]           = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -47,29 +50,19 @@ export default function ResetPasswordForm({ onSuccess }: Props) {
   const [error, setError]               = useState<string | null>(null);
 
   const strength = getPasswordStrength(password);
-
-  // Confirm-match state — only show the indicator once the user starts typing in the confirm field
   const confirmTouched = confirm.length > 0;
   const passwordsMatch = password === confirm;
 
-  // ── Validation ────────────────────────────────────────────────
   const validate = (): string | null => {
-    if (password.length < 8) {
-      return 'Password must be at least 8 characters.';
-    }
-    if (strength.score < 2) {
-      return 'Password is too weak. Add uppercase letters, numbers, or special characters.';
-    }
-    if (!confirm) {
-      return 'Please confirm your new password.';
-    }
-    if (!passwordsMatch) {
-      return 'Passwords do not match.';
-    }
+    if (!email.trim()) return 'Email address is required.';
+    if (!code.trim() || code.trim().length < 4) return 'Please enter the reset code from your email.';
+    if (password.length < 8) return 'Password must be at least 8 characters.';
+    if (strength.score < 2) return 'Password is too weak. Add uppercase letters, numbers, or special characters.';
+    if (!confirm) return 'Please confirm your new password.';
+    if (!passwordsMatch) return 'Passwords do not match.';
     return null;
   };
 
-  // ── Submit ─────────────────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -82,12 +75,10 @@ export default function ResetPasswordForm({ onSuccess }: Props) {
 
     setLoading(true);
     try {
-      // TODO: BACKEND — updatePassword calls supabase.auth.updateUser({ password })
-      // then signs out. When the backend adds audit logging, update src/api/passwordRecovery.ts
-      await updatePassword(password);
+      await updatePassword(email.trim().toLowerCase(), code.trim(), password);
       onSuccess();
     } catch (err) {
-      setError(getAuthErrorMessage(err));
+      setError(err instanceof Error ? err.message : 'Failed to reset password. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -100,6 +91,46 @@ export default function ResetPasswordForm({ onSuccess }: Props) {
           {error}
         </div>
       )}
+
+      {/* ── Email ── */}
+      <div style={{ marginBottom: '1rem' }}>
+        <label htmlFor="reset-email" className="mn-label">
+          Email address
+        </label>
+        <input
+          id="reset-email"
+          type="email"
+          className="mn-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
+          placeholder="you@example.com"
+          required
+          disabled={loading}
+        />
+      </div>
+
+      {/* ── Reset code ── */}
+      <div style={{ marginBottom: '1.25rem' }}>
+        <label htmlFor="reset-code" className="mn-label">
+          Reset code
+        </label>
+        <input
+          id="reset-code"
+          type="text"
+          className="mn-input"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          autoComplete="one-time-code"
+          placeholder="Code from your email"
+          required
+          disabled={loading}
+          style={{ letterSpacing: '0.08em' }}
+        />
+        <p style={{ fontSize: '0.75rem', color: 'var(--mn-text-600)', margin: '0.3rem 0 0' }}>
+          Check your email inbox or the backend terminal for the code.
+        </p>
+      </div>
 
       {/* ── New password ── */}
       <div style={{ marginBottom: '1.25rem' }}>
@@ -129,8 +160,6 @@ export default function ResetPasswordForm({ onSuccess }: Props) {
             {showPassword ? <EyeOffIcon /> : <EyeIcon />}
           </button>
         </div>
-
-        {/* Password strength meter — auto-hides when field is empty */}
         <div id="reset-strength">
           <PasswordStrengthMeter password={password} />
         </div>
@@ -164,8 +193,6 @@ export default function ResetPasswordForm({ onSuccess }: Props) {
             {showConfirm ? <EyeOffIcon /> : <EyeIcon />}
           </button>
         </div>
-
-        {/* Confirm match indicator */}
         <div id="confirm-match-status" aria-live="polite">
           {confirmTouched && passwordsMatch && (
             <p className="mn-match-ok">
@@ -182,7 +209,7 @@ export default function ResetPasswordForm({ onSuccess }: Props) {
       <button
         type="submit"
         className="mn-btn-primary"
-        disabled={loading || !password || !confirm}
+        disabled={loading || !email || !code || !password || !confirm}
       >
         {loading ? 'Updating password…' : 'Set New Password'}
       </button>

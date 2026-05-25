@@ -103,7 +103,7 @@ export default function ForgotPasswordForm({ onEmailSent }: Props) {
         className="mn-btn-primary"
         disabled={isLoading || !email}
       >
-        {isLoading ? 'Sending reset link…' : 'Send Reset Link'}
+        {isLoading ? 'Sending reset code…' : 'Send Reset Code'}
       </button>
     </form>
   );
