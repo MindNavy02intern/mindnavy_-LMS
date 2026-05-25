@@ -83,7 +83,9 @@ model TrustedDevice {
   userAgent         String?
   trustedAt         DateTime @default(now())
   lastUsedAt        DateTime?
-  expiresAt         DateTime
+  expiresAt         DateTime?
+  revokedAt         DateTime?
+  createdAt         DateTime  @default(now())
 
   admin AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
 

@@ -19,6 +19,22 @@ app.get("/", (req, res) => {
 // Admin routes
 app.use("/api/admin", adminRoutes);
 
+app.use((req, res) => {
+  return res.status(404).json({
+    success: false,
+    message: "Route not found.",
+  });
+});
+
+app.use((error, req, res, next) => {
+  console.error("Server error:", error.message);
+
+  return res.status(500).json({
+    success: false,
+    message: "Internal server error.",
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is alive on http://localhost:${PORT}`);
 });

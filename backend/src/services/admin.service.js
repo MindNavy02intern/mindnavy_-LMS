@@ -2,7 +2,16 @@ const bcrypt = require("bcryptjs");
 const prisma = require("../config/prisma");
 const { generateSessionToken, getSessionExpiryDate } = require("../utils/token");
 
+const {
+  generateOtpCode,
+  hashOtpCode,
+  compareOtpCode,
+  getOtpExpiryDate,
+} = require("../utils/otp");
+
 const INVALID_LOGIN_MESSAGE = "Invalid email or password.";
+const MAX_FAILED_LOGIN_ATTEMPTS = 5;
+const FAILED_LOGIN_WINDOW_MINUTES = 15;
 
 async function recordLoginAttempt({
   adminId = null,
@@ -42,7 +51,44 @@ async function createAuditLog({
   });
 }
 
+async function isLoginTemporarilyBlocked({ email }) {
+  const windowStart = new Date();
+  windowStart.setMinutes(windowStart.getMinutes() - FAILED_LOGIN_WINDOW_MINUTES);
+
+  const failedAttemptsCount = await prisma.loginAttempt.count({
+    where: {
+      email,
+      status: "FAILED",
+      reason: "INVALID_CREDENTIALS",
+      createdAt: {
+        gte: windowStart,
+      },
+    },
+  });
+
+  return failedAttemptsCount >= MAX_FAILED_LOGIN_ATTEMPTS;
+}
+
 async function loginAdmin({ email, password, ipAddress, userAgent }) {
+  const isBlocked = await isLoginTemporarilyBlocked({
+    email,
+  });
+
+  if (isBlocked) {
+    await recordLoginAttempt({
+      email,
+      status: "BLOCKED",
+      reason: "TEMPORARILY_BLOCKED",
+      ipAddress,
+      userAgent,
+    });
+
+    return {
+      success: false,
+      message: "Too many failed login attempts. Please try again later.",
+    };
+  }
+
   const admin = await prisma.adminUser.findUnique({
     where: { email },
   });
@@ -217,7 +263,468 @@ async function logoutAdmin({ adminId, sessionId, ipAddress, userAgent }) {
   };
 }
 
+async function sendAdminOtp({ adminId, ipAddress, userAgent }) {
+  const admin = await prisma.adminUser.findUnique({
+    where: {
+      id: adminId,
+    },
+  });
+
+  if (!admin || admin.status !== "ACTIVE") {
+    return {
+      success: false,
+      message: "Access denied.",
+    };
+  }
+
+  await prisma.otpCode.updateMany({
+    where: {
+      adminId: admin.id,
+      purpose: "ADMIN_LOGIN",
+      usedAt: null,
+    },
+    data: {
+      usedAt: new Date(),
+    },
+  });
+
+  const otpCode = generateOtpCode();
+  const codeHash = await hashOtpCode(otpCode);
+  const expiresAt = getOtpExpiryDate();
+
+  await prisma.otpCode.create({
+    data: {
+      adminId: admin.id,
+      codeHash,
+      purpose: "ADMIN_LOGIN",
+      expiresAt,
+    },
+  });
+
+  await createAuditLog({
+    adminId: admin.id,
+    action: "OTP_SENT",
+    details: {
+      purpose: "ADMIN_LOGIN",
+      expiresAt,
+      ipAddress,
+      userAgent,
+    },
+    ipAddress,
+    userAgent,
+  });
+
+  // Development only. Remove this when real email sending is added.
+  console.log("DEV OTP CODE:", otpCode);
+
+  return {
+    success: true,
+    message: "OTP sent successfully.",
+  };
+}
+
+async function verifyAdminOtp({ adminId, code, ipAddress, userAgent }) {
+  const admin = await prisma.adminUser.findUnique({
+    where: {
+      id: adminId,
+    },
+  });
+
+  if (!admin || admin.status !== "ACTIVE") {
+    return {
+      success: false,
+      message: "Access denied.",
+    };
+  }
+
+  const otpRecord = await prisma.otpCode.findFirst({
+    where: {
+      adminId: admin.id,
+      purpose: "ADMIN_LOGIN",
+      usedAt: null,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  if (!otpRecord) {
+    return {
+      success: false,
+      message: "Invalid or expired OTP code.",
+    };
+  }
+
+  if (otpRecord.expiresAt < new Date()) {
+    await prisma.otpCode.update({
+      where: {
+        id: otpRecord.id,
+      },
+      data: {
+        usedAt: new Date(),
+      },
+    });
+
+    return {
+      success: false,
+      message: "Invalid or expired OTP code.",
+    };
+  }
+
+  if (otpRecord.attempts >= otpRecord.maxAttempts) {
+    await prisma.otpCode.update({
+      where: {
+        id: otpRecord.id,
+      },
+      data: {
+        usedAt: new Date(),
+      },
+    });
+
+    return {
+      success: false,
+      message: "Too many OTP attempts. Please request a new code.",
+    };
+  }
+
+  const isOtpValid = await compareOtpCode(code, otpRecord.codeHash);
+
+  if (!isOtpValid) {
+    await prisma.otpCode.update({
+      where: {
+        id: otpRecord.id,
+      },
+      data: {
+        attempts: otpRecord.attempts + 1,
+      },
+    });
+
+    await createAuditLog({
+      adminId: admin.id,
+      action: "FAILED_LOGIN",
+      details: {
+        reason: "INVALID_OTP",
+        ipAddress,
+        userAgent,
+      },
+      ipAddress,
+      userAgent,
+    });
+
+    return {
+      success: false,
+      message: "Invalid or expired OTP code.",
+    };
+  }
+
+  await prisma.otpCode.update({
+    where: {
+      id: otpRecord.id,
+    },
+    data: {
+      usedAt: new Date(),
+    },
+  });
+
+  await createAuditLog({
+    adminId: admin.id,
+    action: "OTP_VERIFIED",
+    details: {
+      purpose: "ADMIN_LOGIN",
+      ipAddress,
+      userAgent,
+    },
+    ipAddress,
+    userAgent,
+  });
+
+  return {
+    success: true,
+    message: "OTP verified successfully.",
+  };
+}
+
+async function getAdminTrustedDevices({ adminId }) {
+  const devices = await prisma.trustedDevice.findMany({
+    where: {
+      adminId,
+      revokedAt: null,
+      expiresAt: {
+        gt: new Date(),
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      deviceName: true,
+      ipAddress: true,
+      userAgent: true,
+      lastUsedAt: true,
+      expiresAt: true,
+      createdAt: true,
+      trustedAt: true,
+
+    },
+  });
+
+  return {
+    success: true,
+    devices,
+  };
+}
+
+async function revokeAdminTrustedDevice({
+  adminId,
+  deviceId,
+  ipAddress,
+  userAgent,
+}) {
+  const device = await prisma.trustedDevice.findFirst({
+    where: {
+      id: deviceId,
+      adminId,
+      revokedAt: null,
+    },
+  });
+
+  if (!device) {
+    return {
+      success: false,
+      message: "Trusted device not found.",
+    };
+  }
+
+  await prisma.trustedDevice.update({
+    where: {
+      id: device.id,
+    },
+    data: {
+      revokedAt: new Date(),
+    },
+  });
+
+  await createAuditLog({
+    adminId,
+    action: "SESSION_REVOKED",
+    details: {
+      reason: "TRUSTED_DEVICE_REVOKED",
+      deviceId: device.id,
+    },
+    ipAddress,
+    userAgent,
+  });
+
+  return {
+    success: true,
+    message: "Trusted device revoked successfully.",
+  };
+}
+
+async function forgotAdminPassword({ email, ipAddress, userAgent }) {
+  const admin = await prisma.adminUser.findUnique({
+    where: { email },
+  });
+
+  // Security: لا نكشف إذا الإيميل موجود أو لا
+  if (!admin || admin.status !== "ACTIVE") {
+    return {
+      success: true,
+      message: "If this email exists, a password reset code has been sent.",
+    };
+  }
+
+  await prisma.otpCode.updateMany({
+    where: {
+      adminId: admin.id,
+      purpose: "PASSWORD_RESET",
+      usedAt: null,
+    },
+    data: {
+      usedAt: new Date(),
+    },
+  });
+
+  const resetCode = generateOtpCode();
+  const codeHash = await hashOtpCode(resetCode);
+  const expiresAt = getOtpExpiryDate();
+
+  await prisma.otpCode.create({
+    data: {
+      adminId: admin.id,
+      codeHash,
+      purpose: "PASSWORD_RESET",
+      expiresAt,
+    },
+  });
+
+  await createAuditLog({
+    adminId: admin.id,
+    action: "OTP_SENT",
+    details: {
+      purpose: "PASSWORD_RESET",
+      expiresAt,
+    },
+    ipAddress,
+    userAgent,
+  });
+
+  // Development only. Remove when real email sending is added.
+  console.log("DEV PASSWORD RESET CODE:", resetCode);
+
+  return {
+    success: true,
+    message: "If this email exists, a password reset code has been sent.",
+  };
+}
+
+async function resetAdminPassword({
+  email,
+  code,
+  newPassword,
+  ipAddress,
+  userAgent,
+}) {
+  const admin = await prisma.adminUser.findUnique({
+    where: { email },
+  });
+
+  if (!admin || admin.status !== "ACTIVE") {
+    return {
+      success: false,
+      message: "Invalid or expired reset code.",
+    };
+  }
+
+  const otpRecord = await prisma.otpCode.findFirst({
+    where: {
+      adminId: admin.id,
+      purpose: "PASSWORD_RESET",
+      usedAt: null,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  if (!otpRecord) {
+    return {
+      success: false,
+      message: "Invalid or expired reset code.",
+    };
+  }
+
+  if (otpRecord.expiresAt < new Date()) {
+    await prisma.otpCode.update({
+      where: { id: otpRecord.id },
+      data: { usedAt: new Date() },
+    });
+
+    return {
+      success: false,
+      message: "Invalid or expired reset code.",
+    };
+  }
+
+  if (otpRecord.attempts >= otpRecord.maxAttempts) {
+    await prisma.otpCode.update({
+      where: { id: otpRecord.id },
+      data: { usedAt: new Date() },
+    });
+
+    return {
+      success: false,
+      message: "Too many reset attempts. Please request a new code.",
+    };
+  }
+
+  const isCodeValid = await compareOtpCode(code, otpRecord.codeHash);
+
+  if (!isCodeValid) {
+    await prisma.otpCode.update({
+      where: { id: otpRecord.id },
+      data: {
+        attempts: otpRecord.attempts + 1,
+      },
+    });
+
+    await createAuditLog({
+      adminId: admin.id,
+      action: "FAILED_LOGIN",
+      details: {
+        reason: "INVALID_PASSWORD_RESET_CODE",
+      },
+      ipAddress,
+      userAgent,
+    });
+
+    return {
+      success: false,
+      message: "Invalid or expired reset code.",
+    };
+  }
+
+  const newPasswordHash = await bcrypt.hash(newPassword, 12);
+
+  await prisma.adminUser.update({
+    where: { id: admin.id },
+    data: {
+      passwordHash: newPasswordHash,
+    },
+  });
+
+  await prisma.otpCode.update({
+    where: { id: otpRecord.id },
+    data: {
+      usedAt: new Date(),
+    },
+  });
+
+  await prisma.adminSession.updateMany({
+    where: {
+      adminId: admin.id,
+      revokedAt: null,
+    },
+    data: {
+      revokedAt: new Date(),
+    },
+  });
+
+  await createAuditLog({
+    adminId: admin.id,
+    action: "OTP_VERIFIED",
+    details: {
+      purpose: "PASSWORD_RESET",
+    },
+    ipAddress,
+    userAgent,
+  });
+
+  await createAuditLog({
+    adminId: admin.id,
+    action: "SESSION_REVOKED",
+    details: {
+      reason: "PASSWORD_RESET",
+    },
+    ipAddress,
+    userAgent,
+  });
+
+  return {
+    success: true,
+    message: "Password reset successfully. Please login again.",
+  };
+}
+
 module.exports = {
   loginAdmin,
   logoutAdmin,
+  sendAdminOtp,
+  verifyAdminOtp,
+  getAdminTrustedDevices,
+  revokeAdminTrustedDevice,
+  forgotAdminPassword,
+  resetAdminPassword,
+
 };
