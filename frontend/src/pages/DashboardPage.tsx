@@ -7,8 +7,9 @@ import type {
   ActivityType,
   DashboardCoreResponse,
   NotificationItem,
-  NotificationSeverity,
+  NotificationType,
   QuickActionItem,
+  QuickActionKey,
 } from '../types/dashboard';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -39,9 +40,9 @@ function formatDate(): string {
   return `${fmt(start)} – ${fmt(now)}`;
 }
 
-// ── Mock chart data (TODO: replace with real chart API endpoint when ready) ────
+// ── Local chart data (TODO: replace with real chart API endpoints when ready) ─
 
-const CHART_LABELS = ['May 13', 'May 20', 'May 27', 'Jun 3', 'Jun 10'];
+const CHART_LABELS   = ['May 13', 'May 20', 'May 27', 'Jun 3', 'Jun 10'];
 const CHART_ENROLLED  = [1200, 1800, 2200, 2800, 2600];
 const CHART_COMPLETED = [500,  900,  1200, 1500, 1650];
 
@@ -54,11 +55,11 @@ const ROLE_DATA = [
 ];
 
 const COMPLETION_COURSES = [
-  { name: 'Leadership',     pct: 85, color: '#2563eb' },
-  { name: 'Data Science',   pct: 72, color: '#16a34a' },
-  { name: 'Cyber Security', pct: 65, color: '#f59e0b' },
-  { name: 'Marketing',      pct: 58, color: '#8b5cf6' },
-  { name: 'Design Thinking',pct: 45, color: '#ef4444' },
+  { name: 'Leadership',      pct: 85, color: '#2563eb' },
+  { name: 'Data Science',    pct: 72, color: '#16a34a' },
+  { name: 'Cyber Security',  pct: 65, color: '#f59e0b' },
+  { name: 'Marketing',       pct: 58, color: '#8b5cf6' },
+  { name: 'Design Thinking', pct: 45, color: '#ef4444' },
 ];
 
 const PERF_METRICS = [
@@ -76,7 +77,7 @@ const DEPT_DATA = [
   { name: 'Finance Department',   count: 1023, pct: 36  },
 ];
 
-// ── KPI icon map ──────────────────────────────────────────────────────────────
+// ── KPI icon ──────────────────────────────────────────────────────────────────
 
 function KpiIcon({ type }: { type: string }) {
   if (type === 'users') return (
@@ -108,52 +109,47 @@ function KpiIcon({ type }: { type: string }) {
   return null;
 }
 
-// Quick action icons (SVG by icon id)
-function QaIcon({ icon }: { icon: string }) {
-  if (icon === 'user-plus') return (
+// ── Quick action icon — mapped from backend key ───────────────────────────────
+
+function QaIcon({ actionKey }: { actionKey: QuickActionKey }) {
+  if (actionKey === 'add_user') return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/>
+      <line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
     </svg>
   );
-  if (icon === 'book-plus') return (
+  if (actionKey === 'create_course') return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="12" y1="7" x2="12" y2="13"/><line x1="9" y1="10" x2="15" y2="10"/>
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      <line x1="12" y1="7" x2="12" y2="13"/><line x1="9" y1="10" x2="15" y2="10"/>
     </svg>
   );
-  if (icon === 'book-assign') return (
+  if (actionKey === 'approve_instructor') return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><polyline points="9 11 11 13 15 9"/>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
     </svg>
   );
-  if (icon === 'chart-bar') return (
+  if (actionKey === 'generate_report') return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
+      <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+      <line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
     </svg>
   );
-  if (icon === 'bell') return (
+  if (actionKey === 'create_live_session') return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
     </svg>
   );
-  if (icon === 'shield') return (
+  if (actionKey === 'system_settings') return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
     </svg>
   );
-  if (icon === 'upload') return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
-    </svg>
-  );
-  if (icon === 'settings') return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-    </svg>
-  );
-  return <span>{icon}</span>;
+  return <span style={{ fontSize: '0.75rem' }}>{actionKey}</span>;
 }
 
-// ── Sparkline (mini chart inside KPI cards) ───────────────────────────────────
+// ── Sparkline (used in Performance Overview only — not from API) ───────────────
 
 function SparkLine({ data, color }: { data: number[]; color: string }) {
   const max = Math.max(...data);
@@ -175,37 +171,26 @@ function SparkLine({ data, color }: { data: number[]; color: string }) {
   );
 }
 
-// ── Light KPI Card ────────────────────────────────────────────────────────────
+// ── KPI Card (values are plain numbers from backend) ──────────────────────────
 
 interface LKpiCardProps {
-  label: string;
-  value: string | number;
-  trend: number;
-  iconType: string;
-  iconBg: string;
-  iconColor: string;
-  sparkline: number[];
-  sparkColor: string;
+  label:      string;
+  value:      string | number;
+  iconType:   string;
+  iconBg:     string;
+  iconColor:  string;
 }
 
-function LKpiCard({ label, value, trend, iconType, iconBg, iconColor, sparkline, sparkColor }: LKpiCardProps) {
-  const up = trend > 0;
-  const neutral = trend === 0;
+function LKpiCard({ label, value, iconType, iconBg, iconColor }: LKpiCardProps) {
   return (
     <div className="mn-lkpi-card">
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
+      <div style={{ marginBottom: 8 }}>
         <div className="mn-lkpi-icon" style={{ background: iconBg, color: iconColor }}>
           <KpiIcon type={iconType} />
         </div>
-        <SparkLine data={sparkline} color={sparkColor} />
       </div>
       <div className="mn-lkpi-label">{label}</div>
       <div className="mn-lkpi-value">{value}</div>
-      {!neutral && (
-        <div className={`mn-lkpi-trend ${up ? 'up' : 'down'}`}>
-          {up ? '↑' : '↓'} {Math.abs(trend)}% vs last month
-        </div>
-      )}
     </div>
   );
 }
@@ -215,18 +200,16 @@ function LKpiCard({ label, value, trend, iconType, iconBg, iconColor, sparkline,
 function KpiSkeleton() {
   return (
     <div className="mn-lkpi-card" style={{ pointerEvents: 'none' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+      <div style={{ marginBottom: 8 }}>
         <div className="mn-skeleton" style={{ width: 28, height: 28, borderRadius: 6 }} />
-        <div className="mn-skeleton" style={{ width: 52, height: 20, borderRadius: 3 }} />
       </div>
       <div className="mn-skeleton" style={{ width: '55%', height: 10, marginBottom: 4, borderRadius: 3 }} />
-      <div className="mn-skeleton" style={{ width: '40%', height: 20, marginBottom: 4, borderRadius: 3 }} />
-      <div className="mn-skeleton" style={{ width: '60%', height: 9, borderRadius: 3 }} />
+      <div className="mn-skeleton" style={{ width: '40%', height: 20, borderRadius: 3 }} />
     </div>
   );
 }
 
-// ── Learning Activity Area Chart ──────────────────────────────────────────────
+// ── Learning Activity Area Chart (local mock data) ────────────────────────────
 
 function LearningActivityChart() {
   const W = 500, H = 130, PAD_L = 32, PAD_B = 22, PAD_T = 8, PAD_R = 8;
@@ -239,8 +222,8 @@ function LearningActivityChart() {
   function toX(i: number) { return PAD_L + (i / (xCount - 1)) * cW; }
   function toY(v: number) { return PAD_T + cH - (v / maxV) * cH; }
 
-  const ptE = CHART_ENROLLED.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
-  const ptC = CHART_COMPLETED.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
+  const ptE   = CHART_ENROLLED.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
+  const ptC   = CHART_COMPLETED.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
   const areaE = `${toX(0)},${toY(0)} ${ptE} ${toX(xCount - 1)},${toY(0)}`;
   const areaC = `${toX(0)},${toY(0)} ${ptC} ${toX(xCount - 1)},${toY(0)}`;
 
@@ -256,32 +239,22 @@ function LearningActivityChart() {
           <stop offset="100%" stopColor="#16a34a" stopOpacity="0" />
         </linearGradient>
       </defs>
-
-      {/* Y grid lines + labels */}
       {yTicks.map((v) => {
         const y = toY(v);
-        const label = v === 0 ? '0' : v >= 1000 ? `${v / 1000}K` : `${v}`;
+        const lbl = v === 0 ? '0' : `${v / 1000}K`;
         return (
           <g key={v}>
             <line x1={PAD_L} y1={y} x2={W - PAD_R} y2={y} stroke="#f1f5f9" strokeWidth="1" />
-            <text x={PAD_L - 6} y={y + 4} textAnchor="end" fontSize="9" fill="#94a3b8" fontFamily="Inter,sans-serif">{label}</text>
+            <text x={PAD_L - 6} y={y + 4} textAnchor="end" fontSize="9" fill="#94a3b8" fontFamily="Inter,sans-serif">{lbl}</text>
           </g>
         );
       })}
-
-      {/* Area fills */}
       <polygon points={areaE} fill="url(#grad-enroll)" />
       <polygon points={areaC} fill="url(#grad-compl)" />
-
-      {/* Lines */}
       <polyline points={ptE} fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       <polyline points={ptC} fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-
-      {/* Dots on last point */}
       <circle cx={toX(xCount - 1)} cy={toY(CHART_ENROLLED[xCount - 1])}  r="3" fill="#2563eb" />
       <circle cx={toX(xCount - 1)} cy={toY(CHART_COMPLETED[xCount - 1])} r="3" fill="#16a34a" />
-
-      {/* X axis labels */}
       {CHART_LABELS.map((lbl, i) => (
         <text key={lbl} x={toX(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="Inter,sans-serif">{lbl}</text>
       ))}
@@ -289,7 +262,7 @@ function LearningActivityChart() {
   );
 }
 
-// ── Users by Role Donut ───────────────────────────────────────────────────────
+// ── Users by Role Donut (local mock data) ─────────────────────────────────────
 
 function UsersRoleDonut() {
   const R = 36, cx = 50, cy = 50;
@@ -301,22 +274,14 @@ function UsersRoleDonut() {
     offset += dashLen;
     return seg;
   });
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
       <svg width="100" height="100" viewBox="0 0 100 100" style={{ flexShrink: 0 }}>
         <circle cx={cx} cy={cy} r={R} fill="none" stroke="#f1f5f9" strokeWidth="14" />
         {segments.map((s) => (
-          <circle
-            key={s.label}
-            cx={cx} cy={cy} r={R}
-            fill="none"
-            stroke={s.color}
-            strokeWidth="14"
-            strokeDasharray={`${s.dashLen} ${circ - s.dashLen}`}
-            strokeDashoffset={-s.offset}
-            transform={`rotate(-90 ${cx} ${cy})`}
-          />
+          <circle key={s.label} cx={cx} cy={cy} r={R} fill="none" stroke={s.color} strokeWidth="14"
+            strokeDasharray={`${s.dashLen} ${circ - s.dashLen}`} strokeDashoffset={-s.offset}
+            transform={`rotate(-90 ${cx} ${cy})`} />
         ))}
         <text x={cx} y={cy - 4} textAnchor="middle" fontSize="11" fontWeight="700" fill="#0f172a" fontFamily="Inter,sans-serif">
           {(ROLE_DATA.reduce((a, b) => a + b.value, 0) / 1000).toFixed(1)}K
@@ -337,7 +302,7 @@ function UsersRoleDonut() {
   );
 }
 
-// ── Completion Rate Donut ─────────────────────────────────────────────────────
+// ── Completion Donut (local mock data) ────────────────────────────────────────
 
 function CompletionDonut({ pct }: { pct: number }) {
   const [animated, setAnimated] = useState(false);
@@ -375,7 +340,7 @@ function CompletionDonut({ pct }: { pct: number }) {
   );
 }
 
-// ── Activity item avatar (initials) ───────────────────────────────────────────
+// ── Activity avatar ───────────────────────────────────────────────────────────
 
 const AVATAR_COLORS = ['#2563eb', '#16a34a', '#8b5cf6', '#f59e0b', '#ef4444', '#06b6d4'];
 
@@ -393,34 +358,55 @@ function ActivityAvatar({ name, index }: { name: string; index: number }) {
   );
 }
 
+// Activity type → badge colours (TASK 5A.3 types)
 const ACTIVITY_ICON_BG: Record<ActivityType, string> = {
-  completion: '#dcfce7', enrollment: '#dbeafe', login: '#f3e8ff',
-  payment: '#d1fae5', approval: '#fef3c7', revocation: '#fee2e2', other: '#f1f5f9',
+  course:       '#dbeafe',
+  user:         '#dcfce7',
+  certificate:  '#fef3c7',
+  assignment:   '#f3e8ff',
+  live_session: '#d1fae5',
+  system:       '#f1f5f9',
 };
 const ACTIVITY_ICON_COLOR: Record<ActivityType, string> = {
-  completion: '#16a34a', enrollment: '#2563eb', login: '#8b5cf6',
-  payment: '#059669', approval: '#f59e0b', revocation: '#ef4444', other: '#64748b',
+  course:       '#2563eb',
+  user:         '#16a34a',
+  certificate:  '#f59e0b',
+  assignment:   '#8b5cf6',
+  live_session: '#059669',
+  system:       '#64748b',
 };
 
-// ── Notification severity styles ──────────────────────────────────────────────
+// ── Notification type → colours (TASK 5A.3 types) ────────────────────────────
 
-const NOTIF_BG: Record<NotificationSeverity, string> = {
-  info: '#eff6ff', warning: '#fffbeb', error: '#fef2f2', success: '#f0fdf4',
+const NOTIF_BG: Record<NotificationType, string> = {
+  security: '#fef2f2',
+  approval: '#fffbeb',
+  system:   '#eff6ff',
+  payment:  '#f0fdf4',
+  course:   '#f5f3ff',
 };
-const NOTIF_ICON_COLOR: Record<NotificationSeverity, string> = {
-  info: '#2563eb', warning: '#f59e0b', error: '#ef4444', success: '#16a34a',
+const NOTIF_ICON_COLOR: Record<NotificationType, string> = {
+  security: '#ef4444',
+  approval: '#f59e0b',
+  system:   '#2563eb',
+  payment:  '#16a34a',
+  course:   '#8b5cf6',
 };
 
-function NotifIcon({ severity }: { severity: NotificationSeverity }) {
-  if (severity === 'info') return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-  );
-  if (severity === 'warning') return (
+function NotifIcon({ type }: { type: NotificationType }) {
+  if (type === 'security') return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
   );
-  if (severity === 'success') return (
+  if (type === 'approval') return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
   );
+  if (type === 'payment') return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+  );
+  if (type === 'course') return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+  );
+  // system (default)
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
   );
@@ -431,13 +417,13 @@ function NotifIcon({ severity }: { severity: NotificationSeverity }) {
 export default function DashboardPage() {
   const { user } = useAuth();
 
-  const [data, setData] = useState<DashboardCoreResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData]           = useState<DashboardCoreResponse | null>(null);
+  const [loading, setLoading]     = useState(true);
+  const [error, setError]         = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const greeting = getGreeting();
-  const adminName = data?.welcome?.adminName ?? user?.name ?? 'Admin';
+  const greeting   = getGreeting();
+  const adminName  = data?.welcome?.adminName ?? user?.name ?? 'Admin';
 
   const fetchData = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
@@ -502,11 +488,11 @@ export default function DashboardPage() {
           Array.from({ length: 5 }, (_, i) => <KpiSkeleton key={i} />)
         ) : kpis ? (
           <>
-            <LKpiCard label="Total Users"      value={kpis.totalUsers.value}     trend={kpis.totalUsers.trend}     iconType="users"       iconBg="#f3e8ff" iconColor="#9333ea" sparkline={kpis.totalUsers.sparkline}     sparkColor="#9333ea" />
-            <LKpiCard label="Active Learners"  value={kpis.activeStudents.value} trend={kpis.activeStudents.trend} iconType="learners"    iconBg="#dcfce7" iconColor="#16a34a" sparkline={kpis.activeStudents.sparkline} sparkColor="#16a34a" />
-            <LKpiCard label="Courses"          value={kpis.publishedCourses.value}trend={kpis.publishedCourses.trend}iconType="courses"   iconBg="#dbeafe" iconColor="#2563eb" sparkline={kpis.publishedCourses.sparkline}sparkColor="#2563eb" />
-            <LKpiCard label="Completions"      value={kpis.certificatesIssued.value}trend={kpis.certificatesIssued.trend}iconType="completions"iconBg="#fed7aa" iconColor="#ea580c" sparkline={kpis.certificatesIssued.sparkline}sparkColor="#ea580c" />
-            <LKpiCard label="Revenue"          value={kpis.totalRevenue.value}   trend={kpis.totalRevenue.trend}   iconType="revenue"     iconBg="#d1fae5" iconColor="#059669" sparkline={kpis.totalRevenue.sparkline}   sparkColor="#059669" />
+            <LKpiCard label="Total Users"     value={kpis.totalUsers.toLocaleString()}         iconType="users"       iconBg="#f3e8ff" iconColor="#9333ea" />
+            <LKpiCard label="Active Learners" value={kpis.activeStudents.toLocaleString()}     iconType="learners"    iconBg="#dcfce7" iconColor="#16a34a" />
+            <LKpiCard label="Courses"         value={kpis.publishedCourses.toLocaleString()}   iconType="courses"     iconBg="#dbeafe" iconColor="#2563eb" />
+            <LKpiCard label="Completions"     value={kpis.certificatesIssued.toLocaleString()} iconType="completions" iconBg="#fed7aa" iconColor="#ea580c" />
+            <LKpiCard label="Revenue"         value={`$${kpis.totalRevenue.toLocaleString()}`} iconType="revenue"     iconBg="#d1fae5" iconColor="#059669" />
           </>
         ) : null}
       </div>
@@ -527,7 +513,7 @@ export default function DashboardPage() {
               <span className="mn-db-pill">This Month</span>
             </div>
           </div>
-          {/* TODO: replace with real enrollment chart data from backend */}
+          {/* TODO: replace with real chart API endpoint when available */}
           <LearningActivityChart />
         </div>
 
@@ -554,15 +540,15 @@ export default function DashboardPage() {
             <div>
               {(data?.recentActivities ?? []).map((item: ActivityItem, i: number) => (
                 <div key={item.id} className="mn-db-activity-row">
-                  <ActivityAvatar name={item.actor} index={i} />
+                  <ActivityAvatar name={item.actorName} index={i} />
                   <div className="mn-db-activity-icon-badge" style={{ background: ACTIVITY_ICON_BG[item.type], color: ACTIVITY_ICON_COLOR[item.type] }}>
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div className="mn-db-activity-text">
-                      <strong>{item.actor}</strong> {item.description}
+                      <strong>{item.actorName}</strong> {item.title}
                     </div>
-                    <div className="mn-db-activity-time">{formatRelative(item.timestamp)}</div>
+                    <div className="mn-db-activity-time">{formatRelative(item.createdAt)}</div>
                   </div>
                 </div>
               ))}
@@ -615,11 +601,7 @@ export default function DashboardPage() {
                   <span style={{ fontSize: '0.625rem', fontWeight: 700, color: '#0f172a' }}>{d.count.toLocaleString()}</span>
                 </div>
                 <div style={{ height: 4, background: '#f1f5f9', borderRadius: 3, overflow: 'hidden' }}>
-                  <div style={{
-                    width: `${d.pct}%`, height: '100%', borderRadius: 3,
-                    background: `linear-gradient(90deg, #2563eb, #60a5fa)`,
-                    transition: 'width 1s ease 0.3s',
-                  }} />
+                  <div style={{ width: `${d.pct}%`, height: '100%', borderRadius: 3, background: 'linear-gradient(90deg, #2563eb, #60a5fa)', transition: 'width 1s ease 0.3s' }} />
                 </div>
               </div>
             ))}
@@ -639,16 +621,16 @@ export default function DashboardPage() {
           ) : (
             <div>
               {(data?.notificationsPreview ?? []).map((n: NotificationItem) => (
-                <div key={n.id} className="mn-db-notif-row" style={{ opacity: n.read ? 0.65 : 1 }}>
-                  <div className="mn-db-notif-icon" style={{ background: NOTIF_BG[n.severity], color: NOTIF_ICON_COLOR[n.severity] }}>
-                    <NotifIcon severity={n.severity} />
+                <div key={n.id} className="mn-db-notif-row" style={{ opacity: n.isRead ? 0.65 : 1 }}>
+                  <div className="mn-db-notif-icon" style={{ background: NOTIF_BG[n.type], color: NOTIF_ICON_COLOR[n.type] }}>
+                    <NotifIcon type={n.type} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div className="mn-db-notif-title">{n.title}</div>
                     <div className="mn-db-notif-msg">{n.message}</div>
-                    <div className="mn-db-notif-time">{formatRelative(n.timestamp)}</div>
+                    <div className="mn-db-notif-time">{formatRelative(n.createdAt)}</div>
                   </div>
-                  {!n.read && <div className="mn-db-unread-dot" />}
+                  {!n.isRead && <div className="mn-db-unread-dot" />}
                 </div>
               ))}
             </div>
@@ -662,14 +644,24 @@ export default function DashboardPage() {
           <div className="mn-db-card-title">Quick Actions</div>
         </div>
         <div className="mn-db-qa-grid">
-          {(data?.quickActions ?? []).map((qa: QuickActionItem) => (
-            <a key={qa.id} href={qa.href} className="mn-db-qa-btn" onClick={(e) => e.preventDefault()}>
-              <div className="mn-db-qa-icon">
-                <QaIcon icon={qa.icon} />
-              </div>
-              <span className="mn-db-qa-label">{qa.label}</span>
-            </a>
-          ))}
+          {(data?.quickActions ?? []).length === 0 ? (
+            <p style={{ fontSize: '0.82rem', color: '#94a3b8', gridColumn: '1 / -1', textAlign: 'center', padding: '16px 0' }}>No actions available.</p>
+          ) : (
+            (data?.quickActions ?? []).map((qa: QuickActionItem) => (
+              <button
+                key={qa.key}
+                className="mn-db-qa-btn"
+                disabled={!qa.enabled}
+                onClick={() => { if (qa.path) window.location.href = qa.path; }}
+                style={{ opacity: qa.enabled ? 1 : 0.45, cursor: qa.enabled ? 'pointer' : 'not-allowed' }}
+              >
+                <div className="mn-db-qa-icon">
+                  <QaIcon actionKey={qa.key} />
+                </div>
+                <span className="mn-db-qa-label">{qa.label}</span>
+              </button>
+            ))
+          )}
         </div>
       </div>
 

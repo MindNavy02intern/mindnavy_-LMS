@@ -1,98 +1,94 @@
-// Field names match GET /api/admin/dashboard/core integration contract.
+// Field names match GET /api/admin/dashboard/core (TASK 5A.3 contract).
 // Do NOT rename these — they must stay in sync with the backend response.
 
 export interface WelcomeInfo {
-  adminName: string;
-  role: string;
-  organization: string;
-  lastLoginAt: string | null;
-}
-
-export type ActivityType =
-  | 'enrollment'
-  | 'completion'
-  | 'login'
-  | 'payment'
-  | 'approval'
-  | 'revocation'
-  | 'other';
-
-export type NotificationSeverity = 'info' | 'warning' | 'error' | 'success';
-export type AlertSeverity = 'low' | 'medium' | 'high' | 'critical';
-export type SystemStatus = 'healthy' | 'degraded' | 'down';
-
-export interface DashboardKpi {
-  value: number | string;
-  /** Percentage change vs last month — positive = up */
-  trend: number;
-  sparkline: number[];
+  adminName:        string;
+  adminRole:        string;
+  organizationName: string;
+  currentDateTime:  string;
+  lastLoginAt:      string | null;
+  systemStatus:     'operational' | 'degraded' | 'maintenance' | 'down';
 }
 
 export interface DashboardKpis {
-  totalUsers: DashboardKpi;
-  activeStudents: DashboardKpi;
-  activeInstructors: DashboardKpi;
-  publishedCourses: DashboardKpi;
-  pendingApprovals: DashboardKpi;
-  totalRevenue: DashboardKpi;
-  certificatesIssued: DashboardKpi;
-  liveSessions: DashboardKpi;
+  totalUsers:          number;
+  activeStudents:      number;
+  activeInstructors:   number;
+  publishedCourses:    number;
+  pendingApprovals:    number;
+  totalRevenue:        number;
+  activeSubscriptions: number;
+  certificatesIssued:  number;
+  liveSessionsRunning: number;
 }
+
+export type ActivityType =
+  | 'course'
+  | 'user'
+  | 'certificate'
+  | 'assignment'
+  | 'live_session'
+  | 'system';
 
 export interface ActivityItem {
-  id: string;
-  type: ActivityType;
-  description: string;
-  actor: string;
-  actorAvatar?: string | null;
-  timestamp: string;
+  id:        string;
+  title:     string;
+  actorName: string;
+  type:      ActivityType;
+  createdAt: string;
 }
+
+export type NotificationType = 'security' | 'approval' | 'system' | 'payment' | 'course';
 
 export interface NotificationItem {
-  id: string;
-  title: string;
-  message: string;
-  severity: NotificationSeverity;
-  timestamp: string;
-  read: boolean;
+  id:        string;
+  title:     string;
+  message:   string;
+  type:      NotificationType;
+  isRead:    boolean;
+  createdAt: string;
 }
+
+export type AlertSeverity = 'low' | 'medium' | 'high' | 'critical';
+export type AlertStatus   = 'open' | 'investigating' | 'resolved';
 
 export interface SecurityAlert {
-  id: string;
-  title: string;
-  description: string;
-  severity: AlertSeverity;
-  timestamp: string;
-  resolved: boolean;
+  id:        string;
+  title:     string;
+  severity:  AlertSeverity;
+  status:    AlertStatus;
+  createdAt: string;
 }
+
+export type QuickActionKey =
+  | 'add_user'
+  | 'create_course'
+  | 'approve_instructor'
+  | 'generate_report'
+  | 'create_live_session'
+  | 'system_settings';
 
 export interface QuickActionItem {
-  id: string;
-  label: string;
-  icon: string;
-  href: string;
+  key:     QuickActionKey;
+  label:   string;
+  enabled: boolean;
+  path:    string | null;
 }
 
-export interface SystemService {
-  name: string;
-  status: SystemStatus;
-  latencyMs?: number;
-  uptime?: string;
-}
+export type SystemStatus = 'operational' | 'degraded' | 'maintenance' | 'down';
 
 export interface SystemHealth {
-  overall: SystemStatus;
-  services: SystemService[];
-  lastCheckedAt: string;
+  status:  SystemStatus;
+  message: string;
+  version: string;
 }
 
 export interface DashboardCoreResponse {
-  welcome: WelcomeInfo;
-  kpis: DashboardKpis;
-  recentActivities: ActivityItem[];
-  notificationsPreview: NotificationItem[];
+  welcome:               WelcomeInfo;
+  kpis:                  DashboardKpis;
+  recentActivities:      ActivityItem[];
+  notificationsPreview:  NotificationItem[];
   securityAlertsPreview: SecurityAlert[];
-  quickActions: QuickActionItem[];
-  systemHealth: SystemHealth;
-  generatedAt: string;
+  quickActions:          QuickActionItem[];
+  systemHealth:          SystemHealth;
 }
