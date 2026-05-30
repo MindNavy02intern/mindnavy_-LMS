@@ -10,4 +10,14 @@ async function getDashboardCore(req, res) {
   }
 }
 
-module.exports = { getDashboardCore };
+async function getDashboardAnalytics(req, res) {
+  try {
+    const data = await dashboardService.getDashboardAnalytics();
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error("Dashboard analytics error:", error.message);
+    return res.status(500).json({ success: false, message: "Internal server error." });
+  }
+}
+
+module.exports = { getDashboardCore, getDashboardAnalytics };

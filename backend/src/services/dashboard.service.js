@@ -43,4 +43,34 @@ async function getDashboardCore(admin) {
   };
 }
 
-module.exports = { getDashboardCore };
+async function getDashboardAnalytics() {
+  return {
+    success: true,
+    data: {
+      learningActivity: [],
+      usersByRole: [],
+      revenueOverview: {
+        totalRevenue: 0,
+        monthlyRevenue: 0,
+        currency: "USD",
+      },
+      userAnalytics: {
+        totalUsers: 0,
+        activeUsers: 0,
+        newUsers: 0,
+      },
+      courseAnalytics: {
+        totalCourses: 0,
+        activeCourses: 0,
+        completedCourses: 0,
+      },
+      courseCompletionRate: {
+        rate: 0,
+        completed: 0,
+        total: 0,
+      },
+    },
+  };
+}
+
+module.exports = { getDashboardCore, getDashboardAnalytics };
