@@ -1710,7 +1710,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L1",
       "id": "frontend_src_authcontext_tsx",
-      "community": 1,
+      "community": 20,
       "norm_label": "authcontext.tsx"
     },
     {
@@ -1719,7 +1719,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L13",
       "id": "src_authcontext_authcontexttype",
-      "community": 1,
+      "community": 20,
       "norm_label": "authcontexttype"
     },
     {
@@ -1728,7 +1728,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L25",
       "id": "src_authcontext_authcontext",
-      "community": 1,
+      "community": 20,
       "norm_label": "authcontext"
     },
     {
@@ -1737,7 +1737,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L34",
       "id": "src_authcontext_demo_user",
-      "community": 1,
+      "community": 20,
       "norm_label": "demo_user"
     },
     {
@@ -1746,7 +1746,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L41",
       "id": "src_authcontext_demo_profile",
-      "community": 1,
+      "community": 20,
       "norm_label": "demo_profile"
     },
     {
@@ -1755,7 +1755,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L49",
       "id": "src_authcontext_mapadmintoprofile",
-      "community": 1,
+      "community": 20,
       "norm_label": "mapadmintoprofile()"
     },
     {
@@ -1764,7 +1764,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L58",
       "id": "src_authcontext_authprovider",
-      "community": 1,
+      "community": 20,
       "norm_label": "authprovider()"
     },
     {
@@ -1782,7 +1782,7 @@
       "source_file": "frontend/src/main.tsx",
       "source_location": "L1",
       "id": "frontend_src_main_tsx",
-      "community": 1,
+      "community": 20,
       "norm_label": "main.tsx"
     },
     {
@@ -1809,7 +1809,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L1",
       "id": "frontend_src_api_adminauth_ts",
-      "community": 2,
+      "community": 20,
       "norm_label": "adminauth.ts"
     },
     {
@@ -1818,7 +1818,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L9",
       "id": "api_adminauth_adminuser",
-      "community": 1,
+      "community": 20,
       "norm_label": "adminuser"
     },
     {
@@ -1836,7 +1836,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L25",
       "id": "api_adminauth_storetoken",
-      "community": 1,
+      "community": 20,
       "norm_label": "storetoken()"
     },
     {
@@ -1845,7 +1845,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L29",
       "id": "api_adminauth_removetoken",
-      "community": 1,
+      "community": 20,
       "norm_label": "removetoken()"
     },
     {
@@ -1854,7 +1854,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L35",
       "id": "api_adminauth_adminfetch",
-      "community": 2,
+      "community": 20,
       "norm_label": "adminfetch()"
     },
     {
@@ -1863,7 +1863,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L46",
       "id": "api_adminauth_bearer",
-      "community": 2,
+      "community": 20,
       "norm_label": "bearer()"
     },
     {
@@ -1872,7 +1872,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L52",
       "id": "api_adminauth_apilogin",
-      "community": 2,
+      "community": 20,
       "norm_label": "apilogin()"
     },
     {
@@ -1881,7 +1881,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L62",
       "id": "api_adminauth_apigetme",
-      "community": 2,
+      "community": 20,
       "norm_label": "apigetme()"
     },
     {
@@ -1890,7 +1890,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L66",
       "id": "api_adminauth_apilogout",
-      "community": 2,
+      "community": 20,
       "norm_label": "apilogout()"
     },
     {
@@ -1899,7 +1899,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L73",
       "id": "api_adminauth_apiforgotpassword",
-      "community": 2,
+      "community": 20,
       "norm_label": "apiforgotpassword()"
     },
     {
@@ -1908,7 +1908,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L80",
       "id": "api_adminauth_apiresetpassword",
-      "community": 2,
+      "community": 20,
       "norm_label": "apiresetpassword()"
     },
     {
@@ -1917,7 +1917,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L93",
       "id": "api_adminauth_apisendotp",
-      "community": 2,
+      "community": 20,
       "norm_label": "apisendotp()"
     },
     {
@@ -1926,8 +1926,35 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L101",
       "id": "api_adminauth_apiverifyotp",
-      "community": 2,
+      "community": 20,
       "norm_label": "apiverifyotp()"
+    },
+    {
+      "label": "dashboard.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L1",
+      "id": "frontend_src_api_dashboard_ts",
+      "community": 22,
+      "norm_label": "dashboard.ts"
+    },
+    {
+      "label": "MOCK",
+      "file_type": "code",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L7",
+      "id": "api_dashboard_mock",
+      "community": 22,
+      "norm_label": "mock"
+    },
+    {
+      "label": "getDashboardCore()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L64",
+      "id": "api_dashboard_getdashboardcore",
+      "community": 22,
+      "norm_label": "getdashboardcore()"
     },
     {
       "label": "index.ts",
@@ -1962,7 +1989,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L1",
       "id": "frontend_src_api_passwordrecovery_ts",
-      "community": 2,
+      "community": 20,
       "norm_label": "passwordrecovery.ts"
     },
     {
@@ -1971,7 +1998,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L10",
       "id": "api_passwordrecovery_requestpasswordreset",
-      "community": 0,
+      "community": 20,
       "norm_label": "requestpasswordreset()"
     },
     {
@@ -1980,7 +2007,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L25",
       "id": "api_passwordrecovery_updatepassword",
-      "community": 2,
+      "community": 0,
       "norm_label": "updatepassword()"
     },
     {
@@ -2295,7 +2322,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_ui_loadingspinner_tsx",
-      "community": 0,
+      "community": 20,
       "norm_label": "loadingspinner.tsx"
     },
     {
@@ -2304,7 +2331,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "ui_loadingspinner_loadingspinner",
-      "community": 0,
+      "community": 20,
       "norm_label": "loadingspinner()"
     },
     {
@@ -2313,7 +2340,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L1",
       "id": "frontend_src_layouts_adminlayout_tsx",
-      "community": 20,
+      "community": 1,
       "norm_label": "adminlayout.tsx"
     },
     {
@@ -2322,7 +2349,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L7",
       "id": "layouts_adminlayout_icongrid",
-      "community": 20,
+      "community": 1,
       "norm_label": "icongrid()"
     },
     {
@@ -2331,7 +2358,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L18",
       "id": "layouts_adminlayout_iconbook",
-      "community": 20,
+      "community": 1,
       "norm_label": "iconbook()"
     },
     {
@@ -2340,7 +2367,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L27",
       "id": "layouts_adminlayout_iconusers",
-      "community": 20,
+      "community": 1,
       "norm_label": "iconusers()"
     },
     {
@@ -2349,7 +2376,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L38",
       "id": "layouts_adminlayout_iconshield",
-      "community": 20,
+      "community": 1,
       "norm_label": "iconshield()"
     },
     {
@@ -2358,7 +2385,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L46",
       "id": "layouts_adminlayout_iconsettings",
-      "community": 20,
+      "community": 1,
       "norm_label": "iconsettings()"
     },
     {
@@ -2367,7 +2394,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L55",
       "id": "layouts_adminlayout_iconmenu",
-      "community": 20,
+      "community": 1,
       "norm_label": "iconmenu()"
     },
     {
@@ -2376,59 +2403,86 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L65",
       "id": "layouts_adminlayout_iconbell",
-      "community": 20,
+      "community": 1,
       "norm_label": "iconbell()"
+    },
+    {
+      "label": "IconMessage()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L74",
+      "id": "layouts_adminlayout_iconmessage",
+      "community": 1,
+      "norm_label": "iconmessage()"
     },
     {
       "label": "IconSearch()",
       "file_type": "code",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
-      "source_location": "L74",
+      "source_location": "L82",
       "id": "layouts_adminlayout_iconsearch",
-      "community": 20,
+      "community": 1,
       "norm_label": "iconsearch()"
+    },
+    {
+      "label": "IconChevronDown()",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L91",
+      "id": "layouts_adminlayout_iconchevrondown",
+      "community": 1,
+      "norm_label": "iconchevrondown()"
+    },
+    {
+      "label": "QA_TOPBAR_ACTIONS",
+      "file_type": "code",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L101",
+      "id": "layouts_adminlayout_qa_topbar_actions",
+      "community": 1,
+      "norm_label": "qa_topbar_actions"
     },
     {
       "label": "NavItem",
       "file_type": "code",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
-      "source_location": "L85",
+      "source_location": "L112",
       "id": "layouts_adminlayout_navitem",
-      "community": 20,
+      "community": 1,
       "norm_label": "navitem"
     },
     {
       "label": "NavSection",
       "file_type": "code",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
-      "source_location": "L92",
+      "source_location": "L119",
       "id": "layouts_adminlayout_navsection",
-      "community": 20,
+      "community": 1,
       "norm_label": "navsection"
     },
     {
       "label": "NAV_SECTIONS",
       "file_type": "code",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
-      "source_location": "L97",
+      "source_location": "L124",
       "id": "layouts_adminlayout_nav_sections",
-      "community": 20,
+      "community": 1,
       "norm_label": "nav_sections"
     },
     {
       "label": "Props",
       "file_type": "code",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
-      "source_location": "L117",
+      "source_location": "L144",
       "id": "layouts_adminlayout_props",
-      "community": 20,
+      "community": 1,
       "norm_label": "props"
     },
     {
       "label": "AdminLayout()",
       "file_type": "code",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
-      "source_location": "L122",
+      "source_location": "L149",
       "id": "layouts_adminlayout_adminlayout",
       "community": 1,
       "norm_label": "adminlayout()"
@@ -2446,135 +2500,243 @@
       "label": "getGreeting()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L7",
+      "source_location": "L16",
       "id": "pages_dashboardpage_getgreeting",
-      "community": 6,
+      "community": 23,
       "norm_label": "getgreeting()"
+    },
+    {
+      "label": "formatRelative()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L23",
+      "id": "pages_dashboardpage_formatrelative",
+      "community": 6,
+      "norm_label": "formatrelative()"
     },
     {
       "label": "formatDate()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L14",
+      "source_location": "L33",
       "id": "pages_dashboardpage_formatdate",
-      "community": 6,
+      "community": 23,
       "norm_label": "formatdate()"
     },
     {
-      "label": "MONTHLY_DATA",
-      "file_type": "code",
-      "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L25",
-      "id": "pages_dashboardpage_monthly_data",
-      "community": 6,
-      "norm_label": "monthly_data"
-    },
-    {
-      "label": "SPARKLINES",
-      "file_type": "code",
-      "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L35",
-      "id": "pages_dashboardpage_sparklines",
-      "community": 6,
-      "norm_label": "sparklines"
-    },
-    {
-      "label": "TrendBadge()",
+      "label": "CHART_LABELS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L44",
-      "id": "pages_dashboardpage_trendbadge",
+      "id": "pages_dashboardpage_chart_labels",
       "community": 6,
-      "norm_label": "trendbadge()"
+      "norm_label": "chart_labels"
+    },
+    {
+      "label": "CHART_ENROLLED",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L45",
+      "id": "pages_dashboardpage_chart_enrolled",
+      "community": 6,
+      "norm_label": "chart_enrolled"
+    },
+    {
+      "label": "CHART_COMPLETED",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L46",
+      "id": "pages_dashboardpage_chart_completed",
+      "community": 6,
+      "norm_label": "chart_completed"
+    },
+    {
+      "label": "ROLE_DATA",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L48",
+      "id": "pages_dashboardpage_role_data",
+      "community": 6,
+      "norm_label": "role_data"
+    },
+    {
+      "label": "COMPLETION_COURSES",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L56",
+      "id": "pages_dashboardpage_completion_courses",
+      "community": 6,
+      "norm_label": "completion_courses"
+    },
+    {
+      "label": "PERF_METRICS",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L64",
+      "id": "pages_dashboardpage_perf_metrics",
+      "community": 6,
+      "norm_label": "perf_metrics"
+    },
+    {
+      "label": "DEPT_DATA",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L71",
+      "id": "pages_dashboardpage_dept_data",
+      "community": 6,
+      "norm_label": "dept_data"
+    },
+    {
+      "label": "KpiIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L81",
+      "id": "pages_dashboardpage_kpiicon",
+      "community": 6,
+      "norm_label": "kpiicon()"
+    },
+    {
+      "label": "QaIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L112",
+      "id": "pages_dashboardpage_qaicon",
+      "community": 6,
+      "norm_label": "qaicon()"
     },
     {
       "label": "SparkLine()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L53",
+      "source_location": "L158",
       "id": "pages_dashboardpage_sparkline",
       "community": 6,
       "norm_label": "sparkline()"
     },
     {
-      "label": "KpiCardProps",
+      "label": "LKpiCardProps",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L95",
-      "id": "pages_dashboardpage_kpicardprops",
+      "source_location": "L180",
+      "id": "pages_dashboardpage_lkpicardprops",
       "community": 6,
-      "norm_label": "kpicardprops"
+      "norm_label": "lkpicardprops"
     },
     {
-      "label": "KpiCard()",
+      "label": "LKpiCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L105",
-      "id": "pages_dashboardpage_kpicard",
+      "source_location": "L191",
+      "id": "pages_dashboardpage_lkpicard",
       "community": 6,
-      "norm_label": "kpicard()"
+      "norm_label": "lkpicard()"
     },
     {
-      "label": "EnrollmentBarChart()",
-      "file_type": "code",
-      "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L131",
-      "id": "pages_dashboardpage_enrollmentbarchart",
-      "community": 6,
-      "norm_label": "enrollmentbarchart()"
-    },
-    {
-      "label": "DonutChart()",
+      "label": "KpiSkeleton()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L215",
-      "id": "pages_dashboardpage_donutchart",
+      "id": "pages_dashboardpage_kpiskeleton",
       "community": 6,
-      "norm_label": "donutchart()"
+      "norm_label": "kpiskeleton()"
     },
     {
-      "label": "IconCourses()",
+      "label": "LearningActivityChart()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L271",
-      "id": "pages_dashboardpage_iconcourses",
+      "source_location": "L231",
+      "id": "pages_dashboardpage_learningactivitychart",
       "community": 6,
-      "norm_label": "iconcourses()"
+      "norm_label": "learningactivitychart()"
     },
     {
-      "label": "IconStudents()",
+      "label": "UsersRoleDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L280",
-      "id": "pages_dashboardpage_iconstudents",
+      "source_location": "L294",
+      "id": "pages_dashboardpage_usersroledonut",
       "community": 6,
-      "norm_label": "iconstudents()"
+      "norm_label": "usersroledonut()"
     },
     {
-      "label": "IconCompletion()",
+      "label": "CompletionDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L291",
-      "id": "pages_dashboardpage_iconcompletion",
+      "source_location": "L342",
+      "id": "pages_dashboardpage_completiondonut",
       "community": 6,
-      "norm_label": "iconcompletion()"
+      "norm_label": "completiondonut()"
     },
     {
-      "label": "IconStar()",
+      "label": "AVATAR_COLORS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L300",
-      "id": "pages_dashboardpage_iconstar",
+      "source_location": "L380",
+      "id": "pages_dashboardpage_avatar_colors",
       "community": 6,
-      "norm_label": "iconstar()"
+      "norm_label": "avatar_colors"
+    },
+    {
+      "label": "ActivityAvatar()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L382",
+      "id": "pages_dashboardpage_activityavatar",
+      "community": 6,
+      "norm_label": "activityavatar()"
+    },
+    {
+      "label": "ACTIVITY_ICON_BG",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L396",
+      "id": "pages_dashboardpage_activity_icon_bg",
+      "community": 6,
+      "norm_label": "activity_icon_bg"
+    },
+    {
+      "label": "ACTIVITY_ICON_COLOR",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L400",
+      "id": "pages_dashboardpage_activity_icon_color",
+      "community": 6,
+      "norm_label": "activity_icon_color"
+    },
+    {
+      "label": "NOTIF_BG",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L407",
+      "id": "pages_dashboardpage_notif_bg",
+      "community": 6,
+      "norm_label": "notif_bg"
+    },
+    {
+      "label": "NOTIF_ICON_COLOR",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L410",
+      "id": "pages_dashboardpage_notif_icon_color",
+      "community": 6,
+      "norm_label": "notif_icon_color"
+    },
+    {
+      "label": "NotifIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L414",
+      "id": "pages_dashboardpage_notificon",
+      "community": 6,
+      "norm_label": "notificon()"
     },
     {
       "label": "DashboardPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L310",
+      "source_location": "L431",
       "id": "pages_dashboardpage_dashboardpage",
-      "community": 6,
+      "community": 23,
       "norm_label": "dashboardpage()"
     },
     {
@@ -2817,7 +2979,7 @@
       "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
       "source_location": "L178",
       "id": "pages_trusteddevicespage_trusteddevicespage",
-      "community": 1,
+      "community": 2,
       "norm_label": "trusteddevicespage()"
     },
     {
@@ -2844,7 +3006,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L1",
       "id": "frontend_src_routes_protectedroute_tsx",
-      "community": 1,
+      "community": 20,
       "norm_label": "protectedroute.tsx"
     },
     {
@@ -2853,7 +3015,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L6",
       "id": "routes_protectedroute_props",
-      "community": 1,
+      "community": 20,
       "norm_label": "props"
     },
     {
@@ -2862,7 +3024,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L12",
       "id": "routes_protectedroute_protectedroute",
-      "community": 1,
+      "community": 20,
       "norm_label": "protectedroute()"
     },
     {
@@ -2871,7 +3033,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "frontend_src_types_auth_ts",
-      "community": 1,
+      "community": 20,
       "norm_label": "auth.ts"
     },
     {
@@ -2880,7 +3042,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "types_auth_profile",
-      "community": 1,
+      "community": 20,
       "norm_label": "profile"
     },
     {
@@ -2889,8 +3051,143 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L8",
       "id": "types_auth_userrole",
-      "community": 1,
+      "community": 20,
       "norm_label": "userrole"
+    },
+    {
+      "label": "dashboard.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L1",
+      "id": "frontend_src_types_dashboard_ts",
+      "community": 21,
+      "norm_label": "dashboard.ts"
+    },
+    {
+      "label": "WelcomeInfo",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L4",
+      "id": "types_dashboard_welcomeinfo",
+      "community": 21,
+      "norm_label": "welcomeinfo"
+    },
+    {
+      "label": "ActivityType",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L11",
+      "id": "types_dashboard_activitytype",
+      "community": 21,
+      "norm_label": "activitytype"
+    },
+    {
+      "label": "NotificationSeverity",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L20",
+      "id": "types_dashboard_notificationseverity",
+      "community": 21,
+      "norm_label": "notificationseverity"
+    },
+    {
+      "label": "AlertSeverity",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L21",
+      "id": "types_dashboard_alertseverity",
+      "community": 21,
+      "norm_label": "alertseverity"
+    },
+    {
+      "label": "SystemStatus",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L22",
+      "id": "types_dashboard_systemstatus",
+      "community": 21,
+      "norm_label": "systemstatus"
+    },
+    {
+      "label": "DashboardKpi",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L24",
+      "id": "types_dashboard_dashboardkpi",
+      "community": 21,
+      "norm_label": "dashboardkpi"
+    },
+    {
+      "label": "DashboardKpis",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L31",
+      "id": "types_dashboard_dashboardkpis",
+      "community": 21,
+      "norm_label": "dashboardkpis"
+    },
+    {
+      "label": "ActivityItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L42",
+      "id": "types_dashboard_activityitem",
+      "community": 21,
+      "norm_label": "activityitem"
+    },
+    {
+      "label": "NotificationItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L51",
+      "id": "types_dashboard_notificationitem",
+      "community": 21,
+      "norm_label": "notificationitem"
+    },
+    {
+      "label": "SecurityAlert",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L60",
+      "id": "types_dashboard_securityalert",
+      "community": 21,
+      "norm_label": "securityalert"
+    },
+    {
+      "label": "QuickActionItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L69",
+      "id": "types_dashboard_quickactionitem",
+      "community": 21,
+      "norm_label": "quickactionitem"
+    },
+    {
+      "label": "SystemService",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L76",
+      "id": "types_dashboard_systemservice",
+      "community": 21,
+      "norm_label": "systemservice"
+    },
+    {
+      "label": "SystemHealth",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L83",
+      "id": "types_dashboard_systemhealth",
+      "community": 21,
+      "norm_label": "systemhealth"
+    },
+    {
+      "label": "DashboardCoreResponse",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L89",
+      "id": "types_dashboard_dashboardcoreresponse",
+      "community": 22,
+      "norm_label": "dashboardcoreresponse"
     },
     {
       "label": "device.ts",
@@ -3145,6 +3442,105 @@
       "norm_label": "code:js (// eslint.config.js)"
     },
     {
+      "label": "MONTHLY_DATA",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L25",
+      "community": 6,
+      "norm_label": "monthly_data",
+      "id": "pages_dashboardpage_monthly_data"
+    },
+    {
+      "label": "SPARKLINES",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L35",
+      "community": 6,
+      "norm_label": "sparklines",
+      "id": "pages_dashboardpage_sparklines"
+    },
+    {
+      "label": "TrendBadge()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L44",
+      "community": 6,
+      "norm_label": "trendbadge()",
+      "id": "pages_dashboardpage_trendbadge"
+    },
+    {
+      "label": "KpiCardProps",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L95",
+      "community": 6,
+      "norm_label": "kpicardprops",
+      "id": "pages_dashboardpage_kpicardprops"
+    },
+    {
+      "label": "KpiCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L105",
+      "community": 6,
+      "norm_label": "kpicard()",
+      "id": "pages_dashboardpage_kpicard"
+    },
+    {
+      "label": "EnrollmentBarChart()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L131",
+      "community": 6,
+      "norm_label": "enrollmentbarchart()",
+      "id": "pages_dashboardpage_enrollmentbarchart"
+    },
+    {
+      "label": "DonutChart()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L215",
+      "community": 6,
+      "norm_label": "donutchart()",
+      "id": "pages_dashboardpage_donutchart"
+    },
+    {
+      "label": "IconCourses()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L271",
+      "community": 6,
+      "norm_label": "iconcourses()",
+      "id": "pages_dashboardpage_iconcourses"
+    },
+    {
+      "label": "IconStudents()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L280",
+      "community": 6,
+      "norm_label": "iconstudents()",
+      "id": "pages_dashboardpage_iconstudents"
+    },
+    {
+      "label": "IconCompletion()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L291",
+      "community": 6,
+      "norm_label": "iconcompletion()",
+      "id": "pages_dashboardpage_iconcompletion"
+    },
+    {
+      "label": "IconStar()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L300",
+      "community": 6,
+      "norm_label": "iconstar()",
+      "id": "pages_dashboardpage_iconstar"
+    },
+    {
       "label": "delay()",
       "file_type": "code",
       "source_file": "frontend/src/api/trustedDevices.ts",
@@ -3239,7 +3635,7 @@
       "file_type": "code",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L67",
-      "community": 20,
+      "community": 1,
       "norm_label": "nav",
       "id": "layouts_adminlayout_nav"
     },
@@ -3293,7 +3689,7 @@
       "file_type": "code",
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L5",
-      "community": 1,
+      "community": 20,
       "norm_label": "profile",
       "id": "src_authcontext_profile"
     }
@@ -3646,9 +4042,9 @@
       "source_file": "backend/server.js",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_server_js",
-      "target": "backend_server_corsoptions",
-      "confidence_score": 1.0
+      "target": "backend_server_corsoptions"
     },
     {
       "relation": "contains",
@@ -3656,9 +4052,9 @@
       "source_file": "backend/server.js",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_server_js",
-      "target": "backend_server_server",
-      "confidence_score": 1.0
+      "target": "backend_server_server"
     },
     {
       "relation": "contains",
@@ -5941,9 +6337,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "frontend_src_api_adminauth_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_adminauth_ts"
     },
     {
       "relation": "imports",
@@ -5952,9 +6348,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "api_adminauth_adminuser",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminuser"
     },
     {
       "relation": "imports",
@@ -5963,9 +6359,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "api_adminauth_apigetme",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apigetme"
     },
     {
       "relation": "imports",
@@ -5974,9 +6370,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "api_adminauth_apilogin",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apilogin"
     },
     {
       "relation": "imports",
@@ -5985,9 +6381,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "api_adminauth_apilogout",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apilogout"
     },
     {
       "relation": "imports",
@@ -5996,9 +6392,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "api_adminauth_getstoredtoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_getstoredtoken"
     },
     {
       "relation": "imports",
@@ -6007,9 +6403,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "api_adminauth_removetoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_removetoken"
     },
     {
       "relation": "imports",
@@ -6018,9 +6414,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "api_adminauth_storetoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_storetoken"
     },
     {
       "relation": "imports_from",
@@ -6090,9 +6486,9 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_authcontext_tsx",
-      "target": "src_authcontext_mapadmintoprofile",
-      "confidence_score": 1.0
+      "target": "src_authcontext_mapadmintoprofile"
     },
     {
       "relation": "contains",
@@ -6132,9 +6528,9 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_auth_loginform_tsx",
-      "target": "frontend_src_authcontext_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_authcontext_tsx"
     },
     {
       "relation": "imports_from",
@@ -6263,9 +6659,9 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_auth_loginform_tsx",
-      "target": "src_authcontext_useauth",
-      "confidence_score": 1.0
+      "target": "src_authcontext_useauth"
     },
     {
       "relation": "imports",
@@ -6536,9 +6932,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_adminuser",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminuser"
     },
     {
       "relation": "contains",
@@ -6546,9 +6942,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_getstoredtoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_getstoredtoken"
     },
     {
       "relation": "contains",
@@ -6556,9 +6952,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_storetoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_storetoken"
     },
     {
       "relation": "contains",
@@ -6566,9 +6962,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_removetoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_removetoken"
     },
     {
       "relation": "contains",
@@ -6576,9 +6972,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_adminfetch",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminfetch"
     },
     {
       "relation": "contains",
@@ -6586,9 +6982,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_bearer",
-      "confidence_score": 1.0
+      "target": "api_adminauth_bearer"
     },
     {
       "relation": "contains",
@@ -6596,9 +6992,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_apilogin",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apilogin"
     },
     {
       "relation": "contains",
@@ -6606,9 +7002,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_apigetme",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apigetme"
     },
     {
       "relation": "contains",
@@ -6616,9 +7012,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_apilogout",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apilogout"
     },
     {
       "relation": "contains",
@@ -6626,9 +7022,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_apiforgotpassword",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apiforgotpassword"
     },
     {
       "relation": "contains",
@@ -6636,9 +7032,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_apiresetpassword",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apiresetpassword"
     },
     {
       "relation": "contains",
@@ -6646,9 +7042,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_apisendotp",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apisendotp"
     },
     {
       "relation": "contains",
@@ -6656,8 +7052,19 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L101",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_adminauth_ts",
-      "target": "api_adminauth_apiverifyotp",
+      "target": "api_adminauth_apiverifyotp"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "frontend_src_api_adminauth_ts",
       "confidence_score": 1.0
     },
     {
@@ -6667,9 +7074,9 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_passwordrecovery_ts",
-      "target": "frontend_src_api_adminauth_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_adminauth_ts"
     },
     {
       "relation": "imports_from",
@@ -6678,8 +7085,19 @@
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_trusteddevices_ts",
-      "target": "frontend_src_api_adminauth_ts",
+      "target": "frontend_src_api_adminauth_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "api_adminauth_getstoredtoken",
       "confidence_score": 1.0
     },
     {
@@ -6689,9 +7107,20 @@
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_trusteddevices_ts",
-      "target": "api_adminauth_getstoredtoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "api_dashboard_getdashboardcore",
+      "target": "api_adminauth_getstoredtoken"
     },
     {
       "relation": "calls",
@@ -6733,9 +7162,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apilogin",
-      "target": "api_adminauth_adminfetch",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminfetch"
     },
     {
       "relation": "calls",
@@ -6744,9 +7173,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apigetme",
-      "target": "api_adminauth_adminfetch",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminfetch"
     },
     {
       "relation": "calls",
@@ -6755,9 +7184,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apilogout",
-      "target": "api_adminauth_adminfetch",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminfetch"
     },
     {
       "relation": "calls",
@@ -6766,9 +7195,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L74",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apiforgotpassword",
-      "target": "api_adminauth_adminfetch",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminfetch"
     },
     {
       "relation": "calls",
@@ -6777,9 +7206,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apiresetpassword",
-      "target": "api_adminauth_adminfetch",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminfetch"
     },
     {
       "relation": "calls",
@@ -6788,9 +7217,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L94",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apisendotp",
-      "target": "api_adminauth_adminfetch",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminfetch"
     },
     {
       "relation": "calls",
@@ -6799,9 +7228,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apiverifyotp",
-      "target": "api_adminauth_adminfetch",
-      "confidence_score": 1.0
+      "target": "api_adminauth_adminfetch"
     },
     {
       "relation": "calls",
@@ -6810,9 +7239,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apigetme",
-      "target": "api_adminauth_bearer",
-      "confidence_score": 1.0
+      "target": "api_adminauth_bearer"
     },
     {
       "relation": "calls",
@@ -6821,9 +7250,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apilogout",
-      "target": "api_adminauth_bearer",
-      "confidence_score": 1.0
+      "target": "api_adminauth_bearer"
     },
     {
       "relation": "calls",
@@ -6832,9 +7261,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L97",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apisendotp",
-      "target": "api_adminauth_bearer",
-      "confidence_score": 1.0
+      "target": "api_adminauth_bearer"
     },
     {
       "relation": "calls",
@@ -6843,9 +7272,9 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L109",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_adminauth_apiverifyotp",
-      "target": "api_adminauth_bearer",
-      "confidence_score": 1.0
+      "target": "api_adminauth_bearer"
     },
     {
       "relation": "imports",
@@ -6854,9 +7283,9 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_passwordrecovery_ts",
-      "target": "api_adminauth_apiforgotpassword",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apiforgotpassword"
     },
     {
       "relation": "calls",
@@ -6876,9 +7305,9 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_passwordrecovery_ts",
-      "target": "api_adminauth_apiresetpassword",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apiresetpassword"
     },
     {
       "relation": "calls",
@@ -6898,9 +7327,9 @@
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_trusteddevices_ts",
-      "target": "api_adminauth_apisendotp",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apisendotp"
     },
     {
       "relation": "calls",
@@ -6920,9 +7349,9 @@
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_trusteddevices_ts",
-      "target": "api_adminauth_apiverifyotp",
-      "confidence_score": 1.0
+      "target": "api_adminauth_apiverifyotp"
     },
     {
       "relation": "calls",
@@ -6934,6 +7363,70 @@
       "weight": 1.0,
       "source": "api_trusteddevices_verifyotp",
       "target": "api_adminauth_apiverifyotp"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "frontend_src_types_dashboard_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "types_dashboard_dashboardcoreresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "api_dashboard_mock",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "api_dashboard_getdashboardcore",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "frontend_src_api_dashboard_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "api_dashboard_getdashboardcore",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -7080,9 +7573,9 @@
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_trusteddevices_ts",
-      "target": "api_trusteddevices_authheaders",
-      "confidence_score": 1.0
+      "target": "api_trusteddevices_authheaders"
     },
     {
       "relation": "contains",
@@ -7090,9 +7583,9 @@
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_trusteddevices_ts",
-      "target": "api_trusteddevices_apicall",
-      "confidence_score": 1.0
+      "target": "api_trusteddevices_apicall"
     },
     {
       "relation": "contains",
@@ -7193,9 +7686,9 @@
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_trusteddevices_apicall",
-      "target": "api_trusteddevices_authheaders",
-      "confidence_score": 1.0
+      "target": "api_trusteddevices_authheaders"
     },
     {
       "relation": "calls",
@@ -7204,9 +7697,9 @@
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_trusteddevices_revokedevice",
-      "target": "api_trusteddevices_apicall",
-      "confidence_score": 1.0
+      "target": "api_trusteddevices_apicall"
     },
     {
       "relation": "imports",
@@ -7922,9 +8415,39 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L74",
       "weight": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_iconmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L74",
+      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_layouts_adminlayout_tsx",
       "target": "layouts_adminlayout_iconsearch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_iconchevrondown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/AdminLayout.tsx",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "frontend_src_layouts_adminlayout_tsx",
+      "target": "layouts_adminlayout_qa_topbar_actions",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8009,6 +8532,83 @@
       "target": "layouts_adminlayout_nav"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "frontend_src_types_dashboard_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_activityitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_activitytype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_dashboardcoreresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_notificationitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_notificationseverity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_quickactionitem",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
@@ -8022,11 +8622,261 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_formatrelative",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L14",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
       "target": "pages_dashboardpage_formatdate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_chart_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_chart_enrolled",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_chart_completed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_role_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_completion_courses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_perf_metrics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_dept_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_kpiicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_qaicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_sparkline"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L180",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_lkpicardprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L191",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_lkpicard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L215",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_kpiskeleton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L231",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_learningactivitychart",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L294",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_usersroledonut",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L342",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_completiondonut",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L380",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_avatar_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L382",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_activityavatar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L396",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_activity_icon_bg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L400",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_activity_icon_color",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L407",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_notif_bg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L410",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_notif_icon_color",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L414",
+      "weight": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_notificon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_dashboardpage"
     },
     {
       "relation": "contains",
@@ -8057,16 +8907,6 @@
       "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
       "target": "pages_dashboardpage_trendbadge"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L53",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_sparkline"
     },
     {
       "relation": "contains",
@@ -8147,16 +8987,6 @@
       "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
       "target": "pages_dashboardpage_iconstar"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L62",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_dashboardpage"
     },
     {
       "relation": "contains",
@@ -8602,6 +9432,146 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_welcomeinfo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_activitytype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_notificationseverity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_alertseverity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_systemstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_dashboardkpi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_dashboardkpis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_activityitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_notificationitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_securityalert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_quickactionitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_systemservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_systemhealth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_dashboardcoreresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/types/device.ts",
       "source_location": "L8",
       "weight": 1.0,
@@ -8851,5 +9821,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "30b53336508343c8c1ecd9d1bbae41604ae10193"
+  "built_at_commit": "bd5e1673bd5eb80dd8d6e25c4e1fab48f55bb19c"
 }
