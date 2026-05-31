@@ -12,7 +12,8 @@ async function getDashboardCore(req, res) {
 
 async function getDashboardAnalytics(req, res) {
   try {
-    const data = await dashboardService.getDashboardAnalytics();
+    const { dateFrom, dateTo, departmentId } = req.query;
+    const data = await dashboardService.getDashboardAnalytics({ dateFrom, dateTo, departmentId });
     return res.status(200).json(data);
   } catch (error) {
     console.error("Dashboard analytics error:", error.message);

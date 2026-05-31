@@ -1,15 +1,32 @@
 import { useCallback, useEffect, useState } from 'react';
 import AdminLayout from '../layouts/AdminLayout';
 import { useAuth } from '../AuthContext';
-import { getDashboardCore } from '../api/dashboard';
+import { getDashboardCore, getDashboardAnalytics, getAdminWidgets } from '../api/dashboard';
 import type {
   ActivityItem,
   ActivityType,
+  AdminWidgetsResponse,
+  AiInsightItem,
+  CalendarEventItem,
+  CourseCompletionCategory,
+  DashboardAnalyticsResponse,
   DashboardCoreResponse,
+  InstructorPerformance,
+  LearningActivityItem,
+  LiveSessions,
   NotificationItem,
   NotificationType,
+  PendingApprovals,
   QuickActionItem,
   QuickActionKey,
+  ReportsSnapshot,
+  RevenueOverview,
+  StudentEngagement,
+  CourseAnalytics,
+  UserAnalytics,
+  UsersByRoleItem,
+  TaskItem,
+  TransactionItem,
 } from '../types/dashboard';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -39,43 +56,6 @@ function formatDate(): string {
     d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   return `${fmt(start)} – ${fmt(now)}`;
 }
-
-// ── Local chart data (TODO: replace with real chart API endpoints when ready) ─
-
-const CHART_LABELS   = ['May 13', 'May 20', 'May 27', 'Jun 3', 'Jun 10'];
-const CHART_ENROLLED  = [1200, 1800, 2200, 2800, 2600];
-const CHART_COMPLETED = [500,  900,  1200, 1500, 1650];
-
-const ROLE_DATA = [
-  { label: 'Learners',    value: 7842, pct: 62.3, color: '#2563eb' },
-  { label: 'Instructors', value: 1253, pct: 9.9,  color: '#16a34a' },
-  { label: 'Admins',      value: 562,  pct: 4.5,  color: '#f59e0b' },
-  { label: 'Managers',    value: 1687, pct: 13.4, color: '#8b5cf6' },
-  { label: 'Others',      value: 1240, pct: 9.9,  color: '#94a3b8' },
-];
-
-const COMPLETION_COURSES = [
-  { name: 'Leadership',      pct: 85, color: '#2563eb' },
-  { name: 'Data Science',    pct: 72, color: '#16a34a' },
-  { name: 'Cyber Security',  pct: 65, color: '#f59e0b' },
-  { name: 'Marketing',       pct: 58, color: '#8b5cf6' },
-  { name: 'Design Thinking', pct: 45, color: '#ef4444' },
-];
-
-const PERF_METRICS = [
-  { label: 'Avg. Score',   value: '76.8%', spark: [68, 72, 74, 75, 76, 77, 76.8], color: '#2563eb' },
-  { label: 'Pass Rate',    value: '82.3%', spark: [75, 78, 80, 81, 82, 83, 82.3], color: '#16a34a' },
-  { label: 'Engagement',   value: '68.5%', spark: [62, 64, 66, 67, 68, 69, 68.5], color: '#8b5cf6' },
-  { label: 'Satisfaction', value: '4.6/5', spark: [4.2, 4.3, 4.4, 4.5, 4.5, 4.6, 4.6], color: '#f59e0b' },
-];
-
-const DEPT_DATA = [
-  { name: 'IT Department',        count: 2856, pct: 100 },
-  { name: 'Sales Department',     count: 2124, pct: 74  },
-  { name: 'HR Department',        count: 1856, pct: 65  },
-  { name: 'Marketing Department', count: 1254, pct: 44  },
-  { name: 'Finance Department',   count: 1023, pct: 36  },
-];
 
 // ── KPI icon ──────────────────────────────────────────────────────────────────
 
@@ -109,7 +89,7 @@ function KpiIcon({ type }: { type: string }) {
   return null;
 }
 
-// ── Quick action icon — mapped from backend key ───────────────────────────────
+// ── Quick action icon ─────────────────────────────────────────────────────────
 
 function QaIcon({ actionKey }: { actionKey: QuickActionKey }) {
   if (actionKey === 'add_user') return (
@@ -149,38 +129,9 @@ function QaIcon({ actionKey }: { actionKey: QuickActionKey }) {
   return <span style={{ fontSize: '0.75rem' }}>{actionKey}</span>;
 }
 
-// ── Sparkline (used in Performance Overview only — not from API) ───────────────
+// ── KPI Card ──────────────────────────────────────────────────────────────────
 
-function SparkLine({ data, color }: { data: number[]; color: string }) {
-  const max = Math.max(...data);
-  const min = Math.min(...data);
-  const range = max - min || 1;
-  const W = 52, H = 20;
-  const pts = data.map((v, i) => `${(i / (data.length - 1)) * W},${H - ((v - min) / range) * (H - 3) - 2}`).join(' ');
-  return (
-    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ overflow: 'visible', flexShrink: 0 }}>
-      <defs>
-        <linearGradient id={`sg-${color.replace('#', '')}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.2" />
-          <stop offset="100%" stopColor={color} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <polygon points={`${pts} ${W},${H} 0,${H}`} fill={`url(#sg-${color.replace('#', '')})`} />
-      <polyline points={pts} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-// ── KPI Card (values are plain numbers from backend) ──────────────────────────
-
-interface LKpiCardProps {
-  label:      string;
-  value:      string | number;
-  iconType:   string;
-  iconBg:     string;
-  iconColor:  string;
-}
-
+interface LKpiCardProps { label: string; value: string | number; iconType: string; iconBg: string; iconColor: string; }
 function LKpiCard({ label, value, iconType, iconBg, iconColor }: LKpiCardProps) {
   return (
     <div className="mn-lkpi-card">
@@ -195,8 +146,6 @@ function LKpiCard({ label, value, iconType, iconBg, iconColor }: LKpiCardProps) 
   );
 }
 
-// ── KPI Skeleton ──────────────────────────────────────────────────────────────
-
 function KpiSkeleton() {
   return (
     <div className="mn-lkpi-card" style={{ pointerEvents: 'none' }}>
@@ -209,23 +158,51 @@ function KpiSkeleton() {
   );
 }
 
-// ── Learning Activity Area Chart (local mock data) ────────────────────────────
+// ── Reusable compact stat row ─────────────────────────────────────────────────
 
-function LearningActivityChart() {
-  const W = 500, H = 130, PAD_L = 32, PAD_B = 22, PAD_T = 8, PAD_R = 8;
-  const cW = W - PAD_L - PAD_R;
-  const cH = H - PAD_B - PAD_T;
-  const maxV = 3000;
-  const yTicks = [0, 1000, 2000, 3000];
-  const xCount = CHART_LABELS.length;
+function StatRow({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '5px 0', borderBottom: '1px solid #f8fafc' }}>
+      <span style={{ fontSize: '0.688rem', color: '#64748b' }}>{label}</span>
+      <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#0f172a' }}>{value}</span>
+    </div>
+  );
+}
 
-  function toX(i: number) { return PAD_L + (i / (xCount - 1)) * cW; }
-  function toY(v: number) { return PAD_T + cH - (v / maxV) * cH; }
+// ── Analytics card skeleton ───────────────────────────────────────────────────
 
-  const ptE   = CHART_ENROLLED.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
-  const ptC   = CHART_COMPLETED.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
-  const areaE = `${toX(0)},${toY(0)} ${ptE} ${toX(xCount - 1)},${toY(0)}`;
-  const areaC = `${toX(0)},${toY(0)} ${ptC} ${toX(xCount - 1)},${toY(0)}`;
+function AnalyticsSpin() {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 28 }}>
+      <div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} />
+    </div>
+  );
+}
+
+function EmptyMsg({ msg }: { msg: string }) {
+  return <p style={{ fontSize: '0.8rem', color: '#94a3b8', textAlign: 'center', padding: '24px 0', margin: 0 }}>{msg}</p>;
+}
+
+// ── Learning Activity Chart (wired to analytics API) ─────────────────────────
+
+function LearningActivityChart({ data }: { data: LearningActivityItem[] }) {
+  if (data.length === 0) return <EmptyMsg msg="No learning activity data for this period." />;
+
+  const labels   = data.map(d => { const dt = new Date(d.date); return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); });
+  const enrolled = data.map(d => d.enrolled);
+  const completed = data.map(d => d.completed);
+  const rawMax = Math.max(...enrolled, ...completed, 1);
+  const maxV = Math.ceil(rawMax / 1000) * 1000 || 1000;
+  const yTicks = [0, Math.round(maxV / 3), Math.round((2 * maxV) / 3), maxV];
+  const W = 500, H = 130, PAD_L = 34, PAD_B = 22, PAD_T = 8, PAD_R = 8;
+  const cW = W - PAD_L - PAD_R, cH = H - PAD_B - PAD_T;
+  const n = data.length;
+  const toX = (i: number) => PAD_L + (i / (n - 1)) * cW;
+  const toY = (v: number) => PAD_T + cH - (v / maxV) * cH;
+  const ptE = enrolled.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
+  const ptC = completed.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
+  const areaE = `${toX(0)},${toY(0)} ${ptE} ${toX(n - 1)},${toY(0)}`;
+  const areaC = `${toX(0)},${toY(0)} ${ptC} ${toX(n - 1)},${toY(0)}`;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
@@ -241,7 +218,7 @@ function LearningActivityChart() {
       </defs>
       {yTicks.map((v) => {
         const y = toY(v);
-        const lbl = v === 0 ? '0' : `${v / 1000}K`;
+        const lbl = v >= 1000 ? `${(v / 1000).toFixed(0)}K` : `${v}`;
         return (
           <g key={v}>
             <line x1={PAD_L} y1={y} x2={W - PAD_R} y2={y} stroke="#f1f5f9" strokeWidth="1" />
@@ -253,48 +230,62 @@ function LearningActivityChart() {
       <polygon points={areaC} fill="url(#grad-compl)" />
       <polyline points={ptE} fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       <polyline points={ptC} fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx={toX(xCount - 1)} cy={toY(CHART_ENROLLED[xCount - 1])}  r="3" fill="#2563eb" />
-      <circle cx={toX(xCount - 1)} cy={toY(CHART_COMPLETED[xCount - 1])} r="3" fill="#16a34a" />
-      {CHART_LABELS.map((lbl, i) => (
+      <circle cx={toX(n - 1)} cy={toY(enrolled[n - 1])}  r="3" fill="#2563eb" />
+      <circle cx={toX(n - 1)} cy={toY(completed[n - 1])} r="3" fill="#16a34a" />
+      {labels.map((lbl, i) => (
         <text key={lbl} x={toX(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="Inter,sans-serif">{lbl}</text>
       ))}
     </svg>
   );
 }
 
-// ── Users by Role Donut (local mock data) ─────────────────────────────────────
+// ── Users by Role Donut (wired to analytics API) ──────────────────────────────
 
-function UsersRoleDonut() {
+const ROLE_COLORS: Record<string, string> = {
+  learners:    '#2563eb',
+  instructors: '#16a34a',
+  admins:      '#f59e0b',
+  managers:    '#8b5cf6',
+  others:      '#94a3b8',
+};
+const ROLE_LABELS: Record<string, string> = {
+  learners: 'Learners', instructors: 'Instructors', admins: 'Admins', managers: 'Managers', others: 'Others',
+};
+
+function UsersRoleDonut({ data }: { data: UsersByRoleItem[] }) {
+  if (data.length === 0) return <EmptyMsg msg="No role data available." />;
   const R = 36, cx = 50, cy = 50;
   const circ = 2 * Math.PI * R;
   let offset = 0;
-  const segments = ROLE_DATA.map((d) => {
-    const dashLen = (d.pct / 100) * circ;
+  const segments = data.map((d) => {
+    const dashLen = (d.percentage / 100) * circ;
     const seg = { ...d, dashLen, offset };
     offset += dashLen;
     return seg;
   });
+  const total = data.reduce((a, b) => a + b.count, 0);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
       <svg width="100" height="100" viewBox="0 0 100 100" style={{ flexShrink: 0 }}>
         <circle cx={cx} cy={cy} r={R} fill="none" stroke="#f1f5f9" strokeWidth="14" />
         {segments.map((s) => (
-          <circle key={s.label} cx={cx} cy={cy} r={R} fill="none" stroke={s.color} strokeWidth="14"
+          <circle key={s.role} cx={cx} cy={cy} r={R} fill="none"
+            stroke={ROLE_COLORS[s.role] ?? '#94a3b8'} strokeWidth="14"
             strokeDasharray={`${s.dashLen} ${circ - s.dashLen}`} strokeDashoffset={-s.offset}
             transform={`rotate(-90 ${cx} ${cy})`} />
         ))}
         <text x={cx} y={cy - 4} textAnchor="middle" fontSize="11" fontWeight="700" fill="#0f172a" fontFamily="Inter,sans-serif">
-          {(ROLE_DATA.reduce((a, b) => a + b.value, 0) / 1000).toFixed(1)}K
+          {(total / 1000).toFixed(1)}K
         </text>
         <text x={cx} y={cy + 8} textAnchor="middle" fontSize="6.5" fill="#64748b" fontFamily="Inter,sans-serif">Total Users</text>
       </svg>
       <div style={{ width: '100%' }}>
-        {ROLE_DATA.map((d) => (
-          <div key={d.label} style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 5 }}>
-            <div style={{ width: 6, height: 6, borderRadius: '50%', background: d.color, flexShrink: 0 }} />
-            <span style={{ fontSize: '0.625rem', color: '#374151', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.label}</span>
-            <span style={{ fontSize: '0.625rem', fontWeight: 600, color: '#0f172a', flexShrink: 0 }}>{d.value.toLocaleString()}</span>
-            <span style={{ fontSize: '0.575rem', color: '#94a3b8', flexShrink: 0, minWidth: 26, textAlign: 'right' }}>{d.pct}%</span>
+        {data.map((d) => (
+          <div key={d.role} style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 5 }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: ROLE_COLORS[d.role] ?? '#94a3b8', flexShrink: 0 }} />
+            <span style={{ fontSize: '0.625rem', color: '#374151', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ROLE_LABELS[d.role] ?? d.role}</span>
+            <span style={{ fontSize: '0.625rem', fontWeight: 600, color: '#0f172a', flexShrink: 0 }}>{d.count.toLocaleString()}</span>
+            <span style={{ fontSize: '0.575rem', color: '#94a3b8', flexShrink: 0, minWidth: 26, textAlign: 'right' }}>{d.percentage.toFixed(1)}%</span>
           </div>
         ))}
       </div>
@@ -302,13 +293,14 @@ function UsersRoleDonut() {
   );
 }
 
-// ── Completion Donut (local mock data) ────────────────────────────────────────
+// ── Completion Donut (wired to analytics API) ─────────────────────────────────
 
-function CompletionDonut({ pct }: { pct: number }) {
+function CompletionDonut({ pct, categories }: { pct: number; categories: CourseCompletionCategory[] }) {
   const [animated, setAnimated] = useState(false);
   useEffect(() => { const t = setTimeout(() => setAnimated(true), 300); return () => clearTimeout(t); }, []);
   const R = 36, circ = 2 * Math.PI * R;
   const dash = animated ? (pct / 100) * circ : 0;
+  const COLORS = ['#2563eb', '#16a34a', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4'];
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
       <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -324,14 +316,16 @@ function CompletionDonut({ pct }: { pct: number }) {
         </div>
       </div>
       <div style={{ width: '100%' }}>
-        {COMPLETION_COURSES.map((c) => (
+        {categories.length === 0 ? (
+          <p style={{ fontSize: '0.75rem', color: '#94a3b8', textAlign: 'center', margin: 0 }}>No category data.</p>
+        ) : categories.map((c, i) => (
           <div key={c.name} style={{ marginBottom: 6 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
               <span style={{ fontSize: '0.625rem', color: '#374151' }}>{c.name}</span>
-              <span style={{ fontSize: '0.625rem', fontWeight: 600, color: '#0f172a' }}>{c.pct}%</span>
+              <span style={{ fontSize: '0.625rem', fontWeight: 600, color: '#0f172a' }}>{c.completionRate}%</span>
             </div>
             <div style={{ height: 4, background: '#f1f5f9', borderRadius: 3, overflow: 'hidden' }}>
-              <div style={{ width: `${c.pct}%`, height: '100%', background: c.color, borderRadius: 3, transition: 'width 1s ease 0.4s' }} />
+              <div style={{ width: `${c.completionRate}%`, height: '100%', background: COLORS[i % COLORS.length], borderRadius: 3, transition: 'width 1s ease 0.4s' }} />
             </div>
           </div>
         ))}
@@ -340,7 +334,7 @@ function CompletionDonut({ pct }: { pct: number }) {
   );
 }
 
-// ── Activity avatar ───────────────────────────────────────────────────────────
+// ── Activity / Notification helpers (TASK 5A — unchanged) ────────────────────
 
 const AVATAR_COLORS = ['#2563eb', '#16a34a', '#8b5cf6', '#f59e0b', '#ef4444', '#06b6d4'];
 
@@ -358,39 +352,17 @@ function ActivityAvatar({ name, index }: { name: string; index: number }) {
   );
 }
 
-// Activity type → badge colours (TASK 5A.3 types)
 const ACTIVITY_ICON_BG: Record<ActivityType, string> = {
-  course:       '#dbeafe',
-  user:         '#dcfce7',
-  certificate:  '#fef3c7',
-  assignment:   '#f3e8ff',
-  live_session: '#d1fae5',
-  system:       '#f1f5f9',
+  course: '#dbeafe', user: '#dcfce7', certificate: '#fef3c7', assignment: '#f3e8ff', live_session: '#d1fae5', system: '#f1f5f9',
 };
 const ACTIVITY_ICON_COLOR: Record<ActivityType, string> = {
-  course:       '#2563eb',
-  user:         '#16a34a',
-  certificate:  '#f59e0b',
-  assignment:   '#8b5cf6',
-  live_session: '#059669',
-  system:       '#64748b',
+  course: '#2563eb', user: '#16a34a', certificate: '#f59e0b', assignment: '#8b5cf6', live_session: '#059669', system: '#64748b',
 };
-
-// ── Notification type → colours (TASK 5A.3 types) ────────────────────────────
-
 const NOTIF_BG: Record<NotificationType, string> = {
-  security: '#fef2f2',
-  approval: '#fffbeb',
-  system:   '#eff6ff',
-  payment:  '#f0fdf4',
-  course:   '#f5f3ff',
+  security: '#fef2f2', approval: '#fffbeb', system: '#eff6ff', payment: '#f0fdf4', course: '#f5f3ff',
 };
 const NOTIF_ICON_COLOR: Record<NotificationType, string> = {
-  security: '#ef4444',
-  approval: '#f59e0b',
-  system:   '#2563eb',
-  payment:  '#16a34a',
-  course:   '#8b5cf6',
+  security: '#ef4444', approval: '#f59e0b', system: '#2563eb', payment: '#16a34a', course: '#8b5cf6',
 };
 
 function NotifIcon({ type }: { type: NotificationType }) {
@@ -406,9 +378,407 @@ function NotifIcon({ type }: { type: NotificationType }) {
   if (type === 'course') return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
   );
-  // system (default)
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  );
+}
+
+// ── Analytics widgets ─────────────────────────────────────────────────────────
+
+function RevenueCard({ data, loading }: { data: RevenueOverview | undefined; loading: boolean }) {
+  const grow = data?.growthPercentage ?? 0;
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header">
+        <div className="mn-db-card-title">Revenue Overview</div>
+        {data && (
+          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: grow >= 0 ? '#16a34a' : '#ef4444' }}>
+            {grow >= 0 ? '+' : ''}{grow.toFixed(1)}% growth
+          </span>
+        )}
+      </div>
+      {loading ? <AnalyticsSpin /> : data ? (
+        <>
+          <StatRow label="Daily Revenue"      value={`$${data.dailyRevenue.toLocaleString()}`} />
+          <StatRow label="Monthly Revenue"    value={`$${data.monthlyRevenue.toLocaleString()}`} />
+          <StatRow label="Annual Revenue"     value={`$${data.annualRevenue.toLocaleString()}`} />
+          <StatRow label="Subscriptions"      value={`$${data.subscriptionRevenue.toLocaleString()}`} />
+          <StatRow label="Refunds"            value={`$${data.refundTotal.toLocaleString()}`} />
+          <StatRow label="Instructor Payouts" value={`$${data.instructorPayouts.toLocaleString()}`} />
+        </>
+      ) : <EmptyMsg msg="No revenue data." />}
+    </div>
+  );
+}
+
+function UserAnalyticsCard({ data, loading }: { data: UserAnalytics | undefined; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header"><div className="mn-db-card-title">User Analytics</div></div>
+      {loading ? <AnalyticsSpin /> : data ? (
+        <>
+          <StatRow label="New Registrations" value={data.newRegistrations.toLocaleString()} />
+          <StatRow label="Active Users"      value={data.activeUsers.toLocaleString()} />
+          <StatRow label="Retention Rate"    value={`${data.retentionRate.toFixed(1)}%`} />
+          <StatRow label="Verified Users"    value={data.verifiedUsers.toLocaleString()} />
+          <StatRow label="Suspended Users"   value={data.suspendedUsers.toLocaleString()} />
+        </>
+      ) : <EmptyMsg msg="No user analytics." />}
+    </div>
+  );
+}
+
+function CourseAnalyticsCard({ data, loading }: { data: CourseAnalytics | undefined; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header"><div className="mn-db-card-title">Course Analytics</div></div>
+      {loading ? <AnalyticsSpin /> : data ? (
+        <>
+          <StatRow label="Total Courses"      value={data.totalCourses.toLocaleString()} />
+          <StatRow label="Active Courses"     value={data.activeCourses.toLocaleString()} />
+          <StatRow label="Pending Approval"   value={data.pendingApprovalCourses.toLocaleString()} />
+          <StatRow label="Avg Completion"     value={`${data.averageCompletionRate.toFixed(1)}%`} />
+          <StatRow label="Avg Quiz Score"     value={`${data.averageQuizScore.toFixed(1)}%`} />
+          {data.mostPopularCourse && (
+            <div style={{ marginTop: 6, padding: '5px 0', borderTop: '1px solid #f8fafc' }}>
+              <div style={{ fontSize: '0.65rem', color: '#64748b', marginBottom: 2 }}>Most Popular</div>
+              <div style={{ fontSize: '0.72rem', fontWeight: 600, color: '#2563eb', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {data.mostPopularCourse}
+              </div>
+            </div>
+          )}
+        </>
+      ) : <EmptyMsg msg="No course analytics." />}
+    </div>
+  );
+}
+
+function InstructorPerformanceCard({ data, loading }: { data: InstructorPerformance | undefined; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header"><div className="mn-db-card-title">Instructor Performance</div></div>
+      {loading ? <AnalyticsSpin /> : data ? (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 4 }}>
+          {[
+            { label: 'Avg Rating',     value: `${data.averageRating.toFixed(1)}/5`, color: '#f59e0b' },
+            { label: 'Completion',     value: `${data.averageCompletionRate.toFixed(1)}%`, color: '#16a34a' },
+            { label: 'Attendance',     value: `${data.averageAttendanceRate.toFixed(1)}%`, color: '#2563eb' },
+            { label: 'Review Score',   value: `${data.averageReviewScore.toFixed(1)}/5`, color: '#8b5cf6' },
+          ].map(m => (
+            <div key={m.label} style={{ background: '#f8fafc', borderRadius: 8, padding: '8px 10px' }}>
+              <div style={{ fontSize: '0.625rem', color: '#64748b', marginBottom: 4 }}>{m.label}</div>
+              <div style={{ fontSize: '1rem', fontWeight: 700, color: m.color }}>{m.value}</div>
+            </div>
+          ))}
+        </div>
+      ) : <EmptyMsg msg="No instructor data." />}
+    </div>
+  );
+}
+
+function StudentEngagementCard({ data, loading }: { data: StudentEngagement | undefined; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header"><div className="mn-db-card-title">Student Engagement</div></div>
+      {loading ? <AnalyticsSpin /> : data ? (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 4 }}>
+          {[
+            { label: 'Daily Active',      value: data.dailyActiveStudents.toLocaleString(), color: '#2563eb' },
+            { label: 'Quiz Participation',value: `${data.quizParticipationRate.toFixed(1)}%`, color: '#16a34a' },
+            { label: 'Assignment Compl.', value: `${data.assignmentCompletionRate.toFixed(1)}%`, color: '#8b5cf6' },
+            { label: 'Avg Learn Time',    value: `${data.averageLearningTimeMinutes}m`, color: '#f59e0b' },
+          ].map(m => (
+            <div key={m.label} style={{ background: '#f8fafc', borderRadius: 8, padding: '8px 10px' }}>
+              <div style={{ fontSize: '0.625rem', color: '#64748b', marginBottom: 4 }}>{m.label}</div>
+              <div style={{ fontSize: '1rem', fontWeight: 700, color: m.color }}>{m.value}</div>
+            </div>
+          ))}
+        </div>
+      ) : <EmptyMsg msg="No engagement data." />}
+    </div>
+  );
+}
+
+// ── Admin widget helpers ──────────────────────────────────────────────────────
+
+const PRIORITY_STYLE: Record<string, { bg: string; color: string }> = {
+  low:    { bg: '#f1f5f9', color: '#64748b' },
+  medium: { bg: '#dbeafe', color: '#2563eb' },
+  high:   { bg: '#fed7aa', color: '#ea580c' },
+  urgent: { bg: '#fee2e2', color: '#dc2626' },
+};
+
+const TX_STATUS_COLOR: Record<string, string> = {
+  success: '#16a34a', pending: '#f59e0b', failed: '#dc2626', refunded: '#64748b',
+};
+
+const TX_TYPE_LABEL: Record<string, string> = {
+  payment: 'Payment', refund: 'Refund', subscription: 'Subscription',
+  payout: 'Instructor Payout', failed_payment: 'Failed Payment',
+};
+
+const CALENDAR_COLOR: Record<string, string> = {
+  live_session: '#2563eb', deadline: '#dc2626', meeting: '#8b5cf6',
+  maintenance: '#f59e0b', course_launch: '#16a34a',
+};
+
+const INSIGHT_STYLE: Record<string, { bg: string; color: string }> = {
+  info:     { bg: '#eff6ff', color: '#2563eb' },
+  warning:  { bg: '#fffbeb', color: '#f59e0b' },
+  critical: { bg: '#fef2f2', color: '#dc2626' },
+};
+
+const CS_BTN: React.CSSProperties = {
+  fontSize: '0.6rem', padding: '2px 7px', borderRadius: 4,
+  border: '1px solid #e2e8f0', background: '#f8fafc', color: '#94a3b8',
+  cursor: 'not-allowed',
+};
+
+// ── Pending Approvals widget ───────────────────────────────────────────────────
+
+function PendingApprovalsCard({ data, loading }: { data: PendingApprovals | undefined; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div className="mn-db-card-title">Pending Approvals</div>
+          {data && data.total > 0 && (
+            <span style={{ background: '#fee2e2', color: '#dc2626', fontSize: '0.65rem', fontWeight: 700, padding: '1px 6px', borderRadius: 10 }}>
+              {data.total}
+            </span>
+          )}
+        </div>
+        <button style={CS_BTN} disabled title="Coming Soon">View All</button>
+      </div>
+      {loading ? <AnalyticsSpin /> : !data || data.items.length === 0 ? (
+        <EmptyMsg msg="No pending approvals." />
+      ) : (
+        <div>
+          {data.items.map(item => (
+            <div key={item.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '6px 0', borderBottom: '1px solid #f8fafc' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: '0.72rem', fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {item.title}
+                </div>
+                <div style={{ fontSize: '0.62rem', color: '#64748b', marginTop: 2 }}>
+                  {item.submittedBy} · {formatRelative(item.submittedAt)}
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3, flexShrink: 0 }}>
+                <span style={{ fontSize: '0.6rem', fontWeight: 600, padding: '2px 6px', borderRadius: 10, ...PRIORITY_STYLE[item.priority] }}>
+                  {item.priority}
+                </span>
+                <button style={CS_BTN} disabled title="Coming Soon">Review →</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Live Sessions widget ───────────────────────────────────────────────────────
+
+function LiveSessionsCard({ data, loading }: { data: LiveSessions | undefined; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header">
+        <div className="mn-db-card-title">Live Sessions</div>
+      </div>
+      {loading ? <AnalyticsSpin /> : !data ? <EmptyMsg msg="No session data." /> : (
+        <>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginBottom: 10 }}>
+            {([
+              { label: 'Active',    value: data.activeCount,          color: '#16a34a', bg: '#dcfce7' },
+              { label: 'Upcoming',  value: data.upcomingCount,        color: '#2563eb', bg: '#dbeafe' },
+              { label: 'Issues',    value: data.technicalIssuesCount, color: '#dc2626', bg: '#fee2e2' },
+            ] as const).map(s => (
+              <div key={s.label} style={{ background: s.bg, borderRadius: 8, padding: '6px 4px', textAlign: 'center' }}>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: s.color, lineHeight: 1 }}>{s.value}</div>
+                <div style={{ fontSize: '0.58rem', color: s.color, opacity: 0.85 }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+          {data.items.length === 0 ? <EmptyMsg msg="No sessions." /> : data.items.map(s => (
+            <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: '1px solid #f8fafc' }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', flexShrink: 0, background: s.status === 'active' ? '#16a34a' : '#2563eb' }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title}</div>
+                <div style={{ fontSize: '0.6rem', color: '#64748b' }}>{s.instructorName} · {formatRelative(s.startsAt)}</div>
+              </div>
+              {s.status === 'active' && (
+                <span style={{ fontSize: '0.6rem', color: '#64748b', flexShrink: 0 }}>{s.attendanceCount} 👥</span>
+              )}
+              <button style={CS_BTN} disabled title="Coming Soon">End</button>
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  );
+}
+
+// ── Tasks & Reminders widget ───────────────────────────────────────────────────
+
+function TasksRemindersCard({ data, loading }: { data: TaskItem[]; loading: boolean }) {
+  const pending = data.filter(t => t.status === 'pending').length;
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header">
+        <div className="mn-db-card-title">Tasks & Reminders</div>
+        {data.length > 0 && <span className="mn-db-pill">{pending} pending</span>}
+      </div>
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No tasks." /> : (
+        <div>
+          {data.map(t => (
+            <div key={t.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, padding: '5px 0', borderBottom: '1px solid #f8fafc', opacity: t.status === 'completed' ? 0.5 : 1 }}>
+              <div style={{
+                width: 13, height: 13, borderRadius: '50%', flexShrink: 0, marginTop: 2,
+                border: `2px solid ${t.status === 'completed' ? '#16a34a' : '#e2e8f0'}`,
+                background: t.status === 'completed' ? '#16a34a' : 'transparent',
+              }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: '0.7rem', fontWeight: t.status === 'pending' ? 600 : 400, color: '#0f172a', textDecoration: t.status === 'completed' ? 'line-through' : 'none' }}>
+                  {t.title}
+                </div>
+                {t.dueAt && t.status === 'pending' && (
+                  <div style={{ fontSize: '0.6rem', color: '#f59e0b', marginTop: 1 }}>Due {formatRelative(t.dueAt)}</div>
+                )}
+              </div>
+              <span style={{ fontSize: '0.6rem', fontWeight: 600, padding: '2px 5px', borderRadius: 10, flexShrink: 0, ...(PRIORITY_STYLE[t.priority] ?? {}) }}>
+                {t.priority}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Recent Transactions widget ─────────────────────────────────────────────────
+
+function RecentTransactionsCard({ data, loading }: { data: TransactionItem[]; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header">
+        <div className="mn-db-card-title">Recent Transactions</div>
+        <button style={CS_BTN} disabled title="Coming Soon">View All</button>
+      </div>
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No transactions." /> : (
+        <div>
+          {data.map(t => (
+            <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: '1px solid #f8fafc' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#0f172a' }}>{TX_TYPE_LABEL[t.type] ?? t.type}</div>
+                <div style={{ fontSize: '0.6rem', color: '#94a3b8' }}>{formatRelative(t.createdAt)}</div>
+              </div>
+              <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0f172a' }}>
+                  {t.type === 'refund' || t.type === 'payout' ? '-' : '+'}{t.currency} {t.amount.toFixed(2)}
+                </div>
+                <span style={{ fontSize: '0.6rem', fontWeight: 600, color: TX_STATUS_COLOR[t.status] ?? '#64748b' }}>{t.status}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Calendar & Events widget ───────────────────────────────────────────────────
+
+function CalendarEventsCard({ data, loading }: { data: CalendarEventItem[]; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header">
+        <div className="mn-db-card-title">Calendar & Events</div>
+      </div>
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No upcoming events." /> : (
+        <div>
+          {data.map(ev => {
+            const start = new Date(ev.startsAt);
+            const color = CALENDAR_COLOR[ev.type] ?? '#64748b';
+            return (
+              <div key={ev.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '5px 0', borderBottom: '1px solid #f8fafc' }}>
+                <div style={{ width: 28, flexShrink: 0, textAlign: 'center', background: '#f8fafc', borderRadius: 6, padding: '3px 4px' }}>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 700, color, lineHeight: 1 }}>{start.getDate()}</div>
+                  <div style={{ fontSize: '0.55rem', color: '#94a3b8', textTransform: 'uppercase' }}>
+                    {start.toLocaleDateString('en-US', { month: 'short' })}
+                  </div>
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ev.title}</div>
+                  <div style={{ fontSize: '0.6rem', color, marginTop: 1 }}>
+                    {ev.type.replace(/_/g, ' ')} · {start.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Reports Snapshot widget ────────────────────────────────────────────────────
+
+function ReportsSnapshotCard({ data, loading }: { data: ReportsSnapshot | undefined; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div className="mn-db-card-title">Reports Snapshot</div>
+          {data?.lastGeneratedAt && (
+            <span style={{ fontSize: '0.62rem', color: '#94a3b8' }}>last generated {formatRelative(data.lastGeneratedAt)}</span>
+          )}
+        </div>
+        <button style={CS_BTN} disabled title="Export — Coming Soon">Export</button>
+      </div>
+      {loading ? <AnalyticsSpin /> : !data || data.availableReports.length === 0 ? <EmptyMsg msg="No reports available." /> : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 8 }}>
+          {data.availableReports.map(r => (
+            <button key={r.key} disabled title="Coming Soon"
+              style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 8, padding: '9px 10px', textAlign: 'left', cursor: 'not-allowed' }}>
+              <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#374151', marginBottom: 2 }}>{r.label}</div>
+              <div style={{ fontSize: '0.6rem', color: '#94a3b8' }}>Coming soon</div>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── AI Insights widget ─────────────────────────────────────────────────────────
+
+function AiInsightsCard({ data, loading }: { data: AiInsightItem[]; loading: boolean }) {
+  return (
+    <div className="mn-db-card">
+      <div className="mn-db-card-header">
+        <div className="mn-db-card-title">AI Insights</div>
+      </div>
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No insights available." /> : (
+        <div>
+          {data.map(ins => {
+            const sev = INSIGHT_STYLE[ins.severity] ?? { bg: '#f8fafc', color: '#64748b' };
+            return (
+              <div key={ins.id} style={{ borderLeft: `3px solid ${sev.color}`, background: sev.bg, borderRadius: '0 6px 6px 0', padding: '7px 10px', marginBottom: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 2 }}>
+                  <span style={{ fontSize: '0.6rem', fontWeight: 700, color: sev.color, textTransform: 'uppercase' }}>{ins.severity}</span>
+                  <span style={{ fontSize: '0.6rem', color: '#94a3b8' }}>{formatRelative(ins.createdAt)}</span>
+                </div>
+                <div style={{ fontSize: '0.72rem', fontWeight: 600, color: '#0f172a', marginBottom: 3 }}>{ins.title}</div>
+                <div style={{ fontSize: '0.68rem', color: '#374151', lineHeight: 1.5 }}>{ins.message}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -417,20 +787,42 @@ function NotifIcon({ type }: { type: NotificationType }) {
 export default function DashboardPage() {
   const { user } = useAuth();
 
-  const [data, setData]           = useState<DashboardCoreResponse | null>(null);
-  const [loading, setLoading]     = useState(true);
-  const [error, setError]         = useState<string | null>(null);
-  const [refreshing, setRefreshing] = useState(false);
+  // Core dashboard state (TASK 5A)
+  const [data, setData]               = useState<DashboardCoreResponse | null>(null);
+  const [loading, setLoading]         = useState(true);
+  const [error, setError]             = useState<string | null>(null);
+  const [refreshing, setRefreshing]   = useState(false);
+  const [isDemoCore, setIsDemoCore]   = useState(false);
 
-  const greeting   = getGreeting();
-  const adminName  = data?.welcome?.adminName ?? user?.name ?? 'Admin';
+  // Admin widgets state (TASK 5C)
+  const [adminWidgets, setAdminWidgets]               = useState<AdminWidgetsResponse | null>(null);
+  const [widgetsLoading, setWidgetsLoading]           = useState(true);
+  const [widgetsError, setWidgetsError]               = useState<string | null>(null);
+  const [isDemoWidgets, setIsDemoWidgets]             = useState(false);
+
+  // Analytics state (TASK 5B.1)
+  const [analytics, setAnalytics]               = useState<DashboardAnalyticsResponse | null>(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(true);
+  const [analyticsError, setAnalyticsError]     = useState<string | null>(null);
+  const [isDemo, setIsDemo]                     = useState(false);
+
+  // Filter state
+  const [dateFrom, setDateFrom]     = useState('');
+  const [dateTo, setDateTo]         = useState('');
+  const [departmentId, setDeptId]   = useState('');
+  const [courseId, setCourseId]     = useState('');
+  const [appliedFilters, setApplied] = useState({ dateFrom: '', dateTo: '', departmentId: '', courseId: '' });
+
+  const greeting  = getGreeting();
+  const adminName = data?.welcome?.adminName ?? user?.name ?? 'Admin';
 
   const fetchData = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
     else { setLoading(true); setError(null); }
     try {
-      const d = await getDashboardCore();
+      const { data: d, isDemo: demo } = await getDashboardCore();
       setData(d);
+      setIsDemoCore(demo);
       setError(null);
     } catch {
       setError('Could not load dashboard data. Please try again.');
@@ -440,9 +832,62 @@ export default function DashboardPage() {
     }
   }, []);
 
-  useEffect(() => { fetchData(); }, [fetchData]);
+  const fetchAnalytics = useCallback(async () => {
+    setAnalyticsLoading(true);
+    setAnalyticsError(null);
+    try {
+      const { data: d, isDemo: demo } = await getDashboardAnalytics({
+        dateFrom:     appliedFilters.dateFrom     || null,
+        dateTo:       appliedFilters.dateTo       || null,
+        departmentId: appliedFilters.departmentId || null,
+      });
+      setAnalytics(d);
+      setIsDemo(demo);
+    } catch {
+      setAnalyticsError('Could not load analytics data.');
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  }, [appliedFilters]);
 
-  const kpis = data?.kpis;
+  const fetchAdminWidgets = useCallback(async () => {
+    setWidgetsLoading(true);
+    setWidgetsError(null);
+    try {
+      const { data: d, isDemo: demo } = await getAdminWidgets({
+        dateFrom:     appliedFilters.dateFrom     || null,
+        dateTo:       appliedFilters.dateTo       || null,
+        departmentId: appliedFilters.departmentId || null,
+        courseId:     appliedFilters.courseId     || null,
+      });
+      setAdminWidgets(d);
+      setIsDemoWidgets(demo);
+    } catch {
+      setWidgetsError('Could not load admin widgets.');
+    } finally {
+      setWidgetsLoading(false);
+    }
+  }, [appliedFilters]);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+  useEffect(() => { fetchAnalytics(); }, [fetchAnalytics]);
+  useEffect(() => { fetchAdminWidgets(); }, [fetchAdminWidgets]);
+
+  function applyFilters() { setApplied({ dateFrom, dateTo, departmentId, courseId }); }
+  function clearFilters()  {
+    setDateFrom(''); setDateTo(''); setDeptId(''); setCourseId('');
+    setApplied({ dateFrom: '', dateTo: '', departmentId: '', courseId: '' });
+  }
+
+  const kpis        = data?.kpis;
+  const depts       = analytics?.topDepartments ?? [];
+  const maxDept     = depts.length > 0 ? Math.max(...depts.map(d => d.usersCount)) : 1;
+  const perfOverview = analytics?.performanceOverview;
+  const completion  = analytics?.courseCompletion;
+  const activity    = analytics?.learningActivity ?? [];
+  const roles       = analytics?.usersByRole ?? [];
+
+  const fi: React.CSSProperties = { padding: '3px 7px', fontSize: '0.72rem', border: '1px solid #e2e8f0', borderRadius: 5, color: '#374151', background: '#fff' };
 
   return (
     <AdminLayout pageTitle="Dashboard Overview">
@@ -460,13 +905,10 @@ export default function DashboardPage() {
             </svg>
             {formatDate()}
           </div>
-          <button
-            className="mn-db-refresh-btn"
-            onClick={() => fetchData(true)}
-            disabled={loading || refreshing}
-            title="Refresh dashboard"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+          <button className="mn-db-refresh-btn" onClick={() => { fetchData(true); fetchAnalytics(); fetchAdminWidgets(); }}
+            disabled={loading || refreshing} title="Refresh dashboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+              strokeLinecap="round" strokeLinejoin="round"
               style={{ animation: refreshing ? 'mn-spin 0.65s linear infinite' : 'none' }}>
               <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
             </svg>
@@ -474,27 +916,67 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Error banner ── */}
+      {/* ── Core error banner ── */}
       {error && !loading && (
-        <div className="mn-alert-error" style={{ marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="mn-alert-error" style={{ marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span>{error}</span>
           <button className="mn-btn-outline" style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem' }} onClick={() => fetchData()}>Retry</button>
         </div>
       )}
 
-      {/* ── KPI row — 5 columns ── */}
+      {/* ── KPI row ── */}
       <div className="mn-lkpi-grid">
         {loading ? (
           Array.from({ length: 5 }, (_, i) => <KpiSkeleton key={i} />)
         ) : kpis ? (
           <>
-            <LKpiCard label="Total Users"     value={kpis.totalUsers.toLocaleString()}         iconType="users"       iconBg="#f3e8ff" iconColor="#9333ea" />
-            <LKpiCard label="Active Learners" value={kpis.activeStudents.toLocaleString()}     iconType="learners"    iconBg="#dcfce7" iconColor="#16a34a" />
-            <LKpiCard label="Courses"         value={kpis.publishedCourses.toLocaleString()}   iconType="courses"     iconBg="#dbeafe" iconColor="#2563eb" />
-            <LKpiCard label="Completions"     value={kpis.certificatesIssued.toLocaleString()} iconType="completions" iconBg="#fed7aa" iconColor="#ea580c" />
-            <LKpiCard label="Revenue"         value={`$${kpis.totalRevenue.toLocaleString()}`} iconType="revenue"     iconBg="#d1fae5" iconColor="#059669" />
+            <LKpiCard label="Total Users"     value={kpis.totalUsers.toLocaleString()}          iconType="users"       iconBg="#f3e8ff" iconColor="#9333ea" />
+            <LKpiCard label="Active Learners" value={kpis.activeStudents.toLocaleString()}      iconType="learners"    iconBg="#dcfce7" iconColor="#16a34a" />
+            <LKpiCard label="Courses"         value={kpis.publishedCourses.toLocaleString()}    iconType="courses"     iconBg="#dbeafe" iconColor="#2563eb" />
+            <LKpiCard label="Completions"     value={kpis.certificatesIssued.toLocaleString()}  iconType="completions" iconBg="#fed7aa" iconColor="#ea580c" />
+            <LKpiCard label="Revenue"         value={`$${kpis.totalRevenue.toLocaleString()}`}  iconType="revenue"     iconBg="#d1fae5" iconColor="#059669" />
           </>
         ) : null}
+      </div>
+
+      {/* ── Analytics section header + compact filter ── */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8, gap: 8, flexWrap: 'wrap' }}>
+        {/* Left: label + demo badge + error */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151' }}>Analytics</span>
+          {isDemo && (
+            <span style={{ fontSize: '0.63rem', padding: '2px 7px', background: '#fef9c3', border: '1px solid #fde047', borderRadius: 4, color: '#854d0e', fontWeight: 500 }}>
+              Demo analytics data
+            </span>
+          )}
+          {analyticsLoading && <div className="mn-spinner" style={{ borderTopColor: '#2563eb', width: 12, height: 12, borderWidth: 2 }} />}
+          {analyticsError && !analyticsLoading && (
+            <span style={{ fontSize: '0.68rem', color: '#ef4444' }}>
+              {analyticsError}
+              <button onClick={fetchAnalytics} style={{ marginLeft: 5, fontSize: '0.68rem', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Retry</button>
+            </span>
+          )}
+        </div>
+        {/* Right: compact date / dept filter */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
+          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} style={fi} title="Date from" />
+          <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>–</span>
+          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} style={fi} title="Date to" />
+          <input type="text" placeholder="Dept. ID" value={departmentId}
+            onChange={e => setDeptId(e.target.value)} style={{ ...fi, width: 74 }} />
+          <input type="text" placeholder="Course ID" value={courseId}
+            onChange={e => setCourseId(e.target.value)} style={{ ...fi, width: 74 }} />
+          <button onClick={applyFilters}
+            style={{ padding: '3px 10px', fontSize: '0.72rem', fontWeight: 600, background: '#2563eb', color: '#fff', border: 'none', borderRadius: 5, cursor: 'pointer' }}>
+            Filter
+          </button>
+          {(appliedFilters.dateFrom || appliedFilters.dateTo || appliedFilters.departmentId || appliedFilters.courseId) && (
+            <button onClick={clearFilters}
+              style={{ padding: '3px 8px', fontSize: '0.72rem', color: '#64748b', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 5, cursor: 'pointer' }}>
+              ✕
+            </button>
+          )}
+        </div>
       </div>
 
       {/* ── Charts row: Activity | Roles | Recent Activity ── */}
@@ -510,11 +992,13 @@ export default function DashboardPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <span className="mn-db-legend-dot" style={{ '--dot-color': '#2563eb' } as React.CSSProperties}>Enrolled</span>
               <span className="mn-db-legend-dot" style={{ '--dot-color': '#16a34a' } as React.CSSProperties}>Completed</span>
-              <span className="mn-db-pill">This Month</span>
             </div>
           </div>
-          {/* TODO: replace with real chart API endpoint when available */}
-          <LearningActivityChart />
+          {analyticsLoading ? (
+            <div className="mn-skeleton" style={{ height: 130, borderRadius: 8 }} />
+          ) : (
+            <LearningActivityChart data={activity} />
+          )}
         </div>
 
         {/* Users by Role */}
@@ -522,20 +1006,32 @@ export default function DashboardPage() {
           <div className="mn-db-card-header">
             <div className="mn-db-card-title">Users by Role</div>
           </div>
-          {/* TODO: replace with real role distribution from backend */}
-          <UsersRoleDonut />
+          {analyticsLoading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 28 }}>
+              <div className="mn-skeleton" style={{ width: 100, height: 100, borderRadius: '50%' }} />
+            </div>
+          ) : (
+            <UsersRoleDonut data={roles} />
+          )}
         </div>
 
         {/* Recent Activity */}
         <div className="mn-db-card">
           <div className="mn-db-card-header">
-            <div className="mn-db-card-title">Recent Activity</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div className="mn-db-card-title">Recent Activity</div>
+              {isDemoCore && (
+                <span style={{ fontSize: '0.63rem', padding: '2px 7px', background: '#fef9c3', border: '1px solid #fde047', borderRadius: 4, color: '#854d0e', fontWeight: 500 }}>
+                  Demo dashboard data
+                </span>
+              )}
+            </div>
             <button className="mn-db-view-all">View All</button>
           </div>
           {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: 32 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
           ) : (data?.recentActivities ?? []).length === 0 ? (
-            <p style={{ fontSize: '0.82rem', color: '#94a3b8', textAlign: 'center', padding: '32px 0' }}>No recent activity.</p>
+            <EmptyMsg msg="No recent activity." />
           ) : (
             <div>
               {(data?.recentActivities ?? []).map((item: ActivityItem, i: number) => (
@@ -545,9 +1041,7 @@ export default function DashboardPage() {
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div className="mn-db-activity-text">
-                      <strong>{item.actorName}</strong> {item.title}
-                    </div>
+                    <div className="mn-db-activity-text"><strong>{item.actorName}</strong> {item.title}</div>
                     <div className="mn-db-activity-time">{formatRelative(item.createdAt)}</div>
                   </div>
                 </div>
@@ -565,26 +1059,43 @@ export default function DashboardPage() {
           <div className="mn-db-card-header">
             <div className="mn-db-card-title">Course Completion Rate</div>
           </div>
-          {/* TODO: replace with real completion data from backend */}
-          <CompletionDonut pct={68} />
+          {analyticsLoading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 24 }}>
+              <div className="mn-skeleton" style={{ width: 96, height: 96, borderRadius: '50%' }} />
+            </div>
+          ) : (
+            <CompletionDonut
+              pct={completion?.averageCompletion ?? 0}
+              categories={completion?.categories ?? []}
+            />
+          )}
         </div>
 
         {/* Performance Overview */}
         <div className="mn-db-card">
           <div className="mn-db-card-header">
             <div className="mn-db-card-title">Performance Overview</div>
-            <span className="mn-db-pill">This Month</span>
+            <span className="mn-db-pill">This Period</span>
           </div>
-          {/* TODO: replace with real performance metrics from backend */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-            {PERF_METRICS.map((m) => (
-              <div key={m.label} style={{ background: '#f8fafc', borderRadius: 8, padding: '8px 10px' }}>
-                <div style={{ fontSize: '0.625rem', color: '#64748b', marginBottom: 4 }}>{m.label}</div>
-                <div style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a', marginBottom: 4 }}>{m.value}</div>
-                <SparkLine data={m.spark} color={m.color} />
-              </div>
-            ))}
-          </div>
+          {analyticsLoading ? (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {Array.from({ length: 4 }, (_, i) => <div key={i} className="mn-skeleton" style={{ height: 56, borderRadius: 8 }} />)}
+            </div>
+          ) : perfOverview ? (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {[
+                { label: 'Avg. Score',   value: `${perfOverview.averageScore.toFixed(1)}%`,    color: '#2563eb' },
+                { label: 'Pass Rate',    value: `${perfOverview.passRate.toFixed(1)}%`,         color: '#16a34a' },
+                { label: 'Engagement',   value: `${perfOverview.engagement.toFixed(1)}%`,       color: '#8b5cf6' },
+                { label: 'Satisfaction', value: `${perfOverview.satisfaction.toFixed(1)}/5`,    color: '#f59e0b' },
+              ].map(m => (
+                <div key={m.label} style={{ background: '#f8fafc', borderRadius: 8, padding: '8px 10px' }}>
+                  <div style={{ fontSize: '0.625rem', color: '#64748b', marginBottom: 4 }}>{m.label}</div>
+                  <div style={{ fontSize: '1rem', fontWeight: 700, color: m.color }}>{m.value}</div>
+                </div>
+              ))}
+            </div>
+          ) : <EmptyMsg msg="No performance data." />}
         </div>
 
         {/* Top Departments */}
@@ -592,20 +1103,21 @@ export default function DashboardPage() {
           <div className="mn-db-card-header">
             <div className="mn-db-card-title">Top Departments</div>
           </div>
-          {/* TODO: replace with real department data from backend */}
-          <div>
-            {DEPT_DATA.map((d, i) => (
-              <div key={d.name} style={{ marginBottom: i < DEPT_DATA.length - 1 ? 8 : 0 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                  <span style={{ fontSize: '0.625rem', color: '#374151', fontWeight: 500 }}>{d.name}</span>
-                  <span style={{ fontSize: '0.625rem', fontWeight: 700, color: '#0f172a' }}>{d.count.toLocaleString()}</span>
-                </div>
-                <div style={{ height: 4, background: '#f1f5f9', borderRadius: 3, overflow: 'hidden' }}>
-                  <div style={{ width: `${d.pct}%`, height: '100%', borderRadius: 3, background: 'linear-gradient(90deg, #2563eb, #60a5fa)', transition: 'width 1s ease 0.3s' }} />
-                </div>
+          {analyticsLoading ? (
+            <div>{Array.from({ length: 4 }, (_, i) => <div key={i} className="mn-skeleton" style={{ height: 24, borderRadius: 4, marginBottom: 8 }} />)}</div>
+          ) : depts.length === 0 ? (
+            <EmptyMsg msg="No department data." />
+          ) : depts.map((d, i) => (
+            <div key={d.id} style={{ marginBottom: i < depts.length - 1 ? 8 : 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                <span style={{ fontSize: '0.625rem', color: '#374151', fontWeight: 500 }}>{d.name}</span>
+                <span style={{ fontSize: '0.625rem', fontWeight: 700, color: '#0f172a' }}>{d.usersCount.toLocaleString()}</span>
               </div>
-            ))}
-          </div>
+              <div style={{ height: 4, background: '#f1f5f9', borderRadius: 3, overflow: 'hidden' }}>
+                <div style={{ width: `${(d.usersCount / maxDept) * 100}%`, height: '100%', borderRadius: 3, background: 'linear-gradient(90deg, #2563eb, #60a5fa)', transition: 'width 1s ease 0.3s' }} />
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Notifications */}
@@ -617,7 +1129,7 @@ export default function DashboardPage() {
           {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: 32 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
           ) : (data?.notificationsPreview ?? []).length === 0 ? (
-            <p style={{ fontSize: '0.82rem', color: '#94a3b8', textAlign: 'center', padding: '32px 0' }}>No notifications.</p>
+            <EmptyMsg msg="No notifications." />
           ) : (
             <div>
               {(data?.notificationsPreview ?? []).map((n: NotificationItem) => (
@@ -638,8 +1150,21 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      {/* ── Extended analytics row 1: Revenue | User Analytics | Course Analytics ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 10, marginBottom: 10 }}>
+        <RevenueCard        data={analytics?.revenueOverview}  loading={analyticsLoading} />
+        <UserAnalyticsCard  data={analytics?.userAnalytics}    loading={analyticsLoading} />
+        <CourseAnalyticsCard data={analytics?.courseAnalytics} loading={analyticsLoading} />
+      </div>
+
+      {/* ── Extended analytics row 2: Instructor Performance | Student Engagement ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 10, marginBottom: 10 }}>
+        <InstructorPerformanceCard data={analytics?.instructorPerformance} loading={analyticsLoading} />
+        <StudentEngagementCard     data={analytics?.studentEngagement}     loading={analyticsLoading} />
+      </div>
+
       {/* ── Quick Actions ── */}
-      <div className="mn-db-card" style={{ marginBottom: 0 }}>
+      <div className="mn-db-card" style={{ marginBottom: 10 }}>
         <div className="mn-db-card-header" style={{ marginBottom: 8 }}>
           <div className="mn-db-card-title">Quick Actions</div>
         </div>
@@ -648,22 +1173,60 @@ export default function DashboardPage() {
             <p style={{ fontSize: '0.82rem', color: '#94a3b8', gridColumn: '1 / -1', textAlign: 'center', padding: '16px 0' }}>No actions available.</p>
           ) : (
             (data?.quickActions ?? []).map((qa: QuickActionItem) => (
-              <button
-                key={qa.key}
-                className="mn-db-qa-btn"
-                disabled={!qa.enabled}
+              <button key={qa.key} className="mn-db-qa-btn" disabled={!qa.enabled}
                 onClick={() => { if (qa.path) window.location.href = qa.path; }}
-                style={{ opacity: qa.enabled ? 1 : 0.45, cursor: qa.enabled ? 'pointer' : 'not-allowed' }}
-              >
-                <div className="mn-db-qa-icon">
-                  <QaIcon actionKey={qa.key} />
-                </div>
+                style={{ opacity: qa.enabled ? 1 : 0.45, cursor: qa.enabled ? 'pointer' : 'not-allowed' }}>
+                <div className="mn-db-qa-icon"><QaIcon actionKey={qa.key} /></div>
                 <span className="mn-db-qa-label">{qa.label}</span>
               </button>
             ))
           )}
         </div>
       </div>
+
+      {/* ── Admin Widgets section header ── */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8, gap: 8, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151' }}>Admin Widgets</span>
+          {isDemoWidgets && (
+            <span style={{ fontSize: '0.63rem', padding: '2px 7px', background: '#fef9c3', border: '1px solid #fde047', borderRadius: 4, color: '#854d0e', fontWeight: 500 }}>
+              Demo admin widgets data
+            </span>
+          )}
+          {widgetsLoading && <div className="mn-spinner" style={{ borderTopColor: '#2563eb', width: 12, height: 12, borderWidth: 2 }} />}
+          {widgetsError && !widgetsLoading && (
+            <span style={{ fontSize: '0.68rem', color: '#ef4444' }}>
+              {widgetsError}
+              <button onClick={fetchAdminWidgets} style={{ marginLeft: 5, fontSize: '0.68rem', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Retry</button>
+            </span>
+          )}
+        </div>
+        {/* Export button — disabled until backend export endpoint is ready */}
+        <button disabled title="Export Dashboard — Coming Soon"
+          style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', fontSize: '0.72rem', fontWeight: 600, background: '#f8fafc', color: '#94a3b8', border: '1px solid #e2e8f0', borderRadius: 5, cursor: 'not-allowed' }}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export Dashboard
+        </button>
+      </div>
+
+      {/* ── Admin widgets row 1: Pending Approvals | Live Sessions | Tasks & Reminders ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 10, marginBottom: 10 }}>
+        <PendingApprovalsCard data={adminWidgets?.pendingApprovals}        loading={widgetsLoading} />
+        <LiveSessionsCard     data={adminWidgets?.liveSessions}            loading={widgetsLoading} />
+        <TasksRemindersCard   data={adminWidgets?.tasksAndReminders ?? []} loading={widgetsLoading} />
+      </div>
+
+      {/* ── Admin widgets row 2: Recent Transactions | Calendar Events | AI Insights ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 10, marginBottom: 10 }}>
+        <RecentTransactionsCard data={adminWidgets?.recentTransactions ?? []} loading={widgetsLoading} />
+        <CalendarEventsCard     data={adminWidgets?.calendarEvents    ?? []} loading={widgetsLoading} />
+        <AiInsightsCard         data={adminWidgets?.aiInsights         ?? []} loading={widgetsLoading} />
+      </div>
+
+      {/* ── Reports Snapshot (full-width) ── */}
+      <ReportsSnapshotCard data={adminWidgets?.reportsSnapshot} loading={widgetsLoading} />
 
     </AdminLayout>
   );

@@ -43,33 +43,63 @@ async function getDashboardCore(admin) {
   };
 }
 
-async function getDashboardAnalytics() {
+async function getDashboardAnalytics(filters = {}) {
+  // TODO: replace with real DB queries when tables are ready
   return {
-    success: true,
-    data: {
-      learningActivity: [],
-      usersByRole: [],
-      revenueOverview: {
-        totalRevenue: 0,
-        monthlyRevenue: 0,
-        currency: "USD",
-      },
-      userAnalytics: {
-        totalUsers: 0,
-        activeUsers: 0,
-        newUsers: 0,
-      },
-      courseAnalytics: {
-        totalCourses: 0,
-        activeCourses: 0,
-        completedCourses: 0,
-      },
-      courseCompletionRate: {
-        rate: 0,
-        completed: 0,
-        total: 0,
-      },
+    filters: {
+      dateFrom:     filters.dateFrom     || null,
+      dateTo:       filters.dateTo       || null,
+      departmentId: filters.departmentId || null,
     },
+    learningActivity: [],
+    usersByRole:      [],
+    revenueOverview: {
+      dailyRevenue:        0,
+      monthlyRevenue:      0,
+      annualRevenue:       0,
+      subscriptionRevenue: 0,
+      refundTotal:         0,
+      instructorPayouts:   0,
+      growthPercentage:    0,
+    },
+    userAnalytics: {
+      newRegistrations: 0,
+      activeUsers:      0,
+      retentionRate:    0,
+      verifiedUsers:    0,
+      suspendedUsers:   0,
+    },
+    courseAnalytics: {
+      totalCourses:           0,
+      activeCourses:          0,
+      pendingApprovalCourses: 0,
+      averageCompletionRate:  0,
+      mostPopularCourse:      null,
+      averageQuizScore:       0,
+    },
+    courseCompletion: {
+      averageCompletion: 0,
+      categories:        [],
+    },
+    instructorPerformance: {
+      averageRating:         0,
+      averageCompletionRate: 0,
+      averageAttendanceRate: 0,
+      averageReviewScore:    0,
+    },
+    studentEngagement: {
+      dailyActiveStudents:        0,
+      quizParticipationRate:      0,
+      assignmentCompletionRate:   0,
+      averageLearningTimeMinutes: 0,
+    },
+    performanceOverview: {
+      averageScore: 0,
+      passRate:     0,
+      engagement:   0,
+      satisfaction: 0,
+    },
+    topDepartments: [],
   };
 }
 
