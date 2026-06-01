@@ -73,4 +73,33 @@ async function getDashboardAnalytics() {
   };
 }
 
-module.exports = { getDashboardCore, getDashboardAnalytics };
+async function getDashboardAdminWidgets(query = {}) {
+  const dateFrom = query.dateFrom || null;
+  const dateTo   = query.dateTo   || null;
+  const status   = query.status   || "all";
+
+  const rawLimit = parseInt(query.limit, 10);
+  const limit    = Number.isFinite(rawLimit) && rawLimit >= 1 && rawLimit <= 20 ? rawLimit : 5;
+
+  return {
+    // TODO: replace with real DB queries when tables are ready
+    filters: { dateFrom, dateTo, status, limit },
+
+    pendingApprovals: {
+      summary: { total: 0, pending: 0, approved: 0, rejected: 0 },
+      list: [],
+    },
+
+    liveSessions: {
+      summary: { activeNow: 0, scheduledToday: 0, completedToday: 0 },
+      list: [],
+    },
+
+    tasksAndReminders: {
+      summary: { total: 0, dueToday: 0, overdue: 0, completed: 0 },
+      list: [],
+    },
+  };
+}
+
+module.exports = { getDashboardCore, getDashboardAnalytics, getDashboardAdminWidgets };
