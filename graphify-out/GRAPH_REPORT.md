@@ -1,21 +1,22 @@
-# Graph Report - mindnavy LMS  (2026-05-31)
+# Graph Report - mindnavy LMS  (2026-06-01)
 
 ## Corpus Check
-- 57 files · ~55,316 words
+- 57 files · ~58,517 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 455 nodes · 652 edges · 24 communities (21 shown, 3 thin omitted)
+- 496 nodes · 706 edges · 25 communities (21 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4008f633`
+- Built from commit: `c4e55d42`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - [[_COMMUNITY_Community 0|Community 0]]
+- [[_COMMUNITY_Community 1|Community 1]]
 - [[_COMMUNITY_Community 2|Community 2]]
 - [[_COMMUNITY_Community 3|Community 3]]
 - [[_COMMUNITY_Community 4|Community 4]]
@@ -40,7 +41,7 @@
 1. `compilerOptions` - 17 edges
 2. `useAuth()` - 17 edges
 3. `compilerOptions` - 16 edges
-4. `getStoredToken()` - 9 edges
+4. `getStoredToken()` - 10 edges
 5. `scripts` - 8 edges
 6. `createAuditLog()` - 8 edges
 7. `adminFetch()` - 8 edges
@@ -60,11 +61,11 @@
 - `AdminLayout()` --calls--> `useAuth()`  [EXTRACTED]
   frontend/src/layouts/AdminLayout.tsx → frontend/src/AuthContext.tsx
 
-## Communities (24 total, 3 thin omitted)
+## Communities (25 total, 4 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.06
-Nodes (18): updatePassword(), Props, getPasswordStrength(), PasswordStrengthMeter(), REQUIREMENTS, Props, ResetPasswordForm(), Props (+10 more)
+Nodes (17): Props, getPasswordStrength(), PasswordStrengthMeter(), REQUIREMENTS, Props, ResetPasswordForm(), Props, supabase (+9 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.09
@@ -83,8 +84,8 @@ Cohesion: 0.08
 Nodes (46): adminForgotPasswordController(), adminGetTrustedDevicesController(), adminLoginController(), adminLogoutController(), adminMeController(), adminResetPasswordController(), adminRevokeTrustedDeviceController(), adminSendOtpController() (+38 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.04
-Nodes (19): ACTIVITY_ICON_BG, ACTIVITY_ICON_COLOR, AVATAR_COLORS, CHART_COMPLETED, CHART_ENROLLED, CHART_LABELS, COMPLETION_COURSES, DEPT_DATA (+11 more)
+Cohesion: 0.03
+Nodes (25): ACTIVITY_ICON_BG, ACTIVITY_ICON_COLOR, AVATAR_COLORS, CALENDAR_COLOR, CHART_COMPLETED, CHART_ENROLLED, CHART_LABELS, COMPLETION_COURSES (+17 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.11
@@ -108,19 +109,19 @@ Nodes (5): code:js (export default defineConfig([), code:js (// eslint.config.js
 
 ### Community 19 - "Community 19"
 Cohesion: 0.09
-Nodes (17): adminRoutes, app, cors, corsOptions, dashboardRoutes, express, server, dashboardService (+9 more)
+Nodes (19): adminRoutes, app, cors, corsOptions, dashboardRoutes, express, server, dashboardService (+11 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.11
-Nodes (23): adminFetch(), AdminUser, apiForgotPassword(), apiGetMe(), apiLogin(), apiLogout(), apiResetPassword(), apiSendOtp() (+15 more)
+Cohesion: 0.12
+Nodes (24): adminFetch(), AdminUser, apiForgotPassword(), apiGetMe(), apiLogin(), apiLogout(), apiResetPassword(), apiSendOtp() (+16 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.07
-Nodes (29): ActivityItem, ActivityType, AlertSeverity, AlertStatus, AnalyticsFilters, CourseAnalytics, CourseCompletion, CourseCompletionCategory (+21 more)
+Cohesion: 0.04
+Nodes (50): ActivityItem, ActivityType, AdminWidgetsFilters, AiInsightItem, AlertSeverity, AlertStatus, AnalyticsFilters, ApprovalPriority (+42 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.24
-Nodes (9): getStoredToken(), ANALYTICS_MOCK, AnalyticsParams, CORE_MOCK, getDashboardAnalytics(), getDashboardCore(), MOCK, DashboardAnalyticsResponse (+1 more)
+Cohesion: 0.18
+Nodes (13): getStoredToken(), ADMIN_WIDGETS_MOCK, AdminWidgetsParams, ANALYTICS_MOCK, AnalyticsParams, CORE_MOCK, getAdminWidgets(), getDashboardAnalytics() (+5 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.67
@@ -131,23 +132,23 @@ Cohesion: 0.08
 Nodes (14): LoginForm(), Props, AdminLayout(), NAV, NAV_SECTIONS, NavItem, NavSection, Props (+6 more)
 
 ## Knowledge Gaps
-- **200 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+195 more)
+- **223 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+218 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `useAuth()` connect `Community 24` to `Community 2`, `Community 20`, `Community 6`, `Community 23`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+  _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **Why does `getStoredToken()` connect `Community 22` to `Community 2`, `Community 20`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._
 - **Why does `supabase` connect `Community 0` to `Community 24`, `Community 20`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _200 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _223 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06280193236714976 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06105457909343201 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.08858858858858859 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**

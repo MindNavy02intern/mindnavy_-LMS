@@ -625,6 +625,15 @@
       "norm_label": "getdashboardanalytics()"
     },
     {
+      "label": "getDashboardAdminWidgets()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/dashboard.controller.js",
+      "source_location": "L24",
+      "id": "controllers_dashboard_controller_getdashboardadminwidgets",
+      "community": 19,
+      "norm_label": "getdashboardadminwidgets()"
+    },
+    {
       "label": "auth.middleware.js",
       "file_type": "code",
       "source_file": "backend/src/middlewares/auth.middleware.js",
@@ -760,19 +769,19 @@
       "norm_label": "{ requireadminauth }"
     },
     {
-      "label": "{\r\n  getDashboardCore,\r\n  getDashboardAnalytics,\r\n}",
+      "label": "{\r\n  getDashboardCore,\r\n  getDashboardAnalytics,\r\n  getDashboardAdminWidgets,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/routes/dashboard.routes.js",
       "source_location": "L4",
-      "id": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics",
+      "id": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics_getdashboardadminwidgets",
       "community": 19,
-      "norm_label": "{\r\n  getdashboardcore,\r\n  getdashboardanalytics,\r\n}"
+      "norm_label": "{\r\n  getdashboardcore,\r\n  getdashboardanalytics,\r\n  getdashboardadminwidgets,\r\n}"
     },
     {
       "label": "router",
       "file_type": "code",
       "source_file": "backend/src/routes/dashboard.routes.js",
-      "source_location": "L9",
+      "source_location": "L10",
       "id": "routes_dashboard_routes_router",
       "community": 19,
       "norm_label": "router"
@@ -1037,6 +1046,15 @@
       "id": "services_dashboard_service_getdashboardanalytics",
       "community": 19,
       "norm_label": "getdashboardanalytics()"
+    },
+    {
+      "label": "getDashboardAdminWidgets()",
+      "file_type": "code",
+      "source_file": "backend/src/services/dashboard.service.js",
+      "source_location": "L106",
+      "id": "services_dashboard_service_getdashboardadminwidgets",
+      "community": 19,
+      "norm_label": "getdashboardadminwidgets()"
     },
     {
       "label": "otp.js",
@@ -2059,7 +2077,7 @@
       "label": "CORE_MOCK",
       "file_type": "code",
       "source_file": "frontend/src/api/dashboard.ts",
-      "source_location": "L10",
+      "source_location": "L11",
       "id": "api_dashboard_core_mock",
       "community": 22,
       "norm_label": "core_mock"
@@ -2068,7 +2086,7 @@
       "label": "getDashboardCore()",
       "file_type": "code",
       "source_file": "frontend/src/api/dashboard.ts",
-      "source_location": "L63",
+      "source_location": "L64",
       "id": "api_dashboard_getdashboardcore",
       "community": 22,
       "norm_label": "getdashboardcore()"
@@ -2077,7 +2095,7 @@
       "label": "AnalyticsParams",
       "file_type": "code",
       "source_file": "frontend/src/api/dashboard.ts",
-      "source_location": "L96",
+      "source_location": "L97",
       "id": "api_dashboard_analyticsparams",
       "community": 22,
       "norm_label": "analyticsparams"
@@ -2086,7 +2104,7 @@
       "label": "ANALYTICS_MOCK",
       "file_type": "code",
       "source_file": "frontend/src/api/dashboard.ts",
-      "source_location": "L103",
+      "source_location": "L104",
       "id": "api_dashboard_analytics_mock",
       "community": 22,
       "norm_label": "analytics_mock"
@@ -2095,10 +2113,37 @@
       "label": "getDashboardAnalytics()",
       "file_type": "code",
       "source_file": "frontend/src/api/dashboard.ts",
-      "source_location": "L180",
+      "source_location": "L181",
       "id": "api_dashboard_getdashboardanalytics",
       "community": 22,
       "norm_label": "getdashboardanalytics()"
+    },
+    {
+      "label": "AdminWidgetsParams",
+      "file_type": "code",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L224",
+      "id": "api_dashboard_adminwidgetsparams",
+      "community": 22,
+      "norm_label": "adminwidgetsparams"
+    },
+    {
+      "label": "ADMIN_WIDGETS_MOCK",
+      "file_type": "code",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L232",
+      "id": "api_dashboard_admin_widgets_mock",
+      "community": 22,
+      "norm_label": "admin_widgets_mock"
+    },
+    {
+      "label": "getAdminWidgets()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L294",
+      "id": "api_dashboard_getadminwidgets",
+      "community": 22,
+      "norm_label": "getadminwidgets()"
     },
     {
       "label": "index.ts",
@@ -2151,7 +2196,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L25",
       "id": "api_passwordrecovery_updatepassword",
-      "community": 0,
+      "community": 20,
       "norm_label": "updatepassword()"
     },
     {
@@ -2466,7 +2511,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_ui_loadingspinner_tsx",
-      "community": 20,
+      "community": 0,
       "norm_label": "loadingspinner.tsx"
     },
     {
@@ -2475,7 +2520,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "ui_loadingspinner_loadingspinner",
-      "community": 20,
+      "community": 0,
       "norm_label": "loadingspinner()"
     },
     {
@@ -2644,7 +2689,7 @@
       "label": "getGreeting()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L26",
+      "source_location": "L34",
       "id": "pages_dashboardpage_getgreeting",
       "community": 23,
       "norm_label": "getgreeting()"
@@ -2653,16 +2698,16 @@
       "label": "formatRelative()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L33",
+      "source_location": "L41",
       "id": "pages_dashboardpage_formatrelative",
-      "community": 6,
+      "community": 1,
       "norm_label": "formatrelative()"
     },
     {
       "label": "formatDate()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L43",
+      "source_location": "L51",
       "id": "pages_dashboardpage_formatdate",
       "community": 23,
       "norm_label": "formatdate()"
@@ -2671,7 +2716,7 @@
       "label": "KpiIcon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L54",
+      "source_location": "L62",
       "id": "pages_dashboardpage_kpiicon",
       "community": 6,
       "norm_label": "kpiicon()"
@@ -2680,7 +2725,7 @@
       "label": "QaIcon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L86",
+      "source_location": "L94",
       "id": "pages_dashboardpage_qaicon",
       "community": 6,
       "norm_label": "qaicon()"
@@ -2689,7 +2734,7 @@
       "label": "LKpiCardProps",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L126",
+      "source_location": "L134",
       "id": "pages_dashboardpage_lkpicardprops",
       "community": 6,
       "norm_label": "lkpicardprops"
@@ -2698,7 +2743,7 @@
       "label": "LKpiCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L127",
+      "source_location": "L135",
       "id": "pages_dashboardpage_lkpicard",
       "community": 6,
       "norm_label": "lkpicard()"
@@ -2707,7 +2752,7 @@
       "label": "KpiSkeleton()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L141",
+      "source_location": "L149",
       "id": "pages_dashboardpage_kpiskeleton",
       "community": 6,
       "norm_label": "kpiskeleton()"
@@ -2716,7 +2761,7 @@
       "label": "StatRow()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L155",
+      "source_location": "L163",
       "id": "pages_dashboardpage_statrow",
       "community": 6,
       "norm_label": "statrow()"
@@ -2725,7 +2770,7 @@
       "label": "AnalyticsSpin()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L166",
+      "source_location": "L174",
       "id": "pages_dashboardpage_analyticsspin",
       "community": 6,
       "norm_label": "analyticsspin()"
@@ -2734,7 +2779,7 @@
       "label": "EmptyMsg()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L174",
+      "source_location": "L182",
       "id": "pages_dashboardpage_emptymsg",
       "community": 6,
       "norm_label": "emptymsg()"
@@ -2743,7 +2788,7 @@
       "label": "LearningActivityChart()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L180",
+      "source_location": "L188",
       "id": "pages_dashboardpage_learningactivitychart",
       "community": 6,
       "norm_label": "learningactivitychart()"
@@ -2752,7 +2797,7 @@
       "label": "ROLE_COLORS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L236",
+      "source_location": "L244",
       "id": "pages_dashboardpage_role_colors",
       "community": 6,
       "norm_label": "role_colors"
@@ -2761,7 +2806,7 @@
       "label": "ROLE_LABELS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L243",
+      "source_location": "L251",
       "id": "pages_dashboardpage_role_labels",
       "community": 6,
       "norm_label": "role_labels"
@@ -2770,7 +2815,7 @@
       "label": "UsersRoleDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L247",
+      "source_location": "L255",
       "id": "pages_dashboardpage_usersroledonut",
       "community": 6,
       "norm_label": "usersroledonut()"
@@ -2779,7 +2824,7 @@
       "label": "CompletionDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L290",
+      "source_location": "L298",
       "id": "pages_dashboardpage_completiondonut",
       "community": 6,
       "norm_label": "completiondonut()"
@@ -2788,7 +2833,7 @@
       "label": "AVATAR_COLORS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L331",
+      "source_location": "L339",
       "id": "pages_dashboardpage_avatar_colors",
       "community": 6,
       "norm_label": "avatar_colors"
@@ -2797,7 +2842,7 @@
       "label": "ActivityAvatar()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L333",
+      "source_location": "L341",
       "id": "pages_dashboardpage_activityavatar",
       "community": 6,
       "norm_label": "activityavatar()"
@@ -2806,7 +2851,7 @@
       "label": "ACTIVITY_ICON_BG",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L347",
+      "source_location": "L355",
       "id": "pages_dashboardpage_activity_icon_bg",
       "community": 6,
       "norm_label": "activity_icon_bg"
@@ -2815,7 +2860,7 @@
       "label": "ACTIVITY_ICON_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L350",
+      "source_location": "L358",
       "id": "pages_dashboardpage_activity_icon_color",
       "community": 6,
       "norm_label": "activity_icon_color"
@@ -2824,7 +2869,7 @@
       "label": "NOTIF_BG",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L353",
+      "source_location": "L361",
       "id": "pages_dashboardpage_notif_bg",
       "community": 6,
       "norm_label": "notif_bg"
@@ -2833,7 +2878,7 @@
       "label": "NOTIF_ICON_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L356",
+      "source_location": "L364",
       "id": "pages_dashboardpage_notif_icon_color",
       "community": 6,
       "norm_label": "notif_icon_color"
@@ -2842,7 +2887,7 @@
       "label": "NotifIcon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L360",
+      "source_location": "L368",
       "id": "pages_dashboardpage_notificon",
       "community": 6,
       "norm_label": "notificon()"
@@ -2851,7 +2896,7 @@
       "label": "RevenueCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L380",
+      "source_location": "L388",
       "id": "pages_dashboardpage_revenuecard",
       "community": 6,
       "norm_label": "revenuecard()"
@@ -2860,7 +2905,7 @@
       "label": "UserAnalyticsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L406",
+      "source_location": "L414",
       "id": "pages_dashboardpage_useranalyticscard",
       "community": 6,
       "norm_label": "useranalyticscard()"
@@ -2869,7 +2914,7 @@
       "label": "CourseAnalyticsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L423",
+      "source_location": "L431",
       "id": "pages_dashboardpage_courseanalyticscard",
       "community": 6,
       "norm_label": "courseanalyticscard()"
@@ -2878,7 +2923,7 @@
       "label": "InstructorPerformanceCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L448",
+      "source_location": "L456",
       "id": "pages_dashboardpage_instructorperformancecard",
       "community": 6,
       "norm_label": "instructorperformancecard()"
@@ -2887,16 +2932,133 @@
       "label": "StudentEngagementCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L471",
+      "source_location": "L479",
       "id": "pages_dashboardpage_studentengagementcard",
       "community": 6,
       "norm_label": "studentengagementcard()"
     },
     {
+      "label": "PRIORITY_STYLE",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L504",
+      "id": "pages_dashboardpage_priority_style",
+      "community": 6,
+      "norm_label": "priority_style"
+    },
+    {
+      "label": "TX_STATUS_COLOR",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L511",
+      "id": "pages_dashboardpage_tx_status_color",
+      "community": 6,
+      "norm_label": "tx_status_color"
+    },
+    {
+      "label": "TX_TYPE_LABEL",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L515",
+      "id": "pages_dashboardpage_tx_type_label",
+      "community": 6,
+      "norm_label": "tx_type_label"
+    },
+    {
+      "label": "CALENDAR_COLOR",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L520",
+      "id": "pages_dashboardpage_calendar_color",
+      "community": 6,
+      "norm_label": "calendar_color"
+    },
+    {
+      "label": "INSIGHT_STYLE",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L525",
+      "id": "pages_dashboardpage_insight_style",
+      "community": 6,
+      "norm_label": "insight_style"
+    },
+    {
+      "label": "CS_BTN",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L531",
+      "id": "pages_dashboardpage_cs_btn",
+      "community": 6,
+      "norm_label": "cs_btn"
+    },
+    {
+      "label": "PendingApprovalsCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L539",
+      "id": "pages_dashboardpage_pendingapprovalscard",
+      "community": 6,
+      "norm_label": "pendingapprovalscard()"
+    },
+    {
+      "label": "LiveSessionsCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L583",
+      "id": "pages_dashboardpage_livesessionscard",
+      "community": 6,
+      "norm_label": "livesessionscard()"
+    },
+    {
+      "label": "TasksRemindersCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L624",
+      "id": "pages_dashboardpage_tasksreminderscard",
+      "community": 6,
+      "norm_label": "tasksreminderscard()"
+    },
+    {
+      "label": "RecentTransactionsCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L662",
+      "id": "pages_dashboardpage_recenttransactionscard",
+      "community": 6,
+      "norm_label": "recenttransactionscard()"
+    },
+    {
+      "label": "CalendarEventsCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L693",
+      "id": "pages_dashboardpage_calendareventscard",
+      "community": 6,
+      "norm_label": "calendareventscard()"
+    },
+    {
+      "label": "ReportsSnapshotCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L729",
+      "id": "pages_dashboardpage_reportssnapshotcard",
+      "community": 1,
+      "norm_label": "reportssnapshotcard()"
+    },
+    {
+      "label": "AiInsightsCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L758",
+      "id": "pages_dashboardpage_aiinsightscard",
+      "community": 6,
+      "norm_label": "aiinsightscard()"
+    },
+    {
       "label": "DashboardPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L496",
+      "source_location": "L787",
       "id": "pages_dashboardpage_dashboardpage",
       "community": 23,
       "norm_label": "dashboardpage()"
@@ -3478,6 +3640,204 @@
       "norm_label": "dashboardanalyticsresponse"
     },
     {
+      "label": "AdminWidgetsFilters",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L201",
+      "id": "types_dashboard_adminwidgetsfilters",
+      "community": 21,
+      "norm_label": "adminwidgetsfilters"
+    },
+    {
+      "label": "ApprovalType",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L208",
+      "id": "types_dashboard_approvaltype",
+      "community": 21,
+      "norm_label": "approvaltype"
+    },
+    {
+      "label": "ApprovalPriority",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L209",
+      "id": "types_dashboard_approvalpriority",
+      "community": 21,
+      "norm_label": "approvalpriority"
+    },
+    {
+      "label": "PendingApprovalItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L211",
+      "id": "types_dashboard_pendingapprovalitem",
+      "community": 21,
+      "norm_label": "pendingapprovalitem"
+    },
+    {
+      "label": "PendingApprovals",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L220",
+      "id": "types_dashboard_pendingapprovals",
+      "community": 21,
+      "norm_label": "pendingapprovals"
+    },
+    {
+      "label": "LiveSessionStatus",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L225",
+      "id": "types_dashboard_livesessionstatus",
+      "community": 21,
+      "norm_label": "livesessionstatus"
+    },
+    {
+      "label": "LiveSessionItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L227",
+      "id": "types_dashboard_livesessionitem",
+      "community": 21,
+      "norm_label": "livesessionitem"
+    },
+    {
+      "label": "LiveSessions",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L236",
+      "id": "types_dashboard_livesessions",
+      "community": 21,
+      "norm_label": "livesessions"
+    },
+    {
+      "label": "TaskPriority",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L243",
+      "id": "types_dashboard_taskpriority",
+      "community": 21,
+      "norm_label": "taskpriority"
+    },
+    {
+      "label": "TaskStatus",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L244",
+      "id": "types_dashboard_taskstatus",
+      "community": 21,
+      "norm_label": "taskstatus"
+    },
+    {
+      "label": "TaskItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L246",
+      "id": "types_dashboard_taskitem",
+      "community": 21,
+      "norm_label": "taskitem"
+    },
+    {
+      "label": "TransactionType",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L254",
+      "id": "types_dashboard_transactiontype",
+      "community": 21,
+      "norm_label": "transactiontype"
+    },
+    {
+      "label": "TransactionStatus",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L255",
+      "id": "types_dashboard_transactionstatus",
+      "community": 21,
+      "norm_label": "transactionstatus"
+    },
+    {
+      "label": "TransactionItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L257",
+      "id": "types_dashboard_transactionitem",
+      "community": 21,
+      "norm_label": "transactionitem"
+    },
+    {
+      "label": "CalendarEventType",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L266",
+      "id": "types_dashboard_calendareventtype",
+      "community": 21,
+      "norm_label": "calendareventtype"
+    },
+    {
+      "label": "CalendarEventItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L268",
+      "id": "types_dashboard_calendareventitem",
+      "community": 21,
+      "norm_label": "calendareventitem"
+    },
+    {
+      "label": "ReportKey",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L276",
+      "id": "types_dashboard_reportkey",
+      "community": 21,
+      "norm_label": "reportkey"
+    },
+    {
+      "label": "ReportItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L278",
+      "id": "types_dashboard_reportitem",
+      "community": 21,
+      "norm_label": "reportitem"
+    },
+    {
+      "label": "ReportsSnapshot",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L284",
+      "id": "types_dashboard_reportssnapshot",
+      "community": 21,
+      "norm_label": "reportssnapshot"
+    },
+    {
+      "label": "InsightSeverity",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L289",
+      "id": "types_dashboard_insightseverity",
+      "community": 21,
+      "norm_label": "insightseverity"
+    },
+    {
+      "label": "AiInsightItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L291",
+      "id": "types_dashboard_aiinsightitem",
+      "community": 21,
+      "norm_label": "aiinsightitem"
+    },
+    {
+      "label": "AdminWidgetsResponse",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L299",
+      "id": "types_dashboard_adminwidgetsresponse",
+      "community": 22,
+      "norm_label": "adminwidgetsresponse"
+    },
+    {
       "label": "device.ts",
       "file_type": "code",
       "source_file": "frontend/src/types/device.ts",
@@ -3728,6 +4088,15 @@
       "id": "frontend_readme_codeblock_2",
       "community": 11,
       "norm_label": "code:js (// eslint.config.js)"
+    },
+    {
+      "label": "{\r\n  getDashboardCore,\r\n  getDashboardAnalytics,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "community": 19,
+      "norm_label": "{\r\n  getdashboardcore,\r\n  getdashboardanalytics,\r\n}",
+      "id": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics"
     },
     {
       "label": "{ getDashboardCore }",
@@ -5209,8 +5578,18 @@
       "source_file": "backend/src/controllers/dashboard.controller.js",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_dashboard_controller_js",
-      "target": "controllers_dashboard_controller_getdashboardanalytics",
+      "target": "controllers_dashboard_controller_getdashboardanalytics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/dashboard.controller.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "backend_src_controllers_dashboard_controller_js",
+      "target": "controllers_dashboard_controller_getdashboardadminwidgets",
       "confidence_score": 1.0
     },
     {
@@ -5242,8 +5621,19 @@
       "source_file": "backend/src/routes/dashboard.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_dashboard_routes_js",
-      "target": "controllers_dashboard_controller_getdashboardanalytics",
+      "target": "controllers_dashboard_controller_getdashboardanalytics"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_dashboard_routes_js",
+      "target": "controllers_dashboard_controller_getdashboardadminwidgets",
       "confidence_score": 1.0
     },
     {
@@ -5439,7 +5829,7 @@
       "source_location": "L4",
       "weight": 1.0,
       "source": "backend_src_routes_dashboard_routes_js",
-      "target": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics",
+      "target": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics_getdashboardadminwidgets",
       "confidence_score": 1.0
     },
     {
@@ -5451,6 +5841,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_dashboard_routes_js",
       "target": "routes_dashboard_routes_router"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_dashboard_routes_js",
+      "target": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics"
     },
     {
       "relation": "contains",
@@ -6016,8 +6416,18 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_dashboard_service_js",
-      "target": "services_dashboard_service_getdashboardanalytics",
+      "target": "services_dashboard_service_getdashboardanalytics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/dashboard.service.js",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "backend_src_services_dashboard_service_js",
+      "target": "services_dashboard_service_getdashboardadminwidgets",
       "confidence_score": 1.0
     },
     {
@@ -7730,6 +8140,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L297",
+      "weight": 1.0,
+      "source": "api_dashboard_getadminwidgets",
+      "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L12",
       "weight": 1.0,
@@ -7985,9 +8406,20 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_dashboard_ts",
-      "target": "types_dashboard_dashboardanalyticsresponse",
-      "confidence_score": 1.0
+      "target": "types_dashboard_adminwidgetsresponse"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "types_dashboard_dashboardanalyticsresponse"
     },
     {
       "relation": "imports",
@@ -8006,9 +8438,9 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_dashboard_ts",
-      "target": "api_dashboard_core_mock",
-      "confidence_score": 1.0
+      "target": "api_dashboard_core_mock"
     },
     {
       "relation": "contains",
@@ -8026,9 +8458,9 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_dashboard_ts",
-      "target": "api_dashboard_analyticsparams",
-      "confidence_score": 1.0
+      "target": "api_dashboard_analyticsparams"
     },
     {
       "relation": "contains",
@@ -8036,9 +8468,9 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_dashboard_ts",
-      "target": "api_dashboard_analytics_mock",
-      "confidence_score": 1.0
+      "target": "api_dashboard_analytics_mock"
     },
     {
       "relation": "contains",
@@ -8046,9 +8478,39 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L180",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_dashboard_ts",
-      "target": "api_dashboard_getdashboardanalytics",
-      "confidence_score": 1.0
+      "target": "api_dashboard_getdashboardanalytics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L224",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "api_dashboard_adminwidgetsparams"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L232",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "api_dashboard_admin_widgets_mock"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/dashboard.ts",
+      "source_location": "L294",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_dashboard_ts",
+      "target": "api_dashboard_getadminwidgets"
     },
     {
       "relation": "imports_from",
@@ -8089,9 +8551,20 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "api_dashboard_getdashboardanalytics",
-      "confidence_score": 1.0
+      "target": "api_dashboard_getdashboardanalytics"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "api_dashboard_getadminwidgets"
     },
     {
       "relation": "contains",
@@ -9236,9 +9709,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_coursecompletioncategory",
-      "confidence_score": 1.0
+      "target": "types_dashboard_adminwidgetsresponse"
     },
     {
       "relation": "imports",
@@ -9247,9 +9720,42 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_dashboardanalyticsresponse",
-      "confidence_score": 1.0
+      "target": "types_dashboard_aiinsightitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_calendareventitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_coursecompletioncategory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_dashboardanalyticsresponse"
     },
     {
       "relation": "imports",
@@ -9269,9 +9775,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_instructorperformance",
-      "confidence_score": 1.0
+      "target": "types_dashboard_instructorperformance"
     },
     {
       "relation": "imports",
@@ -9280,9 +9786,20 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_learningactivityitem",
-      "confidence_score": 1.0
+      "target": "types_dashboard_learningactivityitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_livesessions"
     },
     {
       "relation": "imports",
@@ -9315,6 +9832,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_pendingapprovals"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
       "target": "types_dashboard_quickactionitem"
     },
     {
@@ -9335,9 +9863,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_revenueoverview",
-      "confidence_score": 1.0
+      "target": "types_dashboard_reportssnapshot"
     },
     {
       "relation": "imports",
@@ -9346,9 +9874,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_studentengagement",
-      "confidence_score": 1.0
+      "target": "types_dashboard_revenueoverview"
     },
     {
       "relation": "imports",
@@ -9357,9 +9885,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_courseanalytics",
-      "confidence_score": 1.0
+      "target": "types_dashboard_studentengagement"
     },
     {
       "relation": "imports",
@@ -9368,9 +9896,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_useranalytics",
-      "confidence_score": 1.0
+      "target": "types_dashboard_courseanalytics"
     },
     {
       "relation": "imports",
@@ -9379,9 +9907,42 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "types_dashboard_usersbyroleitem",
-      "confidence_score": 1.0
+      "target": "types_dashboard_useranalytics"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_usersbyroleitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_taskitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "types_dashboard_transactionitem"
     },
     {
       "relation": "contains",
@@ -9469,9 +10030,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L155",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_statrow",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_statrow"
     },
     {
       "relation": "contains",
@@ -9479,9 +10040,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L166",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_analyticsspin",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_analyticsspin"
     },
     {
       "relation": "contains",
@@ -9489,9 +10050,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L174",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_emptymsg",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_emptymsg"
     },
     {
       "relation": "contains",
@@ -9509,9 +10070,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L236",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_role_colors",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_role_colors"
     },
     {
       "relation": "contains",
@@ -9519,9 +10080,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L243",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_role_labels",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_role_labels"
     },
     {
       "relation": "contains",
@@ -9619,9 +10180,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L380",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_revenuecard",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_revenuecard"
     },
     {
       "relation": "contains",
@@ -9629,9 +10190,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L406",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_useranalyticscard",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_useranalyticscard"
     },
     {
       "relation": "contains",
@@ -9639,9 +10200,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L423",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_courseanalyticscard",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_courseanalyticscard"
     },
     {
       "relation": "contains",
@@ -9649,9 +10210,9 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L448",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_instructorperformancecard",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_instructorperformancecard"
     },
     {
       "relation": "contains",
@@ -9659,9 +10220,139 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L471",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_dashboardpage_tsx",
-      "target": "pages_dashboardpage_studentengagementcard",
-      "confidence_score": 1.0
+      "target": "pages_dashboardpage_studentengagementcard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L504",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_priority_style"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L511",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_tx_status_color"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L515",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_tx_type_label"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L520",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_calendar_color"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L525",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_insight_style"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L531",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_cs_btn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L539",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_pendingapprovalscard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L583",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_livesessionscard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L624",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_tasksreminderscard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L662",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_recenttransactionscard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L693",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_calendareventscard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L729",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_reportssnapshotcard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L758",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_dashboardpage_tsx",
+      "target": "pages_dashboardpage_aiinsightscard"
     },
     {
       "relation": "contains",
@@ -9934,6 +10625,17 @@
       "confidence_score": 1.0,
       "source": "pages_dashboardpage_dashboardpage",
       "target": "pages_dashboardpage_getgreeting"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/DashboardPage.tsx",
+      "source_location": "L736",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_dashboardpage_reportssnapshotcard",
+      "target": "pages_dashboardpage_formatrelative"
     },
     {
       "relation": "calls",
@@ -10461,9 +11163,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_analyticsfilters",
-      "confidence_score": 1.0
+      "target": "types_dashboard_analyticsfilters"
     },
     {
       "relation": "contains",
@@ -10471,9 +11173,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_learningactivityitem",
-      "confidence_score": 1.0
+      "target": "types_dashboard_learningactivityitem"
     },
     {
       "relation": "contains",
@@ -10481,9 +11183,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_userrole",
-      "confidence_score": 1.0
+      "target": "types_dashboard_userrole"
     },
     {
       "relation": "contains",
@@ -10491,9 +11193,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_usersbyroleitem",
-      "confidence_score": 1.0
+      "target": "types_dashboard_usersbyroleitem"
     },
     {
       "relation": "contains",
@@ -10501,9 +11203,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L120",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_revenueoverview",
-      "confidence_score": 1.0
+      "target": "types_dashboard_revenueoverview"
     },
     {
       "relation": "contains",
@@ -10511,9 +11213,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L130",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_useranalytics",
-      "confidence_score": 1.0
+      "target": "types_dashboard_useranalytics"
     },
     {
       "relation": "contains",
@@ -10521,9 +11223,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L138",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_courseanalytics",
-      "confidence_score": 1.0
+      "target": "types_dashboard_courseanalytics"
     },
     {
       "relation": "contains",
@@ -10531,9 +11233,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L147",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_coursecompletioncategory",
-      "confidence_score": 1.0
+      "target": "types_dashboard_coursecompletioncategory"
     },
     {
       "relation": "contains",
@@ -10541,9 +11243,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L152",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_coursecompletion",
-      "confidence_score": 1.0
+      "target": "types_dashboard_coursecompletion"
     },
     {
       "relation": "contains",
@@ -10551,9 +11253,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L157",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_instructorperformance",
-      "confidence_score": 1.0
+      "target": "types_dashboard_instructorperformance"
     },
     {
       "relation": "contains",
@@ -10561,9 +11263,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L164",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_studentengagement",
-      "confidence_score": 1.0
+      "target": "types_dashboard_studentengagement"
     },
     {
       "relation": "contains",
@@ -10571,9 +11273,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L171",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_performanceoverview",
-      "confidence_score": 1.0
+      "target": "types_dashboard_performanceoverview"
     },
     {
       "relation": "contains",
@@ -10581,9 +11283,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L178",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_topdepartmentitem",
-      "confidence_score": 1.0
+      "target": "types_dashboard_topdepartmentitem"
     },
     {
       "relation": "contains",
@@ -10591,9 +11293,229 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L184",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_dashboardanalyticsresponse",
-      "confidence_score": 1.0
+      "target": "types_dashboard_dashboardanalyticsresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L201",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_adminwidgetsfilters"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L208",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_approvaltype"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L209",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_approvalpriority"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L211",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_pendingapprovalitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L220",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_pendingapprovals"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L225",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_livesessionstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L227",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_livesessionitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L236",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_livesessions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L243",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_taskpriority"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L244",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_taskstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L246",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_taskitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L254",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_transactiontype"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L255",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_transactionstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L257",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_transactionitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L266",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_calendareventtype"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L268",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_calendareventitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L276",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_reportkey"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L278",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_reportitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L284",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_reportssnapshot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L289",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_insightseverity"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L291",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_aiinsightitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L299",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_adminwidgetsresponse"
     },
     {
       "relation": "contains",
@@ -10877,5 +11799,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4008f633627742e37738caa1238792722c09d69b"
+  "built_at_commit": "c4e55d42f14dcb9df083d22913e6398ac2ced563"
 }

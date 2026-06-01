@@ -104,31 +104,37 @@ async function getDashboardAnalytics(filters = {}) {
 }
 
 async function getDashboardAdminWidgets(query = {}) {
-  const dateFrom = query.dateFrom || null;
-  const dateTo   = query.dateTo   || null;
-  const status   = query.status   || "all";
-
-  const rawLimit = parseInt(query.limit, 10);
-  const limit    = Number.isFinite(rawLimit) && rawLimit >= 1 && rawLimit <= 20 ? rawLimit : 5;
-
+  // TODO: replace with real DB queries when tables are ready
   return {
-    // TODO: replace with real DB queries when tables are ready
-    filters: { dateFrom, dateTo, status, limit },
+    filters: {
+      dateFrom:     query.dateFrom     || null,
+      dateTo:       query.dateTo       || null,
+      departmentId: query.departmentId || null,
+      courseId:     query.courseId     || null,
+    },
 
     pendingApprovals: {
-      summary: { total: 0, pending: 0, approved: 0, rejected: 0 },
-      list: [],
+      total: 0,
+      items: [],
     },
 
     liveSessions: {
-      summary: { activeNow: 0, scheduledToday: 0, completedToday: 0 },
-      list: [],
+      activeCount:          0,
+      upcomingCount:        0,
+      technicalIssuesCount: 0,
+      items:                [],
     },
 
-    tasksAndReminders: {
-      summary: { total: 0, dueToday: 0, overdue: 0, completed: 0 },
-      list: [],
+    tasksAndReminders:  [],
+    recentTransactions: [],
+    calendarEvents:     [],
+
+    reportsSnapshot: {
+      availableReports: [],
+      lastGeneratedAt:  null,
     },
+
+    aiInsights: [],
   };
 }
 

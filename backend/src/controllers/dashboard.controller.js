@@ -23,8 +23,9 @@ async function getDashboardAnalytics(req, res) {
 
 async function getDashboardAdminWidgets(req, res) {
   try {
-    const data = await dashboardService.getDashboardAdminWidgets(req.query);
-    return res.status(200).json({ success: true, data });
+    const { dateFrom, dateTo, departmentId, courseId } = req.query;
+    const data = await dashboardService.getDashboardAdminWidgets({ dateFrom, dateTo, departmentId, courseId });
+    return res.status(200).json(data);
   } catch (error) {
     console.error("Dashboard admin widgets error:", error.message);
     return res.status(500).json({ success: false, message: "Internal server error." });
