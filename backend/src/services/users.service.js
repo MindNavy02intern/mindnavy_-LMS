@@ -25,6 +25,34 @@ const VERIFICATION_MAP = {
   EXPIRED: "expired",
 };
 
+// UUID v4 pattern — used to reject clearly invalid ids before hitting the DB
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// Shared mapper — passwordHash is never in the input (excluded at the select level)
+function mapUser(u) {
+  return {
+    id: u.id,
+    fullName: u.fullName,
+    email: u.email,
+    avatar: u.avatar ?? null,
+    role: ROLE_MAP[u.role] ?? u.role.toLowerCase(),
+    status: STATUS_MAP[u.status] ?? u.status.toLowerCase(),
+    verificationState: VERIFICATION_MAP[u.verificationState] ?? u.verificationState.toLowerCase(),
+    lastActivityAt: u.lastActivityAt ? u.lastActivityAt.toISOString() : null,
+    riskScore: u.riskScore ?? null,
+    enrollmentCount: 0,
+    createdAt: u.createdAt.toISOString(),
+  };
+}
+
+function makeError(message, statusCode) {
+  const err = new Error(message);
+  err.statusCode = statusCode;
+  return err;
+}
+
+// ─── Task 6A: User List ───────────────────────────────────────────────────────
+
 async function getUsersList(query = {}, admin = {}) {
   // Normalize and sanitize query params
   const page = Math.max(1, parseInt(query.page) || 1);
@@ -103,24 +131,10 @@ async function getUsersList(query = {}, admin = {}) {
         lastActivityAt: true,
         riskScore: true,
         createdAt: true,
-        // passwordHash is intentionally excluded — must never be exposed
+        // passwordHash intentionally excluded — must never be exposed
       },
     }),
   ]);
-
-  const users = rawUsers.map((u) => ({
-    id: u.id,
-    fullName: u.fullName,
-    email: u.email,
-    avatar: u.avatar ?? null,
-    role: ROLE_MAP[u.role] ?? u.role.toLowerCase(),
-    status: STATUS_MAP[u.status] ?? u.status.toLowerCase(),
-    verificationState: VERIFICATION_MAP[u.verificationState] ?? u.verificationState.toLowerCase(),
-    lastActivityAt: u.lastActivityAt ? u.lastActivityAt.toISOString() : null,
-    riskScore: u.riskScore ?? null,
-    enrollmentCount: 0,
-    createdAt: u.createdAt.toISOString(),
-  }));
 
   // Audit log — fire after successful query; errors must not crash the response
   try {
@@ -154,7 +168,7 @@ async function getUsersList(query = {}, admin = {}) {
       invitationsPending,
       invitationsPendingChange: 0,
     },
-    users,
+    users: rawUsers.map(mapUser),
     pagination: {
       page,
       limit,
@@ -164,4 +178,48 @@ async function getUsersList(query = {}, admin = {}) {
   };
 }
 
-module.exports = { getUsersList };
+// ─── Task 6B: User Details ────────────────────────────────────────────────────
+
+async function getUserDetails(id, admin = {}) {
+  // Validate and sanitize id
+  if (!id || typeof id !== "string" || !id.trim()) {
+    throw makeError("Invalid user id.", 400);
+  }
+
+  const sanitizedId = id.trim();
+
+  if (!UUID_REGEX.test(sanitizedId)) {
+    throw makeError("Invalid user id.", 400);
+  }
+
+  const user = await prisma.appUser.findUnique({
+    where: { id: sanitizedId },
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      avatar: true,
+      role: true,
+      status: true,
+      verificationState: true,
+      lastActivityAt: true,
+      riskScore: true,
+      createdAt: true,
+      updatedAt: true,
+      // passwordHash intentionally excluded — must never be exposed
+    },
+  });
+
+  if (!user) {
+    throw makeError("User not found.", 404);
+  }
+
+  return {
+    user: {
+      ...mapUser(user),
+      updatedAt: user.updatedAt.toISOString(),
+    },
+  };
+}
+
+module.exports = { getUsersList, getUserDetails };

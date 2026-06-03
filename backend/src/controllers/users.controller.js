@@ -1,6 +1,6 @@
 const usersService = require("../services/users.service");
 
-const EMPTY_RESPONSE = {
+const EMPTY_LIST_RESPONSE = {
   kpiSummary: {
     totalUsers: 0,
     totalUsersChange: 0,
@@ -28,8 +28,24 @@ async function getUsersList(req, res) {
     return res.status(200).json(result);
   } catch (error) {
     console.error("getUsersList controller error:", error.message);
-    return res.status(500).json(EMPTY_RESPONSE);
+    return res.status(500).json(EMPTY_LIST_RESPONSE);
   }
 }
 
-module.exports = { getUsersList };
+async function getUserDetails(req, res) {
+  try {
+    const result = await usersService.getUserDetails(req.params.id, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 400) {
+      return res.status(400).json({ message: "Invalid user id." });
+    }
+    if (error.statusCode === 404) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    console.error("getUserDetails controller error:", error.message);
+    return res.status(500).json({ message: "Unable to fetch user details." });
+  }
+}
+
+module.exports = { getUsersList, getUserDetails };
