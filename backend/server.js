@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const adminRoutes = require("./src/routes/admin.routes");
 const dashboardRoutes = require("./src/routes/dashboard.routes");
+const usersRoutes = require("./src/routes/users.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -28,6 +29,9 @@ app.use("/api/admin", adminRoutes);
 
 // Dashboard routes
 app.use("/api/admin/dashboard", dashboardRoutes);
+
+// User management routes
+app.use("/api/admin/users", usersRoutes);
 
 app.use((req, res) => {
   return res.status(404).json({
