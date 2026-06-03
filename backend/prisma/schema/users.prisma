@@ -1,0 +1,45 @@
+// LMS App Users — separate from admin_users (admin security) and Supabase auth.users
+
+enum AppUserRole {
+  LEARNER
+  INSTRUCTOR
+  MANAGER
+  ADMIN_ASSISTANT
+}
+
+enum AppUserStatus {
+  ACTIVE
+  SUSPENDED // account stopped by administration after being created or active
+  PENDING   // account not yet fully activated or awaiting approval
+  ARCHIVED
+  INVITED
+}
+
+enum AppUserVerificationState {
+  VERIFIED
+  PENDING
+  REJECTED
+  EXPIRED
+}
+
+model AppUser {
+  id                String                   @id @default(uuid())
+  email             String                   @unique
+  passwordHash      String?                  // null for invited users who have not set a password yet
+  fullName          String
+  avatar            String?
+  role              AppUserRole
+  status            AppUserStatus            @default(PENDING)
+  verificationState AppUserVerificationState @default(PENDING)
+  lastActivityAt    DateTime?
+  riskScore         Int?
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+
+  @@index([role])
+  @@index([status])
+  @@index([verificationState])
+  @@index([createdAt])
+  @@index([lastActivityAt])
+  @@map("app_users")
+}

@@ -23,6 +23,7 @@ enum AuditAction {
   SESSION_CREATED
   SESSION_REVOKED
   FAILED_LOGIN
+  USERS_LIST_VIEWED
 }
 
 model AdminUser {
