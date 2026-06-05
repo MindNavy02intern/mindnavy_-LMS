@@ -127,7 +127,7 @@ const NAV_SECTIONS: NavSection[] = [
     items: [
       { to: '/dashboard', label: 'Dashboard',      Icon: IconGrid   },
       { to: '/courses',   label: 'Learning Mgmt',  Icon: IconBook,  badge: 3 },
-      { to: '/students',  label: 'Students',        Icon: IconUsers  },
+      { to: '/users',     label: 'Users',            Icon: IconUsers  },
     ],
   },
   {

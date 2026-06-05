@@ -27,8 +27,8 @@ async function getUsersList(req, res) {
     const result = await usersService.getUsersList(req.query, req.admin);
     return res.status(200).json(result);
   } catch (error) {
-    console.error("getUsersList controller error:", error.message);
-    return res.status(500).json(EMPTY_LIST_RESPONSE);
+    console.error("[users] Service error:", error.message, error.stack);
+    return res.status(200).json(EMPTY_LIST_RESPONSE);
   }
 }
 

@@ -1,0 +1,3709 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L1",
+      "id": "package_json",
+      "community": 1,
+      "norm_label": "package.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L2",
+      "id": "backend_package_name",
+      "community": 1,
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L3",
+      "id": "backend_package_version",
+      "community": 1,
+      "norm_label": "version"
+    },
+    {
+      "label": "description",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L4",
+      "id": "backend_package_description",
+      "community": 1,
+      "norm_label": "description"
+    },
+    {
+      "label": "main",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L5",
+      "id": "backend_package_main",
+      "community": 1,
+      "norm_label": "main"
+    },
+    {
+      "label": "scripts",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L6",
+      "id": "backend_package_scripts",
+      "community": 9,
+      "norm_label": "scripts"
+    },
+    {
+      "label": "start",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L7",
+      "id": "backend_package_scripts_start",
+      "community": 9,
+      "norm_label": "start"
+    },
+    {
+      "label": "dev",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L8",
+      "id": "backend_package_scripts_dev",
+      "community": 9,
+      "norm_label": "dev"
+    },
+    {
+      "label": "test",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L9",
+      "id": "backend_package_scripts_test",
+      "community": 9,
+      "norm_label": "test"
+    },
+    {
+      "label": "prisma:generate",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L10",
+      "id": "backend_package_scripts_prisma_generate",
+      "community": 9,
+      "norm_label": "prisma:generate"
+    },
+    {
+      "label": "prisma:validate",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L11",
+      "id": "backend_package_scripts_prisma_validate",
+      "community": 9,
+      "norm_label": "prisma:validate"
+    },
+    {
+      "label": "create:first-admin",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L12",
+      "id": "backend_package_scripts_create_first_admin",
+      "community": 9,
+      "norm_label": "create:first-admin"
+    },
+    {
+      "label": "reset:first-admin-password",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L13",
+      "id": "backend_package_scripts_reset_first_admin_password",
+      "community": 9,
+      "norm_label": "reset:first-admin-password"
+    },
+    {
+      "label": "keywords",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L15",
+      "id": "backend_package_keywords",
+      "community": 1,
+      "norm_label": "keywords"
+    },
+    {
+      "label": "author",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L16",
+      "id": "backend_package_author",
+      "community": 1,
+      "norm_label": "author"
+    },
+    {
+      "label": "license",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L17",
+      "id": "backend_package_license",
+      "community": 1,
+      "norm_label": "license"
+    },
+    {
+      "label": "type",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L18",
+      "id": "backend_package_type",
+      "community": 1,
+      "norm_label": "type"
+    },
+    {
+      "label": "dependencies",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L19",
+      "id": "backend_package_dependencies",
+      "community": 1,
+      "norm_label": "dependencies"
+    },
+    {
+      "label": "@prisma/adapter-pg",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L20",
+      "id": "backend_package_dependencies_prisma_adapter_pg",
+      "community": 1,
+      "norm_label": "@prisma/adapter-pg"
+    },
+    {
+      "label": "@prisma/client",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L21",
+      "id": "backend_package_dependencies_prisma_client",
+      "community": 1,
+      "norm_label": "@prisma/client"
+    },
+    {
+      "label": "bcryptjs",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L22",
+      "id": "backend_package_dependencies_bcryptjs",
+      "community": 1,
+      "norm_label": "bcryptjs"
+    },
+    {
+      "label": "cors",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L23",
+      "id": "backend_package_dependencies_cors",
+      "community": 1,
+      "norm_label": "cors"
+    },
+    {
+      "label": "dotenv",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L24",
+      "id": "backend_package_dependencies_dotenv",
+      "community": 1,
+      "norm_label": "dotenv"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L25",
+      "id": "backend_package_dependencies_express",
+      "community": 1,
+      "norm_label": "express"
+    },
+    {
+      "label": "express-rate-limit",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L26",
+      "id": "backend_package_dependencies_express_rate_limit",
+      "community": 1,
+      "norm_label": "express-rate-limit"
+    },
+    {
+      "label": "pg",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L27",
+      "id": "backend_package_dependencies_pg",
+      "community": 1,
+      "norm_label": "pg"
+    },
+    {
+      "label": "devDependencies",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L29",
+      "id": "backend_package_devdependencies",
+      "community": 1,
+      "norm_label": "devdependencies"
+    },
+    {
+      "label": "@types/node",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L30",
+      "id": "backend_package_devdependencies_types_node",
+      "community": 1,
+      "norm_label": "@types/node"
+    },
+    {
+      "label": "nodemon",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L31",
+      "id": "backend_package_devdependencies_nodemon",
+      "community": 1,
+      "norm_label": "nodemon"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L32",
+      "id": "backend_package_devdependencies_prisma",
+      "community": 1,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "prisma.config.ts",
+      "file_type": "code",
+      "source_file": "prisma.config.ts",
+      "source_location": "L1",
+      "id": "prisma_config_ts",
+      "community": 10,
+      "norm_label": "prisma.config.ts"
+    },
+    {
+      "label": "server.js",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L1",
+      "id": "server_js",
+      "community": 8,
+      "norm_label": "server.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L1",
+      "id": "backend_server_express",
+      "community": 8,
+      "norm_label": "express"
+    },
+    {
+      "label": "cors",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L2",
+      "id": "backend_server_cors",
+      "community": 8,
+      "norm_label": "cors"
+    },
+    {
+      "label": "adminRoutes",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L5",
+      "id": "backend_server_adminroutes",
+      "community": 8,
+      "norm_label": "adminroutes"
+    },
+    {
+      "label": "dashboardRoutes",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L6",
+      "id": "backend_server_dashboardroutes",
+      "community": 8,
+      "norm_label": "dashboardroutes"
+    },
+    {
+      "label": "usersRoutes",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L7",
+      "id": "backend_server_usersroutes",
+      "community": 8,
+      "norm_label": "usersroutes"
+    },
+    {
+      "label": "app",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L9",
+      "id": "backend_server_app",
+      "community": 8,
+      "norm_label": "app"
+    },
+    {
+      "label": "corsOptions",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L13",
+      "id": "backend_server_corsoptions",
+      "community": 8,
+      "norm_label": "corsoptions"
+    },
+    {
+      "label": "server",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L52",
+      "id": "backend_server_server",
+      "community": 8,
+      "norm_label": "server"
+    },
+    {
+      "label": "tsconfig.json",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L1",
+      "id": "tsconfig_json",
+      "community": 7,
+      "norm_label": "tsconfig.json"
+    },
+    {
+      "label": "compilerOptions",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L2",
+      "id": "backend_tsconfig_compileroptions",
+      "community": 7,
+      "norm_label": "compileroptions"
+    },
+    {
+      "label": "types",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L3",
+      "id": "backend_tsconfig_compileroptions_types",
+      "community": 7,
+      "norm_label": "types"
+    },
+    {
+      "label": "moduleResolution",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L4",
+      "id": "backend_tsconfig_compileroptions_moduleresolution",
+      "community": 7,
+      "norm_label": "moduleresolution"
+    },
+    {
+      "label": "target",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L5",
+      "id": "backend_tsconfig_compileroptions_target",
+      "community": 7,
+      "norm_label": "target"
+    },
+    {
+      "label": "module",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L6",
+      "id": "backend_tsconfig_compileroptions_module",
+      "community": 7,
+      "norm_label": "module"
+    },
+    {
+      "label": "strict",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L7",
+      "id": "backend_tsconfig_compileroptions_strict",
+      "community": 7,
+      "norm_label": "strict"
+    },
+    {
+      "label": "skipLibCheck",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L8",
+      "id": "backend_tsconfig_compileroptions_skiplibcheck",
+      "community": 7,
+      "norm_label": "skiplibcheck"
+    },
+    {
+      "label": "include",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L10",
+      "id": "backend_tsconfig_include",
+      "community": 7,
+      "norm_label": "include"
+    },
+    {
+      "label": "prisma.js",
+      "file_type": "code",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L1",
+      "id": "src_config_prisma_js",
+      "community": 3,
+      "norm_label": "prisma.js"
+    },
+    {
+      "label": "{ PrismaClient }",
+      "file_type": "code",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L1",
+      "id": "config_prisma_prismaclient",
+      "community": 3,
+      "norm_label": "{ prismaclient }"
+    },
+    {
+      "label": "{ PrismaPg }",
+      "file_type": "code",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L2",
+      "id": "config_prisma_prismapg",
+      "community": 3,
+      "norm_label": "{ prismapg }"
+    },
+    {
+      "label": "adapter",
+      "file_type": "code",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L4",
+      "id": "config_prisma_adapter",
+      "community": 3,
+      "norm_label": "adapter"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L8",
+      "id": "config_prisma_prisma",
+      "community": 3,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "admin.controller.js",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L1",
+      "id": "src_controllers_admin_controller_js",
+      "community": 0,
+      "norm_label": "admin.controller.js"
+    },
+    {
+      "label": "{\r\n  validateAdminLoginInput,\r\n  validateAdminOtpInput,\r\n  validateForgotPasswordInput,\r\n  validateResetPasswordInput,\r\n\r\n}",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L1",
+      "id": "controllers_admin_controller_validateadminlogininput_validateadminotpinput_validateforgotpasswordinput_validateresetpasswordinput",
+      "community": 0,
+      "norm_label": "{\r\n  validateadminlogininput,\r\n  validateadminotpinput,\r\n  validateforgotpasswordinput,\r\n  validateresetpasswordinput,\r\n\r\n}"
+    },
+    {
+      "label": "{\r\n  loginAdmin,\r\n  logoutAdmin,\r\n  sendAdminOtp,\r\n  verifyAdminOtp,\r\n  getAdminTrustedDevices,\r\n  revokeAdminTrustedDevice,\r\n  forgotAdminPassword,\r\n  resetAdminPassword,\r\n\r\n\r\n}",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "id": "controllers_admin_controller_loginadmin_logoutadmin_sendadminotp_verifyadminotp_getadmintrusteddevices_revokeadmintrusteddevice_forgotadminpassword_resetadminpassword",
+      "community": 0,
+      "norm_label": "{\r\n  loginadmin,\r\n  logoutadmin,\r\n  sendadminotp,\r\n  verifyadminotp,\r\n  getadmintrusteddevices,\r\n  revokeadmintrusteddevice,\r\n  forgotadminpassword,\r\n  resetadminpassword,\r\n\r\n\r\n}"
+    },
+    {
+      "label": "adminLoginController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L22",
+      "id": "controllers_admin_controller_adminlogincontroller",
+      "community": 0,
+      "norm_label": "adminlogincontroller()"
+    },
+    {
+      "label": "adminLogoutController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L55",
+      "id": "controllers_admin_controller_adminlogoutcontroller",
+      "community": 0,
+      "norm_label": "adminlogoutcontroller()"
+    },
+    {
+      "label": "adminMeController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L74",
+      "id": "controllers_admin_controller_adminmecontroller",
+      "community": 0,
+      "norm_label": "adminmecontroller()"
+    },
+    {
+      "label": "adminSendOtpController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L82",
+      "id": "controllers_admin_controller_adminsendotpcontroller",
+      "community": 0,
+      "norm_label": "adminsendotpcontroller()"
+    },
+    {
+      "label": "adminVerifyOtpController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L104",
+      "id": "controllers_admin_controller_adminverifyotpcontroller",
+      "community": 0,
+      "norm_label": "adminverifyotpcontroller()"
+    },
+    {
+      "label": "adminGetTrustedDevicesController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L137",
+      "id": "controllers_admin_controller_admingettrusteddevicescontroller",
+      "community": 0,
+      "norm_label": "admingettrusteddevicescontroller()"
+    },
+    {
+      "label": "adminRevokeTrustedDeviceController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L154",
+      "id": "controllers_admin_controller_adminrevoketrusteddevicecontroller",
+      "community": 0,
+      "norm_label": "adminrevoketrusteddevicecontroller()"
+    },
+    {
+      "label": "adminForgotPasswordController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L195",
+      "id": "controllers_admin_controller_adminforgotpasswordcontroller",
+      "community": 0,
+      "norm_label": "adminforgotpasswordcontroller()"
+    },
+    {
+      "label": "adminResetPasswordController()",
+      "file_type": "code",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L231",
+      "id": "controllers_admin_controller_adminresetpasswordcontroller",
+      "community": 0,
+      "norm_label": "adminresetpasswordcontroller()"
+    },
+    {
+      "label": "dashboard.controller.js",
+      "file_type": "code",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L1",
+      "id": "src_controllers_dashboard_controller_js",
+      "community": 4,
+      "norm_label": "dashboard.controller.js"
+    },
+    {
+      "label": "dashboardService",
+      "file_type": "code",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L1",
+      "id": "controllers_dashboard_controller_dashboardservice",
+      "community": 4,
+      "norm_label": "dashboardservice"
+    },
+    {
+      "label": "getDashboardCore()",
+      "file_type": "code",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L3",
+      "id": "controllers_dashboard_controller_getdashboardcore",
+      "community": 4,
+      "norm_label": "getdashboardcore()"
+    },
+    {
+      "label": "getDashboardAnalytics()",
+      "file_type": "code",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L13",
+      "id": "controllers_dashboard_controller_getdashboardanalytics",
+      "community": 4,
+      "norm_label": "getdashboardanalytics()"
+    },
+    {
+      "label": "getDashboardAdminWidgets()",
+      "file_type": "code",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L24",
+      "id": "controllers_dashboard_controller_getdashboardadminwidgets",
+      "community": 4,
+      "norm_label": "getdashboardadminwidgets()"
+    },
+    {
+      "label": "users.controller.js",
+      "file_type": "code",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L1",
+      "id": "src_controllers_users_controller_js",
+      "community": 5,
+      "norm_label": "users.controller.js"
+    },
+    {
+      "label": "usersService",
+      "file_type": "code",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L1",
+      "id": "controllers_users_controller_usersservice",
+      "community": 5,
+      "norm_label": "usersservice"
+    },
+    {
+      "label": "EMPTY_LIST_RESPONSE",
+      "file_type": "code",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L3",
+      "id": "controllers_users_controller_empty_list_response",
+      "community": 5,
+      "norm_label": "empty_list_response"
+    },
+    {
+      "label": "getUsersList()",
+      "file_type": "code",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L25",
+      "id": "controllers_users_controller_getuserslist",
+      "community": 5,
+      "norm_label": "getuserslist()"
+    },
+    {
+      "label": "getUserDetails()",
+      "file_type": "code",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L35",
+      "id": "controllers_users_controller_getuserdetails",
+      "community": 5,
+      "norm_label": "getuserdetails()"
+    },
+    {
+      "label": "auth.middleware.js",
+      "file_type": "code",
+      "source_file": "src/middlewares/auth.middleware.js",
+      "source_location": "L1",
+      "id": "src_middlewares_auth_middleware_js",
+      "community": 5,
+      "norm_label": "auth.middleware.js"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "src/middlewares/auth.middleware.js",
+      "source_location": "L1",
+      "id": "middlewares_auth_middleware_prisma",
+      "community": 5,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "requireAdminAuth()",
+      "file_type": "code",
+      "source_file": "src/middlewares/auth.middleware.js",
+      "source_location": "L3",
+      "id": "middlewares_auth_middleware_requireadminauth",
+      "community": 5,
+      "norm_label": "requireadminauth()"
+    },
+    {
+      "label": "rateLimit.middleware.js",
+      "file_type": "code",
+      "source_file": "src/middlewares/rateLimit.middleware.js",
+      "source_location": "L1",
+      "id": "src_middlewares_ratelimit_middleware_js",
+      "community": 0,
+      "norm_label": "ratelimit.middleware.js"
+    },
+    {
+      "label": "rateLimit",
+      "file_type": "code",
+      "source_file": "src/middlewares/rateLimit.middleware.js",
+      "source_location": "L1",
+      "id": "middlewares_ratelimit_middleware_ratelimit",
+      "community": 0,
+      "norm_label": "ratelimit"
+    },
+    {
+      "label": "adminLoginRateLimiter",
+      "file_type": "code",
+      "source_file": "src/middlewares/rateLimit.middleware.js",
+      "source_location": "L3",
+      "id": "middlewares_ratelimit_middleware_adminloginratelimiter",
+      "community": 0,
+      "norm_label": "adminloginratelimiter"
+    },
+    {
+      "label": "admin.routes.js",
+      "file_type": "code",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L1",
+      "id": "src_routes_admin_routes_js",
+      "community": 0,
+      "norm_label": "admin.routes.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L1",
+      "id": "routes_admin_routes_express",
+      "community": 0,
+      "norm_label": "express"
+    },
+    {
+      "label": "{\r\n  adminLoginController,\r\n  adminMeController,\r\n  adminLogoutController,\r\n  adminSendOtpController,\r\n  adminVerifyOtpController,\r\n  adminGetTrustedDevicesController,\r\n  adminRevokeTrustedDeviceController,\r\n  adminForgotPasswordController,\r\n  adminResetPasswordController,\r\n\r\n}",
+      "file_type": "code",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "id": "routes_admin_routes_adminlogincontroller_adminmecontroller_adminlogoutcontroller_adminsendotpcontroller_adminverifyotpcontroller_admingettrusteddevicescontroller_adminrevoketrusteddevicecontroller_adminforgotpasswordcontroller_adminresetpasswordcontroller",
+      "community": 0,
+      "norm_label": "{\r\n  adminlogincontroller,\r\n  adminmecontroller,\r\n  adminlogoutcontroller,\r\n  adminsendotpcontroller,\r\n  adminverifyotpcontroller,\r\n  admingettrusteddevicescontroller,\r\n  adminrevoketrusteddevicecontroller,\r\n  adminforgotpasswordcontroller,\r\n  adminresetpasswordcontroller,\r\n\r\n}"
+    },
+    {
+      "label": "{ requireAdminAuth }",
+      "file_type": "code",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L16",
+      "id": "routes_admin_routes_requireadminauth",
+      "community": 0,
+      "norm_label": "{ requireadminauth }"
+    },
+    {
+      "label": "{ adminLoginRateLimiter }",
+      "file_type": "code",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L17",
+      "id": "routes_admin_routes_adminloginratelimiter",
+      "community": 0,
+      "norm_label": "{ adminloginratelimiter }"
+    },
+    {
+      "label": "router",
+      "file_type": "code",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L19",
+      "id": "routes_admin_routes_router",
+      "community": 0,
+      "norm_label": "router"
+    },
+    {
+      "label": "dashboard.routes.js",
+      "file_type": "code",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L1",
+      "id": "src_routes_dashboard_routes_js",
+      "community": 4,
+      "norm_label": "dashboard.routes.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L1",
+      "id": "routes_dashboard_routes_express",
+      "community": 4,
+      "norm_label": "express"
+    },
+    {
+      "label": "{ requireAdminAuth }",
+      "file_type": "code",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L3",
+      "id": "routes_dashboard_routes_requireadminauth",
+      "community": 4,
+      "norm_label": "{ requireadminauth }"
+    },
+    {
+      "label": "{\r\n  getDashboardCore,\r\n  getDashboardAnalytics,\r\n  getDashboardAdminWidgets,\r\n}",
+      "file_type": "code",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "id": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics_getdashboardadminwidgets",
+      "community": 4,
+      "norm_label": "{\r\n  getdashboardcore,\r\n  getdashboardanalytics,\r\n  getdashboardadminwidgets,\r\n}"
+    },
+    {
+      "label": "router",
+      "file_type": "code",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L10",
+      "id": "routes_dashboard_routes_router",
+      "community": 4,
+      "norm_label": "router"
+    },
+    {
+      "label": "users.routes.js",
+      "file_type": "code",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L1",
+      "id": "src_routes_users_routes_js",
+      "community": 5,
+      "norm_label": "users.routes.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L1",
+      "id": "routes_users_routes_express",
+      "community": 5,
+      "norm_label": "express"
+    },
+    {
+      "label": "{ requireAdminAuth }",
+      "file_type": "code",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L2",
+      "id": "routes_users_routes_requireadminauth",
+      "community": 5,
+      "norm_label": "{ requireadminauth }"
+    },
+    {
+      "label": "{ getUsersList, getUserDetails }",
+      "file_type": "code",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L3",
+      "id": "routes_users_routes_getuserslist_getuserdetails",
+      "community": 5,
+      "norm_label": "{ getuserslist, getuserdetails }"
+    },
+    {
+      "label": "router",
+      "file_type": "code",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L5",
+      "id": "routes_users_routes_router",
+      "community": 5,
+      "norm_label": "router"
+    },
+    {
+      "label": "createFirstAdmin.js",
+      "file_type": "code",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L1",
+      "id": "src_scripts_createfirstadmin_js",
+      "community": 3,
+      "norm_label": "createfirstadmin.js"
+    },
+    {
+      "label": "bcrypt",
+      "file_type": "code",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L3",
+      "id": "scripts_createfirstadmin_bcrypt",
+      "community": 3,
+      "norm_label": "bcrypt"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L4",
+      "id": "scripts_createfirstadmin_prisma",
+      "community": 3,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "{ validatePasswordStrength }",
+      "file_type": "code",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L5",
+      "id": "scripts_createfirstadmin_validatepasswordstrength",
+      "community": 3,
+      "norm_label": "{ validatepasswordstrength }"
+    },
+    {
+      "label": "createFirstAdmin()",
+      "file_type": "code",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L7",
+      "id": "scripts_createfirstadmin_createfirstadmin",
+      "community": 3,
+      "norm_label": "createfirstadmin()"
+    },
+    {
+      "label": "resetFirstAdminPassword.js",
+      "file_type": "code",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L1",
+      "id": "src_scripts_resetfirstadminpassword_js",
+      "community": 3,
+      "norm_label": "resetfirstadminpassword.js"
+    },
+    {
+      "label": "bcrypt",
+      "file_type": "code",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L3",
+      "id": "scripts_resetfirstadminpassword_bcrypt",
+      "community": 3,
+      "norm_label": "bcrypt"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L4",
+      "id": "scripts_resetfirstadminpassword_prisma",
+      "community": 3,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "{ validatePasswordStrength }",
+      "file_type": "code",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L5",
+      "id": "scripts_resetfirstadminpassword_validatepasswordstrength",
+      "community": 3,
+      "norm_label": "{ validatepasswordstrength }"
+    },
+    {
+      "label": "resetFirstAdminPassword()",
+      "file_type": "code",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L7",
+      "id": "scripts_resetfirstadminpassword_resetfirstadminpassword",
+      "community": 3,
+      "norm_label": "resetfirstadminpassword()"
+    },
+    {
+      "label": "admin.service.js",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L1",
+      "id": "src_services_admin_service_js",
+      "community": 2,
+      "norm_label": "admin.service.js"
+    },
+    {
+      "label": "bcrypt",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L1",
+      "id": "services_admin_service_bcrypt",
+      "community": 2,
+      "norm_label": "bcrypt"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L2",
+      "id": "services_admin_service_prisma",
+      "community": 2,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "{ generateSessionToken, getSessionExpiryDate }",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L3",
+      "id": "services_admin_service_generatesessiontoken_getsessionexpirydate",
+      "community": 2,
+      "norm_label": "{ generatesessiontoken, getsessionexpirydate }"
+    },
+    {
+      "label": "{\r\n  generateOtpCode,\r\n  hashOtpCode,\r\n  compareOtpCode,\r\n  getOtpExpiryDate,\r\n}",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L5",
+      "id": "services_admin_service_generateotpcode_hashotpcode_compareotpcode_getotpexpirydate",
+      "community": 2,
+      "norm_label": "{\r\n  generateotpcode,\r\n  hashotpcode,\r\n  compareotpcode,\r\n  getotpexpirydate,\r\n}"
+    },
+    {
+      "label": "recordLoginAttempt()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L16",
+      "id": "services_admin_service_recordloginattempt",
+      "community": 2,
+      "norm_label": "recordloginattempt()"
+    },
+    {
+      "label": "createAuditLog()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L36",
+      "id": "services_admin_service_createauditlog",
+      "community": 2,
+      "norm_label": "createauditlog()"
+    },
+    {
+      "label": "isLoginTemporarilyBlocked()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L54",
+      "id": "services_admin_service_islogintemporarilyblocked",
+      "community": 2,
+      "norm_label": "islogintemporarilyblocked()"
+    },
+    {
+      "label": "loginAdmin()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L72",
+      "id": "services_admin_service_loginadmin",
+      "community": 2,
+      "norm_label": "loginadmin()"
+    },
+    {
+      "label": "logoutAdmin()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L229",
+      "id": "services_admin_service_logoutadmin",
+      "community": 2,
+      "norm_label": "logoutadmin()"
+    },
+    {
+      "label": "sendAdminOtp()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L266",
+      "id": "services_admin_service_sendadminotp",
+      "community": 2,
+      "norm_label": "sendadminotp()"
+    },
+    {
+      "label": "verifyAdminOtp()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L326",
+      "id": "services_admin_service_verifyadminotp",
+      "community": 2,
+      "norm_label": "verifyadminotp()"
+    },
+    {
+      "label": "getAdminTrustedDevices()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L447",
+      "id": "services_admin_service_getadmintrusteddevices",
+      "community": 0,
+      "norm_label": "getadmintrusteddevices()"
+    },
+    {
+      "label": "revokeAdminTrustedDevice()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L478",
+      "id": "services_admin_service_revokeadmintrusteddevice",
+      "community": 2,
+      "norm_label": "revokeadmintrusteddevice()"
+    },
+    {
+      "label": "forgotAdminPassword()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L525",
+      "id": "services_admin_service_forgotadminpassword",
+      "community": 2,
+      "norm_label": "forgotadminpassword()"
+    },
+    {
+      "label": "resetAdminPassword()",
+      "file_type": "code",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L582",
+      "id": "services_admin_service_resetadminpassword",
+      "community": 2,
+      "norm_label": "resetadminpassword()"
+    },
+    {
+      "label": "dashboard.service.js",
+      "file_type": "code",
+      "source_file": "src/services/dashboard.service.js",
+      "source_location": "L1",
+      "id": "src_services_dashboard_service_js",
+      "community": 4,
+      "norm_label": "dashboard.service.js"
+    },
+    {
+      "label": "getDashboardCore()",
+      "file_type": "code",
+      "source_file": "src/services/dashboard.service.js",
+      "source_location": "L1",
+      "id": "services_dashboard_service_getdashboardcore",
+      "community": 4,
+      "norm_label": "getdashboardcore()"
+    },
+    {
+      "label": "getDashboardAnalytics()",
+      "file_type": "code",
+      "source_file": "src/services/dashboard.service.js",
+      "source_location": "L46",
+      "id": "services_dashboard_service_getdashboardanalytics",
+      "community": 4,
+      "norm_label": "getdashboardanalytics()"
+    },
+    {
+      "label": "getDashboardAdminWidgets()",
+      "file_type": "code",
+      "source_file": "src/services/dashboard.service.js",
+      "source_location": "L106",
+      "id": "services_dashboard_service_getdashboardadminwidgets",
+      "community": 4,
+      "norm_label": "getdashboardadminwidgets()"
+    },
+    {
+      "label": "users.service.js",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L1",
+      "id": "src_services_users_service_js",
+      "community": 6,
+      "norm_label": "users.service.js"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L1",
+      "id": "services_users_service_prisma",
+      "community": 6,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "VALID_ROLES",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L3",
+      "id": "services_users_service_valid_roles",
+      "community": 6,
+      "norm_label": "valid_roles"
+    },
+    {
+      "label": "VALID_STATUSES",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L4",
+      "id": "services_users_service_valid_statuses",
+      "community": 6,
+      "norm_label": "valid_statuses"
+    },
+    {
+      "label": "ROLE_MAP",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L6",
+      "id": "services_users_service_role_map",
+      "community": 6,
+      "norm_label": "role_map"
+    },
+    {
+      "label": "STATUS_MAP",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L13",
+      "id": "services_users_service_status_map",
+      "community": 6,
+      "norm_label": "status_map"
+    },
+    {
+      "label": "VERIFICATION_MAP",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L21",
+      "id": "services_users_service_verification_map",
+      "community": 6,
+      "norm_label": "verification_map"
+    },
+    {
+      "label": "mapUser()",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L32",
+      "id": "services_users_service_mapuser",
+      "community": 6,
+      "norm_label": "mapuser()"
+    },
+    {
+      "label": "makeError()",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L48",
+      "id": "services_users_service_makeerror",
+      "community": 6,
+      "norm_label": "makeerror()"
+    },
+    {
+      "label": "getUsersList()",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L56",
+      "id": "services_users_service_getuserslist",
+      "community": 6,
+      "norm_label": "getuserslist()"
+    },
+    {
+      "label": "getUserDetails()",
+      "file_type": "code",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L183",
+      "id": "services_users_service_getuserdetails",
+      "community": 6,
+      "norm_label": "getuserdetails()"
+    },
+    {
+      "label": "otp.js",
+      "file_type": "code",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L1",
+      "id": "src_utils_otp_js",
+      "community": 2,
+      "norm_label": "otp.js"
+    },
+    {
+      "label": "crypto",
+      "file_type": "code",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L1",
+      "id": "utils_otp_crypto",
+      "community": 2,
+      "norm_label": "crypto"
+    },
+    {
+      "label": "bcrypt",
+      "file_type": "code",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L2",
+      "id": "utils_otp_bcrypt",
+      "community": 2,
+      "norm_label": "bcrypt"
+    },
+    {
+      "label": "generateOtpCode()",
+      "file_type": "code",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L4",
+      "id": "utils_otp_generateotpcode",
+      "community": 2,
+      "norm_label": "generateotpcode()"
+    },
+    {
+      "label": "hashOtpCode()",
+      "file_type": "code",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L8",
+      "id": "utils_otp_hashotpcode",
+      "community": 2,
+      "norm_label": "hashotpcode()"
+    },
+    {
+      "label": "compareOtpCode()",
+      "file_type": "code",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L12",
+      "id": "utils_otp_compareotpcode",
+      "community": 2,
+      "norm_label": "compareotpcode()"
+    },
+    {
+      "label": "getOtpExpiryDate()",
+      "file_type": "code",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L16",
+      "id": "utils_otp_getotpexpirydate",
+      "community": 2,
+      "norm_label": "getotpexpirydate()"
+    },
+    {
+      "label": "passwordPolicy.js",
+      "file_type": "code",
+      "source_file": "src/utils/passwordPolicy.js",
+      "source_location": "L1",
+      "id": "src_utils_passwordpolicy_js",
+      "community": 3,
+      "norm_label": "passwordpolicy.js"
+    },
+    {
+      "label": "validatePasswordStrength()",
+      "file_type": "code",
+      "source_file": "src/utils/passwordPolicy.js",
+      "source_location": "L1",
+      "id": "utils_passwordpolicy_validatepasswordstrength",
+      "community": 3,
+      "norm_label": "validatepasswordstrength()"
+    },
+    {
+      "label": "adminAuth.validator.js",
+      "file_type": "code",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L1",
+      "id": "src_validators_adminauth_validator_js",
+      "community": 0,
+      "norm_label": "adminauth.validator.js"
+    },
+    {
+      "label": "validateAdminLoginInput()",
+      "file_type": "code",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L1",
+      "id": "validators_adminauth_validator_validateadminlogininput",
+      "community": 0,
+      "norm_label": "validateadminlogininput()"
+    },
+    {
+      "label": "validateAdminOtpInput()",
+      "file_type": "code",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L27",
+      "id": "validators_adminauth_validator_validateadminotpinput",
+      "community": 0,
+      "norm_label": "validateadminotpinput()"
+    },
+    {
+      "label": "validateForgotPasswordInput()",
+      "file_type": "code",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L47",
+      "id": "validators_adminauth_validator_validateforgotpasswordinput",
+      "community": 0,
+      "norm_label": "validateforgotpasswordinput()"
+    },
+    {
+      "label": "validateResetPasswordInput()",
+      "file_type": "code",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L65",
+      "id": "validators_adminauth_validator_validateresetpasswordinput",
+      "community": 0,
+      "norm_label": "validateresetpasswordinput()"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_description",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_scripts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_keywords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_author",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_license",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_type",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_dependencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "package_json",
+      "target": "backend_package_devdependencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_start",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_dev",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_test",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_prisma_generate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_prisma_validate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_create_first_admin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_reset_first_admin_password",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_prisma_adapter_pg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_prisma_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_bcryptjs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_cors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_dotenv",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_express",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_express_rate_limit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_pg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_types_node",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_nodemon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "backend_server_express",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "backend_server_cors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "src_routes_admin_routes_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "backend_server_adminroutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "src_routes_dashboard_routes_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "backend_server_dashboardroutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "src_routes_users_routes_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "backend_server_usersroutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "backend_server_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "backend_server_corsoptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "server_js",
+      "target": "backend_server_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "tsconfig_json",
+      "target": "backend_tsconfig_compileroptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "tsconfig_json",
+      "target": "backend_tsconfig_include",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_tsconfig_compileroptions",
+      "target": "backend_tsconfig_compileroptions_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_tsconfig_compileroptions",
+      "target": "backend_tsconfig_compileroptions_moduleresolution",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "backend_tsconfig_compileroptions",
+      "target": "backend_tsconfig_compileroptions_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_tsconfig_compileroptions",
+      "target": "backend_tsconfig_compileroptions_module",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "backend_tsconfig_compileroptions",
+      "target": "backend_tsconfig_compileroptions_strict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "backend_tsconfig_compileroptions",
+      "target": "backend_tsconfig_compileroptions_skiplibcheck",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_config_prisma_js",
+      "target": "config_prisma_prismaclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_config_prisma_js",
+      "target": "config_prisma_prismapg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_config_prisma_js",
+      "target": "config_prisma_adapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/config/prisma.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_config_prisma_js",
+      "target": "config_prisma_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/middlewares/auth.middleware.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_middlewares_auth_middleware_js",
+      "target": "src_config_prisma_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_scripts_createfirstadmin_js",
+      "target": "src_config_prisma_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_scripts_resetfirstadminpassword_js",
+      "target": "src_config_prisma_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "src_config_prisma_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "src_config_prisma_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "src_validators_adminauth_validator_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "validators_adminauth_validator_validateadminlogininput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "validators_adminauth_validator_validateadminotpinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "validators_adminauth_validator_validateforgotpasswordinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "validators_adminauth_validator_validateresetpasswordinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_validateadminlogininput_validateadminotpinput_validateforgotpasswordinput_validateresetpasswordinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "src_services_admin_service_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "services_admin_service_loginadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "services_admin_service_logoutadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "services_admin_service_sendadminotp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "services_admin_service_verifyadminotp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "services_admin_service_getadmintrusteddevices",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "services_admin_service_revokeadmintrusteddevice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "services_admin_service_forgotadminpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "services_admin_service_resetadminpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_loginadmin_logoutadmin_sendadminotp_verifyadminotp_getadmintrusteddevices_revokeadmintrusteddevice_forgotadminpassword_resetadminpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_adminlogincontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_adminlogoutcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_adminmecontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_adminsendotpcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_adminverifyotpcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_admingettrusteddevicescontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L154",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_adminrevoketrusteddevicecontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L195",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_adminforgotpasswordcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L231",
+      "weight": 1.0,
+      "source": "src_controllers_admin_controller_js",
+      "target": "controllers_admin_controller_adminresetpasswordcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "src_controllers_admin_controller_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_adminlogincontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminlogincontroller",
+      "target": "validators_adminauth_validator_validateadminlogininput"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminlogincontroller",
+      "target": "services_admin_service_loginadmin"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_adminlogoutcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminlogoutcontroller",
+      "target": "services_admin_service_logoutadmin"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_adminmecontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_adminsendotpcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminsendotpcontroller",
+      "target": "services_admin_service_sendadminotp"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_adminverifyotpcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminverifyotpcontroller",
+      "target": "validators_adminauth_validator_validateadminotpinput"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminverifyotpcontroller",
+      "target": "services_admin_service_verifyadminotp"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_admingettrusteddevicescontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_admingettrusteddevicescontroller",
+      "target": "services_admin_service_getadmintrusteddevices"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_adminrevoketrusteddevicecontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L173",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminrevoketrusteddevicecontroller",
+      "target": "services_admin_service_revokeadmintrusteddevice"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_adminforgotpasswordcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L197",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminforgotpasswordcontroller",
+      "target": "validators_adminauth_validator_validateforgotpasswordinput"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L214",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminforgotpasswordcontroller",
+      "target": "services_admin_service_forgotadminpassword"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "controllers_admin_controller_adminresetpasswordcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L233",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminresetpasswordcontroller",
+      "target": "validators_adminauth_validator_validateresetpasswordinput"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/controllers/admin.controller.js",
+      "source_location": "L250",
+      "weight": 1.0,
+      "source": "controllers_admin_controller_adminresetpasswordcontroller",
+      "target": "services_admin_service_resetadminpassword"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_dashboard_controller_js",
+      "target": "src_services_dashboard_service_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_dashboard_controller_js",
+      "target": "controllers_dashboard_controller_dashboardservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_controllers_dashboard_controller_js",
+      "target": "controllers_dashboard_controller_getdashboardcore",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_controllers_dashboard_controller_js",
+      "target": "controllers_dashboard_controller_getdashboardanalytics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/dashboard.controller.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "src_controllers_dashboard_controller_js",
+      "target": "controllers_dashboard_controller_getdashboardadminwidgets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "src_controllers_dashboard_controller_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "controllers_dashboard_controller_getdashboardcore",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "controllers_dashboard_controller_getdashboardanalytics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "controllers_dashboard_controller_getdashboardadminwidgets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_users_controller_js",
+      "target": "src_services_users_service_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_controllers_users_controller_js",
+      "target": "controllers_users_controller_usersservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_controllers_users_controller_js",
+      "target": "controllers_users_controller_empty_list_response",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "src_controllers_users_controller_js",
+      "target": "controllers_users_controller_getuserslist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/controllers/users.controller.js",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_controllers_users_controller_js",
+      "target": "controllers_users_controller_getuserdetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "src_controllers_users_controller_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "controllers_users_controller_getuserslist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "controllers_users_controller_getuserdetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/middlewares/auth.middleware.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_middlewares_auth_middleware_js",
+      "target": "middlewares_auth_middleware_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/middlewares/auth.middleware.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_middlewares_auth_middleware_js",
+      "target": "middlewares_auth_middleware_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "src_middlewares_auth_middleware_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "src_middlewares_auth_middleware_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "src_middlewares_auth_middleware_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "middlewares_auth_middleware_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "middlewares_auth_middleware_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "middlewares_auth_middleware_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/middlewares/rateLimit.middleware.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_middlewares_ratelimit_middleware_js",
+      "target": "middlewares_ratelimit_middleware_ratelimit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/middlewares/rateLimit.middleware.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_middlewares_ratelimit_middleware_js",
+      "target": "middlewares_ratelimit_middleware_adminloginratelimiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "src_middlewares_ratelimit_middleware_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "middlewares_ratelimit_middleware_adminloginratelimiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "routes_admin_routes_express",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "routes_admin_routes_adminlogincontroller_adminmecontroller_adminlogoutcontroller_adminsendotpcontroller_adminverifyotpcontroller_admingettrusteddevicescontroller_adminrevoketrusteddevicecontroller_adminforgotpasswordcontroller_adminresetpasswordcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "routes_admin_routes_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "routes_admin_routes_adminloginratelimiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/admin.routes.js",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_routes_admin_routes_js",
+      "target": "routes_admin_routes_router",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "routes_dashboard_routes_express",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "routes_dashboard_routes_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics_getdashboardadminwidgets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/dashboard.routes.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_routes_dashboard_routes_js",
+      "target": "routes_dashboard_routes_router",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "routes_users_routes_express",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "routes_users_routes_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "routes_users_routes_getuserslist_getuserdetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/users.routes.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_routes_users_routes_js",
+      "target": "routes_users_routes_router",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_scripts_createfirstadmin_js",
+      "target": "scripts_createfirstadmin_bcrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_scripts_createfirstadmin_js",
+      "target": "scripts_createfirstadmin_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_scripts_createfirstadmin_js",
+      "target": "src_utils_passwordpolicy_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_scripts_createfirstadmin_js",
+      "target": "utils_passwordpolicy_validatepasswordstrength",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_scripts_createfirstadmin_js",
+      "target": "scripts_createfirstadmin_validatepasswordstrength",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_scripts_createfirstadmin_js",
+      "target": "scripts_createfirstadmin_createfirstadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/scripts/createFirstAdmin.js",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "scripts_createfirstadmin_createfirstadmin",
+      "target": "utils_passwordpolicy_validatepasswordstrength"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_scripts_resetfirstadminpassword_js",
+      "target": "scripts_resetfirstadminpassword_bcrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_scripts_resetfirstadminpassword_js",
+      "target": "scripts_resetfirstadminpassword_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_scripts_resetfirstadminpassword_js",
+      "target": "src_utils_passwordpolicy_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_scripts_resetfirstadminpassword_js",
+      "target": "utils_passwordpolicy_validatepasswordstrength",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_scripts_resetfirstadminpassword_js",
+      "target": "scripts_resetfirstadminpassword_validatepasswordstrength",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_scripts_resetfirstadminpassword_js",
+      "target": "scripts_resetfirstadminpassword_resetfirstadminpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/scripts/resetFirstAdminPassword.js",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "scripts_resetfirstadminpassword_resetfirstadminpassword",
+      "target": "utils_passwordpolicy_validatepasswordstrength"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_bcrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_generatesessiontoken_getsessionexpirydate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "src_utils_otp_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "utils_otp_generateotpcode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "utils_otp_hashotpcode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "utils_otp_compareotpcode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "utils_otp_getotpexpirydate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_generateotpcode_hashotpcode_compareotpcode_getotpexpirydate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_recordloginattempt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_createauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_islogintemporarilyblocked",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_loginadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L229",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_logoutadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L266",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_sendadminotp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L326",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_verifyadminotp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L447",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_getadmintrusteddevices",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L478",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_revokeadmintrusteddevice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L525",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_forgotadminpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L582",
+      "weight": 1.0,
+      "source": "src_services_admin_service_js",
+      "target": "services_admin_service_resetadminpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "services_admin_service_loginadmin",
+      "target": "services_admin_service_recordloginattempt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "services_admin_service_loginadmin",
+      "target": "services_admin_service_createauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L239",
+      "weight": 1.0,
+      "source": "services_admin_service_logoutadmin",
+      "target": "services_admin_service_createauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L304",
+      "weight": 1.0,
+      "source": "services_admin_service_sendadminotp",
+      "target": "services_admin_service_createauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L402",
+      "weight": 1.0,
+      "source": "services_admin_service_verifyadminotp",
+      "target": "services_admin_service_createauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L508",
+      "weight": 1.0,
+      "source": "services_admin_service_revokeadmintrusteddevice",
+      "target": "services_admin_service_createauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L562",
+      "weight": 1.0,
+      "source": "services_admin_service_forgotadminpassword",
+      "target": "services_admin_service_createauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L652",
+      "weight": 1.0,
+      "source": "services_admin_service_resetadminpassword",
+      "target": "services_admin_service_createauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "services_admin_service_loginadmin",
+      "target": "services_admin_service_islogintemporarilyblocked",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L291",
+      "weight": 1.0,
+      "source": "services_admin_service_sendadminotp",
+      "target": "utils_otp_generateotpcode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L292",
+      "weight": 1.0,
+      "source": "services_admin_service_sendadminotp",
+      "target": "utils_otp_hashotpcode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L293",
+      "weight": 1.0,
+      "source": "services_admin_service_sendadminotp",
+      "target": "utils_otp_getotpexpirydate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L390",
+      "weight": 1.0,
+      "source": "services_admin_service_verifyadminotp",
+      "target": "utils_otp_compareotpcode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L549",
+      "weight": 1.0,
+      "source": "services_admin_service_forgotadminpassword",
+      "target": "utils_otp_generateotpcode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L550",
+      "weight": 1.0,
+      "source": "services_admin_service_forgotadminpassword",
+      "target": "utils_otp_hashotpcode"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L551",
+      "weight": 1.0,
+      "source": "services_admin_service_forgotadminpassword",
+      "target": "utils_otp_getotpexpirydate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/services/admin.service.js",
+      "source_location": "L642",
+      "weight": 1.0,
+      "source": "services_admin_service_resetadminpassword",
+      "target": "utils_otp_compareotpcode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/dashboard.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_services_dashboard_service_js",
+      "target": "services_dashboard_service_getdashboardcore",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/dashboard.service.js",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "src_services_dashboard_service_js",
+      "target": "services_dashboard_service_getdashboardanalytics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/dashboard.service.js",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "src_services_dashboard_service_js",
+      "target": "services_dashboard_service_getdashboardadminwidgets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_valid_roles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_valid_statuses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_role_map",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_status_map",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_verification_map",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_mapuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_getuserslist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L183",
+      "weight": 1.0,
+      "source": "src_services_users_service_js",
+      "target": "services_users_service_getuserdetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L219",
+      "weight": 1.0,
+      "source": "services_users_service_getuserdetails",
+      "target": "services_users_service_mapuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/users.service.js",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "services_users_service_getuserdetails",
+      "target": "services_users_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_utils_otp_js",
+      "target": "utils_otp_crypto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_utils_otp_js",
+      "target": "utils_otp_bcrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_utils_otp_js",
+      "target": "utils_otp_generateotpcode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_utils_otp_js",
+      "target": "utils_otp_hashotpcode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_utils_otp_js",
+      "target": "utils_otp_compareotpcode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/otp.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_utils_otp_js",
+      "target": "utils_otp_getotpexpirydate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/passwordPolicy.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_utils_passwordpolicy_js",
+      "target": "utils_passwordpolicy_validatepasswordstrength",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_validators_adminauth_validator_js",
+      "target": "validators_adminauth_validator_validateadminlogininput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "src_validators_adminauth_validator_js",
+      "target": "validators_adminauth_validator_validateadminotpinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "src_validators_adminauth_validator_js",
+      "target": "validators_adminauth_validator_validateforgotpasswordinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/validators/adminAuth.validator.js",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "src_validators_adminauth_validator_js",
+      "target": "validators_adminauth_validator_validateresetpasswordinput",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "2b5eb206bdb42d42a707bc39fad5bc04c55a61d9"
+}
