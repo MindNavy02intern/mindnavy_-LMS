@@ -17,7 +17,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
-app.use(express.json());
+app.use(express.json({ limit: "50kb" }));
 
 // Health check route
 app.get("/", (req, res) => {

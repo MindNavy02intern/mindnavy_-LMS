@@ -11,6 +11,19 @@ const adminLoginRateLimiter = rateLimit({
   },
 });
 
+// Stricter limiter for write operations on user management endpoints
+const adminUserActionRateLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  limit: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many user management requests. Please try again later.",
+  },
+});
+
 module.exports = {
   adminLoginRateLimiter,
+  adminUserActionRateLimiter,
 };

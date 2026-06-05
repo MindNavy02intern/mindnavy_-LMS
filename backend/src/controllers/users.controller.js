@@ -1,4 +1,12 @@
 const usersService = require("../services/users.service");
+const {
+  validateUuidParam,
+  validateCreateUserInput,
+  validateUpdateUserInput,
+  validateUpdateUserStatusInput,
+  validateAssignUserRoleInput,
+  validateResetUserPasswordInput,
+} = require("../validators/users.validator");
 
 const EMPTY_LIST_RESPONSE = {
   kpiSummary: {
@@ -22,12 +30,14 @@ const EMPTY_LIST_RESPONSE = {
   },
 };
 
+// ─── Read endpoints ───────────────────────────────────────────────────────────
+
 async function getUsersList(req, res) {
   try {
     const result = await usersService.getUsersList(req.query, req.admin);
     return res.status(200).json(result);
   } catch (error) {
-    console.error("[users] Service error:", error.message, error.stack);
+    console.error("[users] getUsersList error:", error.message, error.stack);
     return res.status(200).json(EMPTY_LIST_RESPONSE);
   }
 }
@@ -38,14 +48,156 @@ async function getUserDetails(req, res) {
     return res.status(200).json(result);
   } catch (error) {
     if (error.statusCode === 400) {
-      return res.status(400).json({ message: "Invalid user id." });
+      return res.status(400).json({ success: false, message: "Invalid user id." });
     }
     if (error.statusCode === 404) {
-      return res.status(404).json({ message: "User not found." });
+      return res.status(404).json({ success: false, message: "User not found." });
     }
-    console.error("getUserDetails controller error:", error.message);
-    return res.status(500).json({ message: "Unable to fetch user details." });
+    console.error("[users] getUserDetails error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to fetch user details." });
   }
 }
 
-module.exports = { getUsersList, getUserDetails };
+// ─── Write endpoints (Task 6C) ────────────────────────────────────────────────
+
+async function createUser(req, res) {
+  const errors = validateCreateUserInput(req.body || {});
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, message: errors[0] });
+  }
+
+  try {
+    const result = await usersService.createUser(req.body, req.admin);
+    return res.status(201).json(result);
+  } catch (error) {
+    if (error.statusCode === 409) {
+      return res.status(409).json({ success: false, message: error.message });
+    }
+    console.error("[users] createUser error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to create user." });
+  }
+}
+
+async function updateUser(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  const errors = validateUpdateUserInput(req.body || {});
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, message: errors[0] });
+  }
+
+  try {
+    const result = await usersService.updateUser(req.params.id, req.body, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    if (error.statusCode === 409) {
+      return res.status(409).json({ success: false, message: error.message });
+    }
+    console.error("[users] updateUser error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to update user." });
+  }
+}
+
+async function updateUserStatus(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  const errors = validateUpdateUserStatusInput(req.body || {});
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, message: errors[0] });
+  }
+
+  try {
+    const result = await usersService.updateUserStatus(req.params.id, req.body, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] updateUserStatus error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to update user status." });
+  }
+}
+
+async function resetUserPassword(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  const errors = validateResetUserPasswordInput(req.body || {});
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, message: errors[0] });
+  }
+
+  try {
+    const result = await usersService.resetUserPassword(req.params.id, req.body, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] resetUserPassword error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to reset user password." });
+  }
+}
+
+async function assignUserRole(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  const errors = validateAssignUserRoleInput(req.body || {});
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, message: errors[0] });
+  }
+
+  try {
+    const result = await usersService.assignUserRole(req.params.id, req.body, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] assignUserRole error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to assign user role." });
+  }
+}
+
+async function deleteUser(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  try {
+    const result = await usersService.deleteUser(req.params.id, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] deleteUser error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to archive user." });
+  }
+}
+
+module.exports = {
+  getUsersList,
+  getUserDetails,
+  createUser,
+  updateUser,
+  updateUserStatus,
+  resetUserPassword,
+  assignUserRole,
+  deleteUser,
+};
