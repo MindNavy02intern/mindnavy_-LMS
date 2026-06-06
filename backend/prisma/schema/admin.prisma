@@ -31,6 +31,7 @@ enum AuditAction {
   USER_PASSWORD_RESET
   USER_ROLE_ASSIGNED
   USER_DELETED
+  USER_ANALYTICS_VIEWED
 }
 
 model AdminUser {

@@ -434,6 +434,141 @@ async function deleteUser(id, admin = {}) {
   };
 }
 
+// ─── Task 6D: User Analytics ──────────────────────────────────────────────────
+
+async function getUsersAnalytics(admin = {}) {
+  const now = new Date();
+  const last24h = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const last7d  = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const last30d = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+  // Inclusive start of the 7-day growth window (midnight UTC of D-6)
+  const growthStart = new Date(now);
+  growthStart.setUTCDate(growthStart.getUTCDate() - 6);
+  growthStart.setUTCHours(0, 0, 0, 0);
+
+  const [
+    totalUsers,
+    activeUsers,
+    suspendedUsers,
+    pendingUsers,
+    archivedUsers,
+    verifiedUsers,
+    pendingVerification,
+    rejectedVerification,
+    expiredVerification,
+    roleGroups,
+    statusGroups,
+    verificationGroups,
+    lowRisk,
+    mediumRisk,
+    highRisk,
+    recentUsers,
+    activeLast24h,
+    activeLast7d,
+    inactive30d,
+  ] = await Promise.all([
+    prisma.appUser.count(),
+    prisma.appUser.count({ where: { status: "ACTIVE" } }),
+    prisma.appUser.count({ where: { status: "SUSPENDED" } }),
+    prisma.appUser.count({ where: { status: "PENDING" } }),
+    prisma.appUser.count({ where: { status: "ARCHIVED" } }),
+    prisma.appUser.count({ where: { verificationState: "VERIFIED" } }),
+    prisma.appUser.count({ where: { verificationState: "PENDING" } }),
+    prisma.appUser.count({ where: { verificationState: "REJECTED" } }),
+    prisma.appUser.count({ where: { verificationState: "EXPIRED" } }),
+    prisma.appUser.groupBy({ by: ["role"],             _count: { _all: true } }),
+    prisma.appUser.groupBy({ by: ["status"],           _count: { _all: true } }),
+    prisma.appUser.groupBy({ by: ["verificationState"], _count: { _all: true } }),
+    prisma.appUser.count({ where: { riskScore: { gte: 0,  lte: 30  } } }),
+    prisma.appUser.count({ where: { riskScore: { gte: 31, lte: 70  } } }),
+    prisma.appUser.count({ where: { riskScore: { gte: 71, lte: 100 } } }),
+    prisma.appUser.findMany({
+      where:  { createdAt: { gte: growthStart } },
+      select: { createdAt: true },
+    }),
+    prisma.appUser.count({ where: { lastActivityAt: { gte: last24h } } }),
+    prisma.appUser.count({ where: { lastActivityAt: { gte: last7d  } } }),
+    prisma.appUser.count({
+      where: {
+        OR: [
+          { lastActivityAt: null },
+          { lastActivityAt: { lt: last30d } },
+        ],
+      },
+    }),
+  ]);
+
+  // usersByRole — always return every role even if count is 0
+  const ALL_ROLES = ["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"];
+  const roleCountMap = {};
+  for (const g of roleGroups) roleCountMap[g.role] = g._count._all;
+  const usersByRole = ALL_ROLES.map((r) => ({
+    role:  ROLE_MAP[r] ?? r.toLowerCase(),
+    count: roleCountMap[r] ?? 0,
+  }));
+
+  // usersByStatus — always return every status even if count is 0
+  const ALL_STATUSES = ["ACTIVE", "SUSPENDED", "PENDING", "ARCHIVED", "INVITED"];
+  const statusCountMap = {};
+  for (const g of statusGroups) statusCountMap[g.status] = g._count._all;
+  const usersByStatus = ALL_STATUSES.map((s) => ({
+    status: STATUS_MAP[s] ?? s.toLowerCase(),
+    count:  statusCountMap[s] ?? 0,
+  }));
+
+  // verificationBreakdown — always return every state even if count is 0
+  const ALL_VERIFICATION = ["VERIFIED", "PENDING", "REJECTED", "EXPIRED"];
+  const verificationCountMap = {};
+  for (const g of verificationGroups) verificationCountMap[g.verificationState] = g._count._all;
+  const verificationBreakdown = ALL_VERIFICATION.map((v) => ({
+    verificationState: VERIFICATION_MAP[v] ?? v.toLowerCase(),
+    count:             verificationCountMap[v] ?? 0,
+  }));
+
+  // recentGrowth — always return 7 date entries (today and the 6 days before)
+  const growthMap = {};
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(growthStart);
+    d.setUTCDate(d.getUTCDate() + i);
+    growthMap[d.toISOString().slice(0, 10)] = 0;
+  }
+  for (const u of recentUsers) {
+    const key = u.createdAt.toISOString().slice(0, 10);
+    if (key in growthMap) growthMap[key]++;
+  }
+  const recentGrowth = Object.entries(growthMap).map(([date, count]) => ({ date, count }));
+
+  // Audit log — failure must not crash the request
+  try {
+    await prisma.auditLog.create({
+      data: { adminId: admin.id ?? null, action: "USER_ANALYTICS_VIEWED", details: null },
+    });
+  } catch (err) {
+    console.error("Audit log error (USER_ANALYTICS_VIEWED):", err.message);
+  }
+
+  return {
+    summary: {
+      totalUsers,
+      activeUsers,
+      suspendedUsers,
+      pendingUsers,
+      archivedUsers,
+      verifiedUsers,
+      pendingVerification,
+      rejectedVerification,
+      expiredVerification,
+    },
+    usersByRole,
+    usersByStatus,
+    verificationBreakdown,
+    riskDistribution: { low: lowRisk, medium: mediumRisk, high: highRisk },
+    recentGrowth,
+    activitySummary: { activeLast24h, activeLast7d, inactive30d },
+  };
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -443,4 +578,5 @@ module.exports = {
   resetUserPassword,
   assignUserRole,
   deleteUser,
+  getUsersAnalytics,
 };

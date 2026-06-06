@@ -30,6 +30,18 @@ const EMPTY_LIST_RESPONSE = {
   },
 };
 
+// ─── Analytics endpoint (Task 6D) ────────────────────────────────────────────
+
+async function getUsersAnalytics(req, res) {
+  try {
+    const analytics = await usersService.getUsersAnalytics(req.admin);
+    return res.status(200).json({ success: true, analytics });
+  } catch (error) {
+    console.error("[users] getUsersAnalytics error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to load user analytics." });
+  }
+}
+
 // ─── Read endpoints ───────────────────────────────────────────────────────────
 
 async function getUsersList(req, res) {
@@ -200,4 +212,5 @@ module.exports = {
   resetUserPassword,
   assignUserRole,
   deleteUser,
+  getUsersAnalytics,
 };

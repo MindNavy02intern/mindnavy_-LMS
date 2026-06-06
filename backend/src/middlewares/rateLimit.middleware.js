@@ -23,7 +23,20 @@ const adminUserActionRateLimiter = rateLimit({
   },
 });
 
+// Analytics limiter — prevents heavy repeated aggregation queries
+const adminUsersAnalyticsRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many analytics requests. Please try again later.",
+  },
+});
+
 module.exports = {
   adminLoginRateLimiter,
   adminUserActionRateLimiter,
+  adminUsersAnalyticsRateLimiter,
 };

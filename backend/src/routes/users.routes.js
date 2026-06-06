@@ -1,6 +1,6 @@
 const express = require("express");
 const { requireAdminAuth } = require("../middlewares/auth.middleware");
-const { adminUserActionRateLimiter } = require("../middlewares/rateLimit.middleware");
+const { adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter } = require("../middlewares/rateLimit.middleware");
 const {
   getUsersList,
   getUserDetails,
@@ -10,12 +10,15 @@ const {
   resetUserPassword,
   assignUserRole,
   deleteUser,
+  getUsersAnalytics,
 } = require("../controllers/users.controller");
 
 const router = express.Router();
 
 // ─── Read-only ────────────────────────────────────────────────────────────────
 router.get("/", requireAdminAuth, getUsersList);
+// Analytics must be registered before /:id to avoid Express treating "analytics" as an id
+router.get("/analytics", requireAdminAuth, adminUsersAnalyticsRateLimiter, getUsersAnalytics);
 router.get("/:id", requireAdminAuth, getUserDetails);
 
 // ─── Write (auth + strict rate limiter) ──────────────────────────────────────
