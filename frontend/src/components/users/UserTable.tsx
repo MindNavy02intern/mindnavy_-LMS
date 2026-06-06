@@ -1,8 +1,9 @@
 import type { User, UserStatus } from '../../types/users';
 
 interface Props {
-  users:   User[];
-  loading: boolean;
+  users:       User[];
+  loading:     boolean;
+  onViewUser?: (userId: string) => void;
 }
 
 // ── Role badge colours (per design spec) ──────────────────────────────────────
@@ -158,7 +159,7 @@ const TD: React.CSSProperties = {
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
-export default function UserTable({ users, loading }: Props) {
+export default function UserTable({ users, loading, onViewUser }: Props) {
   return (
     <div style={{
       background: '#ffffff', border: '1px solid #e5e7eb',
@@ -281,26 +282,52 @@ export default function UserTable({ users, loading }: Props) {
                       {/* Actions */}
                       <td style={{ ...TD, textAlign: 'right' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 3 }}>
-                          {([
-                            { Icon: IconEye,    label: 'View user'    },
-                            { Icon: IconPencil, label: 'Edit user'    },
-                            { Icon: IconDots,   label: 'More options' },
-                          ] as const).map(({ Icon, label }) => (
-                            <button
-                              key={label}
-                              disabled
-                              title={`${label} — coming soon`}
-                              style={{
-                                width: 24, height: 24,
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                background: '#f9fafb', border: '1px solid #e5e7eb',
-                                borderRadius: 5, color: '#9ca3af',
-                                cursor: 'not-allowed', opacity: 0.65, padding: 0,
-                              }}
-                            >
-                              <Icon />
-                            </button>
-                          ))}
+                          {/* Eye / View — enabled when onViewUser is wired up */}
+                          <button
+                            onClick={() => onViewUser?.(user.id)}
+                            title="View user"
+                            style={{
+                              width: 24, height: 24,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              background: '#eff6ff', border: '1px solid #bfdbfe',
+                              borderRadius: 5, color: '#2563eb',
+                              cursor: onViewUser ? 'pointer' : 'default', padding: 0,
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#dbeafe'; e.currentTarget.style.borderColor = '#93c5fd'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#eff6ff'; e.currentTarget.style.borderColor = '#bfdbfe'; }}
+                          >
+                            <IconEye />
+                          </button>
+
+                          {/* Edit — disabled */}
+                          <button
+                            disabled
+                            title="Edit user — coming soon"
+                            style={{
+                              width: 24, height: 24,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              background: '#f9fafb', border: '1px solid #e5e7eb',
+                              borderRadius: 5, color: '#9ca3af',
+                              cursor: 'not-allowed', opacity: 0.65, padding: 0,
+                            }}
+                          >
+                            <IconPencil />
+                          </button>
+
+                          {/* More — disabled */}
+                          <button
+                            disabled
+                            title="More options — coming soon"
+                            style={{
+                              width: 24, height: 24,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              background: '#f9fafb', border: '1px solid #e5e7eb',
+                              borderRadius: 5, color: '#9ca3af',
+                              cursor: 'not-allowed', opacity: 0.65, padding: 0,
+                            }}
+                          >
+                            <IconDots />
+                          </button>
                         </div>
                       </td>
                     </tr>
