@@ -328,10 +328,19 @@
       "norm_label": "dashboardroutes"
     },
     {
+      "label": "usersRoutes",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L7",
+      "id": "backend_server_usersroutes",
+      "community": 19,
+      "norm_label": "usersroutes"
+    },
+    {
       "label": "app",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L8",
+      "source_location": "L9",
       "id": "backend_server_app",
       "community": 19,
       "norm_label": "app"
@@ -340,7 +349,7 @@
       "label": "corsOptions",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L12",
+      "source_location": "L13",
       "id": "backend_server_corsoptions",
       "community": 19,
       "norm_label": "corsoptions"
@@ -349,7 +358,7 @@
       "label": "server",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L48",
+      "source_location": "L52",
       "id": "backend_server_server",
       "community": 19,
       "norm_label": "server"
@@ -634,6 +643,114 @@
       "norm_label": "getdashboardadminwidgets()"
     },
     {
+      "label": "users.controller.js",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L1",
+      "id": "backend_src_controllers_users_controller_js",
+      "community": 9,
+      "norm_label": "users.controller.js"
+    },
+    {
+      "label": "usersService",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L1",
+      "id": "controllers_users_controller_usersservice",
+      "community": 9,
+      "norm_label": "usersservice"
+    },
+    {
+      "label": "{\r\n  validateUuidParam,\r\n  validateCreateUserInput,\r\n  validateUpdateUserInput,\r\n  validateUpdateUserStatusInput,\r\n  validateAssignUserRoleInput,\r\n  validateResetUserPasswordInput,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "id": "controllers_users_controller_validateuuidparam_validatecreateuserinput_validateupdateuserinput_validateupdateuserstatusinput_validateassignuserroleinput_validateresetuserpasswordinput",
+      "community": 9,
+      "norm_label": "{\r\n  validateuuidparam,\r\n  validatecreateuserinput,\r\n  validateupdateuserinput,\r\n  validateupdateuserstatusinput,\r\n  validateassignuserroleinput,\r\n  validateresetuserpasswordinput,\r\n}"
+    },
+    {
+      "label": "EMPTY_LIST_RESPONSE",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L11",
+      "id": "controllers_users_controller_empty_list_response",
+      "community": 9,
+      "norm_label": "empty_list_response"
+    },
+    {
+      "label": "getUsersList()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L35",
+      "id": "controllers_users_controller_getuserslist",
+      "community": 9,
+      "norm_label": "getuserslist()"
+    },
+    {
+      "label": "getUserDetails()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L45",
+      "id": "controllers_users_controller_getuserdetails",
+      "community": 9,
+      "norm_label": "getuserdetails()"
+    },
+    {
+      "label": "createUser()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L63",
+      "id": "controllers_users_controller_createuser",
+      "community": 9,
+      "norm_label": "createuser()"
+    },
+    {
+      "label": "updateUser()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L81",
+      "id": "controllers_users_controller_updateuser",
+      "community": 9,
+      "norm_label": "updateuser()"
+    },
+    {
+      "label": "updateUserStatus()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L107",
+      "id": "controllers_users_controller_updateuserstatus",
+      "community": 9,
+      "norm_label": "updateuserstatus()"
+    },
+    {
+      "label": "resetUserPassword()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L130",
+      "id": "controllers_users_controller_resetuserpassword",
+      "community": 9,
+      "norm_label": "resetuserpassword()"
+    },
+    {
+      "label": "assignUserRole()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L153",
+      "id": "controllers_users_controller_assignuserrole",
+      "community": 9,
+      "norm_label": "assignuserrole()"
+    },
+    {
+      "label": "deleteUser()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L176",
+      "id": "controllers_users_controller_deleteuser",
+      "community": 9,
+      "norm_label": "deleteuser()"
+    },
+    {
       "label": "auth.middleware.js",
       "file_type": "code",
       "source_file": "backend/src/middlewares/auth.middleware.js",
@@ -686,6 +803,15 @@
       "id": "middlewares_ratelimit_middleware_adminloginratelimiter",
       "community": 5,
       "norm_label": "adminloginratelimiter"
+    },
+    {
+      "label": "adminUserActionRateLimiter",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/rateLimit.middleware.js",
+      "source_location": "L15",
+      "id": "middlewares_ratelimit_middleware_adminuseractionratelimiter",
+      "community": 5,
+      "norm_label": "adminuseractionratelimiter"
     },
     {
       "label": "admin.routes.js",
@@ -784,6 +910,60 @@
       "source_location": "L10",
       "id": "routes_dashboard_routes_router",
       "community": 19,
+      "norm_label": "router"
+    },
+    {
+      "label": "users.routes.js",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L1",
+      "id": "backend_src_routes_users_routes_js",
+      "community": 9,
+      "norm_label": "users.routes.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L1",
+      "id": "routes_users_routes_express",
+      "community": 9,
+      "norm_label": "express"
+    },
+    {
+      "label": "{ requireAdminAuth }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L2",
+      "id": "routes_users_routes_requireadminauth",
+      "community": 9,
+      "norm_label": "{ requireadminauth }"
+    },
+    {
+      "label": "{ adminUserActionRateLimiter }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "id": "routes_users_routes_adminuseractionratelimiter",
+      "community": 9,
+      "norm_label": "{ adminuseractionratelimiter }"
+    },
+    {
+      "label": "{\r\n  getUsersList,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_resetuserpassword_assignuserrole_deleteuser",
+      "community": 9,
+      "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n}"
+    },
+    {
+      "label": "router",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L15",
+      "id": "routes_users_routes_router",
+      "community": 9,
       "norm_label": "router"
     },
     {
@@ -1057,6 +1237,204 @@
       "norm_label": "getdashboardadminwidgets()"
     },
     {
+      "label": "users.service.js",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1",
+      "id": "backend_src_services_users_service_js",
+      "community": 33,
+      "norm_label": "users.service.js"
+    },
+    {
+      "label": "bcrypt",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1",
+      "id": "services_users_service_bcrypt",
+      "community": 33,
+      "norm_label": "bcrypt"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L2",
+      "id": "services_users_service_prisma",
+      "community": 33,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "VALID_ROLES",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L4",
+      "id": "services_users_service_valid_roles",
+      "community": 33,
+      "norm_label": "valid_roles"
+    },
+    {
+      "label": "VALID_STATUSES",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L5",
+      "id": "services_users_service_valid_statuses",
+      "community": 33,
+      "norm_label": "valid_statuses"
+    },
+    {
+      "label": "ROLE_MAP",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L7",
+      "id": "services_users_service_role_map",
+      "community": 33,
+      "norm_label": "role_map"
+    },
+    {
+      "label": "STATUS_MAP",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L14",
+      "id": "services_users_service_status_map",
+      "community": 33,
+      "norm_label": "status_map"
+    },
+    {
+      "label": "VERIFICATION_MAP",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L22",
+      "id": "services_users_service_verification_map",
+      "community": 33,
+      "norm_label": "verification_map"
+    },
+    {
+      "label": "USER_SELECT",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L32",
+      "id": "services_users_service_user_select",
+      "community": 33,
+      "norm_label": "user_select"
+    },
+    {
+      "label": "mapUser()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L48",
+      "id": "services_users_service_mapuser",
+      "community": 33,
+      "norm_label": "mapuser()"
+    },
+    {
+      "label": "makeError()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L64",
+      "id": "services_users_service_makeerror",
+      "community": 33,
+      "norm_label": "makeerror()"
+    },
+    {
+      "label": "createUserAuditLog()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L71",
+      "id": "services_users_service_createuserauditlog",
+      "community": 33,
+      "norm_label": "createuserauditlog()"
+    },
+    {
+      "label": "assertUserExists()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L85",
+      "id": "services_users_service_assertuserexists",
+      "community": 33,
+      "norm_label": "assertuserexists()"
+    },
+    {
+      "label": "ensureEmailAvailable()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L94",
+      "id": "services_users_service_ensureemailavailable",
+      "community": 33,
+      "norm_label": "ensureemailavailable()"
+    },
+    {
+      "label": "getUsersList()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L103",
+      "id": "services_users_service_getuserslist",
+      "community": 33,
+      "norm_label": "getuserslist()"
+    },
+    {
+      "label": "getUserDetails()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L209",
+      "id": "services_users_service_getuserdetails",
+      "community": 33,
+      "norm_label": "getuserdetails()"
+    },
+    {
+      "label": "createUser()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L241",
+      "id": "services_users_service_createuser",
+      "community": 33,
+      "norm_label": "createuser()"
+    },
+    {
+      "label": "updateUser()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L291",
+      "id": "services_users_service_updateuser",
+      "community": 33,
+      "norm_label": "updateuser()"
+    },
+    {
+      "label": "updateUserStatus()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L350",
+      "id": "services_users_service_updateuserstatus",
+      "community": 33,
+      "norm_label": "updateuserstatus()"
+    },
+    {
+      "label": "resetUserPassword()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L375",
+      "id": "services_users_service_resetuserpassword",
+      "community": 33,
+      "norm_label": "resetuserpassword()"
+    },
+    {
+      "label": "assignUserRole()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L393",
+      "id": "services_users_service_assignuserrole",
+      "community": 33,
+      "norm_label": "assignuserrole()"
+    },
+    {
+      "label": "deleteUser()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L418",
+      "id": "services_users_service_deleteuser",
+      "community": 33,
+      "norm_label": "deleteuser()"
+    },
+    {
       "label": "otp.js",
       "file_type": "code",
       "source_file": "backend/src/utils/otp.js",
@@ -1181,6 +1559,105 @@
       "id": "validators_adminauth_validator_validateresetpasswordinput",
       "community": 5,
       "norm_label": "validateresetpasswordinput()"
+    },
+    {
+      "label": "users.validator.js",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L1",
+      "id": "backend_src_validators_users_validator_js",
+      "community": 9,
+      "norm_label": "users.validator.js"
+    },
+    {
+      "label": "{ validatePasswordStrength }",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L1",
+      "id": "validators_users_validator_validatepasswordstrength",
+      "community": 9,
+      "norm_label": "{ validatepasswordstrength }"
+    },
+    {
+      "label": "VALID_ROLES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L3",
+      "id": "validators_users_validator_valid_roles",
+      "community": 9,
+      "norm_label": "valid_roles"
+    },
+    {
+      "label": "VALID_STATUSES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L4",
+      "id": "validators_users_validator_valid_statuses",
+      "community": 9,
+      "norm_label": "valid_statuses"
+    },
+    {
+      "label": "VALID_VERIFICATION_STATES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L5",
+      "id": "validators_users_validator_valid_verification_states",
+      "community": 9,
+      "norm_label": "valid_verification_states"
+    },
+    {
+      "label": "validateUuidParam()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L10",
+      "id": "validators_users_validator_validateuuidparam",
+      "community": 9,
+      "norm_label": "validateuuidparam()"
+    },
+    {
+      "label": "validateCreateUserInput()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L17",
+      "id": "validators_users_validator_validatecreateuserinput",
+      "community": 9,
+      "norm_label": "validatecreateuserinput()"
+    },
+    {
+      "label": "validateUpdateUserInput()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L58",
+      "id": "validators_users_validator_validateupdateuserinput",
+      "community": 9,
+      "norm_label": "validateupdateuserinput()"
+    },
+    {
+      "label": "validateUpdateUserStatusInput()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L109",
+      "id": "validators_users_validator_validateupdateuserstatusinput",
+      "community": 9,
+      "norm_label": "validateupdateuserstatusinput()"
+    },
+    {
+      "label": "validateAssignUserRoleInput()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L126",
+      "id": "validators_users_validator_validateassignuserroleinput",
+      "community": 9,
+      "norm_label": "validateassignuserroleinput()"
+    },
+    {
+      "label": "validateResetUserPasswordInput()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L143",
+      "id": "validators_users_validator_validateresetuserpasswordinput",
+      "community": 9,
+      "norm_label": "validateresetuserpasswordinput()"
     },
     {
       "label": "eslint.config.js",
@@ -1827,16 +2304,16 @@
       "source_file": "frontend/src/App.tsx",
       "source_location": "L1",
       "id": "frontend_src_app_tsx",
-      "community": 0,
+      "community": 28,
       "norm_label": "app.tsx"
     },
     {
       "label": "App()",
       "file_type": "code",
       "source_file": "frontend/src/App.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "id": "src_app_app",
-      "community": 0,
+      "community": 28,
       "norm_label": "app()"
     },
     {
@@ -1845,7 +2322,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L1",
       "id": "frontend_src_authcontext_tsx",
-      "community": 20,
+      "community": 25,
       "norm_label": "authcontext.tsx"
     },
     {
@@ -1854,7 +2331,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L13",
       "id": "src_authcontext_authcontexttype",
-      "community": 20,
+      "community": 25,
       "norm_label": "authcontexttype"
     },
     {
@@ -1863,7 +2340,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L25",
       "id": "src_authcontext_authcontext",
-      "community": 20,
+      "community": 25,
       "norm_label": "authcontext"
     },
     {
@@ -1872,7 +2349,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L34",
       "id": "src_authcontext_demo_user",
-      "community": 20,
+      "community": 25,
       "norm_label": "demo_user"
     },
     {
@@ -1881,7 +2358,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L41",
       "id": "src_authcontext_demo_profile",
-      "community": 20,
+      "community": 25,
       "norm_label": "demo_profile"
     },
     {
@@ -1890,7 +2367,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L49",
       "id": "src_authcontext_mapadmintoprofile",
-      "community": 20,
+      "community": 25,
       "norm_label": "mapadmintoprofile()"
     },
     {
@@ -1899,7 +2376,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L58",
       "id": "src_authcontext_authprovider",
-      "community": 20,
+      "community": 25,
       "norm_label": "authprovider()"
     },
     {
@@ -1908,7 +2385,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L143",
       "id": "src_authcontext_useauth",
-      "community": 24,
+      "community": 27,
       "norm_label": "useauth()"
     },
     {
@@ -1917,7 +2394,7 @@
       "source_file": "frontend/src/main.tsx",
       "source_location": "L1",
       "id": "frontend_src_main_tsx",
-      "community": 20,
+      "community": 25,
       "norm_label": "main.tsx"
     },
     {
@@ -1926,7 +2403,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L1",
       "id": "frontend_src_supabase_ts",
-      "community": 0,
+      "community": 28,
       "norm_label": "supabase.ts"
     },
     {
@@ -1935,7 +2412,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L10",
       "id": "src_supabase_supabase",
-      "community": 0,
+      "community": 28,
       "norm_label": "supabase"
     },
     {
@@ -1953,7 +2430,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L9",
       "id": "api_adminauth_adminuser",
-      "community": 20,
+      "community": 25,
       "norm_label": "adminuser"
     },
     {
@@ -1971,7 +2448,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L25",
       "id": "api_adminauth_storetoken",
-      "community": 20,
+      "community": 25,
       "norm_label": "storetoken()"
     },
     {
@@ -1980,7 +2457,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L29",
       "id": "api_adminauth_removetoken",
-      "community": 20,
+      "community": 25,
       "norm_label": "removetoken()"
     },
     {
@@ -2196,7 +2673,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L25",
       "id": "api_passwordrecovery_updatepassword",
-      "community": 20,
+      "community": 0,
       "norm_label": "updatepassword()"
     },
     {
@@ -2263,6 +2740,42 @@
       "norm_label": "verifyotp()"
     },
     {
+      "label": "users.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "id": "frontend_src_api_users_ts",
+      "community": 26,
+      "norm_label": "users.ts"
+    },
+    {
+      "label": "UsersParams",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L6",
+      "id": "api_users_usersparams",
+      "community": 26,
+      "norm_label": "usersparams"
+    },
+    {
+      "label": "USERS_MOCK",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L16",
+      "id": "api_users_users_mock",
+      "community": 26,
+      "norm_label": "users_mock"
+    },
+    {
+      "label": "getUsers()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L42",
+      "id": "api_users_getusers",
+      "community": 26,
+      "norm_label": "getusers()"
+    },
+    {
       "label": "ForgotPasswordForm.tsx",
       "file_type": "code",
       "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
@@ -2304,7 +2817,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_loginform_tsx",
-      "community": 24,
+      "community": 27,
       "norm_label": "loginform.tsx"
     },
     {
@@ -2313,7 +2826,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L4",
       "id": "auth_loginform_props",
-      "community": 24,
+      "community": 27,
       "norm_label": "props"
     },
     {
@@ -2322,7 +2835,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L8",
       "id": "auth_loginform_loginform",
-      "community": 24,
+      "community": 27,
       "norm_label": "loginform()"
     },
     {
@@ -2484,7 +2997,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_signupform_tsx",
-      "community": 0,
+      "community": 27,
       "norm_label": "signupform.tsx"
     },
     {
@@ -2493,7 +3006,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L5",
       "id": "auth_signupform_props",
-      "community": 0,
+      "community": 27,
       "norm_label": "props"
     },
     {
@@ -2502,7 +3015,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L9",
       "id": "auth_signupform_signupform",
-      "community": 0,
+      "community": 27,
       "norm_label": "signupform()"
     },
     {
@@ -2511,7 +3024,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_ui_loadingspinner_tsx",
-      "community": 0,
+      "community": 30,
       "norm_label": "loadingspinner.tsx"
     },
     {
@@ -2520,8 +3033,323 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "ui_loadingspinner_loadingspinner",
-      "community": 0,
+      "community": 30,
       "norm_label": "loadingspinner()"
+    },
+    {
+      "label": "UserFilters.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_userfilters_tsx",
+      "community": 31,
+      "norm_label": "userfilters.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L1",
+      "id": "users_userfilters_props",
+      "community": 31,
+      "norm_label": "props"
+    },
+    {
+      "label": "INPUT",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L12",
+      "id": "users_userfilters_input",
+      "community": 31,
+      "norm_label": "input"
+    },
+    {
+      "label": "SELECT",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L19",
+      "id": "users_userfilters_select",
+      "community": 31,
+      "norm_label": "select"
+    },
+    {
+      "label": "ICON_BTN",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L25",
+      "id": "users_userfilters_icon_btn",
+      "community": 31,
+      "norm_label": "icon_btn"
+    },
+    {
+      "label": "ACTION_BTN",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L33",
+      "id": "users_userfilters_action_btn",
+      "community": 31,
+      "norm_label": "action_btn"
+    },
+    {
+      "label": "UserFilters()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L41",
+      "id": "users_userfilters_userfilters",
+      "community": 31,
+      "norm_label": "userfilters()"
+    },
+    {
+      "label": "UserKpiCards.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_userkpicards_tsx",
+      "community": 29,
+      "norm_label": "userkpicards.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L3",
+      "id": "users_userkpicards_props",
+      "community": 29,
+      "norm_label": "props"
+    },
+    {
+      "label": "IconUsers()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L10",
+      "id": "users_userkpicards_iconusers",
+      "community": 29,
+      "norm_label": "iconusers()"
+    },
+    {
+      "label": "IconCheck()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L21",
+      "id": "users_userkpicards_iconcheck",
+      "community": 29,
+      "norm_label": "iconcheck()"
+    },
+    {
+      "label": "IconClock()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L29",
+      "id": "users_userkpicards_iconclock",
+      "community": 29,
+      "norm_label": "iconclock()"
+    },
+    {
+      "label": "IconBan()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L38",
+      "id": "users_userkpicards_iconban",
+      "community": 29,
+      "norm_label": "iconban()"
+    },
+    {
+      "label": "IconMail()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L47",
+      "id": "users_userkpicards_iconmail",
+      "community": 29,
+      "norm_label": "iconmail()"
+    },
+    {
+      "label": "CardDef",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L58",
+      "id": "users_userkpicards_carddef",
+      "community": 29,
+      "norm_label": "carddef"
+    },
+    {
+      "label": "CARDS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L68",
+      "id": "users_userkpicards_cards",
+      "community": 29,
+      "norm_label": "cards"
+    },
+    {
+      "label": "sk()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L78",
+      "id": "users_userkpicards_sk",
+      "community": 29,
+      "norm_label": "sk()"
+    },
+    {
+      "label": "SkeletonCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L88",
+      "id": "users_userkpicards_skeletoncard",
+      "community": 29,
+      "norm_label": "skeletoncard()"
+    },
+    {
+      "label": "UserKpiCards()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L108",
+      "id": "users_userkpicards_userkpicards",
+      "community": 29,
+      "norm_label": "userkpicards()"
+    },
+    {
+      "label": "UserTable.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_usertable_tsx",
+      "community": 1,
+      "norm_label": "usertable.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L3",
+      "id": "users_usertable_props",
+      "community": 1,
+      "norm_label": "props"
+    },
+    {
+      "label": "getRoleStyle()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L10",
+      "id": "users_usertable_getrolestyle",
+      "community": 1,
+      "norm_label": "getrolestyle()"
+    },
+    {
+      "label": "STATUS_MAP",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L23",
+      "id": "users_usertable_status_map",
+      "community": 1,
+      "norm_label": "status_map"
+    },
+    {
+      "label": "initials()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L33",
+      "id": "users_usertable_initials",
+      "community": 1,
+      "norm_label": "initials()"
+    },
+    {
+      "label": "AVATAR_PALETTES",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L37",
+      "id": "users_usertable_avatar_palettes",
+      "community": 1,
+      "norm_label": "avatar_palettes"
+    },
+    {
+      "label": "avatarPalette()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L47",
+      "id": "users_usertable_avatarpalette",
+      "community": 1,
+      "norm_label": "avatarpalette()"
+    },
+    {
+      "label": "formatLastActivity()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L52",
+      "id": "users_usertable_formatlastactivity",
+      "community": 1,
+      "norm_label": "formatlastactivity()"
+    },
+    {
+      "label": "sk()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L67",
+      "id": "users_usertable_sk",
+      "community": 1,
+      "norm_label": "sk()"
+    },
+    {
+      "label": "SkeletonRow()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L77",
+      "id": "users_usertable_skeletonrow",
+      "community": 1,
+      "norm_label": "skeletonrow()"
+    },
+    {
+      "label": "IconEye()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L108",
+      "id": "users_usertable_iconeye",
+      "community": 1,
+      "norm_label": "iconeye()"
+    },
+    {
+      "label": "IconPencil()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L117",
+      "id": "users_usertable_iconpencil",
+      "community": 1,
+      "norm_label": "iconpencil()"
+    },
+    {
+      "label": "IconDots()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L126",
+      "id": "users_usertable_icondots",
+      "community": 1,
+      "norm_label": "icondots()"
+    },
+    {
+      "label": "TH",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L138",
+      "id": "users_usertable_th",
+      "community": 1,
+      "norm_label": "th"
+    },
+    {
+      "label": "TD",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L151",
+      "id": "users_usertable_td",
+      "community": 1,
+      "norm_label": "td"
+    },
+    {
+      "label": "UserTable()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L161",
+      "id": "users_usertable_usertable",
+      "community": 1,
+      "norm_label": "usertable()"
     },
     {
       "label": "AdminLayout.tsx",
@@ -2673,7 +3501,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L149",
       "id": "layouts_adminlayout_adminlayout",
-      "community": 24,
+      "community": 27,
       "norm_label": "adminlayout()"
     },
     {
@@ -2700,7 +3528,7 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L41",
       "id": "pages_dashboardpage_formatrelative",
-      "community": 1,
+      "community": 6,
       "norm_label": "formatrelative()"
     },
     {
@@ -3042,7 +3870,7 @@
       "source_file": "frontend/src/pages/DashboardPage.tsx",
       "source_location": "L729",
       "id": "pages_dashboardpage_reportssnapshotcard",
-      "community": 1,
+      "community": 6,
       "norm_label": "reportssnapshotcard()"
     },
     {
@@ -3105,7 +3933,7 @@
       "source_file": "frontend/src/pages/LoginPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_loginpage_tsx",
-      "community": 24,
+      "community": 27,
       "norm_label": "loginpage.tsx"
     },
     {
@@ -3114,7 +3942,7 @@
       "source_file": "frontend/src/pages/LoginPage.tsx",
       "source_location": "L6",
       "id": "pages_loginpage_loginpage",
-      "community": 24,
+      "community": 27,
       "norm_label": "loginpage()"
     },
     {
@@ -3123,7 +3951,7 @@
       "source_file": "frontend/src/pages/NotFoundPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_notfoundpage_tsx",
-      "community": 0,
+      "community": 28,
       "norm_label": "notfoundpage.tsx"
     },
     {
@@ -3132,7 +3960,7 @@
       "source_file": "frontend/src/pages/NotFoundPage.tsx",
       "source_location": "L3",
       "id": "pages_notfoundpage_notfoundpage",
-      "community": 0,
+      "community": 28,
       "norm_label": "notfoundpage()"
     },
     {
@@ -3141,7 +3969,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_resetpasswordpage_tsx",
-      "community": 0,
+      "community": 28,
       "norm_label": "resetpasswordpage.tsx"
     },
     {
@@ -3150,7 +3978,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L7",
       "id": "pages_resetpasswordpage_iconshieldcheck",
-      "community": 0,
+      "community": 28,
       "norm_label": "iconshieldcheck()"
     },
     {
@@ -3159,7 +3987,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L18",
       "id": "pages_resetpasswordpage_authshell",
-      "community": 0,
+      "community": 28,
       "norm_label": "authshell()"
     },
     {
@@ -3168,7 +3996,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L34",
       "id": "pages_resetpasswordpage_resetpasswordpage",
-      "community": 0,
+      "community": 28,
       "norm_label": "resetpasswordpage()"
     },
     {
@@ -3177,7 +4005,7 @@
       "source_file": "frontend/src/pages/SignupPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_signuppage_tsx",
-      "community": 24,
+      "community": 27,
       "norm_label": "signuppage.tsx"
     },
     {
@@ -3186,7 +4014,7 @@
       "source_file": "frontend/src/pages/SignupPage.tsx",
       "source_location": "L6",
       "id": "pages_signuppage_signuppage",
-      "community": 24,
+      "community": 27,
       "norm_label": "signuppage()"
     },
     {
@@ -3303,8 +4131,71 @@
       "source_file": "frontend/src/pages/TrustedDevicesPage.tsx",
       "source_location": "L178",
       "id": "pages_trusteddevicespage_trusteddevicespage",
-      "community": 24,
+      "community": 27,
       "norm_label": "trusteddevicespage()"
+    },
+    {
+      "label": "UserManagementPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_pages_usermanagementpage_tsx",
+      "community": 26,
+      "norm_label": "usermanagementpage.tsx"
+    },
+    {
+      "label": "TABS",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L11",
+      "id": "pages_usermanagementpage_tabs",
+      "community": 26,
+      "norm_label": "tabs"
+    },
+    {
+      "label": "TabKey",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L22",
+      "id": "pages_usermanagementpage_tabkey",
+      "community": 26,
+      "norm_label": "tabkey"
+    },
+    {
+      "label": "LIMIT_OPTIONS",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L24",
+      "id": "pages_usermanagementpage_limit_options",
+      "community": 26,
+      "norm_label": "limit_options"
+    },
+    {
+      "label": "pageRange()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L28",
+      "id": "pages_usermanagementpage_pagerange",
+      "community": 26,
+      "norm_label": "pagerange()"
+    },
+    {
+      "label": "ComingSoon()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L41",
+      "id": "pages_usermanagementpage_comingsoon",
+      "community": 26,
+      "norm_label": "comingsoon()"
+    },
+    {
+      "label": "UserManagementPage()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L58",
+      "id": "pages_usermanagementpage_usermanagementpage",
+      "community": 26,
+      "norm_label": "usermanagementpage()"
     },
     {
       "label": "VerifyDevicePage.tsx",
@@ -3312,7 +4203,7 @@
       "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_verifydevicepage_tsx",
-      "community": 24,
+      "community": 27,
       "norm_label": "verifydevicepage.tsx"
     },
     {
@@ -3321,7 +4212,7 @@
       "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
       "source_location": "L22",
       "id": "pages_verifydevicepage_verifydevicepage",
-      "community": 24,
+      "community": 27,
       "norm_label": "verifydevicepage()"
     },
     {
@@ -3330,7 +4221,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L1",
       "id": "frontend_src_routes_protectedroute_tsx",
-      "community": 20,
+      "community": 30,
       "norm_label": "protectedroute.tsx"
     },
     {
@@ -3339,7 +4230,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L6",
       "id": "routes_protectedroute_props",
-      "community": 20,
+      "community": 30,
       "norm_label": "props"
     },
     {
@@ -3348,7 +4239,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L12",
       "id": "routes_protectedroute_protectedroute",
-      "community": 20,
+      "community": 30,
       "norm_label": "protectedroute()"
     },
     {
@@ -3357,7 +4248,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "frontend_src_types_auth_ts",
-      "community": 20,
+      "community": 30,
       "norm_label": "auth.ts"
     },
     {
@@ -3366,7 +4257,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "types_auth_profile",
-      "community": 20,
+      "community": 30,
       "norm_label": "profile"
     },
     {
@@ -3375,7 +4266,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L8",
       "id": "types_auth_userrole",
-      "community": 20,
+      "community": 30,
       "norm_label": "userrole"
     },
     {
@@ -3951,7 +4842,7 @@
       "source_file": "frontend/src/types/passwordRecovery.ts",
       "source_location": "L14",
       "id": "types_passwordrecovery_resetpasswordstep",
-      "community": 0,
+      "community": 28,
       "norm_label": "resetpasswordstep"
     },
     {
@@ -4009,12 +4900,75 @@
       "norm_label": "passwordstrengthmeterprops"
     },
     {
+      "label": "users.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L1",
+      "id": "frontend_src_types_users_ts",
+      "community": 32,
+      "norm_label": "users.ts"
+    },
+    {
+      "label": "UserStatus",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L4",
+      "id": "types_users_userstatus",
+      "community": 32,
+      "norm_label": "userstatus"
+    },
+    {
+      "label": "VerificationState",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L5",
+      "id": "types_users_verificationstate",
+      "community": 32,
+      "norm_label": "verificationstate"
+    },
+    {
+      "label": "User",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L7",
+      "id": "types_users_user",
+      "community": 32,
+      "norm_label": "user"
+    },
+    {
+      "label": "KpiSummary",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L23",
+      "id": "types_users_kpisummary",
+      "community": 32,
+      "norm_label": "kpisummary"
+    },
+    {
+      "label": "Pagination",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L36",
+      "id": "types_users_pagination",
+      "community": 32,
+      "norm_label": "pagination"
+    },
+    {
+      "label": "UsersResponse",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L43",
+      "id": "types_users_usersresponse",
+      "community": 26,
+      "norm_label": "usersresponse"
+    },
+    {
       "label": "authErrors.ts",
       "file_type": "code",
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "frontend_src_utils_autherrors_ts",
-      "community": 0,
+      "community": 27,
       "norm_label": "autherrors.ts"
     },
     {
@@ -4023,7 +4977,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "utils_autherrors_getautherrormessage",
-      "community": 0,
+      "community": 27,
       "norm_label": "getautherrormessage()"
     },
     {
@@ -4088,6 +5042,15 @@
       "id": "frontend_readme_codeblock_2",
       "community": 11,
       "norm_label": "code:js (// eslint.config.js)"
+    },
+    {
+      "label": "{ getUsersList, getUserDetails }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "community": 9,
+      "norm_label": "{ getuserslist, getuserdetails }",
+      "id": "routes_users_routes_getuserslist_getuserdetails"
     },
     {
       "label": "{\r\n  getDashboardCore,\r\n  getDashboardAnalytics,\r\n}",
@@ -4346,7 +5309,7 @@
       "file_type": "code",
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L19",
-      "community": 0,
+      "community": 28,
       "norm_label": "iconalerttriangle()",
       "id": "pages_resetpasswordpage_iconalerttriangle"
     },
@@ -4463,7 +5426,7 @@
       "file_type": "code",
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L5",
-      "community": 20,
+      "community": 25,
       "norm_label": "profile",
       "id": "src_authcontext_profile"
     }
@@ -4822,6 +5785,27 @@
       "target": "backend_server_dashboardroutes"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_src_routes_users_routes_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_server_usersroutes"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/server.js",
@@ -5013,6 +5997,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_services_admin_service_js",
+      "target": "backend_src_config_prisma_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
       "target": "backend_src_config_prisma_js"
     },
     {
@@ -5588,9 +6583,9 @@
       "source_file": "backend/src/controllers/dashboard.controller.js",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_dashboard_controller_js",
-      "target": "controllers_dashboard_controller_getdashboardadminwidgets",
-      "confidence_score": 1.0
+      "target": "controllers_dashboard_controller_getdashboardadminwidgets"
     },
     {
       "relation": "imports_from",
@@ -5632,9 +6627,416 @@
       "source_file": "backend/src/routes/dashboard.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_dashboard_routes_js",
-      "target": "controllers_dashboard_controller_getdashboardadminwidgets",
+      "target": "controllers_dashboard_controller_getdashboardadminwidgets"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "backend_src_services_users_service_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_usersservice"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "backend_src_validators_users_validator_js",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "validators_users_validator_validateuuidparam",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "validators_users_validator_validatecreateuserinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "validators_users_validator_validateupdateuserinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "validators_users_validator_validateupdateuserstatusinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "validators_users_validator_validateassignuserroleinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "validators_users_validator_validateresetuserpasswordinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_validateuuidparam_validatecreateuserinput_validateupdateuserinput_validateupdateuserstatusinput_validateassignuserroleinput_validateresetuserpasswordinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_empty_list_response"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_getuserslist"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_getuserdetails"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_createuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_updateuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_updateuserstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L130",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_resetuserpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L153",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_assignuserrole",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L176",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_deleteuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "backend_src_controllers_users_controller_js"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_getuserslist"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_getuserdetails"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_createuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "controllers_users_controller_createuser",
+      "target": "validators_users_validator_validatecreateuserinput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_updateuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "controllers_users_controller_updateuser",
+      "target": "validators_users_validator_validateuuidparam"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "controllers_users_controller_updateuser",
+      "target": "validators_users_validator_validateupdateuserinput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_updateuserstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "controllers_users_controller_updateuserstatus",
+      "target": "validators_users_validator_validateuuidparam"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "controllers_users_controller_updateuserstatus",
+      "target": "validators_users_validator_validateupdateuserstatusinput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_resetuserpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "controllers_users_controller_resetuserpassword",
+      "target": "validators_users_validator_validateuuidparam"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L136",
+      "weight": 1.0,
+      "source": "controllers_users_controller_resetuserpassword",
+      "target": "validators_users_validator_validateresetuserpasswordinput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_assignuserrole",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L154",
+      "weight": 1.0,
+      "source": "controllers_users_controller_assignuserrole",
+      "target": "validators_users_validator_validateuuidparam"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "controllers_users_controller_assignuserrole",
+      "target": "validators_users_validator_validateassignuserroleinput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_deleteuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L177",
+      "weight": 1.0,
+      "source": "controllers_users_controller_deleteuser",
+      "target": "validators_users_validator_validateuuidparam"
     },
     {
       "relation": "contains",
@@ -5679,6 +7081,17 @@
       "target": "backend_src_middlewares_auth_middleware_js"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "backend_src_middlewares_auth_middleware_js"
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5698,6 +7111,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_routes_dashboard_routes_js",
+      "target": "middlewares_auth_middleware_requireadminauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
       "target": "middlewares_auth_middleware_requireadminauth"
     },
     {
@@ -5721,6 +7145,16 @@
       "target": "middlewares_ratelimit_middleware_adminloginratelimiter"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middlewares/rateLimit.middleware.js",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "backend_src_middlewares_ratelimit_middleware_js",
+      "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5732,6 +7166,17 @@
       "target": "backend_src_middlewares_ratelimit_middleware_js"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "backend_src_middlewares_ratelimit_middleware_js",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5741,6 +7186,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_admin_routes_js",
       "target": "middlewares_ratelimit_middleware_adminloginratelimiter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -5828,9 +7284,9 @@
       "source_file": "backend/src/routes/dashboard.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_dashboard_routes_js",
-      "target": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics_getdashboardadminwidgets",
-      "confidence_score": 1.0
+      "target": "routes_dashboard_routes_getdashboardcore_getdashboardanalytics_getdashboardadminwidgets"
     },
     {
       "relation": "contains",
@@ -5861,6 +7317,66 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_dashboard_routes_js",
       "target": "routes_dashboard_routes_getdashboardcore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_express"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_requireadminauth"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_adminuseractionratelimiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_resetuserpassword_assignuserrole_deleteuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_router"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_getuserslist_getuserdetails"
     },
     {
       "relation": "contains",
@@ -6426,8 +7942,493 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_dashboard_service_js",
-      "target": "services_dashboard_service_getdashboardadminwidgets",
+      "target": "services_dashboard_service_getdashboardadminwidgets"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_bcrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_prisma"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_valid_roles"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_valid_statuses"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_role_map"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_status_map"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_verification_map"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_user_select",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_mapuser"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_makeerror"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L85",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_assertuserexists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_ensureemailavailable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L56",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_getuserslist"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L183",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_getuserdetails"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L241",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_createuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L291",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_updateuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L350",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_updateuserstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L375",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_resetuserpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L393",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_assignuserrole",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L418",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_deleteuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L219",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_users_service_getuserdetails",
+      "target": "services_users_service_mapuser"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L287",
+      "weight": 1.0,
+      "source": "services_users_service_createuser",
+      "target": "services_users_service_mapuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L346",
+      "weight": 1.0,
+      "source": "services_users_service_updateuser",
+      "target": "services_users_service_mapuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L371",
+      "weight": 1.0,
+      "source": "services_users_service_updateuserstatus",
+      "target": "services_users_service_mapuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L414",
+      "weight": 1.0,
+      "source": "services_users_service_assignuserrole",
+      "target": "services_users_service_mapuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "services_users_service_assertuserexists",
+      "target": "services_users_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "services_users_service_ensureemailavailable",
+      "target": "services_users_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L186",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_users_service_getuserdetails",
+      "target": "services_users_service_makeerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L273",
+      "weight": 1.0,
+      "source": "services_users_service_createuser",
+      "target": "services_users_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L333",
+      "weight": 1.0,
+      "source": "services_users_service_updateuser",
+      "target": "services_users_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L176",
+      "weight": 1.0,
+      "source": "services_users_service_getuserslist",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L229",
+      "weight": 1.0,
+      "source": "services_users_service_getuserdetails",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L278",
+      "weight": 1.0,
+      "source": "services_users_service_createuser",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L338",
+      "weight": 1.0,
+      "source": "services_users_service_updateuser",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L361",
+      "weight": 1.0,
+      "source": "services_users_service_updateuserstatus",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L385",
+      "weight": 1.0,
+      "source": "services_users_service_resetuserpassword",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L404",
+      "weight": 1.0,
+      "source": "services_users_service_assignuserrole",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L426",
+      "weight": 1.0,
+      "source": "services_users_service_deleteuser",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L292",
+      "weight": 1.0,
+      "source": "services_users_service_updateuser",
+      "target": "services_users_service_assertuserexists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L351",
+      "weight": 1.0,
+      "source": "services_users_service_updateuserstatus",
+      "target": "services_users_service_assertuserexists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L376",
+      "weight": 1.0,
+      "source": "services_users_service_resetuserpassword",
+      "target": "services_users_service_assertuserexists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L394",
+      "weight": 1.0,
+      "source": "services_users_service_assignuserrole",
+      "target": "services_users_service_assertuserexists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L419",
+      "weight": 1.0,
+      "source": "services_users_service_deleteuser",
+      "target": "services_users_service_assertuserexists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L250",
+      "weight": 1.0,
+      "source": "services_users_service_createuser",
+      "target": "services_users_service_ensureemailavailable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L304",
+      "weight": 1.0,
+      "source": "services_users_service_updateuser",
+      "target": "services_users_service_ensureemailavailable",
       "confidence_score": 1.0
     },
     {
@@ -6501,6 +8502,50 @@
       "target": "utils_passwordpolicy_validatepasswordstrength"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "backend_src_utils_passwordpolicy_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "utils_passwordpolicy_validatepasswordstrength",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "validators_users_validator_validatecreateuserinput",
+      "target": "utils_passwordpolicy_validatepasswordstrength"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "validators_users_validator_validateresetuserpasswordinput",
+      "target": "utils_passwordpolicy_validatepasswordstrength"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/validators/adminAuth.validator.js",
@@ -6539,6 +8584,106 @@
       "confidence_score": 1.0,
       "source": "backend_src_validators_adminauth_validator_js",
       "target": "validators_adminauth_validator_validateresetpasswordinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_validatepasswordstrength",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_valid_roles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_valid_statuses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_valid_verification_states",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_validateuuidparam",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_validatecreateuserinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_validateupdateuserinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_validateupdateuserstatusinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_validateassignuserroleinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_validateresetuserpasswordinput",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -7244,6 +9389,17 @@
       "confidence_score": 1.0,
       "source": "frontend_src_app_tsx",
       "target": "frontend_src_pages_dashboardpage_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_pages_usermanagementpage_tsx"
     },
     {
       "relation": "imports_from",
@@ -8092,6 +10248,17 @@
       "target": "frontend_src_api_adminauth_ts"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "frontend_src_api_adminauth_ts"
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -8111,6 +10278,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_api_trusteddevices_ts",
+      "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
       "target": "api_adminauth_getstoredtoken"
     },
     {
@@ -8177,6 +10355,17 @@
       "source_location": "L43",
       "weight": 1.0,
       "source": "api_trusteddevices_verifyotp",
+      "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "api_users_getusers",
       "target": "api_adminauth_getstoredtoken"
     },
     {
@@ -8931,6 +11120,80 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "frontend_src_types_users_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "types_users_usersresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_usersparams"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_users_mock"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_getusers"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "frontend_src_api_users_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "api_users_getusers"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
       "source_location": "L3",
       "weight": 1.0,
@@ -9480,6 +11743,436 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userfilters_tsx",
+      "target": "users_userfilters_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userfilters_tsx",
+      "target": "users_userfilters_input"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userfilters_tsx",
+      "target": "users_userfilters_select"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userfilters_tsx",
+      "target": "users_userfilters_icon_btn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userfilters_tsx",
+      "target": "users_userfilters_action_btn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userfilters_tsx",
+      "target": "users_userfilters_userfilters"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "frontend_src_components_users_userfilters_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "frontend_src_types_users_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "types_users_kpisummary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_iconusers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_iconcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_iconclock"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_iconban"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_iconmail"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_carddef"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_cards"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L78",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_sk"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L88",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_skeletoncard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L108",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userkpicards_tsx",
+      "target": "users_userkpicards_userkpicards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "frontend_src_components_users_userkpicards_tsx"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserKpiCards.tsx",
+      "source_location": "L97",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "users_userkpicards_skeletoncard",
+      "target": "users_userkpicards_sk"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "frontend_src_types_users_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "types_users_user"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "types_users_userstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_getrolestyle"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_status_map"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_initials"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_avatar_palettes"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_avatarpalette"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_formatlastactivity"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_sk"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_skeletonrow"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L108",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_iconeye"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L117",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_iconpencil"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L126",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_icondots"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L138",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_th"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L151",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_td"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L161",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_usertable"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "frontend_src_components_users_usertable_tsx"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L81",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "users_usertable_skeletonrow",
+      "target": "users_usertable_sk"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L7",
       "weight": 1.0,
@@ -9657,6 +12350,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_pages_trusteddevicespage_tsx",
+      "target": "frontend_src_layouts_adminlayout_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
       "target": "frontend_src_layouts_adminlayout_tsx"
     },
     {
@@ -10946,6 +13650,99 @@
       "target": "pages_trusteddevicespage_formatdate"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "frontend_src_types_users_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "types_users_usersresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_tabs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_tabkey"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_limit_options"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_pagerange"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_comingsoon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_usermanagementpage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L229",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pages_usermanagementpage_usermanagementpage",
+      "target": "pages_usermanagementpage_pagerange"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/VerifyDevicePage.tsx",
@@ -11720,6 +14517,66 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_userstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_verificationstate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_user"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_kpisummary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_pagination"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_usersresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "weight": 1.0,
@@ -11799,5 +14656,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c4e55d42f14dcb9df083d22913e6398ac2ced563"
+  "built_at_commit": "38c20c96e2b9034a66c407e4a1795e11da03f7f9"
 }

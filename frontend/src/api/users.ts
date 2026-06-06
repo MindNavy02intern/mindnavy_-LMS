@@ -1,4 +1,4 @@
-import type { UsersResponse } from '../types/users';
+import type { UsersResponse, UserDetailsResponse } from '../types/users';
 import { getStoredToken } from './adminAuth';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
@@ -68,4 +68,62 @@ export async function getUsers(params: UsersParams = {}): Promise<UsersResponse>
   // TODO: REMOVE — temporary mock data while backend 500 is being fixed
   console.warn('[users] Using fallback mock data — backend returned error');
   return USERS_MOCK;
+}
+
+// ── getUserDetails ─────────────────────────────────────────────────────────────
+
+// TODO: REMOVE — temporary mock data while backend is being wired up
+const DETAILS_MOCK: UserDetailsResponse = {
+  user: {
+    id: 'usr-001', fullName: 'John Doe', email: 'john.doe@example.com',
+    phone: '+1 555 123 4567', avatar: null, role: 'Administrator',
+    department: 'IT Department', branch: 'Head Office',
+    status: 'active', verificationState: 'verified',
+    emailVerified: true, phoneVerified: true, riskScore: null,
+    createdAt: '2024-01-15T00:00:00.000Z',
+    lastActivityAt: new Date(Date.now() - 2 * 60_000).toISOString(),
+  },
+  roles: [
+    { id: 'r1', name: 'Administrator', type: 'primary',   expiresAt: null },
+    { id: 'r2', name: 'IT Manager',    type: 'secondary', expiresAt: null },
+    { id: 'r3', name: 'System Access', type: 'temporary', expiresAt: '2025-06-30T00:00:00.000Z' },
+  ],
+  securityOverview: {
+    mfaEnabled: true, activeSessions: 2,
+    lastIpAddress: '192.168.1.105', lastLocation: 'New York, USA', riskScore: 'low',
+  },
+  recentActivity: [
+    { id: 'a1', action: 'Logged in successfully',    timestamp: new Date(Date.now() - 2 * 60_000).toISOString(),    ipAddress: '192.168.1.105' },
+    { id: 'a2', action: 'Updated profile settings',  timestamp: new Date(Date.now() - 60 * 60_000).toISOString(),   ipAddress: '192.168.1.105' },
+    { id: 'a3', action: 'Completed course module',   timestamp: new Date(Date.now() - 180 * 60_000).toISOString(),  ipAddress: '192.168.1.105' },
+    { id: 'a4', action: 'Password changed',          timestamp: new Date(Date.now() - 1440 * 60_000).toISOString(), ipAddress: '192.168.1.90'  },
+  ],
+  enrolledCourses: [
+    { id: 'c1', title: 'React Advanced Patterns',    progress: 75,  status: 'active'    },
+    { id: 'c2', title: 'TypeScript Fundamentals',    progress: 100, status: 'completed' },
+    { id: 'c3', title: 'Node.js for Enterprise',     progress: 40,  status: 'active'    },
+  ],
+};
+
+export async function getUserDetails(userId: string): Promise<UserDetailsResponse> {
+  const token = getStoredToken();
+  const url   = `${BASE_URL}/users/${encodeURIComponent(userId)}`;
+  console.log('[users] GET details', url, { token: token ? 'present' : 'missing' });
+
+  try {
+    const res = await fetch(url, {
+      headers: { Authorization: token ? `Bearer ${token}` : '' },
+    });
+    if (res.ok) {
+      return await res.json() as UserDetailsResponse;
+    }
+    const body = await res.json().catch(() => null);
+    console.error('[users] getUserDetails error', res.status, body);
+  } catch (err) {
+    console.error('[users] getUserDetails network error', err);
+  }
+
+  // TODO: REMOVE — temporary mock data while backend is being wired up
+  console.warn('[users] getUserDetails: using fallback mock — real userId:', userId);
+  return { ...DETAILS_MOCK, user: { ...DETAILS_MOCK.user, id: userId } };
 }

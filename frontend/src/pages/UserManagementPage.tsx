@@ -5,6 +5,7 @@ import type { UsersResponse } from '../types/users';
 import UserKpiCards from '../components/users/UserKpiCards';
 import UserFilters from '../components/users/UserFilters';
 import UserTable from '../components/users/UserTable';
+import UserDetailsDrawer from '../components/users/UserDetailsDrawer';
 
 // ── Tab config ─────────────────────────────────────────────────────────────────
 
@@ -59,6 +60,8 @@ export default function UserManagementPage() {
   const [data,    setData]    = useState<UsersResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);
+
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   const [activeTab,  setActiveTab]  = useState<TabKey>('users');
   const [search,     setSearch]     = useState('');
@@ -204,7 +207,11 @@ export default function UserManagementPage() {
             </div>
 
             {/* Table — flush top, shares border with filter row above */}
-            <UserTable users={data?.users ?? []} loading={loading} />
+            <UserTable
+              users={data?.users ?? []}
+              loading={loading}
+              onViewUser={id => setSelectedUserId(id)}
+            />
 
             {/* ── Pagination ─────────────────────────────────────────────────────── */}
             {pagination && pagination.total > 0 && (
@@ -258,6 +265,13 @@ export default function UserManagementPage() {
           </>
         )}
       </div>
+      {/* ── User Details Drawer ───────────────────────────────────────────── */}
+      {selectedUserId && (
+        <UserDetailsDrawer
+          userId={selectedUserId}
+          onClose={() => setSelectedUserId(null)}
+        />
+      )}
     </AdminLayout>
   );
 }
