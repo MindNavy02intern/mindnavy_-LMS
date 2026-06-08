@@ -1,3 +1,5 @@
+import { DEPARTMENT_OPTIONS } from '../../constants/userOptions';
+
 interface Props {
   search:       string;
   onSearch:     (v: string) => void;
@@ -7,6 +9,7 @@ interface Props {
   onDepartment: (v: string) => void;
   status:       string;
   onStatus:     (v: string) => void;
+  onAddUser?:   () => void;
 }
 
 const INPUT: React.CSSProperties = {
@@ -39,7 +42,7 @@ const ACTION_BTN: React.CSSProperties = {
 };
 
 export default function UserFilters({
-  search, onSearch, role, onRole, department, onDepartment, status, onStatus,
+  search, onSearch, role, onRole, department, onDepartment, status, onStatus, onAddUser,
 }: Props) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
@@ -84,19 +87,14 @@ export default function UserFilters({
 
         {/* All Departments */}
         <select
-          value={department} onChange={e => onDepartment(e.target.value)} style={{ ...SELECT, width: 140 }}
+          value={department} onChange={e => onDepartment(e.target.value)} style={{ ...SELECT, width: 160 }}
           onFocus={e => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(59,130,246,0.15)'; }}
           onBlur={e =>  { e.currentTarget.style.borderColor = '#d1d5db'; e.currentTarget.style.boxShadow = 'none'; }}
         >
           <option value="">All Departments</option>
-          <option value="Engineering">Engineering</option>
-          <option value="Product">Product</option>
-          <option value="Design">Design</option>
-          <option value="Marketing">Marketing</option>
-          <option value="Operations">Operations</option>
-          <option value="Finance">Finance</option>
-          <option value="HR">HR</option>
-          <option value="Sales">Sales</option>
+          {DEPARTMENT_OPTIONS.filter(o => o.value !== '').map(o => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
         </select>
 
         {/* All Status */}
@@ -133,9 +131,14 @@ export default function UserFilters({
       {/* ── Right group: action buttons ───────────────────────────────────────── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
         <button
-          disabled
-          style={{ ...ACTION_BTN, background: '#16a34a', color: '#fff', border: '1px solid #15803d', fontWeight: 600 }}
-          title="Coming soon"
+          onClick={onAddUser}
+          style={{
+            ...ACTION_BTN,
+            background: '#16a34a', color: '#fff', border: '1px solid #15803d', fontWeight: 600,
+            cursor: onAddUser ? 'pointer' : 'not-allowed',
+            opacity: 1,
+          }}
+          title={onAddUser ? 'Add a new user' : 'Coming soon'}
         >
           + Add User
         </button>

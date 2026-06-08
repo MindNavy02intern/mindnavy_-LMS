@@ -4,6 +4,7 @@ const {
   validateCreateUserInput,
   validateUpdateUserInput,
   validateUpdateUserStatusInput,
+  validateSuspendUserInput,
   validateAssignUserRoleInput,
   validateResetUserPasswordInput,
 } = require("../validators/users.validator");
@@ -116,6 +117,29 @@ async function updateUser(req, res) {
   }
 }
 
+async function suspendUser(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  const errors = validateSuspendUserInput(req.body || {});
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, message: errors[0] });
+  }
+
+  try {
+    const result = await usersService.suspendUser(req.params.id, req.body, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] suspendUser error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to suspend user." });
+  }
+}
+
 async function updateUserStatus(req, res) {
   const idError = validateUuidParam(req.params.id);
   if (idError) {
@@ -185,6 +209,24 @@ async function assignUserRole(req, res) {
   }
 }
 
+async function reactivateUser(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  try {
+    const result = await usersService.reactivateUser(req.params.id, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] reactivateUser error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to reactivate user." });
+  }
+}
+
 async function deleteUser(req, res) {
   const idError = validateUuidParam(req.params.id);
   if (idError) {
@@ -232,6 +274,8 @@ module.exports = {
   createUser,
   updateUser,
   updateUserStatus,
+  suspendUser,
+  reactivateUser,
   resetUserPassword,
   assignUserRole,
   deleteUser,

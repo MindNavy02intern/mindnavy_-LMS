@@ -57,7 +57,10 @@ function validateCreateUserInput(body) {
 
 function validateUpdateUserInput(body) {
   const errors = [];
-  const ALLOWED_FIELDS = new Set(["fullName", "email", "avatar", "verificationState", "riskScore"]);
+  const ALLOWED_FIELDS = new Set([
+    "fullName", "email", "avatar", "verificationState", "riskScore",
+    "phone", "department", "branch", "groupId", "accessLevel", "managerId", "skills",
+  ]);
 
   const provided = Object.keys(body || {});
 
@@ -71,7 +74,7 @@ function validateUpdateUserInput(body) {
     errors.push(`Fields not allowed here: ${disallowed.join(", ")}. Use the dedicated status/role/password endpoints.`);
   }
 
-  const { fullName, email, avatar, verificationState, riskScore } = body;
+  const { fullName, email, avatar, verificationState, riskScore, phone, department, branch, groupId, accessLevel, managerId, skills } = body;
 
   if (fullName !== undefined) {
     if (typeof fullName !== "string" || fullName.trim().length < 2 || fullName.trim().length > 100) {
@@ -103,6 +106,48 @@ function validateUpdateUserInput(body) {
     }
   }
 
+  if (phone !== undefined && phone !== null) {
+    if (typeof phone !== "string" || phone.trim().length > 30) {
+      errors.push("phone must be a string up to 30 characters.");
+    }
+  }
+
+  if (department !== undefined && department !== null) {
+    if (typeof department !== "string" || department.trim().length > 100) {
+      errors.push("department must be a string up to 100 characters.");
+    }
+  }
+
+  if (branch !== undefined && branch !== null) {
+    if (typeof branch !== "string" || branch.trim().length > 100) {
+      errors.push("branch must be a string up to 100 characters.");
+    }
+  }
+
+  if (groupId !== undefined && groupId !== null) {
+    if (typeof groupId !== "string" || groupId.trim().length > 100) {
+      errors.push("groupId must be a string up to 100 characters.");
+    }
+  }
+
+  if (accessLevel !== undefined && accessLevel !== null) {
+    if (typeof accessLevel !== "string" || accessLevel.trim().length > 50) {
+      errors.push("accessLevel must be a string up to 50 characters.");
+    }
+  }
+
+  if (managerId !== undefined && managerId !== null) {
+    if (typeof managerId !== "string" || managerId.trim().length > 100) {
+      errors.push("managerId must be a string up to 100 characters.");
+    }
+  }
+
+  if (skills !== undefined && skills !== null) {
+    if (!Array.isArray(skills) || skills.some((s) => typeof s !== "string")) {
+      errors.push("skills must be an array of strings.");
+    }
+  }
+
   return errors;
 }
 
@@ -123,12 +168,29 @@ function validateUpdateUserStatusInput(body) {
   return errors;
 }
 
+function validateSuspendUserInput(body) {
+  const errors = [];
+  const { reason, notes } = body || {};
+
+  if (!reason || typeof reason !== "string" || reason.trim().length === 0 || reason.trim().length > 300) {
+    errors.push("reason is required and must be up to 300 characters.");
+  }
+
+  if (notes != null) {
+    if (typeof notes !== "string" || notes.trim().length > 500) {
+      errors.push("notes must be a string up to 500 characters.");
+    }
+  }
+
+  return errors;
+}
+
 function validateAssignUserRoleInput(body) {
   const errors = [];
-  const { role, reason } = body || {};
+  const { roleId, reason } = body || {};
 
-  if (!role || typeof role !== "string" || !VALID_ROLES.has(role.trim().toUpperCase())) {
-    errors.push(`role is required and must be one of: ${[...VALID_ROLES].join(", ")}.`);
+  if (!roleId || typeof roleId !== "string" || !VALID_ROLES.has(roleId.trim().toUpperCase())) {
+    errors.push(`roleId is required and must be one of: ${[...VALID_ROLES].join(", ")}.`);
   }
 
   if (reason != null) {
@@ -155,6 +217,7 @@ module.exports = {
   validateCreateUserInput,
   validateUpdateUserInput,
   validateUpdateUserStatusInput,
+  validateSuspendUserInput,
   validateAssignUserRoleInput,
   validateResetUserPasswordInput,
 };

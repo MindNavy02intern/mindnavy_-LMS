@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import type { User, UserStatus } from '../../types/users';
 
 interface Props {
-  users:   User[];
-  loading: boolean;
+  users:         User[];
+  loading:       boolean;
+  onViewUser?:   (userId: string) => void;
+  onEditUser?:   (user: User) => void;
+  onDeleteUser?: (user: User) => void;
 }
 
 // ── Role badge colours (per design spec) ──────────────────────────────────────
@@ -158,12 +162,19 @@ const TD: React.CSSProperties = {
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
-export default function UserTable({ users, loading }: Props) {
+export default function UserTable({ users, loading, onViewUser, onEditUser, onDeleteUser }: Props) {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
   return (
     <div style={{
       background: '#ffffff', border: '1px solid #e5e7eb',
       borderRadius: '0 0 8px 8px', overflow: 'auto',
+      position: 'relative',
     }}>
+      {/* Click-outside overlay closes any open row dropdown */}
+      {openDropdown && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 5 }} onClick={() => setOpenDropdown(null)} />
+      )}
       <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 820 }}>
         <thead>
           <tr>
@@ -279,28 +290,56 @@ export default function UserTable({ users, loading }: Props) {
                       </td>
 
                       {/* Actions */}
-                      <td style={{ ...TD, textAlign: 'right' }}>
+                      <td style={{ ...TD, textAlign: 'right', position: 'relative' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 3 }}>
-                          {([
-                            { Icon: IconEye,    label: 'View user'    },
-                            { Icon: IconPencil, label: 'Edit user'    },
-                            { Icon: IconDots,   label: 'More options' },
-                          ] as const).map(({ Icon, label }) => (
+                          {/* View */}
+                          <button
+                            onClick={() => onViewUser?.(user.id)}
+                            title="View user"
+                            style={{ width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 5, color: '#2563eb', cursor: 'pointer', padding: 0 }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#dbeafe'; e.currentTarget.style.borderColor = '#93c5fd'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#eff6ff'; e.currentTarget.style.borderColor = '#bfdbfe'; }}
+                          >
+                            <IconEye />
+                          </button>
+
+                          {/* Edit */}
+                          <button
+                            onClick={() => onEditUser?.(user)}
+                            title="Edit user"
+                            style={{ width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 5, color: '#6b7280', cursor: 'pointer', padding: 0 }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#f0fdf4'; e.currentTarget.style.borderColor = '#bbf7d0'; e.currentTarget.style.color = '#16a34a'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#f9fafb'; e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = '#6b7280'; }}
+                          >
+                            <IconPencil />
+                          </button>
+
+                          {/* More — opens dropdown */}
+                          <div style={{ position: 'relative' }}>
                             <button
-                              key={label}
-                              disabled
-                              title={`${label} — coming soon`}
-                              style={{
-                                width: 24, height: 24,
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                background: '#f9fafb', border: '1px solid #e5e7eb',
-                                borderRadius: 5, color: '#9ca3af',
-                                cursor: 'not-allowed', opacity: 0.65, padding: 0,
-                              }}
+                              onClick={e => { e.stopPropagation(); setOpenDropdown(openDropdown === user.id ? null : user.id); }}
+                              title="More options"
+                              style={{ width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: openDropdown === user.id ? '#fee2e2' : '#f9fafb', border: `1px solid ${openDropdown === user.id ? '#fca5a5' : '#e5e7eb'}`, borderRadius: 5, color: openDropdown === user.id ? '#dc2626' : '#6b7280', cursor: 'pointer', padding: 0 }}
                             >
-                              <Icon />
+                              <IconDots />
                             </button>
-                          ))}
+                            {openDropdown === user.id && (
+                              <div
+                                onClick={e => e.stopPropagation()}
+                                style={{ position: 'absolute', right: 0, top: 28, zIndex: 6, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', minWidth: 150, overflow: 'hidden' }}
+                              >
+                                <button
+                                  onClick={() => { setOpenDropdown(null); onDeleteUser?.(user); }}
+                                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '9px 14px', fontSize: 13, fontFamily: 'inherit', background: 'none', border: 'none', cursor: 'pointer', color: '#dc2626', textAlign: 'left' }}
+                                  onMouseEnter={e => { e.currentTarget.style.background = '#fef2f2'; }}
+                                  onMouseLeave={e => { e.currentTarget.style.background = 'none'; }}
+                                >
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                  Delete User
+                                </button>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </td>
                     </tr>

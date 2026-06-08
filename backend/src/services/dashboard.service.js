@@ -1,4 +1,18 @@
+const prisma = require("../config/prisma");
+
 async function getDashboardCore(admin) {
+  const [
+    totalUsers,
+    activeStudents,
+    activeInstructors,
+    pendingApprovals,
+  ] = await Promise.all([
+    prisma.appUser.count(),
+    prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }),
+    prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }),
+    prisma.appUser.count({ where: { status: "PENDING" } }),
+  ]);
+
   return {
     welcome: {
       adminName:        admin.fullName     || null,
@@ -10,14 +24,14 @@ async function getDashboardCore(admin) {
     },
 
     kpis: {
-      totalUsers:         0,
-      activeStudents:     0,
-      activeInstructors:  0,
-      publishedCourses:   0,
-      pendingApprovals:   0,
-      totalRevenue:       0,
+      totalUsers,
+      activeStudents,
+      activeInstructors,
+      publishedCourses:    0,
+      pendingApprovals,
+      totalRevenue:        0,
       activeSubscriptions: 0,
-      certificatesIssued: 0,
+      certificatesIssued:  0,
       liveSessionsRunning: 0,
     },
 
@@ -27,12 +41,12 @@ async function getDashboardCore(admin) {
     securityAlertsPreview: [],
 
     quickActions: [
-      { key: "add_user",            label: "Add User",            enabled: true, path: null },
-      { key: "create_course",       label: "Create Course",       enabled: true, path: null },
-      { key: "approve_instructor",  label: "Approve Instructor",  enabled: true, path: null },
-      { key: "generate_report",     label: "Generate Report",     enabled: true, path: null },
-      { key: "create_live_session", label: "Create Live Session", enabled: true, path: null },
-      { key: "system_settings",     label: "System Settings",     enabled: true, path: null },
+      { key: "add_user",            label: "Add User",            enabled: true, path: "/users"              },
+      { key: "create_course",       label: "Create Course",       enabled: true, path: "/learning/courses"   },
+      { key: "approve_instructor",  label: "Approve Instructor",  enabled: true, path: "/learning/approvals" },
+      { key: "generate_report",     label: "Generate Report",     enabled: true, path: "/reports"            },
+      { key: "create_live_session", label: "Create Live Session", enabled: true, path: "/learning/sessions"  },
+      { key: "system_settings",     label: "System Settings",     enabled: true, path: "/settings"           },
     ],
 
     systemHealth: {

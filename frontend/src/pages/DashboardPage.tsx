@@ -792,19 +792,16 @@ export default function DashboardPage() {
   const [loading, setLoading]         = useState(true);
   const [error, setError]             = useState<string | null>(null);
   const [refreshing, setRefreshing]   = useState(false);
-  const [isDemoCore, setIsDemoCore]   = useState(false);
 
   // Admin widgets state (TASK 5C)
   const [adminWidgets, setAdminWidgets]               = useState<AdminWidgetsResponse | null>(null);
   const [widgetsLoading, setWidgetsLoading]           = useState(true);
   const [widgetsError, setWidgetsError]               = useState<string | null>(null);
-  const [isDemoWidgets, setIsDemoWidgets]             = useState(false);
 
   // Analytics state (TASK 5B.1)
   const [analytics, setAnalytics]               = useState<DashboardAnalyticsResponse | null>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(true);
   const [analyticsError, setAnalyticsError]     = useState<string | null>(null);
-  const [isDemo, setIsDemo]                     = useState(false);
 
   // Filter state
   const [dateFrom, setDateFrom]     = useState('');
@@ -820,9 +817,8 @@ export default function DashboardPage() {
     if (isRefresh) setRefreshing(true);
     else { setLoading(true); setError(null); }
     try {
-      const { data: d, isDemo: demo } = await getDashboardCore();
+      const d = await getDashboardCore();
       setData(d);
-      setIsDemoCore(demo);
       setError(null);
     } catch {
       setError('Could not load dashboard data. Please try again.');
@@ -836,13 +832,12 @@ export default function DashboardPage() {
     setAnalyticsLoading(true);
     setAnalyticsError(null);
     try {
-      const { data: d, isDemo: demo } = await getDashboardAnalytics({
+      const d = await getDashboardAnalytics({
         dateFrom:     appliedFilters.dateFrom     || null,
         dateTo:       appliedFilters.dateTo       || null,
         departmentId: appliedFilters.departmentId || null,
       });
       setAnalytics(d);
-      setIsDemo(demo);
     } catch {
       setAnalyticsError('Could not load analytics data.');
     } finally {
@@ -854,14 +849,13 @@ export default function DashboardPage() {
     setWidgetsLoading(true);
     setWidgetsError(null);
     try {
-      const { data: d, isDemo: demo } = await getAdminWidgets({
+      const d = await getAdminWidgets({
         dateFrom:     appliedFilters.dateFrom     || null,
         dateTo:       appliedFilters.dateTo       || null,
         departmentId: appliedFilters.departmentId || null,
         courseId:     appliedFilters.courseId     || null,
       });
       setAdminWidgets(d);
-      setIsDemoWidgets(demo);
     } catch {
       setWidgetsError('Could not load admin widgets.');
     } finally {
@@ -872,6 +866,11 @@ export default function DashboardPage() {
   useEffect(() => { fetchData(); }, [fetchData]);
   useEffect(() => { fetchAnalytics(); }, [fetchAnalytics]);
   useEffect(() => { fetchAdminWidgets(); }, [fetchAdminWidgets]);
+  useEffect(() => {
+    const handler = () => fetchData(true);
+    window.addEventListener('userDataChanged', handler);
+    return () => window.removeEventListener('userDataChanged', handler);
+  }, [fetchData]);
 
   function applyFilters() { setApplied({ dateFrom, dateTo, departmentId, courseId }); }
   function clearFilters()  {
@@ -944,11 +943,6 @@ export default function DashboardPage() {
         {/* Left: label + demo badge + error */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151' }}>Analytics</span>
-          {isDemo && (
-            <span style={{ fontSize: '0.63rem', padding: '2px 7px', background: '#fef9c3', border: '1px solid #fde047', borderRadius: 4, color: '#854d0e', fontWeight: 500 }}>
-              Demo analytics data
-            </span>
-          )}
           {analyticsLoading && <div className="mn-spinner" style={{ borderTopColor: '#2563eb', width: 12, height: 12, borderWidth: 2 }} />}
           {analyticsError && !analyticsLoading && (
             <span style={{ fontSize: '0.68rem', color: '#ef4444' }}>
@@ -1018,14 +1012,7 @@ export default function DashboardPage() {
         {/* Recent Activity */}
         <div className="mn-db-card">
           <div className="mn-db-card-header">
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <div className="mn-db-card-title">Recent Activity</div>
-              {isDemoCore && (
-                <span style={{ fontSize: '0.63rem', padding: '2px 7px', background: '#fef9c3', border: '1px solid #fde047', borderRadius: 4, color: '#854d0e', fontWeight: 500 }}>
-                  Demo dashboard data
-                </span>
-              )}
-            </div>
+            <div className="mn-db-card-title">Recent Activity</div>
             <button className="mn-db-view-all">View All</button>
           </div>
           {loading ? (
@@ -1188,11 +1175,6 @@ export default function DashboardPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8, gap: 8, flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151' }}>Admin Widgets</span>
-          {isDemoWidgets && (
-            <span style={{ fontSize: '0.63rem', padding: '2px 7px', background: '#fef9c3', border: '1px solid #fde047', borderRadius: 4, color: '#854d0e', fontWeight: 500 }}>
-              Demo admin widgets data
-            </span>
-          )}
           {widgetsLoading && <div className="mn-spinner" style={{ borderTopColor: '#2563eb', width: 12, height: 12, borderWidth: 2 }} />}
           {widgetsError && !widgetsLoading && (
             <span style={{ fontSize: '0.68rem', color: '#ef4444' }}>
