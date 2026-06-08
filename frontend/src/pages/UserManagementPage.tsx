@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import AdminLayout from '../layouts/AdminLayout';
 import { getUsers } from '../api/users';
 import type { UsersResponse } from '../types/users';
@@ -6,6 +7,11 @@ import UserKpiCards from '../components/users/UserKpiCards';
 import UserFilters from '../components/users/UserFilters';
 import UserTable from '../components/users/UserTable';
 import UserDetailsDrawer from '../components/users/UserDetailsDrawer';
+import AddUserModal from '../components/users/AddUserModal';
+import EditUserModal from '../components/users/EditUserModal';
+import DeleteUserDialog from '../components/users/DeleteUserDialog';
+import { useToast, ToastContainer } from '../components/users/Toast';
+import type { User } from '../types/users';
 
 // ── Tab config ─────────────────────────────────────────────────────────────────
 
@@ -71,6 +77,19 @@ export default function UserManagementPage() {
   const [page,       setPage]       = useState(1);
   const [limit,      setLimit]      = useState(10);
 
+  const { toasts, showToast, dismiss } = useToast();
+  const [addUserOpen, setAddUserOpen]  = useState(false);
+  const [editUser,    setEditUser]     = useState<User | null>(null);
+  const [deleteUser,  setDeleteUser]   = useState<User | null>(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    if (searchParams.get('modal') === 'addUser') {
+      setAddUserOpen(true);
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [debouncedSearch, setDebouncedSearch] = useState('');
 
@@ -79,6 +98,8 @@ export default function UserManagementPage() {
     if (searchTimer.current) clearTimeout(searchTimer.current);
     searchTimer.current = setTimeout(() => { setDebouncedSearch(q); setPage(1); }, 400);
   };
+
+  const notifyDashboard = () => window.dispatchEvent(new CustomEvent('userDataChanged'));
 
   const load = useCallback(async () => {
     if (activeTab !== 'users') return;
@@ -203,6 +224,7 @@ export default function UserManagementPage() {
                 role={role}             onRole={filterSetter(setRole)}
                 department={department} onDepartment={filterSetter(setDepartment)}
                 status={status}         onStatus={filterSetter(setStatus)}
+                onAddUser={() => setAddUserOpen(true)}
               />
             </div>
 
@@ -211,6 +233,8 @@ export default function UserManagementPage() {
               users={data?.users ?? []}
               loading={loading}
               onViewUser={id => setSelectedUserId(id)}
+              onEditUser={user => setEditUser(user)}
+              onDeleteUser={user => setDeleteUser(user)}
             />
 
             {/* ── Pagination ─────────────────────────────────────────────────────── */}
@@ -270,8 +294,42 @@ export default function UserManagementPage() {
         <UserDetailsDrawer
           userId={selectedUserId}
           onClose={() => setSelectedUserId(null)}
+          showToast={showToast}
+          onUserUpdated={() => { load(); notifyDashboard(); }}
         />
       )}
+      {addUserOpen && (
+        <AddUserModal
+          onClose={() => setAddUserOpen(false)}
+          onSuccess={() => { setAddUserOpen(false); load(); notifyDashboard(); }}
+          showToast={showToast}
+        />
+      )}
+      {editUser && (
+        <EditUserModal
+          userId={editUser.id}
+          initialData={{ fullName: editUser.fullName, phone: editUser.phone ?? null, department: editUser.department, branch: editUser.branch, groupId: null, accessLevel: null, managerId: null, skills: null }}
+          onClose={() => setEditUser(null)}
+          onSuccess={() => { setEditUser(null); load(); notifyDashboard(); }}
+          showToast={showToast}
+        />
+      )}
+      {deleteUser && (
+        <DeleteUserDialog
+          userId={deleteUser.id}
+          email={deleteUser.email}
+          fullName={deleteUser.fullName}
+          onClose={() => setDeleteUser(null)}
+          onSuccess={() => {
+            if (selectedUserId === deleteUser.id) setSelectedUserId(null);
+            setDeleteUser(null);
+            load();
+            notifyDashboard();
+          }}
+          showToast={showToast}
+        />
+      )}
+      <ToastContainer toasts={toasts} onDismiss={dismiss} />
     </AdminLayout>
   );
 }

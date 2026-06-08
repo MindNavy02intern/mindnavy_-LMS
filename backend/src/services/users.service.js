@@ -37,6 +37,15 @@ const USER_SELECT = {
   role: true,
   status: true,
   verificationState: true,
+  emailVerified: true,
+  phoneVerified: true,
+  phone: true,
+  department: true,
+  branch: true,
+  groupId: true,
+  accessLevel: true,
+  managerId: true,
+  skills: true,
   lastActivityAt: true,
   riskScore: true,
   createdAt: true,
@@ -54,6 +63,15 @@ function mapUser(u) {
     role: ROLE_MAP[u.role] ?? u.role.toLowerCase(),
     status: STATUS_MAP[u.status] ?? u.status.toLowerCase(),
     verificationState: VERIFICATION_MAP[u.verificationState] ?? u.verificationState.toLowerCase(),
+    emailVerified: u.emailVerified ?? false,
+    phoneVerified: u.phoneVerified ?? false,
+    phone: u.phone ?? null,
+    department: u.department ?? null,
+    branch: u.branch ?? null,
+    groupId: u.groupId ?? null,
+    accessLevel: u.accessLevel ?? null,
+    managerId: u.managerId ?? null,
+    skills: u.skills ?? [],
     lastActivityAt: u.lastActivityAt ? u.lastActivityAt.toISOString() : null,
     riskScore: u.riskScore ?? null,
     enrollmentCount: 0,
@@ -165,6 +183,9 @@ async function getUsersList(query = {}, admin = {}) {
         role: true,
         status: true,
         verificationState: true,
+        phone: true,
+        department: true,
+        branch: true,
         lastActivityAt: true,
         riskScore: true,
         createdAt: true,
@@ -233,6 +254,16 @@ async function getUserDetails(id, admin = {}) {
       ...mapUser(user),
       updatedAt: user.updatedAt.toISOString(),
     },
+    roles: [],
+    securityOverview: {
+      mfaEnabled: false,
+      activeSessions: 0,
+      lastIpAddress: null,
+      lastLocation: null,
+      riskScore: "low",
+    },
+    recentActivity: [],
+    enrolledCourses: [],
   };
 }
 
@@ -258,12 +289,19 @@ async function createUser(body, admin = {}) {
   try {
     user = await prisma.appUser.create({
       data: {
-        fullName: normalizedFullName,
-        email: normalizedEmail,
+        fullName:          normalizedFullName,
+        email:             normalizedEmail,
         passwordHash,
-        role: normalizedRole,
-        status: normalizedStatus,
+        role:              normalizedRole,
+        status:            normalizedStatus,
         verificationState: normalizedVerificationState,
+        phone:       body.phone       ? body.phone.trim()       : null,
+        department:  body.department  ? body.department.trim()  : null,
+        branch:      body.branch      ? body.branch.trim()      : null,
+        groupId:     body.groupId     ? body.groupId.trim()     : null,
+        accessLevel: body.accessLevel ? body.accessLevel.trim() : null,
+        managerId:   body.managerId   ? body.managerId.trim()   : null,
+        skills:      Array.isArray(body.skills) ? body.skills   : [],
       },
       select: USER_SELECT,
     });
@@ -319,6 +357,41 @@ async function updateUser(id, body, admin = {}) {
   if (body.riskScore !== undefined) {
     updateData.riskScore = body.riskScore;
     changedFields.push("riskScore");
+  }
+
+  if (body.phone !== undefined) {
+    updateData.phone = body.phone ? body.phone.trim() : null;
+    changedFields.push("phone");
+  }
+
+  if (body.department !== undefined) {
+    updateData.department = body.department ? body.department.trim() : null;
+    changedFields.push("department");
+  }
+
+  if (body.branch !== undefined) {
+    updateData.branch = body.branch ? body.branch.trim() : null;
+    changedFields.push("branch");
+  }
+
+  if (body.groupId !== undefined) {
+    updateData.groupId = body.groupId ? body.groupId.trim() : null;
+    changedFields.push("groupId");
+  }
+
+  if (body.accessLevel !== undefined) {
+    updateData.accessLevel = body.accessLevel ? body.accessLevel.trim() : null;
+    changedFields.push("accessLevel");
+  }
+
+  if (body.managerId !== undefined) {
+    updateData.managerId = body.managerId ? body.managerId.trim() : null;
+    changedFields.push("managerId");
+  }
+
+  if (body.skills !== undefined) {
+    updateData.skills = Array.isArray(body.skills) ? body.skills : [];
+    changedFields.push("skills");
   }
 
   let user;
@@ -390,9 +463,57 @@ async function resetUserPassword(id, body, admin = {}) {
   };
 }
 
+async function suspendUser(id, body, admin = {}) {
+  const existing = await assertUserExists(id);
+  const reason = body.reason.trim();
+  const notes = body.notes ? body.notes.trim() : null;
+
+  const user = await prisma.appUser.update({
+    where: { id },
+    data: { status: "SUSPENDED" },
+    select: USER_SELECT,
+  });
+
+  await createUserAuditLog(admin.id, "USER_SUSPENDED", {
+    userId: id,
+    oldStatus: existing.status,
+    newStatus: "SUSPENDED",
+    reason,
+    notes,
+  });
+
+  return {
+    success: true,
+    message: "User suspended successfully.",
+    user: { ...mapUser(user), updatedAt: user.updatedAt.toISOString() },
+  };
+}
+
+async function reactivateUser(id, admin = {}) {
+  const existing = await assertUserExists(id);
+
+  const user = await prisma.appUser.update({
+    where: { id },
+    data: { status: "ACTIVE" },
+    select: USER_SELECT,
+  });
+
+  await createUserAuditLog(admin.id, "USER_REACTIVATED", {
+    userId: id,
+    oldStatus: existing.status,
+    newStatus: "ACTIVE",
+  });
+
+  return {
+    success: true,
+    message: "User reactivated successfully.",
+    user: { ...mapUser(user), updatedAt: user.updatedAt.toISOString() },
+  };
+}
+
 async function assignUserRole(id, body, admin = {}) {
   const existing = await assertUserExists(id);
-  const newRole = body.role.trim().toUpperCase();
+  const newRole = body.roleId.trim().toUpperCase();
   const reason = body.reason ? body.reason.trim() : null;
 
   const user = await prisma.appUser.update({
@@ -575,6 +696,8 @@ module.exports = {
   createUser,
   updateUser,
   updateUserStatus,
+  suspendUser,
+  reactivateUser,
   resetUserPassword,
   assignUserRole,
   deleteUser,

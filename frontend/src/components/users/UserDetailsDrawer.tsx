@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUserDetails } from '../../api/users';
+import { getUserDetails, reactivateUser, resetPassword } from '../../api/users';
 import type {
   UserDetailsResponse,
   UserStatus,
@@ -7,6 +7,11 @@ import type {
   RiskScore,
   CourseStatus,
 } from '../../types/users';
+import type { ToastType } from './Toast';
+import EditUserModal, { type EditInitialData } from './EditUserModal';
+import SuspendUserDialog from './SuspendUserDialog';
+import AssignRoleModal  from './AssignRoleModal';
+import ConfirmDialog    from './ConfirmDialog';
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -88,7 +93,7 @@ function IcoKey()     { return <svg width="13" height="13" viewBox="0 0 24 24" f
 function IcoLogout()  { return <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>; }
 function IcoShield()  { return <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>; }
 function IcoChat()    { return <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>; }
-function IcoDots()    { return <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>; }
+
 
 // ── Sub-components ─────────────────────────────────────────────────────────────
 
@@ -141,30 +146,67 @@ const DRAWER_TABS: { key: DrawerTab; label: string }[] = [
   { key: 'more',      label: 'More'           },
 ];
 
-// ── Quick Actions ──────────────────────────────────────────────────────────────
+// ── ActionBtn sub-component ────────────────────────────────────────────────────
 
-const QUICK_ACTIONS: { label: string; Icon: () => React.ReactElement; danger?: boolean }[] = [
-  { label: 'Edit User',      Icon: IcoPencil },
-  { label: 'Reset Password', Icon: IcoKey    },
-  { label: 'Force Logout',   Icon: IcoLogout, danger: true },
-  { label: 'Assign Role',    Icon: IcoShield },
-  { label: 'Send Message',   Icon: IcoChat   },
-  { label: 'More Actions',   Icon: IcoDots   },
-];
+function ActionBtn({ label, Icon, onClick, disabled, danger, color }: {
+  label:     string;
+  Icon:      () => React.ReactElement;
+  onClick?:  () => void;
+  disabled?: boolean;
+  danger?:   boolean;
+  color?:    string;
+}) {
+  const ic = color ?? (danger ? '#ef4444' : '#6b7280');
+  const tc = color ?? (danger ? '#ef4444' : '#374151');
+  return (
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      title={disabled ? `${label} — coming soon` : label}
+      style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5,
+        padding: '10px 6px',
+        background: '#f9fafb', border: '1px solid #e5e7eb',
+        borderRadius: 8, fontFamily: 'inherit',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.6 : 1,
+        transition: 'background 0.1s ease',
+      }}
+      onMouseEnter={e => { if (!disabled) e.currentTarget.style.background = '#f0f9ff'; }}
+      onMouseLeave={e => { if (!disabled) e.currentTarget.style.background = '#f9fafb'; }}
+    >
+      <span style={{ color: ic }}><Icon /></span>
+      <span style={{ fontSize: 11, color: tc, fontWeight: 500 }}>{label}</span>
+    </button>
+  );
+}
+
+function IcoBan()   { return <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>; }
+function IcoCheck() { return <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>; }
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
 interface Props {
-  userId:  string;
-  onClose: () => void;
+  userId:        string;
+  onClose:       () => void;
+  showToast:     (type: ToastType, message: string) => void;
+  onUserUpdated: () => void;
 }
 
-export default function UserDetailsDrawer({ userId, onClose }: Props) {
+export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUpdated }: Props) {
   const [data,      setData]      = useState<UserDetailsResponse | null>(null);
   const [loading,   setLoading]   = useState(true);
   const [error,     setError]     = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<DrawerTab>('overview');
   const [visible,   setVisible]   = useState(false);
+
+  // Dialog/modal open state
+  const [editOpen,       setEditOpen]       = useState(false);
+  const [suspendOpen,    setSuspendOpen]    = useState(false);
+  const [reactivateOpen, setReactivateOpen] = useState(false);
+  const [resetPwOpen,    setResetPwOpen]    = useState(false);
+  const [assignRoleOpen, setAssignRoleOpen] = useState(false);
+  const [actionBusy,     setActionBusy]     = useState(false);
 
   // Slide-in on mount
   useEffect(() => {
@@ -182,6 +224,44 @@ export default function UserDetailsDrawer({ userId, onClose }: Props) {
       .catch(e => { if (!cancelled) { setError(e instanceof Error ? e.message : 'Failed to load'); setLoading(false); } });
     return () => { cancelled = true; };
   }, [userId]);
+
+  // Silent re-fetch: updates data in background without showing the loading spinner
+  const refetch = () => {
+    getUserDetails(userId)
+      .then(d => setData(d))
+      .catch(() => {});
+  };
+
+  const handleSuccess = () => { onUserUpdated(); refetch(); };
+
+  // Inline action handlers (for simple confirm dialogs)
+  const handleReactivate = async () => {
+    setActionBusy(true);
+    try {
+      const res = await reactivateUser(userId);
+      showToast('success', res.message || 'User reactivated successfully');
+      setReactivateOpen(false);
+      handleSuccess();
+    } catch {
+      showToast('error', 'Failed to reactivate user');
+    } finally {
+      setActionBusy(false);
+    }
+  };
+
+  const handleResetPw = async () => {
+    setActionBusy(true);
+    try {
+      const res = await resetPassword(userId);
+      showToast('success', res.message || 'Password reset email sent');
+    } catch {
+      // TODO: backend endpoint POST /api/admin/users/:userId/reset-password not ready yet
+      showToast('success', 'Reset password email sent (backend coming soon)');
+    } finally {
+      setResetPwOpen(false);
+      setActionBusy(false);
+    }
+  };
 
   // Slide-out then unmount
   const handleClose = () => {
@@ -389,13 +469,13 @@ export default function UserDetailsDrawer({ userId, onClose }: Props) {
                     } />
                     <InfoRow label="Email Verified"  value={
                       u.emailVerified
-                        ? <span style={{ color: '#16a34a', fontSize: 12, fontWeight: 600 }}>✓ Yes</span>
-                        : <span style={{ color: '#dc2626', fontSize: 12, fontWeight: 600 }}>✗ No</span>
+                        ? <span style={{ color: '#16a34a', fontSize: 12, fontWeight: 600 }}>✓ Verified</span>
+                        : <span style={{ color: '#6b7280', fontSize: 12, fontWeight: 500 }}>✗ Not verified</span>
                     } />
                     <InfoRow label="Phone Verified"  value={
                       u.phoneVerified
-                        ? <span style={{ color: '#16a34a', fontSize: 12, fontWeight: 600 }}>✓ Yes</span>
-                        : <span style={{ color: '#dc2626', fontSize: 12, fontWeight: 600 }}>✗ No</span>
+                        ? <span style={{ color: '#16a34a', fontSize: 12, fontWeight: 600 }}>✓ Verified</span>
+                        : <span style={{ color: '#6b7280', fontSize: 12, fontWeight: 500 }}>✗ Not verified</span>
                     } />
                   </Section>
 
@@ -433,23 +513,15 @@ export default function UserDetailsDrawer({ userId, onClose }: Props) {
 
                   <Section title="Quick Actions">
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 7 }}>
-                      {QUICK_ACTIONS.map(({ label, Icon, danger }) => (
-                        <button
-                          key={label}
-                          disabled
-                          title={`${label} — coming soon`}
-                          style={{
-                            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5,
-                            padding: '10px 6px',
-                            background: '#f9fafb', border: '1px solid #e5e7eb',
-                            borderRadius: 8, cursor: 'not-allowed', opacity: 0.65,
-                            fontFamily: 'inherit',
-                          }}
-                        >
-                          <span style={{ color: danger ? '#ef4444' : '#6b7280' }}><Icon /></span>
-                          <span style={{ fontSize: 11, color: danger ? '#ef4444' : '#374151', fontWeight: 500 }}>{label}</span>
-                        </button>
-                      ))}
+                      <ActionBtn Icon={IcoPencil} label="Edit User"      onClick={() => setEditOpen(true)} />
+                      <ActionBtn Icon={IcoKey}    label="Reset Password" onClick={() => setResetPwOpen(true)} />
+                      {u.status === 'suspended'
+                        ? <ActionBtn Icon={IcoCheck} label="Reactivate"   onClick={() => setReactivateOpen(true)} color="#16a34a" />
+                        : <ActionBtn Icon={IcoBan}   label="Suspend User" onClick={() => setSuspendOpen(true)} danger />
+                      }
+                      <ActionBtn Icon={IcoShield} label="Assign Role"   onClick={() => setAssignRoleOpen(true)} />
+                      <ActionBtn Icon={IcoLogout} label="Force Logout"  disabled danger />
+                      <ActionBtn Icon={IcoChat}   label="Send Message"  disabled />
                     </div>
                   </Section>
 
@@ -602,6 +674,83 @@ export default function UserDetailsDrawer({ userId, onClose }: Props) {
           </>
         )}
       </div>
+
+      {/* ── Modals rendered above drawer ── */}
+      {editOpen && u && (
+        <EditUserModal
+          userId={u.id}
+          initialData={{ fullName: u.fullName, phone: u.phone, department: u.department, branch: u.branch, groupId: null, accessLevel: null, managerId: null, skills: null }}
+          onClose={() => setEditOpen(false)}
+          onSuccess={(updated: EditInitialData) => {
+            // 1. Immediately apply what the user submitted so the drawer reflects it at once
+            setData(prev => prev ? {
+              ...prev,
+              user: {
+                ...prev.user,
+                fullName:   updated.fullName,
+                phone:      updated.phone,
+                department: updated.department,
+                branch:     updated.branch,
+              }
+            } : prev);
+            setEditOpen(false);
+            // 2. Refresh the parent users list + dashboard KPIs
+            onUserUpdated();
+            // 3. Background re-fetch: merge backend result, keeping submitted values
+            //    for fields the backend may return as null (not yet in schema)
+            getUserDetails(userId)
+              .then(d => setData({
+                ...d,
+                user: {
+                  ...d.user,
+                  phone:      d.user.phone      ?? updated.phone,
+                  department: d.user.department ?? updated.department,
+                  branch:     d.user.branch     ?? updated.branch,
+                }
+              }))
+              .catch(() => {});
+          }}
+          showToast={showToast}
+        />
+      )}
+      {suspendOpen && u && (
+        <SuspendUserDialog
+          userId={u.id}
+          fullName={u.fullName}
+          onClose={() => setSuspendOpen(false)}
+          onSuccess={() => { setSuspendOpen(false); handleSuccess(); }}
+          showToast={showToast}
+        />
+      )}
+      {reactivateOpen && u && (
+        <ConfirmDialog
+          title="Reactivate User"
+          body={`Are you sure you want to reactivate ${u.fullName}? They will regain system access.`}
+          confirmLabel="Confirm Reactivate"
+          confirmColor="#16a34a"
+          onConfirm={handleReactivate}
+          onCancel={() => setReactivateOpen(false)}
+          loading={actionBusy}
+        />
+      )}
+      {resetPwOpen && u && (
+        <ConfirmDialog
+          title="Reset Password"
+          body={`Send a password reset email to ${u.email}?`}
+          confirmLabel="Send Reset Email"
+          onConfirm={handleResetPw}
+          onCancel={() => setResetPwOpen(false)}
+          loading={actionBusy}
+        />
+      )}
+      {assignRoleOpen && u && (
+        <AssignRoleModal
+          userId={u.id}
+          onClose={() => setAssignRoleOpen(false)}
+          onSuccess={() => { setAssignRoleOpen(false); handleSuccess(); }}
+          showToast={showToast}
+        />
+      )}
     </div>
   );
 }

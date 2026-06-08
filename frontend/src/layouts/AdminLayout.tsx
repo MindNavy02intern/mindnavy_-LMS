@@ -99,12 +99,13 @@ function IconChevronDown() {
 // ── Quick Actions (topbar dropdown) ──────────────────────────────────────────
 
 const QA_TOPBAR_ACTIONS = [
-  { label: 'Add User' },
-  { label: 'Create Course' },
-  { label: 'Assign Course' },
-  { label: 'Generate Report' },
-  { label: 'Send Notification' },
-  { label: 'Manage Roles' },
+  { label: 'Add User',          route: '/users?modal=addUser' },
+  { label: 'Create Course',     route: null },
+  { label: 'Assign Course',     route: null },
+  { label: 'Generate Report',   route: null },
+  { label: 'Send Notification', route: null },
+  { label: 'Manage Roles',      route: null },
+  { label: 'System Settings',   route: '/settings' },
 ];
 
 // ── Nav config ────────────────────────────────────────────────────────────────
@@ -152,8 +153,21 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
   const [open, setOpen] = useState(false);
   const [qaOpen, setQaOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [qaToast, setQaToast] = useState<string | null>(null);
   const qaRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
+  const qaToastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleQaAction = (route: string | null, label: string) => {
+    setQaOpen(false);
+    if (route) {
+      navigate(route);
+    } else {
+      if (qaToastTimer.current) clearTimeout(qaToastTimer.current);
+      setQaToast(`${label} — Coming Soon`);
+      qaToastTimer.current = setTimeout(() => setQaToast(null), 3000);
+    }
+  };
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -261,7 +275,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
               {qaOpen && (
                 <div className="mn-dropdown-panel mn-qa-dropdown-panel">
                   {QA_TOPBAR_ACTIONS.map((a) => (
-                    <button key={a.label} className="mn-qa-dropdown-item" onClick={() => setQaOpen(false)}>
+                    <button key={a.label} className="mn-qa-dropdown-item" onClick={() => handleQaAction(a.route, a.label)}>
                       {a.label}
                     </button>
                   ))}
@@ -329,6 +343,23 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
 
         {/* Page content */}
         <div className="mn-content">{children}</div>
+
+        {/* Quick Actions coming-soon toast */}
+        {qaToast && (
+          <div style={{
+            position: 'fixed', bottom: 24, right: 24, zIndex: 9000,
+            background: '#1e293b', color: '#f1f5f9',
+            padding: '10px 18px', borderRadius: 8, fontSize: 13, fontWeight: 500,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+            display: 'flex', alignItems: 'center', gap: 10,
+          }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            {qaToast}
+            <button onClick={() => setQaToast(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: 0, fontSize: 16, lineHeight: 1 }}>×</button>
+          </div>
+        )}
       </main>
     </>
   );

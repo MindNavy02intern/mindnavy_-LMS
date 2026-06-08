@@ -31,6 +31,15 @@ model AppUser {
   role              AppUserRole
   status            AppUserStatus            @default(PENDING)
   verificationState AppUserVerificationState @default(PENDING)
+  emailVerified     Boolean                  @default(false)
+  phoneVerified     Boolean                  @default(false)
+  phone             String?
+  department        String?
+  branch            String?
+  groupId           String?
+  accessLevel       String?
+  managerId         String?
+  skills            String[]
   lastActivityAt    DateTime?
   riskScore         Int?
   createdAt         DateTime                 @default(now())

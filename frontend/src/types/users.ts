@@ -10,6 +10,7 @@ export interface User {
   email:             string;
   avatar:            string | null;
   role:              string;
+  phone:             string | null;
   department:        string | null;
   branch:            string | null;
   status:            UserStatus;
@@ -105,4 +106,48 @@ export interface UserDetailsResponse {
   securityOverview: SecurityOverview;
   recentActivity:   ActivityItem[];
   enrolledCourses:  EnrolledCourse[];
+}
+
+// ── Task 6C: Action request / response types ──────────────────────────────────
+
+export interface CreateUserRequest {
+  fullName:         string;
+  email:            string;
+  password:         string;
+  phone:            string | null;
+  role:             string;
+  department:       string | null;
+  branch:           string | null;
+  groupId:          string | null;
+  accessLevel:      string | null;
+  managerId:        string | null;
+  skills:           string[] | null;
+  customAttributes: Record<string, unknown> | null;
+}
+
+export interface UpdateUserRequest {
+  fullName:    string;
+  phone:       string | null;
+  department:  string | null;
+  branch:      string | null;
+  groupId:     string | null;
+  accessLevel: string | null;
+  managerId:   string | null;
+  skills:      string[] | null;
+}
+
+export interface SuspendUserRequest {
+  reason: string;
+  notes:  string | null;
+}
+
+export interface AssignRoleRequest {
+  roleId:    string;
+  type:      RoleType;
+  expiresAt: string | null;
+}
+
+export interface ActionResponse {
+  message: string;
+  user:    Partial<User>;
 }

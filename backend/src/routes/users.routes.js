@@ -7,6 +7,8 @@ const {
   createUser,
   updateUser,
   updateUserStatus,
+  suspendUser,
+  reactivateUser,
   resetUserPassword,
   assignUserRole,
   deleteUser,
@@ -26,9 +28,11 @@ router.get("/:id", requireAdminAuth, getUserDetails);
 router.post("/", requireAdminAuth, adminUserActionRateLimiter, createUser);
 
 // Sub-resource routes must come before bare /:id to avoid shadowing
-router.patch("/:id/status", requireAdminAuth, adminUserActionRateLimiter, updateUserStatus);
-router.post("/:id/reset-password", requireAdminAuth, adminUserActionRateLimiter, resetUserPassword);
-router.patch("/:id/role", requireAdminAuth, adminUserActionRateLimiter, assignUserRole);
+router.patch("/:id/status",     requireAdminAuth, adminUserActionRateLimiter, updateUserStatus);
+router.patch("/:id/suspend",    requireAdminAuth, adminUserActionRateLimiter, suspendUser);
+router.patch("/:id/reactivate", requireAdminAuth, adminUserActionRateLimiter, reactivateUser);
+router.post( "/:id/reset-password", requireAdminAuth, adminUserActionRateLimiter, resetUserPassword);
+router.patch("/:id/role",       requireAdminAuth, adminUserActionRateLimiter, assignUserRole);
 
 // General /:id routes last
 router.patch("/:id", requireAdminAuth, adminUserActionRateLimiter, updateUser);
