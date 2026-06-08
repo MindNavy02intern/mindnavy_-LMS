@@ -1,3 +1,107 @@
+model AdminUser {
+  id             String          @id @default(uuid())
+  email          String          @unique
+  passwordHash   String
+  fullName       String
+  role           String          @default("admin")
+  status         AdminStatus     @default(ACTIVE)
+  lastLoginAt    DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  sessions       AdminSession[]
+  auditLogs      AuditLog[]
+  loginAttempts  LoginAttempt[]
+  otpCodes       OtpCode[]
+  trustedDevices TrustedDevice[]
+
+  @@map("admin_users")
+}
+
+model AdminSession {
+  id           String    @id @default(uuid())
+  adminId      String
+  sessionToken String    @unique
+  ipAddress    String?
+  userAgent    String?
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  admin        AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([sessionToken])
+  @@map("admin_sessions")
+}
+
+model TrustedDevice {
+  id                String    @id @default(uuid())
+  adminId           String
+  deviceFingerprint String
+  deviceName        String?
+  ipAddress         String?
+  userAgent         String?
+  trustedAt         DateTime  @default(now())
+  lastUsedAt        DateTime?
+  expiresAt         DateTime?
+  createdAt         DateTime  @default(now())
+  revokedAt         DateTime?
+  admin             AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@unique([adminId, deviceFingerprint])
+  @@index([adminId])
+  @@map("trusted_devices")
+}
+
+model OtpCode {
+  id          String     @id @default(uuid())
+  adminId     String
+  codeHash    String
+  purpose     OtpPurpose
+  expiresAt   DateTime
+  usedAt      DateTime?
+  attempts    Int        @default(0)
+  maxAttempts Int        @default(5)
+  createdAt   DateTime   @default(now())
+  admin       AdminUser  @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([expiresAt])
+  @@map("otp_codes")
+}
+
+model LoginAttempt {
+  id        String      @id @default(uuid())
+  adminId   String?
+  email     String
+  status    LoginStatus
+  reason    String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime    @default(now())
+  admin     AdminUser?  @relation(fields: [adminId], references: [id])
+
+  @@index([email])
+  @@index([ipAddress])
+  @@index([createdAt])
+  @@map("login_attempts")
+}
+
+model AuditLog {
+  id        String      @id @default(uuid())
+  adminId   String?
+  action    AuditAction
+  details   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime    @default(now())
+  admin     AdminUser?  @relation(fields: [adminId], references: [id])
+
+  @@index([adminId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
 enum AdminStatus {
   ACTIVE
   SUSPENDED
@@ -28,132 +132,11 @@ enum AuditAction {
   USER_CREATED
   USER_UPDATED
   USER_STATUS_CHANGED
-  USER_SUSPENDED
-  USER_REACTIVATED
   USER_PASSWORD_RESET
   USER_ROLE_ASSIGNED
   USER_DELETED
   USER_ANALYTICS_VIEWED
-}
-
-model AdminUser {
-  id           String      @id @default(uuid())
-  email        String      @unique
-  passwordHash String
-  fullName     String
-  role         String      @default("admin")
-  status       AdminStatus @default(ACTIVE)
-
-  lastLoginAt  DateTime?
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-
-  sessions       AdminSession[]
-  trustedDevices TrustedDevice[]
-  otpCodes       OtpCode[]
-  loginAttempts  LoginAttempt[]
-  auditLogs      AuditLog[]
-
-  @@map("admin_users")
-}
-
-model AdminSession {
-  id           String   @id @default(uuid())
-  adminId      String
-  sessionToken String   @unique
-
-  ipAddress    String?
-  userAgent    String?
-  expiresAt    DateTime
-  revokedAt    DateTime?
-
-  createdAt    DateTime @default(now())
-
-  admin AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
-
-  @@index([adminId])
-  @@index([sessionToken])
-  @@map("admin_sessions")
-}
-
-model TrustedDevice {
-  id                String   @id @default(uuid())
-  adminId           String
-  deviceFingerprint String
-  deviceName        String?
-
-  ipAddress         String?
-  userAgent         String?
-  trustedAt         DateTime @default(now())
-  lastUsedAt        DateTime?
-  expiresAt         DateTime?
-  revokedAt         DateTime?
-  createdAt         DateTime  @default(now())
-
-  admin AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
-
-  @@unique([adminId, deviceFingerprint])
-  @@index([adminId])
-  @@map("trusted_devices")
-}
-
-model OtpCode {
-  id          String     @id @default(uuid())
-  adminId     String
-  codeHash    String
-  purpose     OtpPurpose
-
-  expiresAt   DateTime
-  usedAt      DateTime?
-  attempts    Int        @default(0)
-  maxAttempts Int        @default(5)
-
-  createdAt   DateTime   @default(now())
-
-  admin AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
-
-  @@index([adminId])
-  @@index([expiresAt])
-  @@map("otp_codes")
-}
-
-model LoginAttempt {
-  id        String      @id @default(uuid())
-  adminId   String?
-
-  email     String
-  status    LoginStatus
-  reason    String?
-
-  ipAddress String?
-  userAgent String?
-
-  createdAt DateTime @default(now())
-
-  admin AdminUser? @relation(fields: [adminId], references: [id], onDelete: SetNull)
-
-  @@index([email])
-  @@index([ipAddress])
-  @@index([createdAt])
-  @@map("login_attempts")
-}
-
-model AuditLog {
-  id        String      @id @default(uuid())
-  adminId   String?
-
-  action    AuditAction
-  details   Json?
-
-  ipAddress String?
-  userAgent String?
-
-  createdAt DateTime @default(now())
-
-  admin AdminUser? @relation(fields: [adminId], references: [id], onDelete: SetNull)
-
-  @@index([adminId])
-  @@index([action])
-  @@index([createdAt])
-  @@map("audit_logs")
+  USER_SUSPENDED
+  USER_REACTIVATED
+  USERS_IMPORTED
 }

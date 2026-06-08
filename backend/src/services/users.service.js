@@ -1,5 +1,12 @@
 const bcrypt = require("bcryptjs");
+const { parse } = require("csv-parse/sync");
 const prisma = require("../config/prisma");
+const {
+  MAX_IMPORT_ROWS,
+  MAX_RETURNED_ERRORS,
+  validateHeaders,
+  validateImportRows,
+} = require("../validators/usersImport.validator");
 
 const VALID_ROLES = new Set(["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"]);
 const VALID_STATUSES = new Set(["ACTIVE", "SUSPENDED", "PENDING", "ARCHIVED", "INVITED"]);
@@ -658,6 +665,140 @@ async function getUsersAnalytics(admin = {}) {
   };
 }
 
+// ─── Task 6E: Bulk User Import ────────────────────────────────────────────────
+
+async function importUsersFromCsv(file, admin = {}) {
+  if (!file || !file.buffer || file.buffer.length === 0) {
+    const err = new Error("Empty CSV file.");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // Strip BOM that Windows CSV exports sometimes prepend
+  const csvContent = file.buffer.toString("utf8").replace(/^﻿/, "");
+
+  let rawRows;
+  try {
+    rawRows = parse(csvContent, {
+      skip_empty_lines: true,
+      relax_column_count: true,
+    });
+  } catch {
+    const err = new Error("Invalid CSV file.");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if (!rawRows || rawRows.length < 1) {
+    const err = new Error("Empty CSV file.");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // First row is the header row; trim each header name
+  const headers = rawRows[0].map((h) => (typeof h === "string" ? h.trim() : String(h)));
+  const headerError = validateHeaders(headers);
+  if (headerError) {
+    const err = new Error(headerError);
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const dataRows = rawRows.slice(1);
+  const totalRows = dataRows.length;
+
+  if (totalRows === 0) {
+    return {
+      success: true,
+      message: "Import completed.",
+      summary: { totalRows: 0, created: 0, failed: 0, skipped: 0 },
+      errors: [],
+    };
+  }
+
+  if (totalRows > MAX_IMPORT_ROWS) {
+    const err = new Error(`CSV exceeds the maximum of ${MAX_IMPORT_ROWS} rows.`);
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // Map each raw row array to an object keyed by header name
+  const rowObjects = dataRows.map((row) => {
+    const obj = {};
+    headers.forEach((h, i) => {
+      obj[h] = row[i] ?? "";
+    });
+    return obj;
+  });
+
+  // Validate all rows — passwords are never logged inside this call
+  const {
+    validRows: initialValidRows,
+    failedCount: validationFailed,
+    returnedErrors,
+  } = validateImportRows(rowObjects);
+
+  let finalValidRows = initialValidRows;
+  let dbDuplicateFailed = 0;
+
+  // Check for emails that already exist — one DB round-trip for the whole batch
+  if (finalValidRows.length > 0) {
+    const emailsToCheck = finalValidRows.map((r) => r.email);
+    const existingUsers = await prisma.appUser.findMany({
+      where: { email: { in: emailsToCheck } },
+      select: { email: true },
+    });
+
+    if (existingUsers.length > 0) {
+      const existingSet = new Set(existingUsers.map((u) => u.email));
+      const duplicates = finalValidRows.filter((r) => existingSet.has(r.email));
+      dbDuplicateFailed = duplicates.length;
+
+      for (const dup of duplicates) {
+        if (returnedErrors.length < MAX_RETURNED_ERRORS) {
+          returnedErrors.push({
+            row: dup.rowIndex,
+            email: dup.email,
+            message: "Email already exists in the system.",
+          });
+        }
+      }
+
+      finalValidRows = finalValidRows.filter((r) => !existingSet.has(r.email));
+    }
+  }
+
+  // Hash passwords for every row that passed all checks — never log or return plain password
+  const usersToCreate = await Promise.all(
+    finalValidRows.map(async ({ rowIndex, password, ...fields }) => {
+      const passwordHash = await bcrypt.hash(password, 12);
+      return { ...fields, passwordHash };
+    })
+  );
+
+  let created = 0;
+  if (usersToCreate.length > 0) {
+    const batchResult = await prisma.appUser.createMany({
+      data: usersToCreate,
+      skipDuplicates: true,
+    });
+    created = batchResult.count;
+  }
+
+  const failed = totalRows - created;
+  const skipped = failed;
+  const message = failed === 0 ? "Import completed." : "Import completed with errors.";
+
+  await createUserAuditLog(admin.id, "USERS_IMPORTED", { totalRows, created, failed, skipped });
+
+  return {
+    success: true,
+    message,
+    summary: { totalRows, created, failed, skipped },
+    errors: returnedErrors,
+  };
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -670,4 +811,5 @@ module.exports = {
   assignUserRole,
   deleteUser,
   getUsersAnalytics,
+  importUsersFromCsv,
 };

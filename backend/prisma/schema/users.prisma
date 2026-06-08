@@ -1,4 +1,33 @@
-// LMS App Users — separate from admin_users (admin security) and Supabase auth.users
+model AppUser {
+  id                String                   @id @default(uuid())
+  email             String                   @unique
+  passwordHash      String?
+  fullName          String
+  avatar            String?
+  role              AppUserRole
+  status            AppUserStatus            @default(PENDING)
+  verificationState AppUserVerificationState @default(PENDING)
+  lastActivityAt    DateTime?
+  riskScore         Int?
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  accessLevel       String?
+  branch            String?
+  department        String?
+  emailVerified     Boolean                  @default(false)
+  groupId           String?
+  managerId         String?
+  phone             String?
+  phoneVerified     Boolean                  @default(false)
+  skills            String[]
+
+  @@index([role])
+  @@index([status])
+  @@index([verificationState])
+  @@index([createdAt])
+  @@index([lastActivityAt])
+  @@map("app_users")
+}
 
 enum AppUserRole {
   LEARNER
@@ -9,8 +38,8 @@ enum AppUserRole {
 
 enum AppUserStatus {
   ACTIVE
-  SUSPENDED // account stopped by administration after being created or active
-  PENDING   // account not yet fully activated or awaiting approval
+  SUSPENDED
+  PENDING
   ARCHIVED
   INVITED
 }
@@ -20,35 +49,4 @@ enum AppUserVerificationState {
   PENDING
   REJECTED
   EXPIRED
-}
-
-model AppUser {
-  id                String                   @id @default(uuid())
-  email             String                   @unique
-  passwordHash      String?                  // null for invited users who have not set a password yet
-  fullName          String
-  avatar            String?
-  role              AppUserRole
-  status            AppUserStatus            @default(PENDING)
-  verificationState AppUserVerificationState @default(PENDING)
-  emailVerified     Boolean                  @default(false)
-  phoneVerified     Boolean                  @default(false)
-  phone             String?
-  department        String?
-  branch            String?
-  groupId           String?
-  accessLevel       String?
-  managerId         String?
-  skills            String[]
-  lastActivityAt    DateTime?
-  riskScore         Int?
-  createdAt         DateTime                 @default(now())
-  updatedAt         DateTime                 @updatedAt
-
-  @@index([role])
-  @@index([status])
-  @@index([verificationState])
-  @@index([createdAt])
-  @@index([lastActivityAt])
-  @@map("app_users")
 }

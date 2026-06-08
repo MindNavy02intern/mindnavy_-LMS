@@ -245,6 +245,29 @@ async function deleteUser(req, res) {
   }
 }
 
+// ─── Task 6E: Bulk User Import ────────────────────────────────────────────────
+
+async function importUsers(req, res) {
+  if (req.uploadError) {
+    return res.status(400).json({ success: false, message: req.uploadError });
+  }
+
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "No CSV file uploaded. Use field name: file." });
+  }
+
+  try {
+    const result = await usersService.importUsersFromCsv(req.file, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 400) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+    console.error("[users] importUsers error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to import users." });
+  }
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -257,4 +280,5 @@ module.exports = {
   assignUserRole,
   deleteUser,
   getUsersAnalytics,
+  importUsers,
 };
