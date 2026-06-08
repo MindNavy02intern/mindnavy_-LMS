@@ -867,10 +867,14 @@ export default function DashboardPage() {
   useEffect(() => { fetchAnalytics(); }, [fetchAnalytics]);
   useEffect(() => { fetchAdminWidgets(); }, [fetchAdminWidgets]);
   useEffect(() => {
-    const handler = () => fetchData(true);
-    window.addEventListener('userDataChanged', handler);
-    return () => window.removeEventListener('userDataChanged', handler);
-  }, [fetchData]);
+    const handler = () => { fetchData(true); fetchAnalytics(); };
+    window.addEventListener('userDataChanged',  handler);
+    window.addEventListener('analyticsUpdated', handler);
+    return () => {
+      window.removeEventListener('userDataChanged',  handler);
+      window.removeEventListener('analyticsUpdated', handler);
+    };
+  }, [fetchData, fetchAnalytics]);
 
   function applyFilters() { setApplied({ dateFrom, dateTo, departmentId, courseId }); }
   function clearFilters()  {
@@ -879,8 +883,8 @@ export default function DashboardPage() {
   }
 
   const kpis        = data?.kpis;
-  const depts       = analytics?.topDepartments ?? [];
-  const maxDept     = depts.length > 0 ? Math.max(...depts.map(d => d.usersCount)) : 1;
+  const depts       = analytics?.usersByDepartment ?? [];
+  const maxDept     = depts.length > 0 ? Math.max(...depts.map(d => d.count)) : 1;
   const perfOverview = analytics?.performanceOverview;
   const completion  = analytics?.courseCompletion;
   const activity    = analytics?.learningActivity ?? [];
@@ -1095,13 +1099,13 @@ export default function DashboardPage() {
           ) : depts.length === 0 ? (
             <EmptyMsg msg="No department data." />
           ) : depts.map((d, i) => (
-            <div key={d.id} style={{ marginBottom: i < depts.length - 1 ? 8 : 0 }}>
+            <div key={d.department} style={{ marginBottom: i < depts.length - 1 ? 8 : 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                <span style={{ fontSize: '0.625rem', color: '#374151', fontWeight: 500 }}>{d.name}</span>
-                <span style={{ fontSize: '0.625rem', fontWeight: 700, color: '#0f172a' }}>{d.usersCount.toLocaleString()}</span>
+                <span style={{ fontSize: '0.625rem', color: '#374151', fontWeight: 500 }}>{d.department}</span>
+                <span style={{ fontSize: '0.625rem', fontWeight: 700, color: '#0f172a' }}>{d.count.toLocaleString()}</span>
               </div>
               <div style={{ height: 4, background: '#f1f5f9', borderRadius: 3, overflow: 'hidden' }}>
-                <div style={{ width: `${(d.usersCount / maxDept) * 100}%`, height: '100%', borderRadius: 3, background: 'linear-gradient(90deg, #2563eb, #60a5fa)', transition: 'width 1s ease 0.3s' }} />
+                <div style={{ width: `${(d.count / maxDept) * 100}%`, height: '100%', borderRadius: 3, background: 'linear-gradient(90deg, #2563eb, #60a5fa)', transition: 'width 1s ease 0.3s' }} />
               </div>
             </div>
           ))}

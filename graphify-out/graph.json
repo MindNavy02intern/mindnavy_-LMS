@@ -450,7 +450,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L1",
       "id": "backend_src_config_prisma_js",
-      "community": 19,
+      "community": 33,
       "norm_label": "prisma.js"
     },
     {
@@ -459,7 +459,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L1",
       "id": "config_prisma_prismaclient",
-      "community": 19,
+      "community": 33,
       "norm_label": "{ prismaclient }"
     },
     {
@@ -468,7 +468,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L2",
       "id": "config_prisma_prismapg",
-      "community": 19,
+      "community": 33,
       "norm_label": "{ prismapg }"
     },
     {
@@ -477,7 +477,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L4",
       "id": "config_prisma_adapter",
-      "community": 19,
+      "community": 33,
       "norm_label": "adapter"
     },
     {
@@ -486,7 +486,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L8",
       "id": "config_prisma_prisma",
-      "community": 19,
+      "community": 33,
       "norm_label": "prisma"
     },
     {
@@ -1008,7 +1008,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L1",
       "id": "backend_src_scripts_createfirstadmin_js",
-      "community": 19,
+      "community": 9,
       "norm_label": "createfirstadmin.js"
     },
     {
@@ -1017,7 +1017,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L3",
       "id": "scripts_createfirstadmin_bcrypt",
-      "community": 19,
+      "community": 9,
       "norm_label": "bcrypt"
     },
     {
@@ -1026,7 +1026,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L4",
       "id": "scripts_createfirstadmin_prisma",
-      "community": 19,
+      "community": 9,
       "norm_label": "prisma"
     },
     {
@@ -1035,7 +1035,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L5",
       "id": "scripts_createfirstadmin_validatepasswordstrength",
-      "community": 19,
+      "community": 9,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -1044,7 +1044,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L7",
       "id": "scripts_createfirstadmin_createfirstadmin",
-      "community": 19,
+      "community": 9,
       "norm_label": "createfirstadmin()"
     },
     {
@@ -1053,7 +1053,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L1",
       "id": "backend_src_scripts_resetfirstadminpassword_js",
-      "community": 19,
+      "community": 9,
       "norm_label": "resetfirstadminpassword.js"
     },
     {
@@ -1062,7 +1062,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L3",
       "id": "scripts_resetfirstadminpassword_bcrypt",
-      "community": 19,
+      "community": 9,
       "norm_label": "bcrypt"
     },
     {
@@ -1071,7 +1071,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L4",
       "id": "scripts_resetfirstadminpassword_prisma",
-      "community": 19,
+      "community": 9,
       "norm_label": "prisma"
     },
     {
@@ -1080,7 +1080,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L5",
       "id": "scripts_resetfirstadminpassword_validatepasswordstrength",
-      "community": 19,
+      "community": 9,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -1089,7 +1089,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L7",
       "id": "scripts_resetfirstadminpassword_resetfirstadminpassword",
-      "community": 19,
+      "community": 9,
       "norm_label": "resetfirstadminpassword()"
     },
     {
@@ -1242,7 +1242,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L1",
       "id": "backend_src_services_dashboard_service_js",
-      "community": 19,
+      "community": 33,
       "norm_label": "dashboard.service.js"
     },
     {
@@ -1251,34 +1251,43 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L1",
       "id": "services_dashboard_service_prisma",
-      "community": 19,
+      "community": 33,
       "norm_label": "prisma"
+    },
+    {
+      "label": "{ getUsersAnalytics }",
+      "file_type": "code",
+      "source_file": "backend/src/services/dashboard.service.js",
+      "source_location": "L2",
+      "id": "services_dashboard_service_getusersanalytics",
+      "community": 33,
+      "norm_label": "{ getusersanalytics }"
     },
     {
       "label": "getDashboardCore()",
       "file_type": "code",
       "source_file": "backend/src/services/dashboard.service.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "id": "services_dashboard_service_getdashboardcore",
-      "community": 19,
+      "community": 33,
       "norm_label": "getdashboardcore()"
     },
     {
       "label": "getDashboardAnalytics()",
       "file_type": "code",
       "source_file": "backend/src/services/dashboard.service.js",
-      "source_location": "L60",
+      "source_location": "L61",
       "id": "services_dashboard_service_getdashboardanalytics",
-      "community": 19,
+      "community": 33,
       "norm_label": "getdashboardanalytics()"
     },
     {
       "label": "getDashboardAdminWidgets()",
       "file_type": "code",
       "source_file": "backend/src/services/dashboard.service.js",
-      "source_location": "L120",
+      "source_location": "L168",
       "id": "services_dashboard_service_getdashboardadminwidgets",
-      "community": 19,
+      "community": 33,
       "norm_label": "getdashboardadminwidgets()"
     },
     {
@@ -1575,7 +1584,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "backend_src_utils_passwordpolicy_js",
-      "community": 19,
+      "community": 9,
       "norm_label": "passwordpolicy.js"
     },
     {
@@ -1584,7 +1593,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "utils_passwordpolicy_validatepasswordstrength",
-      "community": 19,
+      "community": 9,
       "norm_label": "validatepasswordstrength()"
     },
     {
@@ -1894,10 +1903,19 @@
       "norm_label": "react-router-dom"
     },
     {
+      "label": "recharts",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L18",
+      "id": "frontend_package_dependencies_recharts",
+      "community": 4,
+      "norm_label": "recharts"
+    },
+    {
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "frontend_package_devdependencies",
       "community": 4,
       "norm_label": "devdependencies"
@@ -1906,7 +1924,7 @@
       "label": "@eslint/js",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L20",
+      "source_location": "L21",
       "id": "frontend_package_devdependencies_eslint_js",
       "community": 4,
       "norm_label": "@eslint/js"
@@ -1915,7 +1933,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L21",
+      "source_location": "L22",
       "id": "frontend_package_devdependencies_types_node",
       "community": 4,
       "norm_label": "@types/node"
@@ -1924,7 +1942,7 @@
       "label": "@types/react",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "id": "frontend_package_devdependencies_types_react",
       "community": 4,
       "norm_label": "@types/react"
@@ -1933,7 +1951,7 @@
       "label": "@types/react-dom",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "id": "frontend_package_devdependencies_types_react_dom",
       "community": 4,
       "norm_label": "@types/react-dom"
@@ -1942,7 +1960,7 @@
       "label": "@vitejs/plugin-react",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "id": "frontend_package_devdependencies_vitejs_plugin_react",
       "community": 4,
       "norm_label": "@vitejs/plugin-react"
@@ -1951,7 +1969,7 @@
       "label": "eslint",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "id": "frontend_package_devdependencies_eslint",
       "community": 4,
       "norm_label": "eslint"
@@ -1960,7 +1978,7 @@
       "label": "eslint-plugin-react-hooks",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "id": "frontend_package_devdependencies_eslint_plugin_react_hooks",
       "community": 4,
       "norm_label": "eslint-plugin-react-hooks"
@@ -1969,7 +1987,7 @@
       "label": "eslint-plugin-react-refresh",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "id": "frontend_package_devdependencies_eslint_plugin_react_refresh",
       "community": 4,
       "norm_label": "eslint-plugin-react-refresh"
@@ -1978,7 +1996,7 @@
       "label": "globals",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "id": "frontend_package_devdependencies_globals",
       "community": 4,
       "norm_label": "globals"
@@ -1987,7 +2005,7 @@
       "label": "typescript",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "id": "frontend_package_devdependencies_typescript",
       "community": 4,
       "norm_label": "typescript"
@@ -1996,7 +2014,7 @@
       "label": "typescript-eslint",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "id": "frontend_package_devdependencies_typescript_eslint",
       "community": 4,
       "norm_label": "typescript-eslint"
@@ -2005,7 +2023,7 @@
       "label": "vite",
       "file_type": "code",
       "source_file": "frontend/package.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "id": "frontend_package_devdependencies_vite",
       "community": 4,
       "norm_label": "vite"
@@ -2806,7 +2824,7 @@
       "label": "UsersParams",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "api_users_usersparams",
       "community": 27,
       "norm_label": "usersparams"
@@ -2815,7 +2833,7 @@
       "label": "USERS_MOCK",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L24",
+      "source_location": "L25",
       "id": "api_users_users_mock",
       "community": 27,
       "norm_label": "users_mock"
@@ -2824,7 +2842,7 @@
       "label": "getUsers()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L50",
+      "source_location": "L51",
       "id": "api_users_getusers",
       "community": 22,
       "norm_label": "getusers()"
@@ -2833,7 +2851,7 @@
       "label": "DETAILS_MOCK",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L84",
+      "source_location": "L85",
       "id": "api_users_details_mock",
       "community": 27,
       "norm_label": "details_mock"
@@ -2842,7 +2860,7 @@
       "label": "ApiError",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L118",
+      "source_location": "L119",
       "id": "api_users_apierror",
       "community": 27,
       "norm_label": "apierror"
@@ -2851,7 +2869,7 @@
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L120",
+      "source_location": "L121",
       "id": "api_users_apierror_constructor",
       "community": 27,
       "norm_label": ".constructor()"
@@ -2860,7 +2878,7 @@
       "label": "actionFetch()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L129",
+      "source_location": "L130",
       "id": "api_users_actionfetch",
       "community": 27,
       "norm_label": "actionfetch()"
@@ -2869,7 +2887,7 @@
       "label": "createUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L159",
+      "source_location": "L160",
       "id": "api_users_createuser",
       "community": 27,
       "norm_label": "createuser()"
@@ -2878,7 +2896,7 @@
       "label": "updateUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L163",
+      "source_location": "L164",
       "id": "api_users_updateuser",
       "community": 27,
       "norm_label": "updateuser()"
@@ -2887,7 +2905,7 @@
       "label": "suspendUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L167",
+      "source_location": "L168",
       "id": "api_users_suspenduser",
       "community": 27,
       "norm_label": "suspenduser()"
@@ -2896,7 +2914,7 @@
       "label": "reactivateUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L171",
+      "source_location": "L172",
       "id": "api_users_reactivateuser",
       "community": 27,
       "norm_label": "reactivateuser()"
@@ -2905,7 +2923,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L175",
+      "source_location": "L176",
       "id": "api_users_deleteuser",
       "community": 27,
       "norm_label": "deleteuser()"
@@ -2914,7 +2932,7 @@
       "label": "resetPassword()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L179",
+      "source_location": "L180",
       "id": "api_users_resetpassword",
       "community": 27,
       "norm_label": "resetpassword()"
@@ -2923,7 +2941,7 @@
       "label": "assignRole()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L183",
+      "source_location": "L184",
       "id": "api_users_assignrole",
       "community": 27,
       "norm_label": "assignrole()"
@@ -2932,10 +2950,19 @@
       "label": "getUserDetails()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L189",
+      "source_location": "L190",
       "id": "api_users_getuserdetails",
       "community": 22,
       "norm_label": "getuserdetails()"
+    },
+    {
+      "label": "getAnalytics()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L215",
+      "id": "api_users_getanalytics",
+      "community": 31,
+      "norm_label": "getanalytics()"
     },
     {
       "label": "ForgotPasswordForm.tsx",
@@ -3348,7 +3375,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_deleteuserdialog_tsx",
-      "community": 26,
+      "community": 27,
       "norm_label": "deleteuserdialog.tsx"
     },
     {
@@ -3357,7 +3384,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L5",
       "id": "users_deleteuserdialog_props",
-      "community": 26,
+      "community": 27,
       "norm_label": "props"
     },
     {
@@ -3366,7 +3393,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L14",
       "id": "users_deleteuserdialog_input",
-      "community": 26,
+      "community": 27,
       "norm_label": "input"
     },
     {
@@ -3375,7 +3402,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L21",
       "id": "users_deleteuserdialog_deleteuserdialog",
-      "community": 26,
+      "community": 27,
       "norm_label": "deleteuserdialog()"
     },
     {
@@ -3492,7 +3519,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L3",
       "id": "users_toast_toasttype",
-      "community": 26,
+      "community": 27,
       "norm_label": "toasttype"
     },
     {
@@ -3530,6 +3557,33 @@
       "id": "users_toast_toastcontainer",
       "community": 26,
       "norm_label": "toastcontainer()"
+    },
+    {
+      "label": "UserAnalytics.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_useranalytics_tsx",
+      "community": 31,
+      "norm_label": "useranalytics.tsx"
+    },
+    {
+      "label": "ChartCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L10",
+      "id": "users_useranalytics_chartcard",
+      "community": 31,
+      "norm_label": "chartcard()"
+    },
+    {
+      "label": "UserAnalytics()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L24",
+      "id": "users_useranalytics_useranalytics",
+      "community": 31,
+      "norm_label": "useranalytics()"
     },
     {
       "label": "UserDetailsDrawer.tsx",
@@ -4115,6 +4169,240 @@
       "id": "users_usertable_usertable",
       "community": 1,
       "norm_label": "usertable()"
+    },
+    {
+      "label": "NewUsersCard.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_charts_newuserscard_tsx",
+      "community": 31,
+      "norm_label": "newuserscard.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L3",
+      "id": "charts_newuserscard_props",
+      "community": 31,
+      "norm_label": "props"
+    },
+    {
+      "label": "Skeleton()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L8",
+      "id": "charts_newuserscard_skeleton",
+      "community": 31,
+      "norm_label": "skeleton()"
+    },
+    {
+      "label": "NewUsersCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L18",
+      "id": "charts_newuserscard_newuserscard",
+      "community": 31,
+      "norm_label": "newuserscard()"
+    },
+    {
+      "label": "UserActivityChart.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_charts_useractivitychart_tsx",
+      "community": 31,
+      "norm_label": "useractivitychart.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L4",
+      "id": "charts_useractivitychart_props",
+      "community": 31,
+      "norm_label": "props"
+    },
+    {
+      "label": "Skeleton()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L9",
+      "id": "charts_useractivitychart_skeleton",
+      "community": 31,
+      "norm_label": "skeleton()"
+    },
+    {
+      "label": "UserActivityChart()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L22",
+      "id": "charts_useractivitychart_useractivitychart",
+      "community": 31,
+      "norm_label": "useractivitychart()"
+    },
+    {
+      "label": "UsersByDepartmentChart.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "community": 31,
+      "norm_label": "usersbydepartmentchart.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L4",
+      "id": "charts_usersbydepartmentchart_props",
+      "community": 31,
+      "norm_label": "props"
+    },
+    {
+      "label": "BAR_COLORS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L9",
+      "id": "charts_usersbydepartmentchart_bar_colors",
+      "community": 31,
+      "norm_label": "bar_colors"
+    },
+    {
+      "label": "Skeleton()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L14",
+      "id": "charts_usersbydepartmentchart_skeleton",
+      "community": 31,
+      "norm_label": "skeleton()"
+    },
+    {
+      "label": "truncate()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L27",
+      "id": "charts_usersbydepartmentchart_truncate",
+      "community": 31,
+      "norm_label": "truncate()"
+    },
+    {
+      "label": "UsersByDepartmentChart()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L31",
+      "id": "charts_usersbydepartmentchart_usersbydepartmentchart",
+      "community": 31,
+      "norm_label": "usersbydepartmentchart()"
+    },
+    {
+      "label": "UsersByRoleChart.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "community": 31,
+      "norm_label": "usersbyrolechart.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L4",
+      "id": "charts_usersbyrolechart_props",
+      "community": 31,
+      "norm_label": "props"
+    },
+    {
+      "label": "ROLE_COLORS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L9",
+      "id": "charts_usersbyrolechart_role_colors",
+      "community": 31,
+      "norm_label": "role_colors"
+    },
+    {
+      "label": "ROLE_LABELS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L16",
+      "id": "charts_usersbyrolechart_role_labels",
+      "community": 31,
+      "norm_label": "role_labels"
+    },
+    {
+      "label": "Skeleton()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L23",
+      "id": "charts_usersbyrolechart_skeleton",
+      "community": 31,
+      "norm_label": "skeleton()"
+    },
+    {
+      "label": "UsersByRoleChart()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L36",
+      "id": "charts_usersbyrolechart_usersbyrolechart",
+      "community": 31,
+      "norm_label": "usersbyrolechart()"
+    },
+    {
+      "label": "VerificationStatusChart.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "community": 31,
+      "norm_label": "verificationstatuschart.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L4",
+      "id": "charts_verificationstatuschart_props",
+      "community": 31,
+      "norm_label": "props"
+    },
+    {
+      "label": "STATUS_COLORS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L9",
+      "id": "charts_verificationstatuschart_status_colors",
+      "community": 31,
+      "norm_label": "status_colors"
+    },
+    {
+      "label": "STATUS_LABELS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L16",
+      "id": "charts_verificationstatuschart_status_labels",
+      "community": 31,
+      "norm_label": "status_labels"
+    },
+    {
+      "label": "Skeleton()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L23",
+      "id": "charts_verificationstatuschart_skeleton",
+      "community": 31,
+      "norm_label": "skeleton()"
+    },
+    {
+      "label": "VerificationStatusChart()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L36",
+      "id": "charts_verificationstatuschart_verificationstatuschart",
+      "community": 31,
+      "norm_label": "verificationstatuschart()"
     },
     {
       "label": "userOptions.ts",
@@ -4957,7 +5245,7 @@
       "label": "TABS",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "id": "pages_usermanagementpage_tabs",
       "community": 26,
       "norm_label": "tabs"
@@ -4966,7 +5254,7 @@
       "label": "TabKey",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L29",
+      "source_location": "L31",
       "id": "pages_usermanagementpage_tabkey",
       "community": 26,
       "norm_label": "tabkey"
@@ -4975,7 +5263,7 @@
       "label": "LIMIT_OPTIONS",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L31",
+      "source_location": "L33",
       "id": "pages_usermanagementpage_limit_options",
       "community": 26,
       "norm_label": "limit_options"
@@ -4984,7 +5272,7 @@
       "label": "pageRange()",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L35",
+      "source_location": "L37",
       "id": "pages_usermanagementpage_pagerange",
       "community": 26,
       "norm_label": "pagerange()"
@@ -4993,7 +5281,7 @@
       "label": "ComingSoon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L48",
+      "source_location": "L50",
       "id": "pages_usermanagementpage_comingsoon",
       "community": 26,
       "norm_label": "comingsoon()"
@@ -5002,7 +5290,7 @@
       "label": "UserManagementPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L65",
+      "source_location": "L67",
       "id": "pages_usermanagementpage_usermanagementpage",
       "community": 26,
       "norm_label": "usermanagementpage()"
@@ -5332,10 +5620,46 @@
       "norm_label": "topdepartmentitem"
     },
     {
+      "label": "DashboardDeptItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L185",
+      "id": "types_dashboard_dashboarddeptitem",
+      "community": 21,
+      "norm_label": "dashboarddeptitem"
+    },
+    {
+      "label": "DashboardDailyTrend",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L190",
+      "id": "types_dashboard_dashboarddailytrend",
+      "community": 21,
+      "norm_label": "dashboarddailytrend"
+    },
+    {
+      "label": "DashboardActivityData",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L195",
+      "id": "types_dashboard_dashboardactivitydata",
+      "community": 21,
+      "norm_label": "dashboardactivitydata"
+    },
+    {
+      "label": "DashboardVerifItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L201",
+      "id": "types_dashboard_dashboardverifitem",
+      "community": 21,
+      "norm_label": "dashboardverifitem"
+    },
+    {
       "label": "DashboardAnalyticsResponse",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L184",
+      "source_location": "L207",
       "id": "types_dashboard_dashboardanalyticsresponse",
       "community": 22,
       "norm_label": "dashboardanalyticsresponse"
@@ -5344,7 +5668,7 @@
       "label": "AdminWidgetsFilters",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L201",
+      "source_location": "L227",
       "id": "types_dashboard_adminwidgetsfilters",
       "community": 21,
       "norm_label": "adminwidgetsfilters"
@@ -5353,7 +5677,7 @@
       "label": "ApprovalType",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L208",
+      "source_location": "L234",
       "id": "types_dashboard_approvaltype",
       "community": 21,
       "norm_label": "approvaltype"
@@ -5362,7 +5686,7 @@
       "label": "ApprovalPriority",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L209",
+      "source_location": "L235",
       "id": "types_dashboard_approvalpriority",
       "community": 21,
       "norm_label": "approvalpriority"
@@ -5371,7 +5695,7 @@
       "label": "PendingApprovalItem",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L211",
+      "source_location": "L237",
       "id": "types_dashboard_pendingapprovalitem",
       "community": 21,
       "norm_label": "pendingapprovalitem"
@@ -5380,7 +5704,7 @@
       "label": "PendingApprovals",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L220",
+      "source_location": "L246",
       "id": "types_dashboard_pendingapprovals",
       "community": 21,
       "norm_label": "pendingapprovals"
@@ -5389,7 +5713,7 @@
       "label": "LiveSessionStatus",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L225",
+      "source_location": "L251",
       "id": "types_dashboard_livesessionstatus",
       "community": 21,
       "norm_label": "livesessionstatus"
@@ -5398,7 +5722,7 @@
       "label": "LiveSessionItem",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L227",
+      "source_location": "L253",
       "id": "types_dashboard_livesessionitem",
       "community": 21,
       "norm_label": "livesessionitem"
@@ -5407,7 +5731,7 @@
       "label": "LiveSessions",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L236",
+      "source_location": "L262",
       "id": "types_dashboard_livesessions",
       "community": 21,
       "norm_label": "livesessions"
@@ -5416,7 +5740,7 @@
       "label": "TaskPriority",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L243",
+      "source_location": "L269",
       "id": "types_dashboard_taskpriority",
       "community": 21,
       "norm_label": "taskpriority"
@@ -5425,7 +5749,7 @@
       "label": "TaskStatus",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L244",
+      "source_location": "L270",
       "id": "types_dashboard_taskstatus",
       "community": 21,
       "norm_label": "taskstatus"
@@ -5434,7 +5758,7 @@
       "label": "TaskItem",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L246",
+      "source_location": "L272",
       "id": "types_dashboard_taskitem",
       "community": 21,
       "norm_label": "taskitem"
@@ -5443,7 +5767,7 @@
       "label": "TransactionType",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L254",
+      "source_location": "L280",
       "id": "types_dashboard_transactiontype",
       "community": 21,
       "norm_label": "transactiontype"
@@ -5452,7 +5776,7 @@
       "label": "TransactionStatus",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L255",
+      "source_location": "L281",
       "id": "types_dashboard_transactionstatus",
       "community": 21,
       "norm_label": "transactionstatus"
@@ -5461,7 +5785,7 @@
       "label": "TransactionItem",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L257",
+      "source_location": "L283",
       "id": "types_dashboard_transactionitem",
       "community": 21,
       "norm_label": "transactionitem"
@@ -5470,7 +5794,7 @@
       "label": "CalendarEventType",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L266",
+      "source_location": "L292",
       "id": "types_dashboard_calendareventtype",
       "community": 21,
       "norm_label": "calendareventtype"
@@ -5479,7 +5803,7 @@
       "label": "CalendarEventItem",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L268",
+      "source_location": "L294",
       "id": "types_dashboard_calendareventitem",
       "community": 21,
       "norm_label": "calendareventitem"
@@ -5488,7 +5812,7 @@
       "label": "ReportKey",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L276",
+      "source_location": "L302",
       "id": "types_dashboard_reportkey",
       "community": 21,
       "norm_label": "reportkey"
@@ -5497,7 +5821,7 @@
       "label": "ReportItem",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L278",
+      "source_location": "L304",
       "id": "types_dashboard_reportitem",
       "community": 21,
       "norm_label": "reportitem"
@@ -5506,7 +5830,7 @@
       "label": "ReportsSnapshot",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L284",
+      "source_location": "L310",
       "id": "types_dashboard_reportssnapshot",
       "community": 21,
       "norm_label": "reportssnapshot"
@@ -5515,7 +5839,7 @@
       "label": "InsightSeverity",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L289",
+      "source_location": "L315",
       "id": "types_dashboard_insightseverity",
       "community": 21,
       "norm_label": "insightseverity"
@@ -5524,7 +5848,7 @@
       "label": "AiInsightItem",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L291",
+      "source_location": "L317",
       "id": "types_dashboard_aiinsightitem",
       "community": 21,
       "norm_label": "aiinsightitem"
@@ -5533,7 +5857,7 @@
       "label": "AdminWidgetsResponse",
       "file_type": "code",
       "source_file": "frontend/src/types/dashboard.ts",
-      "source_location": "L299",
+      "source_location": "L325",
       "id": "types_dashboard_adminwidgetsresponse",
       "community": 22,
       "norm_label": "adminwidgetsresponse"
@@ -5742,7 +6066,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L7",
       "id": "types_users_user",
-      "community": 1,
+      "community": 26,
       "norm_label": "user"
     },
     {
@@ -5850,7 +6174,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L103",
       "id": "types_users_userdetailsresponse",
-      "community": 32,
+      "community": 27,
       "norm_label": "userdetailsresponse"
     },
     {
@@ -5859,7 +6183,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L113",
       "id": "types_users_createuserrequest",
-      "community": 36,
+      "community": 27,
       "norm_label": "createuserrequest"
     },
     {
@@ -5895,8 +6219,71 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L150",
       "id": "types_users_actionresponse",
-      "community": 32,
+      "community": 27,
       "norm_label": "actionresponse"
+    },
+    {
+      "label": "RoleAnalyticsItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L157",
+      "id": "types_users_roleanalyticsitem",
+      "community": 31,
+      "norm_label": "roleanalyticsitem"
+    },
+    {
+      "label": "DepartmentAnalyticsItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L158",
+      "id": "types_users_departmentanalyticsitem",
+      "community": 31,
+      "norm_label": "departmentanalyticsitem"
+    },
+    {
+      "label": "NewUsersThisMonth",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L159",
+      "id": "types_users_newusersthismonth",
+      "community": 31,
+      "norm_label": "newusersthismonth"
+    },
+    {
+      "label": "DailyTrendItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L160",
+      "id": "types_users_dailytrenditem",
+      "community": 32,
+      "norm_label": "dailytrenditem"
+    },
+    {
+      "label": "UserActivity",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L161",
+      "id": "types_users_useractivity",
+      "community": 31,
+      "norm_label": "useractivity"
+    },
+    {
+      "label": "VerificationStatusItem",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L162",
+      "id": "types_users_verificationstatusitem",
+      "community": 31,
+      "norm_label": "verificationstatusitem"
+    },
+    {
+      "label": "AnalyticsResponse",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L164",
+      "id": "types_users_analyticsresponse",
+      "community": 31,
+      "norm_label": "analyticsresponse"
     },
     {
       "label": "authErrors.ts",
@@ -9178,6 +9565,38 @@
       "target": "services_dashboard_service_prisma"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/dashboard.service.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_services_dashboard_service_js",
+      "target": "backend_src_services_users_service_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/dashboard.service.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_services_dashboard_service_js",
+      "target": "services_users_service_getusersanalytics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/dashboard.service.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_services_dashboard_service_js",
+      "target": "services_dashboard_service_getusersanalytics",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/services/dashboard.service.js",
@@ -10211,6 +10630,16 @@
       "confidence_score": 1.0,
       "source": "frontend_package_dependencies",
       "target": "frontend_package_dependencies_react_router_dom"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_recharts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11761,6 +12190,17 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L216",
+      "weight": 1.0,
+      "source": "api_users_getanalytics",
+      "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L56",
       "weight": 1.0,
@@ -12594,6 +13034,17 @@
       "target": "types_users_actionresponse"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "types_users_analyticsresponse",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/api/users.ts",
@@ -12734,6 +13185,16 @@
       "target": "api_users_getuserdetails"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L215",
+      "weight": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_getanalytics",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -12787,6 +13248,17 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspenduserdialog_tsx",
       "target": "frontend_src_api_users_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "frontend_src_api_users_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13050,6 +13522,17 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_userdetailsdrawer_tsx",
       "target": "api_users_getuserdetails"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "api_users_getanalytics",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13652,9 +14135,9 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_addusermodal_tsx",
-      "target": "frontend_src_constants_useroptions_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_constants_useroptions_ts"
     },
     {
       "relation": "imports",
@@ -13663,9 +14146,9 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_addusermodal_tsx",
-      "target": "constants_useroptions_department_options",
-      "confidence_score": 1.0
+      "target": "constants_useroptions_department_options"
     },
     {
       "relation": "imports",
@@ -13674,9 +14157,9 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_addusermodal_tsx",
-      "target": "constants_useroptions_branch_options",
-      "confidence_score": 1.0
+      "target": "constants_useroptions_branch_options"
     },
     {
       "relation": "imports",
@@ -13685,9 +14168,9 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_addusermodal_tsx",
-      "target": "constants_useroptions_access_level_options",
-      "confidence_score": 1.0
+      "target": "constants_useroptions_access_level_options"
     },
     {
       "relation": "imports",
@@ -13696,9 +14179,9 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_addusermodal_tsx",
-      "target": "constants_useroptions_role_options",
-      "confidence_score": 1.0
+      "target": "constants_useroptions_role_options"
     },
     {
       "relation": "contains",
@@ -14052,9 +14535,9 @@
       "source_file": "frontend/src/components/users/EditUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_editusermodal_tsx",
-      "target": "frontend_src_constants_useroptions_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_constants_useroptions_ts"
     },
     {
       "relation": "imports",
@@ -14063,9 +14546,9 @@
       "source_file": "frontend/src/components/users/EditUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_editusermodal_tsx",
-      "target": "constants_useroptions_department_options",
-      "confidence_score": 1.0
+      "target": "constants_useroptions_department_options"
     },
     {
       "relation": "imports",
@@ -14074,9 +14557,9 @@
       "source_file": "frontend/src/components/users/EditUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_editusermodal_tsx",
-      "target": "constants_useroptions_branch_options",
-      "confidence_score": 1.0
+      "target": "constants_useroptions_branch_options"
     },
     {
       "relation": "imports",
@@ -14085,9 +14568,9 @@
       "source_file": "frontend/src/components/users/EditUserModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_editusermodal_tsx",
-      "target": "constants_useroptions_access_level_options",
-      "confidence_score": 1.0
+      "target": "constants_useroptions_access_level_options"
     },
     {
       "relation": "contains",
@@ -14402,6 +14885,114 @@
       "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
       "target": "users_toast_toastcontainer"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "types_users_analyticsresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "frontend_src_components_users_charts_newuserscard_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "frontend_src_components_users_charts_useractivitychart_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "users_useranalytics_chartcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserAnalytics.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_useranalytics_tsx",
+      "target": "users_useranalytics_useranalytics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "frontend_src_components_users_useranalytics_tsx",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -14852,9 +15443,9 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_userfilters_tsx",
-      "target": "frontend_src_constants_useroptions_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_constants_useroptions_ts"
     },
     {
       "relation": "imports",
@@ -14863,9 +15454,9 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_userfilters_tsx",
-      "target": "constants_useroptions_department_options",
-      "confidence_score": 1.0
+      "target": "constants_useroptions_department_options"
     },
     {
       "relation": "contains",
@@ -15296,6 +15887,326 @@
       "confidence_score": 1.0,
       "source": "users_usertable_skeletonrow",
       "target": "users_usertable_sk"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_newuserscard_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_newuserscard_tsx",
+      "target": "types_users_newusersthismonth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_newuserscard_tsx",
+      "target": "charts_newuserscard_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_newuserscard_tsx",
+      "target": "charts_newuserscard_skeleton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_newuserscard_tsx",
+      "target": "charts_newuserscard_newuserscard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_useractivitychart_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_useractivitychart_tsx",
+      "target": "types_users_useractivity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_useractivitychart_tsx",
+      "target": "charts_useractivitychart_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_useractivitychart_tsx",
+      "target": "charts_useractivitychart_skeleton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_useractivitychart_tsx",
+      "target": "charts_useractivitychart_useractivitychart",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "target": "types_users_departmentanalyticsitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "target": "charts_usersbydepartmentchart_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "target": "charts_usersbydepartmentchart_bar_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "target": "charts_usersbydepartmentchart_skeleton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "target": "charts_usersbydepartmentchart_truncate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
+      "target": "charts_usersbydepartmentchart_usersbydepartmentchart",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "target": "types_users_roleanalyticsitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "target": "charts_usersbyrolechart_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "target": "charts_usersbyrolechart_role_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "target": "charts_usersbyrolechart_role_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "target": "charts_usersbyrolechart_skeleton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
+      "target": "charts_usersbyrolechart_usersbyrolechart",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "target": "types_users_verificationstatusitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "target": "charts_verificationstatuschart_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "target": "charts_verificationstatuschart_status_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "target": "charts_verificationstatuschart_status_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "target": "charts_verificationstatuschart_skeleton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
+      "target": "charts_verificationstatuschart_verificationstatuschart",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -17266,6 +18177,46 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L185",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_dashboarddeptitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L190",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_dashboarddailytrend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L195",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_dashboardactivitydata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
+      "source_location": "L201",
+      "weight": 1.0,
+      "source": "frontend_src_types_dashboard_ts",
+      "target": "types_dashboard_dashboardverifitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L184",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -17895,6 +18846,76 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L157",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_roleanalyticsitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L158",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_departmentanalyticsitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_newusersthismonth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L160",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_dailytrenditem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L161",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_useractivity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L162",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_verificationstatusitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L164",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_analyticsresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "weight": 1.0,
@@ -17974,5 +18995,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "62d5c7587b05ff5a40a0420264713c8010ef22fd"
+  "built_at_commit": "4baa9b2c9b51391ef73678d3eda7ecd2c89970fc"
 }

@@ -11,12 +11,14 @@ import AddUserModal from '../components/users/AddUserModal';
 import EditUserModal from '../components/users/EditUserModal';
 import DeleteUserDialog from '../components/users/DeleteUserDialog';
 import { useToast, ToastContainer } from '../components/users/Toast';
+import UserAnalytics from '../components/users/UserAnalytics';
 import type { User } from '../types/users';
 
 // ── Tab config ─────────────────────────────────────────────────────────────────
 
 const TABS = [
   { key: 'users',                label: 'Users',               icon: '👥' },
+  { key: 'analytics',            label: 'Analytics',           icon: '📊' },
   { key: 'organization',         label: 'Organization',        icon: '🏢' },
   { key: 'roles-permissions',    label: 'Roles & Permissions', icon: '🔑' },
   { key: 'groups',               label: 'Groups',              icon: '👥' },
@@ -99,7 +101,10 @@ export default function UserManagementPage() {
     searchTimer.current = setTimeout(() => { setDebouncedSearch(q); setPage(1); }, 400);
   };
 
-  const notifyDashboard = () => window.dispatchEvent(new CustomEvent('userDataChanged'));
+  const notifyDashboard = () => {
+    window.dispatchEvent(new CustomEvent('userDataChanged'));
+    window.dispatchEvent(new CustomEvent('analyticsUpdated'));
+  };
 
   const load = useCallback(async () => {
     if (activeTab !== 'users') return;
@@ -192,8 +197,11 @@ export default function UserManagementPage() {
           ))}
         </div>
 
-        {/* ── Non-Users tabs ────────────────────────────────────────────────────── */}
-        {activeTab !== 'users' && (
+        {/* ── Analytics tab ─────────────────────────────────────────────────────── */}
+        {activeTab === 'analytics' && <UserAnalytics />}
+
+        {/* ── Non-Users / non-Analytics tabs ────────────────────────────────────── */}
+        {activeTab !== 'users' && activeTab !== 'analytics' && (
           <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? ''} />
         )}
 

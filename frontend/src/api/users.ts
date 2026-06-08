@@ -6,6 +6,7 @@ import type {
   SuspendUserRequest,
   AssignRoleRequest,
   ActionResponse,
+  AnalyticsResponse,
 } from '../types/users';
 import { getStoredToken } from './adminAuth';
 
@@ -207,4 +208,26 @@ export async function getUserDetails(userId: string): Promise<UserDetailsRespons
   // TODO: REMOVE — temporary mock data while backend is being wired up
   console.warn('[users] getUserDetails: using fallback mock — real userId:', userId);
   return { ...DETAILS_MOCK, user: { ...DETAILS_MOCK.user, id: userId } };
+}
+
+// ── getAnalytics ───────────────────────────────────────────────────────────────
+
+export async function getAnalytics(): Promise<AnalyticsResponse> {
+  const token = getStoredToken();
+  try {
+    const res = await fetch(`${BASE_URL}/users/analytics?_t=${Date.now()}`, {
+      headers: { Authorization: token ? `Bearer ${token}` : '' },
+    });
+    if (res.ok) {
+      const json = await res.json();
+      return json.analytics as AnalyticsResponse;
+    }
+    const body = await res.json().catch(() => null);
+    console.error('[users] getAnalytics error', res.status, body);
+    throw new ApiError(res.status, 'Failed to fetch analytics');
+  } catch (err) {
+    if (err instanceof ApiError) throw err;
+    console.error('[users] getAnalytics network error', err);
+    throw new ApiError(0, 'Network error fetching analytics');
+  }
 }

@@ -151,3 +151,20 @@ export interface ActionResponse {
   message: string;
   user:    Partial<User>;
 }
+
+// ── Analytics (Task 6D) ────────────────────────────────────────────────────────
+
+export interface RoleAnalyticsItem       { role: string; count: number; percentage: number; }
+export interface DepartmentAnalyticsItem { department: string; count: number; }
+export interface NewUsersThisMonth       { count: number; changePercentage: number; }
+export interface DailyTrendItem          { date: string; count: number; }
+export interface UserActivity            { activeToday: number; activeThisWeek: number; dailyTrend: DailyTrendItem[]; }
+export interface VerificationStatusItem  { status: string; count: number; percentage: number; }
+
+export interface AnalyticsResponse {
+  usersByRole:        RoleAnalyticsItem[];
+  usersByDepartment:  DepartmentAnalyticsItem[];
+  newUsersThisMonth:  NewUsersThisMonth;
+  userActivity:       UserActivity;
+  verificationStatus: VerificationStatusItem[];
+}
