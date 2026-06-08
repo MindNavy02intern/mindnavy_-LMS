@@ -1,6 +1,11 @@
 const express = require("express");
 const { requireAdminAuth } = require("../middlewares/auth.middleware");
-const { adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter } = require("../middlewares/rateLimit.middleware");
+const {
+  adminUserActionRateLimiter,
+  adminUsersAnalyticsRateLimiter,
+  adminUsersImportRateLimiter,
+} = require("../middlewares/rateLimit.middleware");
+const { uploadUsersCsv } = require("../middlewares/upload.middleware");
 const {
   getUsersList,
   getUserDetails,
@@ -11,6 +16,7 @@ const {
   assignUserRole,
   deleteUser,
   getUsersAnalytics,
+  importUsers,
 } = require("../controllers/users.controller");
 
 const router = express.Router();
@@ -24,6 +30,9 @@ router.get("/:id", requireAdminAuth, getUserDetails);
 // ─── Write (auth + strict rate limiter) ──────────────────────────────────────
 // POST / must come before /:id routes to avoid shadowing
 router.post("/", requireAdminAuth, adminUserActionRateLimiter, createUser);
+
+// Import route BEFORE /:id — "import" must not be treated as a user id
+router.post("/import", requireAdminAuth, adminUsersImportRateLimiter, uploadUsersCsv, importUsers);
 
 // Sub-resource routes must come before bare /:id to avoid shadowing
 router.patch("/:id/status", requireAdminAuth, adminUserActionRateLimiter, updateUserStatus);
