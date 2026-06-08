@@ -202,10 +202,19 @@
       "norm_label": "cors"
     },
     {
-      "label": "dotenv",
+      "label": "csv-parse",
       "file_type": "code",
       "source_file": "backend/package.json",
       "source_location": "L24",
+      "id": "backend_package_dependencies_csv_parse",
+      "community": 3,
+      "norm_label": "csv-parse"
+    },
+    {
+      "label": "dotenv",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L25",
       "id": "backend_package_dependencies_dotenv",
       "community": 3,
       "norm_label": "dotenv"
@@ -214,7 +223,7 @@
       "label": "express",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "id": "backend_package_dependencies_express",
       "community": 3,
       "norm_label": "express"
@@ -223,16 +232,25 @@
       "label": "express-rate-limit",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "id": "backend_package_dependencies_express_rate_limit",
       "community": 3,
       "norm_label": "express-rate-limit"
     },
     {
+      "label": "multer",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L28",
+      "id": "backend_package_dependencies_multer",
+      "community": 3,
+      "norm_label": "multer"
+    },
+    {
       "label": "pg",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L27",
+      "source_location": "L29",
       "id": "backend_package_dependencies_pg",
       "community": 3,
       "norm_label": "pg"
@@ -241,7 +259,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L29",
+      "source_location": "L31",
       "id": "backend_package_devdependencies",
       "community": 3,
       "norm_label": "devdependencies"
@@ -250,7 +268,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L30",
+      "source_location": "L32",
       "id": "backend_package_devdependencies_types_node",
       "community": 3,
       "norm_label": "@types/node"
@@ -259,7 +277,7 @@
       "label": "nodemon",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L31",
+      "source_location": "L33",
       "id": "backend_package_devdependencies_nodemon",
       "community": 3,
       "norm_label": "nodemon"
@@ -268,7 +286,7 @@
       "label": "prisma",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L32",
+      "source_location": "L34",
       "id": "backend_package_devdependencies_prisma",
       "community": 3,
       "norm_label": "prisma"
@@ -778,6 +796,15 @@
       "norm_label": "deleteuser()"
     },
     {
+      "label": "importUsers()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L250",
+      "id": "controllers_users_controller_importusers",
+      "community": 9,
+      "norm_label": "importusers()"
+    },
+    {
       "label": "auth.middleware.js",
       "file_type": "code",
       "source_file": "backend/src/middlewares/auth.middleware.js",
@@ -848,6 +875,78 @@
       "id": "middlewares_ratelimit_middleware_adminusersanalyticsratelimiter",
       "community": 9,
       "norm_label": "adminusersanalyticsratelimiter"
+    },
+    {
+      "label": "adminUsersImportRateLimiter",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/rateLimit.middleware.js",
+      "source_location": "L39",
+      "id": "middlewares_ratelimit_middleware_adminusersimportratelimiter",
+      "community": 9,
+      "norm_label": "adminusersimportratelimiter"
+    },
+    {
+      "label": "upload.middleware.js",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L1",
+      "id": "backend_src_middlewares_upload_middleware_js",
+      "community": 9,
+      "norm_label": "upload.middleware.js"
+    },
+    {
+      "label": "multer",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L1",
+      "id": "middlewares_upload_middleware_multer",
+      "community": 9,
+      "norm_label": "multer"
+    },
+    {
+      "label": "ALLOWED_MIME_TYPES",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L3",
+      "id": "middlewares_upload_middleware_allowed_mime_types",
+      "community": 9,
+      "norm_label": "allowed_mime_types"
+    },
+    {
+      "label": "storage",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L5",
+      "id": "middlewares_upload_middleware_storage",
+      "community": 9,
+      "norm_label": "storage"
+    },
+    {
+      "label": "csvFileFilter()",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L7",
+      "id": "middlewares_upload_middleware_csvfilefilter",
+      "community": 9,
+      "norm_label": "csvfilefilter()"
+    },
+    {
+      "label": "_upload",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L18",
+      "id": "middlewares_upload_middleware_upload",
+      "community": 9,
+      "norm_label": "_upload"
+    },
+    {
+      "label": "uploadUsersCsv()",
+      "file_type": "code",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L26",
+      "id": "middlewares_upload_middleware_uploaduserscsv",
+      "community": 9,
+      "norm_label": "uploaduserscsv()"
     },
     {
       "label": "admin.routes.js",
@@ -976,31 +1075,67 @@
       "norm_label": "{ requireadminauth }"
     },
     {
-      "label": "{ adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter }",
+      "label": "{\r\n  adminUserActionRateLimiter,\r\n  adminUsersAnalyticsRateLimiter,\r\n  adminUsersImportRateLimiter,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L3",
-      "id": "routes_users_routes_adminuseractionratelimiter_adminusersanalyticsratelimiter",
+      "id": "routes_users_routes_adminuseractionratelimiter_adminusersanalyticsratelimiter_adminusersimportratelimiter",
       "community": 9,
-      "norm_label": "{ adminuseractionratelimiter, adminusersanalyticsratelimiter }"
+      "norm_label": "{\r\n  adminuseractionratelimiter,\r\n  adminusersanalyticsratelimiter,\r\n  adminusersimportratelimiter,\r\n}"
     },
     {
-      "label": "{\r\n  getUsersList,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n}",
+      "label": "{ uploadUsersCsv }",
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
-      "source_location": "L4",
-      "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics",
+      "source_location": "L8",
+      "id": "routes_users_routes_uploaduserscsv",
       "community": 9,
-      "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n}"
+      "norm_label": "{ uploaduserscsv }"
+    },
+    {
+      "label": "{\r\n  getUsersList,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n  importUsers,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L9",
+      "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers",
+      "community": 9,
+      "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n}"
     },
     {
       "label": "router",
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
-      "source_location": "L18",
+      "source_location": "L24",
       "id": "routes_users_routes_router",
       "community": 9,
       "norm_label": "router"
+    },
+    {
+      "label": "addUsersImportedEnum.js",
+      "file_type": "code",
+      "source_file": "backend/src/scripts/addUsersImportedEnum.js",
+      "source_location": "L1",
+      "id": "backend_src_scripts_addusersimportedenum_js",
+      "community": 33,
+      "norm_label": "addusersimportedenum.js"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "backend/src/scripts/addUsersImportedEnum.js",
+      "source_location": "L2",
+      "id": "scripts_addusersimportedenum_prisma",
+      "community": 33,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "backend/src/scripts/addUsersImportedEnum.js",
+      "source_location": "L4",
+      "id": "scripts_addusersimportedenum_main",
+      "community": 33,
+      "norm_label": "main()"
     },
     {
       "label": "createFirstAdmin.js",
@@ -1008,7 +1143,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L1",
       "id": "backend_src_scripts_createfirstadmin_js",
-      "community": 9,
+      "community": 33,
       "norm_label": "createfirstadmin.js"
     },
     {
@@ -1017,7 +1152,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L3",
       "id": "scripts_createfirstadmin_bcrypt",
-      "community": 9,
+      "community": 33,
       "norm_label": "bcrypt"
     },
     {
@@ -1026,7 +1161,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L4",
       "id": "scripts_createfirstadmin_prisma",
-      "community": 9,
+      "community": 33,
       "norm_label": "prisma"
     },
     {
@@ -1035,7 +1170,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L5",
       "id": "scripts_createfirstadmin_validatepasswordstrength",
-      "community": 9,
+      "community": 33,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -1044,7 +1179,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L7",
       "id": "scripts_createfirstadmin_createfirstadmin",
-      "community": 9,
+      "community": 33,
       "norm_label": "createfirstadmin()"
     },
     {
@@ -1053,7 +1188,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L1",
       "id": "backend_src_scripts_resetfirstadminpassword_js",
-      "community": 9,
+      "community": 33,
       "norm_label": "resetfirstadminpassword.js"
     },
     {
@@ -1062,7 +1197,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L3",
       "id": "scripts_resetfirstadminpassword_bcrypt",
-      "community": 9,
+      "community": 33,
       "norm_label": "bcrypt"
     },
     {
@@ -1071,7 +1206,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L4",
       "id": "scripts_resetfirstadminpassword_prisma",
-      "community": 9,
+      "community": 33,
       "norm_label": "prisma"
     },
     {
@@ -1080,7 +1215,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L5",
       "id": "scripts_resetfirstadminpassword_validatepasswordstrength",
-      "community": 9,
+      "community": 33,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -1089,7 +1224,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L7",
       "id": "scripts_resetfirstadminpassword_resetfirstadminpassword",
-      "community": 9,
+      "community": 33,
       "norm_label": "resetfirstadminpassword()"
     },
     {
@@ -1309,19 +1444,37 @@
       "norm_label": "bcrypt"
     },
     {
-      "label": "prisma",
+      "label": "{ parse }",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
       "source_location": "L2",
+      "id": "services_users_service_parse",
+      "community": 33,
+      "norm_label": "{ parse }"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L3",
       "id": "services_users_service_prisma",
       "community": 33,
       "norm_label": "prisma"
     },
     {
-      "label": "VALID_ROLES",
+      "label": "{\r\n  MAX_IMPORT_ROWS,\r\n  MAX_RETURNED_ERRORS,\r\n  validateHeaders,\r\n  validateImportRows,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
       "source_location": "L4",
+      "id": "services_users_service_max_import_rows_max_returned_errors_validateheaders_validateimportrows",
+      "community": 33,
+      "norm_label": "{\r\n  max_import_rows,\r\n  max_returned_errors,\r\n  validateheaders,\r\n  validateimportrows,\r\n}"
+    },
+    {
+      "label": "VALID_ROLES",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L11",
       "id": "services_users_service_valid_roles",
       "community": 33,
       "norm_label": "valid_roles"
@@ -1330,7 +1483,7 @@
       "label": "VALID_STATUSES",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L5",
+      "source_location": "L12",
       "id": "services_users_service_valid_statuses",
       "community": 33,
       "norm_label": "valid_statuses"
@@ -1339,7 +1492,7 @@
       "label": "ROLE_MAP",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L7",
+      "source_location": "L14",
       "id": "services_users_service_role_map",
       "community": 33,
       "norm_label": "role_map"
@@ -1348,7 +1501,7 @@
       "label": "STATUS_MAP",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L14",
+      "source_location": "L21",
       "id": "services_users_service_status_map",
       "community": 33,
       "norm_label": "status_map"
@@ -1357,7 +1510,7 @@
       "label": "VERIFICATION_MAP",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L22",
+      "source_location": "L29",
       "id": "services_users_service_verification_map",
       "community": 33,
       "norm_label": "verification_map"
@@ -1366,7 +1519,7 @@
       "label": "USER_SELECT",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L32",
+      "source_location": "L39",
       "id": "services_users_service_user_select",
       "community": 33,
       "norm_label": "user_select"
@@ -1375,7 +1528,7 @@
       "label": "mapUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L57",
+      "source_location": "L64",
       "id": "services_users_service_mapuser",
       "community": 33,
       "norm_label": "mapuser()"
@@ -1384,7 +1537,7 @@
       "label": "makeError()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L82",
+      "source_location": "L89",
       "id": "services_users_service_makeerror",
       "community": 33,
       "norm_label": "makeerror()"
@@ -1393,7 +1546,7 @@
       "label": "createUserAuditLog()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L89",
+      "source_location": "L96",
       "id": "services_users_service_createuserauditlog",
       "community": 33,
       "norm_label": "createuserauditlog()"
@@ -1402,7 +1555,7 @@
       "label": "assertUserExists()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L103",
+      "source_location": "L110",
       "id": "services_users_service_assertuserexists",
       "community": 33,
       "norm_label": "assertuserexists()"
@@ -1411,7 +1564,7 @@
       "label": "ensureEmailAvailable()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L112",
+      "source_location": "L119",
       "id": "services_users_service_ensureemailavailable",
       "community": 33,
       "norm_label": "ensureemailavailable()"
@@ -1420,7 +1573,7 @@
       "label": "getUsersList()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L121",
+      "source_location": "L128",
       "id": "services_users_service_getuserslist",
       "community": 33,
       "norm_label": "getuserslist()"
@@ -1429,7 +1582,7 @@
       "label": "getUserDetails()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L230",
+      "source_location": "L237",
       "id": "services_users_service_getuserdetails",
       "community": 33,
       "norm_label": "getuserdetails()"
@@ -1438,7 +1591,7 @@
       "label": "createUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L272",
+      "source_location": "L279",
       "id": "services_users_service_createuser",
       "community": 33,
       "norm_label": "createuser()"
@@ -1447,7 +1600,7 @@
       "label": "updateUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L329",
+      "source_location": "L336",
       "id": "services_users_service_updateuser",
       "community": 33,
       "norm_label": "updateuser()"
@@ -1456,7 +1609,7 @@
       "label": "updateUserStatus()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L423",
+      "source_location": "L430",
       "id": "services_users_service_updateuserstatus",
       "community": 33,
       "norm_label": "updateuserstatus()"
@@ -1465,7 +1618,7 @@
       "label": "resetUserPassword()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L448",
+      "source_location": "L455",
       "id": "services_users_service_resetuserpassword",
       "community": 33,
       "norm_label": "resetuserpassword()"
@@ -1474,7 +1627,7 @@
       "label": "suspendUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L466",
+      "source_location": "L473",
       "id": "services_users_service_suspenduser",
       "community": 33,
       "norm_label": "suspenduser()"
@@ -1483,7 +1636,7 @@
       "label": "reactivateUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L492",
+      "source_location": "L499",
       "id": "services_users_service_reactivateuser",
       "community": 33,
       "norm_label": "reactivateuser()"
@@ -1492,7 +1645,7 @@
       "label": "assignUserRole()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L514",
+      "source_location": "L521",
       "id": "services_users_service_assignuserrole",
       "community": 33,
       "norm_label": "assignuserrole()"
@@ -1501,7 +1654,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L539",
+      "source_location": "L546",
       "id": "services_users_service_deleteuser",
       "community": 33,
       "norm_label": "deleteuser()"
@@ -1510,10 +1663,19 @@
       "label": "getUsersAnalytics()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L560",
+      "source_location": "L567",
       "id": "services_users_service_getusersanalytics",
       "community": 33,
       "norm_label": "getusersanalytics()"
+    },
+    {
+      "label": "importUsersFromCsv()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L670",
+      "id": "services_users_service_importusersfromcsv",
+      "community": 33,
+      "norm_label": "importusersfromcsv()"
     },
     {
       "label": "otp.js",
@@ -1584,7 +1746,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "backend_src_utils_passwordpolicy_js",
-      "community": 9,
+      "community": 33,
       "norm_label": "passwordpolicy.js"
     },
     {
@@ -1593,7 +1755,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "utils_passwordpolicy_validatepasswordstrength",
-      "community": 9,
+      "community": 33,
       "norm_label": "validatepasswordstrength()"
     },
     {
@@ -1748,6 +1910,96 @@
       "id": "validators_users_validator_validateresetuserpasswordinput",
       "community": 9,
       "norm_label": "validateresetuserpasswordinput()"
+    },
+    {
+      "label": "usersImport.validator.js",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L1",
+      "id": "backend_src_validators_usersimport_validator_js",
+      "community": 33,
+      "norm_label": "usersimport.validator.js"
+    },
+    {
+      "label": "{ validatePasswordStrength }",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L1",
+      "id": "validators_usersimport_validator_validatepasswordstrength",
+      "community": 33,
+      "norm_label": "{ validatepasswordstrength }"
+    },
+    {
+      "label": "ALLOWED_HEADERS",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L5",
+      "id": "validators_usersimport_validator_allowed_headers",
+      "community": 33,
+      "norm_label": "allowed_headers"
+    },
+    {
+      "label": "REQUIRED_HEADERS",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L6",
+      "id": "validators_usersimport_validator_required_headers",
+      "community": 33,
+      "norm_label": "required_headers"
+    },
+    {
+      "label": "VALID_ROLES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L8",
+      "id": "validators_usersimport_validator_valid_roles",
+      "community": 33,
+      "norm_label": "valid_roles"
+    },
+    {
+      "label": "VALID_STATUSES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L9",
+      "id": "validators_usersimport_validator_valid_statuses",
+      "community": 33,
+      "norm_label": "valid_statuses"
+    },
+    {
+      "label": "VALID_VERIFICATION_STATES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L10",
+      "id": "validators_usersimport_validator_valid_verification_states",
+      "community": 33,
+      "norm_label": "valid_verification_states"
+    },
+    {
+      "label": "validateHeaders()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L13",
+      "id": "validators_usersimport_validator_validateheaders",
+      "community": 33,
+      "norm_label": "validateheaders()"
+    },
+    {
+      "label": "validateAndNormalizeRow()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L31",
+      "id": "validators_usersimport_validator_validateandnormalizerow",
+      "community": 33,
+      "norm_label": "validateandnormalizerow()"
+    },
+    {
+      "label": "validateImportRows()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L106",
+      "id": "validators_usersimport_validator_validateimportrows",
+      "community": 33,
+      "norm_label": "validateimportrows()"
     },
     {
       "label": "eslint.config.js",
@@ -2502,7 +2754,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L1",
       "id": "frontend_src_supabase_ts",
-      "community": 37,
+      "community": 20,
       "norm_label": "supabase.ts"
     },
     {
@@ -2511,7 +2763,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L10",
       "id": "src_supabase_supabase",
-      "community": 37,
+      "community": 20,
       "norm_label": "supabase"
     },
     {
@@ -2520,7 +2772,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L1",
       "id": "frontend_src_api_adminauth_ts",
-      "community": 20,
+      "community": 25,
       "norm_label": "adminauth.ts"
     },
     {
@@ -2565,7 +2817,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L35",
       "id": "api_adminauth_adminfetch",
-      "community": 20,
+      "community": 25,
       "norm_label": "adminfetch()"
     },
     {
@@ -2574,7 +2826,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L46",
       "id": "api_adminauth_bearer",
-      "community": 20,
+      "community": 25,
       "norm_label": "bearer()"
     },
     {
@@ -2583,7 +2835,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L52",
       "id": "api_adminauth_apilogin",
-      "community": 20,
+      "community": 25,
       "norm_label": "apilogin()"
     },
     {
@@ -2592,7 +2844,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L62",
       "id": "api_adminauth_apigetme",
-      "community": 20,
+      "community": 25,
       "norm_label": "apigetme()"
     },
     {
@@ -2601,7 +2853,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L66",
       "id": "api_adminauth_apilogout",
-      "community": 20,
+      "community": 25,
       "norm_label": "apilogout()"
     },
     {
@@ -2610,7 +2862,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L73",
       "id": "api_adminauth_apiforgotpassword",
-      "community": 20,
+      "community": 28,
       "norm_label": "apiforgotpassword()"
     },
     {
@@ -2619,7 +2871,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L80",
       "id": "api_adminauth_apiresetpassword",
-      "community": 20,
+      "community": 28,
       "norm_label": "apiresetpassword()"
     },
     {
@@ -2628,7 +2880,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L93",
       "id": "api_adminauth_apisendotp",
-      "community": 20,
+      "community": 25,
       "norm_label": "apisendotp()"
     },
     {
@@ -2637,7 +2889,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L101",
       "id": "api_adminauth_apiverifyotp",
-      "community": 20,
+      "community": 25,
       "norm_label": "apiverifyotp()"
     },
     {
@@ -2727,7 +2979,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L1",
       "id": "frontend_src_api_passwordrecovery_ts",
-      "community": 20,
+      "community": 28,
       "norm_label": "passwordrecovery.ts"
     },
     {
@@ -2736,7 +2988,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L10",
       "id": "api_passwordrecovery_requestpasswordreset",
-      "community": 20,
+      "community": 28,
       "norm_label": "requestpasswordreset()"
     },
     {
@@ -2745,7 +2997,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L25",
       "id": "api_passwordrecovery_updatepassword",
-      "community": 20,
+      "community": 28,
       "norm_label": "updatepassword()"
     },
     {
@@ -2862,7 +3114,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L119",
       "id": "api_users_apierror",
-      "community": 27,
+      "community": 26,
       "norm_label": "apierror"
     },
     {
@@ -2871,7 +3123,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L121",
       "id": "api_users_apierror_constructor",
-      "community": 27,
+      "community": 26,
       "norm_label": ".constructor()"
     },
     {
@@ -2961,7 +3213,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L215",
       "id": "api_users_getanalytics",
-      "community": 31,
+      "community": 42,
       "norm_label": "getanalytics()"
     },
     {
@@ -3006,7 +3258,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_loginform_tsx",
-      "community": 37,
+      "community": 20,
       "norm_label": "loginform.tsx"
     },
     {
@@ -3015,7 +3267,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L4",
       "id": "auth_loginform_props",
-      "community": 37,
+      "community": 20,
       "norm_label": "props"
     },
     {
@@ -3186,7 +3438,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_signupform_tsx",
-      "community": 37,
+      "community": 20,
       "norm_label": "signupform.tsx"
     },
     {
@@ -3195,7 +3447,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L5",
       "id": "auth_signupform_props",
-      "community": 37,
+      "community": 20,
       "norm_label": "props"
     },
     {
@@ -3204,7 +3456,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L9",
       "id": "auth_signupform_signupform",
-      "community": 37,
+      "community": 20,
       "norm_label": "signupform()"
     },
     {
@@ -3294,7 +3546,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_assignrolemodal_tsx",
-      "community": 32,
+      "community": 24,
       "norm_label": "assignrolemodal.tsx"
     },
     {
@@ -3303,7 +3555,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L6",
       "id": "users_assignrolemodal_props",
-      "community": 32,
+      "community": 24,
       "norm_label": "props"
     },
     {
@@ -3312,7 +3564,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L13",
       "id": "users_assignrolemodal_roles",
-      "community": 32,
+      "community": 24,
       "norm_label": "roles"
     },
     {
@@ -3321,7 +3573,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L20",
       "id": "users_assignrolemodal_types",
-      "community": 32,
+      "community": 24,
       "norm_label": "types"
     },
     {
@@ -3330,7 +3582,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L26",
       "id": "users_assignrolemodal_input",
-      "community": 32,
+      "community": 24,
       "norm_label": "input"
     },
     {
@@ -3339,7 +3591,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L33",
       "id": "users_assignrolemodal_assignrolemodal",
-      "community": 32,
+      "community": 24,
       "norm_label": "assignrolemodal()"
     },
     {
@@ -3375,7 +3627,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_deleteuserdialog_tsx",
-      "community": 27,
+      "community": 26,
       "norm_label": "deleteuserdialog.tsx"
     },
     {
@@ -3384,7 +3636,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L5",
       "id": "users_deleteuserdialog_props",
-      "community": 27,
+      "community": 26,
       "norm_label": "props"
     },
     {
@@ -3393,7 +3645,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L14",
       "id": "users_deleteuserdialog_input",
-      "community": 27,
+      "community": 26,
       "norm_label": "input"
     },
     {
@@ -3402,7 +3654,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L21",
       "id": "users_deleteuserdialog_deleteuserdialog",
-      "community": 27,
+      "community": 26,
       "norm_label": "deleteuserdialog()"
     },
     {
@@ -3474,7 +3726,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_suspenduserdialog_tsx",
-      "community": 27,
+      "community": 26,
       "norm_label": "suspenduserdialog.tsx"
     },
     {
@@ -3483,7 +3735,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L6",
       "id": "users_suspenduserdialog_props",
-      "community": 27,
+      "community": 26,
       "norm_label": "props"
     },
     {
@@ -3492,7 +3744,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L14",
       "id": "users_suspenduserdialog_ta",
-      "community": 27,
+      "community": 26,
       "norm_label": "ta"
     },
     {
@@ -3501,7 +3753,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L22",
       "id": "users_suspenduserdialog_suspenduserdialog",
-      "community": 27,
+      "community": 26,
       "norm_label": "suspenduserdialog()"
     },
     {
@@ -3519,7 +3771,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L3",
       "id": "users_toast_toasttype",
-      "community": 27,
+      "community": 26,
       "norm_label": "toasttype"
     },
     {
@@ -3537,7 +3789,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L9",
       "id": "users_toast_usetoast",
-      "community": 26,
+      "community": 1,
       "norm_label": "usetoast()"
     },
     {
@@ -3564,7 +3816,7 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_useranalytics_tsx",
-      "community": 31,
+      "community": 42,
       "norm_label": "useranalytics.tsx"
     },
     {
@@ -3573,7 +3825,7 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L10",
       "id": "users_useranalytics_chartcard",
-      "community": 31,
+      "community": 42,
       "norm_label": "chartcard()"
     },
     {
@@ -3582,7 +3834,7 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L24",
       "id": "users_useranalytics_useranalytics",
-      "community": 31,
+      "community": 42,
       "norm_label": "useranalytics()"
     },
     {
@@ -4176,7 +4428,7 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_charts_newuserscard_tsx",
-      "community": 31,
+      "community": 43,
       "norm_label": "newuserscard.tsx"
     },
     {
@@ -4185,7 +4437,7 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L3",
       "id": "charts_newuserscard_props",
-      "community": 31,
+      "community": 43,
       "norm_label": "props"
     },
     {
@@ -4194,7 +4446,7 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L8",
       "id": "charts_newuserscard_skeleton",
-      "community": 31,
+      "community": 43,
       "norm_label": "skeleton()"
     },
     {
@@ -4203,7 +4455,7 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L18",
       "id": "charts_newuserscard_newuserscard",
-      "community": 31,
+      "community": 43,
       "norm_label": "newuserscard()"
     },
     {
@@ -4212,7 +4464,7 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_charts_useractivitychart_tsx",
-      "community": 31,
+      "community": 44,
       "norm_label": "useractivitychart.tsx"
     },
     {
@@ -4221,7 +4473,7 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L4",
       "id": "charts_useractivitychart_props",
-      "community": 31,
+      "community": 44,
       "norm_label": "props"
     },
     {
@@ -4230,7 +4482,7 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L9",
       "id": "charts_useractivitychart_skeleton",
-      "community": 31,
+      "community": 44,
       "norm_label": "skeleton()"
     },
     {
@@ -4239,7 +4491,7 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L22",
       "id": "charts_useractivitychart_useractivitychart",
-      "community": 31,
+      "community": 44,
       "norm_label": "useractivitychart()"
     },
     {
@@ -4302,7 +4554,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "community": 31,
+      "community": 35,
       "norm_label": "usersbyrolechart.tsx"
     },
     {
@@ -4311,7 +4563,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L4",
       "id": "charts_usersbyrolechart_props",
-      "community": 31,
+      "community": 35,
       "norm_label": "props"
     },
     {
@@ -4320,7 +4572,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L9",
       "id": "charts_usersbyrolechart_role_colors",
-      "community": 31,
+      "community": 35,
       "norm_label": "role_colors"
     },
     {
@@ -4329,7 +4581,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L16",
       "id": "charts_usersbyrolechart_role_labels",
-      "community": 31,
+      "community": 35,
       "norm_label": "role_labels"
     },
     {
@@ -4338,7 +4590,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L23",
       "id": "charts_usersbyrolechart_skeleton",
-      "community": 31,
+      "community": 35,
       "norm_label": "skeleton()"
     },
     {
@@ -4347,7 +4599,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L36",
       "id": "charts_usersbyrolechart_usersbyrolechart",
-      "community": 31,
+      "community": 35,
       "norm_label": "usersbyrolechart()"
     },
     {
@@ -4356,7 +4608,7 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "community": 31,
+      "community": 40,
       "norm_label": "verificationstatuschart.tsx"
     },
     {
@@ -4365,7 +4617,7 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L4",
       "id": "charts_verificationstatuschart_props",
-      "community": 31,
+      "community": 40,
       "norm_label": "props"
     },
     {
@@ -4374,7 +4626,7 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L9",
       "id": "charts_verificationstatuschart_status_colors",
-      "community": 31,
+      "community": 40,
       "norm_label": "status_colors"
     },
     {
@@ -4383,7 +4635,7 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L16",
       "id": "charts_verificationstatuschart_status_labels",
-      "community": 31,
+      "community": 40,
       "norm_label": "status_labels"
     },
     {
@@ -4392,7 +4644,7 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L23",
       "id": "charts_verificationstatuschart_skeleton",
-      "community": 31,
+      "community": 40,
       "norm_label": "skeleton()"
     },
     {
@@ -4401,7 +4653,7 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L36",
       "id": "charts_verificationstatuschart_verificationstatuschart",
-      "community": 31,
+      "community": 40,
       "norm_label": "verificationstatuschart()"
     },
     {
@@ -4455,7 +4707,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L1",
       "id": "frontend_src_layouts_adminlayout_tsx",
-      "community": 24,
+      "community": 1,
       "norm_label": "adminlayout.tsx"
     },
     {
@@ -4464,7 +4716,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L7",
       "id": "layouts_adminlayout_icongrid",
-      "community": 24,
+      "community": 1,
       "norm_label": "icongrid()"
     },
     {
@@ -4473,7 +4725,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L18",
       "id": "layouts_adminlayout_iconbook",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconbook()"
     },
     {
@@ -4482,7 +4734,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L27",
       "id": "layouts_adminlayout_iconusers",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconusers()"
     },
     {
@@ -4491,7 +4743,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L38",
       "id": "layouts_adminlayout_iconshield",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconshield()"
     },
     {
@@ -4500,7 +4752,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L46",
       "id": "layouts_adminlayout_iconsettings",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconsettings()"
     },
     {
@@ -4509,7 +4761,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L55",
       "id": "layouts_adminlayout_iconmenu",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconmenu()"
     },
     {
@@ -4518,7 +4770,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L65",
       "id": "layouts_adminlayout_iconbell",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconbell()"
     },
     {
@@ -4527,7 +4779,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L74",
       "id": "layouts_adminlayout_iconmessage",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconmessage()"
     },
     {
@@ -4536,7 +4788,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L82",
       "id": "layouts_adminlayout_iconsearch",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconsearch()"
     },
     {
@@ -4545,7 +4797,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L91",
       "id": "layouts_adminlayout_iconchevrondown",
-      "community": 24,
+      "community": 1,
       "norm_label": "iconchevrondown()"
     },
     {
@@ -4554,7 +4806,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L101",
       "id": "layouts_adminlayout_qa_topbar_actions",
-      "community": 24,
+      "community": 1,
       "norm_label": "qa_topbar_actions"
     },
     {
@@ -4563,7 +4815,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L113",
       "id": "layouts_adminlayout_navitem",
-      "community": 24,
+      "community": 1,
       "norm_label": "navitem"
     },
     {
@@ -4572,7 +4824,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L120",
       "id": "layouts_adminlayout_navsection",
-      "community": 24,
+      "community": 1,
       "norm_label": "navsection"
     },
     {
@@ -4581,7 +4833,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L125",
       "id": "layouts_adminlayout_nav_sections",
-      "community": 24,
+      "community": 1,
       "norm_label": "nav_sections"
     },
     {
@@ -4590,7 +4842,7 @@
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L145",
       "id": "layouts_adminlayout_props",
-      "community": 24,
+      "community": 1,
       "norm_label": "props"
     },
     {
@@ -5238,7 +5490,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_usermanagementpage_tsx",
-      "community": 26,
+      "community": 1,
       "norm_label": "usermanagementpage.tsx"
     },
     {
@@ -5247,7 +5499,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L19",
       "id": "pages_usermanagementpage_tabs",
-      "community": 26,
+      "community": 1,
       "norm_label": "tabs"
     },
     {
@@ -5256,7 +5508,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L31",
       "id": "pages_usermanagementpage_tabkey",
-      "community": 26,
+      "community": 1,
       "norm_label": "tabkey"
     },
     {
@@ -5265,7 +5517,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L33",
       "id": "pages_usermanagementpage_limit_options",
-      "community": 26,
+      "community": 1,
       "norm_label": "limit_options"
     },
     {
@@ -5274,7 +5526,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L37",
       "id": "pages_usermanagementpage_pagerange",
-      "community": 26,
+      "community": 1,
       "norm_label": "pagerange()"
     },
     {
@@ -5283,7 +5535,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L50",
       "id": "pages_usermanagementpage_comingsoon",
-      "community": 26,
+      "community": 1,
       "norm_label": "comingsoon()"
     },
     {
@@ -5292,7 +5544,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L67",
       "id": "pages_usermanagementpage_usermanagementpage",
-      "community": 26,
+      "community": 1,
       "norm_label": "usermanagementpage()"
     },
     {
@@ -5319,7 +5571,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L1",
       "id": "frontend_src_routes_protectedroute_tsx",
-      "community": 25,
+      "community": 41,
       "norm_label": "protectedroute.tsx"
     },
     {
@@ -5328,7 +5580,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L6",
       "id": "routes_protectedroute_props",
-      "community": 25,
+      "community": 41,
       "norm_label": "props"
     },
     {
@@ -5337,7 +5589,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L12",
       "id": "routes_protectedroute_protectedroute",
-      "community": 25,
+      "community": 41,
       "norm_label": "protectedroute()"
     },
     {
@@ -5346,7 +5598,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "frontend_src_types_auth_ts",
-      "community": 25,
+      "community": 41,
       "norm_label": "auth.ts"
     },
     {
@@ -5355,7 +5607,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "types_auth_profile",
-      "community": 25,
+      "community": 41,
       "norm_label": "profile"
     },
     {
@@ -5364,7 +5616,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L8",
       "id": "types_auth_userrole",
-      "community": 25,
+      "community": 41,
       "norm_label": "userrole"
     },
     {
@@ -6066,7 +6318,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L7",
       "id": "types_users_user",
-      "community": 26,
+      "community": 1,
       "norm_label": "user"
     },
     {
@@ -6093,7 +6345,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L44",
       "id": "types_users_usersresponse",
-      "community": 26,
+      "community": 1,
       "norm_label": "usersresponse"
     },
     {
@@ -6102,7 +6354,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L52",
       "id": "types_users_roletype",
-      "community": 32,
+      "community": 24,
       "norm_label": "roletype"
     },
     {
@@ -6183,7 +6435,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L113",
       "id": "types_users_createuserrequest",
-      "community": 27,
+      "community": 36,
       "norm_label": "createuserrequest"
     },
     {
@@ -6201,7 +6453,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L139",
       "id": "types_users_suspenduserrequest",
-      "community": 27,
+      "community": 26,
       "norm_label": "suspenduserrequest"
     },
     {
@@ -6210,7 +6462,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L144",
       "id": "types_users_assignrolerequest",
-      "community": 32,
+      "community": 24,
       "norm_label": "assignrolerequest"
     },
     {
@@ -6228,7 +6480,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L157",
       "id": "types_users_roleanalyticsitem",
-      "community": 31,
+      "community": 35,
       "norm_label": "roleanalyticsitem"
     },
     {
@@ -6246,7 +6498,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L159",
       "id": "types_users_newusersthismonth",
-      "community": 31,
+      "community": 43,
       "norm_label": "newusersthismonth"
     },
     {
@@ -6264,7 +6516,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L161",
       "id": "types_users_useractivity",
-      "community": 31,
+      "community": 44,
       "norm_label": "useractivity"
     },
     {
@@ -6273,7 +6525,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L162",
       "id": "types_users_verificationstatusitem",
-      "community": 31,
+      "community": 40,
       "norm_label": "verificationstatusitem"
     },
     {
@@ -6282,7 +6534,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L164",
       "id": "types_users_analyticsresponse",
-      "community": 31,
+      "community": 42,
       "norm_label": "analyticsresponse"
     },
     {
@@ -6291,7 +6543,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "frontend_src_utils_autherrors_ts",
-      "community": 37,
+      "community": 20,
       "norm_label": "autherrors.ts"
     },
     {
@@ -6300,7 +6552,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "utils_autherrors_getautherrormessage",
-      "community": 37,
+      "community": 20,
       "norm_label": "getautherrormessage()"
     },
     {
@@ -6365,6 +6617,24 @@
       "id": "frontend_readme_codeblock_2",
       "community": 11,
       "norm_label": "code:js (// eslint.config.js)"
+    },
+    {
+      "label": "{ adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "community": 9,
+      "norm_label": "{ adminuseractionratelimiter, adminusersanalyticsratelimiter }",
+      "id": "routes_users_routes_adminuseractionratelimiter_adminusersanalyticsratelimiter"
+    },
+    {
+      "label": "{\r\n  getUsersList,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L4",
+      "community": 9,
+      "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n}",
+      "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics"
     },
     {
       "label": "ROLES",
@@ -6821,7 +7091,7 @@
       "file_type": "code",
       "source_file": "frontend/src/layouts/AdminLayout.tsx",
       "source_location": "L67",
-      "community": 24,
+      "community": 1,
       "norm_label": "nav",
       "id": "layouts_adminlayout_nav"
     },
@@ -7105,6 +7375,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_csv_parse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
       "source_location": "L18",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -7130,6 +7410,16 @@
       "confidence_score": 1.0,
       "source": "backend_package_dependencies",
       "target": "backend_package_dependencies_express_rate_limit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_multer",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -7414,6 +7704,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_middlewares_auth_middleware_js",
       "target": "backend_src_config_prisma_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/scripts/addUsersImportedEnum.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_scripts_addusersimportedenum_js",
+      "target": "backend_src_config_prisma_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -8331,6 +8632,16 @@
       "target": "controllers_users_controller_deleteuser"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L250",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_importusers",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -8616,6 +8927,17 @@
       "target": "validators_users_validator_validateuuidparam"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_importusers",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/middlewares/auth.middleware.js",
@@ -8742,6 +9064,16 @@
       "target": "middlewares_ratelimit_middleware_adminusersanalyticsratelimiter"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middlewares/rateLimit.middleware.js",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "backend_src_middlewares_ratelimit_middleware_js",
+      "target": "middlewares_ratelimit_middleware_adminusersimportratelimiter",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -8795,6 +9127,99 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
       "target": "middlewares_ratelimit_middleware_adminusersanalyticsratelimiter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "middlewares_ratelimit_middleware_adminusersimportratelimiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_middlewares_upload_middleware_js",
+      "target": "middlewares_upload_middleware_multer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_middlewares_upload_middleware_js",
+      "target": "middlewares_upload_middleware_allowed_mime_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "backend_src_middlewares_upload_middleware_js",
+      "target": "middlewares_upload_middleware_storage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "backend_src_middlewares_upload_middleware_js",
+      "target": "middlewares_upload_middleware_csvfilefilter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "backend_src_middlewares_upload_middleware_js",
+      "target": "middlewares_upload_middleware_upload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middlewares/upload.middleware.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "backend_src_middlewares_upload_middleware_js",
+      "target": "middlewares_upload_middleware_uploaduserscsv",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "backend_src_middlewares_upload_middleware_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "middlewares_upload_middleware_uploaduserscsv",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -8942,6 +9367,46 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L3",
       "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_adminuseractionratelimiter_adminusersanalyticsratelimiter_adminusersimportratelimiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_uploaduserscsv",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_router"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
       "target": "routes_users_routes_adminuseractionratelimiter_adminusersanalyticsratelimiter"
@@ -8955,16 +9420,6 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
       "target": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/src/routes/users.routes.js",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_src_routes_users_routes_js",
-      "target": "routes_users_routes_router"
     },
     {
       "relation": "contains",
@@ -9015,6 +9470,26 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
       "target": "routes_users_routes_getuserslist_getuserdetails"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/scripts/addUsersImportedEnum.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_scripts_addusersimportedenum_js",
+      "target": "scripts_addusersimportedenum_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/scripts/addUsersImportedEnum.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_scripts_addusersimportedenum_js",
+      "target": "scripts_addusersimportedenum_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9571,9 +10046,9 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_dashboard_service_js",
-      "target": "backend_src_services_users_service_js",
-      "confidence_score": 1.0
+      "target": "backend_src_services_users_service_js"
     },
     {
       "relation": "imports",
@@ -9582,9 +10057,9 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_dashboard_service_js",
-      "target": "services_users_service_getusersanalytics",
-      "confidence_score": 1.0
+      "target": "services_users_service_getusersanalytics"
     },
     {
       "relation": "contains",
@@ -9592,9 +10067,9 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_dashboard_service_js",
-      "target": "services_dashboard_service_getusersanalytics",
-      "confidence_score": 1.0
+      "target": "services_dashboard_service_getusersanalytics"
     },
     {
       "relation": "contains",
@@ -9640,11 +10115,64 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/services/users.service.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_parse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_services_users_service_js",
       "target": "services_users_service_prisma"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "backend_src_validators_usersimport_validator_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "validators_usersimport_validator_validateheaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "validators_usersimport_validator_validateimportrows",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_max_import_rows_max_returned_errors_validateheaders_validateimportrows",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9865,6 +10393,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_services_users_service_js",
       "target": "services_users_service_getusersanalytics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L670",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_importusersfromcsv",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -10113,6 +10651,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/services/users.service.js",
+      "source_location": "L792",
+      "weight": 1.0,
+      "source": "services_users_service_importusersfromcsv",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
       "source_location": "L292",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -10208,6 +10757,28 @@
       "target": "services_users_service_ensureemailavailable"
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L700",
+      "weight": 1.0,
+      "source": "services_users_service_importusersfromcsv",
+      "target": "validators_usersimport_validator_validateheaders"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L739",
+      "weight": 1.0,
+      "source": "services_users_service_importusersfromcsv",
+      "target": "validators_usersimport_validator_validateimportrows"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/utils/otp.js",
@@ -10289,6 +10860,17 @@
       "target": "backend_src_utils_passwordpolicy_js"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "backend_src_utils_passwordpolicy_js",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -10298,6 +10880,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_validators_users_validator_js",
       "target": "utils_passwordpolicy_validatepasswordstrength"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "utils_passwordpolicy_validatepasswordstrength",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -10319,6 +10912,17 @@
       "source_location": "L150",
       "weight": 1.0,
       "source": "validators_users_validator_validateresetuserpasswordinput",
+      "target": "utils_passwordpolicy_validatepasswordstrength"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "validators_usersimport_validator_validateandnormalizerow",
       "target": "utils_passwordpolicy_validatepasswordstrength"
     },
     {
@@ -10470,6 +11074,107 @@
       "confidence_score": 1.0,
       "source": "backend_src_validators_users_validator_js",
       "target": "validators_users_validator_validateresetuserpasswordinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_validatepasswordstrength",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_allowed_headers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_required_headers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_valid_roles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_valid_statuses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_valid_verification_states",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_validateheaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_validateandnormalizerow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "backend_src_validators_usersimport_validator_js",
+      "target": "validators_usersimport_validator_validateimportrows",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/usersImport.validator.js",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "validators_usersimport_validator_validateimportrows",
+      "target": "validators_usersimport_validator_validateandnormalizerow",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -10637,9 +11342,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_package_dependencies",
-      "target": "frontend_package_dependencies_recharts",
-      "confidence_score": 1.0
+      "target": "frontend_package_dependencies_recharts"
     },
     {
       "relation": "contains",
@@ -13040,9 +13745,9 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_users_ts",
-      "target": "types_users_analyticsresponse",
-      "confidence_score": 1.0
+      "target": "types_users_analyticsresponse"
     },
     {
       "relation": "contains",
@@ -13190,9 +13895,9 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L215",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_users_ts",
-      "target": "api_users_getanalytics",
-      "confidence_score": 1.0
+      "target": "api_users_getanalytics"
     },
     {
       "relation": "imports_from",
@@ -13256,9 +13961,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "frontend_src_api_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_users_ts"
     },
     {
       "relation": "imports_from",
@@ -13530,9 +14235,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "api_users_getanalytics",
-      "confidence_score": 1.0
+      "target": "api_users_getanalytics"
     },
     {
       "relation": "imports_from",
@@ -14893,9 +15598,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -14904,9 +15609,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "types_users_analyticsresponse",
-      "confidence_score": 1.0
+      "target": "types_users_analyticsresponse"
     },
     {
       "relation": "imports_from",
@@ -14915,9 +15620,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_charts_usersbyrolechart_tsx"
     },
     {
       "relation": "imports_from",
@@ -14926,9 +15631,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_charts_usersbydepartmentchart_tsx"
     },
     {
       "relation": "imports_from",
@@ -14937,9 +15642,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "frontend_src_components_users_charts_newuserscard_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_charts_newuserscard_tsx"
     },
     {
       "relation": "imports_from",
@@ -14948,9 +15653,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "frontend_src_components_users_charts_useractivitychart_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_charts_useractivitychart_tsx"
     },
     {
       "relation": "imports_from",
@@ -14959,9 +15664,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_charts_verificationstatuschart_tsx"
     },
     {
       "relation": "contains",
@@ -14969,9 +15674,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "users_useranalytics_chartcard",
-      "confidence_score": 1.0
+      "target": "users_useranalytics_chartcard"
     },
     {
       "relation": "contains",
@@ -14979,9 +15684,9 @@
       "source_file": "frontend/src/components/users/UserAnalytics.tsx",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_useranalytics_tsx",
-      "target": "users_useranalytics_useranalytics",
-      "confidence_score": 1.0
+      "target": "users_useranalytics_useranalytics"
     },
     {
       "relation": "imports_from",
@@ -14990,9 +15695,9 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
-      "target": "frontend_src_components_users_useranalytics_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_useranalytics_tsx"
     },
     {
       "relation": "imports_from",
@@ -15895,9 +16600,9 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_newuserscard_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -15906,9 +16611,9 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_newuserscard_tsx",
-      "target": "types_users_newusersthismonth",
-      "confidence_score": 1.0
+      "target": "types_users_newusersthismonth"
     },
     {
       "relation": "contains",
@@ -15916,9 +16621,9 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_newuserscard_tsx",
-      "target": "charts_newuserscard_props",
-      "confidence_score": 1.0
+      "target": "charts_newuserscard_props"
     },
     {
       "relation": "contains",
@@ -15926,9 +16631,9 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_newuserscard_tsx",
-      "target": "charts_newuserscard_skeleton",
-      "confidence_score": 1.0
+      "target": "charts_newuserscard_skeleton"
     },
     {
       "relation": "contains",
@@ -15936,9 +16641,9 @@
       "source_file": "frontend/src/components/users/charts/NewUsersCard.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_newuserscard_tsx",
-      "target": "charts_newuserscard_newuserscard",
-      "confidence_score": 1.0
+      "target": "charts_newuserscard_newuserscard"
     },
     {
       "relation": "imports_from",
@@ -15947,9 +16652,9 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_useractivitychart_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -15958,9 +16663,9 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_useractivitychart_tsx",
-      "target": "types_users_useractivity",
-      "confidence_score": 1.0
+      "target": "types_users_useractivity"
     },
     {
       "relation": "contains",
@@ -15968,9 +16673,9 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_useractivitychart_tsx",
-      "target": "charts_useractivitychart_props",
-      "confidence_score": 1.0
+      "target": "charts_useractivitychart_props"
     },
     {
       "relation": "contains",
@@ -15978,9 +16683,9 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_useractivitychart_tsx",
-      "target": "charts_useractivitychart_skeleton",
-      "confidence_score": 1.0
+      "target": "charts_useractivitychart_skeleton"
     },
     {
       "relation": "contains",
@@ -15988,9 +16693,9 @@
       "source_file": "frontend/src/components/users/charts/UserActivityChart.tsx",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_useractivitychart_tsx",
-      "target": "charts_useractivitychart_useractivitychart",
-      "confidence_score": 1.0
+      "target": "charts_useractivitychart_useractivitychart"
     },
     {
       "relation": "imports_from",
@@ -15999,9 +16704,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -16010,9 +16715,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "target": "types_users_departmentanalyticsitem",
-      "confidence_score": 1.0
+      "target": "types_users_departmentanalyticsitem"
     },
     {
       "relation": "contains",
@@ -16020,9 +16725,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "target": "charts_usersbydepartmentchart_props",
-      "confidence_score": 1.0
+      "target": "charts_usersbydepartmentchart_props"
     },
     {
       "relation": "contains",
@@ -16030,9 +16735,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "target": "charts_usersbydepartmentchart_bar_colors",
-      "confidence_score": 1.0
+      "target": "charts_usersbydepartmentchart_bar_colors"
     },
     {
       "relation": "contains",
@@ -16040,9 +16745,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "target": "charts_usersbydepartmentchart_skeleton",
-      "confidence_score": 1.0
+      "target": "charts_usersbydepartmentchart_skeleton"
     },
     {
       "relation": "contains",
@@ -16050,9 +16755,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "target": "charts_usersbydepartmentchart_truncate",
-      "confidence_score": 1.0
+      "target": "charts_usersbydepartmentchart_truncate"
     },
     {
       "relation": "contains",
@@ -16060,9 +16765,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "target": "charts_usersbydepartmentchart_usersbydepartmentchart",
-      "confidence_score": 1.0
+      "target": "charts_usersbydepartmentchart_usersbydepartmentchart"
     },
     {
       "relation": "imports_from",
@@ -16071,9 +16776,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -16082,9 +16787,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "target": "types_users_roleanalyticsitem",
-      "confidence_score": 1.0
+      "target": "types_users_roleanalyticsitem"
     },
     {
       "relation": "contains",
@@ -16092,9 +16797,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "target": "charts_usersbyrolechart_props",
-      "confidence_score": 1.0
+      "target": "charts_usersbyrolechart_props"
     },
     {
       "relation": "contains",
@@ -16102,9 +16807,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "target": "charts_usersbyrolechart_role_colors",
-      "confidence_score": 1.0
+      "target": "charts_usersbyrolechart_role_colors"
     },
     {
       "relation": "contains",
@@ -16112,9 +16817,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "target": "charts_usersbyrolechart_role_labels",
-      "confidence_score": 1.0
+      "target": "charts_usersbyrolechart_role_labels"
     },
     {
       "relation": "contains",
@@ -16122,9 +16827,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "target": "charts_usersbyrolechart_skeleton",
-      "confidence_score": 1.0
+      "target": "charts_usersbyrolechart_skeleton"
     },
     {
       "relation": "contains",
@@ -16132,9 +16837,9 @@
       "source_file": "frontend/src/components/users/charts/UsersByRoleChart.tsx",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_usersbyrolechart_tsx",
-      "target": "charts_usersbyrolechart_usersbyrolechart",
-      "confidence_score": 1.0
+      "target": "charts_usersbyrolechart_usersbyrolechart"
     },
     {
       "relation": "imports_from",
@@ -16143,9 +16848,9 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -16154,9 +16859,9 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "target": "types_users_verificationstatusitem",
-      "confidence_score": 1.0
+      "target": "types_users_verificationstatusitem"
     },
     {
       "relation": "contains",
@@ -16164,9 +16869,9 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "target": "charts_verificationstatuschart_props",
-      "confidence_score": 1.0
+      "target": "charts_verificationstatuschart_props"
     },
     {
       "relation": "contains",
@@ -16174,9 +16879,9 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "target": "charts_verificationstatuschart_status_colors",
-      "confidence_score": 1.0
+      "target": "charts_verificationstatuschart_status_colors"
     },
     {
       "relation": "contains",
@@ -16184,9 +16889,9 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "target": "charts_verificationstatuschart_status_labels",
-      "confidence_score": 1.0
+      "target": "charts_verificationstatuschart_status_labels"
     },
     {
       "relation": "contains",
@@ -16194,9 +16899,9 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "target": "charts_verificationstatuschart_skeleton",
-      "confidence_score": 1.0
+      "target": "charts_verificationstatuschart_skeleton"
     },
     {
       "relation": "contains",
@@ -16204,9 +16909,9 @@
       "source_file": "frontend/src/components/users/charts/VerificationStatusChart.tsx",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_charts_verificationstatuschart_tsx",
-      "target": "charts_verificationstatuschart_verificationstatuschart",
-      "confidence_score": 1.0
+      "target": "charts_verificationstatuschart_verificationstatuschart"
     },
     {
       "relation": "contains",
@@ -18179,9 +18884,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L185",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_dashboarddeptitem",
-      "confidence_score": 1.0
+      "target": "types_dashboard_dashboarddeptitem"
     },
     {
       "relation": "contains",
@@ -18189,9 +18894,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L190",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_dashboarddailytrend",
-      "confidence_score": 1.0
+      "target": "types_dashboard_dashboarddailytrend"
     },
     {
       "relation": "contains",
@@ -18199,9 +18904,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L195",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_dashboardactivitydata",
-      "confidence_score": 1.0
+      "target": "types_dashboard_dashboardactivitydata"
     },
     {
       "relation": "contains",
@@ -18209,9 +18914,9 @@
       "source_file": "frontend/src/types/dashboard.ts",
       "source_location": "L201",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_dashboard_ts",
-      "target": "types_dashboard_dashboardverifitem",
-      "confidence_score": 1.0
+      "target": "types_dashboard_dashboardverifitem"
     },
     {
       "relation": "contains",
@@ -18849,9 +19554,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L157",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_roleanalyticsitem",
-      "confidence_score": 1.0
+      "target": "types_users_roleanalyticsitem"
     },
     {
       "relation": "contains",
@@ -18859,9 +19564,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L158",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_departmentanalyticsitem",
-      "confidence_score": 1.0
+      "target": "types_users_departmentanalyticsitem"
     },
     {
       "relation": "contains",
@@ -18869,9 +19574,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L159",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_newusersthismonth",
-      "confidence_score": 1.0
+      "target": "types_users_newusersthismonth"
     },
     {
       "relation": "contains",
@@ -18879,9 +19584,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L160",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_dailytrenditem",
-      "confidence_score": 1.0
+      "target": "types_users_dailytrenditem"
     },
     {
       "relation": "contains",
@@ -18889,9 +19594,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L161",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_useractivity",
-      "confidence_score": 1.0
+      "target": "types_users_useractivity"
     },
     {
       "relation": "contains",
@@ -18899,9 +19604,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L162",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_verificationstatusitem",
-      "confidence_score": 1.0
+      "target": "types_users_verificationstatusitem"
     },
     {
       "relation": "contains",
@@ -18909,9 +19614,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L164",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_analyticsresponse",
-      "confidence_score": 1.0
+      "target": "types_users_analyticsresponse"
     },
     {
       "relation": "contains",
@@ -18995,5 +19700,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4baa9b2c9b51391ef73678d3eda7ecd2c89970fc"
+  "built_at_commit": "068e09ce284b09b5afbe8c9776e758d484ee4356"
 }
