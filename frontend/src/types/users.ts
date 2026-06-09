@@ -168,3 +168,26 @@ export interface AnalyticsResponse {
   userActivity:       UserActivity;
   verificationStatus: VerificationStatusItem[];
 }
+
+// ── Task 6E: Import types ──────────────────────────────────────────────────────
+// Field names match POST /api/admin/users/import response contract exactly.
+
+export interface ImportError {
+  row:     number;
+  email:   string | null;
+  message: string;
+}
+
+export interface ImportSummary {
+  totalRows: number;
+  created:   number;
+  failed:    number;
+  skipped:   number;
+}
+
+export interface ImportResult {
+  success: boolean;
+  message: string;
+  summary: ImportSummary;
+  errors:  ImportError[];
+}

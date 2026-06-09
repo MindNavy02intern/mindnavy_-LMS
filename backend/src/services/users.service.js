@@ -137,9 +137,15 @@ async function getUsersList(query = {}, admin = {}) {
   const rawStatus = typeof query.status === "string"
     ? query.status.trim().toUpperCase()
     : "";
+  const rawVerificationState = typeof query.verificationState === "string"
+    ? query.verificationState.trim().toUpperCase()
+    : "";
 
-  const roleFilter = VALID_ROLES.has(rawRole) ? rawRole : null;
-  const statusFilter = VALID_STATUSES.has(rawStatus) ? rawStatus : null;
+  const VALID_VERIFICATION_STATES = new Set(["VERIFIED", "PENDING", "REJECTED", "EXPIRED"]);
+
+  const roleFilter              = VALID_ROLES.has(rawRole)              ? rawRole              : null;
+  const statusFilter            = VALID_STATUSES.has(rawStatus)         ? rawStatus            : null;
+  const verificationStateFilter = VALID_VERIFICATION_STATES.has(rawVerificationState) ? rawVerificationState : null;
 
   const where = {};
 
@@ -157,8 +163,9 @@ async function getUsersList(query = {}, admin = {}) {
     where.OR = searchConditions;
   }
 
-  if (roleFilter) where.role = roleFilter;
-  if (statusFilter) where.status = statusFilter;
+  if (roleFilter)              where.role              = roleFilter;
+  if (statusFilter)            where.status            = statusFilter;
+  if (verificationStateFilter) where.verificationState = verificationStateFilter;
 
   const skip = (page - 1) * limit;
 

@@ -12,6 +12,13 @@ import EditUserModal from '../components/users/EditUserModal';
 import DeleteUserDialog from '../components/users/DeleteUserDialog';
 import { useToast, ToastContainer } from '../components/users/Toast';
 import UserAnalytics from '../components/users/UserAnalytics';
+import ImportUsersModal from '../components/users/ImportUsersModal';
+import ExportUsersModal from '../components/users/ExportUsersModal';
+import BulkActionsMenu from '../components/users/BulkActionsMenu';
+import SuspendedTab from '../components/users/SuspendedTab';
+import PendingVerificationTab from '../components/users/PendingVerificationTab';
+import ArchivedTab from '../components/users/ArchivedTab';
+import InvitationsTab from '../components/users/InvitationsTab';
 import type { User } from '../types/users';
 
 // ── Tab config ─────────────────────────────────────────────────────────────────
@@ -83,6 +90,9 @@ export default function UserManagementPage() {
   const [addUserOpen, setAddUserOpen]  = useState(false);
   const [editUser,    setEditUser]     = useState<User | null>(null);
   const [deleteUser,  setDeleteUser]   = useState<User | null>(null);
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+  const [importOpen,  setImportOpen]   = useState(false);
+  const [exportOpen,  setExportOpen]   = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
@@ -128,7 +138,7 @@ export default function UserManagementPage() {
 
   useEffect(() => { load(); }, [load]);
 
-  const handleTabChange = (key: TabKey) => { setActiveTab(key); if (key === 'users') setPage(1); };
+  const handleTabChange = (key: TabKey) => { setActiveTab(key); if (key === 'users') setPage(1); setSelectedUserIds([]); };
   const filterSetter = (setter: (v: string) => void) => (v: string) => { setter(v); setPage(1); };
   const handleLimitChange = (n: number) => { setLimit(n); setPage(1); };
 
@@ -200,8 +210,14 @@ export default function UserManagementPage() {
         {/* ── Analytics tab ─────────────────────────────────────────────────────── */}
         {activeTab === 'analytics' && <UserAnalytics />}
 
-        {/* ── Non-Users / non-Analytics tabs ────────────────────────────────────── */}
-        {activeTab !== 'users' && activeTab !== 'analytics' && (
+        {/* ── Per-tab components ────────────────────────────────────────────────── */}
+        {activeTab === 'invitations'          && <InvitationsTab />}
+        {activeTab === 'suspended'            && <SuspendedTab />}
+        {activeTab === 'pending-verification' && <PendingVerificationTab />}
+        {activeTab === 'archived'             && <ArchivedTab />}
+        {activeTab !== 'users' && activeTab !== 'analytics' &&
+          activeTab !== 'invitations' && activeTab !== 'suspended' &&
+          activeTab !== 'pending-verification' && activeTab !== 'archived' && (
           <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? ''} />
         )}
 
@@ -236,6 +252,31 @@ export default function UserManagementPage() {
               />
             </div>
 
+            {/* Import / Export row */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
+              <BulkActionsMenu selectedCount={selectedUserIds.length} onClearSelection={() => setSelectedUserIds([])} />
+              <div style={{ display: 'flex', gap: 6, marginLeft: 'auto' }}>
+                <button
+                  onClick={() => setExportOpen(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', fontSize: 12, fontWeight: 600, borderRadius: 6, border: '1px solid #e5e7eb', background: '#fff', color: '#374151', cursor: 'pointer', fontFamily: 'inherit' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#f9fafb'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#fff'; }}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Export
+                </button>
+                <button
+                  onClick={() => setImportOpen(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', fontSize: 12, fontWeight: 600, borderRadius: 6, border: '1px solid #bfdbfe', background: '#eff6ff', color: '#2563eb', cursor: 'pointer', fontFamily: 'inherit' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#dbeafe'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#eff6ff'; }}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Import
+                </button>
+              </div>
+            </div>
+
             {/* Table — flush top, shares border with filter row above */}
             <UserTable
               users={data?.users ?? []}
@@ -243,6 +284,8 @@ export default function UserManagementPage() {
               onViewUser={id => setSelectedUserId(id)}
               onEditUser={user => setEditUser(user)}
               onDeleteUser={user => setDeleteUser(user)}
+              selectedIds={selectedUserIds}
+              onSelectChange={setSelectedUserIds}
             />
 
             {/* ── Pagination ─────────────────────────────────────────────────────── */}
@@ -335,6 +378,18 @@ export default function UserManagementPage() {
             notifyDashboard();
           }}
           showToast={showToast}
+        />
+      )}
+      {importOpen && (
+        <ImportUsersModal
+          onClose={() => setImportOpen(false)}
+          showToast={showToast}
+        />
+      )}
+      {exportOpen && (
+        <ExportUsersModal
+          onClose={() => setExportOpen(false)}
+          totalUsers={data?.pagination.total}
         />
       )}
       <ToastContainer toasts={toasts} onDismiss={dismiss} />

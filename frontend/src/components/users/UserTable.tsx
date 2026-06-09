@@ -2,11 +2,13 @@ import { useState } from 'react';
 import type { User, UserStatus } from '../../types/users';
 
 interface Props {
-  users:         User[];
-  loading:       boolean;
-  onViewUser?:   (userId: string) => void;
-  onEditUser?:   (user: User) => void;
-  onDeleteUser?: (user: User) => void;
+  users:            User[];
+  loading:          boolean;
+  onViewUser?:      (userId: string) => void;
+  onEditUser?:      (user: User) => void;
+  onDeleteUser?:    (user: User) => void;
+  selectedIds?:     string[];
+  onSelectChange?:  (ids: string[]) => void;
 }
 
 // ── Role badge colours (per design spec) ──────────────────────────────────────
@@ -162,8 +164,21 @@ const TD: React.CSSProperties = {
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
-export default function UserTable({ users, loading, onViewUser, onEditUser, onDeleteUser }: Props) {
+export default function UserTable({ users, loading, onViewUser, onEditUser, onDeleteUser, selectedIds = [], onSelectChange }: Props) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const allChecked  = users.length > 0 && users.every(u => selectedIds.includes(u.id));
+  const someChecked = users.some(u => selectedIds.includes(u.id)) && !allChecked;
+
+  function toggleAll() {
+    if (!onSelectChange) return;
+    onSelectChange(allChecked ? selectedIds.filter(id => !users.some(u => u.id === id)) : [...new Set([...selectedIds, ...users.map(u => u.id)])]);
+  }
+
+  function toggleOne(id: string) {
+    if (!onSelectChange) return;
+    onSelectChange(selectedIds.includes(id) ? selectedIds.filter(x => x !== id) : [...selectedIds, id]);
+  }
 
   return (
     <div style={{
@@ -179,7 +194,14 @@ export default function UserTable({ users, loading, onViewUser, onEditUser, onDe
         <thead>
           <tr>
             <th style={{ ...TH, width: 40, textAlign: 'center' }}>
-              <input type="checkbox" disabled style={{ cursor: 'not-allowed', opacity: 0.35, accentColor: '#2563eb' }} />
+              <input
+                type="checkbox"
+                checked={allChecked}
+                ref={el => { if (el) el.indeterminate = someChecked; }}
+                onChange={toggleAll}
+                disabled={loading || !onSelectChange}
+                style={{ cursor: loading || !onSelectChange ? 'not-allowed' : 'pointer', opacity: !onSelectChange ? 0.35 : 1, accentColor: '#2563eb' }}
+              />
             </th>
             <th style={TH}>User</th>
             <th style={TH}>Email</th>
@@ -222,8 +244,13 @@ export default function UserTable({ users, loading, onViewUser, onEditUser, onDe
                       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     >
                       {/* Checkbox */}
-                      <td style={{ ...TD, textAlign: 'center' }}>
-                        <input type="checkbox" disabled style={{ cursor: 'not-allowed', opacity: 0.35, accentColor: '#2563eb' }} />
+                      <td style={{ ...TD, textAlign: 'center' }} onClick={e => e.stopPropagation()}>
+                        <input
+                          type="checkbox"
+                          checked={selectedIds.includes(user.id)}
+                          onChange={() => toggleOne(user.id)}
+                          style={{ cursor: 'pointer', accentColor: '#2563eb' }}
+                        />
                       </td>
 
                       {/* User */}

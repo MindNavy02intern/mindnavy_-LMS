@@ -7,18 +7,20 @@ import type {
   AssignRoleRequest,
   ActionResponse,
   AnalyticsResponse,
+  ImportResult,
 } from '../types/users';
 import { getStoredToken } from './adminAuth';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
 export interface UsersParams {
-  page?:       number;
-  limit?:      number;
-  search?:     string;
-  role?:       string;
-  department?: string;
-  status?:     string;
+  page?:              number;
+  limit?:             number;
+  search?:            string;
+  role?:              string;
+  department?:        string;
+  status?:            string;
+  verificationState?: string;
 }
 
 // TODO: REMOVE — temporary mock data while backend 500 is being fixed
@@ -51,12 +53,13 @@ const USERS_MOCK: UsersResponse = {
 export async function getUsers(params: UsersParams = {}): Promise<UsersResponse> {
   const token = getStoredToken();
   const qs = new URLSearchParams();
-  if (params.page       !== undefined) qs.set('page',       String(params.page));
-  if (params.limit      !== undefined) qs.set('limit',      String(params.limit));
-  if (params.search)                   qs.set('search',     params.search);
-  if (params.role)                     qs.set('role',       params.role);
-  if (params.department)               qs.set('department', params.department);
-  if (params.status)                   qs.set('status',     params.status);
+  if (params.page              !== undefined) qs.set('page',              String(params.page));
+  if (params.limit             !== undefined) qs.set('limit',             String(params.limit));
+  if (params.search)                          qs.set('search',            params.search);
+  if (params.role)                            qs.set('role',              params.role);
+  if (params.department)                      qs.set('department',        params.department);
+  if (params.status)                          qs.set('status',            params.status);
+  if (params.verificationState)               qs.set('verificationState', params.verificationState);
 
   const url = `${BASE_URL}/users?${qs.toString()}`;
   console.log('[users] GET', url, { token: token ? 'present' : 'missing' });
@@ -208,6 +211,28 @@ export async function getUserDetails(userId: string): Promise<UserDetailsRespons
   // TODO: REMOVE — temporary mock data while backend is being wired up
   console.warn('[users] getUserDetails: using fallback mock — real userId:', userId);
   return { ...DETAILS_MOCK, user: { ...DETAILS_MOCK.user, id: userId } };
+}
+
+// ── importUsers ────────────────────────────────────────────────────────────────
+
+export async function importUsers(file: File): Promise<ImportResult> {
+  const token = getStoredToken();
+  const formData = new FormData();
+  formData.append('file', file);
+  // No Content-Type header — browser sets multipart/form-data + boundary automatically
+  try {
+    const res = await fetch(`${BASE_URL}/users/import`, {
+      method: 'POST',
+      headers: { Authorization: token ? `Bearer ${token}` : '' },
+      body: formData,
+    });
+    if (res.ok) return await res.json() as ImportResult;
+    const err = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
+    throw new ApiError(res.status, (err as { message?: string }).message ?? `HTTP ${res.status}`);
+  } catch (err) {
+    if (err instanceof ApiError) throw err;
+    throw new ApiError(0, 'Network error during import');
+  }
 }
 
 // ── getAnalytics ───────────────────────────────────────────────────────────────
