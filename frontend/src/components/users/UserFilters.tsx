@@ -19,27 +19,7 @@ const INPUT: React.CSSProperties = {
   transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
 };
 
-const SELECT: React.CSSProperties = {
-  ...INPUT,
-  padding: '5px 8px',
-  cursor: 'pointer',
-};
-
-const ICON_BTN: React.CSSProperties = {
-  display: 'flex', alignItems: 'center', gap: 5,
-  padding: '5px 10px', fontSize: 12, fontFamily: 'inherit',
-  background: '#f9fafb', border: '1px solid #d1d5db',
-  borderRadius: 6, color: '#6b7280',
-  cursor: 'not-allowed', opacity: 0.65, whiteSpace: 'nowrap',
-};
-
-const ACTION_BTN: React.CSSProperties = {
-  display: 'flex', alignItems: 'center', gap: 4,
-  padding: '5px 10px', fontSize: 12, fontFamily: 'inherit',
-  background: '#ffffff', color: '#374151',
-  border: '1px solid #d1d5db', borderRadius: 6,
-  cursor: 'not-allowed', opacity: 0.6, whiteSpace: 'nowrap',
-};
+const SELECT: React.CSSProperties = { ...INPUT, padding: '5px 8px', cursor: 'pointer' };
 
 export default function UserFilters({
   search, onSearch, role, onRole, department, onDepartment, status, onStatus, onAddUser,
@@ -47,7 +27,7 @@ export default function UserFilters({
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
 
-      {/* ── Left group: search + filter dropdowns ─────────────────────────────── */}
+      {/* Left: search + filter dropdowns */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
 
         {/* Search */}
@@ -69,7 +49,7 @@ export default function UserFilters({
           />
         </div>
 
-        {/* All Roles */}
+        {/* Role */}
         <select
           value={role} onChange={e => onRole(e.target.value)} style={{ ...SELECT, width: 130 }}
           onFocus={e => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(59,130,246,0.15)'; }}
@@ -85,7 +65,7 @@ export default function UserFilters({
           <option value="Branch Manager">Branch Manager</option>
         </select>
 
-        {/* All Departments */}
+        {/* Department */}
         <select
           value={department} onChange={e => onDepartment(e.target.value)} style={{ ...SELECT, width: 160 }}
           onFocus={e => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(59,130,246,0.15)'; }}
@@ -97,7 +77,7 @@ export default function UserFilters({
           ))}
         </select>
 
-        {/* All Status */}
+        {/* Status */}
         <select
           value={status} onChange={e => onStatus(e.target.value)} style={{ ...SELECT, width: 120 }}
           onFocus={e => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(59,130,246,0.15)'; }}
@@ -110,47 +90,24 @@ export default function UserFilters({
           <option value="archived">Archived</option>
           <option value="invited">Invited</option>
         </select>
-
-        {/* Filters */}
-        <button disabled style={ICON_BTN} title="Coming soon">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
-          </svg>
-          Filters
-        </button>
-
-        {/* Columns */}
-        <button disabled style={ICON_BTN} title="Coming soon">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>
-          </svg>
-          Columns
-        </button>
       </div>
 
-      {/* ── Right group: action buttons ───────────────────────────────────────── */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <button
-          onClick={onAddUser}
-          style={{
-            ...ACTION_BTN,
-            background: '#16a34a', color: '#fff', border: '1px solid #15803d', fontWeight: 600,
-            cursor: onAddUser ? 'pointer' : 'not-allowed',
-            opacity: 1,
-          }}
-          title={onAddUser ? 'Add a new user' : 'Coming soon'}
-        >
-          + Add User
-        </button>
-        <button disabled style={ACTION_BTN} title="Coming soon">Import Users</button>
-        <button disabled style={ACTION_BTN} title="Coming soon">Export Users</button>
-        <button disabled style={{ ...ACTION_BTN, gap: 4 }} title="Coming soon">
-          Bulk Actions
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
-        </button>
-      </div>
+      {/* Right: Add User */}
+      <button
+        onClick={onAddUser}
+        style={{
+          display: 'flex', alignItems: 'center', gap: 4,
+          padding: '5px 12px', fontSize: 12, fontFamily: 'inherit',
+          background: '#16a34a', color: '#fff', border: '1px solid #15803d',
+          borderRadius: 6, fontWeight: 600,
+          cursor: onAddUser ? 'pointer' : 'default',
+        }}
+        onMouseEnter={e => { if (onAddUser) e.currentTarget.style.background = '#15803d'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = '#16a34a'; }}
+        title={onAddUser ? 'Add a new user' : undefined}
+      >
+        + Add User
+      </button>
     </div>
   );
 }

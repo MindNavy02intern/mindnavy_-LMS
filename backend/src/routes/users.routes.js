@@ -19,6 +19,7 @@ const {
   deleteUser,
   getUsersAnalytics,
   importUsers,
+  bulkActionUsers,
 } = require("../controllers/users.controller");
 
 const router = express.Router();
@@ -34,7 +35,9 @@ router.get("/:id", requireAdminAuth, getUserDetails);
 router.post("/", requireAdminAuth, adminUserActionRateLimiter, createUser);
 
 // Import route BEFORE /:id — "import" must not be treated as a user id
-router.post("/import", requireAdminAuth, adminUsersImportRateLimiter, uploadUsersCsv, importUsers);
+router.post("/import",       requireAdminAuth, adminUsersImportRateLimiter, uploadUsersCsv, importUsers);
+// Bulk-action BEFORE /:id — "bulk-action" must not be treated as a user id
+router.post("/bulk-action",  requireAdminAuth, adminUserActionRateLimiter,  bulkActionUsers);
 
 // Sub-resource routes must come before bare /:id to avoid shadowing
 router.patch("/:id/status",     requireAdminAuth, adminUserActionRateLimiter, updateUserStatus);
