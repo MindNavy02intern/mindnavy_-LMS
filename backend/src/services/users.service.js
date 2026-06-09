@@ -140,12 +140,21 @@ async function getUsersList(query = {}, admin = {}) {
   const rawVerificationState = typeof query.verificationState === "string"
     ? query.verificationState.trim().toUpperCase()
     : "";
+  const rawDepartment = typeof query.department === "string"
+    ? query.department.trim()
+    : "";
 
   const VALID_VERIFICATION_STATES = new Set(["VERIFIED", "PENDING", "REJECTED", "EXPIRED"]);
 
   const roleFilter              = VALID_ROLES.has(rawRole)              ? rawRole              : null;
   const statusFilter            = VALID_STATUSES.has(rawStatus)         ? rawStatus            : null;
   const verificationStateFilter = VALID_VERIFICATION_STATES.has(rawVerificationState) ? rawVerificationState : null;
+  const departmentFilter        = rawDepartment || null;
+
+  const rawCreatedAfter  = typeof query.createdAfter  === "string" ? query.createdAfter.trim()  : "";
+  const rawCreatedBefore = typeof query.createdBefore === "string" ? query.createdBefore.trim() : "";
+  const createdAfterDate  = rawCreatedAfter  ? new Date(rawCreatedAfter)  : null;
+  const createdBeforeDate = rawCreatedBefore ? new Date(rawCreatedBefore) : null;
 
   const where = {};
 
@@ -166,6 +175,9 @@ async function getUsersList(query = {}, admin = {}) {
   if (roleFilter)              where.role              = roleFilter;
   if (statusFilter)            where.status            = statusFilter;
   if (verificationStateFilter) where.verificationState = verificationStateFilter;
+  if (departmentFilter)        where.department        = { equals: departmentFilter, mode: "insensitive" };
+  if (createdAfterDate && !isNaN(createdAfterDate.getTime()))  where.createdAt = { ...where.createdAt, gte: createdAfterDate };
+  if (createdBeforeDate && !isNaN(createdBeforeDate.getTime())) where.createdAt = { ...where.createdAt, lte: createdBeforeDate };
 
   const skip = (page - 1) * limit;
 
@@ -806,6 +818,67 @@ async function importUsersFromCsv(file, admin = {}) {
   };
 }
 
+// ── bulkActionUsers (Task 6E) ─────────────────────────────────────────────────
+
+async function bulkActionUsers(body, admin) {
+  const VALID_ACTIONS = new Set(["suspend", "reactivate", "delete", "assign_role", "notify"]);
+
+  const action =
+    typeof body.action === "string" ? body.action.trim().toLowerCase() : "";
+  if (!VALID_ACTIONS.has(action)) {
+    const err = new Error(
+      `Invalid action: "${action}". Must be one of: ${[...VALID_ACTIONS].join(", ")}.`
+    );
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const userIds = Array.isArray(body.userIds)
+    ? body.userIds.filter((id) => typeof id === "string" && id.trim())
+    : [];
+  if (userIds.length === 0) {
+    const err = new Error("userIds must be a non-empty array of strings.");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const params =
+    body.params && typeof body.params === "object" ? body.params : {};
+
+  let succeeded = 0;
+  let failed = 0;
+  const errors = [];
+
+  for (const id of userIds) {
+    try {
+      if (action === "suspend") {
+        await suspendUser(id, { reason: params.reason || "Bulk action", notes: null }, admin);
+      } else if (action === "reactivate") {
+        await reactivateUser(id, admin);
+      } else if (action === "delete") {
+        await deleteUser(id, admin);
+      } else if (action === "assign_role") {
+        const roleId = params.role || params.roleId;
+        await assignUserRole(id, { roleId, type: "primary", expiresAt: null }, admin);
+      } else if (action === "notify") {
+        console.log(`[bulk:notify] user=${id} message=${params.message || "(none)"}`);
+      }
+      succeeded++;
+    } catch (err) {
+      failed++;
+      errors.push({ id, message: err.message || "Unknown error" });
+    }
+  }
+
+  return {
+    success: true,
+    message: `Bulk ${action}: ${succeeded} succeeded, ${failed} failed`,
+    succeeded,
+    failed,
+    errors,
+  };
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -819,4 +892,5 @@ module.exports = {
   deleteUser,
   getUsersAnalytics,
   importUsersFromCsv,
+  bulkActionUsers,
 };

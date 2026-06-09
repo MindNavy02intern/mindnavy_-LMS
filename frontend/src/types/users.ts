@@ -170,7 +170,6 @@ export interface AnalyticsResponse {
 }
 
 // ── Task 6E: Import types ──────────────────────────────────────────────────────
-// Field names match POST /api/admin/users/import response contract exactly.
 
 export interface ImportError {
   row:     number;
@@ -190,4 +189,21 @@ export interface ImportResult {
   message: string;
   summary: ImportSummary;
   errors:  ImportError[];
+}
+
+// ── Task 6E: Bulk action types ─────────────────────────────────────────────────
+
+export type BulkActionType = 'suspend' | 'reactivate' | 'delete' | 'assign_role' | 'notify';
+
+export interface BulkActionError {
+  id:      string;
+  message: string;
+}
+
+export interface BulkActionResponse {
+  success:   boolean;
+  message:   string;
+  succeeded: number;
+  failed:    number;
+  errors:    BulkActionError[];
 }

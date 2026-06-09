@@ -1,16 +1,16 @@
-# Graph Report - mindnavy LMS  (2026-06-08)
+# Graph Report - mindnavy LMS  (2026-06-09)
 
 ## Corpus Check
-- 85 files · ~78,793 words
+- 92 files · ~86,173 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 794 nodes · 1205 edges · 45 communities (37 shown, 8 thin omitted)
+- 846 nodes · 1284 edges · 49 communities (41 shown, 8 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `068e09ce`
+- Built from commit: `5bef0918`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -56,12 +56,16 @@
 - [[_COMMUNITY_Community 42|Community 42]]
 - [[_COMMUNITY_Community 43|Community 43]]
 - [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 45|Community 45]]
+- [[_COMMUNITY_Community 46|Community 46]]
+- [[_COMMUNITY_Community 47|Community 47]]
+- [[_COMMUNITY_Community 48|Community 48]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 17 edges
 2. `useAuth()` - 17 edges
 3. `compilerOptions` - 16 edges
-4. `getStoredToken()` - 15 edges
+4. `getStoredToken()` - 16 edges
 5. `createUserAuditLog()` - 12 edges
 6. `validatePasswordStrength()` - 10 edges
 7. `assertUserExists()` - 9 edges
@@ -81,15 +85,15 @@
 - `validateResetUserPasswordInput()` --calls--> `validatePasswordStrength()`  [EXTRACTED]
   backend/src/validators/users.validator.js → backend/src/utils/passwordPolicy.js
 
-## Communities (45 total, 8 thin omitted)
+## Communities (49 total, 8 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.15
 Nodes (11): getPasswordStrength(), PasswordStrengthMeter(), REQUIREMENTS, Props, ResetPasswordForm(), PasswordChecks, PasswordResetConfirm, PasswordResetRequest (+3 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.05
-Nodes (22): NAV, NAV_SECTIONS, NavItem, NavSection, Props, QA_TOPBAR_ACTIONS, LIMIT_OPTIONS, pageRange() (+14 more)
+Cohesion: 0.12
+Nodes (6): NAV, NAV_SECTIONS, NavItem, NavSection, Props, QA_TOPBAR_ACTIONS
 
 ### Community 2 - "Community 2"
 Cohesion: 0.09
@@ -136,8 +140,8 @@ Cohesion: 0.10
 Nodes (20): adminRoutes, app, cors, corsOptions, dashboardRoutes, express, server, usersRoutes (+12 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.36
-Nodes (4): Props, Props, supabase, getAuthErrorMessage()
+Cohesion: 0.12
+Nodes (8): UserStatus, AVATAR_PALETTES, Props, sk(), SkeletonRow(), STATUS_MAP, TD, TH
 
 ### Community 21 - "Community 21"
 Cohesion: 0.04
@@ -152,24 +156,20 @@ Cohesion: 0.67
 Nodes (3): DashboardPage(), formatDate(), getGreeting()
 
 ### Community 24 - "Community 24"
-Cohesion: 0.25
-Nodes (6): AssignRoleRequest, RoleType, INPUT, Props, ROLES, TYPES
+Cohesion: 0.15
+Nodes (9): LIMIT_OPTIONS, pageRange(), TabKey, TABS, UserManagementPage(), UsersResponse, ACTIONS, Props (+1 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.18
-Nodes (16): adminFetch(), AdminUser, apiGetMe(), apiLogin(), apiLogout(), apiSendOtp(), apiVerifyOtp(), bearer() (+8 more)
+Cohesion: 0.14
+Nodes (13): AdminUser, removeToken(), storeToken(), Props, ProtectedRoute(), AuthContext, AuthContextType, AuthProvider() (+5 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.15
-Nodes (10): ApiError, SuspendUserRequest, INPUT, Props, Props, TA, ContainerProps, ToastContainer() (+2 more)
+Cohesion: 0.10
+Nodes (16): ApiError, AssignRoleRequest, RoleType, SuspendUserRequest, INPUT, Props, ROLES, TYPES (+8 more)
 
 ### Community 27 - "Community 27"
-Cohesion: 0.22
-Nodes (13): actionFetch(), assignRole(), createUser(), deleteUser(), DETAILS_MOCK, reactivateUser(), resetPassword(), suspendUser() (+5 more)
-
-### Community 28 - "Community 28"
-Cohesion: 0.18
-Nodes (6): apiForgotPassword(), apiResetPassword(), requestPasswordReset(), updatePassword(), Props, ForgotPasswordStep
+Cohesion: 0.24
+Nodes (12): actionFetch(), assignRole(), createUser(), deleteUser(), DETAILS_MOCK, reactivateUser(), resetPassword(), suspendUser() (+4 more)
 
 ### Community 29 - "Community 29"
 Cohesion: 0.17
@@ -181,15 +181,15 @@ Nodes (3): BAR_COLORS, Props, DepartmentAnalyticsItem
 
 ### Community 32 - "Community 32"
 Cohesion: 0.18
-Nodes (10): ActivityItem, CourseStatus, DailyTrendItem, EnrolledCourse, Pagination, RiskScore, SecurityOverview, UserDetails (+2 more)
+Nodes (10): ActivityItem, DailyTrendItem, EnrolledCourse, ImportError, ImportSummary, Pagination, SecurityOverview, UserDetails (+2 more)
 
 ### Community 33 - "Community 33"
 Cohesion: 0.05
 Nodes (52): adapter, prisma, { PrismaClient }, { PrismaPg }, prisma, bcrypt, createFirstAdmin(), prisma (+44 more)
 
 ### Community 34 - "Community 34"
-Cohesion: 0.07
-Nodes (11): AVATAR_PALETTES, avatarPalette(), DRAWER_TABS, DrawerTab, formatDate(), formatRelative(), initials(), Props (+3 more)
+Cohesion: 0.06
+Nodes (15): CourseStatus, RiskScore, UserDetailsResponse, Props, AVATAR_PALETTES, avatarPalette(), DRAWER_TABS, DrawerTab (+7 more)
 
 ### Community 35 - "Community 35"
 Cohesion: 0.29
@@ -200,40 +200,60 @@ Cohesion: 0.11
 Nodes (16): ACCESS_LEVEL_OPTIONS, BRANCH_OPTIONS, DEPARTMENT_OPTIONS, ROLE_OPTIONS, CreateUserRequest, ACCESS, ERR_INPUT, FormKey (+8 more)
 
 ### Community 37 - "Community 37"
-Cohesion: 0.20
-Nodes (7): LoginForm(), AdminLayout(), LoginPage(), SignupPage(), TrustedDevicesPage(), VerifyDevicePage(), useAuth()
+Cohesion: 0.15
+Nodes (11): LoginForm(), Props, Props, AdminLayout(), LoginPage(), SignupPage(), TrustedDevicesPage(), VerifyDevicePage() (+3 more)
 
 ### Community 38 - "Community 38"
 Cohesion: 0.20
 Nodes (7): UpdateUserRequest, ACCESS, DISABLED, EditInitialData, ERR_INPUT, INPUT, Props
+
+### Community 39 - "Community 39"
+Cohesion: 0.35
+Nodes (11): adminFetch(), apiForgotPassword(), apiGetMe(), apiLogin(), apiLogout(), apiResetPassword(), apiSendOtp(), apiVerifyOtp() (+3 more)
 
 ### Community 40 - "Community 40"
 Cohesion: 0.29
 Nodes (4): Props, STATUS_COLORS, STATUS_LABELS, VerificationStatusItem
 
 ### Community 41 - "Community 41"
-Cohesion: 0.40
-Nodes (4): Props, ProtectedRoute(), Profile, UserRole
+Cohesion: 0.20
+Nodes (6): User, PALETTES, sk(), SkeletonRow(), TD, TH
+
+### Community 45 - "Community 45"
+Cohesion: 0.22
+Nodes (5): PALETTES, sk(), SkeletonRow(), TD, TH
+
+### Community 46 - "Community 46"
+Cohesion: 0.25
+Nodes (5): getUsers(), sk(), SkeletonRow(), TD, TH
+
+### Community 47 - "Community 47"
+Cohesion: 0.25
+Nodes (7): importUsers(), ImportResult, CSVPreview, formatBytes(), ImportUsersModal(), Props, REQUIRED_HEADERS
+
+### Community 48 - "Community 48"
+Cohesion: 0.29
+Nodes (5): FieldKey, FIELDS, FormatKey, FORMATS, Props
 
 ## Knowledge Gaps
-- **340 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+335 more)
+- **360 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+355 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getStoredToken()` connect `Community 22` to `Community 25`, `Community 2`, `Community 27`, `Community 42`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `useAuth()` connect `Community 37` to `Community 1`, `Community 2`, `Community 6`, `Community 41`, `Community 20`, `Community 23`, `Community 25`?**
-  _High betweenness centrality (0.013) - this node is a cross-community bridge._
-- **Why does `supabase` connect `Community 20` to `Community 25`, `Community 28`, `Community 37`, `Community 30`?**
+- **Why does `getStoredToken()` connect `Community 22` to `Community 2`, `Community 39`, `Community 46`, `Community 47`, `Community 25`, `Community 27`?**
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
+- **Why does `useAuth()` connect `Community 37` to `Community 1`, `Community 2`, `Community 6`, `Community 23`, `Community 25`?**
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+- **Why does `supabase` connect `Community 37` to `Community 25`, `Community 30`, `Community 39`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _340 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _360 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.14619883040935672 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.049682875264270614 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.08858858858858859 - nodes in this community are weakly interconnected._

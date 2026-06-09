@@ -268,6 +268,28 @@ async function importUsers(req, res) {
   }
 }
 
+// ─── Task 6E: Bulk Action ─────────────────────────────────────────────────────
+
+async function bulkActionUsers(req, res) {
+  const body = req.body || {};
+  if (!body.action || !Array.isArray(body.userIds) || body.userIds.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "body must include action (string) and userIds (non-empty array).",
+    });
+  }
+  try {
+    const result = await usersService.bulkActionUsers(body, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 400) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+    console.error("[users] bulkActionUsers error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Bulk action failed." });
+  }
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -281,4 +303,5 @@ module.exports = {
   deleteUser,
   getUsersAnalytics,
   importUsers,
+  bulkActionUsers,
 };

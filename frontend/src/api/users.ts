@@ -8,6 +8,8 @@ import type {
   ActionResponse,
   AnalyticsResponse,
   ImportResult,
+  BulkActionType,
+  BulkActionResponse,
 } from '../types/users';
 import { getStoredToken } from './adminAuth';
 
@@ -21,6 +23,8 @@ export interface UsersParams {
   department?:        string;
   status?:            string;
   verificationState?: string;
+  createdAfter?:      string;
+  createdBefore?:     string;
 }
 
 // TODO: REMOVE — temporary mock data while backend 500 is being fixed
@@ -60,6 +64,8 @@ export async function getUsers(params: UsersParams = {}): Promise<UsersResponse>
   if (params.department)                      qs.set('department',        params.department);
   if (params.status)                          qs.set('status',            params.status);
   if (params.verificationState)               qs.set('verificationState', params.verificationState);
+  if (params.createdAfter)                    qs.set('createdAfter',      params.createdAfter);
+  if (params.createdBefore)                   qs.set('createdBefore',     params.createdBefore);
 
   const url = `${BASE_URL}/users?${qs.toString()}`;
   console.log('[users] GET', url, { token: token ? 'present' : 'missing' });
@@ -233,6 +239,27 @@ export async function importUsers(file: File): Promise<ImportResult> {
     if (err instanceof ApiError) throw err;
     throw new ApiError(0, 'Network error during import');
   }
+}
+
+// ── bulkAction ────────────────────────────────────────────────────────────────
+
+export async function bulkAction(body: {
+  userIds: string[];
+  action:  BulkActionType;
+  params:  Record<string, string>;
+}): Promise<BulkActionResponse> {
+  const token = getStoredToken();
+  const res = await fetch(`${BASE_URL}/users/bulk-action`, {
+    method:  'POST',
+    headers: {
+      Authorization:  token ? `Bearer ${token}` : '',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+  if (res.ok) return await res.json() as BulkActionResponse;
+  const err = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
+  throw new ApiError(res.status, (err as { message?: string }).message ?? `HTTP ${res.status}`);
 }
 
 // ── getAnalytics ───────────────────────────────────────────────────────────────
