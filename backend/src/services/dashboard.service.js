@@ -1,4 +1,5 @@
 const prisma = require("../config/prisma");
+const { getUsersAnalytics } = require("./users.service");
 
 async function getDashboardCore(admin) {
   const [
@@ -58,7 +59,51 @@ async function getDashboardCore(admin) {
 }
 
 async function getDashboardAnalytics(filters = {}) {
-  // TODO: replace with real DB queries when tables are ready
+  // Pull real data from the users analytics service AND direct status counts in parallel
+  const [ua, activeUsers, suspendedUsers] = await Promise.allSettled([
+    getUsersAnalytics(),
+    prisma.appUser.count({ where: { status: "ACTIVE" } }),
+    prisma.appUser.count({ where: { status: "SUSPENDED" } }),
+  ]).then(([uaRes, activeRes, suspendedRes]) => [
+    uaRes.status     === "fulfilled" ? uaRes.value     : null,
+    activeRes.status === "fulfilled" ? activeRes.value : 0,
+    suspendedRes.status === "fulfilled" ? suspendedRes.value : 0,
+  ]);
+
+  if (!ua) console.error("[dashboard] getUsersAnalytics failed — charts will be empty");
+
+  // Map users-service role keys (LEARNER) → dashboard role keys (learners)
+  const ROLE_MAP = {
+    LEARNER:         "learners",
+    INSTRUCTOR:      "instructors",
+    MANAGER:         "managers",
+    ADMIN_ASSISTANT: "admins",
+  };
+
+  const usersByRole = (ua?.usersByRole ?? []).map(r => ({
+    role:       ROLE_MAP[r.role] ?? "others",
+    count:      r.count,
+    percentage: r.percentage,
+  }));
+
+  // Raw department list (users-service format: { department, count })
+  const usersByDepartment = ua?.usersByDepartment ?? [];
+
+  // Raw activity data (users-service format: { activeToday, activeThisWeek, dailyTrend })
+  const userActivity = ua?.userActivity ?? { activeToday: 0, activeThisWeek: 0, dailyTrend: [] };
+
+  // Raw verification data (users-service format: { status, count, percentage })
+  const verificationStatus = ua?.verificationStatus ?? [];
+
+  // topDepartments keeps existing frontend shape: { id, name, usersCount }
+  const topDepartments = usersByDepartment.slice(0, 8).map(d => ({
+    id:         d.department,
+    name:       d.department,
+    usersCount: d.count,
+  }));
+
+  const verifiedCount = verificationStatus.find(v => v.status === "verified")?.count ?? 0;
+
   return {
     filters: {
       dateFrom:     filters.dateFrom     || null,
@@ -66,7 +111,11 @@ async function getDashboardAnalytics(filters = {}) {
       departmentId: filters.departmentId || null,
     },
     learningActivity: [],
-    usersByRole:      [],
+    usersByRole,
+    usersByDepartment,
+    userActivity,
+    verificationStatus,
+    topDepartments,
     revenueOverview: {
       dailyRevenue:        0,
       monthlyRevenue:      0,
@@ -77,11 +126,11 @@ async function getDashboardAnalytics(filters = {}) {
       growthPercentage:    0,
     },
     userAnalytics: {
-      newRegistrations: 0,
-      activeUsers:      0,
+      newRegistrations: ua?.newUsersThisMonth?.count ?? 0,
+      activeUsers,
       retentionRate:    0,
-      verifiedUsers:    0,
-      suspendedUsers:   0,
+      verifiedUsers:    verifiedCount,
+      suspendedUsers,
     },
     courseAnalytics: {
       totalCourses:           0,
@@ -102,7 +151,7 @@ async function getDashboardAnalytics(filters = {}) {
       averageReviewScore:    0,
     },
     studentEngagement: {
-      dailyActiveStudents:        0,
+      dailyActiveStudents:        userActivity.activeToday,
       quizParticipationRate:      0,
       assignmentCompletionRate:   0,
       averageLearningTimeMinutes: 0,
@@ -113,7 +162,6 @@ async function getDashboardAnalytics(filters = {}) {
       engagement:   0,
       satisfaction: 0,
     },
-    topDepartments: [],
   };
 }
 

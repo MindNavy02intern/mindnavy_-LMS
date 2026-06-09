@@ -111,9 +111,9 @@ const QA_TOPBAR_ACTIONS = [
 // ── Nav config ────────────────────────────────────────────────────────────────
 
 interface NavItem {
-  to: string;
-  label: string;
-  Icon: () => React.ReactElement;
+  to:     string;
+  label:  string;
+  Icon:   () => React.ReactElement;
   badge?: number;
 }
 
@@ -126,15 +126,15 @@ const NAV_SECTIONS: NavSection[] = [
   {
     label: 'Main',
     items: [
-      { to: '/dashboard', label: 'Dashboard',      Icon: IconGrid   },
-      { to: '/courses',   label: 'Learning Mgmt',  Icon: IconBook,  badge: 3 },
-      { to: '/users',     label: 'Users',            Icon: IconUsers  },
+      { to: '/dashboard', label: 'Dashboard',       Icon: IconGrid   },
+      { to: '/users',     label: 'User Management', Icon: IconUsers  },
+      { to: '/courses',   label: 'Learning Mgmt',   Icon: IconBook, badge: 3 },
     ],
   },
   {
     label: 'Administration',
     items: [
-      { to: '/trusted-devices', label: 'Audit & Security', Icon: IconShield },
+      { to: '/trusted-devices', label: 'Audit & Security', Icon: IconShield   },
       { to: '/settings',        label: 'System Settings',  Icon: IconSettings },
     ],
   },

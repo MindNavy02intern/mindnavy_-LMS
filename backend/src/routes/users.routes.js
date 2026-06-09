@@ -23,6 +23,7 @@ const {
   deleteUser,
   getUsersAnalytics,
   importUsers,
+  bulkActionUsers,
 } = require("../controllers/users.controller");
 
 const router = express.Router();
@@ -38,6 +39,10 @@ router.get(
   getUsersAnalytics
 );
 
+// Import route BEFORE /:id — "import" must not be treated as a user id
+// router.post("/import",       requireAdminAuth, adminUsersImportRateLimiter, uploadUsersCsv, importUsers);
+// Bulk-action BEFORE /:id — "bulk-action" must not be treated as a user id
+router.post("/bulk-action",  requireAdminAuth, adminUserActionRateLimiter,  bulkActionUsers);
 
 
 router.post(

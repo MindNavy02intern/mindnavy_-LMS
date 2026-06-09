@@ -137,9 +137,24 @@ async function getUsersList(query = {}, admin = {}) {
   const rawStatus = typeof query.status === "string"
     ? query.status.trim().toUpperCase()
     : "";
+  const rawVerificationState = typeof query.verificationState === "string"
+    ? query.verificationState.trim().toUpperCase()
+    : "";
+  const rawDepartment = typeof query.department === "string"
+    ? query.department.trim()
+    : "";
 
-  const roleFilter = VALID_ROLES.has(rawRole) ? rawRole : null;
-  const statusFilter = VALID_STATUSES.has(rawStatus) ? rawStatus : null;
+  const VALID_VERIFICATION_STATES = new Set(["VERIFIED", "PENDING", "REJECTED", "EXPIRED"]);
+
+  const roleFilter              = VALID_ROLES.has(rawRole)              ? rawRole              : null;
+  const statusFilter            = VALID_STATUSES.has(rawStatus)         ? rawStatus            : null;
+  const verificationStateFilter = VALID_VERIFICATION_STATES.has(rawVerificationState) ? rawVerificationState : null;
+  const departmentFilter        = rawDepartment || null;
+
+  const rawCreatedAfter  = typeof query.createdAfter  === "string" ? query.createdAfter.trim()  : "";
+  const rawCreatedBefore = typeof query.createdBefore === "string" ? query.createdBefore.trim() : "";
+  const createdAfterDate  = rawCreatedAfter  ? new Date(rawCreatedAfter)  : null;
+  const createdBeforeDate = rawCreatedBefore ? new Date(rawCreatedBefore) : null;
 
   const where = {};
 
@@ -157,8 +172,12 @@ async function getUsersList(query = {}, admin = {}) {
     where.OR = searchConditions;
   }
 
-  if (roleFilter) where.role = roleFilter;
-  if (statusFilter) where.status = statusFilter;
+  if (roleFilter)              where.role              = roleFilter;
+  if (statusFilter)            where.status            = statusFilter;
+  if (verificationStateFilter) where.verificationState = verificationStateFilter;
+  if (departmentFilter)        where.department        = { equals: departmentFilter, mode: "insensitive" };
+  if (createdAfterDate && !isNaN(createdAfterDate.getTime()))  where.createdAt = { ...where.createdAt, gte: createdAfterDate };
+  if (createdBeforeDate && !isNaN(createdBeforeDate.getTime())) where.createdAt = { ...where.createdAt, lte: createdBeforeDate };
 
   const skip = (page - 1) * limit;
 
@@ -566,106 +585,86 @@ async function deleteUser(id, admin = {}) {
 
 async function getUsersAnalytics(admin = {}) {
   const now = new Date();
-  const last24h = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  const last7d  = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-  const last30d = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-  // Inclusive start of the 7-day growth window (midnight UTC of D-6)
-  const growthStart = new Date(now);
-  growthStart.setUTCDate(growthStart.getUTCDate() - 6);
-  growthStart.setUTCHours(0, 0, 0, 0);
+  // Time boundaries
+  const startOfToday     = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const last7d           = new Date(now.getTime() - 7  * 24 * 60 * 60 * 1000);
+  const last30d          = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const startOfMonth     = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(),     1));
+  const startOfLastMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
 
   const [
     totalUsers,
-    activeUsers,
-    suspendedUsers,
-    pendingUsers,
-    archivedUsers,
-    verifiedUsers,
-    pendingVerification,
-    rejectedVerification,
-    expiredVerification,
     roleGroups,
-    statusGroups,
+    departmentGroups,
     verificationGroups,
-    lowRisk,
-    mediumRisk,
-    highRisk,
-    recentUsers,
-    activeLast24h,
+    thisMonthCount,
+    lastMonthCount,
+    activeToday,
     activeLast7d,
-    inactive30d,
+    activityLast30d,
   ] = await Promise.all([
     prisma.appUser.count(),
-    prisma.appUser.count({ where: { status: "ACTIVE" } }),
-    prisma.appUser.count({ where: { status: "SUSPENDED" } }),
-    prisma.appUser.count({ where: { status: "PENDING" } }),
-    prisma.appUser.count({ where: { status: "ARCHIVED" } }),
-    prisma.appUser.count({ where: { verificationState: "VERIFIED" } }),
-    prisma.appUser.count({ where: { verificationState: "PENDING" } }),
-    prisma.appUser.count({ where: { verificationState: "REJECTED" } }),
-    prisma.appUser.count({ where: { verificationState: "EXPIRED" } }),
     prisma.appUser.groupBy({ by: ["role"],             _count: { _all: true } }),
-    prisma.appUser.groupBy({ by: ["status"],           _count: { _all: true } }),
+    prisma.appUser.groupBy({ by: ["department"],       _count: { _all: true }, where: { department: { not: null } } }),
     prisma.appUser.groupBy({ by: ["verificationState"], _count: { _all: true } }),
-    prisma.appUser.count({ where: { riskScore: { gte: 0,  lte: 30  } } }),
-    prisma.appUser.count({ where: { riskScore: { gte: 31, lte: 70  } } }),
-    prisma.appUser.count({ where: { riskScore: { gte: 71, lte: 100 } } }),
-    prisma.appUser.findMany({
-      where:  { createdAt: { gte: growthStart } },
-      select: { createdAt: true },
-    }),
-    prisma.appUser.count({ where: { lastActivityAt: { gte: last24h } } }),
-    prisma.appUser.count({ where: { lastActivityAt: { gte: last7d  } } }),
-    prisma.appUser.count({
-      where: {
-        OR: [
-          { lastActivityAt: null },
-          { lastActivityAt: { lt: last30d } },
-        ],
-      },
-    }),
+    prisma.appUser.count({ where: { createdAt: { gte: startOfMonth } } }),
+    prisma.appUser.count({ where: { createdAt: { gte: startOfLastMonth, lt: startOfMonth } } }),
+    prisma.appUser.count({ where: { lastActivityAt: { gte: startOfToday } } }),
+    prisma.appUser.count({ where: { lastActivityAt: { gte: last7d } } }),
+    prisma.appUser.findMany({ where: { lastActivityAt: { gte: last30d } }, select: { lastActivityAt: true } }),
   ]);
 
-  // usersByRole — always return every role even if count is 0
+  // usersByRole — uppercase names + percentage
   const ALL_ROLES = ["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"];
   const roleCountMap = {};
   for (const g of roleGroups) roleCountMap[g.role] = g._count._all;
-  const usersByRole = ALL_ROLES.map((r) => ({
-    role:  ROLE_MAP[r] ?? r.toLowerCase(),
-    count: roleCountMap[r] ?? 0,
-  }));
+  const usersByRole = ALL_ROLES.map((r) => {
+    const count = roleCountMap[r] ?? 0;
+    return { role: r, count, percentage: totalUsers > 0 ? Math.round((count / totalUsers) * 100) : 0 };
+  });
 
-  // usersByStatus — always return every status even if count is 0
-  const ALL_STATUSES = ["ACTIVE", "SUSPENDED", "PENDING", "ARCHIVED", "INVITED"];
-  const statusCountMap = {};
-  for (const g of statusGroups) statusCountMap[g.status] = g._count._all;
-  const usersByStatus = ALL_STATUSES.map((s) => ({
-    status: STATUS_MAP[s] ?? s.toLowerCase(),
-    count:  statusCountMap[s] ?? 0,
-  }));
+  // usersByDepartment — top 10, descending count, no nulls
+  const usersByDepartment = departmentGroups
+    .filter((g) => g.department)
+    .map((g) => ({ department: g.department, count: g._count._all }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10);
 
-  // verificationBreakdown — always return every state even if count is 0
+  // newUsersThisMonth — % change vs last month
+  const changePercentage =
+    lastMonthCount > 0
+      ? Math.round(((thisMonthCount - lastMonthCount) / lastMonthCount) * 1000) / 10
+      : thisMonthCount > 0 ? 100 : 0;
+  const newUsersThisMonth = { count: thisMonthCount, changePercentage };
+
+  // userActivity — 30-day dailyTrend based on lastActivityAt
+  const activityMap = {};
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - i));
+    activityMap[d.toISOString().slice(0, 10)] = 0;
+  }
+  for (const u of activityLast30d) {
+    if (u.lastActivityAt) {
+      const key = u.lastActivityAt.toISOString().slice(0, 10);
+      if (key in activityMap) activityMap[key]++;
+    }
+  }
+  const dailyTrend = Object.entries(activityMap).map(([date, count]) => ({ date, count }));
+  const userActivity = { activeToday, activeThisWeek: activeLast7d, dailyTrend };
+
+  // verificationStatus — lowercase status names + percentage
   const ALL_VERIFICATION = ["VERIFIED", "PENDING", "REJECTED", "EXPIRED"];
   const verificationCountMap = {};
   for (const g of verificationGroups) verificationCountMap[g.verificationState] = g._count._all;
-  const verificationBreakdown = ALL_VERIFICATION.map((v) => ({
-    verificationState: VERIFICATION_MAP[v] ?? v.toLowerCase(),
-    count:             verificationCountMap[v] ?? 0,
-  }));
-
-  // recentGrowth — always return 7 date entries (today and the 6 days before)
-  const growthMap = {};
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(growthStart);
-    d.setUTCDate(d.getUTCDate() + i);
-    growthMap[d.toISOString().slice(0, 10)] = 0;
-  }
-  for (const u of recentUsers) {
-    const key = u.createdAt.toISOString().slice(0, 10);
-    if (key in growthMap) growthMap[key]++;
-  }
-  const recentGrowth = Object.entries(growthMap).map(([date, count]) => ({ date, count }));
+  const verificationStatus = ALL_VERIFICATION.map((v) => {
+    const count = verificationCountMap[v] ?? 0;
+    return {
+      status:     VERIFICATION_MAP[v] ?? v.toLowerCase(),
+      count,
+      percentage: totalUsers > 0 ? Math.round((count / totalUsers) * 100) : 0,
+    };
+  });
 
   // Audit log — failure must not crash the request
   try {
@@ -677,23 +676,11 @@ async function getUsersAnalytics(admin = {}) {
   }
 
   return {
-    summary: {
-      totalUsers,
-      activeUsers,
-      suspendedUsers,
-      pendingUsers,
-      archivedUsers,
-      verifiedUsers,
-      pendingVerification,
-      rejectedVerification,
-      expiredVerification,
-    },
     usersByRole,
-    usersByStatus,
-    verificationBreakdown,
-    riskDistribution: { low: lowRisk, medium: mediumRisk, high: highRisk },
-    recentGrowth,
-    activitySummary: { activeLast24h, activeLast7d, inactive30d },
+    usersByDepartment,
+    newUsersThisMonth,
+    userActivity,
+    verificationStatus,
   };
 }
 
@@ -831,6 +818,67 @@ async function importUsersFromCsv(file, admin = {}) {
   };
 }
 
+// ── bulkActionUsers (Task 6E) ─────────────────────────────────────────────────
+
+async function bulkActionUsers(body, admin) {
+  const VALID_ACTIONS = new Set(["suspend", "reactivate", "delete", "assign_role", "notify"]);
+
+  const action =
+    typeof body.action === "string" ? body.action.trim().toLowerCase() : "";
+  if (!VALID_ACTIONS.has(action)) {
+    const err = new Error(
+      `Invalid action: "${action}". Must be one of: ${[...VALID_ACTIONS].join(", ")}.`
+    );
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const userIds = Array.isArray(body.userIds)
+    ? body.userIds.filter((id) => typeof id === "string" && id.trim())
+    : [];
+  if (userIds.length === 0) {
+    const err = new Error("userIds must be a non-empty array of strings.");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const params =
+    body.params && typeof body.params === "object" ? body.params : {};
+
+  let succeeded = 0;
+  let failed = 0;
+  const errors = [];
+
+  for (const id of userIds) {
+    try {
+      if (action === "suspend") {
+        await suspendUser(id, { reason: params.reason || "Bulk action", notes: null }, admin);
+      } else if (action === "reactivate") {
+        await reactivateUser(id, admin);
+      } else if (action === "delete") {
+        await deleteUser(id, admin);
+      } else if (action === "assign_role") {
+        const roleId = params.role || params.roleId;
+        await assignUserRole(id, { roleId, type: "primary", expiresAt: null }, admin);
+      } else if (action === "notify") {
+        console.log(`[bulk:notify] user=${id} message=${params.message || "(none)"}`);
+      }
+      succeeded++;
+    } catch (err) {
+      failed++;
+      errors.push({ id, message: err.message || "Unknown error" });
+    }
+  }
+
+  return {
+    success: true,
+    message: `Bulk ${action}: ${succeeded} succeeded, ${failed} failed`,
+    succeeded,
+    failed,
+    errors,
+  };
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -844,4 +892,5 @@ module.exports = {
   deleteUser,
   getUsersAnalytics,
   importUsersFromCsv,
+  bulkActionUsers,
 };

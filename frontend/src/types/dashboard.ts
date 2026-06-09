@@ -181,10 +181,36 @@ export interface TopDepartmentItem {
   usersCount: number;
 }
 
+// New fields sourced from GET /api/admin/users/analytics via the dashboard service
+export interface DashboardDeptItem {
+  department: string;
+  count:      number;
+}
+
+export interface DashboardDailyTrend {
+  date:  string;
+  count: number;
+}
+
+export interface DashboardActivityData {
+  activeToday:    number;
+  activeThisWeek: number;
+  dailyTrend:     DashboardDailyTrend[];
+}
+
+export interface DashboardVerifItem {
+  status:     string;
+  count:      number;
+  percentage: number;
+}
+
 export interface DashboardAnalyticsResponse {
   filters:               AnalyticsFilters;
   learningActivity:      LearningActivityItem[];
   usersByRole:           UsersByRoleItem[];
+  usersByDepartment:     DashboardDeptItem[];
+  userActivity:          DashboardActivityData;
+  verificationStatus:    DashboardVerifItem[];
   revenueOverview:       RevenueOverview;
   userAnalytics:         UserAnalytics;
   courseAnalytics:       CourseAnalytics;

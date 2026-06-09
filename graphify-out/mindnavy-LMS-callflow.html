@@ -60,24 +60,24 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>mindnavy LMS — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 721 nodes, 1102 edges, 38 communities. Commit: 62d5c75</p>
+<p class="subtitle">Generated from graphify knowledge graph: 846 nodes, 1284 edges, 49 communities. Commit: 5bef091</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
     <a href="#build-graph">Graph Build</a>
     <a href="#cli-skills">CLI &amp; Skill Installers</a>
     <a href="#serve-api">Serving API</a>
+    <a href="#community-33">Community 33</a>
     <a href="#community-6">Community 6</a>
     <a href="#community-21">Community 21</a>
     <a href="#community-5">Community 5</a>
-    <a href="#community-19">Community 19</a>
     <a href="#community-34">Community 34</a>
-    <a href="#community-33">Community 33</a>
+    <a href="#community-19">Community 19</a>
     <a href="#community-37">Community 37</a>
     <a href="#community-36">Community 36</a>
-    <a href="#community-32">Community 32</a>
     <a href="#community-0">Community 0</a>
     <a href="#community-1">Community 1</a>
+    <a href="#community-20">Community 20</a>
     <a href="#other">Other</a>
 </div>
 
@@ -88,48 +88,48 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>111 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>114 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>1 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>150 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>180 nodes</small>")
     class SERVE_API_35EC8E86 module;
+    COMMUNITY_33_03CF07C5("Community 33<br/><small>64 nodes</small>")
+    class COMMUNITY_33_03CF07C5 module;
     COMMUNITY_6_7D637A07("Community 6<br/><small>64 nodes</small>")
     class COMMUNITY_6_7D637A07 module;
-    COMMUNITY_21_47BA4108("Community 21<br/><small>51 nodes</small>")
+    COMMUNITY_21_47BA4108("Community 21<br/><small>55 nodes</small>")
     class COMMUNITY_21_47BA4108 module;
     COMMUNITY_5_2966028D("Community 5<br/><small>49 nodes</small>")
     class COMMUNITY_5_2966028D module;
-    COMMUNITY_19_9462A0B9("Community 19<br/><small>46 nodes</small>")
-    class COMMUNITY_19_9462A0B9 module;
-    COMMUNITY_34_80350725("Community 34<br/><small>32 nodes</small>")
+    COMMUNITY_34_80350725("Community 34<br/><small>38 nodes</small>")
     class COMMUNITY_34_80350725 module;
-    COMMUNITY_33_03CF07C5("Community 33<br/><small>25 nodes</small>")
-    class COMMUNITY_33_03CF07C5 module;
+    COMMUNITY_19_9462A0B9("Community 19<br/><small>24 nodes</small>")
+    class COMMUNITY_19_9462A0B9 module;
     COMMUNITY_37_489F9468("Community 37<br/><small>23 nodes</small>")
     class COMMUNITY_37_489F9468 module;
     COMMUNITY_36_F6473446("Community 36<br/><small>22 nodes</small>")
     class COMMUNITY_36_F6473446 module;
-    COMMUNITY_32_4867BAA9("Community 32<br/><small>20 nodes</small>")
-    class COMMUNITY_32_4867BAA9 module;
     COMMUNITY_0_B056AD3D("Community 0<br/><small>19 nodes</small>")
     class COMMUNITY_0_B056AD3D module;
-    COMMUNITY_1_3073A0DB("Community 1<br/><small>18 nodes</small>")
+    COMMUNITY_1_3073A0DB("Community 1<br/><small>17 nodes</small>")
     class COMMUNITY_1_3073A0DB module;
-    OTHER_D0941E68("Other<br/><small>90 nodes</small>")
+    COMMUNITY_20_C86C0F59("Community 20<br/><small>17 nodes</small>")
+    class COMMUNITY_20_C86C0F59 module;
+    OTHER_D0941E68("Other<br/><small>159 nodes</small>")
     class OTHER_D0941E68 module;
+    SERVE_API_35EC8E86 -->|imports x32| OTHER_D0941E68
     COMMUNITY_6_7D637A07 -->|imports x23| COMMUNITY_21_47BA4108
-    SERVE_API_35EC8E86 -->|imports x15| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x9| COMMUNITY_37_489F9468
+    SERVE_API_35EC8E86 -->|imports x9| COMMUNITY_34_80350725
     COMMUNITY_37_489F9468 -->|imports x8| SERVE_API_35EC8E86
-    SERVE_API_35EC8E86 -->|imports x8| COMMUNITY_32_4867BAA9
-    COMMUNITY_19_9462A0B9 -->|imports x7| SERVE_API_35EC8E86
-    COMMUNITY_37_489F9468 -->|imports x7| OTHER_D0941E68
+    OTHER_D0941E68 -->|contains x7| SERVE_API_35EC8E86
+    COMMUNITY_37_489F9468 -->|imports x6| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x5| COMMUNITY_6_7D637A07
-    SERVE_API_35EC8E86 -->|imports x5| COMMUNITY_34_80350725
-    COMMUNITY_32_4867BAA9 -->|contains x5| OTHER_D0941E68
-    OTHER_D0941E68 -->|imports x5| COMMUNITY_34_80350725
-    COMMUNITY_34_80350725 -->|imports x5| COMMUNITY_32_4867BAA9
+    OTHER_D0941E68 -->|imports x5| COMMUNITY_36_F6473446
+    OTHER_D0941E68 -->|contains x5| COMMUNITY_34_80350725
+    COMMUNITY_33_03CF07C5 -->|calls x4| SERVE_API_35EC8E86
+    SERVE_API_35EC8E86 -->|imports x4| COMMUNITY_36_F6473446
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -146,19 +146,19 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>111</td><td><code>3, 4, 7, 8, 10, 12, 14</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>1</td><td><code>18</code></td></tr><tr><td>Serving API</td><td>150</td><td><code>9, 2, 27, 25, 22, 20, 13</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>51</td><td><code>21</code></td></tr><tr><td>Community 5</td><td>49</td><td><code>5</code></td></tr><tr><td>Community 19</td><td>46</td><td><code>19</code></td></tr><tr><td>Community 34</td><td>32</td><td><code>34</code></td></tr><tr><td>Community 33</td><td>25</td><td><code>33</code></td></tr><tr><td>Community 37</td><td>23</td><td><code>37</code></td></tr><tr><td>Community 36</td><td>22</td><td><code>36</code></td></tr><tr><td>Community 32</td><td>20</td><td><code>32</code></td></tr><tr><td>Community 0</td><td>19</td><td><code>0</code></td></tr><tr><td>Community 1</td><td>18</td><td><code>1</code></td></tr><tr><td>Other</td><td>90</td><td><code>26, 24, 29, 38, 28, 30, 11, 23, 39, 15, 16, 17</code></td></tr>
+      <tr><td>Graph Build</td><td>114</td><td><code>3, 4, 7, 8, 10, 12, 14</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>1</td><td><code>18</code></td></tr><tr><td>Serving API</td><td>180</td><td><code>9, 2, 26, 25, 22, 27, 39, 13</code></td></tr><tr><td>Community 33</td><td>64</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 5</td><td>49</td><td><code>5</code></td></tr><tr><td>Community 34</td><td>38</td><td><code>34</code></td></tr><tr><td>Community 19</td><td>24</td><td><code>19</code></td></tr><tr><td>Community 37</td><td>23</td><td><code>37</code></td></tr><tr><td>Community 36</td><td>22</td><td><code>36</code></td></tr><tr><td>Community 0</td><td>19</td><td><code>0</code></td></tr><tr><td>Community 1</td><td>17</td><td><code>1</code></td></tr><tr><td>Community 20</td><td>17</td><td><code>20</code></td></tr><tr><td>Other</td><td>159</td><td><code>24, 29, 32, 41, 38, 45, 28, 46, 47, 30, 31, 35, 40, 48, 11, 43, 44, 42, 23, 15, 16, 17</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">Graph Build -&gt; CLI &amp; Skill Installers -&gt; Serving API -&gt; Other -&gt; Community 34 -&gt; Community 32 -&gt; Community 1</div>
+    <div class="arrow-chain">Graph Build -&gt; CLI &amp; Skill Installers -&gt; Serving API -&gt; Other -&gt; Community 36 -&gt; Community 33 -&gt; Community 5</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>721 nodes · 1102 edges · 38 communities (32 shown, 6 thin omitted)</li>
+      <li>846 nodes · 1284 edges · 49 communities (41 shown, 8 thin omitted)</li>
       <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `compilerOptions` - 17 edges</li>
@@ -170,12 +170,12 @@ flowchart LR
 <hr>
 <!-- ====== 2. Graph Build ====== -->
 <h2 id="build-graph">2. Graph Build</h2>
-<p>Graph Build groups implementation around frontend, packagejson, backend, tsconfigappjson, mostly in backend/package.json, frontend/package.json, frontend/tsconfig.app.json. This section covers 111 nodes and 104 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around frontend, packagejson, backend, tsconfigappjson, mostly in backend/package.json, frontend/package.json, frontend/tsconfig.app.json. This section covers 114 nodes and 107 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (111 nodes, 104 edges)
+    %% Section: Graph Build (114 nodes, 107 edges)
     subgraph build_graph_backend_package_json_fef74fa2["backend/package.json"]
         backend_package_json_c3759217("package.json")
         backend_package_dependencies_4ff26931("dependencies<br/><small>backend/package.json</small>")
@@ -212,7 +212,7 @@ flowchart LR
     backend_package_scripts_95503ce5 -->|contains| backend_package_scripts_start_8887ff42
     backend_package_scripts_95503ce5 -->|contains| backend_package_scripts_dev_156e5cf6
     frontend_package_json_cb6b69be -->|contains| frontend_package_devdependencies_ea29f362
-    %% Omitted for readability: 93 nodes, 0 edges
+    %% Omitted for readability: 96 nodes, 0 edges
     class backend_package_json_c3759217 function;
     class backend_package_dependencies_4ff26931 function;
     class backend_package_name_693d9dbf function;
@@ -430,6 +430,14 @@ flowchart LR
 </tr>
 <tr>
   <td>23</td>
+  <td><code>csv-parse</code><br><small style="color:var(--muted)">backend/package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>csv-parse node in backend/package.json.</td>
+</tr>
+<tr>
+  <td>24</td>
   <td><code>dotenv</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -437,7 +445,7 @@ flowchart LR
   <td>dotenv node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>25</td>
   <td><code>express</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -445,7 +453,7 @@ flowchart LR
   <td>express node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>26</td>
   <td><code>express-rate-limit</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -453,7 +461,15 @@ flowchart LR
   <td>express-rate-limit node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>27</td>
+  <td><code>multer</code><br><small style="color:var(--muted)">backend/package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>multer node in backend/package.json.</td>
+</tr>
+<tr>
+  <td>28</td>
   <td><code>pg</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -461,7 +477,7 @@ flowchart LR
   <td>pg node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>29</td>
   <td><code>devDependencies</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -469,28 +485,12 @@ flowchart LR
   <td>devDependencies node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>28</td>
+  <td>30</td>
   <td><code>@types/node</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>@types/node node in backend/package.json.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>nodemon</code><br><small style="color:var(--muted)">backend/package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>nodemon node in backend/package.json.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">backend/package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>prisma node in backend/package.json.</td>
 </tr>
 </table>
 
@@ -499,8 +499,8 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>backend/package.json</code></td><td>30 nodes</td></tr>
-<tr><td><code>frontend/package.json</code></td><td>29 nodes</td></tr>
+      <tr><td><code>backend/package.json</code></td><td>32 nodes</td></tr>
+<tr><td><code>frontend/package.json</code></td><td>30 nodes</td></tr>
 <tr><td><code>frontend/tsconfig.app.json</code></td><td>19 nodes</td></tr>
 <tr><td><code>frontend/tsconfig.node.json</code></td><td>18 nodes</td></tr>
 <tr><td><code>backend/tsconfig.json</code></td><td>9 nodes</td></tr>
@@ -510,7 +510,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x104. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x107. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -573,12 +573,12 @@ flowchart LR
 
 <!-- ====== 4. Serving API ====== -->
 <h2 id="serve-api">4. Serving API</h2>
-<p>Serving API groups implementation around frontend, api, backend, usersts, mostly in src/controllers/users.controller.js, src/api/users.ts, src/api/adminAuth.ts. This section covers 150 nodes and 256 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around frontend, api, backend, components, mostly in src/controllers/users.controller.js, src/api/users.ts, src/routes/users.routes.js. This section covers 180 nodes and 299 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (150 nodes, 256 edges)
+    %% Section: Serving API (180 nodes, 299 edges)
     subgraph serve_api_src_controllers_users_controller_js_8d60ab07["src/controllers/users.controller.js"]
         backend_src_controllers_users_controller_js_108e1036("users.controller.js")
         controllers_users_controller_createuser_1d4bed69("createUser()<br/><small>src/controllers/users.controller.js</small>")
@@ -599,10 +599,12 @@ flowchart LR
     subgraph serve_api_src_api_adminAuth_ts_29dd8eba["src/api/adminAuth.ts"]
         api_adminauth_getstoredtoken_6da5b8df("getStoredToken()<br/><small>src/api/adminAuth.ts</small>")
         api_adminauth_adminfetch_bb7dace4("adminFetch()<br/><small>src/api/adminAuth.ts</small>")
-        api_adminauth_bearer_ddcb0f2c("bearer()<br/><small>src/api/adminAuth.ts</small>")
+    end
+    subgraph serve_api_src_api_users_ts_089bead8["src/api/users.ts"]
+        api_users_actionfetch_26dbe2ec("actionFetch()<br/><small>src/api/users.ts</small>")
+        frontend_src_api_users_ts_f0590af5("users.ts")
     end
     frontend_src_authcontext_tsx_62479c75("AuthContext.tsx")
-    api_users_actionfetch_26dbe2ec("actionFetch()<br/><small>src/api/users.ts</small>")
     controllers_users_controller_createuser_1d4bed69 -->|calls| validators_users_validator_validatecreateuserinp_e973ca38
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateuuidparam_36622e78
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateupdateuserinp_415e7af4
@@ -621,7 +623,8 @@ flowchart LR
     backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validatesuspenduserin_d9703da8
     backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validateresetuserpass_7d038d6c
     frontend_src_authcontext_tsx_62479c75 -->|imports| api_adminauth_getstoredtoken_6da5b8df
-    %% Omitted for readability: 132 nodes, 0 edges
+    api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_users_ts_f0590af5
+    %% Omitted for readability: 162 nodes, 0 edges
     class backend_src_controllers_users_controller_js_108e1036 module;
     class controllers_users_controller_createuser_1d4bed69 function;
     class controllers_users_controller_updateuser_09b2ac67 function;
@@ -637,9 +640,9 @@ flowchart LR
     class validators_users_validator_validateresetuserpass_7d038d6c function;
     class api_adminauth_getstoredtoken_6da5b8df ui;
     class api_adminauth_adminfetch_bb7dace4 function;
-    class api_adminauth_bearer_ddcb0f2c function;
-    class frontend_src_authcontext_tsx_62479c75 ui;
     class api_users_actionfetch_26dbe2ec function;
+    class frontend_src_api_users_ts_f0590af5 module;
+    class frontend_src_authcontext_tsx_62479c75 ui;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -799,6 +802,14 @@ flowchart LR
 </tr>
 <tr>
   <td>16</td>
+  <td><code>importUsers()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
+  <td>importUsers() node in src/controllers/users.controller.js.</td>
+</tr>
+<tr>
+  <td>17</td>
   <td><code>rateLimit.middleware.js</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
@@ -806,7 +817,7 @@ flowchart LR
   <td>rateLimit.middleware.js node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>18</td>
   <td><code>rateLimit</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -814,7 +825,7 @@ flowchart LR
   <td>rateLimit node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>19</td>
   <td><code>adminLoginRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -822,7 +833,7 @@ flowchart LR
   <td>adminLoginRateLimiter node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>20</td>
   <td><code>adminUserActionRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -830,7 +841,7 @@ flowchart LR
   <td>adminUserActionRateLimiter node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>21</td>
   <td><code>adminUsersAnalyticsRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -838,96 +849,76 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>21</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td><code>adminUserActionRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small><br><code>adminUsersAnalyticsRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small><br><code>assignUserRole()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small><br>+12 more</td>
-  <td>No direct outbound edge</td>
-  <td>users.routes.js node in src/routes/users.routes.js.</td>
-</tr>
-<tr>
   <td>22</td>
-  <td><code>express</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
+  <td><code>adminUsersImportRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>express node in src/routes/users.routes.js.</td>
+  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
+  <td>adminUsersImportRateLimiter node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>{ requireAdminAuth }</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>upload.middleware.js</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ requireAdminAuth } node in src/routes/users.routes.js.</td>
+  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
+  <td>upload.middleware.js node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>{ adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter }</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
+  <td><code>multer</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
+  <td>multer node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>{
-  getUsersList,
-  getUserDetails,
-  createUser,
-  updateUser,
-  updateUserStatus,
-  suspendUser,
-  reactivateUser,
-  resetUserPassword,
-  assignUserRole,
-  deleteUser,
-  getUsersAnalytics,
-}</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ALLOWED_MIME_TYPES</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
+  <td>ALLOWED_MIME_TYPES node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>router</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>router node in src/routes/users.routes.js.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>users.validator.js</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>users.controller.js</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>users.validator.js node in src/validators/users.validator.js.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>{ validatePasswordStrength }</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
+  <td><code>storage</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>{ validatePasswordStrength } node in src/validators/users.validator.js.</td>
+  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>csvFileFilter()</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>csvFileFilter() node in src/middlewares/upload.middleware.js.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>_upload</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>_upload node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>VALID_ROLES</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>uploadUsersCsv()</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>VALID_ROLES node in src/validators/users.validator.js.</td>
+  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
+  <td>uploadUsersCsv() node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>VALID_STATUSES</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
+  <td><span class="tag tag-endpoint">API</span></td>
+  <td><code>adminUserActionRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small><br><code>adminUsersAnalyticsRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small><br><code>adminUsersImportRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small><br>+16 more</td>
   <td>No direct outbound edge</td>
-  <td>VALID_STATUSES node in src/validators/users.validator.js.</td>
+  <td>users.routes.js node in src/routes/users.routes.js.</td>
 </tr>
 </table>
 
@@ -936,25 +927,391 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/controllers/users.controller.js</code></td><td>16 nodes</td></tr>
+      <tr><td><code>src/controllers/users.controller.js</code></td><td>17 nodes</td></tr>
 <tr><td><code>src/api/users.ts</code></td><td>16 nodes</td></tr>
+<tr><td><code>src/routes/users.routes.js</code></td><td>14 nodes</td></tr>
 <tr><td><code>src/api/adminAuth.ts</code></td><td>14 nodes</td></tr>
 <tr><td><code>src/validators/users.validator.js</code></td><td>12 nodes</td></tr>
 <tr><td><code>src/pages/TrustedDevicesPage.tsx</code></td><td>12 nodes</td></tr>
-<tr><td><code>src/routes/users.routes.js</code></td><td>11 nodes</td></tr>
 <tr><td><code>src/api/dashboard.ts</code></td><td>10 nodes</td></tr>
 <tr><td><code>src/api/trustedDevices.ts</code></td><td>10 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x127, imports x56, calls x52, imports x20. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x150, imports x70, calls x52, imports x26. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 5. Community 6 ====== -->
-<h2 id="community-6">5. Community 6</h2>
+<!-- ====== 5. Community 33 ====== -->
+<h2 id="community-33">5. Community 33</h2>
+<p>Community 33 groups implementation around backend, services, usersservicejs, scripts, mostly in src/services/users.service.js, src/validators/usersImport.validator.js, src/services/dashboard.service.js. This section covers 64 nodes and 110 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 33 (64 nodes, 110 edges)
+    subgraph community_33_src_services_users_service_js_d4c7904d["src/services/users.service.js"]
+        services_users_service_createuserauditlog_87a3fafc("createUserAuditLog()<br/><small>src/services/users.service.js</small>")
+        services_users_service_mapuser_947e5df2("mapUser()<br/><small>src/services/users.service.js</small>")
+        services_users_service_assertuserexists_c325a334("assertUserExists()<br/><small>src/services/users.service.js</small>")
+        services_users_service_makeerror_39538342("makeError()<br/><small>src/services/users.service.js</small>")
+        backend_src_services_users_service_js_3daaf94a("users.service.js")
+        services_users_service_getuserdetails_6c92b55c("getUserDetails()<br/><small>src/services/users.service.js</small>")
+        services_users_service_createuser_f1084aea("createUser()<br/><small>src/services/users.service.js</small>")
+        services_users_service_updateuser_d7489ed6("updateUser()<br/><small>src/services/users.service.js</small>")
+        services_users_service_updateuserstatus_b3f834ce("updateUserStatus()<br/><small>src/services/users.service.js</small>")
+        services_users_service_suspenduser_5d586553("suspendUser()<br/><small>src/services/users.service.js</small>")
+        services_users_service_reactivateuser_a4ad447e("reactivateUser()<br/><small>src/services/users.service.js</small>")
+        services_users_service_assignuserrole_2eb58cd3("assignUserRole()<br/><small>src/services/users.service.js</small>")
+        services_users_service_ensureemailavailable_9eaf3193("ensureEmailAvailable()<br/><small>src/services/users.service.js</small>")
+        services_users_service_getuserslist_9b18bcc9("getUsersList()<br/><small>src/services/users.service.js</small>")
+    end
+    backend_src_config_prisma_js_69cd0a59("prisma.js")
+    scripts_createfirstadmin_createfirstadmin_785f3eab("createFirstAdmin()<br/><small>src/scripts/createFirstAdmin.js</small>")
+    scripts_resetfirstadminpassword_resetfirstadminp_76a7133b("resetFirstAdminPassword()<br/><small>src/scripts/resetFirstAdminPassword.js</small>")
+    utils_passwordpolicy_validatepasswordstrength_56dae8f5("validatePasswordStrength()<br/><small>src/utils/passwordPolicy.js</small>")
+    scripts_createfirstadmin_createfirstadmin_785f3eab -->|calls| utils_passwordpolicy_validatepasswordstrength_56dae8f5
+    scripts_resetfirstadminpassword_resetfirstadminp_76a7133b -->|calls| utils_passwordpolicy_validatepasswordstrength_56dae8f5
+    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_getuserdetails_6c92b55c
+    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_createuser_f1084aea
+    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_updateuser_d7489ed6
+    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_updateuserstatus_b3f834ce
+    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_suspenduser_5d586553
+    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_reactivateuser_a4ad447e
+    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_assignuserrole_2eb58cd3
+    services_users_service_makeerror_39538342 -->|calls| services_users_service_assertuserexists_c325a334
+    services_users_service_makeerror_39538342 -->|calls| services_users_service_ensureemailavailable_9eaf3193
+    services_users_service_makeerror_39538342 -->|calls| services_users_service_getuserdetails_6c92b55c
+    services_users_service_makeerror_39538342 -->|calls| services_users_service_createuser_f1084aea
+    services_users_service_makeerror_39538342 -->|calls| services_users_service_updateuser_d7489ed6
+    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_getuserslist_9b18bcc9
+    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_getuserdetails_6c92b55c
+    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_createuser_f1084aea
+    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_updateuser_d7489ed6
+    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_updateuserstatus_b3f834ce
+    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_suspenduser_5d586553
+    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_reactivateuser_a4ad447e
+    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_assignuserrole_2eb58cd3
+    services_users_service_assertuserexists_c325a334 -->|calls| services_users_service_updateuser_d7489ed6
+    services_users_service_assertuserexists_c325a334 -->|calls| services_users_service_updateuserstatus_b3f834ce
+    %% Omitted for readability: 46 nodes, 6 edges
+    class services_users_service_createuserauditlog_87a3fafc function;
+    class services_users_service_mapuser_947e5df2 function;
+    class services_users_service_assertuserexists_c325a334 async;
+    class services_users_service_makeerror_39538342 function;
+    class backend_src_services_users_service_js_3daaf94a module;
+    class services_users_service_getuserdetails_6c92b55c function;
+    class services_users_service_createuser_f1084aea function;
+    class services_users_service_updateuser_d7489ed6 function;
+    class services_users_service_updateuserstatus_b3f834ce function;
+    class services_users_service_suspenduser_5d586553 function;
+    class services_users_service_reactivateuser_a4ad447e function;
+    class services_users_service_assignuserrole_2eb58cd3 function;
+    class services_users_service_ensureemailavailable_9eaf3193 function;
+    class services_users_service_getuserslist_9b18bcc9 function;
+    class backend_src_config_prisma_js_69cd0a59 module;
+    class scripts_createfirstadmin_createfirstadmin_785f3eab function;
+    class scripts_resetfirstadminpassword_resetfirstadminp_76a7133b function;
+    class utils_passwordpolicy_validatepasswordstrength_56dae8f5 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>addUsersImportedEnum.js</code><br><small style="color:var(--muted)">src/scripts/addUsersImportedEnum.js</small><br><code>createFirstAdmin.js</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small><br><code>dashboard.service.js</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small><br>+2 more</td>
+  <td>prisma.js node in src/config/prisma.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>{ PrismaClient }</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><span class="tag tag-cmd">Entry</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ PrismaClient } node in src/config/prisma.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>{ PrismaPg }</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ PrismaPg } node in src/config/prisma.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>adapter</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>adapter node in src/config/prisma.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/config/prisma.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>addUsersImportedEnum.js</code><br><small style="color:var(--muted)">src/scripts/addUsersImportedEnum.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>addUsersImportedEnum.js node in src/scripts/addUsersImportedEnum.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/scripts/addUsersImportedEnum.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/scripts/addUsersImportedEnum.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>main()</code><br><small style="color:var(--muted)">src/scripts/addUsersImportedEnum.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>main() node in src/scripts/addUsersImportedEnum.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>createFirstAdmin.js</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><code>passwordPolicy.js</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small><br><code>validatePasswordStrength()</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small></td>
+  <td>createFirstAdmin.js node in src/scripts/createFirstAdmin.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>bcrypt</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>bcrypt node in src/scripts/createFirstAdmin.js.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/scripts/createFirstAdmin.js.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>{ validatePasswordStrength }</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ validatePasswordStrength } node in src/scripts/createFirstAdmin.js.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>createFirstAdmin()</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>validatePasswordStrength()</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small></td>
+  <td>createFirstAdmin() node in src/scripts/createFirstAdmin.js.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>resetFirstAdminPassword.js</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><code>passwordPolicy.js</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small><br><code>validatePasswordStrength()</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small></td>
+  <td>resetFirstAdminPassword.js node in src/scripts/resetFirstAdminPassword.js.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>bcrypt</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>bcrypt node in src/scripts/resetFirstAdminPassword.js.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/scripts/resetFirstAdminPassword.js.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>{ validatePasswordStrength }</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ validatePasswordStrength } node in src/scripts/resetFirstAdminPassword.js.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>resetFirstAdminPassword()</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>validatePasswordStrength()</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small></td>
+  <td>resetFirstAdminPassword() node in src/scripts/resetFirstAdminPassword.js.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>dashboard.service.js</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><code>getUsersAnalytics()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>users.service.js</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
+  <td>dashboard.service.js node in src/services/dashboard.service.js.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/services/dashboard.service.js.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>{ getUsersAnalytics }</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>getDashboardCore()</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>getDashboardCore() node in src/services/dashboard.service.js.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>getDashboardAnalytics()</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>getDashboardAdminWidgets()</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>getDashboardAdminWidgets() node in src/services/dashboard.service.js.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>users.service.js</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>dashboard.service.js</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small><br><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td><code>usersImport.validator.js</code><br><small style="color:var(--muted)">src/validators/usersImport.validator.js</small><br><code>validateHeaders()</code><br><small style="color:var(--muted)">src/validators/usersImport.validator.js</small><br><code>validateImportRows()</code><br><small style="color:var(--muted)">src/validators/usersImport.validator.js</small></td>
+  <td>users.service.js node in src/services/users.service.js.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>bcrypt</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>bcrypt node in src/services/users.service.js.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>{ parse }</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ parse } node in src/services/users.service.js.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/services/users.service.js.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>{
+  MAX_IMPORT_ROWS,
+  MAX_RETURNED_ERRORS,
+  validateHeaders,
+  validateImportRows,
+}</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{
+  MAX_IMPORT_ROWS,
+  MAX_RETURNED_ERRORS,
+  validateHeaders,
+  validateImportRows,
+} node in src/services/users.service.js.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>VALID_ROLES</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>VALID_ROLES node in src/services/users.service.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/services/users.service.js</code></td><td>28 nodes</td></tr>
+<tr><td><code>src/validators/usersImport.validator.js</code></td><td>10 nodes</td></tr>
+<tr><td><code>src/services/dashboard.service.js</code></td><td>6 nodes</td></tr>
+<tr><td><code>src/config/prisma.js</code></td><td>5 nodes</td></tr>
+<tr><td><code>src/scripts/createFirstAdmin.js</code></td><td>5 nodes</td></tr>
+<tr><td><code>src/scripts/resetFirstAdminPassword.js</code></td><td>5 nodes</td></tr>
+<tr><td><code>src/scripts/addUsersImportedEnum.js</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/utils/passwordPolicy.js</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x56, calls x38, imports x10, imports x6. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 6. Community 6 ====== -->
+<h2 id="community-6">6. Community 6</h2>
 <p>Community 6 groups implementation around dashboardpagetsx, frontend, pages, color, mostly in src/pages/DashboardPage.tsx. This section covers 64 nodes and 64 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1277,14 +1634,14 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 6. Community 21 ====== -->
-<h2 id="community-21">6. Community 21</h2>
-<p>Community 21 groups implementation around dashboardts, frontend, types, welcomeinfo, mostly in src/types/dashboard.ts. This section covers 51 nodes and 50 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 7. Community 21 ====== -->
+<h2 id="community-21">7. Community 21</h2>
+<p>Community 21 groups implementation around dashboardts, frontend, types, welcomeinfo, mostly in src/types/dashboard.ts. This section covers 55 nodes and 54 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 21 (51 nodes, 50 edges)
+    %% Section: Community 21 (55 nodes, 54 edges)
     frontend_src_types_dashboard_ts_7d69f6d8("dashboard.ts")
     types_dashboard_welcomeinfo_d873e2bb("WelcomeInfo<br/><small>src/types/dashboard.ts</small>")
     types_dashboard_dashboardkpis_c3ef8308("DashboardKpis<br/><small>src/types/dashboard.ts</small>")
@@ -1320,7 +1677,7 @@ flowchart LR
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_learningactivityitem_a5b6d7a8
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_userrole_b33c8f35
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_usersbyroleitem_010fbf46
-    %% Omitted for readability: 33 nodes, 0 edges
+    %% Omitted for readability: 37 nodes, 0 edges
     class frontend_src_types_dashboard_ts_7d69f6d8 module;
     class types_dashboard_welcomeinfo_d873e2bb klass;
     class types_dashboard_dashboardkpis_c3ef8308 klass;
@@ -1578,27 +1935,27 @@ flowchart LR
 </tr>
 <tr>
   <td>28</td>
-  <td><code>AdminWidgetsFilters</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
+  <td><code>DashboardDeptItem</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>AdminWidgetsFilters node in src/types/dashboard.ts.</td>
+  <td>DashboardDeptItem node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>ApprovalType</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
+  <td><code>DashboardDailyTrend</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ApprovalType node in src/types/dashboard.ts.</td>
+  <td>DashboardDailyTrend node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>ApprovalPriority</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
+  <td><code>DashboardActivityData</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ApprovalPriority node in src/types/dashboard.ts.</td>
+  <td>DashboardActivityData node in src/types/dashboard.ts.</td>
 </tr>
 </table>
 
@@ -1607,18 +1964,18 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/types/dashboard.ts</code></td><td>51 nodes</td></tr>
+      <tr><td><code>src/types/dashboard.ts</code></td><td>55 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x50. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x54. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 7. Community 5 ====== -->
-<h2 id="community-5">7. Community 5</h2>
+<!-- ====== 8. Community 5 ====== -->
+<h2 id="community-5">8. Community 5</h2>
 <p>Community 5 groups implementation around backend, adminservicejs, services, admincontrollerjs, mostly in src/services/admin.service.js, src/controllers/admin.controller.js, src/routes/admin.routes.js. This section covers 49 nodes and 102 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2030,81 +2387,404 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 8. Community 19 ====== -->
-<h2 id="community-19">8. Community 19</h2>
-<p>Community 19 groups implementation around backend, serverjs, scripts, dashboardroutesjs, mostly in backend/server.js, src/routes/dashboard.routes.js, src/config/prisma.js. This section covers 46 nodes and 55 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 9. Community 34 ====== -->
+<h2 id="community-34">9. Community 34</h2>
+<p>Community 34 groups implementation around frontend, components, users, userdetailsdrawertsx, mostly in components/users/UserDetailsDrawer.tsx, components/users/ConfirmDialog.tsx, src/types/users.ts. This section covers 38 nodes and 42 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 19 (46 nodes, 55 edges)
-    subgraph community_19_src_controllers_dashboard_controlle_438f8d35["src/controllers/dashboard.controller.js"]
-        backend_src_controllers_dashboard_controller_js_fa012b29("dashboard.controller.js")
-        controllers_dashboard_controller_getdashboardadm_02fb2302("getDashboardAdminWidgets()<br/><small>src/controllers/dashboard.controller.js</small>")
-        controllers_dashboard_controller_getdashboardcor_9176e121("getDashboardCore()<br/><small>src/controllers/dashboard.controller.js</small>")
-        controllers_dashboard_controller_getdashboardana_475521be("getDashboardAnalytics()<br/><small>src/controllers/dashboard.controller.js</small>")
+    %% Section: Community 34 (38 nodes, 42 edges)
+    subgraph community_34_components_users_UserDetailsDrawer_1a1cf0cd["components/users/UserDetailsDrawer.tsx"]
+        frontend_src_components_users_userdetailsdrawer_75152e55("UserDetailsDrawer.tsx")
+        users_userdetailsdrawer_formatdate_7f166829("formatDate()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_avatarpalette_baabd122("avatarPalette()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_initials_67060d8b("initials()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_formatrelative_c29d72fe("formatRelative()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_userdetailsdrawer_ecf20f63("UserDetailsDrawer()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_avatar_palettes_42ecd4bb("AVATAR_PALETTES<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_actionbtn_769aa332("ActionBtn()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_drawer_tabs_ab44ef6b("DRAWER_TABS<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_drawertab_2f4d7722("DrawerTab<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_emptystate_9d89976c("EmptyState()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_icoalert_05dbbbec("IcoAlert()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
     end
+    subgraph community_34_components_users_ConfirmDialog_tsx_71b12d29["components/users/ConfirmDialog.tsx"]
+        frontend_src_components_users_confirmdialog_tsx_caf75547("ConfirmDialog.tsx")
+        users_confirmdialog_confirmdialog_4bb8cca2("ConfirmDialog()<br/><small>components/users/ConfirmDialog.tsx</small>")
+        users_confirmdialog_props_ab2c09bb("Props<br/><small>components/users/ConfirmDialog.tsx</small>")
+    end
+    subgraph community_34_src_types_users_ts_93301fd8["src/types/users.ts"]
+        types_users_userdetailsresponse_06f51bdb("UserDetailsResponse<br/><small>src/types/users.ts</small>")
+        types_users_riskscore_08f8ce98("RiskScore<br/><small>src/types/users.ts</small>")
+        types_users_coursestatus_4a51235b("CourseStatus<br/><small>src/types/users.ts</small>")
+    end
+    users_userdetailsdrawer_initials_67060d8b -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
+    users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_formatrelative_c29d72fe
+    users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
+    users_userdetailsdrawer_formatrelative_c29d72fe -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
+    users_userdetailsdrawer_avatarpalette_baabd122 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
+    frontend_src_components_users_confirmdialog_tsx_caf75547 -->|imports| frontend_src_components_users_userdetailsdrawer_75152e55
+    frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_userdetailsresponse_06f51bdb
+    frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_riskscore_08f8ce98
+    frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_coursestatus_4a51235b
+    %% Omitted for readability: 20 nodes, 0 edges
+    class frontend_src_components_users_userdetailsdrawer_75152e55 ui;
+    class users_userdetailsdrawer_formatdate_7f166829 ui;
+    class users_userdetailsdrawer_avatarpalette_baabd122 ui;
+    class users_userdetailsdrawer_initials_67060d8b ui;
+    class users_userdetailsdrawer_formatrelative_c29d72fe ui;
+    class users_userdetailsdrawer_userdetailsdrawer_ecf20f63 ui;
+    class users_userdetailsdrawer_avatar_palettes_42ecd4bb ui;
+    class users_userdetailsdrawer_actionbtn_769aa332 ui;
+    class users_userdetailsdrawer_drawer_tabs_ab44ef6b ui;
+    class users_userdetailsdrawer_drawertab_2f4d7722 ui;
+    class users_userdetailsdrawer_emptystate_9d89976c ui;
+    class users_userdetailsdrawer_icoalert_05dbbbec ui;
+    class frontend_src_components_users_confirmdialog_tsx_caf75547 ui;
+    class users_confirmdialog_confirmdialog_4bb8cca2 ui;
+    class users_confirmdialog_props_ab2c09bb ui;
+    class types_users_userdetailsresponse_06f51bdb klass;
+    class types_users_riskscore_08f8ce98 klass;
+    class types_users_coursestatus_4a51235b klass;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>ConfirmDialog.tsx</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>Module file in components/users/ConfirmDialog.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Props node in components/users/ConfirmDialog.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>ConfirmDialog()</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ConfirmDialog() node in components/users/ConfirmDialog.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConfirmDialog.tsx</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
+  <td><code>CourseStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>RiskScore</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UserDetailsResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td>Module file in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>initials()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>initials() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small><br><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>formatDate() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>formatRelative() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>STATUS_STYLE</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>STATUS_STYLE node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>AVATAR_PALETTES</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AVATAR_PALETTES node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>avatarPalette()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>avatarPalette() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>roleTypeBadge()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>roleTypeBadge() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>riskBadge()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>riskBadge() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>courseStatusStyle()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>courseStatusStyle() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>IcoBack()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoBack() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>IcoClose()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoClose() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>IcoMail()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoMail() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>IcoPhone()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoPhone() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>IcoAlert()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoAlert() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>IcoPencil()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoPencil() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>IcoKey()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoKey() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>IcoLogout()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoLogout() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>IcoShield()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoShield() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>IcoChat()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>Section()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Section() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>InfoRow()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>InfoRow() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>EmptyState()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>EmptyState() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>DrawerTab</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DrawerTab node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>DRAWER_TABS</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DRAWER_TABS node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>ActionBtn()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ActionBtn() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>IcoBan()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoBan() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>components/users/UserDetailsDrawer.tsx</code></td><td>32 nodes</td></tr>
+<tr><td><code>components/users/ConfirmDialog.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/types/users.ts</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x33, calls x5, imports x3, imports x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 10. Community 19 ====== -->
+<h2 id="community-19">10. Community 19</h2>
+<p>Community 19 groups implementation around backend, serverjs, dashboardroutesjs, routes, mostly in backend/server.js, src/routes/dashboard.routes.js, src/controllers/dashboard.controller.js. This section covers 24 nodes and 27 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 19 (24 nodes, 27 edges)
     subgraph community_19_backend_server_js_aa4ddac1["backend/server.js"]
         backend_server_js_8b5ab4c1("server.js")
         backend_server_adminroutes_4a7f5352("adminRoutes<br/><small>backend/server.js</small>")
         backend_server_app_f3146f7f("app<br/><small>backend/server.js</small>")
+        backend_server_cors_f91d0d3a("cors<br/><small>backend/server.js</small>")
+        backend_server_corsoptions_2f1aabdd("corsOptions<br/><small>backend/server.js</small>")
+        backend_server_dashboardroutes_16a74376("dashboardRoutes<br/><small>backend/server.js</small>")
+        backend_server_express_1dc3eba0("express<br/><small>backend/server.js</small>")
+        backend_server_server_8e859398("server<br/><small>backend/server.js</small>")
+        backend_server_usersroutes_b2009e7b("usersRoutes<br/><small>backend/server.js</small>")
+    end
+    subgraph community_19_src_controllers_dashboard_controlle_438f8d35["src/controllers/dashboard.controller.js"]
+        backend_src_controllers_dashboard_controller_js_fa012b29("dashboard.controller.js")
+        controllers_dashboard_controller_getdashboardadm_02fb2302("getDashboardAdminWidgets()<br/><small>src/controllers/dashboard.controller.js</small>")
+        controllers_dashboard_controller_getdashboardana_475521be("getDashboardAnalytics()<br/><small>src/controllers/dashboard.controller.js</small>")
+        controllers_dashboard_controller_getdashboardcor_9176e121("getDashboardCore()<br/><small>src/controllers/dashboard.controller.js</small>")
+        controllers_dashboard_controller_dashboardservic_b86a552d("dashboardService<br/><small>src/controllers/dashboard.controller.js</small>")
     end
     subgraph community_19_src_middlewares_auth_middleware_js_5613f20a["src/middlewares/auth.middleware.js"]
         backend_src_middlewares_auth_middleware_js_b1f2a535("auth.middleware.js")
         middlewares_auth_middleware_requireadminauth_78c06910("requireAdminAuth()<br/><small>src/middlewares/auth.middleware.js</small>")
+        middlewares_auth_middleware_prisma_6b089309("prisma<br/><small>src/middlewares/auth.middleware.js</small>")
     end
-    subgraph community_19_src_scripts_createFirstAdmin_js_d1fbaf3a["src/scripts/createFirstAdmin.js"]
-        backend_src_scripts_createfirstadmin_js_1ae87508("createFirstAdmin.js")
-        scripts_createfirstadmin_createfirstadmin_785f3eab("createFirstAdmin()<br/><small>src/scripts/createFirstAdmin.js</small>")
-    end
-    subgraph community_19_src_scripts_resetFirstAdminPassword_5d724d01["src/scripts/resetFirstAdminPassword.js"]
-        backend_src_scripts_resetfirstadminpassword_js_47301913("resetFirstAdminPassword.js")
-        scripts_resetfirstadminpassword_resetfirstadminp_76a7133b("resetFirstAdminPassword()<br/><small>src/scripts/resetFirstAdminPassword.js</small>")
-    end
-    subgraph community_19_src_utils_passwordPolicy_js_69611f34["src/utils/passwordPolicy.js"]
-        utils_passwordpolicy_validatepasswordstrength_56dae8f5("validatePasswordStrength()<br/><small>src/utils/passwordPolicy.js</small>")
-        backend_src_utils_passwordpolicy_js_b8f210ac("passwordPolicy.js")
-    end
-    backend_src_config_prisma_js_69cd0a59("prisma.js")
     backend_src_routes_dashboard_routes_js_7fb0b28f("dashboard.routes.js")
-    backend_src_services_dashboard_service_js_26620eb4("dashboard.service.js")
-    scripts_createfirstadmin_createfirstadmin_785f3eab -->|calls| utils_passwordpolicy_validatepasswordstrength_56dae8f5
-    scripts_resetfirstadminpassword_resetfirstadminp_76a7133b -->|calls| utils_passwordpolicy_validatepasswordstrength_56dae8f5
     backend_server_js_8b5ab4c1 -->|imports| backend_src_routes_dashboard_routes_js_7fb0b28f
-    backend_src_config_prisma_js_69cd0a59 -->|imports| backend_src_middlewares_auth_middleware_js_b1f2a535
-    backend_src_config_prisma_js_69cd0a59 -->|imports| backend_src_scripts_createfirstadmin_js_1ae87508
-    backend_src_config_prisma_js_69cd0a59 -->|imports| backend_src_scripts_resetfirstadminpassword_js_47301913
-    backend_src_config_prisma_js_69cd0a59 -->|imports| backend_src_services_dashboard_service_js_26620eb4
-    backend_src_controllers_dashboard_controller_js_fa012b29 -->|imports| backend_src_services_dashboard_service_js_26620eb4
     backend_src_controllers_dashboard_controller_js_fa012b29 -->|imports| backend_src_routes_dashboard_routes_js_7fb0b28f
     controllers_dashboard_controller_getdashboardcor_9176e121 -->|imports| backend_src_routes_dashboard_routes_js_7fb0b28f
     controllers_dashboard_controller_getdashboardana_475521be -->|imports| backend_src_routes_dashboard_routes_js_7fb0b28f
     controllers_dashboard_controller_getdashboardadm_02fb2302 -->|imports| backend_src_routes_dashboard_routes_js_7fb0b28f
     backend_src_middlewares_auth_middleware_js_b1f2a535 -->|imports| backend_src_routes_dashboard_routes_js_7fb0b28f
     middlewares_auth_middleware_requireadminauth_78c06910 -->|imports| backend_src_routes_dashboard_routes_js_7fb0b28f
-    backend_src_scripts_createfirstadmin_js_1ae87508 -->|imports| backend_src_utils_passwordpolicy_js_b8f210ac
-    backend_src_scripts_createfirstadmin_js_1ae87508 -->|imports| utils_passwordpolicy_validatepasswordstrength_56dae8f5
-    backend_src_scripts_resetfirstadminpassword_js_47301913 -->|imports| backend_src_utils_passwordpolicy_js_b8f210ac
-    backend_src_scripts_resetfirstadminpassword_js_47301913 -->|imports| utils_passwordpolicy_validatepasswordstrength_56dae8f5
-    %% Omitted for readability: 28 nodes, 0 edges
-    class backend_src_controllers_dashboard_controller_js_fa012b29 module;
-    class controllers_dashboard_controller_getdashboardadm_02fb2302 function;
-    class controllers_dashboard_controller_getdashboardcor_9176e121 function;
-    class controllers_dashboard_controller_getdashboardana_475521be function;
+    %% Omitted for readability: 6 nodes, 0 edges
     class backend_server_js_8b5ab4c1 module;
     class backend_server_adminroutes_4a7f5352 api;
     class backend_server_app_f3146f7f function;
+    class backend_server_cors_f91d0d3a function;
+    class backend_server_corsoptions_2f1aabdd function;
+    class backend_server_dashboardroutes_16a74376 api;
+    class backend_server_express_1dc3eba0 function;
+    class backend_server_server_8e859398 function;
+    class backend_server_usersroutes_b2009e7b api;
+    class backend_src_controllers_dashboard_controller_js_fa012b29 module;
+    class controllers_dashboard_controller_getdashboardadm_02fb2302 function;
+    class controllers_dashboard_controller_getdashboardana_475521be function;
+    class controllers_dashboard_controller_getdashboardcor_9176e121 function;
+    class controllers_dashboard_controller_dashboardservic_b86a552d function;
     class backend_src_middlewares_auth_middleware_js_b1f2a535 module;
     class middlewares_auth_middleware_requireadminauth_78c06910 function;
-    class backend_src_scripts_createfirstadmin_js_1ae87508 module;
-    class scripts_createfirstadmin_createfirstadmin_785f3eab function;
-    class backend_src_scripts_resetfirstadminpassword_js_47301913 module;
-    class scripts_resetfirstadminpassword_resetfirstadminp_76a7133b function;
-    class utils_passwordpolicy_validatepasswordstrength_56dae8f5 function;
-    class backend_src_utils_passwordpolicy_js_b8f210ac module;
-    class backend_src_config_prisma_js_69cd0a59 module;
+    class middlewares_auth_middleware_prisma_6b089309 function;
     class backend_src_routes_dashboard_routes_js_7fb0b28f api;
-    class backend_src_services_dashboard_service_js_26620eb4 module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2200,54 +2880,14 @@ flowchart LR
 </tr>
 <tr>
   <td>10</td>
-  <td><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>auth.middleware.js</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small><br><code>createFirstAdmin.js</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small><br><code>dashboard.service.js</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small><br>+1 more</td>
-  <td>prisma.js node in src/config/prisma.js.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>{ PrismaClient }</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
-  <td><span class="tag tag-cmd">Entry</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ PrismaClient } node in src/config/prisma.js.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>{ PrismaPg }</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ PrismaPg } node in src/config/prisma.js.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>adapter</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>adapter node in src/config/prisma.js.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>prisma node in src/config/prisma.js.</td>
-</tr>
-<tr>
-  <td>15</td>
   <td><code>dashboard.controller.js</code><br><small style="color:var(--muted)">src/controllers/dashboard.controller.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>dashboard.routes.js</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small><br><code>dashboard.service.js</code><br><small style="color:var(--muted)">src/services/dashboard.service.js</small></td>
+  <td><code>dashboard.routes.js</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small></td>
   <td>dashboard.controller.js node in src/controllers/dashboard.controller.js.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>11</td>
   <td><code>dashboardService</code><br><small style="color:var(--muted)">src/controllers/dashboard.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2255,7 +2895,7 @@ flowchart LR
   <td>dashboardService node in src/controllers/dashboard.controller.js.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>12</td>
   <td><code>getDashboardCore()</code><br><small style="color:var(--muted)">src/controllers/dashboard.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2263,7 +2903,7 @@ flowchart LR
   <td>getDashboardCore() node in src/controllers/dashboard.controller.js.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>13</td>
   <td><code>getDashboardAnalytics()</code><br><small style="color:var(--muted)">src/controllers/dashboard.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2271,7 +2911,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>14</td>
   <td><code>getDashboardAdminWidgets()</code><br><small style="color:var(--muted)">src/controllers/dashboard.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2279,15 +2919,15 @@ flowchart LR
   <td>getDashboardAdminWidgets() node in src/controllers/dashboard.controller.js.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>15</td>
   <td><code>auth.middleware.js</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
-  <td><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
+  <td>External entry / no inbound edge</td>
   <td><code>dashboard.routes.js</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small></td>
   <td>auth.middleware.js node in src/middlewares/auth.middleware.js.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>16</td>
   <td><code>prisma</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2295,7 +2935,7 @@ flowchart LR
   <td>prisma node in src/middlewares/auth.middleware.js.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>17</td>
   <td><code>requireAdminAuth()</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2303,7 +2943,7 @@ flowchart LR
   <td>requireAdminAuth() node in src/middlewares/auth.middleware.js.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>18</td>
   <td><code>dashboard.routes.js</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small></td>
   <td><span class="tag tag-endpoint">API</span></td>
   <td><code>auth.middleware.js</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small><br><code>dashboard.controller.js</code><br><small style="color:var(--muted)">src/controllers/dashboard.controller.js</small><br><code>getDashboardAdminWidgets()</code><br><small style="color:var(--muted)">src/controllers/dashboard.controller.js</small><br>+4 more</td>
@@ -2311,7 +2951,7 @@ flowchart LR
   <td>dashboard.routes.js node in src/routes/dashboard.routes.js.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>19</td>
   <td><code>express</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2319,7 +2959,7 @@ flowchart LR
   <td>express node in src/routes/dashboard.routes.js.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>20</td>
   <td><code>{ requireAdminAuth }</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2327,7 +2967,7 @@ flowchart LR
   <td>{ requireAdminAuth } node in src/routes/dashboard.routes.js.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>21</td>
   <td><code>{
   getDashboardCore,
   getDashboardAnalytics,
@@ -2339,7 +2979,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>22</td>
   <td><code>router</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small></td>
   <td><span class="tag tag-endpoint">API</span></td>
   <td>External entry / no inbound edge</td>
@@ -2347,28 +2987,23 @@ flowchart LR
   <td>router node in src/routes/dashboard.routes.js.</td>
 </tr>
 <tr>
-  <td>28</td>
-  <td><code>createFirstAdmin.js</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>prisma.js</code><br><small style="color:var(--muted)">src/config/prisma.js</small></td>
-  <td><code>passwordPolicy.js</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small><br><code>validatePasswordStrength()</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small></td>
-  <td>createFirstAdmin.js node in src/scripts/createFirstAdmin.js.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>bcrypt</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
+  <td>23</td>
+  <td><code>{
+  getDashboardCore,
+  getDashboardAnalytics,
+}</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>bcrypt node in src/scripts/createFirstAdmin.js.</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>30</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
+  <td>24</td>
+  <td><code>{ getDashboardCore }</code><br><small style="color:var(--muted)">src/routes/dashboard.routes.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>prisma node in src/scripts/createFirstAdmin.js.</td>
+  <td>{ getDashboardCore } node in src/routes/dashboard.routes.js.</td>
 </tr>
 </table>
 
@@ -2379,652 +3014,13 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>backend/server.js</code></td><td>9 nodes</td></tr>
 <tr><td><code>src/routes/dashboard.routes.js</code></td><td>7 nodes</td></tr>
-<tr><td><code>src/config/prisma.js</code></td><td>5 nodes</td></tr>
 <tr><td><code>src/controllers/dashboard.controller.js</code></td><td>5 nodes</td></tr>
-<tr><td><code>src/scripts/createFirstAdmin.js</code></td><td>5 nodes</td></tr>
-<tr><td><code>src/scripts/resetFirstAdminPassword.js</code></td><td>5 nodes</td></tr>
-<tr><td><code>src/services/dashboard.service.js</code></td><td>5 nodes</td></tr>
 <tr><td><code>src/middlewares/auth.middleware.js</code></td><td>3 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x37, imports x10, imports x6, calls x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 9. Community 34 ====== -->
-<h2 id="community-34">9. Community 34</h2>
-<p>Community 34 groups implementation around userdetailsdrawertsx, frontend, components, users, mostly in components/users/UserDetailsDrawer.tsx. This section covers 32 nodes and 36 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 34 (32 nodes, 36 edges)
-    users_userdetailsdrawer_formatdate_7f166829("formatDate()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_avatarpalette_baabd122("avatarPalette()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_initials_67060d8b("initials()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_formatrelative_c29d72fe("formatRelative()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_userdetailsdrawer_ecf20f63("UserDetailsDrawer()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_avatar_palettes_42ecd4bb("AVATAR_PALETTES<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_actionbtn_769aa332("ActionBtn()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_drawer_tabs_ab44ef6b("DRAWER_TABS<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_drawertab_2f4d7722("DrawerTab<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_emptystate_9d89976c("EmptyState()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_icoalert_05dbbbec("IcoAlert()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_icoback_4fe1faa2("IcoBack()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_icoban_c5237deb("IcoBan()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_icochat_ec12772a("IcoChat()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_icocheck_8573bebe("IcoCheck()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_icoclose_a0b81c65("IcoClose()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_icodots_7c759333("IcoDots()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_icokey_becfe2d2("IcoKey()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-    users_userdetailsdrawer_initials_67060d8b -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
-    users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_formatrelative_c29d72fe
-    users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
-    users_userdetailsdrawer_formatrelative_c29d72fe -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
-    users_userdetailsdrawer_avatarpalette_baabd122 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
-    %% Omitted for readability: 14 nodes, 0 edges
-    class users_userdetailsdrawer_formatdate_7f166829 ui;
-    class users_userdetailsdrawer_avatarpalette_baabd122 ui;
-    class users_userdetailsdrawer_initials_67060d8b ui;
-    class users_userdetailsdrawer_formatrelative_c29d72fe ui;
-    class users_userdetailsdrawer_userdetailsdrawer_ecf20f63 ui;
-    class users_userdetailsdrawer_avatar_palettes_42ecd4bb ui;
-    class users_userdetailsdrawer_actionbtn_769aa332 ui;
-    class users_userdetailsdrawer_drawer_tabs_ab44ef6b ui;
-    class users_userdetailsdrawer_drawertab_2f4d7722 ui;
-    class users_userdetailsdrawer_emptystate_9d89976c ui;
-    class users_userdetailsdrawer_icoalert_05dbbbec ui;
-    class users_userdetailsdrawer_icoback_4fe1faa2 ui;
-    class users_userdetailsdrawer_icoban_c5237deb ui;
-    class users_userdetailsdrawer_icochat_ec12772a ui;
-    class users_userdetailsdrawer_icocheck_8573bebe ui;
-    class users_userdetailsdrawer_icoclose_a0b81c65 ui;
-    class users_userdetailsdrawer_icodots_7c759333 ui;
-    class users_userdetailsdrawer_icokey_becfe2d2 ui;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Module file in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>initials()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>initials() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small><br><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>formatDate() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>formatRelative() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>STATUS_STYLE</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>STATUS_STYLE node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>AVATAR_PALETTES</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>AVATAR_PALETTES node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>avatarPalette()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>avatarPalette() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>roleTypeBadge()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>roleTypeBadge() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>riskBadge()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>riskBadge() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>courseStatusStyle()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>courseStatusStyle() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>IcoBack()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoBack() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>IcoClose()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoClose() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>IcoMail()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoMail() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>IcoPhone()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoPhone() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>IcoAlert()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoAlert() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>IcoPencil()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoPencil() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>IcoKey()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoKey() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>IcoLogout()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoLogout() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>IcoShield()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoShield() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>IcoChat()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>Section()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Section() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>InfoRow()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>InfoRow() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>EmptyState()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>EmptyState() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>DrawerTab</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>DrawerTab node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>DRAWER_TABS</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>DRAWER_TABS node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>ActionBtn()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ActionBtn() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>IcoBan()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoBan() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>IcoCheck()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoCheck() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Props node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>avatarPalette()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small><br><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small><br><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small><br>+1 more</td>
-  <td>No direct outbound edge</td>
-  <td>UserDetailsDrawer() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>components/users/UserDetailsDrawer.tsx</code></td><td>32 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x31, calls x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 10. Community 33 ====== -->
-<h2 id="community-33">10. Community 33</h2>
-<p>Community 33 groups implementation around usersservicejs, backend, services, map, mostly in src/services/users.service.js. This section covers 25 nodes and 55 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 33 (25 nodes, 55 edges)
-    services_users_service_createuserauditlog_87a3fafc("createUserAuditLog()<br/><small>src/services/users.service.js</small>")
-    services_users_service_mapuser_947e5df2("mapUser()<br/><small>src/services/users.service.js</small>")
-    services_users_service_assertuserexists_c325a334("assertUserExists()<br/><small>src/services/users.service.js</small>")
-    services_users_service_makeerror_39538342("makeError()<br/><small>src/services/users.service.js</small>")
-    services_users_service_ensureemailavailable_9eaf3193("ensureEmailAvailable()<br/><small>src/services/users.service.js</small>")
-    services_users_service_getuserdetails_6c92b55c("getUserDetails()<br/><small>src/services/users.service.js</small>")
-    services_users_service_createuser_f1084aea("createUser()<br/><small>src/services/users.service.js</small>")
-    services_users_service_updateuser_d7489ed6("updateUser()<br/><small>src/services/users.service.js</small>")
-    services_users_service_updateuserstatus_b3f834ce("updateUserStatus()<br/><small>src/services/users.service.js</small>")
-    services_users_service_suspenduser_5d586553("suspendUser()<br/><small>src/services/users.service.js</small>")
-    services_users_service_reactivateuser_a4ad447e("reactivateUser()<br/><small>src/services/users.service.js</small>")
-    services_users_service_assignuserrole_2eb58cd3("assignUserRole()<br/><small>src/services/users.service.js</small>")
-    services_users_service_getuserslist_9b18bcc9("getUsersList()<br/><small>src/services/users.service.js</small>")
-    services_users_service_resetuserpassword_e7aba01b("resetUserPassword()<br/><small>src/services/users.service.js</small>")
-    services_users_service_deleteuser_da0197cd("deleteUser()<br/><small>src/services/users.service.js</small>")
-    services_users_service_role_map_1d0db769("ROLE_MAP<br/><small>src/services/users.service.js</small>")
-    services_users_service_status_map_f940d50a("STATUS_MAP<br/><small>src/services/users.service.js</small>")
-    services_users_service_user_select_83cdc83b("USER_SELECT<br/><small>src/services/users.service.js</small>")
-    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_getuserdetails_6c92b55c
-    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_createuser_f1084aea
-    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_updateuser_d7489ed6
-    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_updateuserstatus_b3f834ce
-    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_suspenduser_5d586553
-    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_reactivateuser_a4ad447e
-    services_users_service_mapuser_947e5df2 -->|calls| services_users_service_assignuserrole_2eb58cd3
-    services_users_service_makeerror_39538342 -->|calls| services_users_service_assertuserexists_c325a334
-    services_users_service_makeerror_39538342 -->|calls| services_users_service_ensureemailavailable_9eaf3193
-    services_users_service_makeerror_39538342 -->|calls| services_users_service_getuserdetails_6c92b55c
-    services_users_service_makeerror_39538342 -->|calls| services_users_service_createuser_f1084aea
-    services_users_service_makeerror_39538342 -->|calls| services_users_service_updateuser_d7489ed6
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_getuserslist_9b18bcc9
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_getuserdetails_6c92b55c
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_createuser_f1084aea
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_updateuser_d7489ed6
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_updateuserstatus_b3f834ce
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_resetuserpassword_e7aba01b
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_suspenduser_5d586553
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_reactivateuser_a4ad447e
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_assignuserrole_2eb58cd3
-    services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_deleteuser_da0197cd
-    services_users_service_assertuserexists_c325a334 -->|calls| services_users_service_updateuser_d7489ed6
-    services_users_service_assertuserexists_c325a334 -->|calls| services_users_service_updateuserstatus_b3f834ce
-    %% Omitted for readability: 7 nodes, 7 edges
-    class services_users_service_createuserauditlog_87a3fafc function;
-    class services_users_service_mapuser_947e5df2 function;
-    class services_users_service_assertuserexists_c325a334 async;
-    class services_users_service_makeerror_39538342 function;
-    class services_users_service_ensureemailavailable_9eaf3193 function;
-    class services_users_service_getuserdetails_6c92b55c function;
-    class services_users_service_createuser_f1084aea function;
-    class services_users_service_updateuser_d7489ed6 function;
-    class services_users_service_updateuserstatus_b3f834ce function;
-    class services_users_service_suspenduser_5d586553 function;
-    class services_users_service_reactivateuser_a4ad447e function;
-    class services_users_service_assignuserrole_2eb58cd3 function;
-    class services_users_service_getuserslist_9b18bcc9 function;
-    class services_users_service_resetuserpassword_e7aba01b function;
-    class services_users_service_deleteuser_da0197cd function;
-    class services_users_service_role_map_1d0db769 klass;
-    class services_users_service_status_map_f940d50a klass;
-    class services_users_service_user_select_83cdc83b klass;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>users.service.js</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>users.service.js node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>bcrypt</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>bcrypt node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>prisma node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>VALID_ROLES</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>VALID_ROLES node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>VALID_STATUSES</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>VALID_STATUSES node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>ROLE_MAP</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROLE_MAP node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>STATUS_MAP</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>STATUS_MAP node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>VERIFICATION_MAP</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>VERIFICATION_MAP node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>USER_SELECT</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>USER_SELECT node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>mapUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>assignUserRole()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>getUserDetails()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br>+4 more</td>
-  <td>mapUser() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>makeError()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>ensureEmailAvailable()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br>+2 more</td>
-  <td>makeError() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>assignUserRole()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>deleteUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br>+7 more</td>
-  <td>createUserAuditLog() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-async">Async</span></td>
-  <td><code>makeError()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><code>assignUserRole()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>deleteUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>reactivateUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br>+4 more</td>
-  <td>assertUserExists() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>ensureEmailAvailable()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>makeError()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><code>createUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>updateUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>ensureEmailAvailable() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>getUsersList()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getUsersList() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>getUserDetails()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>makeError()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>mapUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getUserDetails() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>createUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>ensureEmailAvailable()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>makeError()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br>+1 more</td>
-  <td>No direct outbound edge</td>
-  <td>createUser() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>updateUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>ensureEmailAvailable()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br>+2 more</td>
-  <td>No direct outbound edge</td>
-  <td>updateUser() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>updateUserStatus()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>mapUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>updateUserStatus() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>resetUserPassword()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>resetUserPassword() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>suspendUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>mapUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>suspendUser() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>reactivateUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>mapUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>reactivateUser() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>assignUserRole()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>mapUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>assignUserRole() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>deleteUser()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertUserExists()</code><br><small style="color:var(--muted)">src/services/users.service.js</small><br><code>createUserAuditLog()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>deleteUser() node in src/services/users.service.js.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>getUsersAnalytics()</code><br><small style="color:var(--muted)">src/services/users.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/services/users.service.js</code></td><td>25 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x31, contains x24. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x20, imports x4, imports x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -3615,259 +3611,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 13. Community 32 ====== -->
-<h2 id="community-32">13. Community 32</h2>
-<p>Community 32 groups implementation around frontend, types, usersts, assignrolemodaltsx, mostly in src/types/users.ts, components/users/AssignRoleModal.tsx. This section covers 20 nodes and 21 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 32 (20 nodes, 21 edges)
-    subgraph community_32_src_types_users_ts_971a3f6a["src/types/users.ts"]
-        frontend_src_types_users_ts_8f94ab14("users.ts")
-        types_users_assignrolerequest_b5dc3919("AssignRoleRequest<br/><small>src/types/users.ts</small>")
-        types_users_roletype_d820cefe("RoleType<br/><small>src/types/users.ts</small>")
-        types_users_actionresponse_704bebaa("ActionResponse<br/><small>src/types/users.ts</small>")
-        types_users_activityitem_2ad33c58("ActivityItem<br/><small>src/types/users.ts</small>")
-        types_users_coursestatus_4a51235b("CourseStatus<br/><small>src/types/users.ts</small>")
-        types_users_enrolledcourse_02491b03("EnrolledCourse<br/><small>src/types/users.ts</small>")
-        types_users_pagination_5ad57bd7("Pagination<br/><small>src/types/users.ts</small>")
-        types_users_riskscore_08f8ce98("RiskScore<br/><small>src/types/users.ts</small>")
-        types_users_securityoverview_58a7b0a1("SecurityOverview<br/><small>src/types/users.ts</small>")
-        types_users_userdetails_701b87c3("UserDetails<br/><small>src/types/users.ts</small>")
-        types_users_userdetailsresponse_06f51bdb("UserDetailsResponse<br/><small>src/types/users.ts</small>")
-    end
-    subgraph community_32_components_users_AssignRoleModal_ts_d02a1767["components/users/AssignRoleModal.tsx"]
-        frontend_src_components_users_assignrolemodal_ts_8966b868("AssignRoleModal.tsx")
-        users_assignrolemodal_assignrolemodal_ab0cd250("AssignRoleModal()<br/><small>components/users/AssignRoleModal.tsx</small>")
-        users_assignrolemodal_input_99fd2c8e("INPUT<br/><small>components/users/AssignRoleModal.tsx</small>")
-        users_assignrolemodal_props_093b95fc("Props<br/><small>components/users/AssignRoleModal.tsx</small>")
-        users_assignrolemodal_roles_1d0075fb("ROLES<br/><small>components/users/AssignRoleModal.tsx</small>")
-        users_assignrolemodal_types_d6a0fd94("TYPES<br/><small>components/users/AssignRoleModal.tsx</small>")
-    end
-    frontend_src_components_users_assignrolemodal_ts_8966b868 -->|imports| frontend_src_types_users_ts_8f94ab14
-    frontend_src_components_users_assignrolemodal_ts_8966b868 -->|imports| types_users_assignrolerequest_b5dc3919
-    frontend_src_components_users_assignrolemodal_ts_8966b868 -->|imports| types_users_roletype_d820cefe
-    %% Omitted for readability: 2 nodes, 0 edges
-    class frontend_src_types_users_ts_8f94ab14 module;
-    class types_users_assignrolerequest_b5dc3919 klass;
-    class types_users_roletype_d820cefe klass;
-    class types_users_actionresponse_704bebaa klass;
-    class types_users_activityitem_2ad33c58 klass;
-    class types_users_coursestatus_4a51235b klass;
-    class types_users_enrolledcourse_02491b03 klass;
-    class types_users_pagination_5ad57bd7 klass;
-    class types_users_riskscore_08f8ce98 klass;
-    class types_users_securityoverview_58a7b0a1 klass;
-    class types_users_userdetails_701b87c3 klass;
-    class types_users_userdetailsresponse_06f51bdb klass;
-    class frontend_src_components_users_assignrolemodal_ts_8966b868 ui;
-    class users_assignrolemodal_assignrolemodal_ab0cd250 ui;
-    class users_assignrolemodal_input_99fd2c8e ui;
-    class users_assignrolemodal_props_093b95fc ui;
-    class users_assignrolemodal_roles_1d0075fb ui;
-    class users_assignrolemodal_types_d6a0fd94 ui;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>AssignRoleModal.tsx</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>AssignRoleRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>RoleType</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td>Module file in components/users/AssignRoleModal.tsx.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Props node in components/users/AssignRoleModal.tsx.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>ROLES</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROLES node in components/users/AssignRoleModal.tsx.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>TYPES</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>TYPES node in components/users/AssignRoleModal.tsx.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>INPUT node in components/users/AssignRoleModal.tsx.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>AssignRoleModal()</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>AssignRoleModal() node in components/users/AssignRoleModal.tsx.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>AssignRoleModal.tsx</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>Module file in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>VerificationState</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>VerificationState node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>Pagination</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Pagination node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>RoleType</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AssignRoleModal.tsx</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>RoleType node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>RiskScore</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>RiskScore node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>CourseStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>CourseStatus node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>UserDetails</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>UserDetails node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>UserRole</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>UserRole node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>SecurityOverview</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SecurityOverview node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>ActivityItem</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ActivityItem node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>EnrolledCourse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>EnrolledCourse node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>UserDetailsResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>UserDetailsResponse node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>AssignRoleRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AssignRoleModal.tsx</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>AssignRoleRequest node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>ActionResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ActionResponse node in src/types/users.ts.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/types/users.ts</code></td><td>14 nodes</td></tr>
-<tr><td><code>components/users/AssignRoleModal.tsx</code></td><td>6 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x18, imports x2, imports x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 14. Community 0 ====== -->
-<h2 id="community-0">14. Community 0</h2>
+<!-- ====== 13. Community 0 ====== -->
+<h2 id="community-0">13. Community 0</h2>
 <p>Community 0 groups implementation around frontend, components, auth, passwordrecoveryts, mostly in src/types/passwordRecovery.ts, components/auth/PasswordStrengthMeter.tsx, components/auth/ResetPasswordForm.tsx. This section covers 19 nodes and 25 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -4118,15 +3863,247 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 15. Community 1 ====== -->
-<h2 id="community-1">15. Community 1</h2>
-<p>Community 1 groups implementation around frontend, usertabletsx, components, users, mostly in components/users/UserTable.tsx, src/types/users.ts. This section covers 18 nodes and 18 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 14. Community 1 ====== -->
+<h2 id="community-1">14. Community 1</h2>
+<p>Community 1 groups implementation around adminlayouttsx, frontend, layouts, nav, mostly in src/layouts/AdminLayout.tsx. This section covers 17 nodes and 16 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 1 (18 nodes, 18 edges)
-    subgraph community_1_components_users_UserTable_tsx_51343985["components/users/UserTable.tsx"]
+    %% Section: Community 1 (17 nodes, 16 edges)
+    frontend_src_layouts_adminlayout_tsx_03d1aec8("AdminLayout.tsx")
+    layouts_adminlayout_icongrid_013145ef("IconGrid()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconbook_845d2282("IconBook()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconusers_8f584316("IconUsers()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconshield_26c40123("IconShield()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconsettings_4f352650("IconSettings()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconmenu_60cb6c8e("IconMenu()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconbell_6a4350a9("IconBell()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconmessage_1b58889c("IconMessage()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconsearch_26f2d1e2("IconSearch()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_iconchevrondown_7728024b("IconChevronDown()<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_qa_topbar_actions_c6fe3927("QA_TOPBAR_ACTIONS<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_navitem_e5e2965b("NavItem<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_navsection_e512c7b6("NavSection<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_nav_sections_98ad62ae("NAV_SECTIONS<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_props_77b57e54("Props<br/><small>src/layouts/AdminLayout.tsx</small>")
+    layouts_adminlayout_nav_4d6a4224("NAV<br/><small>src/layouts/AdminLayout.tsx</small>")
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_icongrid_013145ef
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconbook_845d2282
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconusers_8f584316
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconshield_26c40123
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconsettings_4f352650
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconmenu_60cb6c8e
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconbell_6a4350a9
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconmessage_1b58889c
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconsearch_26f2d1e2
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_iconchevrondown_7728024b
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_qa_topbar_actions_c6fe3927
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_navitem_e5e2965b
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_navsection_e512c7b6
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_nav_sections_98ad62ae
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_props_77b57e54
+    frontend_src_layouts_adminlayout_tsx_03d1aec8 -->|contains| layouts_adminlayout_nav_4d6a4224
+    class frontend_src_layouts_adminlayout_tsx_03d1aec8 ui;
+    class layouts_adminlayout_icongrid_013145ef ui;
+    class layouts_adminlayout_iconbook_845d2282 ui;
+    class layouts_adminlayout_iconusers_8f584316 ui;
+    class layouts_adminlayout_iconshield_26c40123 ui;
+    class layouts_adminlayout_iconsettings_4f352650 ui;
+    class layouts_adminlayout_iconmenu_60cb6c8e ui;
+    class layouts_adminlayout_iconbell_6a4350a9 ui;
+    class layouts_adminlayout_iconmessage_1b58889c ui;
+    class layouts_adminlayout_iconsearch_26f2d1e2 ui;
+    class layouts_adminlayout_iconchevrondown_7728024b ui;
+    class layouts_adminlayout_qa_topbar_actions_c6fe3927 ui;
+    class layouts_adminlayout_navitem_e5e2965b ui;
+    class layouts_adminlayout_navsection_e512c7b6 ui;
+    class layouts_adminlayout_nav_sections_98ad62ae ui;
+    class layouts_adminlayout_props_77b57e54 ui;
+    class layouts_adminlayout_nav_4d6a4224 ui;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>AdminLayout.tsx</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>IconGrid()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconGrid() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>IconBook()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconBook() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>IconUsers()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconUsers() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>IconShield()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconShield() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>IconSettings()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconSettings() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>IconMenu()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconMenu() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>IconBell()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconBell() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>IconMessage()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconMessage() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>IconSearch()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconSearch() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>IconChevronDown()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconChevronDown() node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>QA_TOPBAR_ACTIONS</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>QA_TOPBAR_ACTIONS node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>NavItem</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NavItem node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>NavSection</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NavSection node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>NAV_SECTIONS</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NAV_SECTIONS node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>Props</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Props node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>NAV</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NAV node in src/layouts/AdminLayout.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/layouts/AdminLayout.tsx</code></td><td>17 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x16. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 15. Community 20 ====== -->
+<h2 id="community-20">15. Community 20</h2>
+<p>Community 20 groups implementation around usertabletsx, frontend, components, users, mostly in components/users/UserTable.tsx, src/types/users.ts. This section covers 17 nodes and 17 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 20 (17 nodes, 17 edges)
+    subgraph community_20_components_users_UserTable_tsx_e9c62743["components/users/UserTable.tsx"]
         frontend_src_components_users_usertable_tsx_b000fd6a("UserTable.tsx")
         users_usertable_sk_3e429f97("sk()<br/><small>components/users/UserTable.tsx</small>")
         users_usertable_skeletonrow_d27d32dd("SkeletonRow()<br/><small>components/users/UserTable.tsx</small>")
@@ -4144,12 +4121,8 @@ flowchart LR
         users_usertable_getrolestyle_eaa0afb8("getRoleStyle()<br/><small>components/users/UserTable.tsx</small>")
         users_usertable_initials_85ad69c6("initials()<br/><small>components/users/UserTable.tsx</small>")
     end
-    subgraph community_1_src_types_users_ts_ffca3e37["src/types/users.ts"]
-        types_users_user_36c93203("User<br/><small>src/types/users.ts</small>")
-        types_users_userstatus_814945a0("UserStatus<br/><small>src/types/users.ts</small>")
-    end
+    types_users_userstatus_814945a0("UserStatus<br/><small>src/types/users.ts</small>")
     users_usertable_sk_3e429f97 -->|calls| users_usertable_skeletonrow_d27d32dd
-    frontend_src_components_users_usertable_tsx_b000fd6a -->|imports| types_users_user_36c93203
     frontend_src_components_users_usertable_tsx_b000fd6a -->|imports| types_users_userstatus_814945a0
     class frontend_src_components_users_usertable_tsx_b000fd6a ui;
     class users_usertable_sk_3e429f97 ui;
@@ -4167,7 +4140,6 @@ flowchart LR
     class users_usertable_formatlastactivity_731401c1 ui;
     class users_usertable_getrolestyle_eaa0afb8 ui;
     class users_usertable_initials_85ad69c6 ui;
-    class types_users_user_36c93203 klass;
     class types_users_userstatus_814945a0 klass;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
@@ -4195,7 +4167,7 @@ flowchart LR
   <td><code>UserTable.tsx</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>User</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
   <td>Module file in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
@@ -4326,14 +4298,6 @@ flowchart LR
   <td>No direct outbound edge</td>
   <td>UserStatus node in src/types/users.ts.</td>
 </tr>
-<tr>
-  <td>18</td>
-  <td><code>User</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>UserTable.tsx</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>User node in src/types/users.ts.</td>
-</tr>
 </table>
 
 <div class="grid">
@@ -4342,81 +4306,78 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>components/users/UserTable.tsx</code></td><td>16 nodes</td></tr>
-<tr><td><code>src/types/users.ts</code></td><td>2 nodes</td></tr>
+<tr><td><code>src/types/users.ts</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x15, imports x2, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x15, imports x1, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around frontend, components, users, pages, mostly in src/layouts/AdminLayout.tsx, components/users/UserKpiCards.tsx, components/users/EditUserModal.tsx. This section covers 90 nodes and 90 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around frontend, components, users, charts, mostly in src/types/users.ts, components/users/UserKpiCards.tsx, components/users/SuspendedTab.tsx. This section covers 159 nodes and 187 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (90 nodes, 90 edges)
-    subgraph other_components_users_Toast_tsx_45894462["components/users/Toast.tsx"]
-        users_toast_usetoast_1307449a("useToast()<br/><small>components/users/Toast.tsx</small>")
-        frontend_src_components_users_toast_tsx_e4a5c54d("Toast.tsx")
-        users_toast_toasttype_0d772d47("ToastType<br/><small>components/users/Toast.tsx</small>")
+    %% Section: Other (159 nodes, 187 edges)
+    subgraph other_components_users_ArchivedTab_tsx_1f23121f["components/users/ArchivedTab.tsx"]
+        frontend_src_components_users_archivedtab_tsx_2c913a4e("ArchivedTab.tsx")
+        users_archivedtab_sk_b69a5abe("sk()<br/><small>components/users/ArchivedTab.tsx</small>")
+        users_archivedtab_skeletonrow_26f17b59("SkeletonRow()<br/><small>components/users/ArchivedTab.tsx</small>")
+    end
+    subgraph other_components_users_ImportUsersModal_tsx_fa7eb0f6["components/users/ImportUsersModal.tsx"]
+        frontend_src_components_users_importusersmodal_t_8fd136e4("ImportUsersModal.tsx")
+        users_importusersmodal_formatbytes_6c0d9281("formatBytes()<br/><small>components/users/ImportUsersModal.tsx</small>")
+        users_importusersmodal_importusersmodal_37281c78("ImportUsersModal()<br/><small>components/users/ImportUsersModal.tsx</small>")
     end
     subgraph other_components_users_UserKpiCards_tsx_eab73a20["components/users/UserKpiCards.tsx"]
         frontend_src_components_users_userkpicards_tsx_e5238a9b("UserKpiCards.tsx")
         users_userkpicards_sk_cff935a0("sk()<br/><small>components/users/UserKpiCards.tsx</small>")
         users_userkpicards_skeletoncard_5c1440d5("SkeletonCard()<br/><small>components/users/UserKpiCards.tsx</small>")
     end
-    subgraph other_src_pages_DashboardPage_tsx_a6f0893d["src/pages/DashboardPage.tsx"]
-        pages_dashboardpage_getgreeting_ce22f992("getGreeting()<br/><small>src/pages/DashboardPage.tsx</small>")
-        pages_dashboardpage_dashboardpage_e65e5da8("DashboardPage()<br/><small>src/pages/DashboardPage.tsx</small>")
-        pages_dashboardpage_formatdate_d27d21fe("formatDate()<br/><small>src/pages/DashboardPage.tsx</small>")
+    subgraph other_components_users_PendingVerificationTab_ts_69bf8c14["components/users/PendingVerificationTab.tsx"]
+        users_pendingverificationtab_sk_ee7b6160("sk()<br/><small>components/users/PendingVerificationTab.tsx</small>")
+        users_pendingverificationtab_skeletonrow_79ca2085("SkeletonRow()<br/><small>components/users/PendingVerificationTab.tsx</small>")
     end
-    subgraph other_src_pages_UserManagementPage_tsx_dc3c5688["src/pages/UserManagementPage.tsx"]
-        pages_usermanagementpage_usermanagementpage_8077ca27("UserManagementPage()<br/><small>src/pages/UserManagementPage.tsx</small>")
-        pages_usermanagementpage_pagerange_9fc5184d("pageRange()<br/><small>src/pages/UserManagementPage.tsx</small>")
+    subgraph other_components_users_SuspendedTab_tsx_b935bdab["components/users/SuspendedTab.tsx"]
+        users_suspendedtab_sk_9b1e45ee("sk()<br/><small>components/users/SuspendedTab.tsx</small>")
+        users_suspendedtab_skeletonrow_c6e4a900("SkeletonRow()<br/><small>components/users/SuspendedTab.tsx</small>")
     end
-    frontend_src_components_auth_forgotpasswordform_c8885bf6("ForgotPasswordForm.tsx")
-    frontend_src_components_ui_loadingspinner_tsx_5892ce65("LoadingSpinner.tsx")
-    frontend_src_components_users_deleteuserdialog_t_e6dc2e70("DeleteUserDialog.tsx")
     frontend_src_components_users_editusermodal_tsx_6bc1a820("EditUserModal.tsx")
-    frontend_src_pages_forgotpasswordpage_tsx_3c83ee76("ForgotPasswordPage.tsx")
-    frontend_src_pages_resetpasswordpage_tsx_aa6dd6f7("ResetPasswordPage.tsx")
-    types_passwordrecovery_forgotpasswordstep_1cad6eb9("ForgotPasswordStep<br/><small>src/types/passwordRecovery.ts</small>")
+    users_toast_usetoast_1307449a("useToast()<br/><small>components/users/Toast.tsx</small>")
+    frontend_src_components_users_useranalytics_tsx_3e6b949c("UserAnalytics.tsx")
+    api_users_getusers_ca684f21("getUsers()<br/><small>src/api/users.ts</small>")
+    pages_usermanagementpage_usermanagementpage_8077ca27("UserManagementPage()<br/><small>src/pages/UserManagementPage.tsx</small>")
+    users_archivedtab_sk_b69a5abe -->|calls| users_archivedtab_skeletonrow_26f17b59
+    users_importusersmodal_formatbytes_6c0d9281 -->|calls| users_importusersmodal_importusersmodal_37281c78
+    users_pendingverificationtab_sk_ee7b6160 -->|calls| users_pendingverificationtab_skeletonrow_79ca2085
+    users_suspendedtab_sk_9b1e45ee -->|calls| users_suspendedtab_skeletonrow_c6e4a900
     users_toast_usetoast_1307449a -->|calls| pages_usermanagementpage_usermanagementpage_8077ca27
     users_userkpicards_sk_cff935a0 -->|calls| users_userkpicards_skeletoncard_5c1440d5
-    pages_dashboardpage_getgreeting_ce22f992 -->|calls| pages_dashboardpage_dashboardpage_e65e5da8
-    pages_dashboardpage_formatdate_d27d21fe -->|calls| pages_dashboardpage_dashboardpage_e65e5da8
-    pages_usermanagementpage_pagerange_9fc5184d -->|calls| pages_usermanagementpage_usermanagementpage_8077ca27
-    frontend_src_components_auth_forgotpasswordform_c8885bf6 -->|imports| types_passwordrecovery_forgotpasswordstep_1cad6eb9
-    frontend_src_components_auth_forgotpasswordform_c8885bf6 -->|imports| frontend_src_pages_forgotpasswordpage_tsx_3c83ee76
-    frontend_src_components_ui_loadingspinner_tsx_5892ce65 -->|imports| frontend_src_pages_resetpasswordpage_tsx_aa6dd6f7
-    frontend_src_components_users_deleteuserdialog_t_e6dc2e70 -->|imports| frontend_src_components_users_toast_tsx_e4a5c54d
-    frontend_src_components_users_deleteuserdialog_t_e6dc2e70 -->|imports| users_toast_toasttype_0d772d47
-    frontend_src_components_users_editusermodal_tsx_6bc1a820 -->|imports| frontend_src_components_users_toast_tsx_e4a5c54d
-    frontend_src_components_users_editusermodal_tsx_6bc1a820 -->|imports| users_toast_toasttype_0d772d47
-    %% Omitted for readability: 72 nodes, 0 edges
-    class users_toast_usetoast_1307449a ui;
-    class frontend_src_components_users_toast_tsx_e4a5c54d ui;
-    class users_toast_toasttype_0d772d47 ui;
+    api_users_getusers_ca684f21 -->|imports| frontend_src_components_users_archivedtab_tsx_2c913a4e
+    %% Omitted for readability: 141 nodes, 0 edges
+    class frontend_src_components_users_archivedtab_tsx_2c913a4e ui;
+    class users_archivedtab_sk_b69a5abe ui;
+    class users_archivedtab_skeletonrow_26f17b59 ui;
+    class frontend_src_components_users_importusersmodal_t_8fd136e4 ui;
+    class users_importusersmodal_formatbytes_6c0d9281 ui;
+    class users_importusersmodal_importusersmodal_37281c78 ui;
     class frontend_src_components_users_userkpicards_tsx_e5238a9b ui;
     class users_userkpicards_sk_cff935a0 ui;
     class users_userkpicards_skeletoncard_5c1440d5 ui;
-    class pages_dashboardpage_getgreeting_ce22f992 ui;
-    class pages_dashboardpage_dashboardpage_e65e5da8 ui;
-    class pages_dashboardpage_formatdate_d27d21fe ui;
-    class pages_usermanagementpage_usermanagementpage_8077ca27 ui;
-    class pages_usermanagementpage_pagerange_9fc5184d ui;
-    class frontend_src_components_auth_forgotpasswordform_c8885bf6 ui;
-    class frontend_src_components_ui_loadingspinner_tsx_5892ce65 ui;
-    class frontend_src_components_users_deleteuserdialog_t_e6dc2e70 ui;
+    class users_pendingverificationtab_sk_ee7b6160 ui;
+    class users_pendingverificationtab_skeletonrow_79ca2085 ui;
+    class users_suspendedtab_sk_9b1e45ee ui;
+    class users_suspendedtab_skeletonrow_c6e4a900 ui;
     class frontend_src_components_users_editusermodal_tsx_6bc1a820 ui;
-    class frontend_src_pages_forgotpasswordpage_tsx_3c83ee76 ui;
-    class frontend_src_pages_resetpasswordpage_tsx_aa6dd6f7 ui;
-    class types_passwordrecovery_forgotpasswordstep_1cad6eb9 klass;
+    class users_toast_usetoast_1307449a ui;
+    class frontend_src_components_users_useranalytics_tsx_3e6b949c ui;
+    class api_users_getusers_ca684f21 function;
+    class pages_usermanagementpage_usermanagementpage_8077ca27 ui;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -4440,62 +4401,54 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>DeleteUserDialog.tsx</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small></td>
+  <td><code>BulkActionsMenu.tsx</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>Toast.tsx</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small><br><code>ToastType</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small><br><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
-  <td>Module file in components/users/DeleteUserDialog.tsx.</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>Module file in components/users/BulkActionsMenu.tsx.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small></td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Props node in components/users/DeleteUserDialog.tsx.</td>
+  <td>Props node in components/users/BulkActionsMenu.tsx.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small></td>
+  <td><code>ACTIONS</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>INPUT node in components/users/DeleteUserDialog.tsx.</td>
+  <td>ACTIONS node in components/users/BulkActionsMenu.tsx.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>DeleteUserDialog()</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small></td>
+  <td><code>BulkActionsMenu()</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>DeleteUserDialog() node in components/users/DeleteUserDialog.tsx.</td>
+  <td>BulkActionsMenu() node in components/users/BulkActionsMenu.tsx.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>Toast.tsx</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
+  <td><code>InvitationsTab.tsx</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td><code>DeleteUserDialog.tsx</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td>External entry / no inbound edge</td>
   <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
-  <td>Module file in components/users/Toast.tsx.</td>
+  <td>Module file in components/users/InvitationsTab.tsx.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>ToastType</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>DeleteUserDialog.tsx</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>ToastType node in components/users/Toast.tsx.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>ToastItem</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
+  <td><code>InvitationsTab()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ToastItem node in components/users/Toast.tsx.</td>
+  <td>InvitationsTab() node in components/users/InvitationsTab.tsx.</td>
 </tr>
 <tr>
-  <td>8</td>
+  <td>7</td>
   <td><code>useToast()</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4503,31 +4456,15 @@ flowchart LR
   <td>useToast() node in components/users/Toast.tsx.</td>
 </tr>
 <tr>
-  <td>9</td>
-  <td><code>ContainerProps</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ContainerProps node in components/users/Toast.tsx.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>ToastContainer()</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
-  <td>ToastContainer() node in components/users/Toast.tsx.</td>
-</tr>
-<tr>
-  <td>11</td>
+  <td>8</td>
   <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td><code>AdminLayout.tsx</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small><br><code>DeleteUserDialog.tsx</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br>+4 more</td>
-  <td><code>UsersResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><code>ArchivedTab.tsx</code><br><small style="color:var(--muted)">components/users/ArchivedTab.tsx</small><br><code>BulkActionsMenu.tsx</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br>+9 more</td>
+  <td><code>User</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UsersResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
   <td>Module file in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>9</td>
   <td><code>TABS</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4535,7 +4472,7 @@ flowchart LR
   <td>TABS node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>10</td>
   <td><code>TabKey</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4543,7 +4480,7 @@ flowchart LR
   <td>TabKey node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>14</td>
+  <td>11</td>
   <td><code>LIMIT_OPTIONS</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4551,7 +4488,7 @@ flowchart LR
   <td>LIMIT_OPTIONS node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>15</td>
+  <td>12</td>
   <td><code>pageRange()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4559,7 +4496,7 @@ flowchart LR
   <td>Organizes documentation pages, navigation, or content lookup.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>13</td>
   <td><code>ComingSoon()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4567,7 +4504,7 @@ flowchart LR
   <td>ComingSoon() node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>14</td>
   <td><code>UserManagementPage()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td><code>pageRange()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small><br><code>useToast()</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
@@ -4575,7 +4512,7 @@ flowchart LR
   <td>Organizes documentation pages, navigation, or content lookup.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>15</td>
   <td><code>UsersResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
@@ -4583,100 +4520,124 @@ flowchart LR
   <td>UsersResponse node in src/types/users.ts.</td>
 </tr>
 <tr>
-  <td>19</td>
-  <td><code>AdminLayout.tsx</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td>16</td>
+  <td><code>UserKpiCards.tsx</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
-  <td>Module file in src/layouts/AdminLayout.tsx.</td>
+  <td><code>KpiSummary</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small><br><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td>Module file in components/users/UserKpiCards.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Props node in components/users/UserKpiCards.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>IconUsers()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconUsers() node in components/users/UserKpiCards.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>IconCheck()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconCheck() node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>IconGrid()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>IconClock()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconGrid() node in src/layouts/AdminLayout.tsx.</td>
+  <td>IconClock() node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>IconBook()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>IconBan()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconBook() node in src/layouts/AdminLayout.tsx.</td>
+  <td>IconBan() node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>IconUsers()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>IconMail()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconUsers() node in src/layouts/AdminLayout.tsx.</td>
+  <td>IconMail() node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>IconShield()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>CardDef</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconShield() node in src/layouts/AdminLayout.tsx.</td>
+  <td>CardDef node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>IconSettings()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>CARDS</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconSettings() node in src/layouts/AdminLayout.tsx.</td>
+  <td>CARDS node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>IconMenu()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IconMenu() node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>SkeletonCard()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td>sk() node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>IconBell()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>SkeletonCard()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>IconBell() node in src/layouts/AdminLayout.tsx.</td>
+  <td>SkeletonCard() node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>IconMessage()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>UserKpiCards()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconMessage() node in src/layouts/AdminLayout.tsx.</td>
+  <td>UserKpiCards() node in components/users/UserKpiCards.tsx.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>IconSearch()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>KpiSummary</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>UserKpiCards.tsx</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>IconSearch() node in src/layouts/AdminLayout.tsx.</td>
+  <td>KpiSummary node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>IconChevronDown()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>ArchivedTab.tsx</code><br><small style="color:var(--muted)">components/users/ArchivedTab.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br><code>ImportUsersModal.tsx</code><br><small style="color:var(--muted)">components/users/ImportUsersModal.tsx</small><br>+10 more</td>
   <td>No direct outbound edge</td>
-  <td>IconChevronDown() node in src/layouts/AdminLayout.tsx.</td>
+  <td>Module file in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>QA_TOPBAR_ACTIONS</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>VerificationState</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>QA_TOPBAR_ACTIONS node in src/layouts/AdminLayout.tsx.</td>
+  <td>VerificationState node in src/types/users.ts.</td>
 </tr>
 </table>
 
@@ -4685,19 +4646,19 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/layouts/AdminLayout.tsx</code></td><td>17 nodes</td></tr>
+      <tr><td><code>src/types/users.ts</code></td><td>22 nodes</td></tr>
 <tr><td><code>components/users/UserKpiCards.tsx</code></td><td>12 nodes</td></tr>
+<tr><td><code>components/users/PendingVerificationTab.tsx</code></td><td>10 nodes</td></tr>
+<tr><td><code>components/users/SuspendedTab.tsx</code></td><td>10 nodes</td></tr>
 <tr><td><code>components/users/EditUserModal.tsx</code></td><td>9 nodes</td></tr>
-<tr><td><code>src/pages/UserManagementPage.tsx</code></td><td>7 nodes</td></tr>
-<tr><td><code>frontend/README.md</code></td><td>6 nodes</td></tr>
-<tr><td><code>components/users/Toast.tsx</code></td><td>6 nodes</td></tr>
-<tr><td><code>src/pages/ResetPasswordPage.tsx</code></td><td>5 nodes</td></tr>
-<tr><td><code>components/auth/ForgotPasswordForm.tsx</code></td><td>4 nodes</td></tr>
+<tr><td><code>components/users/ArchivedTab.tsx</code></td><td>8 nodes</td></tr>
+<tr><td><code>components/users/ExportUsersModal.tsx</code></td><td>7 nodes</td></tr>
+<tr><td><code>components/users/ImportUsersModal.tsx</code></td><td>7 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x67, imports x9, imports x9, calls x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x126, imports x30, imports x22, calls x9. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4708,17 +4669,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>721</td></tr>
-      <tr><td>Edges</td><td>1102</td></tr>
+      <tr><td>Nodes</td><td>846</td></tr>
+      <tr><td>Edges</td><td>1284</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>38</td></tr>
+      <tr><td>Communities</td><td>49</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>1102</td></tr>
+      <tr><td>EXTRACTED</td><td>1284</td></tr>
       <tr><td>INFERRED</td><td>0</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -4727,7 +4688,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>mindnavy LMS — Architecture Documentation</p>
-  <p>Generated: 2026-06-08 02:26 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-06-09 04:01 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

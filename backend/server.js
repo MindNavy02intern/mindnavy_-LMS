@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5001;
 
 // Middlewares
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: /^http:\/\/localhost(:\d+)?$/,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
