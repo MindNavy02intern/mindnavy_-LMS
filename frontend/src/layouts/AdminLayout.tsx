@@ -178,7 +178,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
     return () => document.removeEventListener('mousedown', handleClick);
   }, [qaOpen, profileOpen]);
 
-  const displayName = profile?.full_name ?? user?.name ?? 'Admin';
+  const displayName = profile?.full_name ?? user?.fullName ?? user?.name ?? 'Admin';
   const roleLabel   = profile?.role ?? user?.role ?? 'Administrator';
 
   const initials = displayName

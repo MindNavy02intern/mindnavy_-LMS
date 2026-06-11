@@ -23,7 +23,7 @@ type ActionKey = BulkActionType;
 const ACTION_LABELS: Record<ActionKey, string> = {
   suspend:     'suspended',
   reactivate:  'reactivated',
-  delete:      'archived',
+  archive:     'archived',
   assign_role: 'updated',
   notify:      'notified',
 };
@@ -139,20 +139,20 @@ export default function BulkActionsMenu({ selectedIds, users: _users, onClearSel
           {confirmAction && confirmAction !== 'assign_role' && confirmAction !== 'notify' && (
             <div style={{
               padding: '12px 14px',
-              background: confirmAction === 'delete' ? '#fef2f2' : '#fffbeb',
+              background: confirmAction === 'archive' ? '#fff7ed' : '#fffbeb',
               borderBottom: '1px solid #e5e7eb',
             }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: confirmAction === 'delete' ? '#b91c1c' : '#92400e', marginBottom: 8 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: confirmAction === 'archive' ? '#92400e' : '#92400e', marginBottom: 8 }}>
                 {confirmAction === 'suspend'    && `Suspend ${count} user${count !== 1 ? 's' : ''}?`}
                 {confirmAction === 'reactivate' && `Reactivate ${count} user${count !== 1 ? 's' : ''}?`}
-                {confirmAction === 'delete'     && `Archive ${count} user${count !== 1 ? 's' : ''}? This cannot be undone.`}
+                {confirmAction === 'archive'    && `Archive ${count} user${count !== 1 ? 's' : ''}? They will lose access to the system.`}
               </div>
               <div style={{ display: 'flex', gap: 6 }}>
                 <button
                   onClick={() => runBulk(confirmAction)}
                   style={{
                     flex: 1, padding: '7px 0', fontSize: 12, fontWeight: 600,
-                    background: confirmAction === 'delete' ? '#dc2626' : '#2563eb',
+                    background: confirmAction === 'archive' ? '#c2410c' : '#2563eb',
                     color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontFamily: 'inherit',
                   }}
                 >
@@ -237,7 +237,7 @@ export default function BulkActionsMenu({ selectedIds, users: _users, onClearSel
                 { key: 'reactivate'  as ActionKey, label: 'Reactivate All',       icon: '✅', danger: false },
                 { key: 'assign_role' as ActionKey, label: 'Assign Role',          icon: '🔑', danger: false },
                 { key: 'notify'      as ActionKey, label: 'Send Notification',    icon: '📢', danger: false },
-                { key: 'delete'      as ActionKey, label: 'Archive All',          icon: '🗑️', danger: true  },
+                { key: 'archive'     as ActionKey, label: 'Archive All',          icon: '🗂️', danger: true  },
               ] as { key: ActionKey; label: string; icon: string; danger: boolean }[]).map(a => (
                 <button
                   key={a.key}

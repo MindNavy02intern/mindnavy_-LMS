@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>mindnavy LMS — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 846 nodes, 1284 edges, 49 communities. Commit: 5bef091</p>
+<p class="subtitle">Generated from graphify knowledge graph: 874 nodes, 1341 edges, 54 communities. Commit: a283fd1</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -74,10 +74,10 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#community-34">Community 34</a>
     <a href="#community-19">Community 19</a>
     <a href="#community-37">Community 37</a>
-    <a href="#community-36">Community 36</a>
     <a href="#community-0">Community 0</a>
-    <a href="#community-1">Community 1</a>
     <a href="#community-20">Community 20</a>
+    <a href="#community-1">Community 1</a>
+    <a href="#community-32">Community 32</a>
     <a href="#other">Other</a>
 </div>
 
@@ -92,9 +92,9 @@ flowchart LR
     class BUILD_GRAPH_321CBB04 module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>1 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>180 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>172 nodes</small>")
     class SERVE_API_35EC8E86 module;
-    COMMUNITY_33_03CF07C5("Community 33<br/><small>64 nodes</small>")
+    COMMUNITY_33_03CF07C5("Community 33<br/><small>65 nodes</small>")
     class COMMUNITY_33_03CF07C5 module;
     COMMUNITY_6_7D637A07("Community 6<br/><small>64 nodes</small>")
     class COMMUNITY_6_7D637A07 module;
@@ -102,34 +102,34 @@ flowchart LR
     class COMMUNITY_21_47BA4108 module;
     COMMUNITY_5_2966028D("Community 5<br/><small>49 nodes</small>")
     class COMMUNITY_5_2966028D module;
-    COMMUNITY_34_80350725("Community 34<br/><small>38 nodes</small>")
+    COMMUNITY_34_80350725("Community 34<br/><small>36 nodes</small>")
     class COMMUNITY_34_80350725 module;
     COMMUNITY_19_9462A0B9("Community 19<br/><small>24 nodes</small>")
     class COMMUNITY_19_9462A0B9 module;
     COMMUNITY_37_489F9468("Community 37<br/><small>23 nodes</small>")
     class COMMUNITY_37_489F9468 module;
-    COMMUNITY_36_F6473446("Community 36<br/><small>22 nodes</small>")
-    class COMMUNITY_36_F6473446 module;
     COMMUNITY_0_B056AD3D("Community 0<br/><small>19 nodes</small>")
     class COMMUNITY_0_B056AD3D module;
+    COMMUNITY_20_C86C0F59("Community 20<br/><small>18 nodes</small>")
+    class COMMUNITY_20_C86C0F59 module;
     COMMUNITY_1_3073A0DB("Community 1<br/><small>17 nodes</small>")
     class COMMUNITY_1_3073A0DB module;
-    COMMUNITY_20_C86C0F59("Community 20<br/><small>17 nodes</small>")
-    class COMMUNITY_20_C86C0F59 module;
-    OTHER_D0941E68("Other<br/><small>159 nodes</small>")
+    COMMUNITY_32_4867BAA9("Community 32<br/><small>16 nodes</small>")
+    class COMMUNITY_32_4867BAA9 module;
+    OTHER_D0941E68("Other<br/><small>201 nodes</small>")
     class OTHER_D0941E68 module;
-    SERVE_API_35EC8E86 -->|imports x32| OTHER_D0941E68
+    SERVE_API_35EC8E86 -->|imports x50| OTHER_D0941E68
     COMMUNITY_6_7D637A07 -->|imports x23| COMMUNITY_21_47BA4108
+    OTHER_D0941E68 -->|imports x18| COMMUNITY_32_4867BAA9
+    COMMUNITY_32_4867BAA9 -->|contains x15| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x9| COMMUNITY_37_489F9468
-    SERVE_API_35EC8E86 -->|imports x9| COMMUNITY_34_80350725
     COMMUNITY_37_489F9468 -->|imports x8| SERVE_API_35EC8E86
-    OTHER_D0941E68 -->|contains x7| SERVE_API_35EC8E86
+    SERVE_API_35EC8E86 -->|imports x7| COMMUNITY_34_80350725
+    OTHER_D0941E68 -->|imports x7| SERVE_API_35EC8E86
     COMMUNITY_37_489F9468 -->|imports x6| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x5| COMMUNITY_6_7D637A07
-    OTHER_D0941E68 -->|imports x5| COMMUNITY_36_F6473446
-    OTHER_D0941E68 -->|contains x5| COMMUNITY_34_80350725
-    COMMUNITY_33_03CF07C5 -->|calls x4| SERVE_API_35EC8E86
-    SERVE_API_35EC8E86 -->|imports x4| COMMUNITY_36_F6473446
+    SERVE_API_35EC8E86 -->|imports x5| COMMUNITY_32_4867BAA9
+    COMMUNITY_20_C86C0F59 -->|contains x5| OTHER_D0941E68
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -146,24 +146,24 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>114</td><td><code>3, 4, 7, 8, 10, 12, 14</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>1</td><td><code>18</code></td></tr><tr><td>Serving API</td><td>180</td><td><code>9, 2, 26, 25, 22, 27, 39, 13</code></td></tr><tr><td>Community 33</td><td>64</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 5</td><td>49</td><td><code>5</code></td></tr><tr><td>Community 34</td><td>38</td><td><code>34</code></td></tr><tr><td>Community 19</td><td>24</td><td><code>19</code></td></tr><tr><td>Community 37</td><td>23</td><td><code>37</code></td></tr><tr><td>Community 36</td><td>22</td><td><code>36</code></td></tr><tr><td>Community 0</td><td>19</td><td><code>0</code></td></tr><tr><td>Community 1</td><td>17</td><td><code>1</code></td></tr><tr><td>Community 20</td><td>17</td><td><code>20</code></td></tr><tr><td>Other</td><td>159</td><td><code>24, 29, 32, 41, 38, 45, 28, 46, 47, 30, 31, 35, 40, 48, 11, 43, 44, 42, 23, 15, 16, 17</code></td></tr>
+      <tr><td>Graph Build</td><td>114</td><td><code>3, 4, 7, 8, 10, 12, 14</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>1</td><td><code>18</code></td></tr><tr><td>Serving API</td><td>172</td><td><code>9, 2, 25, 26, 39, 27, 22, 53, 13</code></td></tr><tr><td>Community 33</td><td>65</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 5</td><td>49</td><td><code>5</code></td></tr><tr><td>Community 34</td><td>36</td><td><code>34</code></td></tr><tr><td>Community 19</td><td>24</td><td><code>19</code></td></tr><tr><td>Community 37</td><td>23</td><td><code>37</code></td></tr><tr><td>Community 0</td><td>19</td><td><code>0</code></td></tr><tr><td>Community 20</td><td>18</td><td><code>20</code></td></tr><tr><td>Community 1</td><td>17</td><td><code>1</code></td></tr><tr><td>Community 32</td><td>16</td><td><code>32</code></td></tr><tr><td>Other</td><td>201</td><td><code>24, 36, 29, 48, 38, 41, 45, 49, 28, 46, 47, 50, 30, 51, 52, 31, 35, 40, 11, 42, 43, 44, 23, 15, 16, 17</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">Graph Build -&gt; CLI &amp; Skill Installers -&gt; Serving API -&gt; Other -&gt; Community 36 -&gt; Community 33 -&gt; Community 5</div>
+    <div class="arrow-chain">Graph Build -&gt; CLI &amp; Skill Installers -&gt; Serving API -&gt; Other -&gt; Community 32 -&gt; Community 34 -&gt; Community 20</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>846 nodes · 1284 edges · 49 communities (41 shown, 8 thin omitted)</li>
+      <li>874 nodes · 1341 edges · 54 communities (46 shown, 8 thin omitted)</li>
       <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `compilerOptions` - 17 edges</li>
       <li>2. `useAuth()` - 17 edges</li>
-      <li>3. `compilerOptions` - 16 edges</li>
+      <li>3. `getStoredToken()` - 17 edges</li>
     </ul>
   </div>
 </div>
@@ -573,12 +573,12 @@ flowchart LR
 
 <!-- ====== 4. Serving API ====== -->
 <h2 id="serve-api">4. Serving API</h2>
-<p>Serving API groups implementation around frontend, api, backend, components, mostly in src/controllers/users.controller.js, src/api/users.ts, src/routes/users.routes.js. This section covers 180 nodes and 299 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around frontend, backend, api, userscontrollerjs, mostly in src/controllers/users.controller.js, src/routes/users.routes.js, src/api/users.ts. This section covers 172 nodes and 287 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (180 nodes, 299 edges)
+    %% Section: Serving API (172 nodes, 287 edges)
     subgraph serve_api_src_controllers_users_controller_js_8d60ab07["src/controllers/users.controller.js"]
         backend_src_controllers_users_controller_js_108e1036("users.controller.js")
         controllers_users_controller_createuser_1d4bed69("createUser()<br/><small>src/controllers/users.controller.js</small>")
@@ -599,12 +599,10 @@ flowchart LR
     subgraph serve_api_src_api_adminAuth_ts_29dd8eba["src/api/adminAuth.ts"]
         api_adminauth_getstoredtoken_6da5b8df("getStoredToken()<br/><small>src/api/adminAuth.ts</small>")
         api_adminauth_adminfetch_bb7dace4("adminFetch()<br/><small>src/api/adminAuth.ts</small>")
-    end
-    subgraph serve_api_src_api_users_ts_089bead8["src/api/users.ts"]
-        api_users_actionfetch_26dbe2ec("actionFetch()<br/><small>src/api/users.ts</small>")
-        frontend_src_api_users_ts_f0590af5("users.ts")
+        api_adminauth_bearer_ddcb0f2c("bearer()<br/><small>src/api/adminAuth.ts</small>")
     end
     frontend_src_authcontext_tsx_62479c75("AuthContext.tsx")
+    api_users_actionfetch_26dbe2ec("actionFetch()<br/><small>src/api/users.ts</small>")
     controllers_users_controller_createuser_1d4bed69 -->|calls| validators_users_validator_validatecreateuserinp_e973ca38
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateuuidparam_36622e78
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateupdateuserinp_415e7af4
@@ -623,8 +621,7 @@ flowchart LR
     backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validatesuspenduserin_d9703da8
     backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validateresetuserpass_7d038d6c
     frontend_src_authcontext_tsx_62479c75 -->|imports| api_adminauth_getstoredtoken_6da5b8df
-    api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_users_ts_f0590af5
-    %% Omitted for readability: 162 nodes, 0 edges
+    %% Omitted for readability: 154 nodes, 0 edges
     class backend_src_controllers_users_controller_js_108e1036 module;
     class controllers_users_controller_createuser_1d4bed69 function;
     class controllers_users_controller_updateuser_09b2ac67 function;
@@ -640,9 +637,9 @@ flowchart LR
     class validators_users_validator_validateresetuserpass_7d038d6c function;
     class api_adminauth_getstoredtoken_6da5b8df ui;
     class api_adminauth_adminfetch_bb7dace4 function;
-    class api_users_actionfetch_26dbe2ec function;
-    class frontend_src_api_users_ts_f0590af5 module;
+    class api_adminauth_bearer_ddcb0f2c function;
     class frontend_src_authcontext_tsx_62479c75 ui;
+    class api_users_actionfetch_26dbe2ec function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -810,6 +807,14 @@ flowchart LR
 </tr>
 <tr>
   <td>17</td>
+  <td><code>bulkActionUsers()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
+  <td>bulkActionUsers() node in src/controllers/users.controller.js.</td>
+</tr>
+<tr>
+  <td>18</td>
   <td><code>rateLimit.middleware.js</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
@@ -817,7 +822,7 @@ flowchart LR
   <td>rateLimit.middleware.js node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>19</td>
   <td><code>rateLimit</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -825,7 +830,7 @@ flowchart LR
   <td>rateLimit node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>20</td>
   <td><code>adminLoginRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -833,7 +838,7 @@ flowchart LR
   <td>adminLoginRateLimiter node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>21</td>
   <td><code>adminUserActionRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -841,7 +846,7 @@ flowchart LR
   <td>adminUserActionRateLimiter node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>22</td>
   <td><code>adminUsersAnalyticsRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -849,7 +854,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>23</td>
   <td><code>adminUsersImportRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -857,7 +862,7 @@ flowchart LR
   <td>adminUsersImportRateLimiter node in src/middlewares/rateLimit.middleware.js.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>24</td>
   <td><code>upload.middleware.js</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
@@ -865,7 +870,7 @@ flowchart LR
   <td>upload.middleware.js node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>25</td>
   <td><code>multer</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -873,7 +878,7 @@ flowchart LR
   <td>multer node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>26</td>
   <td><code>ALLOWED_MIME_TYPES</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -881,7 +886,7 @@ flowchart LR
   <td>ALLOWED_MIME_TYPES node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>27</td>
   <td><code>storage</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -889,7 +894,7 @@ flowchart LR
   <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>28</td>
   <td><code>csvFileFilter()</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -897,7 +902,7 @@ flowchart LR
   <td>csvFileFilter() node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
-  <td>28</td>
+  <td>29</td>
   <td><code>_upload</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -905,20 +910,12 @@ flowchart LR
   <td>_upload node in src/middlewares/upload.middleware.js.</td>
 </tr>
 <tr>
-  <td>29</td>
+  <td>30</td>
   <td><code>uploadUsersCsv()</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
   <td>uploadUsersCsv() node in src/middlewares/upload.middleware.js.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td><code>adminUserActionRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small><br><code>adminUsersAnalyticsRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small><br><code>adminUsersImportRateLimiter</code><br><small style="color:var(--muted)">src/middlewares/rateLimit.middleware.js</small><br>+16 more</td>
-  <td>No direct outbound edge</td>
-  <td>users.routes.js node in src/routes/users.routes.js.</td>
 </tr>
 </table>
 
@@ -927,9 +924,9 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/controllers/users.controller.js</code></td><td>17 nodes</td></tr>
-<tr><td><code>src/api/users.ts</code></td><td>16 nodes</td></tr>
-<tr><td><code>src/routes/users.routes.js</code></td><td>14 nodes</td></tr>
+      <tr><td><code>src/controllers/users.controller.js</code></td><td>18 nodes</td></tr>
+<tr><td><code>src/routes/users.routes.js</code></td><td>15 nodes</td></tr>
+<tr><td><code>src/api/users.ts</code></td><td>15 nodes</td></tr>
 <tr><td><code>src/api/adminAuth.ts</code></td><td>14 nodes</td></tr>
 <tr><td><code>src/validators/users.validator.js</code></td><td>12 nodes</td></tr>
 <tr><td><code>src/pages/TrustedDevicesPage.tsx</code></td><td>12 nodes</td></tr>
@@ -939,19 +936,19 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x150, imports x70, calls x52, imports x26. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x146, imports x64, calls x52, imports x24. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 5. Community 33 ====== -->
 <h2 id="community-33">5. Community 33</h2>
-<p>Community 33 groups implementation around backend, services, usersservicejs, scripts, mostly in src/services/users.service.js, src/validators/usersImport.validator.js, src/services/dashboard.service.js. This section covers 64 nodes and 110 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Community 33 groups implementation around backend, services, usersservicejs, scripts, mostly in src/services/users.service.js, src/validators/usersImport.validator.js, src/services/dashboard.service.js. This section covers 65 nodes and 115 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 33 (64 nodes, 110 edges)
+    %% Section: Community 33 (65 nodes, 115 edges)
     subgraph community_33_src_services_users_service_js_d4c7904d["src/services/users.service.js"]
         services_users_service_createuserauditlog_87a3fafc("createUserAuditLog()<br/><small>src/services/users.service.js</small>")
         services_users_service_mapuser_947e5df2("mapUser()<br/><small>src/services/users.service.js</small>")
@@ -996,7 +993,7 @@ flowchart LR
     services_users_service_createuserauditlog_87a3fafc -->|calls| services_users_service_assignuserrole_2eb58cd3
     services_users_service_assertuserexists_c325a334 -->|calls| services_users_service_updateuser_d7489ed6
     services_users_service_assertuserexists_c325a334 -->|calls| services_users_service_updateuserstatus_b3f834ce
-    %% Omitted for readability: 46 nodes, 6 edges
+    %% Omitted for readability: 47 nodes, 6 edges
     class services_users_service_createuserauditlog_87a3fafc function;
     class services_users_service_mapuser_947e5df2 function;
     class services_users_service_assertuserexists_c325a334 async;
@@ -1293,7 +1290,7 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/services/users.service.js</code></td><td>28 nodes</td></tr>
+      <tr><td><code>src/services/users.service.js</code></td><td>29 nodes</td></tr>
 <tr><td><code>src/validators/usersImport.validator.js</code></td><td>10 nodes</td></tr>
 <tr><td><code>src/services/dashboard.service.js</code></td><td>6 nodes</td></tr>
 <tr><td><code>src/config/prisma.js</code></td><td>5 nodes</td></tr>
@@ -1305,7 +1302,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x56, calls x38, imports x10, imports x6. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x57, calls x42, imports x10, imports x6. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -2389,17 +2386,17 @@ flowchart LR
 
 <!-- ====== 9. Community 34 ====== -->
 <h2 id="community-34">9. Community 34</h2>
-<p>Community 34 groups implementation around frontend, components, users, userdetailsdrawertsx, mostly in components/users/UserDetailsDrawer.tsx, components/users/ConfirmDialog.tsx, src/types/users.ts. This section covers 38 nodes and 42 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Community 34 groups implementation around frontend, components, users, userdetailsdrawertsx, mostly in components/users/UserDetailsDrawer.tsx, components/users/ConfirmDialog.tsx, src/types/users.ts. This section covers 36 nodes and 40 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 34 (38 nodes, 42 edges)
+    %% Section: Community 34 (36 nodes, 40 edges)
     subgraph community_34_components_users_UserDetailsDrawer_1a1cf0cd["components/users/UserDetailsDrawer.tsx"]
-        frontend_src_components_users_userdetailsdrawer_75152e55("UserDetailsDrawer.tsx")
         users_userdetailsdrawer_formatdate_7f166829("formatDate()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
         users_userdetailsdrawer_avatarpalette_baabd122("avatarPalette()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
         users_userdetailsdrawer_initials_67060d8b("initials()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        frontend_src_components_users_userdetailsdrawer_75152e55("UserDetailsDrawer.tsx")
         users_userdetailsdrawer_formatrelative_c29d72fe("formatRelative()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
         users_userdetailsdrawer_userdetailsdrawer_ecf20f63("UserDetailsDrawer()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
         users_userdetailsdrawer_avatar_palettes_42ecd4bb("AVATAR_PALETTES<br/><small>components/users/UserDetailsDrawer.tsx</small>")
@@ -2408,31 +2405,27 @@ flowchart LR
         users_userdetailsdrawer_drawertab_2f4d7722("DrawerTab<br/><small>components/users/UserDetailsDrawer.tsx</small>")
         users_userdetailsdrawer_emptystate_9d89976c("EmptyState()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
         users_userdetailsdrawer_icoalert_05dbbbec("IcoAlert()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_icoback_4fe1faa2("IcoBack()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_icoban_c5237deb("IcoBan()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
     end
     subgraph community_34_components_users_ConfirmDialog_tsx_71b12d29["components/users/ConfirmDialog.tsx"]
         frontend_src_components_users_confirmdialog_tsx_caf75547("ConfirmDialog.tsx")
         users_confirmdialog_confirmdialog_4bb8cca2("ConfirmDialog()<br/><small>components/users/ConfirmDialog.tsx</small>")
         users_confirmdialog_props_ab2c09bb("Props<br/><small>components/users/ConfirmDialog.tsx</small>")
     end
-    subgraph community_34_src_types_users_ts_93301fd8["src/types/users.ts"]
-        types_users_userdetailsresponse_06f51bdb("UserDetailsResponse<br/><small>src/types/users.ts</small>")
-        types_users_riskscore_08f8ce98("RiskScore<br/><small>src/types/users.ts</small>")
-        types_users_coursestatus_4a51235b("CourseStatus<br/><small>src/types/users.ts</small>")
-    end
+    types_users_riskscore_08f8ce98("RiskScore<br/><small>src/types/users.ts</small>")
     users_userdetailsdrawer_initials_67060d8b -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
     users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_formatrelative_c29d72fe
     users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
     users_userdetailsdrawer_formatrelative_c29d72fe -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
     users_userdetailsdrawer_avatarpalette_baabd122 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
     frontend_src_components_users_confirmdialog_tsx_caf75547 -->|imports| frontend_src_components_users_userdetailsdrawer_75152e55
-    frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_userdetailsresponse_06f51bdb
     frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_riskscore_08f8ce98
-    frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_coursestatus_4a51235b
-    %% Omitted for readability: 20 nodes, 0 edges
-    class frontend_src_components_users_userdetailsdrawer_75152e55 ui;
+    %% Omitted for readability: 18 nodes, 0 edges
     class users_userdetailsdrawer_formatdate_7f166829 ui;
     class users_userdetailsdrawer_avatarpalette_baabd122 ui;
     class users_userdetailsdrawer_initials_67060d8b ui;
+    class frontend_src_components_users_userdetailsdrawer_75152e55 ui;
     class users_userdetailsdrawer_formatrelative_c29d72fe ui;
     class users_userdetailsdrawer_userdetailsdrawer_ecf20f63 ui;
     class users_userdetailsdrawer_avatar_palettes_42ecd4bb ui;
@@ -2441,12 +2434,12 @@ flowchart LR
     class users_userdetailsdrawer_drawertab_2f4d7722 ui;
     class users_userdetailsdrawer_emptystate_9d89976c ui;
     class users_userdetailsdrawer_icoalert_05dbbbec ui;
+    class users_userdetailsdrawer_icoback_4fe1faa2 ui;
+    class users_userdetailsdrawer_icoban_c5237deb ui;
     class frontend_src_components_users_confirmdialog_tsx_caf75547 ui;
     class users_confirmdialog_confirmdialog_4bb8cca2 ui;
     class users_confirmdialog_props_ab2c09bb ui;
-    class types_users_userdetailsresponse_06f51bdb klass;
     class types_users_riskscore_08f8ce98 klass;
-    class types_users_coursestatus_4a51235b klass;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2497,7 +2490,7 @@ flowchart LR
   <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td><code>ConfirmDialog.tsx</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
-  <td><code>CourseStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>RiskScore</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UserDetailsResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><code>RiskScore</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
   <td>Module file in components/users/UserDetailsDrawer.tsx.</td>
 </tr>
 <tr>
@@ -2717,12 +2710,12 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>components/users/UserDetailsDrawer.tsx</code></td><td>32 nodes</td></tr>
 <tr><td><code>components/users/ConfirmDialog.tsx</code></td><td>3 nodes</td></tr>
-<tr><td><code>src/types/users.ts</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/types/users.ts</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x33, calls x5, imports x3, imports x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x33, calls x5, imports x1, imports x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -3335,284 +3328,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 12. Community 36 ====== -->
-<h2 id="community-36">12. Community 36</h2>
-<p>Community 36 groups implementation around frontend, components, users, addusermodaltsx, mostly in components/users/AddUserModal.tsx, components/users/UserFilters.tsx, src/constants/userOptions.ts. This section covers 22 nodes and 26 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 36 (22 nodes, 26 edges)
-    subgraph community_36_components_users_AddUserModal_tsx_75860fb9["components/users/AddUserModal.tsx"]
-        frontend_src_components_users_addusermodal_tsx_8c841bc6("AddUserModal.tsx")
-        users_addusermodal_access_2d067391("ACCESS<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_addusermodal_66be48db("AddUserModal()<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_err_input_b966e8a7("ERR_INPUT<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_field_0071b2fd("Field()<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_formkey_8cf34955("FormKey<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_input_f214f331("INPUT<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_props_748ef0d7("Props<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_roles_b146054b("ROLES<br/><small>components/users/AddUserModal.tsx</small>")
-    end
-    subgraph community_36_src_constants_userOptions_ts_8c7547c0["src/constants/userOptions.ts"]
-        frontend_src_constants_useroptions_ts_5fc4b7e1("userOptions.ts")
-        constants_useroptions_department_options_bf09096c("DEPARTMENT_OPTIONS<br/><small>src/constants/userOptions.ts</small>")
-        constants_useroptions_branch_options_aff8df75("BRANCH_OPTIONS<br/><small>src/constants/userOptions.ts</small>")
-        constants_useroptions_access_level_options_16b22fa0("ACCESS_LEVEL_OPTIONS<br/><small>src/constants/userOptions.ts</small>")
-        constants_useroptions_role_options_2ea025e3("ROLE_OPTIONS<br/><small>src/constants/userOptions.ts</small>")
-    end
-    subgraph community_36_components_users_UserFilters_tsx_6eb83792["components/users/UserFilters.tsx"]
-        frontend_src_components_users_userfilters_tsx_762c9c33("UserFilters.tsx")
-        users_userfilters_action_btn_50a7cd87("ACTION_BTN<br/><small>components/users/UserFilters.tsx</small>")
-        users_userfilters_icon_btn_1719007f("ICON_BTN<br/><small>components/users/UserFilters.tsx</small>")
-    end
-    types_users_createuserrequest_d520b347("CreateUserRequest<br/><small>src/types/users.ts</small>")
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| types_users_createuserrequest_d520b347
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| frontend_src_constants_useroptions_ts_5fc4b7e1
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| constants_useroptions_department_options_bf09096c
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| constants_useroptions_branch_options_aff8df75
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| constants_useroptions_access_level_options_16b22fa0
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| constants_useroptions_role_options_2ea025e3
-    frontend_src_components_users_userfilters_tsx_762c9c33 -->|imports| frontend_src_constants_useroptions_ts_5fc4b7e1
-    frontend_src_components_users_userfilters_tsx_762c9c33 -->|imports| constants_useroptions_department_options_bf09096c
-    %% Omitted for readability: 4 nodes, 0 edges
-    class frontend_src_components_users_addusermodal_tsx_8c841bc6 ui;
-    class users_addusermodal_access_2d067391 ui;
-    class users_addusermodal_addusermodal_66be48db ui;
-    class users_addusermodal_err_input_b966e8a7 ui;
-    class users_addusermodal_field_0071b2fd ui;
-    class users_addusermodal_formkey_8cf34955 ui;
-    class users_addusermodal_input_f214f331 ui;
-    class users_addusermodal_props_748ef0d7 ui;
-    class users_addusermodal_roles_b146054b ui;
-    class frontend_src_constants_useroptions_ts_5fc4b7e1 module;
-    class constants_useroptions_department_options_bf09096c klass;
-    class constants_useroptions_branch_options_aff8df75 klass;
-    class constants_useroptions_access_level_options_16b22fa0 klass;
-    class constants_useroptions_role_options_2ea025e3 klass;
-    class frontend_src_components_users_userfilters_tsx_762c9c33 ui;
-    class users_userfilters_action_btn_50a7cd87 ui;
-    class users_userfilters_icon_btn_1719007f ui;
-    class types_users_createuserrequest_d520b347 klass;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ACCESS_LEVEL_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>BRANCH_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>CreateUserRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small><br>+3 more</td>
-  <td>Module file in components/users/AddUserModal.tsx.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Props node in components/users/AddUserModal.tsx.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>INPUT node in components/users/AddUserModal.tsx.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>ERR_INPUT</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ERR_INPUT node in components/users/AddUserModal.tsx.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>Field()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Field() node in components/users/AddUserModal.tsx.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>FormKey</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>FormKey node in components/users/AddUserModal.tsx.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>AddUserModal()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>AddUserModal() node in components/users/AddUserModal.tsx.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>UserFilters.tsx</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>DEPARTMENT_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>userOptions.ts</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td>Module file in components/users/UserFilters.tsx.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Props node in components/users/UserFilters.tsx.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>INPUT node in components/users/UserFilters.tsx.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>SELECT</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SELECT node in components/users/UserFilters.tsx.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>ICON_BTN</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ICON_BTN node in components/users/UserFilters.tsx.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>ACTION_BTN</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ACTION_BTN node in components/users/UserFilters.tsx.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>UserFilters()</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>UserFilters() node in components/users/UserFilters.tsx.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>userOptions.ts</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>UserFilters.tsx</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>Module file in src/constants/userOptions.ts.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>DEPARTMENT_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>UserFilters.tsx</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>DEPARTMENT_OPTIONS node in src/constants/userOptions.ts.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>BRANCH_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>BRANCH_OPTIONS node in src/constants/userOptions.ts.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>ACCESS_LEVEL_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>ACCESS_LEVEL_OPTIONS node in src/constants/userOptions.ts.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>ROLE_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>ROLE_OPTIONS node in src/constants/userOptions.ts.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>CreateUserRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>CreateUserRequest node in src/types/users.ts.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>ROLES</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROLES node in components/users/AddUserModal.tsx.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>ACCESS</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ACCESS node in components/users/AddUserModal.tsx.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>components/users/AddUserModal.tsx</code></td><td>9 nodes</td></tr>
-<tr><td><code>components/users/UserFilters.tsx</code></td><td>7 nodes</td></tr>
-<tr><td><code>src/constants/userOptions.ts</code></td><td>5 nodes</td></tr>
-<tr><td><code>src/types/users.ts</code></td><td>1 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x18, imports x6, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 13. Community 0 ====== -->
-<h2 id="community-0">13. Community 0</h2>
+<!-- ====== 12. Community 0 ====== -->
+<h2 id="community-0">12. Community 0</h2>
 <p>Community 0 groups implementation around frontend, components, auth, passwordrecoveryts, mostly in src/types/passwordRecovery.ts, components/auth/PasswordStrengthMeter.tsx, components/auth/ResetPasswordForm.tsx. This section covers 19 nodes and 25 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -3863,6 +3580,237 @@ flowchart LR
 </div>
 <hr>
 
+<!-- ====== 13. Community 20 ====== -->
+<h2 id="community-20">13. Community 20</h2>
+<p>Community 20 groups implementation around usertabletsx, frontend, components, users, mostly in components/users/UserTable.tsx, src/types/users.ts. This section covers 18 nodes and 18 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 20 (18 nodes, 18 edges)
+    subgraph community_20_components_users_UserTable_tsx_e9c62743["components/users/UserTable.tsx"]
+        frontend_src_components_users_usertable_tsx_b000fd6a("UserTable.tsx")
+        users_usertable_sk_3e429f97("sk()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_skeletonrow_d27d32dd("SkeletonRow()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_avatar_palettes_802f86a7("AVATAR_PALETTES<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_icondots_ac9b4d63("IconDots()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_iconeye_3ca19b55("IconEye()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_iconpencil_19ee51b0("IconPencil()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_props_2a67671c("Props<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_status_map_83d623e7("STATUS_MAP<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_td_6b579c07("TD<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_th_46a86316("TH<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_usertable_d3b71156("UserTable()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_avatarpalette_0c75b20a("avatarPalette()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_formatdate_c5d709c9("formatDate()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_formatlastactivity_731401c1("formatLastActivity()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_getrolestyle_eaa0afb8("getRoleStyle()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_initials_85ad69c6("initials()<br/><small>components/users/UserTable.tsx</small>")
+    end
+    types_users_userstatus_814945a0("UserStatus<br/><small>src/types/users.ts</small>")
+    users_usertable_sk_3e429f97 -->|calls| users_usertable_skeletonrow_d27d32dd
+    frontend_src_components_users_usertable_tsx_b000fd6a -->|imports| types_users_userstatus_814945a0
+    class frontend_src_components_users_usertable_tsx_b000fd6a ui;
+    class users_usertable_sk_3e429f97 ui;
+    class users_usertable_skeletonrow_d27d32dd ui;
+    class users_usertable_avatar_palettes_802f86a7 ui;
+    class users_usertable_icondots_ac9b4d63 ui;
+    class users_usertable_iconeye_3ca19b55 ui;
+    class users_usertable_iconpencil_19ee51b0 ui;
+    class users_usertable_props_2a67671c ui;
+    class users_usertable_status_map_83d623e7 ui;
+    class users_usertable_td_6b579c07 ui;
+    class users_usertable_th_46a86316 ui;
+    class users_usertable_usertable_d3b71156 ui;
+    class users_usertable_avatarpalette_0c75b20a ui;
+    class users_usertable_formatdate_c5d709c9 ui;
+    class users_usertable_formatlastactivity_731401c1 ui;
+    class users_usertable_getrolestyle_eaa0afb8 ui;
+    class users_usertable_initials_85ad69c6 ui;
+    class types_users_userstatus_814945a0 klass;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>UserTable.tsx</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td>Module file in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Props node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>getRoleStyle()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>getRoleStyle() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>STATUS_MAP</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>STATUS_MAP node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>initials()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>initials() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>AVATAR_PALETTES</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AVATAR_PALETTES node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>avatarPalette()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>avatarPalette() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>formatLastActivity()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>formatLastActivity() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>formatDate() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>SkeletonRow()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td>sk() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>SkeletonRow()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>SkeletonRow() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>IconEye()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconEye() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>IconPencil()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconPencil() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>IconDots()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IconDots() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>TH</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TH node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>TD</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TD node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>UserTable()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>UserTable() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>UserTable.tsx</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>UserStatus node in src/types/users.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>components/users/UserTable.tsx</code></td><td>17 nodes</td></tr>
+<tr><td><code>src/types/users.ts</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x16, imports x1, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
 <!-- ====== 14. Community 1 ====== -->
 <h2 id="community-1">14. Community 1</h2>
 <p>Community 1 groups implementation around adminlayouttsx, frontend, layouts, nav, mostly in src/layouts/AdminLayout.tsx. This section covers 17 nodes and 16 internal edges; the diagram shows only representative relationships to stay readable.</p>
@@ -4095,52 +4043,61 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 15. Community 20 ====== -->
-<h2 id="community-20">15. Community 20</h2>
-<p>Community 20 groups implementation around usertabletsx, frontend, components, users, mostly in components/users/UserTable.tsx, src/types/users.ts. This section covers 17 nodes and 17 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 15. Community 32 ====== -->
+<h2 id="community-32">15. Community 32</h2>
+<p>Community 32 groups implementation around usersts, frontend, types, verificationstate, mostly in src/types/users.ts. This section covers 16 nodes and 15 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 20 (17 nodes, 17 edges)
-    subgraph community_20_components_users_UserTable_tsx_e9c62743["components/users/UserTable.tsx"]
-        frontend_src_components_users_usertable_tsx_b000fd6a("UserTable.tsx")
-        users_usertable_sk_3e429f97("sk()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_skeletonrow_d27d32dd("SkeletonRow()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_avatar_palettes_802f86a7("AVATAR_PALETTES<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_icondots_ac9b4d63("IconDots()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_iconeye_3ca19b55("IconEye()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_iconpencil_19ee51b0("IconPencil()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_props_2a67671c("Props<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_status_map_83d623e7("STATUS_MAP<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_td_6b579c07("TD<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_th_46a86316("TH<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_usertable_d3b71156("UserTable()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_avatarpalette_0c75b20a("avatarPalette()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_formatlastactivity_731401c1("formatLastActivity()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_getrolestyle_eaa0afb8("getRoleStyle()<br/><small>components/users/UserTable.tsx</small>")
-        users_usertable_initials_85ad69c6("initials()<br/><small>components/users/UserTable.tsx</small>")
-    end
-    types_users_userstatus_814945a0("UserStatus<br/><small>src/types/users.ts</small>")
-    users_usertable_sk_3e429f97 -->|calls| users_usertable_skeletonrow_d27d32dd
-    frontend_src_components_users_usertable_tsx_b000fd6a -->|imports| types_users_userstatus_814945a0
-    class frontend_src_components_users_usertable_tsx_b000fd6a ui;
-    class users_usertable_sk_3e429f97 ui;
-    class users_usertable_skeletonrow_d27d32dd ui;
-    class users_usertable_avatar_palettes_802f86a7 ui;
-    class users_usertable_icondots_ac9b4d63 ui;
-    class users_usertable_iconeye_3ca19b55 ui;
-    class users_usertable_iconpencil_19ee51b0 ui;
-    class users_usertable_props_2a67671c ui;
-    class users_usertable_status_map_83d623e7 ui;
-    class users_usertable_td_6b579c07 ui;
-    class users_usertable_th_46a86316 ui;
-    class users_usertable_usertable_d3b71156 ui;
-    class users_usertable_avatarpalette_0c75b20a ui;
-    class users_usertable_formatlastactivity_731401c1 ui;
-    class users_usertable_getrolestyle_eaa0afb8 ui;
-    class users_usertable_initials_85ad69c6 ui;
-    class types_users_userstatus_814945a0 klass;
+    %% Section: Community 32 (16 nodes, 15 edges)
+    frontend_src_types_users_ts_8f94ab14("users.ts")
+    types_users_verificationstate_1576070f("VerificationState<br/><small>src/types/users.ts</small>")
+    types_users_pagination_5ad57bd7("Pagination<br/><small>src/types/users.ts</small>")
+    types_users_coursestatus_4a51235b("CourseStatus<br/><small>src/types/users.ts</small>")
+    types_users_userdetails_701b87c3("UserDetails<br/><small>src/types/users.ts</small>")
+    types_users_userrole_40f42623("UserRole<br/><small>src/types/users.ts</small>")
+    types_users_securityoverview_58a7b0a1("SecurityOverview<br/><small>src/types/users.ts</small>")
+    types_users_activityitem_2ad33c58("ActivityItem<br/><small>src/types/users.ts</small>")
+    types_users_enrolledcourse_02491b03("EnrolledCourse<br/><small>src/types/users.ts</small>")
+    types_users_userdetailsresponse_06f51bdb("UserDetailsResponse<br/><small>src/types/users.ts</small>")
+    types_users_actionresponse_704bebaa("ActionResponse<br/><small>src/types/users.ts</small>")
+    types_users_dailytrenditem_333607eb("DailyTrendItem<br/><small>src/types/users.ts</small>")
+    types_users_importerror_963a8be5("ImportError<br/><small>src/types/users.ts</small>")
+    types_users_importsummary_04c36b8d("ImportSummary<br/><small>src/types/users.ts</small>")
+    types_users_bulkactionerror_165cdbc3("BulkActionError<br/><small>src/types/users.ts</small>")
+    types_users_bulkactionresponse_09389871("BulkActionResponse<br/><small>src/types/users.ts</small>")
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_verificationstate_1576070f
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_pagination_5ad57bd7
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_coursestatus_4a51235b
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_userdetails_701b87c3
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_userrole_40f42623
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_securityoverview_58a7b0a1
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_activityitem_2ad33c58
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_enrolledcourse_02491b03
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_userdetailsresponse_06f51bdb
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_actionresponse_704bebaa
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_dailytrenditem_333607eb
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_importerror_963a8be5
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_importsummary_04c36b8d
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_bulkactionerror_165cdbc3
+    frontend_src_types_users_ts_8f94ab14 -->|contains| types_users_bulkactionresponse_09389871
+    class frontend_src_types_users_ts_8f94ab14 module;
+    class types_users_verificationstate_1576070f klass;
+    class types_users_pagination_5ad57bd7 klass;
+    class types_users_coursestatus_4a51235b klass;
+    class types_users_userdetails_701b87c3 klass;
+    class types_users_userrole_40f42623 klass;
+    class types_users_securityoverview_58a7b0a1 klass;
+    class types_users_activityitem_2ad33c58 klass;
+    class types_users_enrolledcourse_02491b03 klass;
+    class types_users_userdetailsresponse_06f51bdb klass;
+    class types_users_actionresponse_704bebaa klass;
+    class types_users_dailytrenditem_333607eb klass;
+    class types_users_importerror_963a8be5 klass;
+    class types_users_importsummary_04c36b8d klass;
+    class types_users_bulkactionerror_165cdbc3 klass;
+    class types_users_bulkactionresponse_09389871 klass;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -4164,139 +4121,131 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>UserTable.tsx</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td>Module file in components/users/UserTable.tsx.</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>VerificationState</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Props node in components/users/UserTable.tsx.</td>
+  <td>VerificationState node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>getRoleStyle()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>Pagination</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>getRoleStyle() node in components/users/UserTable.tsx.</td>
+  <td>Pagination node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>STATUS_MAP</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>CourseStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>STATUS_MAP node in components/users/UserTable.tsx.</td>
+  <td>CourseStatus node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>initials()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>UserDetails</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>initials() node in components/users/UserTable.tsx.</td>
+  <td>UserDetails node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>AVATAR_PALETTES</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>UserRole</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>AVATAR_PALETTES node in components/users/UserTable.tsx.</td>
+  <td>UserRole node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>avatarPalette()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>SecurityOverview</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>avatarPalette() node in components/users/UserTable.tsx.</td>
+  <td>SecurityOverview node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>formatLastActivity()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ActivityItem</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>formatLastActivity() node in components/users/UserTable.tsx.</td>
+  <td>ActivityItem node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>EnrolledCourse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>SkeletonRow()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td>sk() node in components/users/UserTable.tsx.</td>
+  <td>No direct outbound edge</td>
+  <td>EnrolledCourse node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>SkeletonRow()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><code>UserDetailsResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>SkeletonRow() node in components/users/UserTable.tsx.</td>
+  <td>UserDetailsResponse node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>IconEye()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ActionResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconEye() node in components/users/UserTable.tsx.</td>
+  <td>ActionResponse node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>IconPencil()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>DailyTrendItem</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconPencil() node in components/users/UserTable.tsx.</td>
+  <td>DailyTrendItem node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>IconDots()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ImportError</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconDots() node in components/users/UserTable.tsx.</td>
+  <td>ImportError node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>TH</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ImportSummary</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>TH node in components/users/UserTable.tsx.</td>
+  <td>ImportSummary node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>TD</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>BulkActionError</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>TD node in components/users/UserTable.tsx.</td>
+  <td>BulkActionError node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>UserTable()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>BulkActionResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>UserTable() node in components/users/UserTable.tsx.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>UserTable.tsx</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>UserStatus node in src/types/users.ts.</td>
+  <td>BulkActionResponse node in src/types/users.ts.</td>
 </tr>
 </table>
 
@@ -4305,39 +4254,35 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>components/users/UserTable.tsx</code></td><td>16 nodes</td></tr>
-<tr><td><code>src/types/users.ts</code></td><td>1 nodes</td></tr>
+      <tr><td><code>src/types/users.ts</code></td><td>16 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x15, imports x1, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x15. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around frontend, components, users, charts, mostly in src/types/users.ts, components/users/UserKpiCards.tsx, components/users/SuspendedTab.tsx. This section covers 159 nodes and 187 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around frontend, components, users, charts, mostly in src/types/users.ts, components/users/UserKpiCards.tsx, src/pages/UserManagementPage.tsx. This section covers 201 nodes and 218 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (159 nodes, 187 edges)
+    %% Section: Other (201 nodes, 218 edges)
     subgraph other_components_users_ArchivedTab_tsx_1f23121f["components/users/ArchivedTab.tsx"]
-        frontend_src_components_users_archivedtab_tsx_2c913a4e("ArchivedTab.tsx")
         users_archivedtab_sk_b69a5abe("sk()<br/><small>components/users/ArchivedTab.tsx</small>")
         users_archivedtab_skeletonrow_26f17b59("SkeletonRow()<br/><small>components/users/ArchivedTab.tsx</small>")
     end
     subgraph other_components_users_ImportUsersModal_tsx_fa7eb0f6["components/users/ImportUsersModal.tsx"]
-        frontend_src_components_users_importusersmodal_t_8fd136e4("ImportUsersModal.tsx")
         users_importusersmodal_formatbytes_6c0d9281("formatBytes()<br/><small>components/users/ImportUsersModal.tsx</small>")
         users_importusersmodal_importusersmodal_37281c78("ImportUsersModal()<br/><small>components/users/ImportUsersModal.tsx</small>")
     end
-    subgraph other_components_users_UserKpiCards_tsx_eab73a20["components/users/UserKpiCards.tsx"]
-        frontend_src_components_users_userkpicards_tsx_e5238a9b("UserKpiCards.tsx")
-        users_userkpicards_sk_cff935a0("sk()<br/><small>components/users/UserKpiCards.tsx</small>")
-        users_userkpicards_skeletoncard_5c1440d5("SkeletonCard()<br/><small>components/users/UserKpiCards.tsx</small>")
+    subgraph other_components_users_InvitationsTab_tsx_8af3ad64["components/users/InvitationsTab.tsx"]
+        users_invitationstab_sk_20de7427("sk()<br/><small>components/users/InvitationsTab.tsx</small>")
+        users_invitationstab_skeletonrow_b0cc8388("SkeletonRow()<br/><small>components/users/InvitationsTab.tsx</small>")
     end
     subgraph other_components_users_PendingVerificationTab_ts_69bf8c14["components/users/PendingVerificationTab.tsx"]
         users_pendingverificationtab_sk_ee7b6160("sk()<br/><small>components/users/PendingVerificationTab.tsx</small>")
@@ -4347,36 +4292,38 @@ flowchart LR
         users_suspendedtab_sk_9b1e45ee("sk()<br/><small>components/users/SuspendedTab.tsx</small>")
         users_suspendedtab_skeletonrow_c6e4a900("SkeletonRow()<br/><small>components/users/SuspendedTab.tsx</small>")
     end
+    frontend_src_components_auth_forgotpasswordform_c8885bf6("ForgotPasswordForm.tsx")
+    frontend_src_components_users_addusermodal_tsx_8c841bc6("AddUserModal.tsx")
+    frontend_src_components_users_bulkactionsmenu_ts_1293fccb("BulkActionsMenu.tsx")
     frontend_src_components_users_editusermodal_tsx_6bc1a820("EditUserModal.tsx")
     users_toast_usetoast_1307449a("useToast()<br/><small>components/users/Toast.tsx</small>")
     frontend_src_components_users_useranalytics_tsx_3e6b949c("UserAnalytics.tsx")
-    api_users_getusers_ca684f21("getUsers()<br/><small>src/api/users.ts</small>")
+    frontend_src_components_users_userfilters_tsx_762c9c33("UserFilters.tsx")
     pages_usermanagementpage_usermanagementpage_8077ca27("UserManagementPage()<br/><small>src/pages/UserManagementPage.tsx</small>")
     users_archivedtab_sk_b69a5abe -->|calls| users_archivedtab_skeletonrow_26f17b59
     users_importusersmodal_formatbytes_6c0d9281 -->|calls| users_importusersmodal_importusersmodal_37281c78
+    users_invitationstab_sk_20de7427 -->|calls| users_invitationstab_skeletonrow_b0cc8388
     users_pendingverificationtab_sk_ee7b6160 -->|calls| users_pendingverificationtab_skeletonrow_79ca2085
     users_suspendedtab_sk_9b1e45ee -->|calls| users_suspendedtab_skeletonrow_c6e4a900
     users_toast_usetoast_1307449a -->|calls| pages_usermanagementpage_usermanagementpage_8077ca27
-    users_userkpicards_sk_cff935a0 -->|calls| users_userkpicards_skeletoncard_5c1440d5
-    api_users_getusers_ca684f21 -->|imports| frontend_src_components_users_archivedtab_tsx_2c913a4e
-    %% Omitted for readability: 141 nodes, 0 edges
-    class frontend_src_components_users_archivedtab_tsx_2c913a4e ui;
+    %% Omitted for readability: 183 nodes, 0 edges
     class users_archivedtab_sk_b69a5abe ui;
     class users_archivedtab_skeletonrow_26f17b59 ui;
-    class frontend_src_components_users_importusersmodal_t_8fd136e4 ui;
     class users_importusersmodal_formatbytes_6c0d9281 ui;
     class users_importusersmodal_importusersmodal_37281c78 ui;
-    class frontend_src_components_users_userkpicards_tsx_e5238a9b ui;
-    class users_userkpicards_sk_cff935a0 ui;
-    class users_userkpicards_skeletoncard_5c1440d5 ui;
+    class users_invitationstab_sk_20de7427 ui;
+    class users_invitationstab_skeletonrow_b0cc8388 ui;
     class users_pendingverificationtab_sk_ee7b6160 ui;
     class users_pendingverificationtab_skeletonrow_79ca2085 ui;
     class users_suspendedtab_sk_9b1e45ee ui;
     class users_suspendedtab_skeletonrow_c6e4a900 ui;
+    class frontend_src_components_auth_forgotpasswordform_c8885bf6 ui;
+    class frontend_src_components_users_addusermodal_tsx_8c841bc6 ui;
+    class frontend_src_components_users_bulkactionsmenu_ts_1293fccb ui;
     class frontend_src_components_users_editusermodal_tsx_6bc1a820 ui;
     class users_toast_usetoast_1307449a ui;
     class frontend_src_components_users_useranalytics_tsx_3e6b949c ui;
-    class api_users_getusers_ca684f21 function;
+    class frontend_src_components_users_userfilters_tsx_762c9c33 ui;
     class pages_usermanagementpage_usermanagementpage_8077ca27 ui;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
@@ -4401,54 +4348,6 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>BulkActionsMenu.tsx</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
-  <td>Module file in components/users/BulkActionsMenu.tsx.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Props node in components/users/BulkActionsMenu.tsx.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>ACTIONS</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ACTIONS node in components/users/BulkActionsMenu.tsx.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>BulkActionsMenu()</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>BulkActionsMenu() node in components/users/BulkActionsMenu.tsx.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>InvitationsTab.tsx</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
-  <td>Module file in components/users/InvitationsTab.tsx.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>InvitationsTab()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>InvitationsTab() node in components/users/InvitationsTab.tsx.</td>
-</tr>
-<tr>
-  <td>7</td>
   <td><code>useToast()</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4456,15 +4355,39 @@ flowchart LR
   <td>useToast() node in components/users/Toast.tsx.</td>
 </tr>
 <tr>
-  <td>8</td>
+  <td>2</td>
+  <td><code>ColKey</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>ColKey node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>COLUMNS</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>COLUMNS node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>loadVisibleCols()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>loadVisibleCols() node in components/users/UserTable.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
   <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td><code>ArchivedTab.tsx</code><br><small style="color:var(--muted)">components/users/ArchivedTab.tsx</small><br><code>BulkActionsMenu.tsx</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br>+9 more</td>
-  <td><code>User</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UsersResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>ArchivedTab.tsx</code><br><small style="color:var(--muted)">components/users/ArchivedTab.tsx</small><br><code>BulkActionsMenu.tsx</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small><br>+15 more</td>
+  <td><code>User</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UsersResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
   <td>Module file in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>9</td>
+  <td>6</td>
   <td><code>TABS</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4472,7 +4395,7 @@ flowchart LR
   <td>TABS node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>10</td>
+  <td>7</td>
   <td><code>TabKey</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4480,7 +4403,7 @@ flowchart LR
   <td>TabKey node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>11</td>
+  <td>8</td>
   <td><code>LIMIT_OPTIONS</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4488,7 +4411,7 @@ flowchart LR
   <td>LIMIT_OPTIONS node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>9</td>
   <td><code>pageRange()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -4496,12 +4419,36 @@ flowchart LR
   <td>Organizes documentation pages, navigation, or content lookup.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>10</td>
   <td><code>ComingSoon()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>ComingSoon() node in src/pages/UserManagementPage.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>INPUT_BASE</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INPUT_BASE node in src/pages/UserManagementPage.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>focusIn()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>focusIn() node in src/pages/UserManagementPage.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>focusOut()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>focusOut() node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>14</td>
@@ -4521,123 +4468,123 @@ flowchart LR
 </tr>
 <tr>
   <td>16</td>
-  <td><code>UserKpiCards.tsx</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>KpiSummary</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small><br><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td>Module file in components/users/UserKpiCards.tsx.</td>
+  <td><code>ACCESS_LEVEL_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>BRANCH_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>CreateUserRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small><br>+4 more</td>
+  <td>Module file in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Props node in components/users/UserKpiCards.tsx.</td>
+  <td>Props node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>IconUsers()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconUsers() node in components/users/UserKpiCards.tsx.</td>
+  <td>INPUT node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>IconCheck()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>ERR_INPUT</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconCheck() node in components/users/UserKpiCards.tsx.</td>
+  <td>ERR_INPUT node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>IconClock()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>Field()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconClock() node in components/users/UserKpiCards.tsx.</td>
+  <td>Field() node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>IconBan()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>FormKey</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconBan() node in components/users/UserKpiCards.tsx.</td>
+  <td>FormKey node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>IconMail()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>AddUserModal()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconMail() node in components/users/UserKpiCards.tsx.</td>
+  <td>AddUserModal() node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>CardDef</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>CardDef node in components/users/UserKpiCards.tsx.</td>
+  <td><code>userOptions.ts</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br><code>UserFilters.tsx</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>Module file in src/constants/userOptions.ts.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>CARDS</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>BRANCH_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>CARDS node in components/users/UserKpiCards.tsx.</td>
+  <td>BRANCH_OPTIONS node in src/constants/userOptions.ts.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>SkeletonCard()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
-  <td>sk() node in components/users/UserKpiCards.tsx.</td>
+  <td><code>ACCESS_LEVEL_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ACCESS_LEVEL_OPTIONS node in src/constants/userOptions.ts.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>SkeletonCard()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>ROLE_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>SkeletonCard() node in components/users/UserKpiCards.tsx.</td>
+  <td>ROLE_OPTIONS node in src/constants/userOptions.ts.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>UserKpiCards()</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>CreateUserRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>UserKpiCards() node in components/users/UserKpiCards.tsx.</td>
+  <td>CreateUserRequest node in src/types/users.ts.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>KpiSummary</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>UserKpiCards.tsx</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><code>ROLES</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>KpiSummary node in src/types/users.ts.</td>
+  <td>ROLES node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>users.ts</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>ArchivedTab.tsx</code><br><small style="color:var(--muted)">components/users/ArchivedTab.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br><code>ImportUsersModal.tsx</code><br><small style="color:var(--muted)">components/users/ImportUsersModal.tsx</small><br>+10 more</td>
+  <td><code>ACCESS</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Module file in src/types/users.ts.</td>
+  <td>ACCESS node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>VerificationState</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>UserKpiCards.tsx</code><br><small style="color:var(--muted)">components/users/UserKpiCards.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>VerificationState node in src/types/users.ts.</td>
+  <td><code>KpiSummary</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>Module file in components/users/UserKpiCards.tsx.</td>
 </tr>
 </table>
 
@@ -4646,19 +4593,19 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/types/users.ts</code></td><td>22 nodes</td></tr>
+      <tr><td><code>src/types/users.ts</code></td><td>15 nodes</td></tr>
 <tr><td><code>components/users/UserKpiCards.tsx</code></td><td>12 nodes</td></tr>
+<tr><td><code>components/users/ExportUsersModal.tsx</code></td><td>10 nodes</td></tr>
+<tr><td><code>components/users/InvitationsTab.tsx</code></td><td>10 nodes</td></tr>
 <tr><td><code>components/users/PendingVerificationTab.tsx</code></td><td>10 nodes</td></tr>
 <tr><td><code>components/users/SuspendedTab.tsx</code></td><td>10 nodes</td></tr>
-<tr><td><code>components/users/EditUserModal.tsx</code></td><td>9 nodes</td></tr>
-<tr><td><code>components/users/ArchivedTab.tsx</code></td><td>8 nodes</td></tr>
-<tr><td><code>components/users/ExportUsersModal.tsx</code></td><td>7 nodes</td></tr>
-<tr><td><code>components/users/ImportUsersModal.tsx</code></td><td>7 nodes</td></tr>
+<tr><td><code>src/pages/UserManagementPage.tsx</code></td><td>10 nodes</td></tr>
+<tr><td><code>components/users/AddUserModal.tsx</code></td><td>9 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x126, imports x30, imports x22, calls x9. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x145, imports x40, imports x23, calls x10. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4669,17 +4616,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>846</td></tr>
-      <tr><td>Edges</td><td>1284</td></tr>
+      <tr><td>Nodes</td><td>874</td></tr>
+      <tr><td>Edges</td><td>1341</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>49</td></tr>
+      <tr><td>Communities</td><td>54</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>1284</td></tr>
+      <tr><td>EXTRACTED</td><td>1341</td></tr>
       <tr><td>INFERRED</td><td>0</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -4688,7 +4635,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>mindnavy LMS — Architecture Documentation</p>
-  <p>Generated: 2026-06-09 04:01 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-06-11 15:07 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

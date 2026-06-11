@@ -1,4 +1,4 @@
-import { DEPARTMENT_OPTIONS } from '../../constants/userOptions';
+import { DEPARTMENT_OPTIONS, ROLE_OPTIONS } from '../../constants/userOptions';
 
 interface Props {
   search:       string;
@@ -56,13 +56,7 @@ export default function UserFilters({
           onBlur={e =>  { e.currentTarget.style.borderColor = '#d1d5db'; e.currentTarget.style.boxShadow = 'none'; }}
         >
           <option value="">All Roles</option>
-          <option value="Student">Student</option>
-          <option value="Instructor">Instructor</option>
-          <option value="Administrator">Administrator</option>
-          <option value="Manager">Manager</option>
-          <option value="HR Manager">HR Manager</option>
-          <option value="Finance Manager">Finance Manager</option>
-          <option value="Branch Manager">Branch Manager</option>
+          {ROLE_OPTIONS.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
         </select>
 
         {/* Department */}

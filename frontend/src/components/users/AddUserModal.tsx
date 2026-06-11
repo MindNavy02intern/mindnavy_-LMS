@@ -70,7 +70,7 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
     if (!form.email.trim())                           errs.email           = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email   = 'Invalid email format';
     if (!form.password)                               errs.password        = 'Password is required';
-    else if (form.password.length < 8)               errs.password        = 'Password must be at least 8 characters';
+    else if (form.password.length < 12)              errs.password        = 'Password must be at least 12 characters';
     if (form.confirmPassword !== form.password)       errs.confirmPassword = 'Passwords do not match';
     if (!form.role)                                   errs.role            = 'Role is required';
     const phoneVal = form.phone.trim();
