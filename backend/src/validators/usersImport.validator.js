@@ -110,7 +110,7 @@ function validateAndNormalizeRow(row, rowNumber, seenEmails) {
   };
 }
 
-  function validateIdmportRows(rows) {
+  function validateImportRows(rows) {
     const validRows = [];
     const returnedErrors = [];
     let failedCount = 0;
