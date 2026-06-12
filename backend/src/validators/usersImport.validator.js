@@ -110,7 +110,7 @@ function validateAndNormalizeRow(row, rowNumber, seenEmails) {
   };
 }
 
-  function validateIdmportRows(rows) {
+function validateImportRows(rows) {
     const validRows = [];
     const returnedErrors = [];
     let failedCount = 0;
@@ -134,8 +134,8 @@ function validateAndNormalizeRow(row, rowNumber, seenEmails) {
       }
     }
 
-    return { validRows, failedCount, returnedErrors };
-  }
+  return { validRows, failedCount, returnedErrors };
+}
 
 module.exports = {
   MAX_IMPORT_ROWS,
