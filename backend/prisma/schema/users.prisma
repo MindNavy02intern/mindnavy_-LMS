@@ -21,6 +21,22 @@ model AppUser {
   phoneVerified     Boolean                  @default(false)
   skills            String[]
 
+  // Organization FK columns — separate from legacy `branch` / `department` string labels
+  branchId          String?
+  departmentId      String?
+  teamId            String?
+
+  orgBranch         Branch?      @relation("AppUserBranch",      fields: [branchId],     references: [id])
+  orgDepartment     Department?  @relation("AppUserDepartment",  fields: [departmentId], references: [id])
+  orgTeam           Team?        @relation("AppUserTeam",        fields: [teamId],       references: [id])
+
+  managedBranches    Branch[]     @relation("BranchManager")
+  managedDepartments Department[] @relation("DeptManager")
+  managedTeams       Team[]       @relation("TeamLeader")
+
+  @@index([branchId])
+  @@index([departmentId])
+  @@index([teamId])
   @@index([role])
   @@index([status])
   @@index([verificationState])

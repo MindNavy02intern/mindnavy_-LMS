@@ -1,0 +1,85 @@
+model Branch {
+  id           String   @id @default(cuid())
+  name         String
+  locationType String   // HEAD_OFFICE | REGIONAL | LOCAL
+  address      String
+  city         String
+  country      String
+  latitude     Float?
+  longitude    Float?
+  phone        String?
+  email        String?
+  managerId    String?
+  status       String   @default("ACTIVE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  manager     AppUser?     @relation("BranchManager",    fields: [managerId], references: [id])
+  departments Department[]
+  users       AppUser[]    @relation("AppUserBranch")
+
+  @@index([managerId])
+  @@map("branches")
+}
+
+model Department {
+  id          String   @id @default(cuid())
+  name        String
+  code        String?
+  description String?
+  branchId    String
+  managerId   String?
+  budget      Float    @default(0)
+  status      String   @default("ACTIVE")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  branch  Branch    @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  manager AppUser?  @relation("DeptManager",  fields: [managerId], references: [id])
+  teams   Team[]
+  users   AppUser[] @relation("AppUserDepartment")
+
+  @@unique([name, branchId])
+  @@index([branchId])
+  @@index([managerId])
+  @@map("departments")
+}
+
+model Team {
+  id           String   @id @default(cuid())
+  name         String
+  departmentId String
+  leaderId     String?
+  description  String?
+  status       String   @default("ACTIVE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  leader     AppUser?   @relation("TeamLeader",  fields: [leaderId], references: [id])
+  members    AppUser[]  @relation("AppUserTeam")
+
+  @@unique([name, departmentId])
+  @@index([departmentId])
+  @@index([leaderId])
+  @@map("teams")
+}
+
+model HierarchySettings {
+  id                           String   @id @default(cuid())
+  allowMultiReporting          Boolean  @default(false)
+  maxReportingLevels           Int      @default(5)
+  requireManagerApproval       Boolean  @default(true)
+  applyRoleBasedAccess         Boolean  @default(true)
+  departmentHeadsSeeOwnOnly    Boolean  @default(true)
+  inheritPermissionsFromParent Boolean  @default(true)
+  allowPermissionOverride      Boolean  @default(false)
+  requireApprovalForMoves      Boolean  @default(true)
+  approvalLevels               Int      @default(2)
+  autoApproveAfterDays         Int      @default(7)
+  customRules                  String?
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+
+  @@map("hierarchy_settings")
+}
