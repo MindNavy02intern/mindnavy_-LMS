@@ -19,6 +19,7 @@ import SuspendedTab from '../components/users/SuspendedTab';
 import PendingVerificationTab from '../components/users/PendingVerificationTab';
 import ArchivedTab from '../components/users/ArchivedTab';
 import InvitationsTab from '../components/users/InvitationsTab';
+import OrganizationTab from '../components/organization/OrganizationTab';
 import type { User } from '../types/users';
 import { DEPARTMENT_OPTIONS, ROLE_OPTIONS } from '../constants/userOptions';
 
@@ -253,9 +254,11 @@ export default function UserManagementPage() {
         {activeTab === 'suspended'            && <SuspendedTab />}
         {activeTab === 'pending-verification' && <PendingVerificationTab />}
         {activeTab === 'archived'             && <ArchivedTab />}
+        {activeTab === 'organization'         && <OrganizationTab showToast={showToast} />}
         {activeTab !== 'users' && activeTab !== 'analytics' &&
           activeTab !== 'invitations' && activeTab !== 'suspended' &&
-          activeTab !== 'pending-verification' && activeTab !== 'archived' && (
+          activeTab !== 'pending-verification' && activeTab !== 'archived' &&
+          activeTab !== 'organization' && (
           <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? ''} />
         )}
 
