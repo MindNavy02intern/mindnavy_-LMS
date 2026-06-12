@@ -208,6 +208,11 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
   const [assignRoleOpen, setAssignRoleOpen] = useState(false);
   const [actionBusy,     setActionBusy]     = useState(false);
 
+  // Reset password form state
+  const [newPassword,  setNewPassword]  = useState('');
+  const [showNewPw,    setShowNewPw]    = useState(false);
+  const [pwError,      setPwError]      = useState<string | null>(null);
+
   // Slide-in on mount
   useEffect(() => {
     const id = requestAnimationFrame(() => setVisible(true));
@@ -250,15 +255,25 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
   };
 
   const handleResetPw = async () => {
+    setPwError(null);
+    if (newPassword.length < 12) {
+      setPwError('Password must be at least 12 characters.');
+      return;
+    }
+    if (!/[A-Z]/.test(newPassword)) { setPwError('Password must contain an uppercase letter.'); return; }
+    if (!/[a-z]/.test(newPassword)) { setPwError('Password must contain a lowercase letter.'); return; }
+    if (!/[0-9]/.test(newPassword)) { setPwError('Password must contain a number.'); return; }
+    if (!/[@$!%*?&]/.test(newPassword)) { setPwError('Password must contain a special character (@$!%*?&).'); return; }
+
     setActionBusy(true);
     try {
-      const res = await resetPassword(userId);
-      showToast('success', res.message || 'Password reset email sent');
-    } catch {
-      // TODO: backend endpoint POST /api/admin/users/:userId/reset-password not ready yet
-      showToast('success', 'Reset password email sent (backend coming soon)');
-    } finally {
+      const res = await resetPassword(userId, newPassword);
+      showToast('success', res.message || 'Password has been updated');
       setResetPwOpen(false);
+      setNewPassword('');
+    } catch (err) {
+      showToast('error', err instanceof Error ? err.message : 'Failed to reset password');
+    } finally {
       setActionBusy(false);
     }
   };
@@ -734,14 +749,54 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
         />
       )}
       {resetPwOpen && u && (
-        <ConfirmDialog
-          title="Reset Password"
-          body={`Send a password reset email to ${u.email}?`}
-          confirmLabel="Send Reset Email"
-          onConfirm={handleResetPw}
-          onCancel={() => setResetPwOpen(false)}
-          loading={actionBusy}
-        />
+        <div style={{ position: 'fixed', inset: 0, zIndex: 2500, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={() => { setResetPwOpen(false); setNewPassword(''); setPwError(null); }} />
+          <div style={{ position: 'relative', background: '#fff', borderRadius: 12, width: '100%', maxWidth: 400, padding: 24, boxShadow: '0 20px 50px rgba(0,0,0,0.2)' }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700, color: '#111827' }}>Set New Password</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 13, color: '#6b7280' }}>
+              Set a new password for <strong>{u.fullName}</strong>. Must be at least 12 characters with uppercase, lowercase, number and special character.
+            </p>
+            {pwError && (
+              <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 6, padding: '8px 12px', marginBottom: 12, fontSize: 12, color: '#b91c1c' }}>
+                {pwError}
+              </div>
+            )}
+            <div style={{ position: 'relative', marginBottom: 16 }}>
+              <input
+                type={showNewPw ? 'text' : 'password'}
+                value={newPassword}
+                onChange={e => { setNewPassword(e.target.value); setPwError(null); }}
+                placeholder="New password (12+ chars)"
+                autoComplete="new-password"
+                style={{ width: '100%', padding: '8px 36px 8px 10px', fontSize: 13, border: '1px solid #d1d5db', borderRadius: 6, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowNewPw(v => !v)}
+                style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: 2 }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  {showNewPw
+                    ? <><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></>
+                    : <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>
+                  }
+                </svg>
+              </button>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
+              <button onClick={() => { setResetPwOpen(false); setNewPassword(''); setPwError(null); }} disabled={actionBusy} style={{ padding: '8px 16px', fontSize: 13, fontFamily: 'inherit', background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 7, cursor: 'pointer', color: '#374151' }}>
+                Cancel
+              </button>
+              <button
+                onClick={handleResetPw}
+                disabled={actionBusy || !newPassword}
+                style={{ padding: '8px 16px', fontSize: 13, fontFamily: 'inherit', fontWeight: 600, background: actionBusy || !newPassword ? '#93c5fd' : '#2563eb', border: 'none', borderRadius: 7, cursor: actionBusy || !newPassword ? 'not-allowed' : 'pointer', color: '#fff' }}
+              >
+                {actionBusy ? 'Setting…' : 'Set Password'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
       {assignRoleOpen && u && (
         <AssignRoleModal

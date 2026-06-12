@@ -805,6 +805,15 @@
       "norm_label": "importusers()"
     },
     {
+      "label": "bulkActionUsers()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L273",
+      "id": "controllers_users_controller_bulkactionusers",
+      "community": 9,
+      "norm_label": "bulkactionusers()"
+    },
+    {
       "label": "auth.middleware.js",
       "file_type": "code",
       "source_file": "backend/src/middlewares/auth.middleware.js",
@@ -1093,19 +1102,19 @@
       "norm_label": "{ uploaduserscsv }"
     },
     {
-      "label": "{\r\n  getUsersList,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n  importUsers,\r\n}",
+      "label": "{\r\n  getUsersList,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n  importUsers,\r\n  bulkActionUsers,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L9",
-      "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers",
+      "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers",
       "community": 9,
-      "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n}"
+      "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n}"
     },
     {
       "label": "router",
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
-      "source_location": "L24",
+      "source_location": "L25",
       "id": "routes_users_routes_router",
       "community": 9,
       "norm_label": "router"
@@ -1582,7 +1591,7 @@
       "label": "getUserDetails()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L244",
+      "source_location": "L256",
       "id": "services_users_service_getuserdetails",
       "community": 33,
       "norm_label": "getuserdetails()"
@@ -1591,7 +1600,7 @@
       "label": "createUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L286",
+      "source_location": "L298",
       "id": "services_users_service_createuser",
       "community": 33,
       "norm_label": "createuser()"
@@ -1600,7 +1609,7 @@
       "label": "updateUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L343",
+      "source_location": "L355",
       "id": "services_users_service_updateuser",
       "community": 33,
       "norm_label": "updateuser()"
@@ -1609,7 +1618,7 @@
       "label": "updateUserStatus()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L437",
+      "source_location": "L449",
       "id": "services_users_service_updateuserstatus",
       "community": 33,
       "norm_label": "updateuserstatus()"
@@ -1618,7 +1627,7 @@
       "label": "resetUserPassword()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L462",
+      "source_location": "L474",
       "id": "services_users_service_resetuserpassword",
       "community": 33,
       "norm_label": "resetuserpassword()"
@@ -1627,7 +1636,7 @@
       "label": "suspendUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L480",
+      "source_location": "L492",
       "id": "services_users_service_suspenduser",
       "community": 33,
       "norm_label": "suspenduser()"
@@ -1636,7 +1645,7 @@
       "label": "reactivateUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L506",
+      "source_location": "L518",
       "id": "services_users_service_reactivateuser",
       "community": 33,
       "norm_label": "reactivateuser()"
@@ -1645,7 +1654,7 @@
       "label": "assignUserRole()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L528",
+      "source_location": "L540",
       "id": "services_users_service_assignuserrole",
       "community": 33,
       "norm_label": "assignuserrole()"
@@ -1654,7 +1663,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L553",
+      "source_location": "L565",
       "id": "services_users_service_deleteuser",
       "community": 33,
       "norm_label": "deleteuser()"
@@ -1663,7 +1672,7 @@
       "label": "getUsersAnalytics()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L574",
+      "source_location": "L586",
       "id": "services_users_service_getusersanalytics",
       "community": 33,
       "norm_label": "getusersanalytics()"
@@ -1672,10 +1681,19 @@
       "label": "importUsersFromCsv()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L677",
+      "source_location": "L689",
       "id": "services_users_service_importusersfromcsv",
       "community": 33,
       "norm_label": "importusersfromcsv()"
+    },
+    {
+      "label": "bulkActionUsers()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L823",
+      "id": "services_users_service_bulkactionusers",
+      "community": 33,
+      "norm_label": "bulkactionusers()"
     },
     {
       "label": "otp.js",
@@ -2790,7 +2808,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L21",
       "id": "api_adminauth_getstoredtoken",
-      "community": 22,
+      "community": 53,
       "norm_label": "getstoredtoken()"
     },
     {
@@ -2907,7 +2925,7 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L12",
       "id": "api_dashboard_getdashboardcore",
-      "community": 22,
+      "community": 53,
       "norm_label": "getdashboardcore()"
     },
     {
@@ -2925,7 +2943,7 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L32",
       "id": "api_dashboard_getdashboardanalytics",
-      "community": 22,
+      "community": 53,
       "norm_label": "getdashboardanalytics()"
     },
     {
@@ -2943,7 +2961,7 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L61",
       "id": "api_dashboard_getadminwidgets",
-      "community": 22,
+      "community": 53,
       "norm_label": "getadminwidgets()"
     },
     {
@@ -3076,16 +3094,16 @@
       "label": "UsersParams",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L16",
+      "source_location": "L18",
       "id": "api_users_usersparams",
-      "community": 27,
+      "community": 48,
       "norm_label": "usersparams"
     },
     {
       "label": "USERS_MOCK",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L27",
+      "source_location": "L31",
       "id": "api_users_users_mock",
       "community": 27,
       "norm_label": "users_mock"
@@ -3094,16 +3112,16 @@
       "label": "getUsers()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L53",
+      "source_location": "L57",
       "id": "api_users_getusers",
-      "community": 46,
+      "community": 53,
       "norm_label": "getusers()"
     },
     {
       "label": "DETAILS_MOCK",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L88",
+      "source_location": "L94",
       "id": "api_users_details_mock",
       "community": 27,
       "norm_label": "details_mock"
@@ -3112,7 +3130,7 @@
       "label": "ApiError",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L122",
+      "source_location": "L128",
       "id": "api_users_apierror",
       "community": 26,
       "norm_label": "apierror"
@@ -3121,7 +3139,7 @@
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L124",
+      "source_location": "L130",
       "id": "api_users_apierror_constructor",
       "community": 26,
       "norm_label": ".constructor()"
@@ -3130,7 +3148,7 @@
       "label": "actionFetch()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L133",
+      "source_location": "L139",
       "id": "api_users_actionfetch",
       "community": 27,
       "norm_label": "actionfetch()"
@@ -3139,7 +3157,7 @@
       "label": "createUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L163",
+      "source_location": "L169",
       "id": "api_users_createuser",
       "community": 27,
       "norm_label": "createuser()"
@@ -3148,7 +3166,7 @@
       "label": "updateUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L167",
+      "source_location": "L173",
       "id": "api_users_updateuser",
       "community": 27,
       "norm_label": "updateuser()"
@@ -3157,7 +3175,7 @@
       "label": "suspendUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L171",
+      "source_location": "L177",
       "id": "api_users_suspenduser",
       "community": 27,
       "norm_label": "suspenduser()"
@@ -3166,7 +3184,7 @@
       "label": "reactivateUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L175",
+      "source_location": "L181",
       "id": "api_users_reactivateuser",
       "community": 27,
       "norm_label": "reactivateuser()"
@@ -3175,7 +3193,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L179",
+      "source_location": "L185",
       "id": "api_users_deleteuser",
       "community": 27,
       "norm_label": "deleteuser()"
@@ -3184,7 +3202,7 @@
       "label": "resetPassword()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L183",
+      "source_location": "L189",
       "id": "api_users_resetpassword",
       "community": 27,
       "norm_label": "resetpassword()"
@@ -3193,7 +3211,7 @@
       "label": "assignRole()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L187",
+      "source_location": "L193",
       "id": "api_users_assignrole",
       "community": 27,
       "norm_label": "assignrole()"
@@ -3202,27 +3220,36 @@
       "label": "getUserDetails()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L193",
+      "source_location": "L199",
       "id": "api_users_getuserdetails",
-      "community": 22,
+      "community": 53,
       "norm_label": "getuserdetails()"
     },
     {
       "label": "importUsers()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L218",
+      "source_location": "L224",
       "id": "api_users_importusers",
       "community": 47,
       "norm_label": "importusers()"
     },
     {
+      "label": "bulkAction()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L246",
+      "id": "api_users_bulkaction",
+      "community": 50,
+      "norm_label": "bulkaction()"
+    },
+    {
       "label": "getAnalytics()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L240",
+      "source_location": "L267",
       "id": "api_users_getanalytics",
-      "community": 22,
+      "community": 42,
       "norm_label": "getanalytics()"
     },
     {
@@ -3627,7 +3654,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_assignrolemodal_tsx",
-      "community": 26,
+      "community": 52,
       "norm_label": "assignrolemodal.tsx"
     },
     {
@@ -3636,7 +3663,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L6",
       "id": "users_assignrolemodal_props",
-      "community": 26,
+      "community": 52,
       "norm_label": "props"
     },
     {
@@ -3645,7 +3672,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L13",
       "id": "users_assignrolemodal_roles",
-      "community": 26,
+      "community": 52,
       "norm_label": "roles"
     },
     {
@@ -3654,7 +3681,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L20",
       "id": "users_assignrolemodal_types",
-      "community": 26,
+      "community": 52,
       "norm_label": "types"
     },
     {
@@ -3663,7 +3690,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L26",
       "id": "users_assignrolemodal_input",
-      "community": 26,
+      "community": 52,
       "norm_label": "input"
     },
     {
@@ -3672,7 +3699,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L33",
       "id": "users_assignrolemodal_assignrolemodal",
-      "community": 26,
+      "community": 52,
       "norm_label": "assignrolemodal()"
     },
     {
@@ -3681,34 +3708,52 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "community": 24,
+      "community": 50,
       "norm_label": "bulkactionsmenu.tsx"
     },
     {
       "label": "Props",
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
-      "source_location": "L3",
+      "source_location": "L6",
       "id": "users_bulkactionsmenu_props",
-      "community": 24,
+      "community": 50,
       "norm_label": "props"
     },
     {
-      "label": "ACTIONS",
+      "label": "ROLE_OPTIONS",
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
-      "source_location": "L8",
-      "id": "users_bulkactionsmenu_actions",
-      "community": 24,
-      "norm_label": "actions"
+      "source_location": "L14",
+      "id": "users_bulkactionsmenu_role_options",
+      "community": 50,
+      "norm_label": "role_options"
+    },
+    {
+      "label": "ActionKey",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L21",
+      "id": "users_bulkactionsmenu_actionkey",
+      "community": 50,
+      "norm_label": "actionkey"
+    },
+    {
+      "label": "ACTION_LABELS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L23",
+      "id": "users_bulkactionsmenu_action_labels",
+      "community": 50,
+      "norm_label": "action_labels"
     },
     {
       "label": "BulkActionsMenu()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
-      "source_location": "L17",
+      "source_location": "L31",
       "id": "users_bulkactionsmenu_bulkactionsmenu",
-      "community": 24,
+      "community": 50,
       "norm_label": "bulkactionsmenu()"
     },
     {
@@ -3850,7 +3895,7 @@
       "label": "Props",
       "file_type": "code",
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
-      "source_location": "L3",
+      "source_location": "L6",
       "id": "users_exportusersmodal_props",
       "community": 48,
       "norm_label": "props"
@@ -3859,7 +3904,7 @@
       "label": "FORMATS",
       "file_type": "code",
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
-      "source_location": "L8",
+      "source_location": "L12",
       "id": "users_exportusersmodal_formats",
       "community": 48,
       "norm_label": "formats"
@@ -3868,7 +3913,7 @@
       "label": "FIELDS",
       "file_type": "code",
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
-      "source_location": "L14",
+      "source_location": "L17",
       "id": "users_exportusersmodal_fields",
       "community": 48,
       "norm_label": "fields"
@@ -3877,7 +3922,7 @@
       "label": "FormatKey",
       "file_type": "code",
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
-      "source_location": "L24",
+      "source_location": "L29",
       "id": "users_exportusersmodal_formatkey",
       "community": 48,
       "norm_label": "formatkey"
@@ -3886,16 +3931,43 @@
       "label": "FieldKey",
       "file_type": "code",
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
-      "source_location": "L25",
+      "source_location": "L30",
       "id": "users_exportusersmodal_fieldkey",
       "community": 48,
       "norm_label": "fieldkey"
     },
     {
+      "label": "csvEscape()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L32",
+      "id": "users_exportusersmodal_csvescape",
+      "community": 48,
+      "norm_label": "csvescape()"
+    },
+    {
+      "label": "buildCSV()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L41",
+      "id": "users_exportusersmodal_buildcsv",
+      "community": 48,
+      "norm_label": "buildcsv()"
+    },
+    {
+      "label": "triggerDownload()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L47",
+      "id": "users_exportusersmodal_triggerdownload",
+      "community": 48,
+      "norm_label": "triggerdownload()"
+    },
+    {
       "label": "ExportUsersModal()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
-      "source_location": "L27",
+      "source_location": "L57",
       "id": "users_exportusersmodal_exportusersmodal",
       "community": 48,
       "norm_label": "exportusersmodal()"
@@ -3969,16 +4041,88 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_invitationstab_tsx",
-      "community": 24,
+      "community": 49,
       "norm_label": "invitationstab.tsx"
+    },
+    {
+      "label": "formatDate()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L5",
+      "id": "users_invitationstab_formatdate",
+      "community": 49,
+      "norm_label": "formatdate()"
+    },
+    {
+      "label": "initials()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L9",
+      "id": "users_invitationstab_initials",
+      "community": 49,
+      "norm_label": "initials()"
+    },
+    {
+      "label": "PALETTES",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L13",
+      "id": "users_invitationstab_palettes",
+      "community": 49,
+      "norm_label": "palettes"
+    },
+    {
+      "label": "palette()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L18",
+      "id": "users_invitationstab_palette",
+      "community": 49,
+      "norm_label": "palette()"
+    },
+    {
+      "label": "sk()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L23",
+      "id": "users_invitationstab_sk",
+      "community": 49,
+      "norm_label": "sk()"
+    },
+    {
+      "label": "SkeletonRow()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L32",
+      "id": "users_invitationstab_skeletonrow",
+      "community": 49,
+      "norm_label": "skeletonrow()"
+    },
+    {
+      "label": "TH",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L53",
+      "id": "users_invitationstab_th",
+      "community": 49,
+      "norm_label": "th"
+    },
+    {
+      "label": "TD",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L58",
+      "id": "users_invitationstab_td",
+      "community": 49,
+      "norm_label": "td"
     },
     {
       "label": "InvitationsTab()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L1",
+      "source_location": "L63",
       "id": "users_invitationstab_invitationstab",
-      "community": 24,
+      "community": 49,
       "norm_label": "invitationstab()"
     },
     {
@@ -4554,7 +4698,7 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_userfilters_tsx",
-      "community": 36,
+      "community": 51,
       "norm_label": "userfilters.tsx"
     },
     {
@@ -4563,7 +4707,7 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L3",
       "id": "users_userfilters_props",
-      "community": 36,
+      "community": 51,
       "norm_label": "props"
     },
     {
@@ -4572,7 +4716,7 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L15",
       "id": "users_userfilters_input",
-      "community": 36,
+      "community": 51,
       "norm_label": "input"
     },
     {
@@ -4581,34 +4725,16 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L22",
       "id": "users_userfilters_select",
-      "community": 36,
+      "community": 51,
       "norm_label": "select"
-    },
-    {
-      "label": "ICON_BTN",
-      "file_type": "code",
-      "source_file": "frontend/src/components/users/UserFilters.tsx",
-      "source_location": "L28",
-      "id": "users_userfilters_icon_btn",
-      "community": 36,
-      "norm_label": "icon_btn"
-    },
-    {
-      "label": "ACTION_BTN",
-      "file_type": "code",
-      "source_file": "frontend/src/components/users/UserFilters.tsx",
-      "source_location": "L36",
-      "id": "users_userfilters_action_btn",
-      "community": 36,
-      "norm_label": "action_btn"
     },
     {
       "label": "UserFilters()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserFilters.tsx",
-      "source_location": "L44",
+      "source_location": "L24",
       "id": "users_userfilters_userfilters",
-      "community": 36,
+      "community": 51,
       "norm_label": "userfilters()"
     },
     {
@@ -4729,10 +4855,37 @@
       "norm_label": "usertable.tsx"
     },
     {
+      "label": "ColKey",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L5",
+      "id": "users_usertable_colkey",
+      "community": 24,
+      "norm_label": "colkey"
+    },
+    {
+      "label": "COLUMNS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L7",
+      "id": "users_usertable_columns",
+      "community": 24,
+      "norm_label": "columns"
+    },
+    {
+      "label": "loadVisibleCols()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L20",
+      "id": "users_usertable_loadvisiblecols",
+      "community": 24,
+      "norm_label": "loadvisiblecols()"
+    },
+    {
       "label": "Props",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L4",
+      "source_location": "L33",
       "id": "users_usertable_props",
       "community": 20,
       "norm_label": "props"
@@ -4741,7 +4894,7 @@
       "label": "getRoleStyle()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L16",
+      "source_location": "L46",
       "id": "users_usertable_getrolestyle",
       "community": 20,
       "norm_label": "getrolestyle()"
@@ -4750,7 +4903,7 @@
       "label": "STATUS_MAP",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L29",
+      "source_location": "L59",
       "id": "users_usertable_status_map",
       "community": 20,
       "norm_label": "status_map"
@@ -4759,7 +4912,7 @@
       "label": "initials()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L39",
+      "source_location": "L69",
       "id": "users_usertable_initials",
       "community": 20,
       "norm_label": "initials()"
@@ -4768,7 +4921,7 @@
       "label": "AVATAR_PALETTES",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L43",
+      "source_location": "L73",
       "id": "users_usertable_avatar_palettes",
       "community": 20,
       "norm_label": "avatar_palettes"
@@ -4777,7 +4930,7 @@
       "label": "avatarPalette()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L53",
+      "source_location": "L83",
       "id": "users_usertable_avatarpalette",
       "community": 20,
       "norm_label": "avatarpalette()"
@@ -4786,16 +4939,25 @@
       "label": "formatLastActivity()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L58",
+      "source_location": "L88",
       "id": "users_usertable_formatlastactivity",
       "community": 20,
       "norm_label": "formatlastactivity()"
     },
     {
+      "label": "formatDate()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L101",
+      "id": "users_usertable_formatdate",
+      "community": 20,
+      "norm_label": "formatdate()"
+    },
+    {
       "label": "sk()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L73",
+      "source_location": "L108",
       "id": "users_usertable_sk",
       "community": 20,
       "norm_label": "sk()"
@@ -4804,7 +4966,7 @@
       "label": "SkeletonRow()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L83",
+      "source_location": "L118",
       "id": "users_usertable_skeletonrow",
       "community": 20,
       "norm_label": "skeletonrow()"
@@ -4813,7 +4975,7 @@
       "label": "IconEye()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L114",
+      "source_location": "L144",
       "id": "users_usertable_iconeye",
       "community": 20,
       "norm_label": "iconeye()"
@@ -4822,7 +4984,7 @@
       "label": "IconPencil()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L123",
+      "source_location": "L147",
       "id": "users_usertable_iconpencil",
       "community": 20,
       "norm_label": "iconpencil()"
@@ -4831,7 +4993,7 @@
       "label": "IconDots()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L132",
+      "source_location": "L150",
       "id": "users_usertable_icondots",
       "community": 20,
       "norm_label": "icondots()"
@@ -4840,7 +5002,7 @@
       "label": "TH",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L144",
+      "source_location": "L156",
       "id": "users_usertable_th",
       "community": 20,
       "norm_label": "th"
@@ -4849,7 +5011,7 @@
       "label": "TD",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L157",
+      "source_location": "L162",
       "id": "users_usertable_td",
       "community": 20,
       "norm_label": "td"
@@ -4858,7 +5020,7 @@
       "label": "UserTable()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserTable.tsx",
-      "source_location": "L167",
+      "source_location": "L171",
       "id": "users_usertable_usertable",
       "community": 20,
       "norm_label": "usertable()"
@@ -5112,7 +5274,7 @@
       "source_file": "frontend/src/constants/userOptions.ts",
       "source_location": "L1",
       "id": "constants_useroptions_department_options",
-      "community": 36,
+      "community": 51,
       "norm_label": "department_options"
     },
     {
@@ -5938,7 +6100,7 @@
       "label": "TABS",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L26",
+      "source_location": "L27",
       "id": "pages_usermanagementpage_tabs",
       "community": 24,
       "norm_label": "tabs"
@@ -5947,7 +6109,7 @@
       "label": "TabKey",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L38",
+      "source_location": "L39",
       "id": "pages_usermanagementpage_tabkey",
       "community": 24,
       "norm_label": "tabkey"
@@ -5956,7 +6118,7 @@
       "label": "LIMIT_OPTIONS",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L40",
+      "source_location": "L41",
       "id": "pages_usermanagementpage_limit_options",
       "community": 24,
       "norm_label": "limit_options"
@@ -5965,7 +6127,7 @@
       "label": "pageRange()",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L44",
+      "source_location": "L45",
       "id": "pages_usermanagementpage_pagerange",
       "community": 24,
       "norm_label": "pagerange()"
@@ -5974,16 +6136,43 @@
       "label": "ComingSoon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L57",
+      "source_location": "L56",
       "id": "pages_usermanagementpage_comingsoon",
       "community": 24,
       "norm_label": "comingsoon()"
     },
     {
+      "label": "INPUT_BASE",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L70",
+      "id": "pages_usermanagementpage_input_base",
+      "community": 24,
+      "norm_label": "input_base"
+    },
+    {
+      "label": "focusIn()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L76",
+      "id": "pages_usermanagementpage_focusin",
+      "community": 24,
+      "norm_label": "focusin()"
+    },
+    {
+      "label": "focusOut()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L80",
+      "id": "pages_usermanagementpage_focusout",
+      "community": 24,
+      "norm_label": "focusout()"
+    },
+    {
       "label": "UserManagementPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
-      "source_location": "L74",
+      "source_location": "L87",
       "id": "pages_usermanagementpage_usermanagementpage",
       "community": 24,
       "norm_label": "usermanagementpage()"
@@ -6759,7 +6948,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L7",
       "id": "types_users_user",
-      "community": 41,
+      "community": 46,
       "norm_label": "user"
     },
     {
@@ -6795,7 +6984,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L52",
       "id": "types_users_roletype",
-      "community": 26,
+      "community": 52,
       "norm_label": "roletype"
     },
     {
@@ -6813,7 +7002,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L54",
       "id": "types_users_coursestatus",
-      "community": 34,
+      "community": 32,
       "norm_label": "coursestatus"
     },
     {
@@ -6867,7 +7056,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L103",
       "id": "types_users_userdetailsresponse",
-      "community": 34,
+      "community": 32,
       "norm_label": "userdetailsresponse"
     },
     {
@@ -6903,7 +7092,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L144",
       "id": "types_users_assignrolerequest",
-      "community": 26,
+      "community": 52,
       "norm_label": "assignrolerequest"
     },
     {
@@ -6912,7 +7101,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L150",
       "id": "types_users_actionresponse",
-      "community": 27,
+      "community": 32,
       "norm_label": "actionresponse"
     },
     {
@@ -6982,7 +7171,7 @@
       "label": "ImportError",
       "file_type": "code",
       "source_file": "frontend/src/types/users.ts",
-      "source_location": "L175",
+      "source_location": "L174",
       "id": "types_users_importerror",
       "community": 32,
       "norm_label": "importerror"
@@ -6991,7 +7180,7 @@
       "label": "ImportSummary",
       "file_type": "code",
       "source_file": "frontend/src/types/users.ts",
-      "source_location": "L181",
+      "source_location": "L180",
       "id": "types_users_importsummary",
       "community": 32,
       "norm_label": "importsummary"
@@ -7000,10 +7189,37 @@
       "label": "ImportResult",
       "file_type": "code",
       "source_file": "frontend/src/types/users.ts",
-      "source_location": "L188",
+      "source_location": "L187",
       "id": "types_users_importresult",
       "community": 47,
       "norm_label": "importresult"
+    },
+    {
+      "label": "BulkActionType",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L196",
+      "id": "types_users_bulkactiontype",
+      "community": 50,
+      "norm_label": "bulkactiontype"
+    },
+    {
+      "label": "BulkActionError",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L198",
+      "id": "types_users_bulkactionerror",
+      "community": 32,
+      "norm_label": "bulkactionerror"
+    },
+    {
+      "label": "BulkActionResponse",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L203",
+      "id": "types_users_bulkactionresponse",
+      "community": 32,
+      "norm_label": "bulkactionresponse"
     },
     {
       "label": "authErrors.ts",
@@ -7085,6 +7301,42 @@
       "id": "frontend_readme_codeblock_2",
       "community": 11,
       "norm_label": "code:js (// eslint.config.js)"
+    },
+    {
+      "label": "{\r\n  getUsersList,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n  importUsers,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L9",
+      "community": 9,
+      "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n}",
+      "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers"
+    },
+    {
+      "label": "ACTIONS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L8",
+      "community": 50,
+      "norm_label": "actions",
+      "id": "users_bulkactionsmenu_actions"
+    },
+    {
+      "label": "ICON_BTN",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L28",
+      "community": 51,
+      "norm_label": "icon_btn",
+      "id": "users_userfilters_icon_btn"
+    },
+    {
+      "label": "ACTION_BTN",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L36",
+      "community": 51,
+      "norm_label": "action_btn",
+      "id": "users_userfilters_action_btn"
     },
     {
       "label": "{ adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter }",
@@ -9110,6 +9362,16 @@
       "target": "controllers_users_controller_importusers"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L273",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_bulkactionusers",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -9404,6 +9666,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
       "target": "controllers_users_controller_importusers"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_bulkactionusers",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9855,9 +10128,9 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L9",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
-      "target": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers"
+      "target": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9868,6 +10141,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
       "target": "routes_users_routes_router"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers"
     },
     {
       "relation": "contains",
@@ -10873,6 +11156,16 @@
       "target": "services_users_service_importusersfromcsv"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L823",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_bulkactionusers",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -11223,6 +11516,50 @@
       "confidence_score": 1.0,
       "source": "services_users_service_updateuser",
       "target": "services_users_service_ensureemailavailable"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L855",
+      "weight": 1.0,
+      "source": "services_users_service_bulkactionusers",
+      "target": "services_users_service_suspenduser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L857",
+      "weight": 1.0,
+      "source": "services_users_service_bulkactionusers",
+      "target": "services_users_service_reactivateuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L862",
+      "weight": 1.0,
+      "source": "services_users_service_bulkactionusers",
+      "target": "services_users_service_assignuserrole",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L859",
+      "weight": 1.0,
+      "source": "services_users_service_bulkactionusers",
+      "target": "services_users_service_deleteuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13376,6 +13713,17 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/api/users.ts",
+      "source_location": "L251",
+      "weight": 1.0,
+      "source": "api_users_bulkaction",
+      "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/api/users.ts",
       "source_location": "L216",
       "weight": 1.0,
       "source": "api_users_getanalytics",
@@ -14235,8 +14583,30 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_users_ts",
-      "target": "types_users_importresult",
+      "target": "types_users_importresult"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "types_users_bulkactiontype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "types_users_bulkactionresponse",
       "confidence_score": 1.0
     },
     {
@@ -14385,8 +14755,18 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L218",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_users_ts",
-      "target": "api_users_importusers",
+      "target": "api_users_importusers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L246",
+      "weight": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_bulkaction",
       "confidence_score": 1.0
     },
     {
@@ -14417,9 +14797,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "frontend_src_api_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_users_ts"
     },
     {
       "relation": "imports_from",
@@ -14431,6 +14811,17 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_assignrolemodal_tsx",
       "target": "frontend_src_api_users_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_bulkactionsmenu_tsx",
+      "target": "frontend_src_api_users_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -14458,10 +14849,32 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_exportusersmodal_tsx",
+      "target": "frontend_src_api_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
+      "target": "frontend_src_api_users_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
       "target": "frontend_src_api_users_ts",
       "confidence_score": 1.0
     },
@@ -14472,9 +14885,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "frontend_src_api_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_users_ts"
     },
     {
       "relation": "imports_from",
@@ -14483,9 +14896,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "frontend_src_api_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_users_ts"
     },
     {
       "relation": "imports_from",
@@ -14535,10 +14948,43 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_exportusersmodal_tsx",
+      "target": "api_users_usersparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
+      "target": "api_users_getusers"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_exportusersmodal_tsx",
+      "target": "api_users_getusers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
       "target": "api_users_getusers",
       "confidence_score": 1.0
     },
@@ -14549,9 +14995,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "api_users_getusers",
-      "confidence_score": 1.0
+      "target": "api_users_getusers"
     },
     {
       "relation": "imports",
@@ -14560,9 +15006,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "api_users_getusers",
-      "confidence_score": 1.0
+      "target": "api_users_getusers"
     },
     {
       "relation": "imports",
@@ -14757,9 +15203,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "api_users_reactivateuser",
-      "confidence_score": 1.0
+      "target": "api_users_reactivateuser"
     },
     {
       "relation": "imports",
@@ -14768,9 +15214,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "api_users_reactivateuser",
-      "confidence_score": 1.0
+      "target": "api_users_reactivateuser"
     },
     {
       "relation": "imports",
@@ -14779,9 +15225,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "api_users_reactivateuser",
-      "confidence_score": 1.0
+      "target": "api_users_reactivateuser"
     },
     {
       "relation": "imports",
@@ -14809,12 +15255,23 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "api_users_deleteuser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "api_users_deleteuser",
-      "confidence_score": 1.0
+      "target": "api_users_deleteuser"
     },
     {
       "relation": "imports",
@@ -14823,9 +15280,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "api_users_deleteuser",
-      "confidence_score": 1.0
+      "target": "api_users_deleteuser"
     },
     {
       "relation": "imports",
@@ -14867,8 +15324,19 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "api_users_importusers",
+      "target": "api_users_importusers"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_bulkactionsmenu_tsx",
+      "target": "api_users_bulkaction",
       "confidence_score": 1.0
     },
     {
@@ -15629,9 +16097,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -15640,9 +16108,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "types_users_user",
-      "confidence_score": 1.0
+      "target": "types_users_user"
     },
     {
       "relation": "contains",
@@ -15650,9 +16118,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "users_archivedtab_formatdate",
-      "confidence_score": 1.0
+      "target": "users_archivedtab_formatdate"
     },
     {
       "relation": "contains",
@@ -15660,9 +16128,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "users_archivedtab_initials",
-      "confidence_score": 1.0
+      "target": "users_archivedtab_initials"
     },
     {
       "relation": "contains",
@@ -15670,9 +16138,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "users_archivedtab_sk",
-      "confidence_score": 1.0
+      "target": "users_archivedtab_sk"
     },
     {
       "relation": "contains",
@@ -15680,9 +16148,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "users_archivedtab_skeletonrow",
-      "confidence_score": 1.0
+      "target": "users_archivedtab_skeletonrow"
     },
     {
       "relation": "contains",
@@ -15690,9 +16158,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "users_archivedtab_th",
-      "confidence_score": 1.0
+      "target": "users_archivedtab_th"
     },
     {
       "relation": "contains",
@@ -15700,9 +16168,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "users_archivedtab_td",
-      "confidence_score": 1.0
+      "target": "users_archivedtab_td"
     },
     {
       "relation": "contains",
@@ -15710,9 +16178,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_archivedtab_tsx",
-      "target": "users_archivedtab_archivedtab",
-      "confidence_score": 1.0
+      "target": "users_archivedtab_archivedtab"
     },
     {
       "relation": "imports_from",
@@ -15721,9 +16189,9 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
-      "target": "frontend_src_components_users_archivedtab_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_archivedtab_tsx"
     },
     {
       "relation": "calls",
@@ -15732,9 +16200,9 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "users_archivedtab_skeletonrow",
-      "target": "users_archivedtab_sk",
-      "confidence_score": 1.0
+      "target": "users_archivedtab_sk"
     },
     {
       "relation": "imports_from",
@@ -15853,23 +16321,76 @@
       "target": "frontend_src_components_users_assignrolemodal_tsx"
     },
     {
-      "relation": "contains",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_bulkactionsmenu_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L3",
       "weight": 1.0,
       "source": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "target": "users_bulkactionsmenu_props",
+      "target": "types_users_bulkactiontype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_bulkactionsmenu_tsx",
+      "target": "types_users_user",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
-      "source_location": "L8",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_bulkactionsmenu_tsx",
+      "target": "users_bulkactionsmenu_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "target": "users_bulkactionsmenu_actions",
+      "target": "users_bulkactionsmenu_role_options",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_bulkactionsmenu_tsx",
+      "target": "users_bulkactionsmenu_actionkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_bulkactionsmenu_tsx",
+      "target": "users_bulkactionsmenu_action_labels",
       "confidence_score": 1.0
     },
     {
@@ -15878,9 +16399,9 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "target": "users_bulkactionsmenu_bulkactionsmenu",
-      "confidence_score": 1.0
+      "target": "users_bulkactionsmenu_bulkactionsmenu"
     },
     {
       "relation": "imports_from",
@@ -15889,9 +16410,19 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
-      "target": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_bulkactionsmenu_tsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_bulkactionsmenu_tsx",
+      "target": "users_bulkactionsmenu_actions"
     },
     {
       "relation": "contains",
@@ -16189,14 +16720,36 @@
       "target": "users_editusermodal_editinitialdata"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_exportusersmodal_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_exportusersmodal_tsx",
+      "target": "types_users_user",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_exportusersmodal_tsx",
-      "target": "users_exportusersmodal_props",
-      "confidence_score": 1.0
+      "target": "users_exportusersmodal_props"
     },
     {
       "relation": "contains",
@@ -16204,9 +16757,9 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_exportusersmodal_tsx",
-      "target": "users_exportusersmodal_formats",
-      "confidence_score": 1.0
+      "target": "users_exportusersmodal_formats"
     },
     {
       "relation": "contains",
@@ -16214,9 +16767,9 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_exportusersmodal_tsx",
-      "target": "users_exportusersmodal_fields",
-      "confidence_score": 1.0
+      "target": "users_exportusersmodal_fields"
     },
     {
       "relation": "contains",
@@ -16224,9 +16777,9 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_exportusersmodal_tsx",
-      "target": "users_exportusersmodal_formatkey",
-      "confidence_score": 1.0
+      "target": "users_exportusersmodal_formatkey"
     },
     {
       "relation": "contains",
@@ -16234,8 +16787,38 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_exportusersmodal_tsx",
-      "target": "users_exportusersmodal_fieldkey",
+      "target": "users_exportusersmodal_fieldkey"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_exportusersmodal_tsx",
+      "target": "users_exportusersmodal_csvescape",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_exportusersmodal_tsx",
+      "target": "users_exportusersmodal_buildcsv",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_exportusersmodal_tsx",
+      "target": "users_exportusersmodal_triggerdownload",
       "confidence_score": 1.0
     },
     {
@@ -16244,9 +16827,9 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_exportusersmodal_tsx",
-      "target": "users_exportusersmodal_exportusersmodal",
-      "confidence_score": 1.0
+      "target": "users_exportusersmodal_exportusersmodal"
     },
     {
       "relation": "imports_from",
@@ -16255,9 +16838,9 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
-      "target": "frontend_src_components_users_exportusersmodal_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_exportusersmodal_tsx"
     },
     {
       "relation": "imports_from",
@@ -16266,9 +16849,9 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -16277,9 +16860,9 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "types_users_importresult",
-      "confidence_score": 1.0
+      "target": "types_users_importresult"
     },
     {
       "relation": "contains",
@@ -16287,9 +16870,9 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "users_importusersmodal_props",
-      "confidence_score": 1.0
+      "target": "users_importusersmodal_props"
     },
     {
       "relation": "contains",
@@ -16297,9 +16880,9 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "users_importusersmodal_csvpreview",
-      "confidence_score": 1.0
+      "target": "users_importusersmodal_csvpreview"
     },
     {
       "relation": "contains",
@@ -16307,9 +16890,9 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "users_importusersmodal_parsecsvpreview",
-      "confidence_score": 1.0
+      "target": "users_importusersmodal_parsecsvpreview"
     },
     {
       "relation": "contains",
@@ -16317,9 +16900,9 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "users_importusersmodal_formatbytes",
-      "confidence_score": 1.0
+      "target": "users_importusersmodal_formatbytes"
     },
     {
       "relation": "contains",
@@ -16327,9 +16910,9 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "users_importusersmodal_required_headers",
-      "confidence_score": 1.0
+      "target": "users_importusersmodal_required_headers"
     },
     {
       "relation": "contains",
@@ -16337,9 +16920,9 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_importusersmodal_tsx",
-      "target": "users_importusersmodal_importusersmodal",
-      "confidence_score": 1.0
+      "target": "users_importusersmodal_importusersmodal"
     },
     {
       "relation": "imports_from",
@@ -16348,9 +16931,9 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
-      "target": "frontend_src_components_users_importusersmodal_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_importusersmodal_tsx"
     },
     {
       "relation": "calls",
@@ -16359,8 +16942,110 @@
       "source_file": "frontend/src/components/users/ImportUsersModal.tsx",
       "source_location": "L270",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "users_importusersmodal_importusersmodal",
-      "target": "users_importusersmodal_formatbytes",
+      "target": "users_importusersmodal_formatbytes"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "frontend_src_types_users_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "types_users_user",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_formatdate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_initials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_palettes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_palette",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_sk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_skeletonrow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_th",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_td",
       "confidence_score": 1.0
     },
     {
@@ -16369,9 +17054,9 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_invitationstab_tsx",
-      "target": "users_invitationstab_invitationstab",
-      "confidence_score": 1.0
+      "target": "users_invitationstab_invitationstab"
     },
     {
       "relation": "imports_from",
@@ -16380,8 +17065,19 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
-      "target": "frontend_src_components_users_invitationstab_tsx",
+      "target": "frontend_src_components_users_invitationstab_tsx"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "users_invitationstab_skeletonrow",
+      "target": "users_invitationstab_sk",
       "confidence_score": 1.0
     },
     {
@@ -16391,9 +17087,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -16402,9 +17098,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "types_users_user",
-      "confidence_score": 1.0
+      "target": "types_users_user"
     },
     {
       "relation": "contains",
@@ -16412,9 +17108,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_formatdate",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_formatdate"
     },
     {
       "relation": "contains",
@@ -16422,9 +17118,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_initials",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_initials"
     },
     {
       "relation": "contains",
@@ -16432,9 +17128,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_palettes",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_palettes"
     },
     {
       "relation": "contains",
@@ -16442,9 +17138,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_palette",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_palette"
     },
     {
       "relation": "contains",
@@ -16452,9 +17148,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_sk",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_sk"
     },
     {
       "relation": "contains",
@@ -16462,9 +17158,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_skeletonrow",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_skeletonrow"
     },
     {
       "relation": "contains",
@@ -16472,9 +17168,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_th",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_th"
     },
     {
       "relation": "contains",
@@ -16482,9 +17178,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_td",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_td"
     },
     {
       "relation": "contains",
@@ -16492,9 +17188,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
-      "target": "users_pendingverificationtab_pendingverificationtab",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_pendingverificationtab"
     },
     {
       "relation": "imports_from",
@@ -16503,9 +17199,9 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
-      "target": "frontend_src_components_users_pendingverificationtab_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_pendingverificationtab_tsx"
     },
     {
       "relation": "calls",
@@ -16514,9 +17210,9 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "users_pendingverificationtab_skeletonrow",
-      "target": "users_pendingverificationtab_sk",
-      "confidence_score": 1.0
+      "target": "users_pendingverificationtab_sk"
     },
     {
       "relation": "imports_from",
@@ -16525,9 +17221,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "frontend_src_types_users_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_users_ts"
     },
     {
       "relation": "imports",
@@ -16536,9 +17232,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "types_users_user",
-      "confidence_score": 1.0
+      "target": "types_users_user"
     },
     {
       "relation": "contains",
@@ -16546,9 +17242,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_formatdate",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_formatdate"
     },
     {
       "relation": "contains",
@@ -16556,9 +17252,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_initials",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_initials"
     },
     {
       "relation": "contains",
@@ -16566,9 +17262,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_palettes",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_palettes"
     },
     {
       "relation": "contains",
@@ -16576,9 +17272,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_palette",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_palette"
     },
     {
       "relation": "contains",
@@ -16586,9 +17282,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_sk",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_sk"
     },
     {
       "relation": "contains",
@@ -16596,9 +17292,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_skeletonrow",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_skeletonrow"
     },
     {
       "relation": "contains",
@@ -16606,9 +17302,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_th",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_th"
     },
     {
       "relation": "contains",
@@ -16616,9 +17312,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L61",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_td",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_td"
     },
     {
       "relation": "contains",
@@ -16626,9 +17322,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
-      "target": "users_suspendedtab_suspendedtab",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_suspendedtab"
     },
     {
       "relation": "imports_from",
@@ -16637,9 +17333,9 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
-      "target": "frontend_src_components_users_suspendedtab_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_suspendedtab_tsx"
     },
     {
       "relation": "calls",
@@ -16648,9 +17344,9 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "users_suspendedtab_skeletonrow",
-      "target": "users_suspendedtab_sk",
-      "confidence_score": 1.0
+      "target": "users_suspendedtab_sk"
     },
     {
       "relation": "imports_from",
@@ -17459,6 +18155,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/UserFilters.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userfilters_tsx",
+      "target": "users_userfilters_userfilters"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L25",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -17474,16 +18180,6 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_userfilters_tsx",
       "target": "users_userfilters_action_btn"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/components/users/UserFilters.tsx",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "frontend_src_components_users_userfilters_tsx",
-      "target": "users_userfilters_userfilters"
     },
     {
       "relation": "imports_from",
@@ -17687,6 +18383,36 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_colkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_columns",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_loadvisiblecols",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
       "source_location": "L3",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -17752,6 +18478,16 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_usertable_tsx",
       "target": "users_usertable_formatlastactivity"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserTable.tsx",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "frontend_src_components_users_usertable_tsx",
+      "target": "users_usertable_formatdate",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -17843,6 +18579,39 @@
       "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
       "target": "frontend_src_components_users_usertable_tsx"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "users_usertable_colkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "users_usertable_columns",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "users_usertable_loadvisiblecols",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -18214,6 +18983,28 @@
       "confidence_score": 1.0,
       "source": "frontend_src_constants_useroptions_ts",
       "target": "constants_useroptions_role_options"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "frontend_src_constants_useroptions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "constants_useroptions_department_options",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -19781,6 +20572,36 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_input_base",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_focusin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "pages_usermanagementpage_focusout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L58",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -20886,9 +21707,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L175",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_importerror",
-      "confidence_score": 1.0
+      "target": "types_users_importerror"
     },
     {
       "relation": "contains",
@@ -20896,9 +21717,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_importsummary",
-      "confidence_score": 1.0
+      "target": "types_users_importsummary"
     },
     {
       "relation": "contains",
@@ -20906,8 +21727,38 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L188",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_importresult",
+      "target": "types_users_importresult"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L196",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_bulkactiontype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L198",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_bulkactionerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L203",
+      "weight": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_bulkactionresponse",
       "confidence_score": 1.0
     },
     {
@@ -20992,5 +21843,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "5bef09189280db72b8be4f769cf6a6d2dfe1f3a9"
+  "built_at_commit": "a283fd1828e1b6d8969f063d75ec5efa325555fc"
 }

@@ -44,6 +44,7 @@ function formatBytes(n: number): string {
 }
 
 const REQUIRED_HEADERS = ['fullName', 'email', 'password', 'role'];
+const VALID_IMPORT_ROLES = new Set(['LEARNER', 'INSTRUCTOR', 'MANAGER', 'ADMIN_ASSISTANT']);
 
 export default function ImportUsersModal({ onClose, showToast }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -117,6 +118,13 @@ export default function ImportUsersModal({ onClose, showToast }: Props) {
     ? REQUIRED_HEADERS.filter(h => !preview.headers.includes(h))
     : [];
 
+  const roleColIdx = preview?.headers.indexOf('role') ?? -1;
+  const invalidRoleRows = (preview && roleColIdx >= 0)
+    ? preview.rows
+        .map((row, i) => ({ rowNum: i + 2, value: row[roleColIdx]?.trim().toUpperCase() ?? '' }))
+        .filter(r => r.value && !VALID_IMPORT_ROLES.has(r.value))
+    : [];
+
   // ── Overlay ────────────────────────────────────────────────────────────────
   return (
     <div style={{
@@ -140,7 +148,7 @@ export default function ImportUsersModal({ onClose, showToast }: Props) {
           <div>
             <div style={{ fontWeight: 700, fontSize: 16, color: '#111827' }}>Import Users</div>
             <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 2 }}>
-              Upload a CSV file — required columns: <strong>fullName, email, password, role</strong>
+              Required columns: <strong>fullName, email, password, role</strong> — role must be LEARNER, INSTRUCTOR, MANAGER, or ADMIN_ASSISTANT
             </div>
           </div>
           <button onClick={onClose} style={{
@@ -288,6 +296,17 @@ export default function ImportUsersModal({ onClose, showToast }: Props) {
                   padding: '10px 14px', marginBottom: 16, fontSize: 13, color: '#92400e',
                 }}>
                   <strong>Missing required columns:</strong> {missingHeaders.join(', ')}
+                </div>
+              )}
+
+              {/* Invalid role values warning */}
+              {invalidRoleRows.length > 0 && (
+                <div style={{
+                  background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8,
+                  padding: '10px 14px', marginBottom: 16, fontSize: 13, color: '#b91c1c',
+                }}>
+                  <strong>Invalid role values on rows {invalidRoleRows.map(r => r.rowNum).join(', ')}.</strong>
+                  {' '}Valid roles: LEARNER, INSTRUCTOR, MANAGER, ADMIN_ASSISTANT.
                 </div>
               )}
 

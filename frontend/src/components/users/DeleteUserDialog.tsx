@@ -29,7 +29,7 @@ export default function DeleteUserDialog({ userId, email, fullName, onClose, onS
     setSubmitting(true);
     try {
       const res = await deleteUser(userId);
-      showToast('success', res.message || `${fullName} has been deleted`);
+      showToast('success', res.message || `${fullName} has been archived`);
       onSuccess();
     } catch (err) {
       if (err instanceof ApiError) {
@@ -50,17 +50,17 @@ export default function DeleteUserDialog({ userId, email, fullName, onClose, onS
 
         {/* Icon + title */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-          <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+          <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#fff7ed', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c2410c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="3" width="20" height="4" rx="1"/><path d="M4 7v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7"/><path d="M10 11h4"/>
             </svg>
           </div>
-          <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: '#111827' }}>Delete User</h3>
+          <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: '#111827' }}>Archive User</h3>
         </div>
 
-        <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, padding: '10px 12px', marginBottom: 16 }}>
-          <p style={{ margin: 0, fontSize: 13, color: '#b91c1c', lineHeight: 1.6 }}>
-            <strong>This action cannot be undone.</strong> All data for <strong>{fullName}</strong> will be permanently deleted.
+        <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 8, padding: '10px 12px', marginBottom: 16 }}>
+          <p style={{ margin: 0, fontSize: 13, color: '#92400e', lineHeight: 1.6 }}>
+            Archive this user? <strong>{fullName}</strong> will lose access to the system. Their records will remain available for audit and reporting.
           </p>
         </div>
 
@@ -86,12 +86,12 @@ export default function DeleteUserDialog({ userId, email, fullName, onClose, onS
             disabled={!confirmed || submitting}
             style={{
               padding: '8px 16px', fontSize: 13, fontFamily: 'inherit', fontWeight: 600,
-              background: !confirmed || submitting ? '#fca5a5' : '#dc2626',
+              background: !confirmed || submitting ? '#fed7aa' : '#c2410c',
               border: 'none', borderRadius: 7,
               cursor: !confirmed || submitting ? 'not-allowed' : 'pointer', color: '#fff',
             }}
           >
-            {submitting ? 'Deleting…' : 'Delete User'}
+            {submitting ? 'Archiving…' : 'Archive User'}
           </button>
         </div>
       </div>

@@ -193,7 +193,7 @@ export interface ImportResult {
 
 // ── Task 6E: Bulk action types ─────────────────────────────────────────────────
 
-export type BulkActionType = 'suspend' | 'reactivate' | 'delete' | 'assign_role' | 'notify';
+export type BulkActionType = 'suspend' | 'reactivate' | 'archive' | 'assign_role' | 'notify';
 
 export interface BulkActionError {
   id:      string;

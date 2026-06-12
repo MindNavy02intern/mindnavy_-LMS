@@ -7,10 +7,11 @@
 //   getStoredToken() → read by other API modules to attach Authorization header
 
 export interface AdminUser {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
+  id:        string;
+  email:     string;
+  name:      string;
+  fullName?: string;
+  role:      string;
 }
 
 const ADMIN_API = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';

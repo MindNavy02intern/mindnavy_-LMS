@@ -821,14 +821,21 @@ async function importUsersFromCsv(file, admin = {}) {
 // ── bulkActionUsers (Task 6E) ─────────────────────────────────────────────────
 
 async function bulkActionUsers(body, admin) {
-  const VALID_ACTIONS = new Set(["suspend", "reactivate", "delete",  "archive",
- "assign_role", "notify"]);
+  const VALID_ACTIONS = new Set([
+    "suspend",
+    "reactivate",
+    "archive",
+    "delete", // backward-compatible alias for archive
+    "assign_role",
+    "notify",
+  ]);
 
   const action =
     typeof body.action === "string" ? body.action.trim().toLowerCase() : "";
+
   if (!VALID_ACTIONS.has(action)) {
     const err = new Error(
-      `Invalid action: "${action}". Must be one of: ${[...VALID_ACTIONS].join(", ")}.`
+      `Invalid action: "${action}". Must be one of: suspend, reactivate, archive, assign_role, notify.`
     );
     err.statusCode = 400;
     throw err;
@@ -837,6 +844,7 @@ async function bulkActionUsers(body, admin) {
   const userIds = Array.isArray(body.userIds)
     ? body.userIds.filter((id) => typeof id === "string" && id.trim())
     : [];
+
   if (userIds.length === 0) {
     const err = new Error("userIds must be a non-empty array of strings.");
     err.statusCode = 400;
@@ -853,33 +861,53 @@ async function bulkActionUsers(body, admin) {
   for (const id of userIds) {
     try {
       if (action === "suspend") {
-        await suspendUser(id, { reason: params.reason || "Bulk action", notes: null }, admin);
+        await suspendUser(
+          id,
+          {
+            reason: params.reason || "Bulk action",
+            notes: null,
+          },
+          admin
+        );
       } else if (action === "reactivate") {
         await reactivateUser(id, admin);
       } else if (action === "archive" || action === "delete") {
-         await deleteUser(id, admin);
-     
+        await deleteUser(id, admin);
       } else if (action === "assign_role") {
-        const roleId = params.role || params.roleId;
-        await assignUserRole(id, { roleId, type: "primary", expiresAt: null }, admin);
+        const roleId = params.roleId || params.role;
+
+        await assignUserRole(
+          id,
+          {
+            roleId,
+            reason: params.reason || "Bulk role assignment",
+          },
+          admin
+        );
       } else if (action === "notify") {
-        console.log(`[bulk:notify] user=${id} message=${params.message || "(none)"}`);
+        if (process.env.NODE_ENV !== "production") {
+          console.log(`[bulk:notify] user=${id}`);
+        }
       }
+
       succeeded++;
     } catch (err) {
       failed++;
-      errors.push({ id, message: err.message || "Unknown error" });
+      errors.push({
+        id,
+        message: err.message || "Unknown error",
+      });
     }
   }
 
   return {
     success: true,
-    message: `Bulk ${action}: ${succeeded} succeeded, ${failed} failed`,
+    message: `Bulk ${action === "delete" ? "archive" : action}: ${succeeded} succeeded, ${failed} failed`,
     succeeded,
     failed,
     errors,
   };
-
+}
 
 module.exports = {
   getUsersList,
@@ -895,4 +923,4 @@ module.exports = {
   getUsersAnalytics,
   importUsersFromCsv,
   bulkActionUsers,
-}};
+};

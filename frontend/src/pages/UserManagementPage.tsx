@@ -20,7 +20,7 @@ import PendingVerificationTab from '../components/users/PendingVerificationTab';
 import ArchivedTab from '../components/users/ArchivedTab';
 import InvitationsTab from '../components/users/InvitationsTab';
 import type { User } from '../types/users';
-import { DEPARTMENT_OPTIONS } from '../constants/userOptions';
+import { DEPARTMENT_OPTIONS, ROLE_OPTIONS } from '../constants/userOptions';
 
 // ── Tab config ─────────────────────────────────────────────────────────────────
 
@@ -285,15 +285,9 @@ export default function UserManagementPage() {
               </div>
 
               {/* Role */}
-              <select value={role} onChange={e => { setRole(e.target.value); setPage(1); }} style={{ ...INPUT_BASE, padding: '5px 8px', width: 120, cursor: 'pointer' }} onFocus={focusIn} onBlur={focusOut}>
+              <select value={role} onChange={e => { setRole(e.target.value); setPage(1); }} style={{ ...INPUT_BASE, padding: '5px 8px', width: 130, cursor: 'pointer' }} onFocus={focusIn} onBlur={focusOut}>
                 <option value="">All Roles</option>
-                <option value="Student">Student</option>
-                <option value="Instructor">Instructor</option>
-                <option value="Administrator">Administrator</option>
-                <option value="Manager">Manager</option>
-                <option value="HR Manager">HR Manager</option>
-                <option value="Finance Manager">Finance Manager</option>
-                <option value="Branch Manager">Branch Manager</option>
+                {ROLE_OPTIONS.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
 
               {/* Department */}
