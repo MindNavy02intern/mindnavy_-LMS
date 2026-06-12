@@ -1,3 +1,5 @@
+const { validatePasswordStrength } = require("../utils/passwordPolicy");
+
 function validateAdminLoginInput(body) {
   const errors = [];
 
@@ -83,6 +85,8 @@ function validateResetPasswordInput(body) {
 
   if (!newPassword) {
     errors.push("New password is required.");
+  } else {
+    errors.push(...validatePasswordStrength(newPassword));
   }
 
   return {
@@ -97,6 +101,4 @@ module.exports = {
   validateAdminOtpInput,
   validateForgotPasswordInput,
   validateResetPasswordInput,
-
-
 };

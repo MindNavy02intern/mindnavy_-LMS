@@ -821,7 +821,8 @@ async function importUsersFromCsv(file, admin = {}) {
 // ── bulkActionUsers (Task 6E) ─────────────────────────────────────────────────
 
 async function bulkActionUsers(body, admin) {
-  const VALID_ACTIONS = new Set(["suspend", "reactivate", "delete", "assign_role", "notify"]);
+  const VALID_ACTIONS = new Set(["suspend", "reactivate", "delete",  "archive",
+ "assign_role", "notify"]);
 
   const action =
     typeof body.action === "string" ? body.action.trim().toLowerCase() : "";
@@ -855,8 +856,9 @@ async function bulkActionUsers(body, admin) {
         await suspendUser(id, { reason: params.reason || "Bulk action", notes: null }, admin);
       } else if (action === "reactivate") {
         await reactivateUser(id, admin);
-      } else if (action === "delete") {
-        await deleteUser(id, admin);
+      } else if (action === "archive" || action === "delete") {
+         await deleteUser(id, admin);
+     
       } else if (action === "assign_role") {
         const roleId = params.role || params.roleId;
         await assignUserRole(id, { roleId, type: "primary", expiresAt: null }, admin);
@@ -877,7 +879,7 @@ async function bulkActionUsers(body, admin) {
     failed,
     errors,
   };
-}
+
 
 module.exports = {
   getUsersList,
@@ -893,4 +895,4 @@ module.exports = {
   getUsersAnalytics,
   importUsersFromCsv,
   bulkActionUsers,
-};
+}};

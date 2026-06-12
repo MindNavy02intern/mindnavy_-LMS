@@ -61,6 +61,7 @@ async function requireAdminAuth(req, res, next) {
       id: session.admin.id,
       email: session.admin.email,
       fullName: session.admin.fullName,
+        name: session.admin.fullName,
       role: session.admin.role,
       status: session.admin.status,
     };

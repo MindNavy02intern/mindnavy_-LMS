@@ -16,8 +16,8 @@ async function getDashboardCore(admin) {
 
   return {
     welcome: {
-      adminName:        admin.fullName     || null,
-      adminRole:        admin.role         || null,
+     adminName: admin.fullName || admin.name || "Admin",
+      adminRole: admin.role || "admin",
       organizationName: "MindNavy LMS",
       currentDateTime:  new Date().toISOString(),
       lastLoginAt:      admin.lastLoginAt  || null,

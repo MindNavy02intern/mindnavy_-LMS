@@ -220,6 +220,7 @@ async function loginAdmin({ email, password, ipAddress, userAgent }) {
       id: admin.id,
       email: admin.email,
       fullName: admin.fullName,
+     name: admin.fullName,
       role: admin.role,
       status: admin.status,
     },
@@ -315,7 +316,9 @@ async function sendAdminOtp({ adminId, ipAddress, userAgent }) {
   });
 
   // Development only. Remove this when real email sending is added.
+  if (process.env.NODE_ENV !== "production") {
   console.log("DEV OTP CODE:", otpCode);
+}
 
   return {
     success: true,
@@ -571,7 +574,9 @@ async function forgotAdminPassword({ email, ipAddress, userAgent }) {
   });
 
   // Development only. Remove when real email sending is added.
+  if (process.env.NODE_ENV !== "production") {
   console.log("DEV PASSWORD RESET CODE:", resetCode);
+}
 
   return {
     success: true,
