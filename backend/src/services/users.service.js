@@ -173,13 +173,23 @@ async function getUsersList(query = {}, admin = {}) {
   }
 
   if (roleFilter)              where.role              = roleFilter;
-  if (statusFilter)            where.status            = statusFilter;
+  // Exclude ARCHIVED by default; only show them when explicitly filtered with status=ARCHIVED
+  if (statusFilter) {
+    where.status = statusFilter;
+  } else {
+    where.status = { not: "ARCHIVED" };
+  }
   if (verificationStateFilter) where.verificationState = verificationStateFilter;
   if (departmentFilter)        where.department        = { equals: departmentFilter, mode: "insensitive" };
   if (createdAfterDate && !isNaN(createdAfterDate.getTime()))  where.createdAt = { ...where.createdAt, gte: createdAfterDate };
   if (createdBeforeDate && !isNaN(createdBeforeDate.getTime())) where.createdAt = { ...where.createdAt, lte: createdBeforeDate };
 
   const skip = (page - 1) * limit;
+
+  // Month boundaries for KPI change calculations
+  const now = new Date();
+  const startOfThisMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+  const startOfLastMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
 
   const [
     totalUsers,
@@ -189,10 +199,16 @@ async function getUsersList(query = {}, admin = {}) {
     invitationsPending,
     total,
     rawUsers,
+    totalThisMonth,
+    totalLastMonth,
+    activeThisMonth,
+    activeLastMonth,
+    suspendedThisMonth,
+    suspendedLastMonth,
   ] = await Promise.all([
-    prisma.appUser.count(),
+    prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }),
     prisma.appUser.count({ where: { status: "ACTIVE" } }),
-    prisma.appUser.count({ where: { verificationState: "PENDING" } }),
+    prisma.appUser.count({ where: { verificationState: "PENDING", status: { not: "ARCHIVED" } } }),
     prisma.appUser.count({ where: { status: "SUSPENDED" } }),
     prisma.appUser.count({ where: { status: "INVITED" } }),
     prisma.appUser.count({ where }),
@@ -218,28 +234,40 @@ async function getUsersList(query = {}, admin = {}) {
         // passwordHash intentionally excluded — must never be exposed
       },
     }),
+    prisma.appUser.count({ where: { createdAt: { gte: startOfThisMonth } } }),
+    prisma.appUser.count({ where: { createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
+    prisma.appUser.count({ where: { status: "ACTIVE",    createdAt: { gte: startOfThisMonth } } }),
+    prisma.appUser.count({ where: { status: "ACTIVE",    createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
+    prisma.appUser.count({ where: { status: "SUSPENDED", createdAt: { gte: startOfThisMonth } } }),
+    prisma.appUser.count({ where: { status: "SUSPENDED", createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
   ]);
 
-  await createUserAuditLog(admin.id, "USERS_LIST_VIEWED", {
+  // Fire-and-forget: don't await so the audit write never delays the response
+  createUserAuditLog(admin.id, "USERS_LIST_VIEWED", {
     page,
     limit,
     search: search || null,
     role: roleFilter,
     status: statusFilter,
-  });
+  }).catch(err => console.error("Audit log failed (USERS_LIST_VIEWED):", err));
+
+  function calcChange(current, previous) {
+    if (previous === 0) return current > 0 ? 100 : 0;
+    return Math.round(((current - previous) / previous) * 100);
+  }
 
   return {
     kpiSummary: {
       totalUsers,
-      totalUsersChange: 0,
+      totalUsersChange:          calcChange(totalThisMonth,     totalLastMonth),
       activeUsers,
-      activeUsersChange: 0,
+      activeUsersChange:         calcChange(activeThisMonth,    activeLastMonth),
       pendingVerification,
       pendingVerificationChange: 0,
       suspendedUsers,
-      suspendedUsersChange: 0,
+      suspendedUsersChange:      calcChange(suspendedThisMonth, suspendedLastMonth),
       invitationsPending,
-      invitationsPendingChange: 0,
+      invitationsPendingChange:  0,
     },
     users: rawUsers.map(mapUser),
     pagination: {
@@ -734,17 +762,27 @@ async function getUsersAnalytics(admin = {}) {
     lastMonthCount,
     activeToday,
     activeLast7d,
-    activityLast30d,
+    rawDailyTrend,
   ] = await Promise.all([
-    prisma.appUser.count(),
-    prisma.appUser.groupBy({ by: ["role"],             _count: { _all: true } }),
+    prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }),
+    prisma.appUser.groupBy({ by: ["role"], _count: { _all: true }, where: { status: { not: "ARCHIVED" } } }),
     prisma.appUser.groupBy({ by: ["department"],       _count: { _all: true }, where: { department: { not: null } } }),
     prisma.appUser.groupBy({ by: ["verificationState"], _count: { _all: true } }),
     prisma.appUser.count({ where: { createdAt: { gte: startOfMonth } } }),
     prisma.appUser.count({ where: { createdAt: { gte: startOfLastMonth, lt: startOfMonth } } }),
     prisma.appUser.count({ where: { lastActivityAt: { gte: startOfToday } } }),
     prisma.appUser.count({ where: { lastActivityAt: { gte: last7d } } }),
-    prisma.appUser.findMany({ where: { lastActivityAt: { gte: last30d } }, select: { lastActivityAt: true } }),
+    // SQL GROUP BY: aggregates in DB instead of loading all rows into Node.js memory
+    prisma.$queryRaw`
+      SELECT
+        DATE("lastActivityAt") AS date,
+        COUNT(*)::int           AS count
+      FROM "app_users"
+      WHERE "lastActivityAt" >= ${last30d}
+        AND "lastActivityAt" IS NOT NULL
+      GROUP BY DATE("lastActivityAt")
+      ORDER BY date ASC
+    `,
   ]);
 
   // usersByRole — uppercase names + percentage
@@ -770,17 +808,18 @@ async function getUsersAnalytics(admin = {}) {
       : thisMonthCount > 0 ? 100 : 0;
   const newUsersThisMonth = { count: thisMonthCount, changePercentage };
 
-  // userActivity — 30-day dailyTrend based on lastActivityAt
+  // userActivity — 30-day dailyTrend: build zero-filled map then merge SQL results
   const activityMap = {};
   for (let i = 29; i >= 0; i--) {
     const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - i));
     activityMap[d.toISOString().slice(0, 10)] = 0;
   }
-  for (const u of activityLast30d) {
-    if (u.lastActivityAt) {
-      const key = u.lastActivityAt.toISOString().slice(0, 10);
-      if (key in activityMap) activityMap[key]++;
-    }
+  for (const row of rawDailyTrend) {
+    // Prisma returns PostgreSQL DATE columns as JS Date objects
+    const key = row.date instanceof Date
+      ? row.date.toISOString().slice(0, 10)
+      : String(row.date).slice(0, 10);
+    if (key in activityMap) activityMap[key] = Number(row.count);
   }
   const dailyTrend = Object.entries(activityMap).map(([date, count]) => ({ date, count }));
   const userActivity = { activeToday, activeThisWeek: activeLast7d, dailyTrend };

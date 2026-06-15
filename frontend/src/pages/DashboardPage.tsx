@@ -135,12 +135,12 @@ interface LKpiCardProps { label: string; value: string | number; iconType: strin
 function LKpiCard({ label, value, iconType, iconBg, iconColor }: LKpiCardProps) {
   return (
     <div className="mn-lkpi-card">
-      <div style={{ marginBottom: 8 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
+        <div className="mn-lkpi-label" style={{ marginBottom: 0, paddingTop: 2 }}>{label}</div>
         <div className="mn-lkpi-icon" style={{ background: iconBg, color: iconColor }}>
           <KpiIcon type={iconType} />
         </div>
       </div>
-      <div className="mn-lkpi-label">{label}</div>
       <div className="mn-lkpi-value">{value}</div>
     </div>
   );
@@ -149,11 +149,11 @@ function LKpiCard({ label, value, iconType, iconBg, iconColor }: LKpiCardProps) 
 function KpiSkeleton() {
   return (
     <div className="mn-lkpi-card" style={{ pointerEvents: 'none' }}>
-      <div style={{ marginBottom: 8 }}>
-        <div className="mn-skeleton" style={{ width: 28, height: 28, borderRadius: 6 }} />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
+        <div className="mn-skeleton" style={{ width: '55%', height: 12, borderRadius: 4 }} />
+        <div className="mn-skeleton" style={{ width: 44, height: 44, borderRadius: 12 }} />
       </div>
-      <div className="mn-skeleton" style={{ width: '55%', height: 10, marginBottom: 4, borderRadius: 3 }} />
-      <div className="mn-skeleton" style={{ width: '40%', height: 20, borderRadius: 3 }} />
+      <div className="mn-skeleton" style={{ width: '45%', height: 30, borderRadius: 4 }} />
     </div>
   );
 }
@@ -242,14 +242,16 @@ function LearningActivityChart({ data }: { data: LearningActivityItem[] }) {
 // ── Users by Role Donut (wired to analytics API) ──────────────────────────────
 
 const ROLE_COLORS: Record<string, string> = {
-  learners:    '#2563eb',
-  instructors: '#16a34a',
-  admins:      '#f59e0b',
-  managers:    '#8b5cf6',
-  others:      '#94a3b8',
+  learners:        '#2563eb',
+  instructors:     '#16a34a',
+  admins:          '#f59e0b',
+  managers:        '#8b5cf6',
+  adminAssistants: '#ef4444',
+  others:          '#94a3b8',
 };
 const ROLE_LABELS: Record<string, string> = {
-  learners: 'Learners', instructors: 'Instructors', admins: 'Admins', managers: 'Managers', others: 'Others',
+  learners: 'Learners', instructors: 'Instructors', admins: 'Admins', managers: 'Managers',
+  adminAssistants: 'Admin Assistants', others: 'Others',
 };
 
 function UsersRoleDonut({ data }: { data: UsersByRoleItem[] }) {
@@ -275,7 +277,7 @@ function UsersRoleDonut({ data }: { data: UsersByRoleItem[] }) {
             transform={`rotate(-90 ${cx} ${cy})`} />
         ))}
         <text x={cx} y={cy - 4} textAnchor="middle" fontSize="11" fontWeight="700" fill="#0f172a" fontFamily="Inter,sans-serif">
-          {(total / 1000).toFixed(1)}K
+          {total >= 1000 ? `${(total / 1000).toFixed(1)}K` : String(total)}
         </text>
         <text x={cx} y={cy + 8} textAnchor="middle" fontSize="6.5" fill="#64748b" fontFamily="Inter,sans-serif">Total Users</text>
       </svg>
@@ -339,7 +341,7 @@ function CompletionDonut({ pct, categories }: { pct: number; categories: CourseC
 const AVATAR_COLORS = ['#2563eb', '#16a34a', '#8b5cf6', '#f59e0b', '#ef4444', '#06b6d4'];
 
 function ActivityAvatar({ name, index }: { name: string; index: number }) {
-  const initials = name.split(' ').map((w) => w[0] ?? '').slice(0, 2).join('').toUpperCase();
+  const initials = (name ?? 'S').split(' ').map((w) => w[0] ?? '').slice(0, 2).join('').toUpperCase();
   return (
     <div style={{
       width: 26, height: 26, borderRadius: '50%', flexShrink: 0,
@@ -863,24 +865,25 @@ export default function DashboardPage() {
     }
   }, [appliedFilters]);
 
-  useEffect(() => { fetchData(); }, [fetchData]);
-  useEffect(() => { fetchAnalytics(); }, [fetchAnalytics]);
-  useEffect(() => { fetchAdminWidgets(); }, [fetchAdminWidgets]);
+  // Fix 2: batch all 3 initial fetches so they fire in parallel
   useEffect(() => {
-    const handler = () => { fetchData(true); fetchAnalytics(); };
-    window.addEventListener('userDataChanged',    handler);
-    window.addEventListener('analyticsUpdated',   handler);
-    window.addEventListener('rolesUpdated',       handler);
-    window.addEventListener('permissionsUpdated', handler);
-    window.addEventListener('organizationUpdated', handler);
-    return () => {
-      window.removeEventListener('userDataChanged',    handler);
-      window.removeEventListener('analyticsUpdated',   handler);
-      window.removeEventListener('rolesUpdated',       handler);
-      window.removeEventListener('permissionsUpdated', handler);
-      window.removeEventListener('organizationUpdated', handler);
-    };
-  }, [fetchData, fetchAnalytics]);
+    Promise.all([fetchData(), fetchAnalytics(), fetchAdminWidgets()]);
+  }, [fetchData, fetchAnalytics, fetchAdminWidgets]);
+
+  // Fix 3+4: include fetchAdminWidgets in refresh handler; add groupsUpdated event
+  useEffect(() => {
+    const handler = () => { fetchData(true); fetchAnalytics(); fetchAdminWidgets(); };
+    const events = [
+      'userDataChanged',
+      'analyticsUpdated',
+      'rolesUpdated',
+      'permissionsUpdated',
+      'organizationUpdated',
+      'groupsUpdated',
+    ];
+    events.forEach(e => window.addEventListener(e, handler));
+    return () => events.forEach(e => window.removeEventListener(e, handler));
+  }, [fetchData, fetchAnalytics, fetchAdminWidgets]);
 
   function applyFilters() { setApplied({ dateFrom, dateTo, departmentId, courseId }); }
   function clearFilters()  {
@@ -963,9 +966,9 @@ export default function DashboardPage() {
         </div>
         {/* Right: compact date / dept filter */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
-          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} style={fi} title="Date from" />
+          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} style={fi} title="Date filtering coming soon" />
           <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>–</span>
-          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} style={fi} title="Date to" />
+          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} style={fi} title="Date filtering coming soon" />
           <input type="text" placeholder="Dept. ID" value={departmentId}
             onChange={e => setDeptId(e.target.value)} style={{ ...fi, width: 74 }} />
           <input type="text" placeholder="Course ID" value={courseId}
@@ -1023,7 +1026,7 @@ export default function DashboardPage() {
         <div className="mn-db-card">
           <div className="mn-db-card-header">
             <div className="mn-db-card-title">Recent Activity</div>
-            <button className="mn-db-view-all">View All</button>
+            <button className="mn-db-view-all" onClick={() => { window.location.href = '/users'; }}>View All</button>
           </div>
           {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: 32 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
@@ -1121,7 +1124,7 @@ export default function DashboardPage() {
         <div className="mn-db-card">
           <div className="mn-db-card-header">
             <div className="mn-db-card-title">Notifications</div>
-            <button className="mn-db-view-all">View All</button>
+            <button className="mn-db-view-all" disabled title="Coming soon" style={{ opacity: 0.4, cursor: 'not-allowed' }}>View All</button>
           </div>
           {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: 32 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>

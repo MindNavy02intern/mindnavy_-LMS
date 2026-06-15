@@ -1,17 +1,85 @@
 const prisma = require("../config/prisma");
 const { getUsersAnalytics } = require("./users.service");
 
+// ── Audit log → ActivityItem mapper ───────────────────────────────────────────
+
+const ACTION_TYPE = {
+  USER_CREATED:          "user",
+  USER_UPDATED:          "user",
+  USER_STATUS_CHANGED:   "user",
+  USER_PASSWORD_RESET:   "user",
+  USER_ROLE_ASSIGNED:    "user",
+  USER_DELETED:          "user",
+  USER_SUSPENDED:        "user",
+  USER_REACTIVATED:      "user",
+  USERS_IMPORTED:        "user",
+  USER_ANALYTICS_VIEWED: "user",
+  USERS_LIST_VIEWED:     "user",
+  USER_DETAILS_VIEWED:   "user",
+};
+
+const ACTION_TITLE = {
+  ADMIN_LOGIN:           "logged in",
+  ADMIN_LOGOUT:          "logged out",
+  USER_CREATED:          "created a new user",
+  USER_UPDATED:          "updated a user",
+  USER_STATUS_CHANGED:   "changed user status",
+  USER_PASSWORD_RESET:   "reset a user password",
+  USER_ROLE_ASSIGNED:    "assigned a role",
+  USER_DELETED:          "deleted a user",
+  USER_SUSPENDED:        "suspended a user",
+  USER_REACTIVATED:      "reactivated a user",
+  USERS_IMPORTED:        "imported users from CSV",
+  USER_ANALYTICS_VIEWED: "viewed analytics",
+  USERS_LIST_VIEWED:     "viewed user list",
+  USER_DETAILS_VIEWED:   "viewed user details",
+  FAILED_LOGIN:          "had a failed login attempt",
+  OTP_SENT:              "requested OTP",
+  OTP_VERIFIED:          "verified OTP",
+  SESSION_CREATED:       "started a session",
+  SESSION_REVOKED:       "revoked a session",
+};
+
+function mapAuditToActivity(entries) {
+  return entries.map(entry => ({
+    id:        entry.id,
+    actorName: entry.admin?.fullName ?? "System",
+    type:      ACTION_TYPE[entry.action] ?? "system",
+    title:     ACTION_TITLE[entry.action] ?? entry.action.replace(/_/g, " ").toLowerCase(),
+    createdAt: entry.createdAt instanceof Date
+      ? entry.createdAt.toISOString()
+      : String(entry.createdAt),
+  }));
+}
+
 async function getDashboardCore(admin) {
+  const now = new Date();
+
   const [
     totalUsers,
     activeStudents,
     activeInstructors,
     pendingApprovals,
+    recentActivitiesRaw,
+    liveSessionsRunning,
   ] = await Promise.all([
     prisma.appUser.count(),
     prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }),
     prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }),
     prisma.appUser.count({ where: { status: "PENDING" } }),
+    prisma.auditLog.findMany({
+      take: 10,
+      orderBy: { createdAt: "desc" },
+      select: {
+        id:      true,
+        action:  true,
+        createdAt: true,
+        admin: { select: { fullName: true } },
+      },
+    }).catch(() => []),
+    prisma.adminSession.count({
+      where: { revokedAt: null, expiresAt: { gt: now } },
+    }),
   ]);
 
   return {
@@ -28,16 +96,15 @@ async function getDashboardCore(admin) {
       totalUsers,
       activeStudents,
       activeInstructors,
-      publishedCourses:    0,
+      publishedCourses:    0,  // TODO: courses table not yet built
       pendingApprovals,
-      totalRevenue:        0,
+      totalRevenue:        0,  // TODO: payments table not yet built
       activeSubscriptions: 0,
-      certificatesIssued:  0,
-      liveSessionsRunning: 0,
+      certificatesIssued:  0,  // TODO: certificates table not yet built
+      liveSessionsRunning,
     },
 
-    // TODO: replace with real DB queries when tables are ready
-    recentActivities:      [],
+    recentActivities:      mapAuditToActivity(recentActivitiesRaw),
     notificationsPreview:  [],
     securityAlertsPreview: [],
 
@@ -77,7 +144,7 @@ async function getDashboardAnalytics(filters = {}) {
     LEARNER:         "learners",
     INSTRUCTOR:      "instructors",
     MANAGER:         "managers",
-    ADMIN_ASSISTANT: "admins",
+    ADMIN_ASSISTANT: "adminAssistants",
   };
 
   const usersByRole = (ua?.usersByRole ?? []).map(r => ({
@@ -110,7 +177,7 @@ async function getDashboardAnalytics(filters = {}) {
       dateTo:       filters.dateTo       || null,
       departmentId: filters.departmentId || null,
     },
-    learningActivity: [],
+    learningActivity: [], // TODO: enrollment/course-progress tracking not yet built
     usersByRole,
     usersByDepartment,
     userActivity,
@@ -166,7 +233,17 @@ async function getDashboardAnalytics(filters = {}) {
 }
 
 async function getDashboardAdminWidgets(query = {}) {
-  // TODO: replace with real DB queries when tables are ready
+  const now = new Date();
+
+  const [liveSessionCount, pendingApprovalCount] = await Promise.all([
+    prisma.adminSession.count({
+      where: { revokedAt: null, expiresAt: { gt: now } },
+    }),
+    prisma.appUser.count({
+      where: { status: "PENDING" },
+    }),
+  ]);
+
   return {
     filters: {
       dateFrom:     query.dateFrom     || null,
@@ -176,12 +253,12 @@ async function getDashboardAdminWidgets(query = {}) {
     },
 
     pendingApprovals: {
-      total: 0,
+      total: pendingApprovalCount,
       items: [],
     },
 
     liveSessions: {
-      activeCount:          0,
+      activeCount:          liveSessionCount,
       upcomingCount:        0,
       technicalIssuesCount: 0,
       items:                [],

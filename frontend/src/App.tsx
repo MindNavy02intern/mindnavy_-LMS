@@ -1,18 +1,46 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
-import DashboardPage from './pages/DashboardPage';
-import UserManagementPage from './pages/UserManagementPage';
-import TrustedDevicesPage from './pages/TrustedDevicesPage';
-import VerifyDevicePage from './pages/VerifyDevicePage';
-import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './routes/ProtectedRoute';
+
+const LoginPage          = lazy(() => import('./pages/LoginPage'));
+const SignupPage         = lazy(() => import('./pages/SignupPage'));
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'));
+const ResetPasswordPage  = lazy(() => import('./pages/ResetPasswordPage'));
+const DashboardPage      = lazy(() => import('./pages/DashboardPage'));
+const UserManagementPage = lazy(() => import('./pages/UserManagementPage'));
+const TrustedDevicesPage = lazy(() => import('./pages/TrustedDevicesPage'));
+const VerifyDevicePage   = lazy(() => import('./pages/VerifyDevicePage'));
+const NotFoundPage       = lazy(() => import('./pages/NotFoundPage'));
+
+function PageLoader() {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      flexDirection: 'column',
+      gap: '16px',
+    }}>
+      <div style={{
+        width: '40px',
+        height: '40px',
+        border: '3px solid #e5e7eb',
+        borderTop: '3px solid #3b82f6',
+        borderRadius: '50%',
+        animation: 'spin 1s linear infinite',
+      }} />
+      <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>
+        Loading MindNavy...
+      </p>
+    </div>
+  );
+}
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Suspense fallback={<PageLoader />}>
       <Routes>
         {/* Root → redirect to dashboard (ProtectedRoute redirects to /login if not signed in) */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -68,6 +96,7 @@ export default function App() {
         {/* 404 catch-all */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

@@ -1,5 +1,30 @@
 const prisma = require("../config/prisma");
 
+// ── In-memory session cache (Fix 1: skip DB lookup on every request) ──────────
+const SESSION_CACHE = new Map();
+const CACHE_TTL_MS = 60 * 1000; // 1 minute
+
+function getCachedSession(token) {
+  const entry = SESSION_CACHE.get(token);
+  if (!entry) return null;
+  if (Date.now() > entry.cacheExpiresAt) {
+    SESSION_CACHE.delete(token);
+    return null;
+  }
+  return entry.payload; // { admin, adminSession }
+}
+
+function setCachedSession(token, payload) {
+  SESSION_CACHE.set(token, {
+    payload,
+    cacheExpiresAt: Date.now() + CACHE_TTL_MS,
+  });
+}
+
+function invalidateCachedSession(token) {
+  SESSION_CACHE.delete(token);
+}
+
 async function requireAdminAuth(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
@@ -20,6 +45,15 @@ async function requireAdminAuth(req, res, next) {
       });
     }
 
+    // Cache hit: skip DB query entirely
+    const cached = getCachedSession(token);
+    if (cached) {
+      req.admin        = cached.admin;
+      req.adminSession = cached.adminSession;
+      return next();
+    }
+
+    // Cache miss: validate against DB
     const session = await prisma.adminSession.findUnique({
       where: {
         sessionToken: token,
@@ -57,19 +91,24 @@ async function requireAdminAuth(req, res, next) {
       });
     }
 
-    req.admin = {
-      id: session.admin.id,
-      email: session.admin.email,
+    const admin = {
+      id:       session.admin.id,
+      email:    session.admin.email,
       fullName: session.admin.fullName,
-        name: session.admin.fullName,
-      role: session.admin.role,
-      status: session.admin.status,
+      name:     session.admin.fullName,
+      role:     session.admin.role,
+      status:   session.admin.status,
     };
 
-    req.adminSession = {
-      id: session.id,
+    const adminSession = {
+      id:        session.id,
       expiresAt: session.expiresAt,
     };
+
+    setCachedSession(token, { admin, adminSession });
+
+    req.admin        = admin;
+    req.adminSession = adminSession;
 
     next();
   } catch (error) {
@@ -84,4 +123,5 @@ async function requireAdminAuth(req, res, next) {
 
 module.exports = {
   requireAdminAuth,
+  invalidateCachedSession,
 };

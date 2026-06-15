@@ -109,7 +109,7 @@ export interface LearningActivityItem {
   completed: number;
 }
 
-export type UserRole = 'learners' | 'instructors' | 'admins' | 'managers' | 'others';
+export type UserRole = 'learners' | 'instructors' | 'admins' | 'managers' | 'adminAssistants' | 'others';
 
 export interface UsersByRoleItem {
   role:       UserRole;

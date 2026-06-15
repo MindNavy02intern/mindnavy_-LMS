@@ -15,9 +15,9 @@ const {
   revokeAdminTrustedDevice,
   forgotAdminPassword,
   resetAdminPassword,
-
-
 } = require("../services/admin.service");
+
+const { invalidateCachedSession } = require("../middlewares/auth.middleware");
 
 async function adminLoginController(req, res) {
   const validation = validateAdminLoginInput(req.body);
@@ -60,6 +60,10 @@ async function adminLogoutController(req, res) {
     : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
 
   const userAgent = req.headers["user-agent"] || null;
+
+  // Evict the token from the auth cache so it stops working immediately
+  const token = req.headers.authorization?.split(" ")[1];
+  if (token) invalidateCachedSession(token);
 
   const result = await logoutAdmin({
     adminId: req.admin.id,
