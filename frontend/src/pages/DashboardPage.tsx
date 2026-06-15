@@ -868,11 +868,17 @@ export default function DashboardPage() {
   useEffect(() => { fetchAdminWidgets(); }, [fetchAdminWidgets]);
   useEffect(() => {
     const handler = () => { fetchData(true); fetchAnalytics(); };
-    window.addEventListener('userDataChanged',  handler);
-    window.addEventListener('analyticsUpdated', handler);
+    window.addEventListener('userDataChanged',    handler);
+    window.addEventListener('analyticsUpdated',   handler);
+    window.addEventListener('rolesUpdated',       handler);
+    window.addEventListener('permissionsUpdated', handler);
+    window.addEventListener('organizationUpdated', handler);
     return () => {
-      window.removeEventListener('userDataChanged',  handler);
-      window.removeEventListener('analyticsUpdated', handler);
+      window.removeEventListener('userDataChanged',    handler);
+      window.removeEventListener('analyticsUpdated',   handler);
+      window.removeEventListener('rolesUpdated',       handler);
+      window.removeEventListener('permissionsUpdated', handler);
+      window.removeEventListener('organizationUpdated', handler);
     };
   }, [fetchData, fetchAnalytics]);
 

@@ -420,6 +420,15 @@ async function updateUser(id, body, admin = {}) {
     changedFields.push("skills");
   }
 
+  if (body.role !== undefined && body.role !== null) {
+    const normalizedRole = body.role.trim().toUpperCase().replace(/[\s-]+/g, "_");
+    if (!VALID_ROLES.has(normalizedRole)) {
+      throw makeError(`Invalid role. Valid values: ${[...VALID_ROLES].join(", ")}.`, 400);
+    }
+    updateData.role = normalizedRole;
+    changedFields.push("role");
+  }
+
   let user;
   try {
     user = await prisma.appUser.update({
@@ -537,10 +546,63 @@ async function reactivateUser(id, admin = {}) {
   };
 }
 
+async function approveVerification(id, admin = {}) {
+  const existing = await assertUserExists(id);
+
+  const user = await prisma.appUser.update({
+    where: { id },
+    data: { verificationState: "VERIFIED", status: "ACTIVE" },
+    select: USER_SELECT,
+  });
+
+  await createUserAuditLog(admin.id, "USER_VERIFICATION_APPROVED", {
+    userId: id,
+    oldVerificationState: existing.verificationState,
+    newVerificationState: "VERIFIED",
+    oldStatus: existing.status,
+    newStatus: "ACTIVE",
+  });
+
+  return {
+    success: true,
+    message: "User verification approved successfully.",
+    user: { ...mapUser(user), updatedAt: user.updatedAt.toISOString() },
+  };
+}
+
+// Maps a Role display name (from the roles table) to an AppUserRole enum value.
+const ROLE_NAME_TO_ENUM_ALIAS = { ADMINISTRATOR: "ADMIN_ASSISTANT", ADMIN: "ADMIN_ASSISTANT" };
+
+function roleNameToAppEnum(name) {
+  const upper = String(name).trim().toUpperCase().replace(/[\s-]+/g, "_");
+  if (VALID_ROLES.has(upper)) return upper;
+  return ROLE_NAME_TO_ENUM_ALIAS[upper] ?? null;
+}
+
 async function assignUserRole(id, body, admin = {}) {
   const existing = await assertUserExists(id);
-  const newRole = body.roleId.trim().toUpperCase();
   const reason = body.reason ? body.reason.trim() : null;
+
+  let newRole;
+
+  if (UUID_REGEX.test(body.roleId)) {
+    // roleId is a real UUID from the roles table — look up and convert to enum
+    const roleRecord = await prisma.role.findUnique({ where: { id: body.roleId } });
+    if (!roleRecord) throw makeError("Role not found.", 404);
+    newRole = roleNameToAppEnum(roleRecord.name);
+    if (!newRole) {
+      throw makeError(
+        `Role "${roleRecord.name}" has no matching system role. Valid roles: ${[...VALID_ROLES].join(", ")}.`,
+        400
+      );
+    }
+  } else {
+    // Legacy path: caller sent an enum string like "LEARNER" directly
+    newRole = body.roleId.trim().toUpperCase();
+    if (!VALID_ROLES.has(newRole)) {
+      throw makeError(`Invalid role value: ${body.roleId}`, 400);
+    }
+  }
 
   const user = await prisma.appUser.update({
     where: { id },
@@ -917,6 +979,7 @@ module.exports = {
   updateUserStatus,
   suspendUser,
   reactivateUser,
+  approveVerification,
   resetUserPassword,
   assignUserRole,
   deleteUser,

@@ -20,8 +20,10 @@ import PendingVerificationTab from '../components/users/PendingVerificationTab';
 import ArchivedTab from '../components/users/ArchivedTab';
 import InvitationsTab from '../components/users/InvitationsTab';
 import OrganizationTab from '../components/organization/OrganizationTab';
+import RolesPermissionsTab from '../components/rolesPermissions/RolesPermissionsTab';
 import type { User } from '../types/users';
-import { DEPARTMENT_OPTIONS, ROLE_OPTIONS } from '../constants/userOptions';
+import useRoles from '../hooks/useRoles';
+import useOrgOptions from '../hooks/useOrgOptions';
 
 // ── Tab config ─────────────────────────────────────────────────────────────────
 
@@ -86,6 +88,9 @@ function focusOut(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) {
 // ── Main component ─────────────────────────────────────────────────────────────
 
 export default function UserManagementPage() {
+  const { options: roleOptions } = useRoles();
+  const { depts, branches } = useOrgOptions();
+
   const [data,    setData]    = useState<UsersResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);
@@ -95,6 +100,7 @@ export default function UserManagementPage() {
   const [search,           setSearch]            = useState('');
   const [role,             setRole]              = useState('');
   const [department,       setDepartment]        = useState('');
+  const [branch,           setBranch]            = useState('');
   const [status,           setStatus]            = useState('');
   const [dateFrom,         setDateFrom]          = useState('');
   const [dateTo,           setDateTo]            = useState('');
@@ -157,7 +163,7 @@ export default function UserManagementPage() {
   }
 
   const hasDateFilter = Boolean(dateFrom || dateTo);
-  const activeFilterCount = [role, department, status, hasDateFilter ? '1' : ''].filter(Boolean).length;
+  const activeFilterCount = [role, department, branch, status, hasDateFilter ? '1' : ''].filter(Boolean).length;
 
   const notifyDashboard = () => {
     window.dispatchEvent(new CustomEvent('userDataChanged'));
@@ -174,6 +180,7 @@ export default function UserManagementPage() {
         search:        debouncedSearch || undefined,
         role:          role            || undefined,
         department:    department      || undefined,
+        branch:        branch          || undefined,
         status:        status          || undefined,
         createdAfter:  dateFrom        || undefined,
         createdBefore: dateTo          || undefined,
@@ -184,7 +191,7 @@ export default function UserManagementPage() {
     } finally {
       setLoading(false);
     }
-  }, [activeTab, page, limit, debouncedSearch, role, department, status, dateFrom, dateTo]);
+  }, [activeTab, page, limit, debouncedSearch, role, department, branch, status, dateFrom, dateTo]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -255,10 +262,11 @@ export default function UserManagementPage() {
         {activeTab === 'pending-verification' && <PendingVerificationTab />}
         {activeTab === 'archived'             && <ArchivedTab />}
         {activeTab === 'organization'         && <OrganizationTab showToast={showToast} />}
+        {activeTab === 'roles-permissions'    && <RolesPermissionsTab />}
         {activeTab !== 'users' && activeTab !== 'analytics' &&
           activeTab !== 'invitations' && activeTab !== 'suspended' &&
           activeTab !== 'pending-verification' && activeTab !== 'archived' &&
-          activeTab !== 'organization' && (
+          activeTab !== 'organization' && activeTab !== 'roles-permissions' && (
           <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? ''} />
         )}
 
@@ -290,15 +298,19 @@ export default function UserManagementPage() {
               {/* Role */}
               <select value={role} onChange={e => { setRole(e.target.value); setPage(1); }} style={{ ...INPUT_BASE, padding: '5px 8px', width: 130, cursor: 'pointer' }} onFocus={focusIn} onBlur={focusOut}>
                 <option value="">All Roles</option>
-                {ROLE_OPTIONS.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
+                {roleOptions.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
 
               {/* Department */}
               <select value={department} onChange={e => { setDepartment(e.target.value); setPage(1); }} style={{ ...INPUT_BASE, padding: '5px 8px', width: 150, cursor: 'pointer' }} onFocus={focusIn} onBlur={focusOut}>
                 <option value="">All Departments</option>
-                {DEPARTMENT_OPTIONS.filter(o => o.value !== '').map(o => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
+                {depts.map(d => <option key={d.id} value={d.name}>{d.name}</option>)}
+              </select>
+
+              {/* Branch */}
+              <select value={branch} onChange={e => { setBranch(e.target.value); setPage(1); }} style={{ ...INPUT_BASE, padding: '5px 8px', width: 130, cursor: 'pointer' }} onFocus={focusIn} onBlur={focusOut}>
+                <option value="">All Branches</option>
+                {branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
               </select>
 
               {/* Status */}
@@ -353,9 +365,9 @@ export default function UserManagementPage() {
                         />
                       </div>
                     </div>
-                    {(dateFrom || dateTo || role || department || status) && (
+                    {(dateFrom || dateTo || role || department || branch || status) && (
                       <button
-                        onClick={() => { setRole(''); setDepartment(''); setStatus(''); setDateFrom(''); setDateTo(''); setPage(1); setFiltersOpen(false); }}
+                        onClick={() => { setRole(''); setDepartment(''); setBranch(''); setStatus(''); setDateFrom(''); setDateTo(''); setPage(1); setFiltersOpen(false); }}
                         style={{ marginTop: 12, width: '100%', padding: '6px', fontSize: 12, fontWeight: 600, background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 6, cursor: 'pointer', color: '#b91c1c', fontFamily: 'inherit' }}
                       >
                         Clear All Filters
@@ -507,7 +519,7 @@ export default function UserManagementPage() {
       {editUser && (
         <EditUserModal
           userId={editUser.id}
-          initialData={{ fullName: editUser.fullName, phone: editUser.phone ?? null, department: editUser.department, branch: editUser.branch, groupId: null, accessLevel: null, managerId: null, skills: null }}
+          initialData={{ fullName: editUser.fullName, phone: editUser.phone ?? null, department: editUser.department, branch: editUser.branch, groupId: null, accessLevel: null, managerId: null, skills: null, role: editUser.role ?? null }}
           onClose={() => setEditUser(null)}
           onSuccess={() => { setEditUser(null); load(); notifyDashboard(); }}
           showToast={showToast}

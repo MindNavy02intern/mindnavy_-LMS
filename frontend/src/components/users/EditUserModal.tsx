@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { updateUser, ApiError } from '../../api/users';
 import type { UpdateUserRequest } from '../../types/users';
 import type { ToastType } from './Toast';
-import { DEPARTMENT_OPTIONS, BRANCH_OPTIONS, ACCESS_LEVEL_OPTIONS } from '../../constants/userOptions';
+import { ACCESS_LEVEL_OPTIONS } from '../../constants/userOptions';
+import useRoles from '../../hooks/useRoles';
+import useOrgOptions from '../../hooks/useOrgOptions';
 
 export interface EditInitialData {
   fullName:    string;
@@ -13,6 +15,7 @@ export interface EditInitialData {
   accessLevel: string | null;
   managerId:   string | null;
   skills:      string[] | null;
+  role?:       string | null;
 }
 
 interface Props {
@@ -49,6 +52,9 @@ function Field({ label, required, error, children }: {
 }
 
 export default function EditUserModal({ userId, initialData, onClose, onSuccess, showToast }: Props) {
+  const { options: roleOptions, loading: rolesLoading } = useRoles();
+  const { depts, branches, loading: orgLoading } = useOrgOptions();
+
   const [form, setForm] = useState({
     fullName:    initialData.fullName,
     phone:       initialData.phone       ?? '',
@@ -57,6 +63,8 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
     groupId:     initialData.groupId     ?? '',
     accessLevel: initialData.accessLevel ?? '',
     managerId:   initialData.managerId   ?? '',
+    // API returns role as lowercase ("learner"), normalise to UPPER for dropdown match
+    role:        (initialData.role ?? '').toUpperCase(),
     skillInput:  '',
     skills:      (initialData.skills ?? []) as string[],
   });
@@ -65,7 +73,7 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
   const [formError,  setFormError]  = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  type FormKey = 'fullName' | 'phone' | 'department' | 'branch' | 'groupId' | 'accessLevel' | 'managerId' | 'skillInput';
+  type FormKey = 'fullName' | 'phone' | 'department' | 'branch' | 'groupId' | 'accessLevel' | 'managerId' | 'role' | 'skillInput';
   const set = (k: FormKey) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
       setForm(prev => ({ ...prev, [k]: e.target.value }));
@@ -102,12 +110,13 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
       accessLevel: form.accessLevel    || null,
       managerId:   form.managerId.trim() || null,
       skills:      form.skills.length > 0 ? form.skills : null,
+      ...(form.role ? { role: form.role } : {}),
     };
 
     try {
       const res = await updateUser(userId, body);
       showToast('success', res.message || 'User updated successfully');
-      onSuccess({ ...body });
+      onSuccess({ ...body, role: form.role || null });
     } catch (err) {
       if (err instanceof ApiError) {
         if (err.status === 400) setFormError(err.message);
@@ -165,22 +174,34 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
             <Field label="Phone Number" error={phoneError}>
               <input style={phoneError ? ERR_INPUT : INPUT} value={form.phone} onChange={set('phone')} placeholder="+1 555 000 0000" />
             </Field>
-            <Field label="Access Level">
-              <select style={selectStyle()} value={form.accessLevel} onChange={set('accessLevel')}>
-                {ACCESS_LEVEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+            <Field label="Role">
+              <select style={selectStyle()} value={form.role} onChange={set('role')} disabled={rolesLoading}>
+                <option value="">{rolesLoading ? 'Loading roles…' : 'No change'}</option>
+                {roleOptions.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
             </Field>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <Field label="Access Level">
+              <select style={selectStyle()} value={form.accessLevel} onChange={set('accessLevel')}>
+                {ACCESS_LEVEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </Field>
+            <div />{/* spacer */}
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <Field label="Department">
-              <select style={selectStyle()} value={form.department} onChange={set('department')}>
-                {DEPARTMENT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              <select style={selectStyle()} value={form.department} onChange={set('department')} disabled={orgLoading}>
+                <option value="">{orgLoading ? 'Loading…' : '— None —'}</option>
+                {depts.map(d => <option key={d.id} value={d.name}>{d.name}</option>)}
               </select>
             </Field>
             <Field label="Branch">
-              <select style={selectStyle()} value={form.branch} onChange={set('branch')}>
-                {BRANCH_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              <select style={selectStyle()} value={form.branch} onChange={set('branch')} disabled={orgLoading}>
+                <option value="">{orgLoading ? 'Loading…' : '— None —'}</option>
+                {branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
               </select>
             </Field>
           </div>

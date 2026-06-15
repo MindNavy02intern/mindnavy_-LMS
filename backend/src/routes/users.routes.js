@@ -18,6 +18,7 @@ const {
   updateUserStatus,
   suspendUser,
   reactivateUser,
+  approveVerification,
   resetUserPassword,
   assignUserRole,
   deleteUser,
@@ -82,6 +83,13 @@ router.patch(
   requireAdminAuth,
   adminUserActionRateLimiter,
   reactivateUser
+);
+
+router.patch(
+  "/:id/approve-verification",
+  requireAdminAuth,
+  adminUserActionRateLimiter,
+  approveVerification
 );
 
 router.post(

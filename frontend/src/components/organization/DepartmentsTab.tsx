@@ -349,6 +349,9 @@ export default function DepartmentsTab({ showToast }: Props) {
     setCreateOpen(false);
     setEditDept(null);
     load();
+    window.dispatchEvent(new CustomEvent('organizationUpdated'));
+    window.dispatchEvent(new CustomEvent('userDataChanged'));
+    window.dispatchEvent(new CustomEvent('analyticsUpdated'));
   }
 
   const showingFrom = departments.length === 0 ? 0 : (page - 1) * LIMIT + 1;
@@ -447,7 +450,7 @@ export default function DepartmentsTab({ showToast }: Props) {
       {/* Modals */}
       {createOpen && <DepartmentModal branches={branches} onClose={() => setCreateOpen(false)} onSaved={onSaved} showToast={showToast} />}
       {editDept   && <DepartmentModal initial={editDept} branches={branches} onClose={() => setEditDept(null)} onSaved={onSaved} showToast={showToast} />}
-      {deleteDept && <DeleteConfirm dept={deleteDept} onClose={() => setDeleteDept(null)} onDeleted={() => { setDeleteDept(null); load(); }} showToast={showToast} />}
+      {deleteDept && <DeleteConfirm dept={deleteDept} onClose={() => setDeleteDept(null)} onDeleted={() => { setDeleteDept(null); load(); window.dispatchEvent(new CustomEvent('organizationUpdated')); window.dispatchEvent(new CustomEvent('userDataChanged')); window.dispatchEvent(new CustomEvent('analyticsUpdated')); }} showToast={showToast} />}
       {detailId   && <DetailDrawer deptId={detailId} onClose={() => setDetailId(null)} />}
     </div>
   );

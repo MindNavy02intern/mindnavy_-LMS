@@ -6,6 +6,8 @@ const adminRoutes = require("./src/routes/admin.routes");
 const dashboardRoutes = require("./src/routes/dashboard.routes");
 const usersRoutes = require("./src/routes/users.routes");
 const organizationRoutes = require("./src/routes/organization.routes");
+const rolesRoutes = require("./src/routes/roles.routes");
+const permissionsRoutes = require("./src/routes/permissions.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -36,6 +38,10 @@ app.use("/api/admin/users", usersRoutes);
 
 // Organization structure routes
 app.use("/api/admin/organization", organizationRoutes);
+
+// Roles & Permissions routes
+app.use("/api/admin/roles", rolesRoutes);
+app.use("/api/admin/permissions", permissionsRoutes);
 
 app.use((req, res) => {
   return res.status(404).json({

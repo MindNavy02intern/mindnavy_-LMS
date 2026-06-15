@@ -227,6 +227,24 @@ async function reactivateUser(req, res) {
   }
 }
 
+async function approveVerification(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  try {
+    const result = await usersService.approveVerification(req.params.id, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] approveVerification error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to approve verification." });
+  }
+}
+
 async function deleteUser(req, res) {
   const idError = validateUuidParam(req.params.id);
   if (idError) {
@@ -298,6 +316,7 @@ module.exports = {
   updateUserStatus,
   suspendUser,
   reactivateUser,
+  approveVerification,
   resetUserPassword,
   assignUserRole,
   deleteUser,
