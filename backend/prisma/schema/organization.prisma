@@ -37,6 +37,7 @@ model Department {
   branch  Branch    @relation(fields: [branchId], references: [id], onDelete: Cascade)
   manager AppUser?  @relation("DeptManager",  fields: [managerId], references: [id])
   teams   Team[]
+  groups  Group[]
   users   AppUser[] @relation("AppUserDepartment")
 
   @@unique([name, branchId])

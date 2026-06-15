@@ -68,6 +68,7 @@ export default function AssignRoleModal({ userId, onClose, onSuccess, showToast 
       showToast('success', res.message || 'Role assigned successfully');
       window.dispatchEvent(new CustomEvent('userDataChanged'));
       window.dispatchEvent(new CustomEvent('analyticsUpdated'));
+      window.dispatchEvent(new CustomEvent('rolesUpdated'));
       onSuccess();
     } catch (err) {
       if (err instanceof ApiError) {

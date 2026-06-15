@@ -12,6 +12,7 @@ const { uploadUsersCsv } = require("../middlewares/upload.middleware");
 
 const {
   getUsersList,
+  exportUsers,
   getUserDetails,
   createUser,
   updateUser,
@@ -32,6 +33,9 @@ const router = express.Router();
 
 
 router.get("/", requireAdminAuth, getUsersList);
+
+// Export route BEFORE /:id — "export" must not be treated as a user id
+router.get("/export", requireAdminAuth, exportUsers);
 
 router.get(
   "/analytics",

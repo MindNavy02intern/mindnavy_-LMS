@@ -64,8 +64,6 @@ export default function BulkActionsMenu({ selectedIds, users: _users, onClearSel
       } else {
         showToast('error', `${result.succeeded} ${label}, ${result.failed} failed`);
       }
-      window.dispatchEvent(new CustomEvent('userDataChanged'));
-      window.dispatchEvent(new CustomEvent('analyticsUpdated'));
       onClearSelection();
       onSuccess();
     } catch (err) {

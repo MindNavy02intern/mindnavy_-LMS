@@ -74,6 +74,7 @@ const RolesTab: React.FC = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteName, setDeleteName] = useState('');
   const [deleteUserCount, setDeleteUserCount] = useState<number | null>(null);
+  const [deleteCheckError, setDeleteCheckError] = useState<string | null>(null);
   const [deleteCheckBusy, setDeleteCheckBusy] = useState(false);
   const [deleteBusy, setDeleteBusy] = useState(false);
 
@@ -134,12 +135,13 @@ const RolesTab: React.FC = () => {
     setDeleteId(id);
     setDeleteName(name);
     setDeleteUserCount(null);
+    setDeleteCheckError(null);
     setDeleteCheckBusy(true);
     try {
       const res = await rolesPermissionsAPI.getRoleById(id);
       setDeleteUserCount(res.data?.userCount ?? 0);
     } catch {
-      setDeleteUserCount(0);
+      setDeleteCheckError('Could not verify user count. Delete is disabled until the check succeeds.');
     } finally {
       setDeleteCheckBusy(false);
     }
@@ -149,6 +151,7 @@ const RolesTab: React.FC = () => {
     setDeleteId(null);
     setDeleteName('');
     setDeleteUserCount(null);
+    setDeleteCheckError(null);
     setDeleteCheckBusy(false);
   }
 
@@ -388,12 +391,23 @@ const RolesTab: React.FC = () => {
       {deleteId && (
         <div style={MODAL_OVERLAY}>
           <div style={MODAL_BOX('420px')}>
-            {deleteCheckBusy || deleteUserCount === null ? (
+            {(deleteCheckBusy || (deleteUserCount === null && !deleteCheckError)) ? (
               <div style={{ textAlign: 'center', padding: '24px 0' }}>
                 <div style={{ fontSize: '32px', marginBottom: '12px' }}>⏳</div>
                 <div style={{ fontSize: '14px', color: '#6b7280' }}>Checking role…</div>
               </div>
-            ) : deleteUserCount > 0 ? (
+            ) : deleteCheckError ? (
+              <>
+                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                  <div style={{ fontSize: '40px', marginBottom: '12px' }}>⚠️</div>
+                  <h2 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: 700, color: '#111827' }}>Check Failed</h2>
+                  <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px', lineHeight: 1.6 }}>{deleteCheckError}</p>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <button onClick={closeDeleteDialog} style={{ ...BTN_PRIMARY, justifyContent: 'center' }}>Close</button>
+                </div>
+              </>
+            ) : deleteUserCount! > 0 ? (
               <>
                 <div style={{ textAlign: 'center', marginBottom: '20px' }}>
                   <div style={{ fontSize: '40px', marginBottom: '12px' }}>🚫</div>

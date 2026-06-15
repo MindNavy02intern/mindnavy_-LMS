@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { getUsers } from '../../api/users';
-import type { UsersParams } from '../../api/users';
+import { exportAllUsers } from '../../api/users';
+import type { ExportParams } from '../../api/users';
 import type { User } from '../../types/users';
 
 interface Props {
   onClose:       () => void;
   totalUsers?:   number;
-  filterParams?: UsersParams;
+  filterParams?: ExportParams;
 }
 
 const FORMATS = [
@@ -79,14 +79,14 @@ export default function ExportUsersModal({ onClose, totalUsers, filterParams = {
     setExporting(true);
     setError(null);
     try {
-      const result = await getUsers({ ...filterParams, limit: 1000, page: 1 });
+      const result = await exportAllUsers(filterParams);
       const users  = result.users;
       const fields = FIELDS.filter(f => selectedFields.has(f.key)).map(f => f.key);
 
-      const csv     = buildCSV(users, fields);
-      const date    = new Date().toISOString().slice(0, 10);
-      const ext     = format === 'excel' ? 'xlsx' : 'csv';
-      const mime    = format === 'excel'
+      const csv  = buildCSV(users, fields);
+      const date = new Date().toISOString().slice(0, 10);
+      const ext  = format === 'excel' ? 'xlsx' : 'csv';
+      const mime = format === 'excel'
         ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         : 'text/csv;charset=utf-8;';
 
@@ -112,7 +112,7 @@ export default function ExportUsersModal({ onClose, totalUsers, filterParams = {
             <div style={{ fontWeight: 700, fontSize: 16, color: '#111827' }}>Export Users</div>
             <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 2 }}>
               {totalUsers !== undefined
-                ? `Up to ${Math.min(totalUsers, 1000).toLocaleString()} user${totalUsers !== 1 ? 's' : ''} will be exported`
+                ? `${totalUsers.toLocaleString()} user${totalUsers !== 1 ? 's' : ''} will be exported`
                 : 'Configure export settings'}
             </div>
           </div>

@@ -52,8 +52,8 @@ function Field({ label, required, error, children }: {
 }
 
 export default function EditUserModal({ userId, initialData, onClose, onSuccess, showToast }: Props) {
-  const { options: roleOptions, loading: rolesLoading } = useRoles();
-  const { depts, branches, loading: orgLoading } = useOrgOptions();
+  const { options: roleOptions, loading: rolesLoading, hasError: rolesError } = useRoles();
+  const { depts, branches, loading: orgLoading, deptsError, branchesError } = useOrgOptions();
 
   const [form, setForm] = useState({
     fullName:    initialData.fullName,
@@ -175,8 +175,8 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
               <input style={phoneError ? ERR_INPUT : INPUT} value={form.phone} onChange={set('phone')} placeholder="+1 555 000 0000" />
             </Field>
             <Field label="Role">
-              <select style={selectStyle()} value={form.role} onChange={set('role')} disabled={rolesLoading}>
-                <option value="">{rolesLoading ? 'Loading roles…' : 'No change'}</option>
+              <select style={selectStyle()} value={form.role} onChange={set('role')} disabled={rolesLoading || rolesError}>
+                <option value="">{rolesLoading ? 'Loading roles…' : rolesError ? 'Failed to load roles. Please refresh.' : 'No change'}</option>
                 {roleOptions.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
             </Field>
@@ -193,14 +193,14 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <Field label="Department">
-              <select style={selectStyle()} value={form.department} onChange={set('department')} disabled={orgLoading}>
-                <option value="">{orgLoading ? 'Loading…' : '— None —'}</option>
+              <select style={selectStyle()} value={form.department} onChange={set('department')} disabled={orgLoading || deptsError}>
+                <option value="">{orgLoading ? 'Loading…' : deptsError ? 'Failed to load departments. Please refresh.' : '— None —'}</option>
                 {depts.map(d => <option key={d.id} value={d.name}>{d.name}</option>)}
               </select>
             </Field>
             <Field label="Branch">
-              <select style={selectStyle()} value={form.branch} onChange={set('branch')} disabled={orgLoading}>
-                <option value="">{orgLoading ? 'Loading…' : '— None —'}</option>
+              <select style={selectStyle()} value={form.branch} onChange={set('branch')} disabled={orgLoading || branchesError}>
+                <option value="">{orgLoading ? 'Loading…' : branchesError ? 'Failed to load branches. Please refresh.' : '— None —'}</option>
                 {branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
               </select>
             </Field>

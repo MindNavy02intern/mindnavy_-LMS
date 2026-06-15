@@ -251,6 +251,76 @@ async function getUsersList(query = {}, admin = {}) {
   };
 }
 
+// ─── Export: all matching users, no pagination cap ────────────────────────────
+
+async function exportUsers(query = {}, admin = {}) {
+  const search = typeof query.search === "string" ? query.search.trim() : "";
+
+  const rawRole = typeof query.role === "string"
+    ? query.role.trim().toUpperCase().replace(/[\s-]+/g, "_")
+    : "";
+  const rawStatus = typeof query.status === "string"
+    ? query.status.trim().toUpperCase()
+    : "";
+  const rawVerificationState = typeof query.verificationState === "string"
+    ? query.verificationState.trim().toUpperCase()
+    : "";
+  const rawDepartment = typeof query.department === "string"
+    ? query.department.trim()
+    : "";
+
+  const VALID_VERIFICATION_STATES = new Set(["VERIFIED", "PENDING", "REJECTED", "EXPIRED"]);
+
+  const roleFilter              = VALID_ROLES.has(rawRole)    ? rawRole    : null;
+  const statusFilter            = VALID_STATUSES.has(rawStatus) ? rawStatus : null;
+  const verificationStateFilter = VALID_VERIFICATION_STATES.has(rawVerificationState) ? rawVerificationState : null;
+  const departmentFilter        = rawDepartment || null;
+
+  const rawCreatedAfter  = typeof query.createdAfter  === "string" ? query.createdAfter.trim()  : "";
+  const rawCreatedBefore = typeof query.createdBefore === "string" ? query.createdBefore.trim() : "";
+  const createdAfterDate  = rawCreatedAfter  ? new Date(rawCreatedAfter)  : null;
+  const createdBeforeDate = rawCreatedBefore ? new Date(rawCreatedBefore) : null;
+
+  const where = {};
+
+  if (search) {
+    const searchConditions = [
+      { fullName: { contains: search, mode: "insensitive" } },
+      { email:    { contains: search, mode: "insensitive" } },
+    ];
+    if (!roleFilter) {
+      const normalizedForRole = search.toUpperCase().replace(/[\s-]+/g, "_");
+      if (VALID_ROLES.has(normalizedForRole)) searchConditions.push({ role: normalizedForRole });
+    }
+    where.OR = searchConditions;
+  }
+
+  if (roleFilter)              where.role              = roleFilter;
+  if (statusFilter)            where.status            = statusFilter;
+  if (verificationStateFilter) where.verificationState = verificationStateFilter;
+  if (departmentFilter)        where.department        = { equals: departmentFilter, mode: "insensitive" };
+  if (createdAfterDate  && !isNaN(createdAfterDate.getTime()))  where.createdAt = { ...where.createdAt, gte: createdAfterDate };
+  if (createdBeforeDate && !isNaN(createdBeforeDate.getTime())) where.createdAt = { ...where.createdAt, lte: createdBeforeDate };
+
+  const rawUsers = await prisma.appUser.findMany({
+    where,
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true, fullName: true, email: true, avatar: true,
+      role: true, status: true, verificationState: true,
+      phone: true, department: true, branch: true,
+      lastActivityAt: true, riskScore: true, createdAt: true,
+    },
+  });
+
+  await createUserAuditLog(admin.id, "USERS_EXPORTED", {
+    filters: { search: search || null, role: roleFilter, status: statusFilter },
+    count: rawUsers.length,
+  });
+
+  return { users: rawUsers.map(mapUser), total: rawUsers.length };
+}
+
 // ─── Task 6B: User Details ────────────────────────────────────────────────────
 
 async function getUserDetails(id, admin = {}) {
@@ -973,6 +1043,7 @@ async function bulkActionUsers(body, admin) {
 
 module.exports = {
   getUsersList,
+  exportUsers,
   getUserDetails,
   createUser,
   updateUser,

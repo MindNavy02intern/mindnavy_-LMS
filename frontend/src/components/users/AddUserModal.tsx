@@ -43,16 +43,16 @@ function Field({ label, required, error, children }: {
 
 type FormKey = 'fullName' | 'email' | 'password' | 'confirmPassword' | 'phone' | 'role'
              | 'department' | 'branch' | 'groupId' | 'accessLevel' | 'managerId'
-             | 'skillInput' | 'customAttributes';
+             | 'skillInput';
 
 export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
-  const { options: roleOptions, loading: rolesLoading } = useRoles();
-  const { depts, branches, loading: orgLoading } = useOrgOptions();
+  const { options: roleOptions, loading: rolesLoading, hasError: rolesError } = useRoles();
+  const { depts, branches, loading: orgLoading, deptsError, branchesError } = useOrgOptions();
 
   const [form, setForm] = useState({
     fullName: '', email: '', password: '', confirmPassword: '', phone: '', role: '',
     department: '', branch: '', groupId: '', accessLevel: '', managerId: '',
-    skillInput: '', customAttributes: '', skills: [] as string[],
+    skillInput: '', skills: [] as string[],
   });
   const [errors,     setErrors]     = useState<Partial<Record<FormKey, string>>>({});
   const [formError,  setFormError]  = useState<string | null>(null);
@@ -101,9 +101,6 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
       accessLevel:      form.accessLevel       || null,
       managerId:        form.managerId.trim()  || null,
       skills:           form.skills.length > 0 ? form.skills : null,
-      customAttributes: form.customAttributes.trim()
-        ? { notes: form.customAttributes.trim() }
-        : null,
     };
 
     try {
@@ -189,8 +186,8 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
               <input style={errors.phone ? ERR_INPUT : INPUT} value={form.phone} onChange={set('phone')} placeholder="+1 555 000 0000" />
             </Field>
             <Field label="Role" required error={errors.role}>
-              <select style={selectStyle(!!errors.role)} value={form.role} onChange={set('role')} disabled={rolesLoading}>
-                <option value="">{rolesLoading ? 'Loading roles…' : 'Select role…'}</option>
+              <select style={selectStyle(!!errors.role)} value={form.role} onChange={set('role')} disabled={rolesLoading || rolesError}>
+                <option value="">{rolesLoading ? 'Loading roles…' : rolesError ? 'Failed to load roles. Please refresh.' : 'Select role…'}</option>
                 {roleOptions.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
             </Field>
@@ -199,14 +196,14 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
           {/* Row 3 */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <Field label="Department">
-              <select style={selectStyle()} value={form.department} onChange={set('department')} disabled={orgLoading}>
-                <option value="">{orgLoading ? 'Loading…' : 'Select department…'}</option>
+              <select style={selectStyle()} value={form.department} onChange={set('department')} disabled={orgLoading || deptsError}>
+                <option value="">{orgLoading ? 'Loading…' : deptsError ? 'Failed to load departments. Please refresh.' : 'Select department…'}</option>
                 {depts.map(d => <option key={d.id} value={d.name}>{d.name}</option>)}
               </select>
             </Field>
             <Field label="Branch">
-              <select style={selectStyle()} value={form.branch} onChange={set('branch')} disabled={orgLoading}>
-                <option value="">{orgLoading ? 'Loading…' : 'Select branch…'}</option>
+              <select style={selectStyle()} value={form.branch} onChange={set('branch')} disabled={orgLoading || branchesError}>
+                <option value="">{orgLoading ? 'Loading…' : branchesError ? 'Failed to load branches. Please refresh.' : 'Select branch…'}</option>
                 {branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
               </select>
             </Field>
@@ -259,15 +256,6 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
             />
           </Field>
 
-          {/* Custom Attributes */}
-          <Field label="Custom Attributes">
-            <textarea
-              style={{ ...INPUT, height: 72, resize: 'vertical' }}
-              value={form.customAttributes}
-              onChange={set('customAttributes')}
-              placeholder="Optional notes or attributes…"
-            />
-          </Field>
         </div>
 
         {/* Footer */}

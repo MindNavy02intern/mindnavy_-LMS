@@ -694,7 +694,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
       {editOpen && u && (
         <EditUserModal
           userId={u.id}
-          initialData={{ fullName: u.fullName, phone: u.phone, department: u.department, branch: u.branch, groupId: null, accessLevel: null, managerId: null, skills: null }}
+          initialData={{ fullName: u.fullName, phone: u.phone, role: u.role ?? null, department: u.department, branch: u.branch, groupId: null, accessLevel: null, managerId: null, skills: null }}
           onClose={() => setEditOpen(false)}
           onSuccess={(updated: EditInitialData) => {
             // 1. Immediately apply what the user submitted so the drawer reflects it at once
@@ -723,7 +723,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                   branch:     d.user.branch     ?? updated.branch,
                 }
               }))
-              .catch(() => {});
+              .catch(() => { showToast('error', 'User was saved but the drawer could not refresh. Please close and reopen.'); });
           }}
           showToast={showToast}
         />

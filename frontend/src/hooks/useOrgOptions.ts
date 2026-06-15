@@ -3,28 +3,39 @@ import { getDepartments, getBranches } from '../api/organization';
 import type { Department, Branch } from '../types/organization';
 
 export default function useOrgOptions() {
-  const [depts,    setDepts]    = useState<Department[]>([]);
-  const [branches, setBranches] = useState<Branch[]>([]);
-  const [loading,  setLoading]  = useState(true);
+  const [depts,        setDepts]        = useState<Department[]>([]);
+  const [branches,     setBranches]     = useState<Branch[]>([]);
+  const [loading,      setLoading]      = useState(true);
+  const [deptsError,   setDeptsError]   = useState(false);
+  const [branchesError,setBranchesError]= useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
     async function fetchAll() {
       setLoading(true);
-      try {
-        const [deptsRes, branchesRes] = await Promise.all([
-          getDepartments({ status: 'ACTIVE', limit: 200 }),
-          getBranches({ limit: 200 }),
-        ]);
-        if (!cancelled) {
-          setDepts(deptsRes.data ?? []);
-          setBranches(branchesRes.data ?? []);
+      setDeptsError(false);
+      setBranchesError(false);
+
+      const [deptsResult, branchesResult] = await Promise.allSettled([
+        getDepartments({ status: 'ACTIVE', limit: 200 }),
+        getBranches({ limit: 200 }),
+      ]);
+
+      if (!cancelled) {
+        if (deptsResult.status === 'fulfilled') {
+          setDepts(deptsResult.value.data ?? []);
+        } else {
+          setDeptsError(true);
         }
-      } catch {
-        // silently fall back — dropdowns remain empty
-      } finally {
-        if (!cancelled) setLoading(false);
+
+        if (branchesResult.status === 'fulfilled') {
+          setBranches(branchesResult.value.data ?? []);
+        } else {
+          setBranchesError(true);
+        }
+
+        setLoading(false);
       }
     }
 
@@ -36,5 +47,5 @@ export default function useOrgOptions() {
     };
   }, []);
 
-  return { depts, branches, loading };
+  return { depts, branches, loading, deptsError, branchesError };
 }

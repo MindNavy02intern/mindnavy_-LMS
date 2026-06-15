@@ -4,6 +4,7 @@ import type { ImportResult } from '../../types/users';
 
 interface Props {
   onClose:    () => void;
+  onSuccess?: () => void;
   showToast:  (type: 'success' | 'error', message: string) => void;
 }
 
@@ -46,7 +47,7 @@ function formatBytes(n: number): string {
 const REQUIRED_HEADERS = ['fullName', 'email', 'password', 'role'];
 const VALID_IMPORT_ROLES = new Set(['LEARNER', 'INSTRUCTOR', 'MANAGER', 'ADMIN_ASSISTANT']);
 
-export default function ImportUsersModal({ onClose, showToast }: Props) {
+export default function ImportUsersModal({ onClose, onSuccess, showToast }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [file,      setFile]      = useState<File | null>(null);
@@ -96,8 +97,11 @@ export default function ImportUsersModal({ onClose, showToast }: Props) {
     try {
       const res = await importUsers(file);
       setResult(res);
-      window.dispatchEvent(new CustomEvent('userDataChanged'));
-      window.dispatchEvent(new CustomEvent('analyticsUpdated'));
+      if (res.summary.created > 0) {
+        window.dispatchEvent(new CustomEvent('userDataChanged'));
+        window.dispatchEvent(new CustomEvent('analyticsUpdated'));
+        onSuccess?.();
+      }
       showToast('success', `Imported ${res.summary.created} users successfully`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Import failed.');

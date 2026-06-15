@@ -21,14 +21,16 @@ export function roleNameToEnum(name: string): string {
 }
 
 export default function useRoles() {
-  const [options, setOptions] = useState<RoleOption[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [options,  setOptions]  = useState<RoleOption[]>([]);
+  const [loading,  setLoading]  = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
     function fetchRoles() {
       setLoading(true);
+      setHasError(false);
       rolesPermissionsAPI
         .getRoles({ status: 'ACTIVE', limit: 200 })
         .then((res) => {
@@ -41,7 +43,9 @@ export default function useRoles() {
             );
           }
         })
-        .catch(() => {})
+        .catch(() => {
+          if (!cancelled) setHasError(true);
+        })
         .finally(() => {
           if (!cancelled) setLoading(false);
         });
@@ -56,5 +60,5 @@ export default function useRoles() {
     };
   }, []);
 
-  return { options, loading };
+  return { options, loading, hasError };
 }

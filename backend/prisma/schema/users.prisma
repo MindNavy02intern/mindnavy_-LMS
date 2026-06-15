@@ -33,6 +33,8 @@ model AppUser {
   managedBranches    Branch[]     @relation("BranchManager")
   managedDepartments Department[] @relation("DeptManager")
   managedTeams       Team[]       @relation("TeamLeader")
+  groups             GroupMember[] @relation("GroupMembers")
+  leadingGroups      Group[]      @relation("GroupLeader")
 
   @@index([branchId])
   @@index([departmentId])

@@ -21,6 +21,7 @@ import ArchivedTab from '../components/users/ArchivedTab';
 import InvitationsTab from '../components/users/InvitationsTab';
 import OrganizationTab from '../components/organization/OrganizationTab';
 import RolesPermissionsTab from '../components/rolesPermissions/RolesPermissionsTab';
+import GroupsTab from '../components/groups/GroupsTab';
 import type { User } from '../types/users';
 import useRoles from '../hooks/useRoles';
 import useOrgOptions from '../hooks/useOrgOptions';
@@ -195,6 +196,14 @@ export default function UserManagementPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  // Reload the user list when any mutation outside this component fires userDataChanged
+  // (e.g. ImportUsersModal dispatches it after a successful CSV import)
+  useEffect(() => {
+    const handler = () => { if (activeTab === 'users') load(); };
+    window.addEventListener('userDataChanged', handler);
+    return () => window.removeEventListener('userDataChanged', handler);
+  }, [activeTab, load]);
+
   const handleTabChange = (key: TabKey) => {
     setActiveTab(key);
     if (key === 'users') setPage(1);
@@ -263,10 +272,12 @@ export default function UserManagementPage() {
         {activeTab === 'archived'             && <ArchivedTab />}
         {activeTab === 'organization'         && <OrganizationTab showToast={showToast} />}
         {activeTab === 'roles-permissions'    && <RolesPermissionsTab />}
+        {activeTab === 'groups'               && <GroupsTab />}
         {activeTab !== 'users' && activeTab !== 'analytics' &&
           activeTab !== 'invitations' && activeTab !== 'suspended' &&
           activeTab !== 'pending-verification' && activeTab !== 'archived' &&
-          activeTab !== 'organization' && activeTab !== 'roles-permissions' && (
+          activeTab !== 'organization' && activeTab !== 'roles-permissions' &&
+          activeTab !== 'groups' && (
           <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? ''} />
         )}
 
@@ -301,13 +312,14 @@ export default function UserManagementPage() {
                 {roleOptions.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
 
-              {/* Department */}
+              {/* Department — value is d.name (string), not d.id, because the backend
+                  filters AppUser.department (a plain string field, not a FK). */}
               <select value={department} onChange={e => { setDepartment(e.target.value); setPage(1); }} style={{ ...INPUT_BASE, padding: '5px 8px', width: 150, cursor: 'pointer' }} onFocus={focusIn} onBlur={focusOut}>
                 <option value="">All Departments</option>
                 {depts.map(d => <option key={d.id} value={d.name}>{d.name}</option>)}
               </select>
 
-              {/* Branch */}
+              {/* Branch — same reason: AppUser.branch is a string field, filter by name */}
               <select value={branch} onChange={e => { setBranch(e.target.value); setPage(1); }} style={{ ...INPUT_BASE, padding: '5px 8px', width: 130, cursor: 'pointer' }} onFocus={focusIn} onBlur={focusOut}>
                 <option value="">All Branches</option>
                 {branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
@@ -534,7 +546,11 @@ export default function UserManagementPage() {
         />
       )}
       {importOpen && (
-        <ImportUsersModal onClose={() => setImportOpen(false)} showToast={showToast} />
+        <ImportUsersModal
+          onClose={() => setImportOpen(false)}
+          onSuccess={() => { load(); notifyDashboard(); }}
+          showToast={showToast}
+        />
       )}
       {exportOpen && (
         <ExportUsersModal

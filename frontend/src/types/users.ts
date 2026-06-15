@@ -122,7 +122,7 @@ export interface CreateUserRequest {
   accessLevel:      string | null;
   managerId:        string | null;
   skills:           string[] | null;
-  customAttributes: Record<string, unknown> | null;
+  customAttributes?: Record<string, unknown> | null;
 }
 
 export interface UpdateUserRequest {

@@ -1,5 +1,6 @@
+// "Delete" soft-archives the user — the backend sets status to ARCHIVED, data is retained.
 import { useState } from 'react';
-import { deleteUser, ApiError } from '../../api/users';
+import { deleteUser as archiveUser, ApiError } from '../../api/users';
 import type { ToastType } from './Toast';
 
 interface Props {
@@ -24,11 +25,11 @@ export default function DeleteUserDialog({ userId, email, fullName, onClose, onS
 
   const confirmed = typed === email;
 
-  const handleDelete = async () => {
+  const handleArchive = async () => {
     if (!confirmed) return;
     setSubmitting(true);
     try {
-      const res = await deleteUser(userId);
+      const res = await archiveUser(userId);
       showToast('success', res.message || `${fullName} has been archived`);
       onSuccess();
     } catch (err) {
@@ -82,7 +83,7 @@ export default function DeleteUserDialog({ userId, email, fullName, onClose, onS
             Cancel
           </button>
           <button
-            onClick={handleDelete}
+            onClick={handleArchive}
             disabled={!confirmed || submitting}
             style={{
               padding: '8px 16px', fontSize: 13, fontFamily: 'inherit', fontWeight: 600,

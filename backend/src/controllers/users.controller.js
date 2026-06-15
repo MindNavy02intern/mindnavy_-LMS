@@ -55,6 +55,16 @@ async function getUsersList(req, res) {
   }
 }
 
+async function exportUsers(req, res) {
+  try {
+    const result = await usersService.exportUsers(req.query, req.admin);
+    return res.status(200).json({ success: true, ...result });
+  } catch (error) {
+    console.error("[users] exportUsers error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Export failed." });
+  }
+}
+
 async function getUserDetails(req, res) {
   try {
     const result = await usersService.getUserDetails(req.params.id, req.admin);
@@ -321,6 +331,7 @@ module.exports = {
   assignUserRole,
   deleteUser,
   getUsersAnalytics,
+  exportUsers,
   importUsers,
   bulkActionUsers,
 };
