@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getUsers, reactivateUser, deleteUser } from '../../api/users';
+import { getUsers, approveVerification, deleteUser } from '../../api/users';
 import type { User } from '../../types/users';
 
 function formatDate(iso: string): string {
@@ -100,7 +100,7 @@ export default function PendingVerificationTab() {
     setActionError(null);
     setConfirmId(null);
     try {
-      await reactivateUser(userId);
+      await approveVerification(userId);
       notify();
       load();
     } catch (err) {

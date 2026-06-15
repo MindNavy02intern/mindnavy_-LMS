@@ -347,9 +347,9 @@ export default function BranchesTab({ showToast }: Props) {
         </div>
       )}
 
-      {createOpen    && <BranchModal onClose={() => setCreateOpen(false)} onSaved={() => { setCreateOpen(false); load(); }} showToast={showToast} />}
-      {editBranch    && <BranchModal initial={editBranch} onClose={() => setEditBranch(null)} onSaved={() => { setEditBranch(null); load(); }} showToast={showToast} />}
-      {deleteBranch_ && <DeleteConfirm branch={deleteBranch_} onClose={() => setDeleteBranch_(null)} onDeleted={() => { setDeleteBranch_(null); load(); }} showToast={showToast} />}
+      {createOpen    && <BranchModal onClose={() => setCreateOpen(false)} onSaved={() => { setCreateOpen(false); load(); window.dispatchEvent(new CustomEvent('organizationUpdated')); window.dispatchEvent(new CustomEvent('userDataChanged')); window.dispatchEvent(new CustomEvent('analyticsUpdated')); }} showToast={showToast} />}
+      {editBranch    && <BranchModal initial={editBranch} onClose={() => setEditBranch(null)} onSaved={() => { setEditBranch(null); load(); window.dispatchEvent(new CustomEvent('organizationUpdated')); window.dispatchEvent(new CustomEvent('userDataChanged')); window.dispatchEvent(new CustomEvent('analyticsUpdated')); }} showToast={showToast} />}
+      {deleteBranch_ && <DeleteConfirm branch={deleteBranch_} onClose={() => setDeleteBranch_(null)} onDeleted={() => { setDeleteBranch_(null); load(); window.dispatchEvent(new CustomEvent('organizationUpdated')); window.dispatchEvent(new CustomEvent('userDataChanged')); window.dispatchEvent(new CustomEvent('analyticsUpdated')); }} showToast={showToast} />}
       {detailId      && <DetailDrawer branchId={detailId} onClose={() => setDetailId(null)} />}
     </div>
   );

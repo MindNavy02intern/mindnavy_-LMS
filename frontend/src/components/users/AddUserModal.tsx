@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { createUser, ApiError } from '../../api/users';
 import type { CreateUserRequest } from '../../types/users';
 import type { ToastType } from './Toast';
-import { DEPARTMENT_OPTIONS, BRANCH_OPTIONS, ACCESS_LEVEL_OPTIONS, ROLE_OPTIONS } from '../../constants/userOptions';
+import { ACCESS_LEVEL_OPTIONS } from '../../constants/userOptions';
+import useRoles from '../../hooks/useRoles';
+import useOrgOptions from '../../hooks/useOrgOptions';
 
 interface Props {
   onClose:   () => void;
@@ -44,6 +46,9 @@ type FormKey = 'fullName' | 'email' | 'password' | 'confirmPassword' | 'phone' |
              | 'skillInput' | 'customAttributes';
 
 export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
+  const { options: roleOptions, loading: rolesLoading } = useRoles();
+  const { depts, branches, loading: orgLoading } = useOrgOptions();
+
   const [form, setForm] = useState({
     fullName: '', email: '', password: '', confirmPassword: '', phone: '', role: '',
     department: '', branch: '', groupId: '', accessLevel: '', managerId: '',
@@ -184,9 +189,9 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
               <input style={errors.phone ? ERR_INPUT : INPUT} value={form.phone} onChange={set('phone')} placeholder="+1 555 000 0000" />
             </Field>
             <Field label="Role" required error={errors.role}>
-              <select style={selectStyle(!!errors.role)} value={form.role} onChange={set('role')}>
-                <option value="">Select role...</option>
-                {ROLE_OPTIONS.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
+              <select style={selectStyle(!!errors.role)} value={form.role} onChange={set('role')} disabled={rolesLoading}>
+                <option value="">{rolesLoading ? 'Loading roles…' : 'Select role…'}</option>
+                {roleOptions.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
               </select>
             </Field>
           </div>
@@ -194,13 +199,15 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
           {/* Row 3 */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <Field label="Department">
-              <select style={selectStyle()} value={form.department} onChange={set('department')}>
-                {DEPARTMENT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              <select style={selectStyle()} value={form.department} onChange={set('department')} disabled={orgLoading}>
+                <option value="">{orgLoading ? 'Loading…' : 'Select department…'}</option>
+                {depts.map(d => <option key={d.id} value={d.name}>{d.name}</option>)}
               </select>
             </Field>
             <Field label="Branch">
-              <select style={selectStyle()} value={form.branch} onChange={set('branch')}>
-                {BRANCH_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              <select style={selectStyle()} value={form.branch} onChange={set('branch')} disabled={orgLoading}>
+                <option value="">{orgLoading ? 'Loading…' : 'Select branch…'}</option>
+                {branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
               </select>
             </Field>
           </div>

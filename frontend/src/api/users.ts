@@ -21,6 +21,7 @@ export interface UsersParams {
   search?:            string;
   role?:              string;
   department?:        string;
+  branch?:            string;
   status?:            string;
   verificationState?: string;
   createdAfter?:      string;
@@ -48,6 +49,7 @@ export async function getUsers(params: UsersParams = {}): Promise<UsersResponse>
   if (params.search)                          qs.set('search',            params.search);
   if (params.role)                            qs.set('role',              params.role);
   if (params.department)                      qs.set('department',        params.department);
+  if (params.branch)                          qs.set('branch',            params.branch);
   if (params.status)                          qs.set('status',            params.status);
   if (params.verificationState)               qs.set('verificationState', params.verificationState);
   if (params.createdAfter)                    qs.set('createdAfter',      params.createdAfter);
@@ -112,6 +114,10 @@ export function suspendUser(userId: string, body: SuspendUserRequest): Promise<A
 
 export function reactivateUser(userId: string): Promise<ActionResponse> {
   return actionFetch(`${BASE_URL}/users/${encodeURIComponent(userId)}/reactivate`, 'PATCH', {});
+}
+
+export function approveVerification(userId: string): Promise<ActionResponse> {
+  return actionFetch(`${BASE_URL}/users/${encodeURIComponent(userId)}/approve-verification`, 'PATCH', {});
 }
 
 export function deleteUser(userId: string): Promise<ActionResponse> {

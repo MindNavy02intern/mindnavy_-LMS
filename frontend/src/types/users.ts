@@ -134,6 +134,7 @@ export interface UpdateUserRequest {
   accessLevel: string | null;
   managerId:   string | null;
   skills:      string[] | null;
+  role?:       string;
 }
 
 export interface SuspendUserRequest {

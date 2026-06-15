@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { assignRole, ApiError } from '../../api/users';
+import { rolesPermissionsAPI } from '../../api/rolesPermissions';
 import type { AssignRoleRequest, RoleType } from '../../types/users';
+import type { Role } from '../../types/rolesPermissions';
 import type { ToastType } from './Toast';
 
 interface Props {
@@ -9,13 +11,6 @@ interface Props {
   onSuccess: () => void;
   showToast: (type: ToastType, message: string) => void;
 }
-
-const ROLES: { id: string; label: string }[] = [
-  { id: 'LEARNER',         label: 'Learner'        },
-  { id: 'INSTRUCTOR',      label: 'Instructor'     },
-  { id: 'MANAGER',         label: 'Manager'        },
-  { id: 'ADMIN_ASSISTANT', label: 'Admin Assistant'},
-];
 
 const TYPES: { value: RoleType; label: string }[] = [
   { value: 'primary',   label: 'Primary'   },
@@ -31,11 +26,31 @@ const INPUT: React.CSSProperties = {
 };
 
 export default function AssignRoleModal({ userId, onClose, onSuccess, showToast }: Props) {
+  const [roles,        setRoles]        = useState<Role[]>([]);
+  const [rolesLoading, setRolesLoading] = useState(true);
+  const [rolesError,   setRolesError]   = useState('');
+
   const [roleId,     setRoleId]     = useState('');
   const [type,       setType]       = useState<RoleType>('primary');
   const [expiresAt,  setExpiresAt]  = useState('');
   const [errors,     setErrors]     = useState<{ roleId?: string }>({});
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    rolesPermissionsAPI
+      .getRoles({ status: 'ACTIVE', limit: 200 })
+      .then((res) => {
+        if (!cancelled) setRoles(res.data ?? []);
+      })
+      .catch(() => {
+        if (!cancelled) setRolesError('Failed to load roles. Please try again.');
+      })
+      .finally(() => {
+        if (!cancelled) setRolesLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   const handleSubmit = async () => {
     if (!roleId) { setErrors({ roleId: 'Please select a role' }); return; }
@@ -51,11 +66,14 @@ export default function AssignRoleModal({ userId, onClose, onSuccess, showToast 
     try {
       const res = await assignRole(userId, body);
       showToast('success', res.message || 'Role assigned successfully');
+      window.dispatchEvent(new CustomEvent('userDataChanged'));
+      window.dispatchEvent(new CustomEvent('analyticsUpdated'));
       onSuccess();
     } catch (err) {
       if (err instanceof ApiError) {
         if (err.status === 403) showToast('error', 'Not authorized');
-        else if (err.status === 404) showToast('error', 'User not found');
+        else if (err.status === 404) showToast('error', err.message);
+        else if (err.status === 400) showToast('error', err.message);
         else showToast('error', err.message);
       } else {
         showToast('error', 'Something went wrong, please try again');
@@ -82,14 +100,23 @@ export default function AssignRoleModal({ userId, onClose, onSuccess, showToast 
           <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#374151', marginBottom: 4 }}>
             Role <span style={{ color: '#ef4444' }}>*</span>
           </label>
-          <select
-            style={errors.roleId ? { ...INPUT, borderColor: '#fca5a5', background: '#fef2f2', cursor: 'pointer' } : { ...INPUT, cursor: 'pointer' }}
-            value={roleId}
-            onChange={e => setRoleId(e.target.value)}
-          >
-            <option value="">Select a role…</option>
-            {ROLES.map(r => <option key={r.id} value={r.id}>{r.label}</option>)}
-          </select>
+
+          {rolesError ? (
+            <div style={{ fontSize: 12, color: '#dc2626', padding: '8px 10px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 6 }}>
+              {rolesError}
+            </div>
+          ) : (
+            <select
+              style={errors.roleId ? { ...INPUT, borderColor: '#fca5a5', background: '#fef2f2', cursor: 'pointer' } : { ...INPUT, cursor: 'pointer' }}
+              value={roleId}
+              onChange={e => setRoleId(e.target.value)}
+              disabled={rolesLoading}
+            >
+              <option value="">{rolesLoading ? 'Loading roles…' : 'Select a role…'}</option>
+              {roles.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
+            </select>
+          )}
+
           {errors.roleId && <div style={{ fontSize: 11, color: '#dc2626', marginTop: 3 }}>{errors.roleId}</div>}
         </div>
 
@@ -140,8 +167,8 @@ export default function AssignRoleModal({ userId, onClose, onSuccess, showToast 
           </button>
           <button
             onClick={handleSubmit}
-            disabled={submitting}
-            style={{ padding: '8px 16px', fontSize: 13, fontFamily: 'inherit', fontWeight: 600, background: submitting ? '#9ca3af' : '#2563eb', border: 'none', borderRadius: 7, cursor: submitting ? 'not-allowed' : 'pointer', color: '#fff' }}
+            disabled={submitting || rolesLoading || !!rolesError}
+            style={{ padding: '8px 16px', fontSize: 13, fontFamily: 'inherit', fontWeight: 600, background: (submitting || rolesLoading || !!rolesError) ? '#9ca3af' : '#2563eb', border: 'none', borderRadius: 7, cursor: (submitting || rolesLoading || !!rolesError) ? 'not-allowed' : 'pointer', color: '#fff' }}
           >
             {submitting ? 'Assigning…' : 'Assign Role'}
           </button>

@@ -354,9 +354,9 @@ export default function TeamsTab({ showToast }: Props) {
         </div>
       )}
 
-      {createOpen  && <TeamModal onClose={() => setCreateOpen(false)} onSaved={() => { setCreateOpen(false); load(); }} showToast={showToast} />}
-      {editTeam    && <TeamModal initial={editTeam} onClose={() => setEditTeam(null)} onSaved={() => { setEditTeam(null); load(); }} showToast={showToast} />}
-      {deleteTeam_ && <DeleteConfirm team={deleteTeam_} onClose={() => setDeleteTeam_(null)} onDeleted={() => { setDeleteTeam_(null); load(); }} showToast={showToast} />}
+      {createOpen  && <TeamModal onClose={() => setCreateOpen(false)} onSaved={() => { setCreateOpen(false); load(); window.dispatchEvent(new CustomEvent('organizationUpdated')); window.dispatchEvent(new CustomEvent('userDataChanged')); window.dispatchEvent(new CustomEvent('analyticsUpdated')); }} showToast={showToast} />}
+      {editTeam    && <TeamModal initial={editTeam} onClose={() => setEditTeam(null)} onSaved={() => { setEditTeam(null); load(); window.dispatchEvent(new CustomEvent('organizationUpdated')); window.dispatchEvent(new CustomEvent('userDataChanged')); window.dispatchEvent(new CustomEvent('analyticsUpdated')); }} showToast={showToast} />}
+      {deleteTeam_ && <DeleteConfirm team={deleteTeam_} onClose={() => setDeleteTeam_(null)} onDeleted={() => { setDeleteTeam_(null); load(); window.dispatchEvent(new CustomEvent('organizationUpdated')); window.dispatchEvent(new CustomEvent('userDataChanged')); window.dispatchEvent(new CustomEvent('analyticsUpdated')); }} showToast={showToast} />}
       {detailId    && <DetailDrawer teamId={detailId} onClose={() => setDetailId(null)} />}
     </div>
   );
