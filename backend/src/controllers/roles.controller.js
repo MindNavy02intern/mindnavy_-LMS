@@ -74,6 +74,9 @@ async function deleteRole(req, res) {
     await svc.deleteRole(req.params.id);
     return res.json({ success: true, message: "Role deleted successfully." });
   } catch (err) {
+    if (err.code === 'ROLE_HAS_USERS') {
+      return res.status(409).json({ success: false, error: 'ROLE_HAS_USERS', count: err.userCount, roleName: err.roleName });
+    }
     if (err.code === "P2025") return notFound(res, "Role not found.");
     return serverError(res, err);
   }

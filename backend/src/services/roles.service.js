@@ -126,6 +126,16 @@ async function updateRole(id, { name, description, status }) {
 }
 
 async function deleteRole(id) {
+  const role = await prisma.role.findUnique({ where: { id }, select: { name: true } });
+  if (role) {
+    const enumVal = roleNameToEnum(role.name);
+    if (enumVal) {
+      const userCount = await prisma.appUser.count({ where: { role: enumVal } });
+      if (userCount > 0) {
+        throw Object.assign(new Error('ROLE_HAS_USERS'), { code: 'ROLE_HAS_USERS', userCount, roleName: role.name });
+      }
+    }
+  }
   await prisma.role.delete({ where: { id } });
 }
 
