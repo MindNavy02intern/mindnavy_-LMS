@@ -210,7 +210,7 @@ async function getUsersList(query = {}, admin = {}) {
     prisma.appUser.count({ where: { status: "ACTIVE" } }),
     prisma.appUser.count({ where: { verificationState: "PENDING", status: { not: "ARCHIVED" } } }),
     prisma.appUser.count({ where: { status: "SUSPENDED" } }),
-    prisma.appUser.count({ where: { status: "INVITED" } }),
+    prisma.invitation.count({ where: { status: "PENDING" } }).catch(() => 0),
     prisma.appUser.count({ where }),
     prisma.appUser.findMany({
       where,
@@ -371,6 +371,49 @@ async function getUserDetails(id, admin = {}) {
     throw makeError("User not found.", 404);
   }
 
+  // Fetch admin audit log entries that reference this app user (actions performed ON this user)
+  const activityRows = await prisma.$queryRaw`
+    SELECT
+      al.id,
+      al.action,
+      al."ipAddress",
+      al."createdAt",
+      au."fullName" AS "adminFullName"
+    FROM audit_logs al
+    LEFT JOIN admin_users au ON au.id = al."adminId"
+    WHERE al.details->>'userId' = ${sanitizedId}
+    ORDER BY al."createdAt" DESC
+    LIMIT 20
+  `.catch(() => []);
+
+  const ACTIVITY_LABEL = {
+    USER_CREATED:        "Account created",
+    USER_UPDATED:        "Profile updated",
+    USER_STATUS_CHANGED: "Status changed",
+    USER_PASSWORD_RESET: "Password reset",
+    USER_ROLE_ASSIGNED:  "Role assigned",
+    USER_DELETED:        "Account archived",
+    USER_SUSPENDED:      "Account suspended",
+    USER_REACTIVATED:    "Account reactivated",
+    USER_DETAILS_VIEWED: "Profile viewed by admin",
+    USERS_IMPORTED:      "Account created via CSV import",
+  };
+
+  const recentActivity = activityRows.map(row => ({
+    id:        row.id,
+    action:    ACTIVITY_LABEL[row.action] ?? row.action.replace(/_/g, " ").toLowerCase(),
+    timestamp: row.createdAt instanceof Date ? row.createdAt.toISOString() : String(row.createdAt),
+    ipAddress: row.ipAddress ?? null,
+  }));
+
+  // Convert riskScore Int (0–100) to a risk level string
+  const rs = user.riskScore ?? null;
+  const riskScore = rs == null ? "low"
+    : rs <= 30 ? "low"
+    : rs <= 60 ? "medium"
+    : rs <= 80 ? "high"
+    : "critical";
+
   await createUserAuditLog(admin.id, "USER_DETAILS_VIEWED", { userId: sanitizedId });
 
   return {
@@ -380,13 +423,13 @@ async function getUserDetails(id, admin = {}) {
     },
     roles: [],
     securityOverview: {
-      mfaEnabled: false,
+      mfaEnabled:     false,
       activeSessions: 0,
-      lastIpAddress: null,
-      lastLocation: null,
-      riskScore: "low",
+      lastIpAddress:  null,
+      lastLocation:   null,
+      riskScore,
     },
-    recentActivity: [],
+    recentActivity,
     enrolledCourses: [],
   };
 }

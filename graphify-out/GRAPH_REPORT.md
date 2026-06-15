@@ -1,16 +1,16 @@
 # Graph Report - mindnavy LMS  (2026-06-16)
 
 ## Corpus Check
-- 128 files · ~124,144 words
+- 132 files · ~127,795 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1282 nodes · 2183 edges · 68 communities (63 shown, 5 thin omitted)
+- 1337 nodes · 2280 edges · 74 communities (70 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8f7fa40d`
+- Built from commit: `aa6ee968`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -79,11 +79,17 @@
 - [[_COMMUNITY_Community 65|Community 65]]
 - [[_COMMUNITY_Community 66|Community 66]]
 - [[_COMMUNITY_Community 67|Community 67]]
+- [[_COMMUNITY_Community 68|Community 68]]
+- [[_COMMUNITY_Community 69|Community 69]]
+- [[_COMMUNITY_Community 70|Community 70]]
+- [[_COMMUNITY_Community 71|Community 71]]
+- [[_COMMUNITY_Community 72|Community 72]]
+- [[_COMMUNITY_Community 73|Community 73]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `serverError()` - 26 edges
 2. `orgFetch()` - 26 edges
-3. `getStoredToken()` - 24 edges
+3. `getStoredToken()` - 25 edges
 4. `validateId()` - 21 edges
 5. `badRequest()` - 20 edges
 6. `compilerOptions` - 17 edges
@@ -93,22 +99,22 @@
 10. `ApiError` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `ProtectedRoute()` --calls--> `useAuth()`  [EXTRACTED]
+  frontend/src/routes/ProtectedRoute.tsx → frontend/src/AuthContext.tsx
+- `groupsFetch()` --calls--> `getStoredToken()`  [EXTRACTED]
+  frontend/src/api/groups.ts → frontend/src/api/adminAuth.ts
 - `apiCall()` --calls--> `getStoredToken()`  [EXTRACTED]
   frontend/src/api/rolesPermissions.ts → frontend/src/api/adminAuth.ts
+- `CreateGroupModal()` --calls--> `useOrgOptions()`  [EXTRACTED]
+  frontend/src/components/groups/CreateGroupModal.tsx → frontend/src/hooks/useOrgOptions.ts
 - `adminLoginController()` --calls--> `loginAdmin()`  [EXTRACTED]
   backend/src/controllers/admin.controller.js → backend/src/services/admin.service.js
-- `adminLogoutController()` --calls--> `logoutAdmin()`  [EXTRACTED]
-  backend/src/controllers/admin.controller.js → backend/src/services/admin.service.js
-- `adminSendOtpController()` --calls--> `sendAdminOtp()`  [EXTRACTED]
-  backend/src/controllers/admin.controller.js → backend/src/services/admin.service.js
-- `adminRevokeTrustedDeviceController()` --calls--> `revokeAdminTrustedDevice()`  [EXTRACTED]
-  backend/src/controllers/admin.controller.js → backend/src/services/admin.service.js
 
-## Communities (68 total, 5 thin omitted)
+## Communities (74 total, 4 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.20
-Nodes (10): getPasswordStrength(), PasswordStrengthMeter(), REQUIREMENTS, ResetPasswordForm(), PasswordChecks, PasswordResetConfirm, PasswordResetRequest, PasswordStrengthMeterProps (+2 more)
+Cohesion: 0.15
+Nodes (11): getPasswordStrength(), PasswordStrengthMeter(), REQUIREMENTS, Props, ResetPasswordForm(), PasswordChecks, PasswordResetConfirm, PasswordResetRequest (+3 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.17
@@ -160,44 +166,44 @@ Cohesion: 0.33
 Nodes (5): code:js (export default defineConfig([), code:js (// eslint.config.js), Expanding the ESLint configuration, React Compiler, React + TypeScript + Vite
 
 ### Community 19 - "Community 19"
-Cohesion: 0.27
-Nodes (16): assignPermissionsToRole(), badRequest(), createPermission(), createRole(), deletePermission(), deleteRole(), getPermission(), getRole() (+8 more)
+Cohesion: 0.20
+Nodes (21): assignPermissionsToRole(), badRequest(), createPermission(), createRole(), deletePermission(), deleteRole(), getPermission(), getRole() (+13 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.12
-Nodes (8): UserStatus, AVATAR_PALETTES, Props, sk(), SkeletonRow(), STATUS_MAP, TD, TH
+Cohesion: 0.11
+Nodes (9): UserStatus, AVATAR_PALETTES, loadVisibleCols(), Props, sk(), SkeletonRow(), STATUS_MAP, TD (+1 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.04
 Nodes (54): ActivityItem, ActivityType, AdminWidgetsFilters, AiInsightItem, AlertSeverity, AlertStatus, AnalyticsFilters, ApprovalPriority (+46 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.18
-Nodes (10): ADMIN_WIDGETS_MOCK, AdminWidgetsParams, ANALYTICS_MOCK, AnalyticsParams, CORE_MOCK, getDashboardCore(), MOCK, AdminWidgetsResponse (+2 more)
+Cohesion: 0.16
+Nodes (14): getStoredToken(), ADMIN_WIDGETS_MOCK, AdminWidgetsParams, ANALYTICS_MOCK, AnalyticsParams, CORE_MOCK, getAdminWidgets(), getDashboardAnalytics() (+6 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.67
 Nodes (3): DashboardPage(), formatDate(), getGreeting()
 
 ### Community 24 - "Community 24"
-Cohesion: 0.09
-Nodes (27): GroupMembersResponse, GroupResponse, groupsAPI, GroupsListResponse, getUsers(), Props, FIELD, INPUT (+19 more)
+Cohesion: 0.08
+Nodes (28): GroupMembersResponse, GroupResponse, groupsAPI, groupsFetch(), GroupsListResponse, Props, CreateGroupModal(), FIELD (+20 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.25
-Nodes (14): adminFetch(), AdminUser, apiForgotPassword(), apiGetMe(), apiLogin(), apiLogout(), apiResetPassword(), apiSendOtp() (+6 more)
+Cohesion: 0.18
+Nodes (16): adminFetch(), AdminUser, apiGetMe(), apiLogin(), apiLogout(), apiSendOtp(), apiVerifyOtp(), bearer() (+8 more)
 
 ### Community 26 - "Community 26"
 Cohesion: 0.14
 Nodes (26): assignDepartmentsToBranch(), assignTeamMembers(), assignUsersToDepartment(), BranchListParams, createBranch(), createDepartment(), createTeam(), deleteBranch() (+18 more)
 
 ### Community 27 - "Community 27"
-Cohesion: 0.07
-Nodes (32): getStoredToken(), getAdminWidgets(), getDashboardAnalytics(), groupsFetch(), actionFetch(), ApiError, approveVerification(), assignRole() (+24 more)
+Cohesion: 0.15
+Nodes (19): actionFetch(), approveVerification(), assignRole(), cancelInvitation(), createUser(), deleteUser(), DETAILS_MOCK, InvitationParams (+11 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.14
-Nodes (9): DashboardPage, ForgotPasswordPage, LoginPage, NotFoundPage, ResetPasswordPage, SignupPage, TrustedDevicesPage, UserManagementPage (+1 more)
+Cohesion: 0.10
+Nodes (11): DashboardPage, ForgotPasswordPage, LoginPage, NotFoundPage, ResetPasswordPage, SignupPage, TrustedDevicesPage, UserManagementPage (+3 more)
 
 ### Community 29 - "Community 29"
 Cohesion: 0.17
@@ -208,34 +214,34 @@ Cohesion: 0.12
 Nodes (9): adapter, prisma, { PrismaClient }, { PrismaPg }, prisma, PERMISSIONS, prisma, ROLES (+1 more)
 
 ### Community 31 - "Community 31"
-Cohesion: 0.06
-Nodes (34): apiCall(), RolesApiError, rolesPermissionsAPI, ENUM_ROLES, ROLE_ALIAS, RoleOption, TAB_STYLE_BASE, BTN_GHOST (+26 more)
+Cohesion: 0.15
+Nodes (15): BTN_GHOST, BTN_PRIMARY, CATEGORY_COLOR, CATEGORY_LABEL, FIELD, INPUT, LABEL, MODAL_BOX() (+7 more)
 
 ### Community 32 - "Community 32"
 Cohesion: 0.05
-Nodes (31): getAnalytics(), Props, Props, BAR_COLORS, Props, Props, STATUS_COLORS, STATUS_LABELS (+23 more)
+Nodes (28): getAnalytics(), Props, Props, BAR_COLORS, Props, Props, STATUS_COLORS, STATUS_LABELS (+20 more)
 
 ### Community 33 - "Community 33"
 Cohesion: 0.07
 Nodes (48): ACTION_TITLE, ACTION_TYPE, getDashboardCore(), { getUsersAnalytics }, mapAuditToActivity(), prisma, approveVerification(), assertUserExists() (+40 more)
 
 ### Community 34 - "Community 34"
-Cohesion: 0.07
-Nodes (12): RiskScore, AVATAR_PALETTES, avatarPalette(), DRAWER_TABS, DrawerTab, formatDate(), formatRelative(), initials() (+4 more)
+Cohesion: 0.06
+Nodes (16): CourseStatus, RiskScore, UserDetailsResponse, Props, AVATAR_PALETTES, avatarPalette(), DRAWER_TABS, DrawerTab (+8 more)
 
 ### Community 35 - "Community 35"
-Cohesion: 0.17
-Nodes (7): ExportParams, UsersParams, FieldKey, FIELDS, FormatKey, FORMATS, Props
+Cohesion: 0.15
+Nodes (8): exportAllUsers(), ExportParams, UsersParams, FieldKey, FIELDS, FormatKey, FORMATS, Props
 
 ### Community 36 - "Community 36"
-Cohesion: 0.18
-Nodes (10): adminLoginRateLimiter, adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter, adminUsersImportRateLimiter, rateLimit, { adminUserActionRateLimiter }, express, {
+Cohesion: 0.21
+Nodes (10): getCachedSession(), prisma, requireAdminAuth(), SESSION_CACHE, setCachedSession(), { adminUserActionRateLimiter }, express, {
   listPermissions, getPermission, createPermission, updatePermission, deletePermission,
 } (+2 more)
 
 ### Community 37 - "Community 37"
-Cohesion: 0.14
-Nodes (6): Props, Props, Props, supabase, ResetPasswordStep, getAuthErrorMessage()
+Cohesion: 0.23
+Nodes (14): autoExpire(), cancelInvitation(), countPendingInvitations(), listInvitations(), makeError(), mapInvitation(), prisma, resendInvitation() (+6 more)
 
 ### Community 38 - "Community 38"
 Cohesion: 0.14
@@ -254,8 +260,8 @@ Cohesion: 0.22
 Nodes (5): PALETTES, sk(), SkeletonRow(), TD, TH
 
 ### Community 42 - "Community 42"
-Cohesion: 0.11
-Nodes (13): getBranches(), getDepartments(), BriefItem, FIELD_WRAP, INPUT, LABEL, ModalProps, Props (+5 more)
+Cohesion: 0.09
+Nodes (20): getBranches(), getDepartments(), BriefItem, FIELD_WRAP, INPUT, LABEL, ModalProps, Props (+12 more)
 
 ### Community 43 - "Community 43"
 Cohesion: 0.17
@@ -263,11 +269,11 @@ Nodes (7): FW, INPUT, LABEL, Props, CreateTeamBody, Team, TeamDetail
 
 ### Community 44 - "Community 44"
 Cohesion: 0.12
-Nodes (16): buildTree(), NODE_COLORS, OrganizationChart(), Props, TreeNode, TYPE_LABEL, BranchesResponse, CreateDepartmentBody (+8 more)
+Nodes (12): buildTree(), NODE_COLORS, OrganizationChart(), Props, TreeNode, TYPE_LABEL, Props, SUB_TABS (+4 more)
 
 ### Community 45 - "Community 45"
-Cohesion: 0.24
-Nodes (8): LoginForm(), AdminLayout(), LoginPage(), SignupPage(), TrustedDevicesPage(), VerifyDevicePage(), ProtectedRoute(), useAuth()
+Cohesion: 0.18
+Nodes (10): LoginForm(), Props, Props, AdminLayout(), LoginPage(), SignupPage(), TrustedDevicesPage(), VerifyDevicePage() (+2 more)
 
 ### Community 46 - "Community 46"
 Cohesion: 0.19
@@ -279,31 +285,35 @@ Nodes (8): importUsers(), ImportResult, CSVPreview, formatBytes(), ImportUsersMo
 
 ### Community 48 - "Community 48"
 Cohesion: 0.25
-Nodes (5): reactivateUser(), sk(), SkeletonRow(), TD, TH
+Nodes (5): getUsers(), sk(), SkeletonRow(), TD, TH
 
 ### Community 49 - "Community 49"
-Cohesion: 0.22
-Nodes (5): PALETTES, sk(), SkeletonRow(), TD, TH
+Cohesion: 0.11
+Nodes (11): getInvitations(), Invitation, InvitationStatus, PALETTES, Props, ROLE_DISPLAY, sk(), SkeletonRow() (+3 more)
 
 ### Community 50 - "Community 50"
-Cohesion: 0.15
-Nodes (11): CreateUserRequest, ACCESS, ERR_INPUT, FormKey, INPUT, Props, ROLES, ContainerProps (+3 more)
+Cohesion: 0.22
+Nodes (7): CreateUserRequest, ACCESS, ERR_INPUT, FormKey, INPUT, Props, ROLES
 
 ### Community 51 - "Community 51"
-Cohesion: 0.14
-Nodes (7): DEFAULTS, Props, Settings, Props, SUB_TABS, SubTab, HierarchySettings
+Cohesion: 0.18
+Nodes (5): ApiError, DEFAULTS, Props, Settings, HierarchySettings
 
 ### Community 52 - "Community 52"
-Cohesion: 0.15
-Nodes (12): adminRoutes, app, cors, corsOptions, dashboardRoutes, express, groupsRoutes, organizationRoutes (+4 more)
+Cohesion: 0.14
+Nodes (13): adminRoutes, app, cors, corsOptions, dashboardRoutes, express, groupsRoutes, invitationsRoutes (+5 more)
 
 ### Community 53 - "Community 53"
-Cohesion: 0.16
-Nodes (9): Props, AuthContext, AuthContextType, AuthProvider(), DEMO_PROFILE, DEMO_USER, Profile, Profile (+1 more)
+Cohesion: 0.29
+Nodes (4): Props, ProtectedRoute(), Profile, UserRole
 
 ### Community 54 - "Community 54"
 Cohesion: 0.19
 Nodes (11): bcrypt, createFirstAdmin(), prisma, { validatePasswordStrength }, bcrypt, prisma, resetFirstAdminPassword(), { validatePasswordStrength } (+3 more)
+
+### Community 55 - "Community 55"
+Cohesion: 0.18
+Nodes (6): apiForgotPassword(), apiResetPassword(), requestPasswordReset(), updatePassword(), Props, ForgotPasswordStep
 
 ### Community 56 - "Community 56"
 Cohesion: 0.21
@@ -325,19 +335,16 @@ Cohesion: 0.08
 Nodes (9): buildPagination(), getTeamMembers(), HIERARCHY_DEFAULTS, listBranches(), listDepartments(), listTeams(), paginate(), prisma (+1 more)
 
 ### Community 59 - "Community 59"
-Cohesion: 0.15
-Nodes (11): INPUT_BASE, LIMIT_OPTIONS, pageRange(), TabKey, TABS, UserManagementPage(), UsersResponse, useToast() (+3 more)
+Cohesion: 0.16
+Nodes (10): INPUT_BASE, LIMIT_OPTIONS, pageRange(), TabKey, TABS, UserManagementPage(), UsersResponse, useToast() (+2 more)
 
 ### Community 60 - "Community 60"
-Cohesion: 0.21
-Nodes (10): getCachedSession(), prisma, requireAdminAuth(), SESSION_CACHE, setCachedSession(), { adminUserActionRateLimiter }, ctrl, express (+2 more)
+Cohesion: 0.18
+Nodes (10): adminLoginRateLimiter, adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter, adminUsersImportRateLimiter, rateLimit, { adminUserActionRateLimiter }, ctrl, express (+2 more)
 
 ### Community 61 - "Community 61"
-Cohesion: 0.33
-Nodes (5): { adminUserActionRateLimiter }, express, {
-  listRoles, getRole, createRole, updateRole, deleteRole,
-  getRolePermissions, assignPermissionsToRole,
-}, { requireAdminAuth }, router
+Cohesion: 0.22
+Nodes (11): cancel(), invitationsService, list(), resend(), send(), updateExpiration(), { adminUserActionRateLimiter }, express (+3 more)
 
 ### Community 62 - "Community 62"
 Cohesion: 0.12
@@ -357,27 +364,51 @@ Nodes (4): Props, ROLE_COLORS, ROLE_LABELS, RoleAnalyticsItem
 
 ### Community 66 - "Community 66"
 Cohesion: 0.40
-Nodes (6): CreateGroupModal(), EditGroupModal(), useOrgOptions(), useRoles(), AddUserModal(), EditUserModal()
+Nodes (6): EditGroupModal(), useOrgOptions(), useRoles(), AddUserModal(), EditUserModal(), SendInvitationModal()
+
+### Community 67 - "Community 67"
+Cohesion: 0.15
+Nodes (10): BTN_GHOST, BTN_PRIMARY, CAT_META, FIELD, INPUT, LABEL, MODAL_BOX(), MODAL_OVERLAY (+2 more)
+
+### Community 68 - "Community 68"
+Cohesion: 0.20
+Nodes (8): Permission, Role, AssignRoleRequest, RoleType, INPUT, Props, ROLES, TYPES
+
+### Community 69 - "Community 69"
+Cohesion: 0.22
+Nodes (6): apiCall(), RolesApiError, rolesPermissionsAPI, ENUM_ROLES, ROLE_ALIAS, RoleOption
+
+### Community 70 - "Community 70"
+Cohesion: 0.22
+Nodes (7): bulkAction(), BulkActionType, ACTION_LABELS, ActionKey, ACTIONS, Props, ROLE_OPTIONS
+
+### Community 71 - "Community 71"
+Cohesion: 0.25
+Nodes (6): INPUT, Props, ContainerProps, ToastContainer(), ToastItem, ToastType
+
+### Community 73 - "Community 73"
+Cohesion: 0.25
+Nodes (5): EXPIRY_OPTIONS, INPUT, LABEL, Props, ROLE_OPTIONS
 
 ## Knowledge Gaps
-- **508 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+503 more)
+- **530 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+525 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getStoredToken()` connect `Community 27` to `Community 32`, `Community 2`, `Community 47`, `Community 53`, `Community 22`, `Community 24`, `Community 25`, `Community 26`, `Community 31`?**
-  _High betweenness centrality (0.051) - this node is a cross-community bridge._
-- **Why does `getUsers()` connect `Community 24` to `Community 35`, `Community 41`, `Community 42`, `Community 43`, `Community 59`, `Community 48`, `Community 49`, `Community 27`, `Community 63`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **Why does `requireAdminAuth()` connect `Community 60` to `Community 36`, `Community 5`, `Community 9`, `Community 56`, `Community 57`, `Community 61`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `getStoredToken()` connect `Community 22` to `Community 32`, `Community 2`, `Community 35`, `Community 69`, `Community 70`, `Community 47`, `Community 48`, `Community 49`, `Community 24`, `Community 25`, `Community 26`, `Community 27`?**
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `getUsers()` connect `Community 48` to `Community 35`, `Community 41`, `Community 42`, `Community 43`, `Community 59`, `Community 49`, `Community 22`, `Community 24`, `Community 27`, `Community 63`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `requireAdminAuth()` connect `Community 36` to `Community 5`, `Community 9`, `Community 19`, `Community 56`, `Community 57`, `Community 60`, `Community 61`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _508 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _530 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Community 0` be split into smaller, more focused modules?**
+  _Cohesion score 0.14619883040935672 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.08858858858858859 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
-- **Should `Community 4` be split into smaller, more focused modules?**
-  _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._

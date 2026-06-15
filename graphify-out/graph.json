@@ -391,10 +391,19 @@
       "norm_label": "groupsroutes"
     },
     {
+      "label": "invitationsRoutes",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L12",
+      "id": "backend_server_invitationsroutes",
+      "community": 52,
+      "norm_label": "invitationsroutes"
+    },
+    {
       "label": "app",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L13",
+      "source_location": "L14",
       "id": "backend_server_app",
       "community": 52,
       "norm_label": "app"
@@ -403,7 +412,7 @@
       "label": "corsOptions",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L17",
+      "source_location": "L18",
       "id": "backend_server_corsoptions",
       "community": 52,
       "norm_label": "corsoptions"
@@ -412,7 +421,7 @@
       "label": "server",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L66",
+      "source_location": "L70",
       "id": "backend_server_server",
       "community": 52,
       "norm_label": "server"
@@ -893,6 +902,69 @@
       "id": "controllers_groups_controller_removemember",
       "community": 39,
       "norm_label": "removemember()"
+    },
+    {
+      "label": "invitations.controller.js",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L1",
+      "id": "backend_src_controllers_invitations_controller_js",
+      "community": 61,
+      "norm_label": "invitations.controller.js"
+    },
+    {
+      "label": "invitationsService",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L1",
+      "id": "controllers_invitations_controller_invitationsservice",
+      "community": 61,
+      "norm_label": "invitationsservice"
+    },
+    {
+      "label": "list()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L3",
+      "id": "controllers_invitations_controller_list",
+      "community": 61,
+      "norm_label": "list()"
+    },
+    {
+      "label": "send()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L13",
+      "id": "controllers_invitations_controller_send",
+      "community": 61,
+      "norm_label": "send()"
+    },
+    {
+      "label": "resend()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L25",
+      "id": "controllers_invitations_controller_resend",
+      "community": 61,
+      "norm_label": "resend()"
+    },
+    {
+      "label": "cancel()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L37",
+      "id": "controllers_invitations_controller_cancel",
+      "community": 61,
+      "norm_label": "cancel()"
+    },
+    {
+      "label": "updateExpiration()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L49",
+      "id": "controllers_invitations_controller_updateexpiration",
+      "community": 61,
+      "norm_label": "updateexpiration()"
     },
     {
       "label": "organization.controller.js",
@@ -1512,7 +1584,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L1",
       "id": "backend_src_middlewares_auth_middleware_js",
-      "community": 60,
+      "community": 36,
       "norm_label": "auth.middleware.js"
     },
     {
@@ -1521,7 +1593,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L1",
       "id": "middlewares_auth_middleware_prisma",
-      "community": 60,
+      "community": 36,
       "norm_label": "prisma"
     },
     {
@@ -1530,7 +1602,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L4",
       "id": "middlewares_auth_middleware_session_cache",
-      "community": 60,
+      "community": 36,
       "norm_label": "session_cache"
     },
     {
@@ -1539,7 +1611,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L7",
       "id": "middlewares_auth_middleware_getcachedsession",
-      "community": 60,
+      "community": 36,
       "norm_label": "getcachedsession()"
     },
     {
@@ -1548,7 +1620,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L17",
       "id": "middlewares_auth_middleware_setcachedsession",
-      "community": 60,
+      "community": 36,
       "norm_label": "setcachedsession()"
     },
     {
@@ -1566,7 +1638,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L28",
       "id": "middlewares_auth_middleware_requireadminauth",
-      "community": 60,
+      "community": 36,
       "norm_label": "requireadminauth()"
     },
     {
@@ -1575,7 +1647,7 @@
       "source_file": "backend/src/middlewares/rateLimit.middleware.js",
       "source_location": "L1",
       "id": "backend_src_middlewares_ratelimit_middleware_js",
-      "community": 36,
+      "community": 60,
       "norm_label": "ratelimit.middleware.js"
     },
     {
@@ -1584,7 +1656,7 @@
       "source_file": "backend/src/middlewares/rateLimit.middleware.js",
       "source_location": "L1",
       "id": "middlewares_ratelimit_middleware_ratelimit",
-      "community": 36,
+      "community": 60,
       "norm_label": "ratelimit"
     },
     {
@@ -1593,7 +1665,7 @@
       "source_file": "backend/src/middlewares/rateLimit.middleware.js",
       "source_location": "L3",
       "id": "middlewares_ratelimit_middleware_adminloginratelimiter",
-      "community": 36,
+      "community": 60,
       "norm_label": "adminloginratelimiter"
     },
     {
@@ -1602,7 +1674,7 @@
       "source_file": "backend/src/middlewares/rateLimit.middleware.js",
       "source_location": "L15",
       "id": "middlewares_ratelimit_middleware_adminuseractionratelimiter",
-      "community": 36,
+      "community": 60,
       "norm_label": "adminuseractionratelimiter"
     },
     {
@@ -1611,7 +1683,7 @@
       "source_file": "backend/src/middlewares/rateLimit.middleware.js",
       "source_location": "L27",
       "id": "middlewares_ratelimit_middleware_adminusersanalyticsratelimiter",
-      "community": 36,
+      "community": 60,
       "norm_label": "adminusersanalyticsratelimiter"
     },
     {
@@ -1620,7 +1692,7 @@
       "source_file": "backend/src/middlewares/rateLimit.middleware.js",
       "source_location": "L39",
       "id": "middlewares_ratelimit_middleware_adminusersimportratelimiter",
-      "community": 36,
+      "community": 60,
       "norm_label": "adminusersimportratelimiter"
     },
     {
@@ -1840,6 +1912,60 @@
       "norm_label": "router"
     },
     {
+      "label": "invitations.routes.js",
+      "file_type": "code",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L1",
+      "id": "backend_src_routes_invitations_routes_js",
+      "community": 61,
+      "norm_label": "invitations.routes.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L1",
+      "id": "routes_invitations_routes_express",
+      "community": 61,
+      "norm_label": "express"
+    },
+    {
+      "label": "{ requireAdminAuth }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L2",
+      "id": "routes_invitations_routes_requireadminauth",
+      "community": 61,
+      "norm_label": "{ requireadminauth }"
+    },
+    {
+      "label": "{ adminUserActionRateLimiter }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L3",
+      "id": "routes_invitations_routes_adminuseractionratelimiter",
+      "community": 61,
+      "norm_label": "{ adminuseractionratelimiter }"
+    },
+    {
+      "label": "{ list, send, resend, cancel, updateExpiration }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L4",
+      "id": "routes_invitations_routes_list_send_resend_cancel_updateexpiration",
+      "community": 61,
+      "norm_label": "{ list, send, resend, cancel, updateexpiration }"
+    },
+    {
+      "label": "router",
+      "file_type": "code",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L6",
+      "id": "routes_invitations_routes_router",
+      "community": 61,
+      "norm_label": "router"
+    },
+    {
       "label": "organization.routes.js",
       "file_type": "code",
       "source_file": "backend/src/routes/organization.routes.js",
@@ -1953,7 +2079,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_roles_routes_js",
-      "community": 61,
+      "community": 19,
       "norm_label": "roles.routes.js"
     },
     {
@@ -1962,7 +2088,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L1",
       "id": "routes_roles_routes_express",
-      "community": 61,
+      "community": 19,
       "norm_label": "express"
     },
     {
@@ -1971,7 +2097,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L2",
       "id": "routes_roles_routes_requireadminauth",
-      "community": 61,
+      "community": 19,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -1980,7 +2106,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L3",
       "id": "routes_roles_routes_adminuseractionratelimiter",
-      "community": 61,
+      "community": 19,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -1989,7 +2115,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L4",
       "id": "routes_roles_routes_listroles_getrole_createrole_updaterole_deleterole_getrolepermissions_assignpermissionstorole",
-      "community": 61,
+      "community": 19,
       "norm_label": "{\r\n  listroles, getrole, createrole, updaterole, deleterole,\r\n  getrolepermissions, assignpermissionstorole,\r\n}"
     },
     {
@@ -1998,7 +2124,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L9",
       "id": "routes_roles_routes_router",
-      "community": 61,
+      "community": 19,
       "norm_label": "router"
     },
     {
@@ -2540,6 +2666,141 @@
       "id": "services_groups_service_removemember",
       "community": 39,
       "norm_label": "removemember()"
+    },
+    {
+      "label": "invitations.service.js",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L1",
+      "id": "backend_src_services_invitations_service_js",
+      "community": 37,
+      "norm_label": "invitations.service.js"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L1",
+      "id": "services_invitations_service_prisma",
+      "community": 37,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "VALID_STATUSES",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L3",
+      "id": "services_invitations_service_valid_statuses",
+      "community": 37,
+      "norm_label": "valid_statuses"
+    },
+    {
+      "label": "VALID_ROLES",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L4",
+      "id": "services_invitations_service_valid_roles",
+      "community": 37,
+      "norm_label": "valid_roles"
+    },
+    {
+      "label": "ROLE_MAP",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L6",
+      "id": "services_invitations_service_role_map",
+      "community": 37,
+      "norm_label": "role_map"
+    },
+    {
+      "label": "STATUS_MAP",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L13",
+      "id": "services_invitations_service_status_map",
+      "community": 37,
+      "norm_label": "status_map"
+    },
+    {
+      "label": "makeError()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L20",
+      "id": "services_invitations_service_makeerror",
+      "community": 37,
+      "norm_label": "makeerror()"
+    },
+    {
+      "label": "mapInvitation()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L26",
+      "id": "services_invitations_service_mapinvitation",
+      "community": 37,
+      "norm_label": "mapinvitation()"
+    },
+    {
+      "label": "autoExpire()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L42",
+      "id": "services_invitations_service_autoexpire",
+      "community": 37,
+      "norm_label": "autoexpire()"
+    },
+    {
+      "label": "listInvitations()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L53",
+      "id": "services_invitations_service_listinvitations",
+      "community": 37,
+      "norm_label": "listinvitations()"
+    },
+    {
+      "label": "sendInvitation()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L90",
+      "id": "services_invitations_service_sendinvitation",
+      "community": 37,
+      "norm_label": "sendinvitation()"
+    },
+    {
+      "label": "resendInvitation()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L141",
+      "id": "services_invitations_service_resendinvitation",
+      "community": 37,
+      "norm_label": "resendinvitation()"
+    },
+    {
+      "label": "cancelInvitation()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L164",
+      "id": "services_invitations_service_cancelinvitation",
+      "community": 37,
+      "norm_label": "cancelinvitation()"
+    },
+    {
+      "label": "updateExpiration()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L182",
+      "id": "services_invitations_service_updateexpiration",
+      "community": 37,
+      "norm_label": "updateexpiration()"
+    },
+    {
+      "label": "countPendingInvitations()",
+      "file_type": "code",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L206",
+      "id": "services_invitations_service_countpendinginvitations",
+      "community": 37,
+      "norm_label": "countpendinginvitations()"
     },
     {
       "label": "organization.service.js",
@@ -3157,7 +3418,7 @@
       "label": "exportUsers()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L279",
+      "source_location": "L284",
       "id": "services_users_service_exportusers",
       "community": 33,
       "norm_label": "exportusers()"
@@ -3166,7 +3427,7 @@
       "label": "getUserDetails()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L349",
+      "source_location": "L354",
       "id": "services_users_service_getuserdetails",
       "community": 33,
       "norm_label": "getuserdetails()"
@@ -3175,7 +3436,7 @@
       "label": "createUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L391",
+      "source_location": "L439",
       "id": "services_users_service_createuser",
       "community": 33,
       "norm_label": "createuser()"
@@ -3184,7 +3445,7 @@
       "label": "updateUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L448",
+      "source_location": "L496",
       "id": "services_users_service_updateuser",
       "community": 33,
       "norm_label": "updateuser()"
@@ -3193,7 +3454,7 @@
       "label": "updateUserStatus()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L551",
+      "source_location": "L599",
       "id": "services_users_service_updateuserstatus",
       "community": 33,
       "norm_label": "updateuserstatus()"
@@ -3202,7 +3463,7 @@
       "label": "resetUserPassword()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L576",
+      "source_location": "L624",
       "id": "services_users_service_resetuserpassword",
       "community": 33,
       "norm_label": "resetuserpassword()"
@@ -3211,7 +3472,7 @@
       "label": "suspendUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L594",
+      "source_location": "L642",
       "id": "services_users_service_suspenduser",
       "community": 33,
       "norm_label": "suspenduser()"
@@ -3220,7 +3481,7 @@
       "label": "reactivateUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L620",
+      "source_location": "L668",
       "id": "services_users_service_reactivateuser",
       "community": 33,
       "norm_label": "reactivateuser()"
@@ -3229,7 +3490,7 @@
       "label": "approveVerification()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L642",
+      "source_location": "L690",
       "id": "services_users_service_approveverification",
       "community": 33,
       "norm_label": "approveverification()"
@@ -3238,7 +3499,7 @@
       "label": "ROLE_NAME_TO_ENUM_ALIAS",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L667",
+      "source_location": "L715",
       "id": "services_users_service_role_name_to_enum_alias",
       "community": 33,
       "norm_label": "role_name_to_enum_alias"
@@ -3247,7 +3508,7 @@
       "label": "roleNameToAppEnum()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L669",
+      "source_location": "L717",
       "id": "services_users_service_rolenametoappenum",
       "community": 33,
       "norm_label": "rolenametoappenum()"
@@ -3256,7 +3517,7 @@
       "label": "assignUserRole()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L675",
+      "source_location": "L723",
       "id": "services_users_service_assignuserrole",
       "community": 33,
       "norm_label": "assignuserrole()"
@@ -3265,7 +3526,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L720",
+      "source_location": "L768",
       "id": "services_users_service_deleteuser",
       "community": 33,
       "norm_label": "deleteuser()"
@@ -3274,7 +3535,7 @@
       "label": "getUsersAnalytics()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L741",
+      "source_location": "L789",
       "id": "services_users_service_getusersanalytics",
       "community": 33,
       "norm_label": "getusersanalytics()"
@@ -3283,7 +3544,7 @@
       "label": "importUsersFromCsv()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L855",
+      "source_location": "L903",
       "id": "services_users_service_importusersfromcsv",
       "community": 33,
       "norm_label": "importusersfromcsv()"
@@ -3292,7 +3553,7 @@
       "label": "bulkActionUsers()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L989",
+      "source_location": "L1037",
       "id": "services_users_service_bulkactionusers",
       "community": 33,
       "norm_label": "bulkactionusers()"
@@ -4554,7 +4815,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L1",
       "id": "frontend_src_authcontext_tsx",
-      "community": 53,
+      "community": 25,
       "norm_label": "authcontext.tsx"
     },
     {
@@ -4563,7 +4824,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L13",
       "id": "src_authcontext_authcontexttype",
-      "community": 53,
+      "community": 25,
       "norm_label": "authcontexttype"
     },
     {
@@ -4572,7 +4833,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L25",
       "id": "src_authcontext_authcontext",
-      "community": 53,
+      "community": 25,
       "norm_label": "authcontext"
     },
     {
@@ -4581,7 +4842,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L34",
       "id": "src_authcontext_demo_user",
-      "community": 53,
+      "community": 25,
       "norm_label": "demo_user"
     },
     {
@@ -4590,7 +4851,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L41",
       "id": "src_authcontext_demo_profile",
-      "community": 53,
+      "community": 25,
       "norm_label": "demo_profile"
     },
     {
@@ -4599,7 +4860,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L49",
       "id": "src_authcontext_mapadmintoprofile",
-      "community": 53,
+      "community": 25,
       "norm_label": "mapadmintoprofile()"
     },
     {
@@ -4608,7 +4869,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L58",
       "id": "src_authcontext_authprovider",
-      "community": 53,
+      "community": 25,
       "norm_label": "authprovider()"
     },
     {
@@ -4626,7 +4887,7 @@
       "source_file": "frontend/src/main.tsx",
       "source_location": "L1",
       "id": "frontend_src_main_tsx",
-      "community": 53,
+      "community": 25,
       "norm_label": "main.tsx"
     },
     {
@@ -4635,7 +4896,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L1",
       "id": "frontend_src_supabase_ts",
-      "community": 37,
+      "community": 28,
       "norm_label": "supabase.ts"
     },
     {
@@ -4644,7 +4905,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L10",
       "id": "src_supabase_supabase",
-      "community": 37,
+      "community": 28,
       "norm_label": "supabase"
     },
     {
@@ -4671,7 +4932,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L22",
       "id": "api_adminauth_getstoredtoken",
-      "community": 27,
+      "community": 22,
       "norm_label": "getstoredtoken()"
     },
     {
@@ -4743,7 +5004,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L74",
       "id": "api_adminauth_apiforgotpassword",
-      "community": 25,
+      "community": 55,
       "norm_label": "apiforgotpassword()"
     },
     {
@@ -4752,7 +5013,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L81",
       "id": "api_adminauth_apiresetpassword",
-      "community": 25,
+      "community": 55,
       "norm_label": "apiresetpassword()"
     },
     {
@@ -4806,7 +5067,7 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L32",
       "id": "api_dashboard_getdashboardanalytics",
-      "community": 27,
+      "community": 22,
       "norm_label": "getdashboardanalytics()"
     },
     {
@@ -4824,7 +5085,7 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L61",
       "id": "api_dashboard_getadminwidgets",
-      "community": 27,
+      "community": 22,
       "norm_label": "getadminwidgets()"
     },
     {
@@ -4842,7 +5103,7 @@
       "source_file": "frontend/src/api/groups.ts",
       "source_location": "L7",
       "id": "api_groups_groupsfetch",
-      "community": 27,
+      "community": 24,
       "norm_label": "groupsfetch()"
     },
     {
@@ -5175,7 +5436,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L1",
       "id": "frontend_src_api_passwordrecovery_ts",
-      "community": 25,
+      "community": 55,
       "norm_label": "passwordrecovery.ts"
     },
     {
@@ -5184,7 +5445,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L10",
       "id": "api_passwordrecovery_requestpasswordreset",
-      "community": 25,
+      "community": 55,
       "norm_label": "requestpasswordreset()"
     },
     {
@@ -5193,7 +5454,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L25",
       "id": "api_passwordrecovery_updatepassword",
-      "community": 25,
+      "community": 55,
       "norm_label": "updatepassword()"
     },
     {
@@ -5202,7 +5463,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L1",
       "id": "frontend_src_api_rolespermissions_ts",
-      "community": 31,
+      "community": 69,
       "norm_label": "rolespermissions.ts"
     },
     {
@@ -5211,7 +5472,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L5",
       "id": "api_rolespermissions_rolesapierror",
-      "community": 31,
+      "community": 69,
       "norm_label": "rolesapierror"
     },
     {
@@ -5220,7 +5481,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L7",
       "id": "api_rolespermissions_rolesapierror_constructor",
-      "community": 31,
+      "community": 69,
       "norm_label": ".constructor()"
     },
     {
@@ -5229,7 +5490,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L14",
       "id": "api_rolespermissions_apicall",
-      "community": 31,
+      "community": 69,
       "norm_label": "apicall()"
     },
     {
@@ -5238,7 +5499,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L37",
       "id": "api_rolespermissions_rolespermissionsapi",
-      "community": 31,
+      "community": 69,
       "norm_label": "rolespermissionsapi"
     },
     {
@@ -5317,7 +5578,7 @@
       "label": "UsersParams",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L19",
+      "source_location": "L22",
       "id": "api_users_usersparams",
       "community": 35,
       "norm_label": "usersparams"
@@ -5326,7 +5587,7 @@
       "label": "ExportParams",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L32",
+      "source_location": "L35",
       "id": "api_users_exportparams",
       "community": 35,
       "norm_label": "exportparams"
@@ -5335,34 +5596,34 @@
       "label": "ApiError",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L45",
+      "source_location": "L48",
       "id": "api_users_apierror",
-      "community": 27,
+      "community": 51,
       "norm_label": "apierror"
     },
     {
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L47",
+      "source_location": "L50",
       "id": "api_users_apierror_constructor",
-      "community": 27,
+      "community": 51,
       "norm_label": ".constructor()"
     },
     {
       "label": "getUsers()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L56",
+      "source_location": "L59",
       "id": "api_users_getusers",
-      "community": 24,
+      "community": 48,
       "norm_label": "getusers()"
     },
     {
       "label": "actionFetch()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L87",
+      "source_location": "L90",
       "id": "api_users_actionfetch",
       "community": 27,
       "norm_label": "actionfetch()"
@@ -5371,7 +5632,7 @@
       "label": "createUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L114",
+      "source_location": "L117",
       "id": "api_users_createuser",
       "community": 27,
       "norm_label": "createuser()"
@@ -5380,7 +5641,7 @@
       "label": "updateUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L118",
+      "source_location": "L121",
       "id": "api_users_updateuser",
       "community": 27,
       "norm_label": "updateuser()"
@@ -5389,7 +5650,7 @@
       "label": "suspendUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L122",
+      "source_location": "L125",
       "id": "api_users_suspenduser",
       "community": 27,
       "norm_label": "suspenduser()"
@@ -5398,16 +5659,16 @@
       "label": "reactivateUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L126",
+      "source_location": "L129",
       "id": "api_users_reactivateuser",
-      "community": 48,
+      "community": 27,
       "norm_label": "reactivateuser()"
     },
     {
       "label": "approveVerification()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L130",
+      "source_location": "L133",
       "id": "api_users_approveverification",
       "community": 27,
       "norm_label": "approveverification()"
@@ -5416,7 +5677,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L134",
+      "source_location": "L137",
       "id": "api_users_deleteuser",
       "community": 27,
       "norm_label": "deleteuser()"
@@ -5425,7 +5686,7 @@
       "label": "resetPassword()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L138",
+      "source_location": "L141",
       "id": "api_users_resetpassword",
       "community": 27,
       "norm_label": "resetpassword()"
@@ -5434,7 +5695,7 @@
       "label": "assignRole()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L142",
+      "source_location": "L145",
       "id": "api_users_assignrole",
       "community": 27,
       "norm_label": "assignrole()"
@@ -5443,16 +5704,16 @@
       "label": "getUserDetails()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L148",
+      "source_location": "L151",
       "id": "api_users_getuserdetails",
-      "community": 27,
+      "community": 22,
       "norm_label": "getuserdetails()"
     },
     {
       "label": "importUsers()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L167",
+      "source_location": "L171",
       "id": "api_users_importusers",
       "community": 47,
       "norm_label": "importusers()"
@@ -5461,25 +5722,79 @@
       "label": "bulkAction()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L191",
+      "source_location": "L195",
       "id": "api_users_bulkaction",
-      "community": 27,
+      "community": 70,
       "norm_label": "bulkaction()"
     },
     {
       "label": "exportAllUsers()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L216",
+      "source_location": "L220",
       "id": "api_users_exportallusers",
-      "community": 27,
+      "community": 35,
       "norm_label": "exportallusers()"
+    },
+    {
+      "label": "InvitationParams",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L247",
+      "id": "api_users_invitationparams",
+      "community": 27,
+      "norm_label": "invitationparams"
+    },
+    {
+      "label": "getInvitations()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L254",
+      "id": "api_users_getinvitations",
+      "community": 49,
+      "norm_label": "getinvitations()"
+    },
+    {
+      "label": "sendInvitation()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L275",
+      "id": "api_users_sendinvitation",
+      "community": 27,
+      "norm_label": "sendinvitation()"
+    },
+    {
+      "label": "resendInvitation()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L279",
+      "id": "api_users_resendinvitation",
+      "community": 27,
+      "norm_label": "resendinvitation()"
+    },
+    {
+      "label": "cancelInvitation()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L283",
+      "id": "api_users_cancelinvitation",
+      "community": 27,
+      "norm_label": "cancelinvitation()"
+    },
+    {
+      "label": "updateInvitationExpiry()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L287",
+      "id": "api_users_updateinvitationexpiry",
+      "community": 27,
+      "norm_label": "updateinvitationexpiry()"
     },
     {
       "label": "getAnalytics()",
       "file_type": "code",
       "source_file": "frontend/src/api/users.ts",
-      "source_location": "L243",
+      "source_location": "L293",
       "id": "api_users_getanalytics",
       "community": 32,
       "norm_label": "getanalytics()"
@@ -5526,7 +5841,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_loginform_tsx",
-      "community": 37,
+      "community": 45,
       "norm_label": "loginform.tsx"
     },
     {
@@ -5535,7 +5850,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L4",
       "id": "auth_loginform_props",
-      "community": 37,
+      "community": 45,
       "norm_label": "props"
     },
     {
@@ -5652,7 +5967,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_resetpasswordform_tsx",
-      "community": 37,
+      "community": 0,
       "norm_label": "resetpasswordform.tsx"
     },
     {
@@ -5661,7 +5976,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L5",
       "id": "auth_resetpasswordform_props",
-      "community": 37,
+      "community": 0,
       "norm_label": "props"
     },
     {
@@ -5670,7 +5985,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L13",
       "id": "auth_resetpasswordform_eyeicon",
-      "community": 37,
+      "community": 0,
       "norm_label": "eyeicon()"
     },
     {
@@ -5679,7 +5994,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L22",
       "id": "auth_resetpasswordform_eyeofficon",
-      "community": 37,
+      "community": 0,
       "norm_label": "eyeofficon()"
     },
     {
@@ -5688,7 +6003,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L32",
       "id": "auth_resetpasswordform_matchokicon",
-      "community": 37,
+      "community": 0,
       "norm_label": "matchokicon()"
     },
     {
@@ -5706,7 +6021,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_signupform_tsx",
-      "community": 37,
+      "community": 45,
       "norm_label": "signupform.tsx"
     },
     {
@@ -5715,7 +6030,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L5",
       "id": "auth_signupform_props",
-      "community": 37,
+      "community": 45,
       "norm_label": "props"
     },
     {
@@ -5724,7 +6039,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L9",
       "id": "auth_signupform_signupform",
-      "community": 37,
+      "community": 45,
       "norm_label": "signupform()"
     },
     {
@@ -5814,7 +6129,7 @@
       "source_file": "frontend/src/components/groups/CreateGroupModal.tsx",
       "source_location": "L28",
       "id": "groups_creategroupmodal_creategroupmodal",
-      "community": 66,
+      "community": 24,
       "norm_label": "creategroupmodal()"
     },
     {
@@ -6372,7 +6687,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_organization_organizationtab_tsx",
-      "community": 51,
+      "community": 44,
       "norm_label": "organizationtab.tsx"
     },
     {
@@ -6381,7 +6696,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L8",
       "id": "organization_organizationtab_props",
-      "community": 51,
+      "community": 44,
       "norm_label": "props"
     },
     {
@@ -6390,7 +6705,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L12",
       "id": "organization_organizationtab_subtab",
-      "community": 51,
+      "community": 44,
       "norm_label": "subtab"
     },
     {
@@ -6399,7 +6714,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L14",
       "id": "organization_organizationtab_sub_tabs",
-      "community": 51,
+      "community": 44,
       "norm_label": "sub_tabs"
     },
     {
@@ -6408,7 +6723,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L22",
       "id": "organization_organizationtab_organizationtab",
-      "community": 51,
+      "community": 44,
       "norm_label": "organizationtab()"
     },
     {
@@ -6498,7 +6813,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissions_permissionstab_tsx",
-      "community": 31,
+      "community": 67,
       "norm_label": "permissionstab.tsx"
     },
     {
@@ -6507,7 +6822,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L7",
       "id": "rolespermissions_permissionstab_permission_categories",
-      "community": 31,
+      "community": 67,
       "norm_label": "permission_categories"
     },
     {
@@ -6516,7 +6831,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L17",
       "id": "rolespermissions_permissionstab_cat_meta",
-      "community": 31,
+      "community": 67,
       "norm_label": "cat_meta"
     },
     {
@@ -6525,7 +6840,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L27",
       "id": "rolespermissions_permissionstab_catmeta",
-      "community": 31,
+      "community": 67,
       "norm_label": "catmeta()"
     },
     {
@@ -6534,7 +6849,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L33",
       "id": "rolespermissions_permissionstab_input",
-      "community": 31,
+      "community": 67,
       "norm_label": "input"
     },
     {
@@ -6543,7 +6858,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L39",
       "id": "rolespermissions_permissionstab_btn_primary",
-      "community": 31,
+      "community": 67,
       "norm_label": "btn_primary"
     },
     {
@@ -6552,7 +6867,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L45",
       "id": "rolespermissions_permissionstab_btn_ghost",
-      "community": 31,
+      "community": 67,
       "norm_label": "btn_ghost"
     },
     {
@@ -6561,7 +6876,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L50",
       "id": "rolespermissions_permissionstab_modal_overlay",
-      "community": 31,
+      "community": 67,
       "norm_label": "modal_overlay"
     },
     {
@@ -6570,7 +6885,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L56",
       "id": "rolespermissions_permissionstab_modal_box",
-      "community": 31,
+      "community": 67,
       "norm_label": "modal_box()"
     },
     {
@@ -6579,7 +6894,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L62",
       "id": "rolespermissions_permissionstab_label",
-      "community": 31,
+      "community": 67,
       "norm_label": "label"
     },
     {
@@ -6588,7 +6903,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L66",
       "id": "rolespermissions_permissionstab_field",
-      "community": 31,
+      "community": 67,
       "norm_label": "field"
     },
     {
@@ -6597,7 +6912,7 @@
       "source_file": "frontend/src/components/rolesPermissions/PermissionsTab.tsx",
       "source_location": "L70",
       "id": "rolespermissions_permissionstab_permissionstab",
-      "community": 31,
+      "community": 67,
       "norm_label": "permissionstab()"
     },
     {
@@ -6606,7 +6921,7 @@
       "source_file": "frontend/src/components/rolesPermissions/RolesPermissionsTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissions_rolespermissionstab_tsx",
-      "community": 31,
+      "community": 67,
       "norm_label": "rolespermissionstab.tsx"
     },
     {
@@ -6615,7 +6930,7 @@
       "source_file": "frontend/src/components/rolesPermissions/RolesPermissionsTab.tsx",
       "source_location": "L5",
       "id": "rolespermissions_rolespermissionstab_rolespermissionstab",
-      "community": 31,
+      "community": 67,
       "norm_label": "rolespermissionstab()"
     },
     {
@@ -6921,7 +7236,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_assignrolemodal_tsx",
-      "community": 32,
+      "community": 68,
       "norm_label": "assignrolemodal.tsx"
     },
     {
@@ -6930,7 +7245,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L8",
       "id": "users_assignrolemodal_props",
-      "community": 32,
+      "community": 68,
       "norm_label": "props"
     },
     {
@@ -6939,7 +7254,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L15",
       "id": "users_assignrolemodal_types",
-      "community": 32,
+      "community": 68,
       "norm_label": "types"
     },
     {
@@ -6948,7 +7263,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L21",
       "id": "users_assignrolemodal_input",
-      "community": 32,
+      "community": 68,
       "norm_label": "input"
     },
     {
@@ -6957,7 +7272,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L28",
       "id": "users_assignrolemodal_assignrolemodal",
-      "community": 32,
+      "community": 68,
       "norm_label": "assignrolemodal()"
     },
     {
@@ -6966,7 +7281,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "community": 27,
+      "community": 70,
       "norm_label": "bulkactionsmenu.tsx"
     },
     {
@@ -6975,7 +7290,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L6",
       "id": "users_bulkactionsmenu_props",
-      "community": 27,
+      "community": 70,
       "norm_label": "props"
     },
     {
@@ -6984,7 +7299,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L14",
       "id": "users_bulkactionsmenu_role_options",
-      "community": 27,
+      "community": 70,
       "norm_label": "role_options"
     },
     {
@@ -6993,7 +7308,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L21",
       "id": "users_bulkactionsmenu_actionkey",
-      "community": 27,
+      "community": 70,
       "norm_label": "actionkey"
     },
     {
@@ -7002,7 +7317,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L23",
       "id": "users_bulkactionsmenu_action_labels",
-      "community": 27,
+      "community": 70,
       "norm_label": "action_labels"
     },
     {
@@ -7011,7 +7326,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L31",
       "id": "users_bulkactionsmenu_bulkactionsmenu",
-      "community": 27,
+      "community": 70,
       "norm_label": "bulkactionsmenu()"
     },
     {
@@ -7020,7 +7335,7 @@
       "source_file": "frontend/src/components/users/ConfirmDialog.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_confirmdialog_tsx",
-      "community": 67,
+      "community": 34,
       "norm_label": "confirmdialog.tsx"
     },
     {
@@ -7029,7 +7344,7 @@
       "source_file": "frontend/src/components/users/ConfirmDialog.tsx",
       "source_location": "L1",
       "id": "users_confirmdialog_props",
-      "community": 67,
+      "community": 34,
       "norm_label": "props"
     },
     {
@@ -7038,7 +7353,7 @@
       "source_file": "frontend/src/components/users/ConfirmDialog.tsx",
       "source_location": "L11",
       "id": "users_confirmdialog_confirmdialog",
-      "community": 67,
+      "community": 34,
       "norm_label": "confirmdialog()"
     },
     {
@@ -7047,7 +7362,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_deleteuserdialog_tsx",
-      "community": 27,
+      "community": 71,
       "norm_label": "deleteuserdialog.tsx"
     },
     {
@@ -7056,7 +7371,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L6",
       "id": "users_deleteuserdialog_props",
-      "community": 27,
+      "community": 71,
       "norm_label": "props"
     },
     {
@@ -7065,7 +7380,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L15",
       "id": "users_deleteuserdialog_input",
-      "community": 27,
+      "community": 71,
       "norm_label": "input"
     },
     {
@@ -7074,7 +7389,7 @@
       "source_file": "frontend/src/components/users/DeleteUserDialog.tsx",
       "source_location": "L22",
       "id": "users_deleteuserdialog_deleteuserdialog",
-      "community": 27,
+      "community": 71,
       "norm_label": "deleteuserdialog()"
     },
     {
@@ -7315,43 +7630,52 @@
       "label": "formatDate()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L5",
+      "source_location": "L14",
       "id": "users_invitationstab_formatdate",
       "community": 49,
       "norm_label": "formatdate()"
     },
     {
-      "label": "initials()",
-      "file_type": "code",
-      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L9",
-      "id": "users_invitationstab_initials",
-      "community": 49,
-      "norm_label": "initials()"
-    },
-    {
-      "label": "PALETTES",
-      "file_type": "code",
-      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L13",
-      "id": "users_invitationstab_palettes",
-      "community": 49,
-      "norm_label": "palettes"
-    },
-    {
-      "label": "palette()",
+      "label": "formatRelative()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L18",
-      "id": "users_invitationstab_palette",
+      "id": "users_invitationstab_formatrelative",
       "community": 49,
-      "norm_label": "palette()"
+      "norm_label": "formatrelative()"
+    },
+    {
+      "label": "minDateStr()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L32",
+      "id": "users_invitationstab_mindatestr",
+      "community": 49,
+      "norm_label": "mindatestr()"
+    },
+    {
+      "label": "STATUS_STYLE",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L40",
+      "id": "users_invitationstab_status_style",
+      "community": 49,
+      "norm_label": "status_style"
+    },
+    {
+      "label": "ROLE_DISPLAY",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L47",
+      "id": "users_invitationstab_role_display",
+      "community": 49,
+      "norm_label": "role_display"
     },
     {
       "label": "sk()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L23",
+      "source_location": "L56",
       "id": "users_invitationstab_sk",
       "community": 49,
       "norm_label": "sk()"
@@ -7360,7 +7684,7 @@
       "label": "SkeletonRow()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L32",
+      "source_location": "L65",
       "id": "users_invitationstab_skeletonrow",
       "community": 49,
       "norm_label": "skeletonrow()"
@@ -7369,7 +7693,7 @@
       "label": "TH",
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L53",
+      "source_location": "L85",
       "id": "users_invitationstab_th",
       "community": 49,
       "norm_label": "th"
@@ -7378,16 +7702,34 @@
       "label": "TD",
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L58",
+      "source_location": "L90",
       "id": "users_invitationstab_td",
       "community": 49,
       "norm_label": "td"
     },
     {
+      "label": "ActionBtn()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L97",
+      "id": "users_invitationstab_actionbtn",
+      "community": 49,
+      "norm_label": "actionbtn()"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L127",
+      "id": "users_invitationstab_props",
+      "community": 49,
+      "norm_label": "props"
+    },
+    {
       "label": "InvitationsTab()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L63",
+      "source_location": "L134",
       "id": "users_invitationstab_invitationstab",
       "community": 49,
       "norm_label": "invitationstab()"
@@ -7481,6 +7823,87 @@
       "id": "users_pendingverificationtab_pendingverificationtab",
       "community": 63,
       "norm_label": "pendingverificationtab()"
+    },
+    {
+      "label": "SendInvitationModal.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "community": 73,
+      "norm_label": "sendinvitationmodal.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L6",
+      "id": "users_sendinvitationmodal_props",
+      "community": 73,
+      "norm_label": "props"
+    },
+    {
+      "label": "ROLE_OPTIONS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L12",
+      "id": "users_sendinvitationmodal_role_options",
+      "community": 73,
+      "norm_label": "role_options"
+    },
+    {
+      "label": "EXPIRY_OPTIONS",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L19",
+      "id": "users_sendinvitationmodal_expiry_options",
+      "community": 73,
+      "norm_label": "expiry_options"
+    },
+    {
+      "label": "INPUT",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L26",
+      "id": "users_sendinvitationmodal_input",
+      "community": 73,
+      "norm_label": "input"
+    },
+    {
+      "label": "LABEL",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L33",
+      "id": "users_sendinvitationmodal_label",
+      "community": 73,
+      "norm_label": "label"
+    },
+    {
+      "label": "focusIn()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L37",
+      "id": "users_sendinvitationmodal_focusin",
+      "community": 73,
+      "norm_label": "focusin()"
+    },
+    {
+      "label": "focusOut()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L41",
+      "id": "users_sendinvitationmodal_focusout",
+      "community": 73,
+      "norm_label": "focusout()"
+    },
+    {
+      "label": "SendInvitationModal()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L46",
+      "id": "users_sendinvitationmodal_sendinvitationmodal",
+      "community": 66,
+      "norm_label": "sendinvitationmodal()"
     },
     {
       "label": "SuspendedTab.tsx",
@@ -7614,7 +8037,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_toast_tsx",
-      "community": 50,
+      "community": 71,
       "norm_label": "toast.tsx"
     },
     {
@@ -7623,7 +8046,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L3",
       "id": "users_toast_toasttype",
-      "community": 50,
+      "community": 71,
       "norm_label": "toasttype"
     },
     {
@@ -7632,7 +8055,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L5",
       "id": "users_toast_toastitem",
-      "community": 50,
+      "community": 71,
       "norm_label": "toastitem"
     },
     {
@@ -7650,7 +8073,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L29",
       "id": "users_toast_containerprops",
-      "community": 50,
+      "community": 71,
       "norm_label": "containerprops"
     },
     {
@@ -7659,7 +8082,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L34",
       "id": "users_toast_toastcontainer",
-      "community": 50,
+      "community": 71,
       "norm_label": "toastcontainer()"
     },
     {
@@ -7780,10 +8203,19 @@
       "norm_label": "coursestatusstyle()"
     },
     {
+      "label": "ROLE_DISPLAY",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
+      "source_location": "L83",
+      "id": "users_userdetailsdrawer_role_display",
+      "community": 34,
+      "norm_label": "role_display"
+    },
+    {
       "label": "IcoBack()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L85",
+      "source_location": "L92",
       "id": "users_userdetailsdrawer_icoback",
       "community": 34,
       "norm_label": "icoback()"
@@ -7792,7 +8224,7 @@
       "label": "IcoClose()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L86",
+      "source_location": "L93",
       "id": "users_userdetailsdrawer_icoclose",
       "community": 34,
       "norm_label": "icoclose()"
@@ -7801,7 +8233,7 @@
       "label": "IcoMail()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L87",
+      "source_location": "L94",
       "id": "users_userdetailsdrawer_icomail",
       "community": 34,
       "norm_label": "icomail()"
@@ -7810,7 +8242,7 @@
       "label": "IcoPhone()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L88",
+      "source_location": "L95",
       "id": "users_userdetailsdrawer_icophone",
       "community": 34,
       "norm_label": "icophone()"
@@ -7819,7 +8251,7 @@
       "label": "IcoAlert()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L89",
+      "source_location": "L96",
       "id": "users_userdetailsdrawer_icoalert",
       "community": 34,
       "norm_label": "icoalert()"
@@ -7828,7 +8260,7 @@
       "label": "IcoPencil()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L91",
+      "source_location": "L98",
       "id": "users_userdetailsdrawer_icopencil",
       "community": 34,
       "norm_label": "icopencil()"
@@ -7837,7 +8269,7 @@
       "label": "IcoKey()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L92",
+      "source_location": "L99",
       "id": "users_userdetailsdrawer_icokey",
       "community": 34,
       "norm_label": "icokey()"
@@ -7846,7 +8278,7 @@
       "label": "IcoLogout()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L93",
+      "source_location": "L100",
       "id": "users_userdetailsdrawer_icologout",
       "community": 34,
       "norm_label": "icologout()"
@@ -7855,7 +8287,7 @@
       "label": "IcoShield()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L94",
+      "source_location": "L101",
       "id": "users_userdetailsdrawer_icoshield",
       "community": 34,
       "norm_label": "icoshield()"
@@ -7864,7 +8296,7 @@
       "label": "IcoChat()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L95",
+      "source_location": "L102",
       "id": "users_userdetailsdrawer_icochat",
       "community": 34,
       "norm_label": "icochat()"
@@ -7873,7 +8305,7 @@
       "label": "Section()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L100",
+      "source_location": "L107",
       "id": "users_userdetailsdrawer_section",
       "community": 34,
       "norm_label": "section()"
@@ -7882,7 +8314,7 @@
       "label": "InfoRow()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L114",
+      "source_location": "L121",
       "id": "users_userdetailsdrawer_inforow",
       "community": 34,
       "norm_label": "inforow()"
@@ -7891,7 +8323,7 @@
       "label": "EmptyState()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L128",
+      "source_location": "L135",
       "id": "users_userdetailsdrawer_emptystate",
       "community": 34,
       "norm_label": "emptystate()"
@@ -7900,7 +8332,7 @@
       "label": "DrawerTab",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L139",
+      "source_location": "L146",
       "id": "users_userdetailsdrawer_drawertab",
       "community": 34,
       "norm_label": "drawertab"
@@ -7909,7 +8341,7 @@
       "label": "DRAWER_TABS",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L141",
+      "source_location": "L148",
       "id": "users_userdetailsdrawer_drawer_tabs",
       "community": 34,
       "norm_label": "drawer_tabs"
@@ -7918,7 +8350,7 @@
       "label": "ActionBtn()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L151",
+      "source_location": "L158",
       "id": "users_userdetailsdrawer_actionbtn",
       "community": 34,
       "norm_label": "actionbtn()"
@@ -7927,7 +8359,7 @@
       "label": "IcoBan()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L184",
+      "source_location": "L191",
       "id": "users_userdetailsdrawer_icoban",
       "community": 34,
       "norm_label": "icoban()"
@@ -7936,7 +8368,7 @@
       "label": "IcoCheck()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L185",
+      "source_location": "L192",
       "id": "users_userdetailsdrawer_icocheck",
       "community": 34,
       "norm_label": "icocheck()"
@@ -7945,7 +8377,7 @@
       "label": "Props",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L189",
+      "source_location": "L196",
       "id": "users_userdetailsdrawer_props",
       "community": 34,
       "norm_label": "props"
@@ -7954,7 +8386,7 @@
       "label": "UserDetailsDrawer()",
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
-      "source_location": "L196",
+      "source_location": "L203",
       "id": "users_userdetailsdrawer_userdetailsdrawer",
       "community": 34,
       "norm_label": "userdetailsdrawer()"
@@ -8145,7 +8577,7 @@
       "source_file": "frontend/src/components/users/UserTable.tsx",
       "source_location": "L20",
       "id": "users_usertable_loadvisiblecols",
-      "community": 59,
+      "community": 20,
       "norm_label": "loadvisiblecols()"
     },
     {
@@ -8595,7 +9027,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L1",
       "id": "frontend_src_hooks_useroles_ts",
-      "community": 31,
+      "community": 69,
       "norm_label": "useroles.ts"
     },
     {
@@ -8604,7 +9036,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L4",
       "id": "hooks_useroles_roleoption",
-      "community": 31,
+      "community": 69,
       "norm_label": "roleoption"
     },
     {
@@ -8613,7 +9045,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L11",
       "id": "hooks_useroles_enum_roles",
-      "community": 31,
+      "community": 69,
       "norm_label": "enum_roles"
     },
     {
@@ -8622,7 +9054,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L12",
       "id": "hooks_useroles_role_alias",
-      "community": 31,
+      "community": 69,
       "norm_label": "role_alias"
     },
     {
@@ -8631,7 +9063,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L17",
       "id": "hooks_useroles_rolenametoenum",
-      "community": 31,
+      "community": 69,
       "norm_label": "rolenametoenum()"
     },
     {
@@ -8926,7 +9358,7 @@
       "label": "ROLE_LABELS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L251",
+      "source_location": "L252",
       "id": "pages_dashboardpage_role_labels",
       "community": 6,
       "norm_label": "role_labels"
@@ -8935,7 +9367,7 @@
       "label": "UsersRoleDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L255",
+      "source_location": "L257",
       "id": "pages_dashboardpage_usersroledonut",
       "community": 6,
       "norm_label": "usersroledonut()"
@@ -8944,7 +9376,7 @@
       "label": "CompletionDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L298",
+      "source_location": "L300",
       "id": "pages_dashboardpage_completiondonut",
       "community": 6,
       "norm_label": "completiondonut()"
@@ -8953,7 +9385,7 @@
       "label": "AVATAR_COLORS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L339",
+      "source_location": "L341",
       "id": "pages_dashboardpage_avatar_colors",
       "community": 6,
       "norm_label": "avatar_colors"
@@ -8962,7 +9394,7 @@
       "label": "ActivityAvatar()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L341",
+      "source_location": "L343",
       "id": "pages_dashboardpage_activityavatar",
       "community": 6,
       "norm_label": "activityavatar()"
@@ -8971,7 +9403,7 @@
       "label": "ACTIVITY_ICON_BG",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L355",
+      "source_location": "L357",
       "id": "pages_dashboardpage_activity_icon_bg",
       "community": 6,
       "norm_label": "activity_icon_bg"
@@ -8980,7 +9412,7 @@
       "label": "ACTIVITY_ICON_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L358",
+      "source_location": "L360",
       "id": "pages_dashboardpage_activity_icon_color",
       "community": 6,
       "norm_label": "activity_icon_color"
@@ -8989,7 +9421,7 @@
       "label": "NOTIF_BG",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L361",
+      "source_location": "L363",
       "id": "pages_dashboardpage_notif_bg",
       "community": 6,
       "norm_label": "notif_bg"
@@ -8998,7 +9430,7 @@
       "label": "NOTIF_ICON_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L364",
+      "source_location": "L366",
       "id": "pages_dashboardpage_notif_icon_color",
       "community": 6,
       "norm_label": "notif_icon_color"
@@ -9007,7 +9439,7 @@
       "label": "NotifIcon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L368",
+      "source_location": "L370",
       "id": "pages_dashboardpage_notificon",
       "community": 6,
       "norm_label": "notificon()"
@@ -9016,7 +9448,7 @@
       "label": "RevenueCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L388",
+      "source_location": "L390",
       "id": "pages_dashboardpage_revenuecard",
       "community": 6,
       "norm_label": "revenuecard()"
@@ -9025,7 +9457,7 @@
       "label": "UserAnalyticsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L414",
+      "source_location": "L416",
       "id": "pages_dashboardpage_useranalyticscard",
       "community": 6,
       "norm_label": "useranalyticscard()"
@@ -9034,7 +9466,7 @@
       "label": "CourseAnalyticsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L431",
+      "source_location": "L433",
       "id": "pages_dashboardpage_courseanalyticscard",
       "community": 6,
       "norm_label": "courseanalyticscard()"
@@ -9043,7 +9475,7 @@
       "label": "InstructorPerformanceCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L456",
+      "source_location": "L458",
       "id": "pages_dashboardpage_instructorperformancecard",
       "community": 6,
       "norm_label": "instructorperformancecard()"
@@ -9052,7 +9484,7 @@
       "label": "StudentEngagementCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L479",
+      "source_location": "L481",
       "id": "pages_dashboardpage_studentengagementcard",
       "community": 6,
       "norm_label": "studentengagementcard()"
@@ -9061,7 +9493,7 @@
       "label": "PRIORITY_STYLE",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L504",
+      "source_location": "L506",
       "id": "pages_dashboardpage_priority_style",
       "community": 6,
       "norm_label": "priority_style"
@@ -9070,7 +9502,7 @@
       "label": "TX_STATUS_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L511",
+      "source_location": "L513",
       "id": "pages_dashboardpage_tx_status_color",
       "community": 6,
       "norm_label": "tx_status_color"
@@ -9079,7 +9511,7 @@
       "label": "TX_TYPE_LABEL",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L515",
+      "source_location": "L517",
       "id": "pages_dashboardpage_tx_type_label",
       "community": 6,
       "norm_label": "tx_type_label"
@@ -9088,7 +9520,7 @@
       "label": "CALENDAR_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L520",
+      "source_location": "L522",
       "id": "pages_dashboardpage_calendar_color",
       "community": 6,
       "norm_label": "calendar_color"
@@ -9097,7 +9529,7 @@
       "label": "INSIGHT_STYLE",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L525",
+      "source_location": "L527",
       "id": "pages_dashboardpage_insight_style",
       "community": 6,
       "norm_label": "insight_style"
@@ -9106,7 +9538,7 @@
       "label": "CS_BTN",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L531",
+      "source_location": "L533",
       "id": "pages_dashboardpage_cs_btn",
       "community": 6,
       "norm_label": "cs_btn"
@@ -9115,7 +9547,7 @@
       "label": "PendingApprovalsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L539",
+      "source_location": "L541",
       "id": "pages_dashboardpage_pendingapprovalscard",
       "community": 6,
       "norm_label": "pendingapprovalscard()"
@@ -9124,7 +9556,7 @@
       "label": "LiveSessionsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L583",
+      "source_location": "L585",
       "id": "pages_dashboardpage_livesessionscard",
       "community": 6,
       "norm_label": "livesessionscard()"
@@ -9133,7 +9565,7 @@
       "label": "TasksRemindersCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L624",
+      "source_location": "L626",
       "id": "pages_dashboardpage_tasksreminderscard",
       "community": 6,
       "norm_label": "tasksreminderscard()"
@@ -9142,7 +9574,7 @@
       "label": "RecentTransactionsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L662",
+      "source_location": "L664",
       "id": "pages_dashboardpage_recenttransactionscard",
       "community": 6,
       "norm_label": "recenttransactionscard()"
@@ -9151,7 +9583,7 @@
       "label": "CalendarEventsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L693",
+      "source_location": "L695",
       "id": "pages_dashboardpage_calendareventscard",
       "community": 6,
       "norm_label": "calendareventscard()"
@@ -9160,7 +9592,7 @@
       "label": "ReportsSnapshotCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L729",
+      "source_location": "L731",
       "id": "pages_dashboardpage_reportssnapshotcard",
       "community": 6,
       "norm_label": "reportssnapshotcard()"
@@ -9169,7 +9601,7 @@
       "label": "AiInsightsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L758",
+      "source_location": "L760",
       "id": "pages_dashboardpage_aiinsightscard",
       "community": 6,
       "norm_label": "aiinsightscard()"
@@ -9178,7 +9610,7 @@
       "label": "DashboardPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L787",
+      "source_location": "L789",
       "id": "pages_dashboardpage_dashboardpage",
       "community": 23,
       "norm_label": "dashboardpage()"
@@ -9261,7 +9693,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_resetpasswordpage_tsx",
-      "community": 37,
+      "community": 28,
       "norm_label": "resetpasswordpage.tsx"
     },
     {
@@ -9270,7 +9702,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L7",
       "id": "pages_resetpasswordpage_iconshieldcheck",
-      "community": 37,
+      "community": 28,
       "norm_label": "iconshieldcheck()"
     },
     {
@@ -9279,7 +9711,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L18",
       "id": "pages_resetpasswordpage_authshell",
-      "community": 37,
+      "community": 28,
       "norm_label": "authshell()"
     },
     {
@@ -9288,7 +9720,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L34",
       "id": "pages_resetpasswordpage_resetpasswordpage",
-      "community": 37,
+      "community": 28,
       "norm_label": "resetpasswordpage()"
     },
     {
@@ -9297,7 +9729,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_rolespermissionspage_tsx",
-      "community": 31,
+      "community": 72,
       "norm_label": "rolespermissionspage.tsx"
     },
     {
@@ -9306,7 +9738,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L5",
       "id": "pages_rolespermissionspage_tab_style_base",
-      "community": 31,
+      "community": 72,
       "norm_label": "tab_style_base"
     },
     {
@@ -9315,7 +9747,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L13",
       "id": "pages_rolespermissionspage_rolespermissionspage",
-      "community": 31,
+      "community": 72,
       "norm_label": "rolespermissionspage()"
     },
     {
@@ -9585,7 +10017,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L12",
       "id": "routes_protectedroute_protectedroute",
-      "community": 45,
+      "community": 53,
       "norm_label": "protectedroute()"
     },
     {
@@ -10233,7 +10665,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L1",
       "id": "frontend_src_types_organization_ts",
-      "community": 44,
+      "community": 42,
       "norm_label": "organization.ts"
     },
     {
@@ -10269,7 +10701,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L6",
       "id": "types_organization_teamstatus",
-      "community": 44,
+      "community": 42,
       "norm_label": "teamstatus"
     },
     {
@@ -10305,7 +10737,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L34",
       "id": "types_organization_createdepartmentbody",
-      "community": 44,
+      "community": 42,
       "norm_label": "createdepartmentbody"
     },
     {
@@ -10377,7 +10809,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L132",
       "id": "types_organization_orgchartedge",
-      "community": 44,
+      "community": 42,
       "norm_label": "orgchartedge"
     },
     {
@@ -10404,7 +10836,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L165",
       "id": "types_organization_orgpagination",
-      "community": 44,
+      "community": 42,
       "norm_label": "orgpagination"
     },
     {
@@ -10413,7 +10845,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L172",
       "id": "types_organization_departmentsresponse",
-      "community": 44,
+      "community": 42,
       "norm_label": "departmentsresponse"
     },
     {
@@ -10422,7 +10854,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L173",
       "id": "types_organization_branchesresponse",
-      "community": 44,
+      "community": 42,
       "norm_label": "branchesresponse"
     },
     {
@@ -10431,7 +10863,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L174",
       "id": "types_organization_teamsresponse",
-      "community": 44,
+      "community": 42,
       "norm_label": "teamsresponse"
     },
     {
@@ -10458,7 +10890,7 @@
       "source_file": "frontend/src/types/passwordRecovery.ts",
       "source_location": "L14",
       "id": "types_passwordrecovery_resetpasswordstep",
-      "community": 37,
+      "community": 28,
       "norm_label": "resetpasswordstep"
     },
     {
@@ -10521,7 +10953,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L1",
       "id": "frontend_src_types_rolespermissions_ts",
-      "community": 31,
+      "community": 68,
       "norm_label": "rolespermissions.ts"
     },
     {
@@ -10530,7 +10962,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L1",
       "id": "types_rolespermissions_role",
-      "community": 31,
+      "community": 68,
       "norm_label": "role"
     },
     {
@@ -10539,7 +10971,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L12",
       "id": "types_rolespermissions_permission",
-      "community": 31,
+      "community": 68,
       "norm_label": "permission"
     },
     {
@@ -10611,7 +11043,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L52",
       "id": "types_users_roletype",
-      "community": 32,
+      "community": 68,
       "norm_label": "roletype"
     },
     {
@@ -10629,7 +11061,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L54",
       "id": "types_users_coursestatus",
-      "community": 32,
+      "community": 34,
       "norm_label": "coursestatus"
     },
     {
@@ -10683,7 +11115,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L103",
       "id": "types_users_userdetailsresponse",
-      "community": 27,
+      "community": 34,
       "norm_label": "userdetailsresponse"
     },
     {
@@ -10719,7 +11151,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L145",
       "id": "types_users_assignrolerequest",
-      "community": 32,
+      "community": 68,
       "norm_label": "assignrolerequest"
     },
     {
@@ -10728,7 +11160,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L151",
       "id": "types_users_actionresponse",
-      "community": 27,
+      "community": 32,
       "norm_label": "actionresponse"
     },
     {
@@ -10822,19 +11254,55 @@
       "norm_label": "importresult"
     },
     {
-      "label": "BulkActionType",
+      "label": "InvitationStatus",
       "file_type": "code",
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L197",
+      "id": "types_users_invitationstatus",
+      "community": 49,
+      "norm_label": "invitationstatus"
+    },
+    {
+      "label": "Invitation",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L199",
+      "id": "types_users_invitation",
+      "community": 49,
+      "norm_label": "invitation"
+    },
+    {
+      "label": "InvitationsResponse",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L212",
+      "id": "types_users_invitationsresponse",
+      "community": 32,
+      "norm_label": "invitationsresponse"
+    },
+    {
+      "label": "SendInvitationRequest",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L218",
+      "id": "types_users_sendinvitationrequest",
+      "community": 32,
+      "norm_label": "sendinvitationrequest"
+    },
+    {
+      "label": "BulkActionType",
+      "file_type": "code",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L228",
       "id": "types_users_bulkactiontype",
-      "community": 27,
+      "community": 70,
       "norm_label": "bulkactiontype"
     },
     {
       "label": "BulkActionError",
       "file_type": "code",
       "source_file": "frontend/src/types/users.ts",
-      "source_location": "L199",
+      "source_location": "L230",
       "id": "types_users_bulkactionerror",
       "community": 32,
       "norm_label": "bulkactionerror"
@@ -10843,9 +11311,9 @@
       "label": "BulkActionResponse",
       "file_type": "code",
       "source_file": "frontend/src/types/users.ts",
-      "source_location": "L204",
+      "source_location": "L235",
       "id": "types_users_bulkactionresponse",
-      "community": 27,
+      "community": 32,
       "norm_label": "bulkactionresponse"
     },
     {
@@ -10854,7 +11322,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "frontend_src_utils_autherrors_ts",
-      "community": 37,
+      "community": 45,
       "norm_label": "autherrors.ts"
     },
     {
@@ -10863,7 +11331,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "utils_autherrors_getautherrormessage",
-      "community": 37,
+      "community": 45,
       "norm_label": "getautherrormessage()"
     },
     {
@@ -10930,6 +11398,33 @@
       "norm_label": "code:js (// eslint.config.js)"
     },
     {
+      "label": "initials()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L9",
+      "community": 49,
+      "norm_label": "initials()",
+      "id": "users_invitationstab_initials"
+    },
+    {
+      "label": "PALETTES",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L13",
+      "community": 49,
+      "norm_label": "palettes",
+      "id": "users_invitationstab_palettes"
+    },
+    {
+      "label": "palette()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L18",
+      "community": 49,
+      "norm_label": "palette()",
+      "id": "users_invitationstab_palette"
+    },
+    {
       "label": "{\r\n  getUsersList,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  approveVerification,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n  importUsers,\r\n  bulkActionUsers,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
@@ -10943,7 +11438,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L13",
-      "community": 32,
+      "community": 68,
       "norm_label": "roles",
       "id": "users_assignrolemodal_roles"
     },
@@ -10988,7 +11483,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L8",
-      "community": 27,
+      "community": 70,
       "norm_label": "actions",
       "id": "users_bulkactionsmenu_actions"
     },
@@ -11420,7 +11915,7 @@
       "file_type": "code",
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L19",
-      "community": 37,
+      "community": 28,
       "norm_label": "iconalerttriangle()",
       "id": "pages_resetpasswordpage_iconalerttriangle"
     },
@@ -11537,7 +12032,7 @@
       "file_type": "code",
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L5",
-      "community": 53,
+      "community": 25,
       "norm_label": "profile",
       "id": "src_authcontext_profile"
     }
@@ -12021,6 +12516,27 @@
       "target": "backend_server_groupsroutes"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_src_routes_invitations_routes_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_server_invitationsroutes"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/server.js",
@@ -12333,6 +12849,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "backend_src_config_prisma_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/services/organization.service.js",
       "source_location": "L1",
       "weight": 1.0,
@@ -12543,9 +13070,9 @@
       "source_file": "backend/src/controllers/admin.controller.js",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_admin_controller_js",
-      "target": "backend_src_middlewares_auth_middleware_js",
-      "confidence_score": 1.0
+      "target": "backend_src_middlewares_auth_middleware_js"
     },
     {
       "relation": "imports",
@@ -12554,9 +13081,9 @@
       "source_file": "backend/src/controllers/admin.controller.js",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_admin_controller_js",
-      "target": "middlewares_auth_middleware_invalidatecachedsession",
-      "confidence_score": 1.0
+      "target": "middlewares_auth_middleware_invalidatecachedsession"
     },
     {
       "relation": "contains",
@@ -12564,9 +13091,9 @@
       "source_file": "backend/src/controllers/admin.controller.js",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_admin_controller_js",
-      "target": "controllers_admin_controller_invalidatecachedsession",
-      "confidence_score": 1.0
+      "target": "controllers_admin_controller_invalidatecachedsession"
     },
     {
       "relation": "contains",
@@ -13354,6 +13881,143 @@
       "confidence_score": 1.0,
       "source": "controllers_groups_controller_removemember",
       "target": "controllers_groups_controller_servererror"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_invitations_controller_js",
+      "target": "backend_src_services_invitations_service_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_invitations_controller_js",
+      "target": "controllers_invitations_controller_invitationsservice"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_invitations_controller_js",
+      "target": "controllers_invitations_controller_list"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_invitations_controller_js",
+      "target": "controllers_invitations_controller_send"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_invitations_controller_js",
+      "target": "controllers_invitations_controller_resend"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_invitations_controller_js",
+      "target": "controllers_invitations_controller_cancel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/invitations.controller.js",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_invitations_controller_js",
+      "target": "controllers_invitations_controller_updateexpiration"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "backend_src_controllers_invitations_controller_js"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "controllers_invitations_controller_list"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "controllers_invitations_controller_send"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "controllers_invitations_controller_resend"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "controllers_invitations_controller_cancel"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "controllers_invitations_controller_updateexpiration"
     },
     {
       "relation": "imports_from",
@@ -16220,9 +16884,9 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_middlewares_auth_middleware_js",
-      "target": "middlewares_auth_middleware_session_cache",
-      "confidence_score": 1.0
+      "target": "middlewares_auth_middleware_session_cache"
     },
     {
       "relation": "contains",
@@ -16230,9 +16894,9 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_middlewares_auth_middleware_js",
-      "target": "middlewares_auth_middleware_getcachedsession",
-      "confidence_score": 1.0
+      "target": "middlewares_auth_middleware_getcachedsession"
     },
     {
       "relation": "contains",
@@ -16240,9 +16904,9 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_middlewares_auth_middleware_js",
-      "target": "middlewares_auth_middleware_setcachedsession",
-      "confidence_score": 1.0
+      "target": "middlewares_auth_middleware_setcachedsession"
     },
     {
       "relation": "contains",
@@ -16250,9 +16914,9 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_middlewares_auth_middleware_js",
-      "target": "middlewares_auth_middleware_invalidatecachedsession",
-      "confidence_score": 1.0
+      "target": "middlewares_auth_middleware_invalidatecachedsession"
     },
     {
       "relation": "contains",
@@ -16295,6 +16959,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_routes_groups_routes_js",
+      "target": "backend_src_middlewares_auth_middleware_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
       "target": "backend_src_middlewares_auth_middleware_js"
     },
     {
@@ -16348,9 +17023,9 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middlewares_auth_middleware_requireadminauth",
-      "target": "middlewares_auth_middleware_getcachedsession",
-      "confidence_score": 1.0
+      "target": "middlewares_auth_middleware_getcachedsession"
     },
     {
       "relation": "calls",
@@ -16359,9 +17034,9 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L108",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middlewares_auth_middleware_requireadminauth",
-      "target": "middlewares_auth_middleware_setcachedsession",
-      "confidence_score": 1.0
+      "target": "middlewares_auth_middleware_setcachedsession"
     },
     {
       "relation": "imports",
@@ -16394,6 +17069,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_routes_groups_routes_js",
+      "target": "middlewares_auth_middleware_requireadminauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
       "target": "middlewares_auth_middleware_requireadminauth"
     },
     {
@@ -16516,6 +17202,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "backend_src_middlewares_ratelimit_middleware_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/organization.routes.js",
       "source_location": "L3",
       "weight": 1.0,
@@ -16576,6 +17273,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_routes_groups_routes_js",
+      "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
       "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter"
     },
     {
@@ -16895,6 +17603,56 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_groups_routes_js",
       "target": "routes_groups_routes_router"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "routes_invitations_routes_express"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "routes_invitations_routes_requireadminauth"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "routes_invitations_routes_adminuseractionratelimiter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "routes_invitations_routes_list_send_resend_cancel_updateexpiration"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/invitations.routes.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_invitations_routes_js",
+      "target": "routes_invitations_routes_router"
     },
     {
       "relation": "contains",
@@ -17812,9 +18570,9 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_dashboard_service_js",
-      "target": "services_dashboard_service_action_type",
-      "confidence_score": 1.0
+      "target": "services_dashboard_service_action_type"
     },
     {
       "relation": "contains",
@@ -17822,9 +18580,9 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_dashboard_service_js",
-      "target": "services_dashboard_service_action_title",
-      "confidence_score": 1.0
+      "target": "services_dashboard_service_action_title"
     },
     {
       "relation": "contains",
@@ -17832,9 +18590,9 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_dashboard_service_js",
-      "target": "services_dashboard_service_mapaudittoactivity",
-      "confidence_score": 1.0
+      "target": "services_dashboard_service_mapaudittoactivity"
     },
     {
       "relation": "contains",
@@ -17873,9 +18631,9 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_dashboard_service_getdashboardcore",
-      "target": "services_dashboard_service_mapaudittoactivity",
-      "confidence_score": 1.0
+      "target": "services_dashboard_service_mapaudittoactivity"
     },
     {
       "relation": "contains",
@@ -18082,6 +18840,256 @@
       "confidence_score": 1.0,
       "source": "services_groups_service_addmembers",
       "target": "services_groups_service_getgroupmembers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_prisma"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_valid_statuses"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_valid_roles"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_role_map"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_status_map"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_makeerror"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_mapinvitation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_autoexpire"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L53",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_listinvitations"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L90",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_sendinvitation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L141",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_resendinvitation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_cancelinvitation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L182",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_updateexpiration"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L206",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_invitations_service_js",
+      "target": "services_invitations_service_countpendinginvitations"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L99",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_sendinvitation",
+      "target": "services_invitations_service_makeerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L143",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_resendinvitation",
+      "target": "services_invitations_service_makeerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L166",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_cancelinvitation",
+      "target": "services_invitations_service_makeerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L184",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_updateexpiration",
+      "target": "services_invitations_service_makeerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L137",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_sendinvitation",
+      "target": "services_invitations_service_mapinvitation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L160",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_resendinvitation",
+      "target": "services_invitations_service_mapinvitation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L178",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_cancelinvitation",
+      "target": "services_invitations_service_mapinvitation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L202",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_updateexpiration",
+      "target": "services_invitations_service_mapinvitation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_listinvitations",
+      "target": "services_invitations_service_autoexpire"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/invitations.service.js",
+      "source_location": "L207",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invitations_service_countpendinginvitations",
+      "target": "services_invitations_service_autoexpire"
     },
     {
       "relation": "contains",
@@ -22271,6 +23279,17 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/api/users.ts",
+      "source_location": "L254",
+      "weight": 1.0,
+      "source": "api_users_getinvitations",
+      "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/api/users.ts",
       "source_location": "L216",
       "weight": 1.0,
       "source": "api_users_getanalytics",
@@ -24561,6 +25580,39 @@
       "target": "types_users_bulkactionresponse"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "types_users_invitation"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "types_users_invitationsresponse"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "types_users_sendinvitationrequest"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/api/users.ts",
@@ -24729,6 +25781,66 @@
       "confidence_score": 1.0,
       "source": "frontend_src_api_users_ts",
       "target": "api_users_exportallusers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L246",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_invitationparams"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L253",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_getinvitations"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L274",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_sendinvitation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L278",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_resendinvitation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L282",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_cancelinvitation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L286",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_users_ts",
+      "target": "api_users_updateinvitationexpiry"
     },
     {
       "relation": "contains",
@@ -24947,6 +26059,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_pendingverificationtab_tsx",
+      "target": "frontend_src_api_users_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
       "target": "frontend_src_api_users_ts"
     },
     {
@@ -25247,17 +26370,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "frontend_src_components_users_invitationstab_tsx",
-      "target": "api_users_getusers"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
@@ -25285,6 +26397,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
+      "target": "api_users_getusers"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
       "target": "api_users_getusers"
     },
     {
@@ -25384,6 +26507,50 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "api_users_assignrole",
+      "target": "api_users_actionfetch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L275",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_users_sendinvitation",
+      "target": "api_users_actionfetch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L279",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_users_resendinvitation",
+      "target": "api_users_actionfetch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L283",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_users_cancelinvitation",
+      "target": "api_users_actionfetch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/users.ts",
+      "source_location": "L287",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "api_users_updateinvitationexpiry",
       "target": "api_users_actionfetch"
     },
     {
@@ -25489,17 +26656,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "frontend_src_components_users_invitationstab_tsx",
-      "target": "api_users_deleteuser"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
@@ -25516,6 +26672,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_suspendedtab_tsx",
+      "target": "api_users_deleteuser"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
       "target": "api_users_deleteuser"
     },
     {
@@ -25583,6 +26750,61 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_exportusersmodal_tsx",
       "target": "api_users_exportallusers"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "api_users_getinvitations"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "api_users_sendinvitation"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "api_users_resendinvitation"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "api_users_cancelinvitation"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "api_users_updateinvitationexpiry"
     },
     {
       "relation": "imports",
@@ -29085,11 +30307,55 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L3",
+      "source_location": "L8",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_invitationstab_tsx",
-      "target": "types_users_user"
+      "target": "types_users_invitation"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "types_users_invitationstatus"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "frontend_src_components_users_toast_tsx"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_toast_toasttype"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "frontend_src_components_users_sendinvitationmodal_tsx"
     },
     {
       "relation": "contains",
@@ -29105,31 +30371,41 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "frontend_src_components_users_invitationstab_tsx",
-      "target": "users_invitationstab_initials"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "frontend_src_components_users_invitationstab_tsx",
-      "target": "users_invitationstab_palettes"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L18",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_invitationstab_tsx",
-      "target": "users_invitationstab_palette"
+      "target": "users_invitationstab_formatrelative"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_mindatestr"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_status_style"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_role_display"
     },
     {
       "relation": "contains",
@@ -29175,6 +30451,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L97",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_actionbtn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L127",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -29191,6 +30487,47 @@
       "confidence_score": 1.0,
       "source": "frontend_src_pages_usermanagementpage_tsx",
       "target": "frontend_src_components_users_invitationstab_tsx"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "types_users_user"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_initials"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_palettes"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/InvitationsTab.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_invitationstab_tsx",
+      "target": "users_invitationstab_palette"
     },
     {
       "relation": "calls",
@@ -29336,6 +30673,130 @@
       "confidence_score": 1.0,
       "source": "users_pendingverificationtab_skeletonrow",
       "target": "users_pendingverificationtab_sk"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "frontend_src_components_users_toast_tsx"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_toast_toasttype"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "frontend_src_hooks_useorgoptions_ts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_sendinvitationmodal_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_sendinvitationmodal_role_options"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_sendinvitationmodal_expiry_options"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_sendinvitationmodal_input"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_sendinvitationmodal_label"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_sendinvitationmodal_focusin"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_sendinvitationmodal_focusout"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_sendinvitationmodal_tsx",
+      "target": "users_sendinvitationmodal_sendinvitationmodal"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "users_sendinvitationmodal_sendinvitationmodal",
+      "target": "hooks_useorgoptions_useorgoptions"
     },
     {
       "relation": "imports_from",
@@ -29935,6 +31396,16 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_users_userdetailsdrawer_tsx",
       "target": "users_userdetailsdrawer_coursestatusstyle"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
+      "source_location": "L83",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_users_userdetailsdrawer_tsx",
+      "target": "users_userdetailsdrawer_role_display"
     },
     {
       "relation": "contains",
@@ -34297,6 +35768,46 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/types/users.ts",
+      "source_location": "L197",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_invitationstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L199",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_invitation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L212",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_invitationsresponse"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
+      "source_location": "L218",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_users_ts",
+      "target": "types_users_sendinvitationrequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/users.ts",
       "source_location": "L196",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -34405,5 +35916,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8f7fa40d20712a547fbb2245a47ee24b4b970c5b"
+  "built_at_commit": "aa6ee9680d74e1e93cce539b5795911b3bb0ff87"
 }

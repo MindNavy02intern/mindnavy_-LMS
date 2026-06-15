@@ -68,3 +68,22 @@ enum AppUserVerificationState {
   REJECTED
   EXPIRED
 }
+
+model Invitation {
+  id              String   @id @default(cuid())
+  email           String
+  role            String
+  department      String?
+  status          String   @default("PENDING")
+  expiresAt       DateTime
+  invitedBy       String
+  personalMessage String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([invitedBy])
+  @@map("invitations")
+}

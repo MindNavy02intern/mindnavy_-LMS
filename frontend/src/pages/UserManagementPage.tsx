@@ -266,7 +266,7 @@ export default function UserManagementPage() {
         {activeTab === 'analytics' && <UserAnalytics />}
 
         {/* Per-tab components */}
-        {activeTab === 'invitations'          && <InvitationsTab />}
+        {activeTab === 'invitations'          && <InvitationsTab showToast={showToast} onUserUpdated={notifyDashboard} />}
         {activeTab === 'suspended'            && <SuspendedTab />}
         {activeTab === 'pending-verification' && <PendingVerificationTab />}
         {activeTab === 'archived'             && <ArchivedTab />}

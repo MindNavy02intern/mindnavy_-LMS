@@ -8,7 +8,8 @@ const usersRoutes = require("./src/routes/users.routes");
 const organizationRoutes = require("./src/routes/organization.routes");
 const rolesRoutes = require("./src/routes/roles.routes");
 const permissionsRoutes = require("./src/routes/permissions.routes");
-const groupsRoutes = require("./src/routes/groups.routes");
+const groupsRoutes       = require("./src/routes/groups.routes");
+const invitationsRoutes  = require("./src/routes/invitations.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -46,6 +47,9 @@ app.use("/api/admin/permissions", permissionsRoutes);
 
 // Groups routes
 app.use("/api/admin/groups", groupsRoutes);
+
+// Invitations routes
+app.use("/api/admin/invitations", invitationsRoutes);
 
 app.use((req, res) => {
   return res.status(404).json({

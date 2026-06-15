@@ -192,6 +192,37 @@ export interface ImportResult {
   errors:  ImportError[];
 }
 
+// ── Invitations ────────────────────────────────────────────────────────────────
+
+export type InvitationStatus = 'pending' | 'accepted' | 'expired' | 'revoked';
+
+export interface Invitation {
+  id:              string;
+  email:           string;
+  role:            string;
+  department:      string | null;
+  status:          InvitationStatus;
+  expiresAt:       string;
+  invitedBy:       string;
+  personalMessage: string | null;
+  createdAt:       string;
+  updatedAt:       string;
+}
+
+export interface InvitationsResponse {
+  invitations:  Invitation[];
+  pagination:   Pagination;
+  pendingCount: number;
+}
+
+export interface SendInvitationRequest {
+  email:           string;
+  role:            string;
+  department:      string | null;
+  expiresInDays:   number;
+  personalMessage: string | null;
+}
+
 // ── Task 6E: Bulk action types ─────────────────────────────────────────────────
 
 export type BulkActionType = 'suspend' | 'reactivate' | 'archive' | 'assign_role' | 'notify';

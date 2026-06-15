@@ -80,6 +80,13 @@ function courseStatusStyle(status: CourseStatus): { color: string; label: string
   return                              { color: '#2563eb', label: 'Active',    bar: '#2563eb' };
 }
 
+const ROLE_DISPLAY: Record<string, string> = {
+  learner:         'Learner',
+  instructor:      'Instructor',
+  manager:         'Manager',
+  admin_assistant: 'Admin Assistant',
+};
+
 // ── Inline SVG icons ───────────────────────────────────────────────────────────
 
 function IcoBack()    { return <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>; }
@@ -416,7 +423,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                       </span>
                     )}
                   </div>
-                  <div style={{ fontSize: 13, color: '#6b7280' }}>{u.role}</div>
+                  <div style={{ fontSize: 13, color: '#6b7280' }}>{ROLE_DISPLAY[u.role] ?? u.role}</div>
                 </div>
               </div>
 
@@ -495,35 +502,41 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                   </Section>
 
                   <Section title="Roles">
-                    {(data!.roles ?? []).length > 0 ? (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                        {(data!.roles ?? []).map(r => {
-                          const t = roleTypeBadge(r.type);
-                          return (
-                            <div key={r.id} style={{
-                              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                              padding: '7px 10px', background: '#f9fafb',
-                              borderRadius: 6, border: '1px solid #f0f0f0',
-                            }}>
-                              <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{r.name}</span>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                {r.expiresAt && (
-                                  <span style={{ fontSize: 11, color: '#9ca3af' }}>Exp {formatDate(r.expiresAt)}</span>
-                                )}
-                                <span style={{
-                                  background: t.bg, color: t.color,
-                                  borderRadius: 100, fontSize: 10, fontWeight: 600, padding: '2px 7px',
-                                }}>
-                                  {t.label}
-                                </span>
-                              </div>
-                            </div>
-                          );
-                        })}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      {/* System role — always shown from user.role field */}
+                      <div style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        padding: '7px 10px', background: '#f9fafb',
+                        borderRadius: 6, border: '1px solid #f0f0f0',
+                      }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{ROLE_DISPLAY[u.role] ?? u.role}</span>
+                        <span style={{ background: '#eff6ff', color: '#1d4ed8', borderRadius: 100, fontSize: 10, fontWeight: 600, padding: '2px 7px', flexShrink: 0 }}>System</span>
                       </div>
-                    ) : (
-                      <p style={{ fontSize: 12, color: '#9ca3af', textAlign: 'center', margin: '8px 0' }}>No roles assigned</p>
-                    )}
+                      {/* Custom role table assignments */}
+                      {(data!.roles ?? []).map(r => {
+                        const t = roleTypeBadge(r.type);
+                        return (
+                          <div key={r.id} style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                            padding: '7px 10px', background: '#f9fafb',
+                            borderRadius: 6, border: '1px solid #f0f0f0',
+                          }}>
+                            <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{r.name}</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              {r.expiresAt && (
+                                <span style={{ fontSize: 11, color: '#9ca3af' }}>Exp {formatDate(r.expiresAt)}</span>
+                              )}
+                              <span style={{
+                                background: t.bg, color: t.color,
+                                borderRadius: 100, fontSize: 10, fontWeight: 600, padding: '2px 7px',
+                              }}>
+                                {t.label}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </Section>
 
                   <Section title="Quick Actions">
@@ -548,7 +561,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                         <InfoRow label="MFA Status"       value={
                           so.mfaEnabled
                             ? <span style={{ background: '#f0fdf4', color: '#16a34a', borderRadius: 100, fontSize: 11, fontWeight: 600, padding: '2px 8px' }}>Enabled</span>
-                            : <span style={{ background: '#fef2f2', color: '#dc2626', borderRadius: 100, fontSize: 11, fontWeight: 600, padding: '2px 8px' }}>Disabled</span>
+                            : <span style={{ background: '#f9fafb', color: '#9ca3af', borderRadius: 100, fontSize: 11, fontWeight: 600, padding: '2px 8px' }}>Not configured</span>
                         } />
                         <InfoRow label="Active Sessions"  value={String(so.activeSessions)} />
                         <InfoRow label="Last IP Address"  value={so.lastIpAddress ?? '—'} />
@@ -566,9 +579,18 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
 
               {/* ══ ROLES & ACCESS ══ */}
               {activeTab === 'roles' && (
-                (data!.roles ?? []).length > 0 ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-                    {(data!.roles ?? []).map(r => {
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+                  {/* System role — always shown */}
+                  <div style={{ padding: '12px 14px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{ROLE_DISPLAY[u.role] ?? u.role}</span>
+                      <span style={{ background: '#1d4ed8', color: '#fff', borderRadius: 100, fontSize: 10, fontWeight: 600, padding: '2px 9px' }}>System Role</span>
+                    </div>
+                    <div style={{ fontSize: 12, color: '#6b7280' }}>Assigned at registration · No expiry</div>
+                  </div>
+                  {/* Custom role assignments */}
+                  {(data!.roles ?? []).length > 0 ? (
+                    (data!.roles ?? []).map(r => {
                       const t = roleTypeBadge(r.type);
                       return (
                         <div key={r.id} style={{
@@ -589,9 +611,13 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                           </div>
                         </div>
                       );
-                    })}
-                  </div>
-                ) : <EmptyState icon="🔑" text="No roles assigned" />
+                    })
+                  ) : (
+                    <div style={{ fontSize: 12, color: '#9ca3af', textAlign: 'center', padding: '10px 0', background: '#f9fafb', borderRadius: 8, border: '1px dashed #e5e7eb' }}>
+                      No custom roles assigned
+                    </div>
+                  )}
+                </div>
               )}
 
               {/* ══ ACTIVITY ══ */}
@@ -649,7 +675,22 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                       );
                     })}
                   </div>
-                ) : <EmptyState icon="📚" text="No courses enrolled" />
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                    <div style={{ fontSize: 32, marginBottom: 12 }}>📚</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#374151', marginBottom: 6 }}>No courses enrolled</div>
+                    <div style={{ fontSize: 12, color: '#9ca3af', marginBottom: 20, lineHeight: 1.6 }}>
+                      Course assignments will be available<br />when Learning Management is set up.
+                    </div>
+                    <button disabled style={{
+                      padding: '8px 18px', fontSize: 13, fontFamily: 'inherit',
+                      fontWeight: 600, background: '#e5e7eb', color: '#9ca3af',
+                      border: 'none', borderRadius: 7, cursor: 'not-allowed',
+                    }}>
+                      Assign Course — Coming Soon
+                    </button>
+                  </div>
+                )
               )}
 
               {/* ══ MORE ══ */}

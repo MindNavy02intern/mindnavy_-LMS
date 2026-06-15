@@ -11,6 +11,9 @@ import type {
   ImportResult,
   BulkActionType,
   BulkActionResponse,
+  Invitation,
+  InvitationsResponse,
+  SendInvitationRequest,
 } from '../types/users';
 import { getStoredToken } from './adminAuth';
 
@@ -146,8 +149,9 @@ export function assignRole(userId: string, body: AssignRoleRequest): Promise<Act
 // ── getUserDetails ─────────────────────────────────────────────────────────────
 
 export async function getUserDetails(userId: string): Promise<UserDetailsResponse> {
-  const token = getStoredToken();
-  const url   = `${BASE_URL}/users/${encodeURIComponent(userId)}?_t=${Date.now()}`;
+  const token   = getStoredToken();
+  const cleanId = userId.split(':')[0].trim();
+  const url     = `${BASE_URL}/users/${encodeURIComponent(cleanId)}?_t=${Date.now()}`;
 
   try {
     const headers: Record<string, string> = {};
@@ -236,6 +240,52 @@ export async function exportAllUsers(params: ExportParams = {}): Promise<{ users
     if (err instanceof ApiError) throw err;
     throw new ApiError(0, 'Network error during export.');
   }
+}
+
+// ── Invitations ────────────────────────────────────────────────────────────────
+
+export interface InvitationParams {
+  page?:   number;
+  limit?:  number;
+  search?: string;
+  status?: string;
+}
+
+export async function getInvitations(params: InvitationParams = {}): Promise<InvitationsResponse> {
+  const token = getStoredToken();
+  const qs = new URLSearchParams();
+  if (params.page   !== undefined) qs.set('page',   String(params.page));
+  if (params.limit  !== undefined) qs.set('limit',  String(params.limit));
+  if (params.search)               qs.set('search', params.search);
+  if (params.status)               qs.set('status', params.status);
+
+  try {
+    const headers: Record<string, string> = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const res = await fetch(`${BASE_URL}/invitations?${qs.toString()}`, { headers });
+    if (res.ok) return await res.json() as InvitationsResponse;
+    const body = await res.json().catch(() => null);
+    throw new ApiError(res.status, (body as { message?: string })?.message ?? `HTTP ${res.status}`);
+  } catch (err) {
+    if (err instanceof ApiError) throw err;
+    throw new ApiError(0, 'Network error fetching invitations.');
+  }
+}
+
+export function sendInvitation(body: SendInvitationRequest): Promise<ActionResponse & { invitation?: Invitation }> {
+  return actionFetch(`${BASE_URL}/invitations`, 'POST', body) as Promise<ActionResponse & { invitation?: Invitation }>;
+}
+
+export function resendInvitation(invitationId: string): Promise<ActionResponse> {
+  return actionFetch(`${BASE_URL}/invitations/${encodeURIComponent(invitationId)}/resend`, 'POST', {});
+}
+
+export function cancelInvitation(invitationId: string): Promise<ActionResponse> {
+  return actionFetch(`${BASE_URL}/invitations/${encodeURIComponent(invitationId)}`, 'DELETE');
+}
+
+export function updateInvitationExpiry(invitationId: string, expiresAt: string): Promise<ActionResponse> {
+  return actionFetch(`${BASE_URL}/invitations/${encodeURIComponent(invitationId)}/expiration`, 'PATCH', { expiresAt });
 }
 
 // ── getAnalytics ───────────────────────────────────────────────────────────────
