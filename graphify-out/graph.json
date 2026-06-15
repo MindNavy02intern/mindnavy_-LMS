@@ -1669,13 +1669,13 @@
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
-      "label": "{\n  listPermissions, getPermission, createPermission, updatePermission, deletePermission,\n}",
+      "label": "{\r\n  listPermissions, getPermission, createPermission, updatePermission, deletePermission,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L4",
       "id": "routes_permissions_routes_listpermissions_getpermission_createpermission_updatepermission_deletepermission",
       "community": 19,
-      "norm_label": "{\n  listpermissions, getpermission, createpermission, updatepermission, deletepermission,\n}"
+      "norm_label": "{\r\n  listpermissions, getpermission, createpermission, updatepermission, deletepermission,\r\n}"
     },
     {
       "label": "router",
@@ -1723,13 +1723,13 @@
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
-      "label": "{\n  listRoles, getRole, createRole, updateRole, deleteRole,\n  getRolePermissions, assignPermissionsToRole,\n}",
+      "label": "{\r\n  listRoles, getRole, createRole, updateRole, deleteRole,\r\n  getRolePermissions, assignPermissionsToRole,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L4",
       "id": "routes_roles_routes_listroles_getrole_createrole_updaterole_deleterole_getrolepermissions_assignpermissionstorole",
       "community": 19,
-      "norm_label": "{\n  listroles, getrole, createrole, updaterole, deleterole,\n  getrolepermissions, assignpermissionstorole,\n}"
+      "norm_label": "{\r\n  listroles, getrole, createrole, updaterole, deleterole,\r\n  getrolepermissions, assignpermissionstorole,\r\n}"
     },
     {
       "label": "router",
@@ -31559,5 +31559,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "73735222c963b7c2be14c2896856acb69ddd2650"
+  "built_at_commit": "b172bb7c579ec418f441b580ebb696388b0635dd"
 }

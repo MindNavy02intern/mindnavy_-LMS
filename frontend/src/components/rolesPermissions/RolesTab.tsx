@@ -72,6 +72,9 @@ const RolesTab: React.FC = () => {
 
   // Delete confirm
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState('');
+  const [deleteUserCount, setDeleteUserCount] = useState<number | null>(null);
+  const [deleteCheckBusy, setDeleteCheckBusy] = useState(false);
   const [deleteBusy, setDeleteBusy] = useState(false);
 
   // Permissions modal
@@ -127,17 +130,39 @@ const RolesTab: React.FC = () => {
     }
   }
 
+  async function openDeleteCheck(id: string, name: string) {
+    setDeleteId(id);
+    setDeleteName(name);
+    setDeleteUserCount(null);
+    setDeleteCheckBusy(true);
+    try {
+      const res = await rolesPermissionsAPI.getRoleById(id);
+      setDeleteUserCount(res.data?.userCount ?? 0);
+    } catch {
+      setDeleteUserCount(0);
+    } finally {
+      setDeleteCheckBusy(false);
+    }
+  }
+
+  function closeDeleteDialog() {
+    setDeleteId(null);
+    setDeleteName('');
+    setDeleteUserCount(null);
+    setDeleteCheckBusy(false);
+  }
+
   async function handleDelete() {
     if (!deleteId) return;
     setDeleteBusy(true);
     try {
       await rolesPermissionsAPI.deleteRole(deleteId);
-      setDeleteId(null);
+      closeDeleteDialog();
       load();
       window.dispatchEvent(new CustomEvent('rolesUpdated'));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete role.');
-      setDeleteId(null);
+      closeDeleteDialog();
     } finally {
       setDeleteBusy(false);
     }
@@ -255,7 +280,7 @@ const RolesTab: React.FC = () => {
                         {role.userCount ?? 0}
                         {role.isCustomRole && (
                           <span
-                            title="Custom role — users are assigned via the standard system roles (Learner, Instructor, Manager, Admin Assistant). This role cannot hold users directly until the schema is extended."
+                            title="Custom role — requires a system update to assign users directly. Contact your administrator."
                             style={{ fontSize: 11, color: '#9ca3af', cursor: 'help', lineHeight: 1 }}
                           >ⓘ</span>
                         )}
@@ -286,7 +311,7 @@ const RolesTab: React.FC = () => {
                         <button onClick={() => openEdit(role)} style={{ padding: '5px 10px', border: '1px solid #e5e7eb', backgroundColor: 'white', color: '#374151', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: 500 }}>
                           ✏️ Edit
                         </button>
-                        <button onClick={() => setDeleteId(role.id)} style={{ padding: '5px 10px', border: '1px solid #fee2e2', backgroundColor: '#fff5f5', color: '#dc2626', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: 500 }}>
+                        <button onClick={() => openDeleteCheck(role.id, role.name)} style={{ padding: '5px 10px', border: '1px solid #fee2e2', backgroundColor: '#fff5f5', color: '#dc2626', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: 500 }}>
                           🗑️ Delete
                         </button>
                       </div>
@@ -362,24 +387,54 @@ const RolesTab: React.FC = () => {
       {/* Delete Confirmation */}
       {deleteId && (
         <div style={MODAL_OVERLAY}>
-          <div style={MODAL_BOX('400px')}>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-              <div style={{ fontSize: '40px', marginBottom: '12px' }}>⚠️</div>
-              <h2 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: 700, color: '#111827' }}>Delete Role?</h2>
-              <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>
-                This role will be permanently removed. This action cannot be undone.
-              </p>
-            </div>
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-              <button onClick={() => setDeleteId(null)} style={{ ...BTN_GHOST, padding: '9px 20px' }} disabled={deleteBusy}>Cancel</button>
-              <button
-                onClick={handleDelete}
-                style={{ padding: '9px 20px', backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: 500, opacity: deleteBusy ? 0.7 : 1 }}
-                disabled={deleteBusy}
-              >
-                {deleteBusy ? 'Deleting…' : 'Yes, Delete'}
-              </button>
-            </div>
+          <div style={MODAL_BOX('420px')}>
+            {deleteCheckBusy || deleteUserCount === null ? (
+              <div style={{ textAlign: 'center', padding: '24px 0' }}>
+                <div style={{ fontSize: '32px', marginBottom: '12px' }}>⏳</div>
+                <div style={{ fontSize: '14px', color: '#6b7280' }}>Checking role…</div>
+              </div>
+            ) : deleteUserCount > 0 ? (
+              <>
+                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                  <div style={{ fontSize: '40px', marginBottom: '12px' }}>🚫</div>
+                  <h2 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: 700, color: '#111827' }}>Cannot Delete Role</h2>
+                  <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px', lineHeight: 1.6 }}>
+                    <strong style={{ color: '#111827' }}>{deleteUserCount}</strong>{' '}
+                    user{deleteUserCount !== 1 ? 's are' : ' is'} currently assigned to{' '}
+                    <strong style={{ color: '#111827' }}>{deleteName}</strong>.
+                    You cannot delete this role while users are assigned to it.
+                    Please reassign those users first.
+                  </p>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <button onClick={closeDeleteDialog} style={{ ...BTN_PRIMARY, justifyContent: 'center' }}>
+                    OK, Got It
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                  <div style={{ fontSize: '40px', marginBottom: '12px' }}>⚠️</div>
+                  <h2 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: 700, color: '#111827' }}>Delete Role?</h2>
+                  <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>
+                    Are you sure you want to delete{' '}
+                    <strong style={{ color: '#111827' }}>{deleteName}</strong>?
+                    This action cannot be undone.
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                  <button onClick={closeDeleteDialog} style={{ ...BTN_GHOST, padding: '9px 20px' }} disabled={deleteBusy}>Cancel</button>
+                  <button
+                    onClick={handleDelete}
+                    style={{ padding: '9px 20px', backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: 500, opacity: deleteBusy ? 0.7 : 1 }}
+                    disabled={deleteBusy}
+                  >
+                    {deleteBusy ? 'Deleting…' : 'Yes, Delete'}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
