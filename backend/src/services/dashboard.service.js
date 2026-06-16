@@ -1,5 +1,4 @@
 const prisma = require("../config/prisma");
-const { getUsersAnalytics } = require("./users.service");
 
 // ── Audit log → ActivityItem mapper ───────────────────────────────────────────
 
@@ -63,7 +62,7 @@ async function getDashboardCore(admin) {
     recentActivitiesRaw,
     liveSessionsRunning,
   ] = await Promise.all([
-    prisma.appUser.count(),
+    prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }),
     prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }),
     prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }),
     prisma.appUser.count({ where: { verificationState: "PENDING", status: { not: "ARCHIVED" } } }),
@@ -126,50 +125,81 @@ async function getDashboardCore(admin) {
 }
 
 async function getDashboardAnalytics(filters = {}) {
-  // Pull real data from the users analytics service AND direct status counts in parallel
-  const [ua, activeUsers, suspendedUsers] = await Promise.allSettled([
-    getUsersAnalytics(),
-    prisma.appUser.count({ where: { status: "ACTIVE" } }),
-    prisma.appUser.count({ where: { status: "SUSPENDED" } }),
-  ]).then(([uaRes, activeRes, suspendedRes]) => [
-    uaRes.status     === "fulfilled" ? uaRes.value     : null,
-    activeRes.status === "fulfilled" ? activeRes.value : 0,
-    suspendedRes.status === "fulfilled" ? suspendedRes.value : 0,
+  const now = new Date();
+  const last30d      = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const startOfToday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const last7d       = new Date(now.getTime() - 7  * 24 * 60 * 60 * 1000);
+  const startOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+
+  const [
+    roleGroups,
+    departmentGroups,
+    verificationGroups,
+    statusGroups,
+    thisMonthCount,
+    activeToday,
+    activeLast7d,
+    rawDailyTrend,
+  ] = await Promise.all([
+    prisma.appUser.groupBy({ by: ["role"],              _count: { _all: true }, where: { status: { not: "ARCHIVED" } } }),
+    prisma.appUser.groupBy({ by: ["department"],        _count: { _all: true }, where: { department: { not: null } } }),
+    prisma.appUser.groupBy({ by: ["verificationState"], _count: { _all: true } }),
+    prisma.appUser.groupBy({ by: ["status"],            _count: { _all: true } }),
+    prisma.appUser.count({ where: { createdAt: { gte: startOfMonth } } }),
+    prisma.appUser.count({ where: { lastActivityAt: { gte: startOfToday } } }),
+    prisma.appUser.count({ where: { lastActivityAt: { gte: last7d } } }),
+    prisma.$queryRaw`
+      SELECT DATE("lastActivityAt") AS date, COUNT(*)::int AS count
+      FROM "app_users"
+      WHERE "lastActivityAt" >= ${last30d} AND "lastActivityAt" IS NOT NULL
+      GROUP BY DATE("lastActivityAt")
+      ORDER BY date ASC
+    `,
   ]);
 
-  if (!ua) console.error("[dashboard] getUsersAnalytics failed — charts will be empty");
+  const totalUsers     = statusGroups.filter((g) => g.status !== "ARCHIVED").reduce((s, g) => s + g._count._all, 0);
+  const activeUsers    = statusGroups.find((g) => g.status === "ACTIVE")?._count._all    ?? 0;
+  const suspendedUsers = statusGroups.find((g) => g.status === "SUSPENDED")?._count._all ?? 0;
 
-  // Map users-service role keys (LEARNER) → dashboard role keys (learners)
-  const ROLE_MAP = {
-    LEARNER:         "learners",
-    INSTRUCTOR:      "instructors",
-    MANAGER:         "managers",
-    ADMIN_ASSISTANT: "adminAssistants",
-  };
+  const ROLE_MAP  = { LEARNER: "learners", INSTRUCTOR: "instructors", MANAGER: "managers", ADMIN_ASSISTANT: "adminAssistants" };
+  const ALL_ROLES = ["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"];
+  const roleCountMap = Object.fromEntries(roleGroups.map((g) => [g.role, g._count._all]));
+  const usersByRole = ALL_ROLES.map((r) => {
+    const count = roleCountMap[r] ?? 0;
+    return { role: ROLE_MAP[r] ?? "others", count, percentage: totalUsers > 0 ? Math.round((count / totalUsers) * 100) : 0 };
+  });
 
-  const usersByRole = (ua?.usersByRole ?? []).map(r => ({
-    role:       ROLE_MAP[r.role] ?? "others",
-    count:      r.count,
-    percentage: r.percentage,
+  const usersByDepartment = departmentGroups
+    .filter((g) => g.department)
+    .map((g) => ({ department: g.department, count: g._count._all }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10);
+
+  const topDepartments = usersByDepartment.slice(0, 8).map((d) => ({
+    id: d.department, name: d.department, usersCount: d.count,
   }));
 
-  // Raw department list (users-service format: { department, count })
-  const usersByDepartment = ua?.usersByDepartment ?? [];
+  const VERIFICATION_MAP = { VERIFIED: "verified", PENDING: "pending", REJECTED: "rejected", EXPIRED: "expired" };
+  const ALL_VERIFICATION = ["VERIFIED", "PENDING", "REJECTED", "EXPIRED"];
+  const verificationCountMap = Object.fromEntries(verificationGroups.map((g) => [g.verificationState, g._count._all]));
+  const verificationStatus = ALL_VERIFICATION.map((v) => {
+    const count = verificationCountMap[v] ?? 0;
+    return { status: VERIFICATION_MAP[v] ?? v.toLowerCase(), count, percentage: totalUsers > 0 ? Math.round((count / totalUsers) * 100) : 0 };
+  });
+  const verifiedCount = verificationCountMap["VERIFIED"] ?? 0;
 
-  // Raw activity data (users-service format: { activeToday, activeThisWeek, dailyTrend })
-  const userActivity = ua?.userActivity ?? { activeToday: 0, activeThisWeek: 0, dailyTrend: [] };
-
-  // Raw verification data (users-service format: { status, count, percentage })
-  const verificationStatus = ua?.verificationStatus ?? [];
-
-  // topDepartments keeps existing frontend shape: { id, name, usersCount }
-  const topDepartments = usersByDepartment.slice(0, 8).map(d => ({
-    id:         d.department,
-    name:       d.department,
-    usersCount: d.count,
-  }));
-
-  const verifiedCount = verificationStatus.find(v => v.status === "verified")?.count ?? 0;
+  // Build dense 30-day daily trend (fill missing days with 0)
+  const activityMap = {};
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - i));
+    activityMap[d.toISOString().slice(0, 10)] = 0;
+  }
+  for (const row of rawDailyTrend) {
+    const key = row.date instanceof Date ? row.date.toISOString().slice(0, 10) : String(row.date).slice(0, 10);
+    if (key in activityMap) activityMap[key] = Number(row.count);
+  }
+  const dailyTrend = Object.entries(activityMap).map(([date, count]) => ({ date, count }));
+  const userActivity = { activeToday, activeThisWeek: activeLast7d, dailyTrend };
 
   return {
     filters: {
@@ -177,7 +207,7 @@ async function getDashboardAnalytics(filters = {}) {
       dateTo:       filters.dateTo       || null,
       departmentId: filters.departmentId || null,
     },
-    learningActivity: [], // TODO: enrollment/course-progress tracking not yet built
+    learningActivity: [],
     usersByRole,
     usersByDepartment,
     userActivity,
@@ -193,7 +223,7 @@ async function getDashboardAnalytics(filters = {}) {
       growthPercentage:    0,
     },
     userAnalytics: {
-      newRegistrations: ua?.newUsersThisMonth?.count ?? 0,
+      newRegistrations: thisMonthCount,
       activeUsers,
       retentionRate:    0,
       verifiedUsers:    verifiedCount,
@@ -207,28 +237,17 @@ async function getDashboardAnalytics(filters = {}) {
       mostPopularCourse:      null,
       averageQuizScore:       0,
     },
-    courseCompletion: {
-      averageCompletion: 0,
-      categories:        [],
-    },
+    courseCompletion: { averageCompletion: 0, categories: [] },
     instructorPerformance: {
-      averageRating:         0,
-      averageCompletionRate: 0,
-      averageAttendanceRate: 0,
-      averageReviewScore:    0,
+      averageRating: 0, averageCompletionRate: 0, averageAttendanceRate: 0, averageReviewScore: 0,
     },
     studentEngagement: {
-      dailyActiveStudents:        userActivity.activeToday,
+      dailyActiveStudents:        activeToday,
       quizParticipationRate:      0,
       assignmentCompletionRate:   0,
       averageLearningTimeMinutes: 0,
     },
-    performanceOverview: {
-      averageScore: 0,
-      passRate:     0,
-      engagement:   0,
-      satisfaction: 0,
-    },
+    performanceOverview: { averageScore: 0, passRate: 0, engagement: 0, satisfaction: 0 },
   };
 }
 

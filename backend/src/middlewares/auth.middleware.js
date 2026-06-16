@@ -1,8 +1,8 @@
 const prisma = require("../config/prisma");
 
-// ── In-memory session cache (Fix 1: skip DB lookup on every request) ──────────
-const SESSION_CACHE = new Map();
-const CACHE_TTL_MS = 60 * 1000; // 1 minute
+const SESSION_CACHE   = new Map();
+const CACHE_TTL_MS    = 60 * 1000;
+const MAX_CACHE_SIZE  = 500;
 
 function getCachedSession(token) {
   const entry = SESSION_CACHE.get(token);
@@ -11,14 +11,14 @@ function getCachedSession(token) {
     SESSION_CACHE.delete(token);
     return null;
   }
-  return entry.payload; // { admin, adminSession }
+  return entry.payload;
 }
 
 function setCachedSession(token, payload) {
-  SESSION_CACHE.set(token, {
-    payload,
-    cacheExpiresAt: Date.now() + CACHE_TTL_MS,
-  });
+  if (SESSION_CACHE.size >= MAX_CACHE_SIZE) {
+    SESSION_CACHE.delete(SESSION_CACHE.keys().next().value);
+  }
+  SESSION_CACHE.set(token, { payload, cacheExpiresAt: Date.now() + CACHE_TTL_MS });
 }
 
 function invalidateCachedSession(token) {

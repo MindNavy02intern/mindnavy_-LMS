@@ -38,8 +38,14 @@ function mapInvitation(inv) {
   };
 }
 
-// Auto-expire any PENDING invitations whose expiresAt has passed
+// Auto-expire PENDING invitations — rate-limited to once every 5 minutes
+let lastAutoExpireAt = 0;
+const AUTO_EXPIRE_INTERVAL_MS = 5 * 60 * 1000;
+
 async function autoExpire() {
+  const now = Date.now();
+  if (now - lastAutoExpireAt < AUTO_EXPIRE_INTERVAL_MS) return;
+  lastAutoExpireAt = now;
   try {
     await prisma.invitation.updateMany({
       where: { status: "PENDING", expiresAt: { lt: new Date() } },

@@ -192,24 +192,16 @@ async function getUsersList(query = {}, admin = {}) {
   const startOfLastMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
 
   const [
-    totalUsers,
-    activeUsers,
+    globalStatusCounts,
     pendingVerification,
-    suspendedUsers,
     invitationsPending,
     total,
     rawUsers,
-    totalThisMonth,
-    totalLastMonth,
-    activeThisMonth,
-    activeLastMonth,
-    suspendedThisMonth,
-    suspendedLastMonth,
+    thisMonthCounts,
+    lastMonthCounts,
   ] = await Promise.all([
-    prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }),
-    prisma.appUser.count({ where: { status: "ACTIVE" } }),
+    prisma.appUser.groupBy({ by: ["status"], _count: { _all: true } }),
     prisma.appUser.count({ where: { verificationState: "PENDING", status: { not: "ARCHIVED" } } }),
-    prisma.appUser.count({ where: { status: "SUSPENDED" } }),
     prisma.invitation.count({ where: { status: "PENDING" } }).catch(() => 0),
     prisma.appUser.count({ where }),
     prisma.appUser.findMany({
@@ -219,22 +211,24 @@ async function getUsersList(query = {}, admin = {}) {
       orderBy: { createdAt: "desc" },
       select: USER_SELECT,
     }),
-    prisma.appUser.count({ where: { status: { not: "ARCHIVED" }, createdAt: { gte: startOfThisMonth } } }),
-    prisma.appUser.count({ where: { status: { not: "ARCHIVED" }, createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
-    prisma.appUser.count({ where: { status: "ACTIVE",    createdAt: { gte: startOfThisMonth } } }),
-    prisma.appUser.count({ where: { status: "ACTIVE",    createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
-    prisma.appUser.count({ where: { status: "SUSPENDED", createdAt: { gte: startOfThisMonth } } }),
-    prisma.appUser.count({ where: { status: "SUSPENDED", createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
+    prisma.appUser.groupBy({ by: ["status"], _count: { _all: true }, where: { createdAt: { gte: startOfThisMonth } } }),
+    prisma.appUser.groupBy({ by: ["status"], _count: { _all: true }, where: { createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
   ]);
 
-  // Fire-and-forget: don't await so the audit write never delays the response
-  createUserAuditLog(admin.id, "USERS_LIST_VIEWED", {
-    page,
-    limit,
-    search: search || null,
-    role: roleFilter,
-    status: statusFilter,
-  }).catch(err => console.error("Audit log failed (USERS_LIST_VIEWED):", err));
+  function pickCount(groups, status) {
+    return groups.find((g) => g.status === status)?._count._all ?? 0;
+  }
+
+  const totalUsers      = globalStatusCounts.filter((g) => g.status !== "ARCHIVED").reduce((s, g) => s + g._count._all, 0);
+  const activeUsers     = pickCount(globalStatusCounts, "ACTIVE");
+  const suspendedUsers  = pickCount(globalStatusCounts, "SUSPENDED");
+
+  const totalThisMonth     = thisMonthCounts.filter((g) => g.status !== "ARCHIVED").reduce((s, g) => s + g._count._all, 0);
+  const totalLastMonth     = lastMonthCounts.filter((g) => g.status !== "ARCHIVED").reduce((s, g) => s + g._count._all, 0);
+  const activeThisMonth    = pickCount(thisMonthCounts,  "ACTIVE");
+  const activeLastMonth    = pickCount(lastMonthCounts,  "ACTIVE");
+  const suspendedThisMonth = pickCount(thisMonthCounts,  "SUSPENDED");
+  const suspendedLastMonth = pickCount(lastMonthCounts,  "SUSPENDED");
 
   function calcChange(current, previous) {
     if (previous === 0) return current > 0 ? 100 : 0;
@@ -351,20 +345,12 @@ async function getUserDetails(id, admin = {}) {
     throw makeError("User not found.", 404);
   }
 
-  // Fetch admin audit log entries that reference this app user (actions performed ON this user)
-  const activityRows = await prisma.$queryRaw`
-    SELECT
-      al.id,
-      al.action,
-      al."ipAddress",
-      al."createdAt",
-      au."fullName" AS "adminFullName"
-    FROM audit_logs al
-    LEFT JOIN admin_users au ON au.id = al."adminId"
-    WHERE al.details->>'userId' = ${sanitizedId}
-    ORDER BY al."createdAt" DESC
-    LIMIT 20
-  `.catch(() => []);
+  const activityRows = await prisma.auditLog.findMany({
+    where:   { details: { path: ["userId"], equals: sanitizedId } },
+    orderBy: { createdAt: "desc" },
+    take:    20,
+    select:  { id: true, action: true, ipAddress: true, createdAt: true },
+  }).catch(() => []);
 
   const ACTIVITY_LABEL = {
     USER_CREATED:        "Account created",
@@ -981,13 +967,17 @@ async function importUsersFromCsv(file, admin = {}) {
     }
   }
 
-  // Hash passwords for every row that passed all checks — never log or return plain password
-  const usersToCreate = await Promise.all(
-    finalValidRows.map(async ({ rowIndex, password, ...fields }) => {
-      const passwordHash = await bcrypt.hash(password, 12);
-      return { ...fields, passwordHash };
-    })
-  );
+  // Hash passwords in batches of 10 to avoid saturating the CPU with concurrent bcrypt calls
+  const usersToCreate = [];
+  for (let i = 0; i < finalValidRows.length; i += 10) {
+    const hashed = await Promise.all(
+      finalValidRows.slice(i, i + 10).map(async ({ rowIndex, password, ...fields }) => ({
+        ...fields,
+        passwordHash: await bcrypt.hash(password, 12),
+      }))
+    );
+    usersToCreate.push(...hashed);
+  }
 
   let created = 0;
   if (usersToCreate.length > 0) {
@@ -1015,92 +1005,72 @@ async function importUsersFromCsv(file, admin = {}) {
 // ── bulkActionUsers (Task 6E) ─────────────────────────────────────────────────
 
 async function bulkActionUsers(body, admin) {
-  const VALID_ACTIONS = new Set([
-    "suspend",
-    "reactivate",
-    "archive",
-    "delete", // backward-compatible alias for archive
-    "assign_role",
-    "notify",
-  ]);
+  const VALID_ACTIONS = new Set(["suspend", "reactivate", "archive", "delete", "assign_role", "notify"]);
 
-  const action =
-    typeof body.action === "string" ? body.action.trim().toLowerCase() : "";
-
+  const action = typeof body.action === "string" ? body.action.trim().toLowerCase() : "";
   if (!VALID_ACTIONS.has(action)) {
-    const err = new Error(
-      `Invalid action: "${action}". Must be one of: suspend, reactivate, archive, assign_role, notify.`
+    throw Object.assign(
+      new Error(`Invalid action: "${action}". Must be one of: suspend, reactivate, archive, assign_role, notify.`),
+      { statusCode: 400 }
     );
-    err.statusCode = 400;
-    throw err;
   }
 
   const userIds = Array.isArray(body.userIds)
     ? body.userIds.filter((id) => typeof id === "string" && id.trim())
     : [];
-
   if (userIds.length === 0) {
-    const err = new Error("userIds must be a non-empty array of strings.");
-    err.statusCode = 400;
-    throw err;
+    throw Object.assign(new Error("userIds must be a non-empty array of strings."), { statusCode: 400 });
   }
 
-  const params =
-    body.params && typeof body.params === "object" ? body.params : {};
+  const params = body.params && typeof body.params === "object" ? body.params : {};
+  const label  = action === "delete" ? "archive" : action;
 
-  let succeeded = 0;
-  let failed = 0;
-  const errors = [];
+  // Status-change actions — single updateMany instead of N individual updates
+  if (action === "suspend" || action === "reactivate" || action === "archive" || action === "delete") {
+    const newStatus   = action === "reactivate" ? "ACTIVE" : action === "suspend" ? "SUSPENDED" : "ARCHIVED";
+    const auditAction = action === "reactivate" ? "USER_REACTIVATED" : action === "suspend" ? "USER_SUSPENDED" : "USER_DELETED";
+    const result      = await prisma.appUser.updateMany({ where: { id: { in: userIds } }, data: { status: newStatus } });
+    createUserAuditLog(admin.id, auditAction, { userIds, count: result.count, reason: params.reason || "Bulk action" });
+    return {
+      success:   true,
+      message:   `Bulk ${label}: ${result.count} succeeded, ${userIds.length - result.count} failed`,
+      succeeded: result.count,
+      failed:    userIds.length - result.count,
+      errors:    [],
+    };
+  }
 
-  for (const id of userIds) {
-    try {
-      if (action === "suspend") {
-        await suspendUser(
-          id,
-          {
-            reason: params.reason || "Bulk action",
-            notes: null,
-          },
-          admin
-        );
-      } else if (action === "reactivate") {
-        await reactivateUser(id, admin);
-      } else if (action === "archive" || action === "delete") {
-        await deleteUser(id, admin);
-      } else if (action === "assign_role") {
-        const roleId = params.roleId || params.role;
+  if (action === "assign_role") {
+    const roleId = params.roleId || params.role;
+    if (!roleId) throw Object.assign(new Error("params.roleId is required for assign_role."), { statusCode: 400 });
 
-        await assignUserRole(
-          id,
-          {
-            roleId,
-            reason: params.reason || "Bulk role assignment",
-          },
-          admin
-        );
-      } else if (action === "notify") {
-        if (process.env.NODE_ENV !== "production") {
-          console.log(`[bulk:notify] user=${id}`);
-        }
-      }
-
-      succeeded++;
-    } catch (err) {
-      failed++;
-      errors.push({
-        id,
-        message: err.message || "Unknown error",
-      });
+    let newRole;
+    if (UUID_REGEX.test(String(roleId).trim())) {
+      const roleRecord = await prisma.role.findUnique({ where: { id: String(roleId).trim() } });
+      if (!roleRecord) throw Object.assign(new Error("Role not found."), { statusCode: 404 });
+      newRole = roleNameToAppEnum(roleRecord.name);
+      if (!newRole) throw Object.assign(new Error(`Role "${roleRecord.name}" has no matching system role.`), { statusCode: 400 });
+    } else {
+      newRole = String(roleId).trim().toUpperCase();
+      if (!VALID_ROLES.has(newRole)) throw Object.assign(new Error(`Invalid role: ${roleId}`), { statusCode: 400 });
     }
+
+    const result = await prisma.appUser.updateMany({ where: { id: { in: userIds } }, data: { role: newRole } });
+    createUserAuditLog(admin.id, "USER_ROLE_ASSIGNED", { userIds, newRole, count: result.count, reason: params.reason || "Bulk role assignment" });
+    return {
+      success:   true,
+      message:   `Bulk assign_role: ${result.count} succeeded, ${userIds.length - result.count} failed`,
+      succeeded: result.count,
+      failed:    userIds.length - result.count,
+      errors:    [],
+    };
   }
 
-  return {
-    success: true,
-    message: `Bulk ${action === "delete" ? "archive" : action}: ${succeeded} succeeded, ${failed} failed`,
-    succeeded,
-    failed,
-    errors,
-  };
+  // notify — stub
+  if (process.env.NODE_ENV !== "production") {
+    userIds.forEach((id) => console.log(`[bulk:notify] user=${id}`));
+  }
+  return { success: true, message: `Bulk notify: ${userIds.length} notified`, succeeded: userIds.length, failed: 0, errors: [] };
 }
 
 module.exports = {

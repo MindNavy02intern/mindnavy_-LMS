@@ -1,5 +1,10 @@
 const prisma = require("../config/prisma");
 
+// ── Org chart cache (30-second TTL) ───────────────────────────────────────────
+let orgChartCache    = null;
+let orgChartCachedAt = 0;
+const ORG_CHART_TTL_MS = 30 * 1000;
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 function paginate(page, limit) {
@@ -60,7 +65,8 @@ async function getBranch(id) {
     include: {
       manager:     { select: USER_BRIEF },
       departments: { select: { id: true, name: true, _count: { select: { users: true } } } },
-      users:       { select: USER_BRIEF, take: 50 },
+      users:       { select: USER_BRIEF, take: 20 },
+      _count:      { select: { users: true, departments: true } },
     },
   });
   if (!b) return null;
@@ -75,8 +81,8 @@ async function getBranch(id) {
     manager: b.manager ?? null,
     departments: b.departments.map((d) => ({ id: d.id, name: d.name, userCount: d._count.users })),
     users: b.users,
-    metrics: { totalUsers: b.users.length, activeUsers: b.users.length, departments: b.departments.length },
-    userCount: b.users.length, departmentCount: b.departments.length, complianceStatus: "COMPLIANT",
+    metrics: { totalUsers: b._count.users, activeUsers: b.users.length, departments: b._count.departments },
+    userCount: b._count.users, departmentCount: b._count.departments, complianceStatus: "COMPLIANT",
   };
 }
 
@@ -174,18 +180,19 @@ async function getDepartment(id) {
     where: { id },
     include: {
       manager: { select: USER_BRIEF },
-      users:   { select: { ...USER_BRIEF, role: true }, take: 100 },
+      users:   { select: { ...USER_BRIEF, role: true }, take: 20 },
       teams:   { select: { id: true, name: true, _count: { select: { members: true } } } },
+      _count:  { select: { users: true } },
     },
   });
   if (!d) return null;
 
-  const kpis = { totalUsers: d.users.length, activeUsers: d.users.length, completionRate: 0, averageProgress: 0 };
+  const kpis = { totalUsers: d._count.users, activeUsers: d.users.length, completionRate: 0, averageProgress: 0 };
 
   return {
     id: d.id, name: d.name, code: d.code ?? null, description: d.description ?? null,
     branchId: d.branchId, managerId: d.managerId ?? null, budget: d.budget, status: d.status,
-    userCount: d.users.length, createdAt: d.createdAt, updatedAt: d.updatedAt,
+    userCount: d._count.users, createdAt: d.createdAt, updatedAt: d.updatedAt,
     manager: d.manager ?? null,
     members: d.users.map((u) => ({ id: u.id, fullName: u.fullName, email: u.email, role: u.role })),
     teams: d.teams.map((t) => ({ id: t.id, name: t.name, memberCount: t._count.members })),
@@ -333,12 +340,13 @@ async function getTeam(id) {
     include: {
       department: { select: { id: true, name: true } },
       leader:     { select: USER_BRIEF },
-      members:    { select: { ...USER_BRIEF, riskScore: true }, take: 100 },
+      members:    { select: { ...USER_BRIEF, riskScore: true }, take: 20 },
+      _count:     { select: { members: true } },
     },
   });
   if (!t) return null;
 
-  const memberCount = t.members.length;
+  const memberCount = t._count.members;
 
   return {
     id: t.id, name: t.name, departmentId: t.departmentId,
@@ -431,6 +439,10 @@ async function getTeamMembers(teamId, { search, page, limit } = {}) {
 // ── Org Chart ──────────────────────────────────────────────────────────────────
 
 async function getOrgChart() {
+  if (orgChartCache && Date.now() - orgChartCachedAt < ORG_CHART_TTL_MS) {
+    return orgChartCache;
+  }
+
   const [branches, departments, teams] = await Promise.all([
     prisma.branch.findMany({
       select: { id: true, name: true, status: true, manager: { select: { fullName: true } }, _count: { select: { users: true } } },
@@ -488,7 +500,9 @@ async function getOrgChart() {
     edges.push({ id: `${parentId}→${nodeId}`, source: parentId, target: nodeId, animated: false });
   });
 
-  return { nodes, edges };
+  orgChartCache    = { nodes, edges };
+  orgChartCachedAt = Date.now();
+  return orgChartCache;
 }
 
 async function moveOrgNode(nodeId, newParentId, action) {
