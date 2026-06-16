@@ -189,8 +189,15 @@ function validateAssignUserRoleInput(body) {
   const errors = [];
   const { roleId, reason } = body || {};
 
-  if (!roleId || typeof roleId !== "string" || !VALID_ROLES.has(roleId.trim().toUpperCase())) {
-    errors.push(`roleId is required and must be one of: ${[...VALID_ROLES].join(", ")}.`);
+  if (!roleId || typeof roleId !== "string" || !roleId.trim()) {
+    errors.push("roleId is required.");
+  } else {
+    const trimmed = roleId.trim();
+    const isEnum = VALID_ROLES.has(trimmed.toUpperCase());
+    const isUuid = UUID_REGEX.test(trimmed);
+    if (!isEnum && !isUuid) {
+      errors.push(`roleId must be a valid role (${[...VALID_ROLES].join(", ")}) or a role UUID.`);
+    }
   }
 
   if (reason != null) {

@@ -237,7 +237,17 @@ async function updateDepartment(id, data) {
 }
 
 async function deleteDepartment(id) {
-  const count = await prisma.appUser.count({ where: { departmentId: id } });
+  const dept = await prisma.department.findUnique({ where: { id }, select: { name: true } });
+
+  const count = await prisma.appUser.count({
+    where: {
+      OR: [
+        { departmentId: id },
+        { department: { equals: dept?.name ?? "", mode: "insensitive" } },
+      ],
+    },
+  });
+
   if (count > 0) {
     throw Object.assign(
       new Error(`Cannot delete department: ${count} user${count !== 1 ? "s" : ""} assigned. Reassign them first.`),

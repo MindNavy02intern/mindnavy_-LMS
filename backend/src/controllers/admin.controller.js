@@ -20,59 +20,64 @@ const {
 const { invalidateCachedSession } = require("../middlewares/auth.middleware");
 
 async function adminLoginController(req, res) {
-  const validation = validateAdminLoginInput(req.body);
+  try {
+    const validation = validateAdminLoginInput(req.body);
 
-  if (!validation.isValid) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid request data.",
-      errors: validation.errors,
+    if (!validation.isValid) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid request data.",
+        errors: validation.errors,
+      });
+    }
+
+    const forwardedFor = req.headers["x-forwarded-for"];
+    const ipAddress = Array.isArray(forwardedFor)
+      ? forwardedFor[0]
+      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const userAgent = req.headers["user-agent"] || null;
+
+    const result = await loginAdmin({
+      email: validation.data.email,
+      password: validation.data.password,
+      ipAddress,
+      userAgent,
     });
+
+    if (!result.success) {
+      return res.status(401).json(result);
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in adminLoginController:", error.message);
+    return res.status(500).json({ success: false, message: "Internal server error." });
   }
-
-  const forwardedFor = req.headers["x-forwarded-for"];
-
-  const ipAddress = Array.isArray(forwardedFor)
-    ? forwardedFor[0]
-    : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
-
-  const userAgent = req.headers["user-agent"] || null;
-
-  const result = await loginAdmin({
-    email: validation.data.email,
-    password: validation.data.password,
-    ipAddress,
-    userAgent,
-  });
-
-  if (!result.success) {
-    return res.status(401).json(result);
-  }
-
-  return res.status(200).json(result);
 }
 
 async function adminLogoutController(req, res) {
-  const forwardedFor = req.headers["x-forwarded-for"];
+  try {
+    const forwardedFor = req.headers["x-forwarded-for"];
+    const ipAddress = Array.isArray(forwardedFor)
+      ? forwardedFor[0]
+      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const userAgent = req.headers["user-agent"] || null;
 
-  const ipAddress = Array.isArray(forwardedFor)
-    ? forwardedFor[0]
-    : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const token = req.headers.authorization?.split(" ")[1];
+    if (token) invalidateCachedSession(token);
 
-  const userAgent = req.headers["user-agent"] || null;
+    const result = await logoutAdmin({
+      adminId: req.admin.id,
+      sessionId: req.adminSession.id,
+      ipAddress,
+      userAgent,
+    });
 
-  // Evict the token from the auth cache so it stops working immediately
-  const token = req.headers.authorization?.split(" ")[1];
-  if (token) invalidateCachedSession(token);
-
-  const result = await logoutAdmin({
-    adminId: req.admin.id,
-    sessionId: req.adminSession.id,
-    ipAddress,
-    userAgent,
-  });
-
-  return res.status(200).json(result);
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in adminLogoutController:", error.message);
+    return res.status(500).json({ success: false, message: "Internal server error." });
+  }
 }
 
 async function adminMeController(req, res) {
@@ -84,58 +89,64 @@ async function adminMeController(req, res) {
 }
 
 async function adminSendOtpController(req, res) {
-  const forwardedFor = req.headers["x-forwarded-for"];
+  try {
+    const forwardedFor = req.headers["x-forwarded-for"];
+    const ipAddress = Array.isArray(forwardedFor)
+      ? forwardedFor[0]
+      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const userAgent = req.headers["user-agent"] || null;
 
-  const ipAddress = Array.isArray(forwardedFor)
-    ? forwardedFor[0]
-    : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const result = await sendAdminOtp({
+      adminId: req.admin.id,
+      ipAddress,
+      userAgent,
+    });
 
-  const userAgent = req.headers["user-agent"] || null;
+    if (!result.success) {
+      return res.status(403).json(result);
+    }
 
-  const result = await sendAdminOtp({
-    adminId: req.admin.id,
-    ipAddress,
-    userAgent,
-  });
-
-  if (!result.success) {
-    return res.status(403).json(result);
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in adminSendOtpController:", error.message);
+    return res.status(500).json({ success: false, message: "Internal server error." });
   }
-
-  return res.status(200).json(result);
 }
 
 async function adminVerifyOtpController(req, res) {
-  const validation = validateAdminOtpInput(req.body);
+  try {
+    const validation = validateAdminOtpInput(req.body);
 
-  if (!validation.isValid) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid request data.",
-      errors: validation.errors,
+    if (!validation.isValid) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid request data.",
+        errors: validation.errors,
+      });
+    }
+
+    const forwardedFor = req.headers["x-forwarded-for"];
+    const ipAddress = Array.isArray(forwardedFor)
+      ? forwardedFor[0]
+      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const userAgent = req.headers["user-agent"] || null;
+
+    const result = await verifyAdminOtp({
+      adminId: req.admin.id,
+      code: validation.data.code,
+      ipAddress,
+      userAgent,
     });
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in adminVerifyOtpController:", error.message);
+    return res.status(500).json({ success: false, message: "Internal server error." });
   }
-
-  const forwardedFor = req.headers["x-forwarded-for"];
-
-  const ipAddress = Array.isArray(forwardedFor)
-    ? forwardedFor[0]
-    : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
-
-  const userAgent = req.headers["user-agent"] || null;
-
-  const result = await verifyAdminOtp({
-    adminId: req.admin.id,
-    code: validation.data.code,
-    ipAddress,
-    userAgent,
-  });
-
-  if (!result.success) {
-    return res.status(400).json(result);
-  }
-
-  return res.status(200).json(result);
 }
 
 async function adminGetTrustedDevicesController(req, res) {

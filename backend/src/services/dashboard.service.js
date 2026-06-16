@@ -66,7 +66,7 @@ async function getDashboardCore(admin) {
     prisma.appUser.count(),
     prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }),
     prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }),
-    prisma.appUser.count({ where: { status: "PENDING" } }),
+    prisma.appUser.count({ where: { verificationState: "PENDING", status: { not: "ARCHIVED" } } }),
     prisma.auditLog.findMany({
       take: 10,
       orderBy: { createdAt: "desc" },

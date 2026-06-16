@@ -217,25 +217,10 @@ async function getUsersList(query = {}, admin = {}) {
       skip,
       take: limit,
       orderBy: { createdAt: "desc" },
-      select: {
-        id: true,
-        fullName: true,
-        email: true,
-        avatar: true,
-        role: true,
-        status: true,
-        verificationState: true,
-        phone: true,
-        department: true,
-        branch: true,
-        lastActivityAt: true,
-        riskScore: true,
-        createdAt: true,
-        // passwordHash intentionally excluded — must never be exposed
-      },
+      select: USER_SELECT,
     }),
-    prisma.appUser.count({ where: { createdAt: { gte: startOfThisMonth } } }),
-    prisma.appUser.count({ where: { createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
+    prisma.appUser.count({ where: { status: { not: "ARCHIVED" }, createdAt: { gte: startOfThisMonth } } }),
+    prisma.appUser.count({ where: { status: { not: "ARCHIVED" }, createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
     prisma.appUser.count({ where: { status: "ACTIVE",    createdAt: { gte: startOfThisMonth } } }),
     prisma.appUser.count({ where: { status: "ACTIVE",    createdAt: { gte: startOfLastMonth, lt: startOfThisMonth } } }),
     prisma.appUser.count({ where: { status: "SUSPENDED", createdAt: { gte: startOfThisMonth } } }),
@@ -333,12 +318,7 @@ async function exportUsers(query = {}, admin = {}) {
   const rawUsers = await prisma.appUser.findMany({
     where,
     orderBy: { createdAt: "desc" },
-    select: {
-      id: true, fullName: true, email: true, avatar: true,
-      role: true, status: true, verificationState: true,
-      phone: true, department: true, branch: true,
-      lastActivityAt: true, riskScore: true, createdAt: true,
-    },
+    select: USER_SELECT,
   });
 
   await createUserAuditLog(admin.id, "USERS_EXPORTED", {
