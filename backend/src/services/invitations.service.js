@@ -81,8 +81,22 @@ async function listInvitations(query = {}) {
     prisma.invitation.count({ where: { status: "PENDING" } }),
   ]);
 
+  // Look up admin full names for each invitedBy ID
+  const invitedByIds = [...new Set(rows.map(r => r.invitedBy).filter(id => id && id !== "system"))];
+  const admins = invitedByIds.length > 0
+    ? await prisma.adminUser.findMany({
+        where:  { id: { in: invitedByIds } },
+        select: { id: true, fullName: true },
+      }).catch(() => [])
+    : [];
+  const adminMap = Object.fromEntries(admins.map(a => [a.id, a.fullName]));
+  adminMap["system"] = "System";
+
   return {
-    invitations: rows.map(mapInvitation),
+    invitations: rows.map(inv => ({
+      ...mapInvitation(inv),
+      invitedByName: adminMap[inv.invitedBy] ?? null,
+    })),
     pagination: {
       page,
       limit,

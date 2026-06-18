@@ -68,6 +68,7 @@ function SkeletonRow() {
       <td style={{ padding: '10px 14px' }}><div style={sk(200, 11)} /></td>
       <td style={{ padding: '10px 14px' }}><div style={sk(80, 20)} /></td>
       <td style={{ padding: '10px 14px' }}><div style={sk(90, 11)} /></td>
+      <td style={{ padding: '10px 14px' }}><div style={sk(100, 11)} /></td>
       <td style={{ padding: '10px 14px' }}><div style={sk(80, 11)} /></td>
       <td style={{ padding: '10px 14px' }}><div style={sk(70, 11)} /></td>
       <td style={{ padding: '10px 14px' }}><div style={sk(60, 20)} /></td>
@@ -309,6 +310,7 @@ export default function InvitationsTab({ showToast, onUserUpdated }: Props) {
               <th style={TH}>Email</th>
               <th style={TH}>Role</th>
               <th style={TH}>Department</th>
+              <th style={TH}>Invited By</th>
               <th style={TH}>Invited</th>
               <th style={TH}>Expires</th>
               <th style={TH}>Status</th>
@@ -321,7 +323,7 @@ export default function InvitationsTab({ showToast, onUserUpdated }: Props) {
               : invitations.length === 0
                 ? (
                   <tr>
-                    <td colSpan={7} style={{ padding: '3rem', textAlign: 'center' }}>
+                    <td colSpan={8} style={{ padding: '3rem', textAlign: 'center' }}>
                       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="1.5" strokeLinecap="round" style={{ display: 'block', margin: '0 auto 10px' }}>
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                         <polyline points="22,6 12,13 2,6"/>
@@ -370,6 +372,11 @@ export default function InvitationsTab({ showToast, onUserUpdated }: Props) {
                         {/* Department */}
                         <td style={{ ...TD, color: '#6b7280' }}>
                           {inv.department ?? <span style={{ color: '#d1d5db' }}>—</span>}
+                        </td>
+
+                        {/* Invited By */}
+                        <td style={{ ...TD, color: '#374151', fontSize: 12 }}>
+                          {inv.invitedByName ?? <span style={{ color: '#d1d5db' }}>—</span>}
                         </td>
 
                         {/* Invited date */}

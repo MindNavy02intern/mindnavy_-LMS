@@ -204,6 +204,7 @@ export interface Invitation {
   status:          InvitationStatus;
   expiresAt:       string;
   invitedBy:       string;
+  invitedByName:   string | null;
   personalMessage: string | null;
   createdAt:       string;
   updatedAt:       string;

@@ -2,19 +2,13 @@ import { useState } from 'react';
 import { sendInvitation } from '../../api/users';
 import type { ToastType } from './Toast';
 import useOrgOptions from '../../hooks/useOrgOptions';
+import useRoles from '../../hooks/useRoles';
 
 interface Props {
   onClose:   () => void;
   onSuccess: (email: string) => void;
   showToast: (type: ToastType, message: string) => void;
 }
-
-const ROLE_OPTIONS = [
-  { value: 'LEARNER',         label: 'Learner'         },
-  { value: 'INSTRUCTOR',      label: 'Instructor'      },
-  { value: 'MANAGER',         label: 'Manager'         },
-  { value: 'ADMIN_ASSISTANT', label: 'Admin Assistant' },
-];
 
 const EXPIRY_OPTIONS = [
   { value: 3,  label: '3 days'  },
@@ -45,6 +39,7 @@ function focusOut(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTM
 
 export default function SendInvitationModal({ onClose, onSuccess, showToast }: Props) {
   const { depts } = useOrgOptions();
+  const { options: roleOptions, loading: rolesLoading, hasError: rolesError } = useRoles();
 
   const [email,           setEmail]           = useState('');
   const [role,            setRole]            = useState('');
@@ -157,9 +152,12 @@ export default function SendInvitationModal({ onClose, onSuccess, showToast }: P
                 onChange={e => { setRole(e.target.value); setRoleError(null); }}
                 style={{ ...INPUT, cursor: 'pointer', borderColor: roleError ? '#ef4444' : '#d1d5db' }}
                 onFocus={focusIn} onBlur={focusOut}
+                disabled={rolesLoading || rolesError}
               >
-                <option value="">Select a role…</option>
-                {ROLE_OPTIONS.map(r => (
+                <option value="">
+                  {rolesLoading ? 'Loading roles…' : rolesError ? 'Failed to load roles' : 'Select a role…'}
+                </option>
+                {roleOptions.map(r => (
                   <option key={r.value} value={r.value}>{r.label}</option>
                 ))}
               </select>
