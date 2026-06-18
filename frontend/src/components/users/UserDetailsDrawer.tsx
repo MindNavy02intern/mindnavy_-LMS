@@ -12,6 +12,7 @@ import EditUserModal, { type EditInitialData } from './EditUserModal';
 import SuspendUserDialog from './SuspendUserDialog';
 import AssignRoleModal  from './AssignRoleModal';
 import ConfirmDialog    from './ConfirmDialog';
+import SendMessageModal from './SendMessageModal';
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -208,12 +209,13 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
   const [visible,   setVisible]   = useState(false);
 
   // Dialog/modal open state
-  const [editOpen,       setEditOpen]       = useState(false);
-  const [suspendOpen,    setSuspendOpen]    = useState(false);
-  const [reactivateOpen, setReactivateOpen] = useState(false);
-  const [resetPwOpen,    setResetPwOpen]    = useState(false);
-  const [assignRoleOpen, setAssignRoleOpen] = useState(false);
-  const [actionBusy,     setActionBusy]     = useState(false);
+  const [editOpen,         setEditOpen]         = useState(false);
+  const [suspendOpen,      setSuspendOpen]      = useState(false);
+  const [reactivateOpen,   setReactivateOpen]   = useState(false);
+  const [resetPwOpen,      setResetPwOpen]      = useState(false);
+  const [assignRoleOpen,   setAssignRoleOpen]   = useState(false);
+  const [sendMessageOpen,  setSendMessageOpen]  = useState(false);
+  const [actionBusy,       setActionBusy]       = useState(false);
 
   // Reset password form state
   const [newPassword,  setNewPassword]  = useState('');
@@ -549,7 +551,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                       }
                       <ActionBtn Icon={IcoShield} label="Assign Role"   onClick={() => setAssignRoleOpen(true)} />
                       <ActionBtn Icon={IcoLogout} label="Force Logout"  disabled danger />
-                      <ActionBtn Icon={IcoChat}   label="Send Message"  disabled />
+                      <ActionBtn Icon={IcoChat}   label="Send Message"  onClick={() => setSendMessageOpen(true)} />
                     </div>
                   </Section>
 
@@ -844,6 +846,19 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
           userId={u.id}
           onClose={() => setAssignRoleOpen(false)}
           onSuccess={() => { setAssignRoleOpen(false); handleSuccess(); }}
+          showToast={showToast}
+        />
+      )}
+      {sendMessageOpen && u && (
+        <SendMessageModal
+          userId={u.id}
+          userName={u.fullName}
+          onClose={() => setSendMessageOpen(false)}
+          onSuccess={() => {
+            setSendMessageOpen(false);
+            window.dispatchEvent(new CustomEvent('messageSent'));
+            window.dispatchEvent(new CustomEvent('analyticsUpdated'));
+          }}
           showToast={showToast}
         />
       )}

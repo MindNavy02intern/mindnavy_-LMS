@@ -226,6 +226,14 @@ export interface SendInvitationRequest {
 
 // ── Task 6E: Bulk action types ─────────────────────────────────────────────────
 
+export interface SendMessagePayload {
+  recipientId: string;
+  subject:     string;
+  body:        string;
+  type:        'DIRECT' | 'WARNING' | 'POLICY_UPDATE' | 'ANNOUNCEMENT' | 'FEEDBACK';
+  priority:    'NORMAL' | 'HIGH' | 'URGENT';
+}
+
 export type BulkActionType = 'suspend' | 'reactivate' | 'archive' | 'assign_role' | 'notify';
 
 export interface BulkActionError {
