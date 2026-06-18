@@ -7,6 +7,7 @@ const {
   validateSuspendUserInput,
   validateAssignUserRoleInput,
   validateResetUserPasswordInput,
+  validateSendMessageInput,
 } = require("../validators/users.validator");
 
 // ─── Analytics endpoint (Task 6D) ────────────────────────────────────────────
@@ -296,6 +297,49 @@ async function bulkActionUsers(req, res) {
   }
 }
 
+// ─── Messaging endpoints ──────────────────────────────────────────────────────
+
+async function sendMessage(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  const errors = validateSendMessageInput(req.body || {});
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, message: errors[0] });
+  }
+
+  try {
+    const result = await usersService.sendMessageToUser(req.params.id, req.body, req.admin);
+    return res.status(201).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] sendMessage error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to send message." });
+  }
+}
+
+async function getUserMessagesList(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  try {
+    const result = await usersService.getUserMessages(req.params.id, req.query, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] getUserMessagesList error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to fetch messages." });
+  }
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -312,4 +356,6 @@ module.exports = {
   exportUsers,
   importUsers,
   bulkActionUsers,
+  sendMessage,
+  getUserMessagesList,
 };

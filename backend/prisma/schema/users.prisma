@@ -22,19 +22,20 @@ model AppUser {
   skills            String[]
 
   // Organization FK columns — separate from legacy `branch` / `department` string labels
-  branchId          String?
-  departmentId      String?
-  teamId            String?
+  branchId     String?
+  departmentId String?
+  teamId       String?
 
-  orgBranch         Branch?      @relation("AppUserBranch",      fields: [branchId],     references: [id])
-  orgDepartment     Department?  @relation("AppUserDepartment",  fields: [departmentId], references: [id])
-  orgTeam           Team?        @relation("AppUserTeam",        fields: [teamId],       references: [id])
+  orgBranch     Branch?     @relation("AppUserBranch", fields: [branchId], references: [id])
+  orgDepartment Department? @relation("AppUserDepartment", fields: [departmentId], references: [id])
+  orgTeam       Team?       @relation("AppUserTeam", fields: [teamId], references: [id])
 
-  managedBranches    Branch[]     @relation("BranchManager")
-  managedDepartments Department[] @relation("DeptManager")
-  managedTeams       Team[]       @relation("TeamLeader")
-  groups             GroupMember[] @relation("GroupMembers")
-  leadingGroups      Group[]      @relation("GroupLeader")
+  managedBranches    Branch[]       @relation("BranchManager")
+  managedDepartments Department[]   @relation("DeptManager")
+  managedTeams       Team[]         @relation("TeamLeader")
+  groups             GroupMember[]  @relation("GroupMembers")
+  leadingGroups      Group[]        @relation("GroupLeader")
+  receivedMessages   AdminMessage[] @relation("UserReceivedMessages")
 
   @@index([branchId])
   @@index([departmentId])

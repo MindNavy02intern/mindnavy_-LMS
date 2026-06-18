@@ -35,6 +35,17 @@ const VERIFICATION_MAP = {
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+// Safe fields returned for every AdminMessage — no sender credentials exposed
+const MESSAGE_SELECT = {
+  id:             true,
+  receiverUserId: true,
+  subject:        true,
+  body:           true,
+  status:         true,
+  readAt:         true,
+  createdAt:      true,
+};
+
 // Select fields used on every AppUser query — passwordHash intentionally excluded
 const USER_SELECT = {
   id: true,
@@ -1082,6 +1093,95 @@ async function bulkActionUsers(body, admin) {
   return { success: true, message: `Bulk notify: ${userIds.length} notified`, succeeded: userIds.length, failed: 0, errors: [] };
 }
 
+// ─── Send Message to User ─────────────────────────────────────────────────────
+
+async function sendMessageToUser(userId, body, admin = {}) {
+  const receiver = await prisma.appUser.findUnique({
+    where: { id: userId },
+    select: { id: true, email: true },
+  });
+  if (!receiver) throw makeError("User not found.", 404);
+
+  const trimmedBody    = body.message.trim();
+  const trimmedSubject = body.subject && typeof body.subject === "string"
+    ? body.subject.trim() || null
+    : null;
+
+  const adminMessage = await prisma.adminMessage.create({
+    data: {
+      senderAdminId:  admin.id,
+      receiverUserId: userId,
+      subject:        trimmedSubject,
+      body:           trimmedBody,
+      status:         "SENT",
+    },
+    select: MESSAGE_SELECT,
+  });
+
+  // Fire-and-forget audit — matches project-wide pattern
+  await createUserAuditLog(admin.id, "USER_MESSAGE_SENT", {
+    userId,
+    email:     receiver.email,
+    messageId: adminMessage.id,
+    subject:   trimmedSubject,
+  });
+
+  return {
+    success:      true,
+    message:      "Message sent successfully.",
+    adminMessage: mapAdminMessage(adminMessage),
+  };
+}
+
+// ─── List Messages for a User ─────────────────────────────────────────────────
+
+async function getUserMessages(userId, query = {}, admin = {}) {
+  const receiver = await prisma.appUser.findUnique({
+    where: { id: userId },
+    select: { id: true },
+  });
+  if (!receiver) throw makeError("User not found.", 404);
+
+  const page     = Math.max(1, parseInt(query.page) || 1);
+  const rawLimit = parseInt(query.limit);
+  const limit    = isNaN(rawLimit) || rawLimit < 1 || rawLimit > 50 ? 10 : rawLimit;
+  const skip     = (page - 1) * limit;
+
+  const [total, rows] = await Promise.all([
+    prisma.adminMessage.count({ where: { receiverUserId: userId } }),
+    prisma.adminMessage.findMany({
+      where:   { receiverUserId: userId },
+      orderBy: { createdAt: "desc" },
+      skip,
+      take:    limit,
+      select:  MESSAGE_SELECT,
+    }),
+  ]);
+
+  return {
+    success:    true,
+    messages:   rows.map(mapAdminMessage),
+    pagination: {
+      page,
+      limit,
+      total,
+      pages: total === 0 ? 0 : Math.ceil(total / limit),
+    },
+  };
+}
+
+function mapAdminMessage(m) {
+  return {
+    id:             m.id,
+    receiverUserId: m.receiverUserId,
+    subject:        m.subject ?? null,
+    body:           m.body,
+    status:         m.status.toLowerCase(),
+    readAt:         m.readAt  ? m.readAt.toISOString()   : null,
+    createdAt:      m.createdAt.toISOString(),
+  };
+}
+
 module.exports = {
   getUsersList,
   exportUsers,
@@ -1098,4 +1198,6 @@ module.exports = {
   getUsersAnalytics,
   importUsersFromCsv,
   bulkActionUsers,
+  sendMessageToUser,
+  getUserMessages,
 };

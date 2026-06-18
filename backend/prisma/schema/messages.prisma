@@ -1,0 +1,28 @@
+model AdminMessage {
+  id             String        @id @default(uuid())
+  senderAdminId  String
+  receiverUserId String
+  subject        String?
+  body           String
+  messageType    String        @default("DIRECT")
+  priority       String        @default("NORMAL")
+  status         MessageStatus @default(SENT)
+  readAt         DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  senderAdmin  AdminUser @relation("AdminSentMessages", fields: [senderAdminId], references: [id])
+  receiverUser AppUser   @relation("UserReceivedMessages", fields: [receiverUserId], references: [id])
+
+  @@index([senderAdminId])
+  @@index([receiverUserId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("admin_messages")
+}
+
+enum MessageStatus {
+  SENT
+  READ
+  ARCHIVED
+}

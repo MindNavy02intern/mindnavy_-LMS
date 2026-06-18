@@ -219,6 +219,40 @@ function validateResetUserPasswordInput(body) {
   return validatePasswordStrength(newPassword);
 }
 
+function validateSendMessageInput(body) {
+  const errors = [];
+  const { message, subject } = body || {};
+
+  if (message === undefined || message === null) {
+    errors.push("Message body is required.");
+    return errors;
+  }
+
+  if (typeof message !== "string") {
+    errors.push("Message body must be a string.");
+    return errors;
+  }
+
+  if (message.trim().length === 0) {
+    errors.push("Message body cannot be empty.");
+    return errors;
+  }
+
+  if (message.trim().length > 2000) {
+    errors.push("Message body must not exceed 2000 characters.");
+  }
+
+  if (subject !== undefined && subject !== null) {
+    if (typeof subject !== "string") {
+      errors.push("Subject must be a string.");
+    } else if (subject.trim().length > 150) {
+      errors.push("Subject must not exceed 150 characters.");
+    }
+  }
+
+  return errors;
+}
+
 module.exports = {
   validateUuidParam,
   validateCreateUserInput,
@@ -227,4 +261,5 @@ module.exports = {
   validateSuspendUserInput,
   validateAssignUserRoleInput,
   validateResetUserPasswordInput,
+  validateSendMessageInput,
 };

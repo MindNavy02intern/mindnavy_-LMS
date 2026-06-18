@@ -26,6 +26,8 @@ const {
   getUsersAnalytics,
   importUsers,
   bulkActionUsers,
+  sendMessage,
+  getUserMessagesList,
 } = require("../controllers/users.controller");
 
 const router = express.Router();
@@ -108,6 +110,20 @@ router.patch(
   assignUserRole
 );
 
+
+// Messages sub-routes BEFORE generic /:id
+router.post(
+  "/:id/messages",
+  requireAdminAuth,
+  adminUserActionRateLimiter,
+  sendMessage
+);
+
+router.get(
+  "/:id/messages",
+  requireAdminAuth,
+  getUserMessagesList
+);
 
 router.get(
   "/:id",

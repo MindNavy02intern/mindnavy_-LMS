@@ -1,7 +1,7 @@
 model Branch {
   id           String   @id @default(cuid())
   name         String
-  locationType String   // HEAD_OFFICE | REGIONAL | LOCAL
+  locationType String // HEAD_OFFICE | REGIONAL | LOCAL
   address      String
   city         String
   country      String
@@ -14,7 +14,7 @@ model Branch {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  manager     AppUser?     @relation("BranchManager",    fields: [managerId], references: [id])
+  manager     AppUser?     @relation("BranchManager", fields: [managerId], references: [id])
   departments Department[]
   users       AppUser[]    @relation("AppUserBranch")
 
@@ -36,7 +36,7 @@ model Department {
   updatedAt   DateTime @updatedAt
 
   branch  Branch    @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  manager AppUser?  @relation("DeptManager",  fields: [managerId], references: [id])
+  manager AppUser?  @relation("DeptManager", fields: [managerId], references: [id])
   teams   Team[]
   groups  Group[]
   users   AppUser[] @relation("AppUserDepartment")
@@ -59,7 +59,7 @@ model Team {
   updatedAt    DateTime @updatedAt
 
   department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
-  leader     AppUser?   @relation("TeamLeader",  fields: [leaderId], references: [id])
+  leader     AppUser?   @relation("TeamLeader", fields: [leaderId], references: [id])
   members    AppUser[]  @relation("AppUserTeam")
 
   @@unique([name, departmentId])
