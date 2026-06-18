@@ -400,10 +400,19 @@
       "norm_label": "invitationsroutes"
     },
     {
+      "label": "messagesRoutes",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L13",
+      "id": "backend_server_messagesroutes",
+      "community": 52,
+      "norm_label": "messagesroutes"
+    },
+    {
       "label": "app",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "backend_server_app",
       "community": 52,
       "norm_label": "app"
@@ -412,7 +421,7 @@
       "label": "corsOptions",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L18",
+      "source_location": "L19",
       "id": "backend_server_corsoptions",
       "community": 52,
       "norm_label": "corsoptions"
@@ -421,7 +430,7 @@
       "label": "server",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L70",
+      "source_location": "L74",
       "id": "backend_server_server",
       "community": 52,
       "norm_label": "server"
@@ -513,7 +522,7 @@
       "source_file": "backend/prisma/seed-groups.js",
       "source_location": "L1",
       "id": "backend_prisma_seed_groups_js",
-      "community": 30,
+      "community": 40,
       "norm_label": "seed-groups.js"
     },
     {
@@ -522,7 +531,7 @@
       "source_file": "backend/prisma/seed-groups.js",
       "source_location": "L1",
       "id": "prisma_seed_groups_prisma",
-      "community": 30,
+      "community": 40,
       "norm_label": "prisma"
     },
     {
@@ -531,7 +540,7 @@
       "source_file": "backend/prisma/seed-groups.js",
       "source_location": "L3",
       "id": "prisma_seed_groups_main",
-      "community": 30,
+      "community": 40,
       "norm_label": "main()"
     },
     {
@@ -540,7 +549,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L1",
       "id": "backend_prisma_seed_js",
-      "community": 30,
+      "community": 40,
       "norm_label": "seed.js"
     },
     {
@@ -549,7 +558,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L2",
       "id": "prisma_seed_prisma",
-      "community": 30,
+      "community": 40,
       "norm_label": "prisma"
     },
     {
@@ -558,7 +567,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L4",
       "id": "prisma_seed_permissions",
-      "community": 30,
+      "community": 40,
       "norm_label": "permissions"
     },
     {
@@ -567,7 +576,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L19",
       "id": "prisma_seed_roles",
-      "community": 30,
+      "community": 40,
       "norm_label": "roles"
     },
     {
@@ -576,7 +585,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L26",
       "id": "prisma_seed_main",
-      "community": 30,
+      "community": 40,
       "norm_label": "main()"
     },
     {
@@ -585,7 +594,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L1",
       "id": "backend_src_config_prisma_js",
-      "community": 30,
+      "community": 40,
       "norm_label": "prisma.js"
     },
     {
@@ -594,7 +603,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L1",
       "id": "config_prisma_prismaclient",
-      "community": 30,
+      "community": 40,
       "norm_label": "{ prismaclient }"
     },
     {
@@ -603,7 +612,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L2",
       "id": "config_prisma_prismapg",
-      "community": 30,
+      "community": 40,
       "norm_label": "{ prismapg }"
     },
     {
@@ -612,7 +621,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L4",
       "id": "config_prisma_adapter",
-      "community": 30,
+      "community": 40,
       "norm_label": "adapter"
     },
     {
@@ -621,7 +630,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L8",
       "id": "config_prisma_prisma",
-      "community": 30,
+      "community": 40,
       "norm_label": "prisma"
     },
     {
@@ -693,7 +702,7 @@
       "source_file": "backend/src/controllers/admin.controller.js",
       "source_location": "L91",
       "id": "controllers_admin_controller_adminsendotpcontroller",
-      "community": 64,
+      "community": 5,
       "norm_label": "adminsendotpcontroller()"
     },
     {
@@ -965,6 +974,51 @@
       "id": "controllers_invitations_controller_updateexpiration",
       "community": 61,
       "norm_label": "updateexpiration()"
+    },
+    {
+      "label": "messages.controller.js",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L1",
+      "id": "backend_src_controllers_messages_controller_js",
+      "community": 30,
+      "norm_label": "messages.controller.js"
+    },
+    {
+      "label": "messagesService",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L1",
+      "id": "controllers_messages_controller_messagesservice",
+      "community": 30,
+      "norm_label": "messagesservice"
+    },
+    {
+      "label": "{ validateSendAdminMessageInput }",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L2",
+      "id": "controllers_messages_controller_validatesendadminmessageinput",
+      "community": 30,
+      "norm_label": "{ validatesendadminmessageinput }"
+    },
+    {
+      "label": "sendMessage()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L6",
+      "id": "controllers_messages_controller_sendmessage",
+      "community": 30,
+      "norm_label": "sendmessage()"
+    },
+    {
+      "label": "getMessages()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L31",
+      "id": "controllers_messages_controller_getmessages",
+      "community": 30,
+      "norm_label": "getmessages()"
     },
     {
       "label": "organization.controller.js",
@@ -1426,19 +1480,19 @@
       "norm_label": "usersservice"
     },
     {
-      "label": "{\r\n  validateUuidParam,\r\n  validateCreateUserInput,\r\n  validateUpdateUserInput,\r\n  validateUpdateUserStatusInput,\r\n  validateSuspendUserInput,\r\n  validateAssignUserRoleInput,\r\n  validateResetUserPasswordInput,\r\n}",
+      "label": "{\r\n  validateUuidParam,\r\n  validateCreateUserInput,\r\n  validateUpdateUserInput,\r\n  validateUpdateUserStatusInput,\r\n  validateSuspendUserInput,\r\n  validateAssignUserRoleInput,\r\n  validateResetUserPasswordInput,\r\n  validateSendMessageInput,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
       "source_location": "L2",
-      "id": "controllers_users_controller_validateuuidparam_validatecreateuserinput_validateupdateuserinput_validateupdateuserstatusinput_validatesuspenduserinput_validateassignuserroleinput_validateresetuserpasswordinput",
+      "id": "controllers_users_controller_validateuuidparam_validatecreateuserinput_validateupdateuserinput_validateupdateuserstatusinput_validatesuspenduserinput_validateassignuserroleinput_validateresetuserpasswordinput_validatesendmessageinput",
       "community": 9,
-      "norm_label": "{\r\n  validateuuidparam,\r\n  validatecreateuserinput,\r\n  validateupdateuserinput,\r\n  validateupdateuserstatusinput,\r\n  validatesuspenduserinput,\r\n  validateassignuserroleinput,\r\n  validateresetuserpasswordinput,\r\n}"
+      "norm_label": "{\r\n  validateuuidparam,\r\n  validatecreateuserinput,\r\n  validateupdateuserinput,\r\n  validateupdateuserstatusinput,\r\n  validatesuspenduserinput,\r\n  validateassignuserroleinput,\r\n  validateresetuserpasswordinput,\r\n  validatesendmessageinput,\r\n}"
     },
     {
       "label": "getUsersAnalytics()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "controllers_users_controller_getusersanalytics",
       "community": 9,
       "norm_label": "getusersanalytics()"
@@ -1447,7 +1501,7 @@
       "label": "getUsersList()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L26",
+      "source_location": "L27",
       "id": "controllers_users_controller_getuserslist",
       "community": 9,
       "norm_label": "getuserslist()"
@@ -1456,7 +1510,7 @@
       "label": "exportUsers()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L36",
+      "source_location": "L37",
       "id": "controllers_users_controller_exportusers",
       "community": 9,
       "norm_label": "exportusers()"
@@ -1465,7 +1519,7 @@
       "label": "getUserDetails()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L46",
+      "source_location": "L47",
       "id": "controllers_users_controller_getuserdetails",
       "community": 9,
       "norm_label": "getuserdetails()"
@@ -1474,7 +1528,7 @@
       "label": "createUser()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L64",
+      "source_location": "L65",
       "id": "controllers_users_controller_createuser",
       "community": 9,
       "norm_label": "createuser()"
@@ -1483,7 +1537,7 @@
       "label": "updateUser()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L82",
+      "source_location": "L83",
       "id": "controllers_users_controller_updateuser",
       "community": 9,
       "norm_label": "updateuser()"
@@ -1492,7 +1546,7 @@
       "label": "suspendUser()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L108",
+      "source_location": "L109",
       "id": "controllers_users_controller_suspenduser",
       "community": 9,
       "norm_label": "suspenduser()"
@@ -1501,7 +1555,7 @@
       "label": "updateUserStatus()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L131",
+      "source_location": "L132",
       "id": "controllers_users_controller_updateuserstatus",
       "community": 9,
       "norm_label": "updateuserstatus()"
@@ -1510,7 +1564,7 @@
       "label": "resetUserPassword()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L154",
+      "source_location": "L155",
       "id": "controllers_users_controller_resetuserpassword",
       "community": 9,
       "norm_label": "resetuserpassword()"
@@ -1519,7 +1573,7 @@
       "label": "assignUserRole()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L177",
+      "source_location": "L178",
       "id": "controllers_users_controller_assignuserrole",
       "community": 9,
       "norm_label": "assignuserrole()"
@@ -1528,7 +1582,7 @@
       "label": "reactivateUser()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L200",
+      "source_location": "L201",
       "id": "controllers_users_controller_reactivateuser",
       "community": 9,
       "norm_label": "reactivateuser()"
@@ -1537,7 +1591,7 @@
       "label": "approveVerification()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L218",
+      "source_location": "L219",
       "id": "controllers_users_controller_approveverification",
       "community": 9,
       "norm_label": "approveverification()"
@@ -1546,7 +1600,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L236",
+      "source_location": "L237",
       "id": "controllers_users_controller_deleteuser",
       "community": 9,
       "norm_label": "deleteuser()"
@@ -1555,7 +1609,7 @@
       "label": "importUsers()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L256",
+      "source_location": "L257",
       "id": "controllers_users_controller_importusers",
       "community": 9,
       "norm_label": "importusers()"
@@ -1564,10 +1618,28 @@
       "label": "bulkActionUsers()",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
-      "source_location": "L279",
+      "source_location": "L280",
       "id": "controllers_users_controller_bulkactionusers",
       "community": 9,
       "norm_label": "bulkactionusers()"
+    },
+    {
+      "label": "sendMessage()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L302",
+      "id": "controllers_users_controller_sendmessage",
+      "community": 9,
+      "norm_label": "sendmessage()"
+    },
+    {
+      "label": "getUserMessagesList()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L325",
+      "id": "controllers_users_controller_getusermessageslist",
+      "community": 9,
+      "norm_label": "getusermessageslist()"
     },
     {
       "label": "auth.middleware.js",
@@ -1629,7 +1701,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L28",
       "id": "middlewares_auth_middleware_clearallcachedsessions",
-      "community": 53,
+      "community": 5,
       "norm_label": "clearallcachedsessions()"
     },
     {
@@ -1966,6 +2038,60 @@
       "norm_label": "router"
     },
     {
+      "label": "messages.routes.js",
+      "file_type": "code",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L1",
+      "id": "backend_src_routes_messages_routes_js",
+      "community": 30,
+      "norm_label": "messages.routes.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L1",
+      "id": "routes_messages_routes_express",
+      "community": 30,
+      "norm_label": "express"
+    },
+    {
+      "label": "{ requireAdminAuth }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L2",
+      "id": "routes_messages_routes_requireadminauth",
+      "community": 30,
+      "norm_label": "{ requireadminauth }"
+    },
+    {
+      "label": "{ adminUserActionRateLimiter }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L3",
+      "id": "routes_messages_routes_adminuseractionratelimiter",
+      "community": 30,
+      "norm_label": "{ adminuseractionratelimiter }"
+    },
+    {
+      "label": "{ sendMessage, getMessages }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L4",
+      "id": "routes_messages_routes_sendmessage_getmessages",
+      "community": 30,
+      "norm_label": "{ sendmessage, getmessages }"
+    },
+    {
+      "label": "router",
+      "file_type": "code",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L6",
+      "id": "routes_messages_routes_router",
+      "community": 30,
+      "norm_label": "router"
+    },
+    {
       "label": "organization.routes.js",
       "file_type": "code",
       "source_file": "backend/src/routes/organization.routes.js",
@@ -2173,19 +2299,19 @@
       "norm_label": "{ uploaduserscsv }"
     },
     {
-      "label": "{\r\n  getUsersList,\r\n  exportUsers,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  approveVerification,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n  importUsers,\r\n  bulkActionUsers,\r\n}",
+      "label": "{\r\n  getUsersList,\r\n  exportUsers,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  approveVerification,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n  importUsers,\r\n  bulkActionUsers,\r\n  sendMessage,\r\n  getUserMessagesList,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L13",
-      "id": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers",
+      "id": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers_sendmessage_getusermessageslist",
       "community": 9,
-      "norm_label": "{\r\n  getuserslist,\r\n  exportusers,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  approveverification,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n}"
+      "norm_label": "{\r\n  getuserslist,\r\n  exportusers,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  approveverification,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n  sendmessage,\r\n  getusermessageslist,\r\n}"
     },
     {
       "label": "router",
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
-      "source_location": "L31",
+      "source_location": "L33",
       "id": "routes_users_routes_router",
       "community": 9,
       "norm_label": "router"
@@ -2196,7 +2322,7 @@
       "source_file": "backend/src/scripts/addUsersImportedEnum.js",
       "source_location": "L1",
       "id": "backend_src_scripts_addusersimportedenum_js",
-      "community": 30,
+      "community": 40,
       "norm_label": "addusersimportedenum.js"
     },
     {
@@ -2205,7 +2331,7 @@
       "source_file": "backend/src/scripts/addUsersImportedEnum.js",
       "source_location": "L2",
       "id": "scripts_addusersimportedenum_prisma",
-      "community": 30,
+      "community": 40,
       "norm_label": "prisma"
     },
     {
@@ -2214,7 +2340,7 @@
       "source_file": "backend/src/scripts/addUsersImportedEnum.js",
       "source_location": "L4",
       "id": "scripts_addusersimportedenum_main",
-      "community": 30,
+      "community": 40,
       "norm_label": "main()"
     },
     {
@@ -2223,7 +2349,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L1",
       "id": "backend_src_scripts_createfirstadmin_js",
-      "community": 54,
+      "community": 5,
       "norm_label": "createfirstadmin.js"
     },
     {
@@ -2232,7 +2358,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L3",
       "id": "scripts_createfirstadmin_bcrypt",
-      "community": 54,
+      "community": 5,
       "norm_label": "bcrypt"
     },
     {
@@ -2241,7 +2367,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L4",
       "id": "scripts_createfirstadmin_prisma",
-      "community": 54,
+      "community": 5,
       "norm_label": "prisma"
     },
     {
@@ -2250,7 +2376,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L5",
       "id": "scripts_createfirstadmin_validatepasswordstrength",
-      "community": 54,
+      "community": 5,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -2259,7 +2385,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L7",
       "id": "scripts_createfirstadmin_createfirstadmin",
-      "community": 54,
+      "community": 5,
       "norm_label": "createfirstadmin()"
     },
     {
@@ -2268,7 +2394,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L1",
       "id": "backend_src_scripts_resetfirstadminpassword_js",
-      "community": 54,
+      "community": 5,
       "norm_label": "resetfirstadminpassword.js"
     },
     {
@@ -2277,7 +2403,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L3",
       "id": "scripts_resetfirstadminpassword_bcrypt",
-      "community": 54,
+      "community": 5,
       "norm_label": "bcrypt"
     },
     {
@@ -2286,7 +2412,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L4",
       "id": "scripts_resetfirstadminpassword_prisma",
-      "community": 54,
+      "community": 5,
       "norm_label": "prisma"
     },
     {
@@ -2295,7 +2421,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L5",
       "id": "scripts_resetfirstadminpassword_validatepasswordstrength",
-      "community": 54,
+      "community": 5,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -2304,7 +2430,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L7",
       "id": "scripts_resetfirstadminpassword_resetfirstadminpassword",
-      "community": 54,
+      "community": 5,
       "norm_label": "resetfirstadminpassword()"
     },
     {
@@ -2313,7 +2439,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L1",
       "id": "backend_src_services_admin_service_js",
-      "community": 53,
+      "community": 5,
       "norm_label": "admin.service.js"
     },
     {
@@ -2322,7 +2448,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L1",
       "id": "services_admin_service_bcrypt",
-      "community": 53,
+      "community": 5,
       "norm_label": "bcrypt"
     },
     {
@@ -2331,7 +2457,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L2",
       "id": "services_admin_service_prisma",
-      "community": 53,
+      "community": 5,
       "norm_label": "prisma"
     },
     {
@@ -2340,7 +2466,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L3",
       "id": "services_admin_service_generatesessiontoken_getsessionexpirydate",
-      "community": 53,
+      "community": 5,
       "norm_label": "{ generatesessiontoken, getsessionexpirydate }"
     },
     {
@@ -2349,7 +2475,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L4",
       "id": "services_admin_service_clearallcachedsessions",
-      "community": 53,
+      "community": 5,
       "norm_label": "{ clearallcachedsessions }"
     },
     {
@@ -2358,7 +2484,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L6",
       "id": "services_admin_service_generateotpcode_hashotpcode_compareotpcode_getotpexpirydate",
-      "community": 53,
+      "community": 5,
       "norm_label": "{\r\n  generateotpcode,\r\n  hashotpcode,\r\n  compareotpcode,\r\n  getotpexpirydate,\r\n}"
     },
     {
@@ -2367,7 +2493,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L17",
       "id": "services_admin_service_recordloginattempt",
-      "community": 53,
+      "community": 5,
       "norm_label": "recordloginattempt()"
     },
     {
@@ -2376,7 +2502,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L37",
       "id": "services_admin_service_createauditlog",
-      "community": 53,
+      "community": 5,
       "norm_label": "createauditlog()"
     },
     {
@@ -2385,7 +2511,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L55",
       "id": "services_admin_service_islogintemporarilyblocked",
-      "community": 53,
+      "community": 5,
       "norm_label": "islogintemporarilyblocked()"
     },
     {
@@ -2394,7 +2520,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L73",
       "id": "services_admin_service_loginadmin",
-      "community": 53,
+      "community": 5,
       "norm_label": "loginadmin()"
     },
     {
@@ -2403,7 +2529,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L230",
       "id": "services_admin_service_logoutadmin",
-      "community": 53,
+      "community": 5,
       "norm_label": "logoutadmin()"
     },
     {
@@ -2412,7 +2538,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L267",
       "id": "services_admin_service_sendadminotp",
-      "community": 64,
+      "community": 5,
       "norm_label": "sendadminotp()"
     },
     {
@@ -2421,7 +2547,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L329",
       "id": "services_admin_service_verifyadminotp",
-      "community": 53,
+      "community": 5,
       "norm_label": "verifyadminotp()"
     },
     {
@@ -2439,7 +2565,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L481",
       "id": "services_admin_service_revokeadmintrusteddevice",
-      "community": 53,
+      "community": 5,
       "norm_label": "revokeadmintrusteddevice()"
     },
     {
@@ -2448,7 +2574,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L528",
       "id": "services_admin_service_forgotadminpassword",
-      "community": 64,
+      "community": 5,
       "norm_label": "forgotadminpassword()"
     },
     {
@@ -2457,7 +2583,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L587",
       "id": "services_admin_service_resetadminpassword",
-      "community": 53,
+      "community": 5,
       "norm_label": "resetadminpassword()"
     },
     {
@@ -2801,6 +2927,78 @@
       "id": "services_invitations_service_countpendinginvitations",
       "community": 37,
       "norm_label": "countpendinginvitations()"
+    },
+    {
+      "label": "messages.service.js",
+      "file_type": "code",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L1",
+      "id": "backend_src_services_messages_service_js",
+      "community": 40,
+      "norm_label": "messages.service.js"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L1",
+      "id": "services_messages_service_prisma",
+      "community": 40,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "MESSAGE_SELECT",
+      "file_type": "code",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L3",
+      "id": "services_messages_service_message_select",
+      "community": 40,
+      "norm_label": "message_select"
+    },
+    {
+      "label": "makeError()",
+      "file_type": "code",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L15",
+      "id": "services_messages_service_makeerror",
+      "community": 40,
+      "norm_label": "makeerror()"
+    },
+    {
+      "label": "createUserAuditLog()",
+      "file_type": "code",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L21",
+      "id": "services_messages_service_createuserauditlog",
+      "community": 40,
+      "norm_label": "createuserauditlog()"
+    },
+    {
+      "label": "mapMessage()",
+      "file_type": "code",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L35",
+      "id": "services_messages_service_mapmessage",
+      "community": 40,
+      "norm_label": "mapmessage()"
+    },
+    {
+      "label": "sendAdminMessage()",
+      "file_type": "code",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L49",
+      "id": "services_messages_service_sendadminmessage",
+      "community": 40,
+      "norm_label": "sendadminmessage()"
+    },
+    {
+      "label": "getAdminMessages()",
+      "file_type": "code",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L98",
+      "id": "services_messages_service_getadminmessages",
+      "community": 40,
+      "norm_label": "getadminmessages()"
     },
     {
       "label": "organization.service.js",
@@ -3352,10 +3550,19 @@
       "norm_label": "verification_map"
     },
     {
-      "label": "USER_SELECT",
+      "label": "MESSAGE_SELECT",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
       "source_location": "L39",
+      "id": "services_users_service_message_select",
+      "community": 33,
+      "norm_label": "message_select"
+    },
+    {
+      "label": "USER_SELECT",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L50",
       "id": "services_users_service_user_select",
       "community": 33,
       "norm_label": "user_select"
@@ -3364,7 +3571,7 @@
       "label": "mapUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L64",
+      "source_location": "L75",
       "id": "services_users_service_mapuser",
       "community": 33,
       "norm_label": "mapuser()"
@@ -3373,7 +3580,7 @@
       "label": "makeError()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L89",
+      "source_location": "L100",
       "id": "services_users_service_makeerror",
       "community": 33,
       "norm_label": "makeerror()"
@@ -3382,7 +3589,7 @@
       "label": "createUserAuditLog()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L96",
+      "source_location": "L107",
       "id": "services_users_service_createuserauditlog",
       "community": 33,
       "norm_label": "createuserauditlog()"
@@ -3391,7 +3598,7 @@
       "label": "assertUserExists()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L110",
+      "source_location": "L121",
       "id": "services_users_service_assertuserexists",
       "community": 33,
       "norm_label": "assertuserexists()"
@@ -3400,7 +3607,7 @@
       "label": "ensureEmailAvailable()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L119",
+      "source_location": "L130",
       "id": "services_users_service_ensureemailavailable",
       "community": 33,
       "norm_label": "ensureemailavailable()"
@@ -3409,7 +3616,7 @@
       "label": "getUsersList()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L128",
+      "source_location": "L139",
       "id": "services_users_service_getuserslist",
       "community": 33,
       "norm_label": "getuserslist()"
@@ -3418,7 +3625,7 @@
       "label": "exportUsers()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L263",
+      "source_location": "L274",
       "id": "services_users_service_exportusers",
       "community": 33,
       "norm_label": "exportusers()"
@@ -3427,7 +3634,7 @@
       "label": "getUserDetails()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L330",
+      "source_location": "L341",
       "id": "services_users_service_getuserdetails",
       "community": 33,
       "norm_label": "getuserdetails()"
@@ -3436,7 +3643,7 @@
       "label": "createUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L407",
+      "source_location": "L418",
       "id": "services_users_service_createuser",
       "community": 33,
       "norm_label": "createuser()"
@@ -3445,7 +3652,7 @@
       "label": "updateUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L464",
+      "source_location": "L475",
       "id": "services_users_service_updateuser",
       "community": 33,
       "norm_label": "updateuser()"
@@ -3454,7 +3661,7 @@
       "label": "updateUserStatus()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L567",
+      "source_location": "L578",
       "id": "services_users_service_updateuserstatus",
       "community": 33,
       "norm_label": "updateuserstatus()"
@@ -3463,7 +3670,7 @@
       "label": "resetUserPassword()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L592",
+      "source_location": "L603",
       "id": "services_users_service_resetuserpassword",
       "community": 33,
       "norm_label": "resetuserpassword()"
@@ -3472,7 +3679,7 @@
       "label": "suspendUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L610",
+      "source_location": "L621",
       "id": "services_users_service_suspenduser",
       "community": 33,
       "norm_label": "suspenduser()"
@@ -3481,7 +3688,7 @@
       "label": "reactivateUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L636",
+      "source_location": "L647",
       "id": "services_users_service_reactivateuser",
       "community": 33,
       "norm_label": "reactivateuser()"
@@ -3490,7 +3697,7 @@
       "label": "approveVerification()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L658",
+      "source_location": "L669",
       "id": "services_users_service_approveverification",
       "community": 33,
       "norm_label": "approveverification()"
@@ -3499,7 +3706,7 @@
       "label": "ROLE_NAME_TO_ENUM_ALIAS",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L683",
+      "source_location": "L694",
       "id": "services_users_service_role_name_to_enum_alias",
       "community": 33,
       "norm_label": "role_name_to_enum_alias"
@@ -3508,7 +3715,7 @@
       "label": "roleNameToAppEnum()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L685",
+      "source_location": "L696",
       "id": "services_users_service_rolenametoappenum",
       "community": 33,
       "norm_label": "rolenametoappenum()"
@@ -3517,7 +3724,7 @@
       "label": "assignUserRole()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L691",
+      "source_location": "L702",
       "id": "services_users_service_assignuserrole",
       "community": 33,
       "norm_label": "assignuserrole()"
@@ -3526,7 +3733,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L736",
+      "source_location": "L747",
       "id": "services_users_service_deleteuser",
       "community": 33,
       "norm_label": "deleteuser()"
@@ -3535,7 +3742,7 @@
       "label": "getUsersAnalytics()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L757",
+      "source_location": "L768",
       "id": "services_users_service_getusersanalytics",
       "community": 33,
       "norm_label": "getusersanalytics()"
@@ -3544,7 +3751,7 @@
       "label": "importUsersFromCsv()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L871",
+      "source_location": "L882",
       "id": "services_users_service_importusersfromcsv",
       "community": 33,
       "norm_label": "importusersfromcsv()"
@@ -3553,10 +3760,37 @@
       "label": "bulkActionUsers()",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
-      "source_location": "L1009",
+      "source_location": "L1020",
       "id": "services_users_service_bulkactionusers",
       "community": 33,
       "norm_label": "bulkactionusers()"
+    },
+    {
+      "label": "sendMessageToUser()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1098",
+      "id": "services_users_service_sendmessagetouser",
+      "community": 33,
+      "norm_label": "sendmessagetouser()"
+    },
+    {
+      "label": "getUserMessages()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1138",
+      "id": "services_users_service_getusermessages",
+      "community": 33,
+      "norm_label": "getusermessages()"
+    },
+    {
+      "label": "mapAdminMessage()",
+      "file_type": "code",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1173",
+      "id": "services_users_service_mapadminmessage",
+      "community": 33,
+      "norm_label": "mapadminmessage()"
     },
     {
       "label": "otp.js",
@@ -3564,7 +3798,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L1",
       "id": "backend_src_utils_otp_js",
-      "community": 64,
+      "community": 5,
       "norm_label": "otp.js"
     },
     {
@@ -3573,7 +3807,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L1",
       "id": "utils_otp_crypto",
-      "community": 64,
+      "community": 5,
       "norm_label": "crypto"
     },
     {
@@ -3582,7 +3816,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L2",
       "id": "utils_otp_bcrypt",
-      "community": 64,
+      "community": 5,
       "norm_label": "bcrypt"
     },
     {
@@ -3591,7 +3825,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L4",
       "id": "utils_otp_generateotpcode",
-      "community": 64,
+      "community": 5,
       "norm_label": "generateotpcode()"
     },
     {
@@ -3600,7 +3834,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L8",
       "id": "utils_otp_hashotpcode",
-      "community": 64,
+      "community": 5,
       "norm_label": "hashotpcode()"
     },
     {
@@ -3609,7 +3843,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L12",
       "id": "utils_otp_compareotpcode",
-      "community": 53,
+      "community": 5,
       "norm_label": "compareotpcode()"
     },
     {
@@ -3618,7 +3852,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L16",
       "id": "utils_otp_getotpexpirydate",
-      "community": 64,
+      "community": 5,
       "norm_label": "getotpexpirydate()"
     },
     {
@@ -3627,7 +3861,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "backend_src_utils_passwordpolicy_js",
-      "community": 54,
+      "community": 5,
       "norm_label": "passwordpolicy.js"
     },
     {
@@ -3636,7 +3870,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "utils_passwordpolicy_validatepasswordstrength",
-      "community": 54,
+      "community": 5,
       "norm_label": "validatepasswordstrength()"
     },
     {
@@ -3645,7 +3879,7 @@
       "source_file": "backend/src/validators/adminAuth.validator.js",
       "source_location": "L1",
       "id": "backend_src_validators_adminauth_validator_js",
-      "community": 54,
+      "community": 5,
       "norm_label": "adminauth.validator.js"
     },
     {
@@ -3654,7 +3888,7 @@
       "source_file": "backend/src/validators/adminAuth.validator.js",
       "source_location": "L1",
       "id": "validators_adminauth_validator_validatepasswordstrength",
-      "community": 54,
+      "community": 5,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -3690,8 +3924,44 @@
       "source_file": "backend/src/validators/adminAuth.validator.js",
       "source_location": "L67",
       "id": "validators_adminauth_validator_validateresetpasswordinput",
-      "community": 54,
+      "community": 5,
       "norm_label": "validateresetpasswordinput()"
+    },
+    {
+      "label": "messages.validator.js",
+      "file_type": "code",
+      "source_file": "backend/src/validators/messages.validator.js",
+      "source_location": "L1",
+      "id": "backend_src_validators_messages_validator_js",
+      "community": 30,
+      "norm_label": "messages.validator.js"
+    },
+    {
+      "label": "VALID_TYPES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/messages.validator.js",
+      "source_location": "L3",
+      "id": "validators_messages_validator_valid_types",
+      "community": 30,
+      "norm_label": "valid_types"
+    },
+    {
+      "label": "VALID_PRIORITIES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/messages.validator.js",
+      "source_location": "L4",
+      "id": "validators_messages_validator_valid_priorities",
+      "community": 30,
+      "norm_label": "valid_priorities"
+    },
+    {
+      "label": "validateSendAdminMessageInput()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/messages.validator.js",
+      "source_location": "L6",
+      "id": "validators_messages_validator_validatesendadminmessageinput",
+      "community": 30,
+      "norm_label": "validatesendadminmessageinput()"
     },
     {
       "label": "organization.validator.js",
@@ -3953,6 +4223,15 @@
       "id": "validators_users_validator_validateresetuserpasswordinput",
       "community": 9,
       "norm_label": "validateresetuserpasswordinput()"
+    },
+    {
+      "label": "validateSendMessageInput()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L222",
+      "id": "validators_users_validator_validatesendmessageinput",
+      "community": 9,
+      "norm_label": "validatesendmessageinput()"
     },
     {
       "label": "usersImport.validator.js",
@@ -4815,7 +5094,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L1",
       "id": "frontend_src_authcontext_tsx",
-      "community": 45,
+      "community": 25,
       "norm_label": "authcontext.tsx"
     },
     {
@@ -4824,7 +5103,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L13",
       "id": "src_authcontext_authcontexttype",
-      "community": 45,
+      "community": 25,
       "norm_label": "authcontexttype"
     },
     {
@@ -4833,7 +5112,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L25",
       "id": "src_authcontext_authcontext",
-      "community": 45,
+      "community": 25,
       "norm_label": "authcontext"
     },
     {
@@ -4842,7 +5121,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L34",
       "id": "src_authcontext_demo_user",
-      "community": 45,
+      "community": 25,
       "norm_label": "demo_user"
     },
     {
@@ -4851,7 +5130,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L41",
       "id": "src_authcontext_demo_profile",
-      "community": 45,
+      "community": 25,
       "norm_label": "demo_profile"
     },
     {
@@ -4860,7 +5139,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L49",
       "id": "src_authcontext_mapadmintoprofile",
-      "community": 45,
+      "community": 25,
       "norm_label": "mapadmintoprofile()"
     },
     {
@@ -4869,7 +5148,7 @@
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L58",
       "id": "src_authcontext_authprovider",
-      "community": 45,
+      "community": 25,
       "norm_label": "authprovider()"
     },
     {
@@ -4887,7 +5166,7 @@
       "source_file": "frontend/src/main.tsx",
       "source_location": "L1",
       "id": "frontend_src_main_tsx",
-      "community": 45,
+      "community": 25,
       "norm_label": "main.tsx"
     },
     {
@@ -4896,7 +5175,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L1",
       "id": "frontend_src_supabase_ts",
-      "community": 59,
+      "community": 28,
       "norm_label": "supabase.ts"
     },
     {
@@ -4905,7 +5184,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L10",
       "id": "src_supabase_supabase",
-      "community": 59,
+      "community": 28,
       "norm_label": "supabase"
     },
     {
@@ -4932,7 +5211,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L22",
       "id": "api_adminauth_getstoredtoken",
-      "community": 22,
+      "community": 27,
       "norm_label": "getstoredtoken()"
     },
     {
@@ -5004,7 +5283,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L74",
       "id": "api_adminauth_apiforgotpassword",
-      "community": 25,
+      "community": 55,
       "norm_label": "apiforgotpassword()"
     },
     {
@@ -5013,7 +5292,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L81",
       "id": "api_adminauth_apiresetpassword",
-      "community": 25,
+      "community": 55,
       "norm_label": "apiresetpassword()"
     },
     {
@@ -5085,7 +5364,7 @@
       "source_file": "frontend/src/api/dashboard.ts",
       "source_location": "L61",
       "id": "api_dashboard_getadminwidgets",
-      "community": 22,
+      "community": 27,
       "norm_label": "getadminwidgets()"
     },
     {
@@ -5103,7 +5382,7 @@
       "source_file": "frontend/src/api/groups.ts",
       "source_location": "L7",
       "id": "api_groups_groupsfetch",
-      "community": 24,
+      "community": 27,
       "norm_label": "groupsfetch()"
     },
     {
@@ -5436,7 +5715,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L1",
       "id": "frontend_src_api_passwordrecovery_ts",
-      "community": 25,
+      "community": 55,
       "norm_label": "passwordrecovery.ts"
     },
     {
@@ -5445,7 +5724,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L10",
       "id": "api_passwordrecovery_requestpasswordreset",
-      "community": 25,
+      "community": 55,
       "norm_label": "requestpasswordreset()"
     },
     {
@@ -5454,7 +5733,7 @@
       "source_file": "frontend/src/api/passwordRecovery.ts",
       "source_location": "L25",
       "id": "api_passwordrecovery_updatepassword",
-      "community": 25,
+      "community": 55,
       "norm_label": "updatepassword()"
     },
     {
@@ -5598,7 +5877,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L48",
       "id": "api_users_apierror",
-      "community": 51,
+      "community": 67,
       "norm_label": "apierror"
     },
     {
@@ -5607,7 +5886,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L50",
       "id": "api_users_apierror_constructor",
-      "community": 51,
+      "community": 67,
       "norm_label": ".constructor()"
     },
     {
@@ -5616,7 +5895,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L59",
       "id": "api_users_getusers",
-      "community": 48,
+      "community": 24,
       "norm_label": "getusers()"
     },
     {
@@ -5706,7 +5985,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L151",
       "id": "api_users_getuserdetails",
-      "community": 22,
+      "community": 27,
       "norm_label": "getuserdetails()"
     },
     {
@@ -5724,7 +6003,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L195",
       "id": "api_users_bulkaction",
-      "community": 41,
+      "community": 27,
       "norm_label": "bulkaction()"
     },
     {
@@ -5733,7 +6012,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L220",
       "id": "api_users_exportallusers",
-      "community": 35,
+      "community": 27,
       "norm_label": "exportallusers()"
     },
     {
@@ -5751,7 +6030,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L254",
       "id": "api_users_getinvitations",
-      "community": 49,
+      "community": 27,
       "norm_label": "getinvitations()"
     },
     {
@@ -5841,7 +6120,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_loginform_tsx",
-      "community": 59,
+      "community": 45,
       "norm_label": "loginform.tsx"
     },
     {
@@ -5850,7 +6129,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L4",
       "id": "auth_loginform_props",
-      "community": 59,
+      "community": 45,
       "norm_label": "props"
     },
     {
@@ -5859,7 +6138,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L8",
       "id": "auth_loginform_loginform",
-      "community": 59,
+      "community": 45,
       "norm_label": "loginform()"
     },
     {
@@ -6021,7 +6300,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_signupform_tsx",
-      "community": 59,
+      "community": 45,
       "norm_label": "signupform.tsx"
     },
     {
@@ -6030,7 +6309,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L5",
       "id": "auth_signupform_props",
-      "community": 59,
+      "community": 45,
       "norm_label": "props"
     },
     {
@@ -6039,7 +6318,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L9",
       "id": "auth_signupform_signupform",
-      "community": 59,
+      "community": 45,
       "norm_label": "signupform()"
     },
     {
@@ -6129,7 +6408,7 @@
       "source_file": "frontend/src/components/groups/CreateGroupModal.tsx",
       "source_location": "L28",
       "id": "groups_creategroupmodal_creategroupmodal",
-      "community": 66,
+      "community": 46,
       "norm_label": "creategroupmodal()"
     },
     {
@@ -6192,7 +6471,7 @@
       "source_file": "frontend/src/components/groups/EditGroupModal.tsx",
       "source_location": "L30",
       "id": "groups_editgroupmodal_editgroupmodal",
-      "community": 66,
+      "community": 46,
       "norm_label": "editgroupmodal()"
     },
     {
@@ -6687,7 +6966,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_organization_organizationtab_tsx",
-      "community": 44,
+      "community": 51,
       "norm_label": "organizationtab.tsx"
     },
     {
@@ -6696,7 +6975,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L8",
       "id": "organization_organizationtab_props",
-      "community": 44,
+      "community": 51,
       "norm_label": "props"
     },
     {
@@ -6705,7 +6984,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L12",
       "id": "organization_organizationtab_subtab",
-      "community": 44,
+      "community": 51,
       "norm_label": "subtab"
     },
     {
@@ -6714,7 +6993,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L14",
       "id": "organization_organizationtab_sub_tabs",
-      "community": 44,
+      "community": 51,
       "norm_label": "sub_tabs"
     },
     {
@@ -6723,7 +7002,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L22",
       "id": "organization_organizationtab_organizationtab",
-      "community": 44,
+      "community": 51,
       "norm_label": "organizationtab()"
     },
     {
@@ -7083,7 +7362,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_ui_loadingspinner_tsx",
-      "community": 45,
+      "community": 41,
       "norm_label": "loadingspinner.tsx"
     },
     {
@@ -7092,7 +7371,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "ui_loadingspinner_loadingspinner",
-      "community": 45,
+      "community": 41,
       "norm_label": "loadingspinner()"
     },
     {
@@ -7101,7 +7380,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_addusermodal_tsx",
-      "community": 65,
+      "community": 50,
       "norm_label": "addusermodal.tsx"
     },
     {
@@ -7110,7 +7389,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L9",
       "id": "users_addusermodal_props",
-      "community": 65,
+      "community": 50,
       "norm_label": "props"
     },
     {
@@ -7119,7 +7398,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L17",
       "id": "users_addusermodal_input",
-      "community": 65,
+      "community": 50,
       "norm_label": "input"
     },
     {
@@ -7128,7 +7407,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L24",
       "id": "users_addusermodal_err_input",
-      "community": 65,
+      "community": 50,
       "norm_label": "err_input"
     },
     {
@@ -7137,7 +7416,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L28",
       "id": "users_addusermodal_field",
-      "community": 65,
+      "community": 50,
       "norm_label": "field()"
     },
     {
@@ -7146,7 +7425,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L44",
       "id": "users_addusermodal_formkey",
-      "community": 65,
+      "community": 50,
       "norm_label": "formkey"
     },
     {
@@ -7155,7 +7434,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L48",
       "id": "users_addusermodal_addusermodal",
-      "community": 66,
+      "community": 46,
       "norm_label": "addusermodal()"
     },
     {
@@ -7164,7 +7443,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_archivedtab_tsx",
-      "community": 48,
+      "community": 1,
       "norm_label": "archivedtab.tsx"
     },
     {
@@ -7173,7 +7452,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L5",
       "id": "users_archivedtab_formatdate",
-      "community": 48,
+      "community": 1,
       "norm_label": "formatdate()"
     },
     {
@@ -7182,7 +7461,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L9",
       "id": "users_archivedtab_initials",
-      "community": 48,
+      "community": 1,
       "norm_label": "initials()"
     },
     {
@@ -7191,7 +7470,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L14",
       "id": "users_archivedtab_sk",
-      "community": 48,
+      "community": 1,
       "norm_label": "sk()"
     },
     {
@@ -7200,7 +7479,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L23",
       "id": "users_archivedtab_skeletonrow",
-      "community": 48,
+      "community": 1,
       "norm_label": "skeletonrow()"
     },
     {
@@ -7209,7 +7488,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L44",
       "id": "users_archivedtab_th",
-      "community": 48,
+      "community": 1,
       "norm_label": "th"
     },
     {
@@ -7218,7 +7497,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L49",
       "id": "users_archivedtab_td",
-      "community": 48,
+      "community": 1,
       "norm_label": "td"
     },
     {
@@ -7227,7 +7506,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L54",
       "id": "users_archivedtab_archivedtab",
-      "community": 48,
+      "community": 1,
       "norm_label": "archivedtab()"
     },
     {
@@ -7236,7 +7515,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_assignrolemodal_tsx",
-      "community": 68,
+      "community": 67,
       "norm_label": "assignrolemodal.tsx"
     },
     {
@@ -7245,7 +7524,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L8",
       "id": "users_assignrolemodal_props",
-      "community": 68,
+      "community": 67,
       "norm_label": "props"
     },
     {
@@ -7254,7 +7533,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L15",
       "id": "users_assignrolemodal_types",
-      "community": 68,
+      "community": 67,
       "norm_label": "types"
     },
     {
@@ -7263,7 +7542,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L21",
       "id": "users_assignrolemodal_input",
-      "community": 68,
+      "community": 67,
       "norm_label": "input"
     },
     {
@@ -7272,7 +7551,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L28",
       "id": "users_assignrolemodal_assignrolemodal",
-      "community": 68,
+      "community": 67,
       "norm_label": "assignrolemodal()"
     },
     {
@@ -7281,7 +7560,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "community": 41,
+      "community": 27,
       "norm_label": "bulkactionsmenu.tsx"
     },
     {
@@ -7290,7 +7569,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L6",
       "id": "users_bulkactionsmenu_props",
-      "community": 41,
+      "community": 27,
       "norm_label": "props"
     },
     {
@@ -7299,7 +7578,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L14",
       "id": "users_bulkactionsmenu_role_options",
-      "community": 41,
+      "community": 27,
       "norm_label": "role_options"
     },
     {
@@ -7308,7 +7587,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L21",
       "id": "users_bulkactionsmenu_actionkey",
-      "community": 41,
+      "community": 27,
       "norm_label": "actionkey"
     },
     {
@@ -7317,7 +7596,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L23",
       "id": "users_bulkactionsmenu_action_labels",
-      "community": 41,
+      "community": 27,
       "norm_label": "action_labels"
     },
     {
@@ -7326,7 +7605,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L31",
       "id": "users_bulkactionsmenu_bulkactionsmenu",
-      "community": 41,
+      "community": 27,
       "norm_label": "bulkactionsmenu()"
     },
     {
@@ -7452,7 +7731,7 @@
       "source_file": "frontend/src/components/users/EditUserModal.tsx",
       "source_location": "L54",
       "id": "users_editusermodal_editusermodal",
-      "community": 66,
+      "community": 46,
       "norm_label": "editusermodal()"
     },
     {
@@ -7893,7 +8172,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L40",
       "id": "users_sendinvitationmodal_sendinvitationmodal",
-      "community": 66,
+      "community": 46,
       "norm_label": "sendinvitationmodal()"
     },
     {
@@ -7902,7 +8181,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_sendmessagemodal_tsx",
-      "community": 69,
+      "community": 34,
       "norm_label": "sendmessagemodal.tsx"
     },
     {
@@ -7911,7 +8190,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L7",
       "id": "users_sendmessagemodal_message_type_options",
-      "community": 69,
+      "community": 34,
       "norm_label": "message_type_options"
     },
     {
@@ -7920,7 +8199,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L15",
       "id": "users_sendmessagemodal_priority_options",
-      "community": 69,
+      "community": 34,
       "norm_label": "priority_options"
     },
     {
@@ -7929,7 +8208,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L21",
       "id": "users_sendmessagemodal_input",
-      "community": 69,
+      "community": 34,
       "norm_label": "input"
     },
     {
@@ -7938,7 +8217,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L28",
       "id": "users_sendmessagemodal_label",
-      "community": 69,
+      "community": 34,
       "norm_label": "label"
     },
     {
@@ -7947,7 +8226,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L32",
       "id": "users_sendmessagemodal_focusin",
-      "community": 69,
+      "community": 34,
       "norm_label": "focusin()"
     },
     {
@@ -7956,7 +8235,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L36",
       "id": "users_sendmessagemodal_focusout",
-      "community": 69,
+      "community": 34,
       "norm_label": "focusout()"
     },
     {
@@ -7965,7 +8244,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L41",
       "id": "users_sendmessagemodal_props",
-      "community": 69,
+      "community": 34,
       "norm_label": "props"
     },
     {
@@ -7974,7 +8253,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L49",
       "id": "users_sendmessagemodal_sendmessagemodal",
-      "community": 69,
+      "community": 34,
       "norm_label": "sendmessagemodal()"
     },
     {
@@ -8073,7 +8352,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_suspenduserdialog_tsx",
-      "community": 27,
+      "community": 67,
       "norm_label": "suspenduserdialog.tsx"
     },
     {
@@ -8082,7 +8361,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L6",
       "id": "users_suspenduserdialog_props",
-      "community": 27,
+      "community": 67,
       "norm_label": "props"
     },
     {
@@ -8091,7 +8370,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L14",
       "id": "users_suspenduserdialog_ta",
-      "community": 27,
+      "community": 67,
       "norm_label": "ta"
     },
     {
@@ -8100,7 +8379,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L22",
       "id": "users_suspenduserdialog_suspenduserdialog",
-      "community": 27,
+      "community": 67,
       "norm_label": "suspenduserdialog()"
     },
     {
@@ -8136,7 +8415,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L9",
       "id": "users_toast_usetoast",
-      "community": 66,
+      "community": 20,
       "norm_label": "usetoast()"
     },
     {
@@ -8469,7 +8748,7 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_userfilters_tsx",
-      "community": 70,
+      "community": 50,
       "norm_label": "userfilters.tsx"
     },
     {
@@ -8478,7 +8757,7 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L3",
       "id": "users_userfilters_props",
-      "community": 70,
+      "community": 50,
       "norm_label": "props"
     },
     {
@@ -8487,7 +8766,7 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L15",
       "id": "users_userfilters_input",
-      "community": 70,
+      "community": 50,
       "norm_label": "input"
     },
     {
@@ -8496,7 +8775,7 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L22",
       "id": "users_userfilters_select",
-      "community": 70,
+      "community": 50,
       "norm_label": "select"
     },
     {
@@ -8505,7 +8784,7 @@
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L24",
       "id": "users_userfilters_userfilters",
-      "community": 70,
+      "community": 50,
       "norm_label": "userfilters()"
     },
     {
@@ -8874,7 +9153,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "community": 71,
+      "community": 32,
       "norm_label": "usersbydepartmentchart.tsx"
     },
     {
@@ -8883,7 +9162,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L4",
       "id": "charts_usersbydepartmentchart_props",
-      "community": 71,
+      "community": 32,
       "norm_label": "props"
     },
     {
@@ -8892,7 +9171,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L9",
       "id": "charts_usersbydepartmentchart_bar_colors",
-      "community": 71,
+      "community": 32,
       "norm_label": "bar_colors"
     },
     {
@@ -8901,7 +9180,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L14",
       "id": "charts_usersbydepartmentchart_skeleton",
-      "community": 71,
+      "community": 32,
       "norm_label": "skeleton()"
     },
     {
@@ -8910,7 +9189,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L27",
       "id": "charts_usersbydepartmentchart_truncate",
-      "community": 71,
+      "community": 32,
       "norm_label": "truncate()"
     },
     {
@@ -8919,7 +9198,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L31",
       "id": "charts_usersbydepartmentchart_usersbydepartmentchart",
-      "community": 71,
+      "community": 32,
       "norm_label": "usersbydepartmentchart()"
     },
     {
@@ -9072,7 +9351,7 @@
       "source_file": "frontend/src/constants/userOptions.ts",
       "source_location": "L33",
       "id": "constants_useroptions_role_options",
-      "community": 70,
+      "community": 50,
       "norm_label": "role_options"
     },
     {
@@ -9090,7 +9369,7 @@
       "source_file": "frontend/src/hooks/useOrgOptions.ts",
       "source_location": "L5",
       "id": "hooks_useorgoptions_useorgoptions",
-      "community": 66,
+      "community": 46,
       "norm_label": "useorgoptions()"
     },
     {
@@ -9144,7 +9423,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L23",
       "id": "hooks_useroles_useroles",
-      "community": 66,
+      "community": 46,
       "norm_label": "useroles()"
     },
     {
@@ -9765,7 +10044,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_resetpasswordpage_tsx",
-      "community": 0,
+      "community": 28,
       "norm_label": "resetpasswordpage.tsx"
     },
     {
@@ -9774,7 +10053,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L7",
       "id": "pages_resetpasswordpage_iconshieldcheck",
-      "community": 0,
+      "community": 28,
       "norm_label": "iconshieldcheck()"
     },
     {
@@ -9783,7 +10062,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L18",
       "id": "pages_resetpasswordpage_authshell",
-      "community": 0,
+      "community": 28,
       "norm_label": "authshell()"
     },
     {
@@ -9792,7 +10071,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L34",
       "id": "pages_resetpasswordpage_resetpasswordpage",
-      "community": 0,
+      "community": 28,
       "norm_label": "resetpasswordpage()"
     },
     {
@@ -9963,7 +10242,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_usermanagementpage_tsx",
-      "community": 48,
+      "community": 20,
       "norm_label": "usermanagementpage.tsx"
     },
     {
@@ -9972,7 +10251,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L31",
       "id": "pages_usermanagementpage_tabs",
-      "community": 48,
+      "community": 20,
       "norm_label": "tabs"
     },
     {
@@ -9981,7 +10260,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L43",
       "id": "pages_usermanagementpage_tabkey",
-      "community": 48,
+      "community": 20,
       "norm_label": "tabkey"
     },
     {
@@ -9990,7 +10269,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L45",
       "id": "pages_usermanagementpage_limit_options",
-      "community": 48,
+      "community": 20,
       "norm_label": "limit_options"
     },
     {
@@ -9999,7 +10278,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L49",
       "id": "pages_usermanagementpage_pagerange",
-      "community": 66,
+      "community": 20,
       "norm_label": "pagerange()"
     },
     {
@@ -10008,7 +10287,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L60",
       "id": "pages_usermanagementpage_comingsoon",
-      "community": 48,
+      "community": 20,
       "norm_label": "comingsoon()"
     },
     {
@@ -10017,7 +10296,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L74",
       "id": "pages_usermanagementpage_input_base",
-      "community": 48,
+      "community": 20,
       "norm_label": "input_base"
     },
     {
@@ -10026,7 +10305,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L80",
       "id": "pages_usermanagementpage_focusin",
-      "community": 48,
+      "community": 20,
       "norm_label": "focusin()"
     },
     {
@@ -10035,7 +10314,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L84",
       "id": "pages_usermanagementpage_focusout",
-      "community": 48,
+      "community": 20,
       "norm_label": "focusout()"
     },
     {
@@ -10044,7 +10323,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L91",
       "id": "pages_usermanagementpage_usermanagementpage",
-      "community": 66,
+      "community": 20,
       "norm_label": "usermanagementpage()"
     },
     {
@@ -10071,7 +10350,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L1",
       "id": "frontend_src_routes_protectedroute_tsx",
-      "community": 45,
+      "community": 41,
       "norm_label": "protectedroute.tsx"
     },
     {
@@ -10080,7 +10359,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L6",
       "id": "routes_protectedroute_props",
-      "community": 45,
+      "community": 41,
       "norm_label": "props"
     },
     {
@@ -10089,7 +10368,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L12",
       "id": "routes_protectedroute_protectedroute",
-      "community": 45,
+      "community": 41,
       "norm_label": "protectedroute()"
     },
     {
@@ -10098,7 +10377,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "frontend_src_types_auth_ts",
-      "community": 45,
+      "community": 41,
       "norm_label": "auth.ts"
     },
     {
@@ -10107,7 +10386,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "types_auth_profile",
-      "community": 45,
+      "community": 41,
       "norm_label": "profile"
     },
     {
@@ -10116,7 +10395,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L8",
       "id": "types_auth_userrole",
-      "community": 45,
+      "community": 41,
       "norm_label": "userrole"
     },
     {
@@ -10737,7 +11016,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L1",
       "id": "frontend_src_types_organization_ts",
-      "community": 42,
+      "community": 44,
       "norm_label": "organization.ts"
     },
     {
@@ -10773,7 +11052,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L6",
       "id": "types_organization_teamstatus",
-      "community": 42,
+      "community": 44,
       "norm_label": "teamstatus"
     },
     {
@@ -10809,7 +11088,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L34",
       "id": "types_organization_createdepartmentbody",
-      "community": 42,
+      "community": 44,
       "norm_label": "createdepartmentbody"
     },
     {
@@ -10881,7 +11160,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L132",
       "id": "types_organization_orgchartedge",
-      "community": 42,
+      "community": 44,
       "norm_label": "orgchartedge"
     },
     {
@@ -10908,7 +11187,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L165",
       "id": "types_organization_orgpagination",
-      "community": 42,
+      "community": 44,
       "norm_label": "orgpagination"
     },
     {
@@ -10917,7 +11196,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L172",
       "id": "types_organization_departmentsresponse",
-      "community": 42,
+      "community": 44,
       "norm_label": "departmentsresponse"
     },
     {
@@ -10926,7 +11205,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L173",
       "id": "types_organization_branchesresponse",
-      "community": 42,
+      "community": 44,
       "norm_label": "branchesresponse"
     },
     {
@@ -10935,7 +11214,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L174",
       "id": "types_organization_teamsresponse",
-      "community": 42,
+      "community": 44,
       "norm_label": "teamsresponse"
     },
     {
@@ -10962,7 +11241,7 @@
       "source_file": "frontend/src/types/passwordRecovery.ts",
       "source_location": "L14",
       "id": "types_passwordrecovery_resetpasswordstep",
-      "community": 0,
+      "community": 28,
       "norm_label": "resetpasswordstep"
     },
     {
@@ -11079,7 +11358,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L7",
       "id": "types_users_user",
-      "community": 24,
+      "community": 1,
       "norm_label": "user"
     },
     {
@@ -11106,7 +11385,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L44",
       "id": "types_users_usersresponse",
-      "community": 48,
+      "community": 20,
       "norm_label": "usersresponse"
     },
     {
@@ -11115,7 +11394,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L52",
       "id": "types_users_roletype",
-      "community": 68,
+      "community": 34,
       "norm_label": "roletype"
     },
     {
@@ -11196,7 +11475,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L113",
       "id": "types_users_createuserrequest",
-      "community": 65,
+      "community": 50,
       "norm_label": "createuserrequest"
     },
     {
@@ -11214,7 +11493,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L140",
       "id": "types_users_suspenduserrequest",
-      "community": 27,
+      "community": 67,
       "norm_label": "suspenduserrequest"
     },
     {
@@ -11223,7 +11502,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L145",
       "id": "types_users_assignrolerequest",
-      "community": 68,
+      "community": 67,
       "norm_label": "assignrolerequest"
     },
     {
@@ -11250,7 +11529,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L159",
       "id": "types_users_departmentanalyticsitem",
-      "community": 71,
+      "community": 32,
       "norm_label": "departmentanalyticsitem"
     },
     {
@@ -11376,7 +11655,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L237",
       "id": "types_users_bulkactiontype",
-      "community": 41,
+      "community": 27,
       "norm_label": "bulkactiontype"
     },
     {
@@ -11403,7 +11682,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "frontend_src_utils_autherrors_ts",
-      "community": 59,
+      "community": 45,
       "norm_label": "autherrors.ts"
     },
     {
@@ -11412,7 +11691,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "utils_autherrors_getautherrormessage",
-      "community": 59,
+      "community": 45,
       "norm_label": "getautherrormessage()"
     },
     {
@@ -11477,6 +11756,24 @@
       "id": "frontend_readme_codeblock_2",
       "community": 11,
       "norm_label": "code:js (// eslint.config.js)"
+    },
+    {
+      "label": "{\r\n  validateUuidParam,\r\n  validateCreateUserInput,\r\n  validateUpdateUserInput,\r\n  validateUpdateUserStatusInput,\r\n  validateSuspendUserInput,\r\n  validateAssignUserRoleInput,\r\n  validateResetUserPasswordInput,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "community": 9,
+      "norm_label": "{\r\n  validateuuidparam,\r\n  validatecreateuserinput,\r\n  validateupdateuserinput,\r\n  validateupdateuserstatusinput,\r\n  validatesuspenduserinput,\r\n  validateassignuserroleinput,\r\n  validateresetuserpasswordinput,\r\n}",
+      "id": "controllers_users_controller_validateuuidparam_validatecreateuserinput_validateupdateuserinput_validateupdateuserstatusinput_validatesuspenduserinput_validateassignuserroleinput_validateresetuserpasswordinput"
+    },
+    {
+      "label": "{\r\n  getUsersList,\r\n  exportUsers,\r\n  getUserDetails,\r\n  createUser,\r\n  updateUser,\r\n  updateUserStatus,\r\n  suspendUser,\r\n  reactivateUser,\r\n  approveVerification,\r\n  resetUserPassword,\r\n  assignUserRole,\r\n  deleteUser,\r\n  getUsersAnalytics,\r\n  importUsers,\r\n  bulkActionUsers,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L13",
+      "community": 9,
+      "norm_label": "{\r\n  getuserslist,\r\n  exportusers,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  approveverification,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n}",
+      "id": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers"
     },
     {
       "label": "ROLE_OPTIONS",
@@ -11555,7 +11852,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L13",
-      "community": 68,
+      "community": 67,
       "norm_label": "roles",
       "id": "users_assignrolemodal_roles"
     },
@@ -11600,7 +11897,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L8",
-      "community": 41,
+      "community": 27,
       "norm_label": "actions",
       "id": "users_bulkactionsmenu_actions"
     },
@@ -11609,7 +11906,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L28",
-      "community": 70,
+      "community": 50,
       "norm_label": "icon_btn",
       "id": "users_userfilters_icon_btn"
     },
@@ -11618,7 +11915,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/UserFilters.tsx",
       "source_location": "L36",
-      "community": 70,
+      "community": 50,
       "norm_label": "action_btn",
       "id": "users_userfilters_action_btn"
     },
@@ -11645,7 +11942,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L23",
-      "community": 65,
+      "community": 50,
       "norm_label": "roles",
       "id": "users_addusermodal_roles"
     },
@@ -11654,7 +11951,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L24",
-      "community": 65,
+      "community": 50,
       "norm_label": "access",
       "id": "users_addusermodal_access"
     },
@@ -12032,7 +12329,7 @@
       "file_type": "code",
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L19",
-      "community": 0,
+      "community": 28,
       "norm_label": "iconalerttriangle()",
       "id": "pages_resetpasswordpage_iconalerttriangle"
     },
@@ -12149,7 +12446,7 @@
       "file_type": "code",
       "source_file": "frontend/src/AuthContext.tsx",
       "source_location": "L5",
-      "community": 45,
+      "community": 25,
       "norm_label": "profile",
       "id": "src_authcontext_profile"
     }
@@ -12654,6 +12951,27 @@
       "target": "backend_server_invitationsroutes"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_src_routes_messages_routes_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_server_messagesroutes",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/server.js",
@@ -12972,6 +13290,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_services_invitations_service_js",
       "target": "backend_src_config_prisma_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_services_messages_service_js",
+      "target": "backend_src_config_prisma_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -14135,6 +14464,123 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_invitations_routes_js",
       "target": "controllers_invitations_controller_updateexpiration"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_controllers_messages_controller_js",
+      "target": "backend_src_services_messages_service_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_controllers_messages_controller_js",
+      "target": "controllers_messages_controller_messagesservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_messages_controller_js",
+      "target": "backend_src_validators_messages_validator_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_messages_controller_js",
+      "target": "validators_messages_validator_validatesendadminmessageinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_messages_controller_js",
+      "target": "controllers_messages_controller_validatesendadminmessageinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_src_controllers_messages_controller_js",
+      "target": "controllers_messages_controller_sendmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "backend_src_controllers_messages_controller_js",
+      "target": "controllers_messages_controller_getmessages",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "backend_src_controllers_messages_controller_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "controllers_messages_controller_sendmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/messages.controller.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "controllers_messages_controller_sendmessage",
+      "target": "validators_messages_validator_validatesendadminmessageinput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "controllers_messages_controller_getmessages",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -16476,14 +16922,25 @@
       "target": "validators_users_validator_validateresetuserpasswordinput"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "validators_users_validator_validatesendmessageinput",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/controllers/users.controller.js",
       "source_location": "L2",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_src_controllers_users_controller_js",
-      "target": "controllers_users_controller_validateuuidparam_validatecreateuserinput_validateupdateuserinput_validateupdateuserstatusinput_validatesuspenduserinput_validateassignuserroleinput_validateresetuserpasswordinput"
+      "target": "controllers_users_controller_validateuuidparam_validatecreateuserinput_validateupdateuserinput_validateupdateuserstatusinput_validatesuspenduserinput_validateassignuserroleinput_validateresetuserpasswordinput_validatesendmessageinput",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -16636,6 +17093,26 @@
       "target": "controllers_users_controller_bulkactionusers"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L302",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_sendmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L325",
+      "weight": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_getusermessageslist",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -16645,6 +17122,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
       "target": "backend_src_controllers_users_controller_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_users_controller_js",
+      "target": "controllers_users_controller_validateuuidparam_validatecreateuserinput_validateupdateuserinput_validateupdateuserstatusinput_validatesuspenduserinput_validateassignuserroleinput_validateresetuserpasswordinput"
     },
     {
       "relation": "contains",
@@ -16986,6 +17473,61 @@
       "target": "controllers_users_controller_bulkactionusers"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_sendmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L303",
+      "weight": 1.0,
+      "source": "controllers_users_controller_sendmessage",
+      "target": "validators_users_validator_validateuuidparam"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L308",
+      "weight": 1.0,
+      "source": "controllers_users_controller_sendmessage",
+      "target": "validators_users_validator_validatesendmessageinput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "controllers_users_controller_getusermessageslist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/users.controller.js",
+      "source_location": "L326",
+      "weight": 1.0,
+      "source": "controllers_users_controller_getusermessageslist",
+      "target": "validators_users_validator_validateuuidparam"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/middlewares/auth.middleware.js",
@@ -17098,6 +17640,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_invitations_routes_js",
       "target": "backend_src_middlewares_auth_middleware_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "backend_src_middlewares_auth_middleware_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -17246,6 +17799,17 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "middlewares_auth_middleware_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/organization.routes.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -17373,6 +17937,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "backend_src_middlewares_ratelimit_middleware_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/organization.routes.js",
       "source_location": "L3",
       "weight": 1.0,
@@ -17456,6 +18031,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_invitations_routes_js",
       "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -17838,6 +18424,56 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "routes_messages_routes_express",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "routes_messages_routes_requireadminauth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "routes_messages_routes_adminuseractionratelimiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "routes_messages_routes_sendmessage_getmessages",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/messages.routes.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_src_routes_messages_routes_js",
+      "target": "routes_messages_routes_router",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/organization.routes.js",
       "source_location": "L1",
       "weight": 1.0,
@@ -18031,9 +18667,9 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
-      "target": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers"
+      "target": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers_sendmessage_getusermessageslist",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -18044,6 +18680,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_users_routes_js",
       "target": "routes_users_routes_router"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/users.routes.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_users_routes_js",
+      "target": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers"
     },
     {
       "relation": "contains",
@@ -19285,6 +19931,120 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_src_services_messages_service_js",
+      "target": "services_messages_service_prisma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_services_messages_service_js",
+      "target": "services_messages_service_message_select",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "backend_src_services_messages_service_js",
+      "target": "services_messages_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "backend_src_services_messages_service_js",
+      "target": "services_messages_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "backend_src_services_messages_service_js",
+      "target": "services_messages_service_mapmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "backend_src_services_messages_service_js",
+      "target": "services_messages_service_sendadminmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "backend_src_services_messages_service_js",
+      "target": "services_messages_service_getadminmessages",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "services_messages_service_sendadminmessage",
+      "target": "services_messages_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "services_messages_service_getadminmessages",
+      "target": "services_messages_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "services_messages_service_sendadminmessage",
+      "target": "services_messages_service_createuserauditlog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/messages.service.js",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "services_messages_service_sendadminmessage",
+      "target": "services_messages_service_mapmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/services/organization.service.js",
       "source_location": "L1",
       "weight": 1.0,
@@ -20075,6 +20835,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/services/users.service.js",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_message_select",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
       "source_location": "L32",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -20302,6 +21072,36 @@
       "target": "services_users_service_bulkactionusers"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1098",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_sendmessagetouser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1138",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_getusermessages",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1173",
+      "weight": 1.0,
+      "source": "backend_src_services_users_service_js",
+      "target": "services_users_service_mapadminmessage",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -20460,6 +21260,28 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1103",
+      "weight": 1.0,
+      "source": "services_users_service_sendmessagetouser",
+      "target": "services_users_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1143",
+      "weight": 1.0,
+      "source": "services_users_service_getusermessages",
+      "target": "services_users_service_makeerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
       "source_location": "L316",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -20597,6 +21419,17 @@
       "confidence_score": 1.0,
       "source": "services_users_service_bulkactionusers",
       "target": "services_users_service_createuserauditlog"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1122",
+      "weight": 1.0,
+      "source": "services_users_service_sendmessagetouser",
+      "target": "services_users_service_createuserauditlog",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -20806,6 +21639,17 @@
       "weight": 1.0,
       "source": "services_users_service_importusersfromcsv",
       "target": "validators_usersimport_validator_validateimportrows"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/users.service.js",
+      "source_location": "L1132",
+      "weight": 1.0,
+      "source": "services_users_service_sendmessagetouser",
+      "target": "services_users_service_mapadminmessage",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -21036,6 +21880,36 @@
       "confidence_score": 1.0,
       "source": "backend_src_validators_adminauth_validator_js",
       "target": "validators_adminauth_validator_validateresetpasswordinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/messages.validator.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "backend_src_validators_messages_validator_js",
+      "target": "validators_messages_validator_valid_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/messages.validator.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_validators_messages_validator_js",
+      "target": "validators_messages_validator_valid_priorities",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/messages.validator.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_src_validators_messages_validator_js",
+      "target": "validators_messages_validator_validatesendadminmessageinput",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -21427,6 +22301,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_validators_users_validator_js",
       "target": "validators_users_validator_validateresetuserpasswordinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/users.validator.js",
+      "source_location": "L222",
+      "weight": 1.0,
+      "source": "backend_src_validators_users_validator_js",
+      "target": "validators_users_validator_validatesendmessageinput",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -23262,9 +24146,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "frontend_src_api_adminauth_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_adminauth_ts"
     },
     {
       "relation": "imports",
@@ -23339,9 +24223,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "api_adminauth_getstoredtoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_getstoredtoken"
     },
     {
       "relation": "calls",
@@ -31062,9 +31946,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "frontend_src_components_users_toast_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_toast_tsx"
     },
     {
       "relation": "imports",
@@ -31073,9 +31957,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_toast_toasttype",
-      "confidence_score": 1.0
+      "target": "users_toast_toasttype"
     },
     {
       "relation": "contains",
@@ -31083,9 +31967,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_sendmessagemodal_message_type_options",
-      "confidence_score": 1.0
+      "target": "users_sendmessagemodal_message_type_options"
     },
     {
       "relation": "contains",
@@ -31093,9 +31977,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_sendmessagemodal_priority_options",
-      "confidence_score": 1.0
+      "target": "users_sendmessagemodal_priority_options"
     },
     {
       "relation": "contains",
@@ -31103,9 +31987,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_sendmessagemodal_input",
-      "confidence_score": 1.0
+      "target": "users_sendmessagemodal_input"
     },
     {
       "relation": "contains",
@@ -31113,9 +31997,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_sendmessagemodal_label",
-      "confidence_score": 1.0
+      "target": "users_sendmessagemodal_label"
     },
     {
       "relation": "contains",
@@ -31123,9 +32007,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_sendmessagemodal_focusin",
-      "confidence_score": 1.0
+      "target": "users_sendmessagemodal_focusin"
     },
     {
       "relation": "contains",
@@ -31133,9 +32017,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_sendmessagemodal_focusout",
-      "confidence_score": 1.0
+      "target": "users_sendmessagemodal_focusout"
     },
     {
       "relation": "contains",
@@ -31143,9 +32027,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_sendmessagemodal_props",
-      "confidence_score": 1.0
+      "target": "users_sendmessagemodal_props"
     },
     {
       "relation": "contains",
@@ -31153,9 +32037,9 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_sendmessagemodal_tsx",
-      "target": "users_sendmessagemodal_sendmessagemodal",
-      "confidence_score": 1.0
+      "target": "users_sendmessagemodal_sendmessagemodal"
     },
     {
       "relation": "imports_from",
@@ -31164,9 +32048,9 @@
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_users_userdetailsdrawer_tsx",
-      "target": "frontend_src_components_users_sendmessagemodal_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_sendmessagemodal_tsx"
     },
     {
       "relation": "imports_from",
@@ -36180,9 +37064,9 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L229",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_users_ts",
-      "target": "types_users_sendmessagepayload",
-      "confidence_score": 1.0
+      "target": "types_users_sendmessagepayload"
     },
     {
       "relation": "contains",
@@ -36296,5 +37180,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "57b1812cc9be73eb925e6370915162e8d2ef2663"
+  "built_at_commit": "e5f027375fa48fe07f3ad3d889472bd82a0cc94b"
 }

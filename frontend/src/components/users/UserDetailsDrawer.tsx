@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getUserDetails, reactivateUser, resetPassword } from '../../api/users';
+import { getStoredToken } from '../../api/adminAuth';
 import type {
   UserDetailsResponse,
   UserStatus,
@@ -214,8 +215,9 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
   const [reactivateOpen,   setReactivateOpen]   = useState(false);
   const [resetPwOpen,      setResetPwOpen]      = useState(false);
   const [assignRoleOpen,   setAssignRoleOpen]   = useState(false);
-  const [sendMessageOpen,  setSendMessageOpen]  = useState(false);
-  const [actionBusy,       setActionBusy]       = useState(false);
+  const [sendMessageOpen,      setSendMessageOpen]      = useState(false);
+  const [actionBusy,           setActionBusy]           = useState(false);
+  const [forceLogoutLoading,   setForceLogoutLoading]   = useState(false);
 
   // Reset password form state
   const [newPassword,  setNewPassword]  = useState('');
@@ -284,6 +286,38 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
       showToast('error', err instanceof Error ? err.message : 'Failed to reset password');
     } finally {
       setActionBusy(false);
+    }
+  };
+
+  const handleForceLogout = async () => {
+    const user = data?.user;
+    if (!user) return;
+    const confirmed = window.confirm(
+      `Force logout ${user.fullName}? They will be immediately signed out of all active sessions.`
+    );
+    if (!confirmed) return;
+    setForceLogoutLoading(true);
+    try {
+      const token = getStoredToken();
+      const base  = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
+      const res   = await fetch(`${base}/users/${userId}/force-logout`, {
+        method:  'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        throw new Error((err as { message?: string })?.message ?? 'Failed to force logout');
+      }
+      showToast('success', 'User logged out of all sessions successfully');
+      window.dispatchEvent(new CustomEvent('userDataChanged'));
+      refetch();
+    } catch (err) {
+      showToast('error', err instanceof Error ? err.message : 'Failed to force logout user');
+    } finally {
+      setForceLogoutLoading(false);
     }
   };
 
@@ -550,7 +584,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                         : <ActionBtn Icon={IcoBan}   label="Suspend User" onClick={() => setSuspendOpen(true)} danger />
                       }
                       <ActionBtn Icon={IcoShield} label="Assign Role"   onClick={() => setAssignRoleOpen(true)} />
-                      <ActionBtn Icon={IcoLogout} label="Force Logout"  disabled danger />
+                      <ActionBtn Icon={IcoLogout} label={forceLogoutLoading ? 'Logging out…' : 'Force Logout'} onClick={handleForceLogout} disabled={forceLogoutLoading} danger />
                       <ActionBtn Icon={IcoChat}   label="Send Message"  onClick={() => setSendMessageOpen(true)} />
                     </div>
                   </Section>
