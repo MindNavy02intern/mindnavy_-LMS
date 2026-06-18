@@ -3,7 +3,7 @@ const invitationsService = require("../services/invitations.service");
 async function list(req, res) {
   try {
     const result = await invitationsService.listInvitations(req.query);
-    return res.status(200).json(result);
+    return res.status(200).json({ success: true, ...result });
   } catch (error) {
     console.error("[invitations] list error:", error.message);
     return res.status(500).json({ success: false, message: "Failed to load invitations." });

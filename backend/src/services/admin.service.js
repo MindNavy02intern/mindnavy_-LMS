@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const prisma = require("../config/prisma");
 const { generateSessionToken, getSessionExpiryDate } = require("../utils/token");
+const { clearAllCachedSessions } = require("../middlewares/auth.middleware");
 
 const {
   generateOtpCode,
@@ -694,6 +695,8 @@ async function resetAdminPassword({
       revokedAt: new Date(),
     },
   });
+
+  clearAllCachedSessions();
 
   await createAuditLog({
     adminId: admin.id,

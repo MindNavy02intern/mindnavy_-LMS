@@ -309,9 +309,11 @@ async function exportUsers(query = {}, admin = {}) {
   if (createdAfterDate  && !isNaN(createdAfterDate.getTime()))  where.createdAt = { ...where.createdAt, gte: createdAfterDate };
   if (createdBeforeDate && !isNaN(createdBeforeDate.getTime())) where.createdAt = { ...where.createdAt, lte: createdBeforeDate };
 
+  const EXPORT_ROW_CAP = 5000;
   const rawUsers = await prisma.appUser.findMany({
     where,
     orderBy: { createdAt: "desc" },
+    take: EXPORT_ROW_CAP,
     select: USER_SELECT,
   });
 
@@ -1015,11 +1017,18 @@ async function bulkActionUsers(body, admin) {
     );
   }
 
+  const BULK_ACTION_MAX_IDS = 500;
   const userIds = Array.isArray(body.userIds)
     ? body.userIds.filter((id) => typeof id === "string" && id.trim())
     : [];
   if (userIds.length === 0) {
     throw Object.assign(new Error("userIds must be a non-empty array of strings."), { statusCode: 400 });
+  }
+  if (userIds.length > BULK_ACTION_MAX_IDS) {
+    throw Object.assign(
+      new Error(`Bulk action is limited to ${BULK_ACTION_MAX_IDS} users at a time. Received ${userIds.length}.`),
+      { statusCode: 400 }
+    );
   }
 
   const params = body.params && typeof body.params === "object" ? body.params : {};

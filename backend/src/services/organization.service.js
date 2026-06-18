@@ -267,21 +267,12 @@ async function deleteDepartment(id) {
 async function assignUsersToDepartment(deptId, userIds) {
   await prisma.department.findFirstOrThrow({ where: { id: deptId } });
 
-  let assignedCount = 0;
-  let failedCount   = 0;
+  const result = await prisma.appUser.updateMany({
+    where: { id: { in: userIds } },
+    data:  { departmentId: deptId },
+  });
 
-  await Promise.all(
-    userIds.map(async (uid) => {
-      try {
-        await prisma.appUser.update({ where: { id: uid }, data: { departmentId: deptId } });
-        assignedCount++;
-      } catch {
-        failedCount++;
-      }
-    })
-  );
-
-  return { assignedCount, failedCount };
+  return { assignedCount: result.count, failedCount: userIds.length - result.count };
 }
 
 async function getDepartmentKpis(id) {
@@ -406,17 +397,12 @@ async function deleteTeam(id) {
 async function assignTeamMembers(teamId, userIds) {
   await prisma.team.findFirstOrThrow({ where: { id: teamId } });
 
-  let assignedCount = 0;
-  await Promise.all(
-    userIds.map(async (uid) => {
-      try {
-        await prisma.appUser.update({ where: { id: uid }, data: { teamId } });
-        assignedCount++;
-      } catch { /* user not found — skip */ }
-    })
-  );
+  const result = await prisma.appUser.updateMany({
+    where: { id: { in: userIds } },
+    data:  { teamId },
+  });
 
-  return { assignedCount };
+  return { assignedCount: result.count };
 }
 
 async function getTeamMembers(teamId, { search, page, limit } = {}) {

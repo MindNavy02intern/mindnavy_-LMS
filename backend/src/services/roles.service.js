@@ -1,3 +1,4 @@
+
 const prisma = require("../config/prisma");
 
 // ── Role name → AppUserRole enum mapping ──────────────────────────────────────
@@ -151,13 +152,15 @@ async function getRolePermissions(roleId) {
 }
 
 async function assignPermissionsToRole(roleId, permissionIds) {
-  await prisma.rolePermission.deleteMany({ where: { roleId } });
+  await prisma.$transaction(async (tx) => {
+    await tx.rolePermission.deleteMany({ where: { roleId } });
 
-  if (permissionIds.length > 0) {
-    await prisma.rolePermission.createMany({
-      data: permissionIds.map((permissionId) => ({ roleId, permissionId })),
-    });
-  }
+    if (permissionIds.length > 0) {
+      await tx.rolePermission.createMany({
+        data: permissionIds.map((permissionId) => ({ roleId, permissionId })),
+      });
+    }
+  });
 
   return getRolePermissions(roleId);
 }

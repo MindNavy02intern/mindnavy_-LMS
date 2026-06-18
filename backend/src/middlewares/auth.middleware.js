@@ -25,6 +25,10 @@ function invalidateCachedSession(token) {
   SESSION_CACHE.delete(token);
 }
 
+function clearAllCachedSessions() {
+  SESSION_CACHE.clear();
+}
+
 async function requireAdminAuth(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
@@ -124,4 +128,5 @@ async function requireAdminAuth(req, res, next) {
 module.exports = {
   requireAdminAuth,
   invalidateCachedSession,
+  clearAllCachedSessions,
 };

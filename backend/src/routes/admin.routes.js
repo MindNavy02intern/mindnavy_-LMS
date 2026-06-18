@@ -14,7 +14,7 @@ const {
 } = require("../controllers/admin.controller");
 
 const { requireAdminAuth } = require("../middlewares/auth.middleware");
-const { adminLoginRateLimiter } = require("../middlewares/rateLimit.middleware");
+const { adminLoginRateLimiter, adminUserActionRateLimiter } = require("../middlewares/rateLimit.middleware");
 
 const router = express.Router();
 
@@ -37,7 +37,7 @@ router.delete(
   adminRevokeTrustedDeviceController
 );
 
-router.post("/forgot-password", adminForgotPasswordController);
-router.post("/reset-password", adminResetPasswordController);
+router.post("/forgot-password", adminLoginRateLimiter, adminForgotPasswordController);
+router.post("/reset-password", adminLoginRateLimiter, adminResetPasswordController);
 
 module.exports = router;

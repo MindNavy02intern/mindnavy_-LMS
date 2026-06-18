@@ -19,6 +19,7 @@ model Branch {
   users       AppUser[]    @relation("AppUserBranch")
 
   @@index([managerId])
+  @@index([status])
   @@map("branches")
 }
 
@@ -43,6 +44,7 @@ model Department {
   @@unique([name, branchId])
   @@index([branchId])
   @@index([managerId])
+  @@index([status])
   @@map("departments")
 }
 
@@ -63,6 +65,7 @@ model Team {
   @@unique([name, departmentId])
   @@index([departmentId])
   @@index([leaderId])
+  @@index([status])
   @@map("teams")
 }
 
