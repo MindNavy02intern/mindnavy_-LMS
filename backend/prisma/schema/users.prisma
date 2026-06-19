@@ -30,12 +30,13 @@ model AppUser {
   orgDepartment Department? @relation("AppUserDepartment", fields: [departmentId], references: [id])
   orgTeam       Team?       @relation("AppUserTeam", fields: [teamId], references: [id])
 
-  managedBranches    Branch[]       @relation("BranchManager")
-  managedDepartments Department[]   @relation("DeptManager")
-  managedTeams       Team[]         @relation("TeamLeader")
-  groups             GroupMember[]  @relation("GroupMembers")
-  leadingGroups      Group[]        @relation("GroupLeader")
-  receivedMessages   AdminMessage[] @relation("UserReceivedMessages")
+  managedBranches    Branch[]         @relation("BranchManager")
+  managedDepartments Department[]     @relation("DeptManager")
+  managedTeams       Team[]           @relation("TeamLeader")
+  groups             GroupMember[]    @relation("GroupMembers")
+  leadingGroups      Group[]          @relation("GroupLeader")
+  receivedMessages   AdminMessage[]   @relation("UserReceivedMessages")
+  sessions           AppUserSession[]
 
   @@index([branchId])
   @@index([departmentId])
@@ -46,6 +47,23 @@ model AppUser {
   @@index([createdAt])
   @@index([lastActivityAt])
   @@map("app_users")
+}
+
+model AppUserSession {
+  id         String    @id @default(uuid())
+  userId     String
+  tokenHash  String    @unique
+  ipAddress  String?
+  userAgent  String?
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  user       AppUser   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tokenHash])
+  @@map("app_user_sessions")
 }
 
 enum AppUserRole {

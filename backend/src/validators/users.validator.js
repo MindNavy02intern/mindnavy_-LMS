@@ -253,6 +253,16 @@ function validateSendMessageInput(body) {
   return errors;
 }
 
+function validateForceLogoutInput(body) {
+  const { reason } = body || {};
+  if (reason != null) {
+    if (typeof reason !== "string" || reason.trim().length > 300) {
+      return ["reason must be a string up to 300 characters."];
+    }
+  }
+  return [];
+}
+
 module.exports = {
   validateUuidParam,
   validateCreateUserInput,
@@ -262,4 +272,5 @@ module.exports = {
   validateAssignUserRoleInput,
   validateResetUserPasswordInput,
   validateSendMessageInput,
+  validateForceLogoutInput,
 };

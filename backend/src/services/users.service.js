@@ -1182,6 +1182,47 @@ function mapAdminMessage(m) {
   };
 }
 
+// ─── Force Logout ─────────────────────────────────────────────────────────────
+
+async function forceLogoutUser(userId, body, admin = {}) {
+  const reason = body?.reason != null ? String(body.reason).trim() || null : null;
+
+  const user = await prisma.appUser.findUnique({
+    where: { id: userId },
+    select: { id: true, email: true, fullName: true, status: true },
+  });
+  if (!user) throw makeError("User not found.", 404);
+
+  const revokedSessionsCount = await prisma.$transaction(async (tx) => {
+    const result = await tx.appUserSession.updateMany({
+      where: { userId, revokedAt: null },
+      data:  { revokedAt: new Date() },
+    });
+
+    await tx.auditLog.create({
+      data: {
+        adminId: admin.id ?? null,
+        action:  "USER_FORCE_LOGOUT",
+        details: {
+          userId:               user.id,
+          email:                user.email,
+          fullName:             user.fullName,
+          revokedSessionsCount: result.count,
+          ...(reason && { reason }),
+        },
+      },
+    });
+
+    return result.count;
+  });
+
+  return {
+    success: true,
+    message: "User sessions revoked successfully.",
+    data:    { userId: user.id, revokedSessionsCount },
+  };
+}
+
 module.exports = {
   getUsersList,
   exportUsers,
@@ -1200,4 +1241,5 @@ module.exports = {
   bulkActionUsers,
   sendMessageToUser,
   getUserMessages,
+  forceLogoutUser,
 };

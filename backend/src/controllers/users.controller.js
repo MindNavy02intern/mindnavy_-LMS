@@ -8,6 +8,7 @@ const {
   validateAssignUserRoleInput,
   validateResetUserPasswordInput,
   validateSendMessageInput,
+  validateForceLogoutInput,
 } = require("../validators/users.validator");
 
 // ─── Analytics endpoint (Task 6D) ────────────────────────────────────────────
@@ -340,6 +341,31 @@ async function getUserMessagesList(req, res) {
   }
 }
 
+// ─── Force Logout ─────────────────────────────────────────────────────────────
+
+async function forceLogoutUser(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  const errors = validateForceLogoutInput(req.body || {});
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, message: errors[0] });
+  }
+
+  try {
+    const result = await usersService.forceLogoutUser(req.params.id, req.body, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] forceLogoutUser error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to force logout user." });
+  }
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -358,4 +384,5 @@ module.exports = {
   bulkActionUsers,
   sendMessage,
   getUserMessagesList,
+  forceLogoutUser,
 };

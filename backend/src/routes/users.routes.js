@@ -28,6 +28,7 @@ const {
   bulkActionUsers,
   sendMessage,
   getUserMessagesList,
+  forceLogoutUser,
 } = require("../controllers/users.controller");
 
 const router = express.Router();
@@ -110,6 +111,13 @@ router.patch(
   assignUserRole
 );
 
+
+router.post(
+  "/:id/force-logout",
+  requireAdminAuth,
+  adminUserActionRateLimiter,
+  forceLogoutUser
+);
 
 // Messages sub-routes BEFORE generic /:id
 router.post(
