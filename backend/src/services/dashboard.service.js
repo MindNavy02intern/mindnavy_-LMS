@@ -1,4 +1,52 @@
 const prisma = require("../config/prisma");
+const { Prisma } = require("@prisma/client");
+
+// ── Shared filter helpers ─────────────────────────────────────────────────────
+
+// A user is "pending approval" when their verification is PENDING and they are
+// not archived. Kept in one place so every widget reports the same number.
+const PENDING_APPROVAL_WHERE = { verificationState: "PENDING", status: { not: "ARCHIVED" } };
+
+function parseDateInput(value) {
+  if (!value) return null;
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function endOfUtcDay(d) {
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 23, 59, 59, 999));
+}
+
+// Build a reusable Prisma `where` scope from the dashboard filters:
+//   departmentId      → narrows to a single department
+//   dateFrom/dateTo   → narrows by account-creation date (inclusive)
+// Returns {} when no filters are supplied, so it is safe to spread anywhere.
+function buildUserScope({ departmentId, dateFrom, dateTo } = {}) {
+  const from  = parseDateInput(dateFrom);
+  const to    = parseDateInput(dateTo);
+  const scope = {};
+  if (departmentId) scope.department = String(departmentId);
+  if (from || to) {
+    scope.createdAt = {
+      ...(from && { gte: from }),
+      ...(to   && { lte: endOfUtcDay(to) }),
+    };
+  }
+  return scope;
+}
+
+// Inclusive list of UTC day strings (YYYY-MM-DD) between two dates, capped so a
+// huge custom range can never blow up memory.
+function enumerateUtcDays(start, end, cap = 366) {
+  const days = [];
+  const cur  = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
+  const last = new Date(Date.UTC(end.getUTCFullYear(),   end.getUTCMonth(),   end.getUTCDate()));
+  while (cur <= last && days.length < cap) {
+    days.push(cur.toISOString().slice(0, 10));
+    cur.setUTCDate(cur.getUTCDate() + 1);
+  }
+  return days;
+}
 
 // ── Audit log → ActivityItem mapper ───────────────────────────────────────────
 
@@ -52,20 +100,19 @@ function mapAuditToActivity(entries) {
 }
 
 async function getDashboardCore(admin) {
-  const now = new Date();
-
+  // Each query falls back independently so a single failed count cannot 500 the
+  // whole dashboard.
   const [
     totalUsers,
     activeStudents,
     activeInstructors,
     pendingApprovals,
     recentActivitiesRaw,
-    liveSessionsRunning,
   ] = await Promise.all([
-    prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }),
-    prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }),
-    prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }),
-    prisma.appUser.count({ where: { verificationState: "PENDING", status: { not: "ARCHIVED" } } }),
+    prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }).catch(() => 0),
+    prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }).catch(() => 0),
+    prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }).catch(() => 0),
+    prisma.appUser.count({ where: PENDING_APPROVAL_WHERE }).catch(() => 0),
     prisma.auditLog.findMany({
       take: 10,
       orderBy: { createdAt: "desc" },
@@ -76,9 +123,6 @@ async function getDashboardCore(admin) {
         admin: { select: { fullName: true } },
       },
     }).catch(() => []),
-    prisma.adminSession.count({
-      where: { revokedAt: null, expiresAt: { gt: now } },
-    }),
   ]);
 
   return {
@@ -100,7 +144,7 @@ async function getDashboardCore(admin) {
       totalRevenue:        0,  // TODO: payments table not yet built
       activeSubscriptions: 0,
       certificatesIssued:  0,  // TODO: certificates table not yet built
-      liveSessionsRunning,
+      liveSessionsRunning: 0,  // TODO: live sessions table not yet built (was miscounting admin logins)
     },
 
     recentActivities:      mapAuditToActivity(recentActivitiesRaw),
@@ -131,6 +175,23 @@ async function getDashboardAnalytics(filters = {}) {
   const last7d       = new Date(now.getTime() - 7  * 24 * 60 * 60 * 1000);
   const startOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
 
+  // ── Apply dashboard filters (department + creation-date range) ──────────────
+  const scope        = buildUserScope(filters);
+  const deptScope    = scope.department ? { department: scope.department } : {};
+  const hasDateRange = Boolean(scope.createdAt);
+
+  // New registrations honor an explicit date range, else default to this month.
+  const registrationWhere = hasDateRange
+    ? { createdAt: scope.createdAt, ...deptScope }
+    : { createdAt: { gte: startOfMonth }, ...deptScope };
+
+  // The daily-activity trend spans the requested range, else the last 30 days.
+  const trendStart = scope.createdAt?.gte ?? last30d;
+  const trendEnd   = scope.createdAt?.lte ?? now;
+  const deptCond   = scope.department
+    ? Prisma.sql`AND "department" = ${scope.department}`
+    : Prisma.empty;
+
   const [
     roleGroups,
     departmentGroups,
@@ -141,17 +202,18 @@ async function getDashboardAnalytics(filters = {}) {
     activeLast7d,
     rawDailyTrend,
   ] = await Promise.all([
-    prisma.appUser.groupBy({ by: ["role"],              _count: { _all: true }, where: { status: { not: "ARCHIVED" } } }),
-    prisma.appUser.groupBy({ by: ["department"],        _count: { _all: true }, where: { department: { not: null } } }),
-    prisma.appUser.groupBy({ by: ["verificationState"], _count: { _all: true } }),
-    prisma.appUser.groupBy({ by: ["status"],            _count: { _all: true } }),
-    prisma.appUser.count({ where: { createdAt: { gte: startOfMonth } } }),
-    prisma.appUser.count({ where: { lastActivityAt: { gte: startOfToday } } }),
-    prisma.appUser.count({ where: { lastActivityAt: { gte: last7d } } }),
+    prisma.appUser.groupBy({ by: ["role"],              _count: { _all: true }, where: { status: { not: "ARCHIVED" }, ...scope } }),
+    prisma.appUser.groupBy({ by: ["department"],        _count: { _all: true }, where: { department: { not: null }, ...scope } }),
+    prisma.appUser.groupBy({ by: ["verificationState"], _count: { _all: true }, where: scope }),
+    prisma.appUser.groupBy({ by: ["status"],            _count: { _all: true }, where: scope }),
+    prisma.appUser.count({ where: registrationWhere }),
+    prisma.appUser.count({ where: { lastActivityAt: { gte: startOfToday }, ...deptScope } }),
+    prisma.appUser.count({ where: { lastActivityAt: { gte: last7d }, ...deptScope } }),
     prisma.$queryRaw`
       SELECT DATE("lastActivityAt") AS date, COUNT(*)::int AS count
       FROM "app_users"
-      WHERE "lastActivityAt" >= ${last30d} AND "lastActivityAt" IS NOT NULL
+      WHERE "lastActivityAt" >= ${trendStart} AND "lastActivityAt" <= ${trendEnd}
+        AND "lastActivityAt" IS NOT NULL ${deptCond}
       GROUP BY DATE("lastActivityAt")
       ORDER BY date ASC
     `,
@@ -188,11 +250,10 @@ async function getDashboardAnalytics(filters = {}) {
   });
   const verifiedCount = verificationCountMap["VERIFIED"] ?? 0;
 
-  // Build dense 30-day daily trend (fill missing days with 0)
+  // Build a dense daily trend across the active range (fill missing days with 0)
   const activityMap = {};
-  for (let i = 29; i >= 0; i--) {
-    const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - i));
-    activityMap[d.toISOString().slice(0, 10)] = 0;
+  for (const day of enumerateUtcDays(trendStart, trendEnd)) {
+    activityMap[day] = 0;
   }
   for (const row of rawDailyTrend) {
     const key = row.date instanceof Date ? row.date.toISOString().slice(0, 10) : String(row.date).slice(0, 10);
@@ -252,16 +313,12 @@ async function getDashboardAnalytics(filters = {}) {
 }
 
 async function getDashboardAdminWidgets(query = {}) {
-  const now = new Date();
+  const scope     = buildUserScope(query);
+  const deptScope = scope.department ? { department: scope.department } : {};
 
-  const [liveSessionCount, pendingApprovalCount] = await Promise.all([
-    prisma.adminSession.count({
-      where: { revokedAt: null, expiresAt: { gt: now } },
-    }),
-    prisma.appUser.count({
-      where: { status: "PENDING" },
-    }),
-  ]);
+  const pendingApprovalCount = await prisma.appUser
+    .count({ where: { ...PENDING_APPROVAL_WHERE, ...deptScope } })
+    .catch(() => 0);
 
   return {
     filters: {
@@ -277,7 +334,7 @@ async function getDashboardAdminWidgets(query = {}) {
     },
 
     liveSessions: {
-      activeCount:          liveSessionCount,
+      activeCount:          0,  // TODO: live sessions table not yet built (was miscounting admin logins)
       upcomingCount:        0,
       technicalIssuesCount: 0,
       items:                [],

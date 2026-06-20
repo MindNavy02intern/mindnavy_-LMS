@@ -7,7 +7,10 @@ const MAX_CACHE_SIZE  = 500;
 function getCachedSession(token) {
   const entry = SESSION_CACHE.get(token);
   if (!entry) return null;
-  if (Date.now() > entry.cacheExpiresAt) {
+  // Evict when either the cache window OR the session's own expiry has passed,
+  // so an expired session can never ride the cache past its real lifetime.
+  const sessionExpiresAt = new Date(entry.payload.adminSession.expiresAt).getTime();
+  if (Date.now() > entry.cacheExpiresAt || Date.now() > sessionExpiresAt) {
     SESSION_CACHE.delete(token);
     return null;
   }
