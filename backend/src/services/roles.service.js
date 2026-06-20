@@ -35,6 +35,17 @@ function buildPagination(total, page, limit) {
   return { total, page, limit, pages: Math.ceil(total / limit) || 1 };
 }
 
+// Best-effort audit log — never breaks the primary operation (mirrors users.service).
+async function createRoleAuditLog(adminId, action, details) {
+  try {
+    await prisma.auditLog.create({
+      data: { adminId: adminId ?? null, action, details: details ?? null },
+    });
+  } catch (err) {
+    console.error(`Audit log error (${action}):`, err.message);
+  }
+}
+
 // ── Roles ─────────────────────────────────────────────────────────────────────
 
 async function listRoles({ search, status, page, limit } = {}) {
@@ -54,6 +65,7 @@ async function listRoles({ search, status, page, limit } = {}) {
       select: {
         id: true, name: true, description: true,
         status: true, createdAt: true, updatedAt: true,
+        _count: { select: { rolePermissions: true } },
       },
     }),
     getUserCountByEnum(),
@@ -61,7 +73,13 @@ async function listRoles({ search, status, page, limit } = {}) {
 
   const data = rows.map((r) => {
     const enumVal = roleNameToEnum(r.name);
-    return { ...r, userCount: enumVal ? (countByEnum[enumVal] ?? 0) : 0, isCustomRole: !enumVal };
+    const { _count, ...rest } = r;
+    return {
+      ...rest,
+      permissionCount: _count.rolePermissions,
+      userCount: enumVal ? (countByEnum[enumVal] ?? 0) : 0,
+      isCustomRole: !enumVal,
+    };
   });
   return { data, pagination: buildPagination(total, p, l) };
 }
@@ -69,10 +87,16 @@ async function listRoles({ search, status, page, limit } = {}) {
 async function getRole(id) {
   const role = await prisma.role.findUnique({
     where: { id },
-    include: {
+    select: {
+      id: true, name: true, description: true, status: true,
+      createdAt: true, updatedAt: true,
       rolePermissions: {
-        include: { permission: true },
         orderBy: { assignedAt: "asc" },
+        select: {
+          permission: {
+            select: { id: true, name: true, description: true, category: true },
+          },
+        },
       },
     },
   });
@@ -89,6 +113,7 @@ async function getRole(id) {
     description: role.description ?? null,
     status: role.status,
     userCount,
+    permissionCount: role.rolePermissions.length,
     isCustomRole: !enumVal,
     createdAt: role.createdAt,
     updatedAt: role.updatedAt,
@@ -96,8 +121,8 @@ async function getRole(id) {
   };
 }
 
-async function createRole({ name, description, status }) {
-  return prisma.role.create({
+async function createRole({ name, description, status }, adminId) {
+  const role = await prisma.role.create({
     data: {
       name: name.trim(),
       description: description?.trim() || null,
@@ -108,15 +133,17 @@ async function createRole({ name, description, status }) {
       status: true, createdAt: true, updatedAt: true,
     },
   });
+  await createRoleAuditLog(adminId, "ROLE_CREATED", { roleId: role.id, name: role.name });
+  return role;
 }
 
-async function updateRole(id, { name, description, status }) {
+async function updateRole(id, { name, description, status }, adminId) {
   const data = {};
   if (name      !== undefined) data.name        = name.trim();
   if (description !== undefined) data.description = description?.trim() || null;
   if (status    !== undefined) data.status       = status;
 
-  return prisma.role.update({
+  const role = await prisma.role.update({
     where: { id },
     data,
     select: {
@@ -124,9 +151,11 @@ async function updateRole(id, { name, description, status }) {
       status: true, createdAt: true, updatedAt: true,
     },
   });
+  await createRoleAuditLog(adminId, "ROLE_UPDATED", { roleId: id, fields: Object.keys(data) });
+  return role;
 }
 
-async function deleteRole(id) {
+async function deleteRole(id, adminId) {
   const role = await prisma.role.findUnique({ where: { id }, select: { name: true } });
   if (role) {
     const enumVal = roleNameToEnum(role.name);
@@ -138,6 +167,7 @@ async function deleteRole(id) {
     }
   }
   await prisma.role.delete({ where: { id } });
+  await createRoleAuditLog(adminId, "ROLE_DELETED", { roleId: id, name: role?.name ?? null });
 }
 
 // ── Role Permissions ───────────────────────────────────────────────────────────
@@ -151,17 +181,36 @@ async function getRolePermissions(roleId) {
   return rows.map((r) => r.permission);
 }
 
-async function assignPermissionsToRole(roleId, permissionIds) {
+async function assignPermissionsToRole(roleId, permissionIds, adminId) {
+  // 1. Role must exist (clean 404 instead of a raw FK error).
+  const role = await prisma.role.findUnique({ where: { id: roleId }, select: { id: true } });
+  if (!role) throw Object.assign(new Error("ROLE_NOT_FOUND"), { code: "ROLE_NOT_FOUND" });
+
+  // 2. Every permissionId must exist — fail BEFORE touching existing assignments.
+  if (permissionIds.length > 0) {
+    const found = await prisma.permission.findMany({
+      where: { id: { in: permissionIds } },
+      select: { id: true },
+    });
+    if (found.length !== permissionIds.length) {
+      const foundSet = new Set(found.map((p) => p.id));
+      const missing  = permissionIds.filter((id) => !foundSet.has(id));
+      throw Object.assign(new Error("INVALID_PERMISSIONS"), { code: "INVALID_PERMISSIONS", missing });
+    }
+  }
+
+  // 3. Atomic replace — old permissions are only removed if the new set is valid.
   await prisma.$transaction(async (tx) => {
     await tx.rolePermission.deleteMany({ where: { roleId } });
-
     if (permissionIds.length > 0) {
       await tx.rolePermission.createMany({
         data: permissionIds.map((permissionId) => ({ roleId, permissionId })),
+        skipDuplicates: true,
       });
     }
   });
 
+  await createRoleAuditLog(adminId, "ROLE_PERMISSIONS_UPDATED", { roleId, count: permissionIds.length });
   return getRolePermissions(roleId);
 }
 
@@ -235,8 +284,79 @@ async function deletePermission(id) {
   await prisma.permission.delete({ where: { id } });
 }
 
+// ── Stats & duplicate ────────────────────────────────────────────────────────
+
+// Real aggregate numbers for the Roles & Permissions page header.
+async function getRolesStats() {
+  const [totalRoles, statusGroups, totalPermissions, countByEnum] = await Promise.all([
+    prisma.role.count(),
+    prisma.role.groupBy({ by: ["status"], _count: { status: true } }),
+    prisma.permission.count(),
+    getUserCountByEnum(),
+  ]);
+
+  const byStatus = Object.fromEntries(statusGroups.map((g) => [g.status, g._count.status]));
+  const usersWithRoles = Object.values(countByEnum).reduce((sum, n) => sum + n, 0);
+
+  return {
+    totalRoles,
+    activeRoles:     byStatus.ACTIVE   ?? 0,
+    inactiveRoles:   byStatus.INACTIVE ?? 0,
+    totalPermissions,
+    usersWithRoles,
+  };
+}
+
+// Clone a role (and its permission set) under a unique "<name> (Copy[ n])" name.
+async function duplicateRole(id, adminId) {
+  const source = await prisma.role.findUnique({
+    where: { id },
+    select: {
+      name: true, description: true, status: true,
+      rolePermissions: { select: { permissionId: true } },
+    },
+  });
+  if (!source) throw Object.assign(new Error("ROLE_NOT_FOUND"), { code: "ROLE_NOT_FOUND" });
+
+  // Find a free name (unique constraint on Role.name).
+  let newName = `${source.name} (Copy)`;
+  let suffix  = 2;
+  while (await prisma.role.findUnique({ where: { name: newName }, select: { id: true } })) {
+    newName = `${source.name} (Copy ${suffix++})`;
+  }
+
+  const created = await prisma.$transaction(async (tx) => {
+    const role = await tx.role.create({
+      data: { name: newName, description: source.description, status: source.status },
+      select: {
+        id: true, name: true, description: true,
+        status: true, createdAt: true, updatedAt: true,
+      },
+    });
+    if (source.rolePermissions.length > 0) {
+      await tx.rolePermission.createMany({
+        data: source.rolePermissions.map((rp) => ({ roleId: role.id, permissionId: rp.permissionId })),
+        skipDuplicates: true,
+      });
+    }
+    return role;
+  });
+
+  await createRoleAuditLog(adminId, "ROLE_DUPLICATED", {
+    sourceRoleId: id, newRoleId: created.id, name: created.name,
+  });
+
+  return {
+    ...created,
+    permissionCount: source.rolePermissions.length,
+    userCount: 0,
+    isCustomRole: !roleNameToEnum(created.name),
+  };
+}
+
 module.exports = {
   listRoles, getRole, createRole, updateRole, deleteRole,
   getRolePermissions, assignPermissionsToRole,
   listPermissions, getPermission, createPermission, updatePermission, deletePermission,
+  getRolesStats, duplicateRole,
 };

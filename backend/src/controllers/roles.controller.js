@@ -1,4 +1,11 @@
 const svc = require("../services/roles.service");
+const {
+  validateId,
+  validateListRolesQuery,
+  validateCreateRole,
+  validateUpdateRole,
+  validateAssignPermissions,
+} = require("../validators/roles.validator");
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -28,9 +35,17 @@ function serverError(res, err) {
 
 async function listRoles(req, res) {
   try {
-    const { search, status, page, limit } = req.query;
-    const result = await svc.listRoles({ search, status, page, limit });
+    const v = validateListRolesQuery(req.query);
+    if (!v.isValid) return badRequest(res, v.errors[0]);
+    const result = await svc.listRoles(v.data);
     return res.json({ success: true, ...result });
+  } catch (err) { return serverError(res, err); }
+}
+
+async function getRolesStats(req, res) {
+  try {
+    const stats = await svc.getRolesStats();
+    return res.json({ success: true, data: stats });
   } catch (err) { return serverError(res, err); }
 }
 
@@ -44,20 +59,24 @@ async function getRole(req, res) {
 
 async function createRole(req, res) {
   try {
-    const { name, description, status } = req.body;
-    if (!name?.trim()) return badRequest(res, "Role name is required.");
-    const role = await svc.createRole({ name, description, status });
+    const v = validateCreateRole(req.body);
+    if (!v.isValid) return badRequest(res, v.errors[0]);
+    const role = await svc.createRole(v.data, req.admin?.id);
     return res.status(201).json({
       success: true,
       message: "Role created successfully.",
-      data: { ...role, userCount: 0 },
+      data: { ...role, userCount: 0, permissionCount: 0 },
     });
   } catch (err) { return serverError(res, err); }
 }
 
 async function updateRole(req, res) {
   try {
-    const role = await svc.updateRole(req.params.id, req.body);
+    const idErr = validateId(req.params.id, "roleId");
+    if (idErr) return badRequest(res, idErr);
+    const v = validateUpdateRole(req.body);
+    if (!v.isValid) return badRequest(res, v.errors[0]);
+    const role = await svc.updateRole(req.params.id, v.data, req.admin?.id);
     return res.json({
       success: true,
       message: "Role updated successfully.",
@@ -71,13 +90,33 @@ async function updateRole(req, res) {
 
 async function deleteRole(req, res) {
   try {
-    await svc.deleteRole(req.params.id);
+    const idErr = validateId(req.params.id, "roleId");
+    if (idErr) return badRequest(res, idErr);
+    await svc.deleteRole(req.params.id, req.admin?.id);
     return res.json({ success: true, message: "Role deleted successfully." });
   } catch (err) {
     if (err.code === 'ROLE_HAS_USERS') {
-      return res.status(409).json({ success: false, error: 'ROLE_HAS_USERS', count: err.userCount, roleName: err.roleName });
+      return res.status(409).json({
+        success: false,
+        error: 'ROLE_HAS_USERS',
+        message: `This role has ${err.userCount} assigned user(s). Reassign them before deleting.`,
+        count: err.userCount,
+        roleName: err.roleName,
+      });
     }
     if (err.code === "P2025") return notFound(res, "Role not found.");
+    return serverError(res, err);
+  }
+}
+
+async function duplicateRole(req, res) {
+  try {
+    const idErr = validateId(req.params.id, "roleId");
+    if (idErr) return badRequest(res, idErr);
+    const role = await svc.duplicateRole(req.params.id, req.admin?.id);
+    return res.status(201).json({ success: true, message: "Role duplicated successfully.", data: role });
+  } catch (err) {
+    if (err.code === "ROLE_NOT_FOUND") return notFound(res, "Role not found.");
     return serverError(res, err);
   }
 }
@@ -93,11 +132,23 @@ async function getRolePermissions(req, res) {
 
 async function assignPermissionsToRole(req, res) {
   try {
-    const { permissionIds } = req.body;
-    if (!Array.isArray(permissionIds)) return badRequest(res, "permissionIds must be an array.");
-    const permissions = await svc.assignPermissionsToRole(req.params.id, permissionIds);
+    const idErr = validateId(req.params.id, "roleId");
+    if (idErr) return badRequest(res, idErr);
+    const v = validateAssignPermissions(req.body);
+    if (!v.isValid) return badRequest(res, v.errors[0]);
+    const permissions = await svc.assignPermissionsToRole(req.params.id, v.data.permissionIds, req.admin?.id);
     return res.json({ success: true, message: "Permissions assigned successfully.", data: permissions });
-  } catch (err) { return serverError(res, err); }
+  } catch (err) {
+    if (err.code === "ROLE_NOT_FOUND") return notFound(res, "Role not found.");
+    if (err.code === "INVALID_PERMISSIONS") {
+      return res.status(400).json({
+        success: false,
+        message: "One or more permission IDs do not exist.",
+        missing: err.missing,
+      });
+    }
+    return serverError(res, err);
+  }
 }
 
 // ── Permissions ────────────────────────────────────────────────────────────────
@@ -149,7 +200,7 @@ async function deletePermission(req, res) {
 }
 
 module.exports = {
-  listRoles, getRole, createRole, updateRole, deleteRole,
+  listRoles, getRolesStats, getRole, createRole, updateRole, deleteRole, duplicateRole,
   getRolePermissions, assignPermissionsToRole,
   listPermissions, getPermission, createPermission, updatePermission, deletePermission,
 };
