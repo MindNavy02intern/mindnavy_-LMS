@@ -358,11 +358,15 @@ async function forceLogoutUser(req, res) {
     const result = await usersService.forceLogoutUser(req.params.id, req.body, req.admin);
     return res.status(200).json(result);
   } catch (error) {
+    console.error("=== FORCE LOGOUT ERROR ===");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code);
+    console.error("Meta:", error.meta);
+    console.error("Stack:", error.stack);
     if (error.statusCode === 404) {
       return res.status(404).json({ success: false, message: error.message });
     }
-    console.error("[users] forceLogoutUser error:", error.message);
-    return res.status(500).json({ success: false, message: "Unable to force logout user." });
+    return res.status(500).json({ error: error.message, code: error.code });
   }
 }
 
