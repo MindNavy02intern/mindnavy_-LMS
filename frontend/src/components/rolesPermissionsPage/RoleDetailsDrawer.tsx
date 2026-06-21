@@ -169,6 +169,12 @@ export default function RoleDetailsDrawer({ roleId, onClose, onEdit, onDelete, s
 
   useEffect(() => { loadData(); }, [loadData]);
 
+  useEffect(() => {
+    const handler = () => loadData();
+    window.addEventListener('rolesUpdated', handler);
+    return () => window.removeEventListener('rolesUpdated', handler);
+  }, [loadData]);
+
   const handleClose = () => {
     setVisible(false);
     setTimeout(onClose, 300);

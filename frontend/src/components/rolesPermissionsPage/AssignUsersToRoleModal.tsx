@@ -15,18 +15,23 @@ async function fetchAllUsers(): Promise<User[]> {
 }
 
 async function patchUserRole(userId: string, roleName: string): Promise<void> {
+  const url  = `${BASE}/users/${encodeURIComponent(userId)}`;
+  const body = { role: roleName };
+  console.log('CALLING API', url, body);
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/users/${encodeURIComponent(userId)}`, {
+  const res = await fetch(url, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
-    body: JSON.stringify({ role: roleName }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) {
     const json = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
-    throw new Error((json as { message?: string }).message ?? `HTTP ${res.status}`);
+    const err = new Error((json as { message?: string }).message ?? `HTTP ${res.status}`);
+    console.error('ASSIGN ERROR', err);
+    throw err;
   }
 }
 
@@ -108,6 +113,7 @@ export default function AssignUsersToRoleModal({ roleId: _roleId, roleName, onCl
     setSelectedIds(prev => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
+      console.log('SELECTED', Array.from(next));
       return next;
     });
   }
@@ -124,6 +130,7 @@ export default function AssignUsersToRoleModal({ roleId: _roleId, roleName, onCl
   }
 
   async function handleAssign() {
+    console.log('ASSIGN CLICKED', Array.from(selectedIds));
     if (selectedIds.size === 0) return;
     setSubmitting(true);
 
@@ -143,7 +150,6 @@ export default function AssignUsersToRoleModal({ roleId: _roleId, roleName, onCl
       showToast('error', `${failed.length} assignment${failed.length !== 1 ? 's' : ''} failed`);
     }
     setSubmitting(false);
-    if (succeeded > 0) onClose();
   }
 
   const allFilteredSelected =
@@ -157,13 +163,13 @@ export default function AssignUsersToRoleModal({ roleId: _roleId, roleName, onCl
     }}>
       {/* Overlay */}
       <div
-        style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)' }}
+        style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }}
         onClick={onClose}
       />
 
       {/* Modal */}
       <div style={{
-        position: 'relative', background: '#fff', borderRadius: 12,
+        position: 'relative', zIndex: 1, background: '#fff', borderRadius: 12,
         width: '100%', maxWidth: 560,
         boxShadow: '0 24px 64px rgba(0,0,0,0.22)',
         display: 'flex', flexDirection: 'column', maxHeight: '90vh',

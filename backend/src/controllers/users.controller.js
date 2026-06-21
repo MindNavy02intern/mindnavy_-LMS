@@ -82,6 +82,9 @@ async function createUser(req, res) {
 }
 
 async function updateUser(req, res) {
+  console.log("UPDATE USER ID:", req.params.id);
+  console.log("UPDATE USER BODY:", req.body);
+
   const idError = validateUuidParam(req.params.id);
   if (idError) {
     return res.status(400).json({ success: false, message: idError });
