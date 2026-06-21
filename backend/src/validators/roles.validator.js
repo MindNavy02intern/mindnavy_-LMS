@@ -3,10 +3,20 @@
 
 const VALID_ROLE_STATUSES = new Set(["ACTIVE", "INACTIVE"]);
 const LIST_STATUS_FILTERS = new Set(["ACTIVE", "INACTIVE", "ALL"]);
+// Permission has no status field — category is the only valid permission filter.
+const VALID_PERMISSION_CATEGORIES = new Set([
+  "USERS", "REPORTS", "SETTINGS", "ORGANIZATION", "LEARNERS", "COURSES", "ADMIN",
+]);
 
 const MAX_NAME_LEN              = 100;
 const MAX_DESCRIPTION_LEN       = 500;
 const MAX_PERMISSIONS_PER_ROLE  = 300;
+
+// Hard caps so the matrix can never return an unbounded payload.
+const MATRIX_DEFAULT_ROLES       = 100;
+const MATRIX_MAX_ROLES           = 200;
+const MATRIX_DEFAULT_PERMISSIONS = 300;
+const MATRIX_MAX_PERMISSIONS     = 500;
 
 // Simple required-string id guard (returns an error string or null).
 function validateId(id, label = "id") {
@@ -108,10 +118,80 @@ function validateAssignPermissions(body = {}) {
   return { isValid: errors.length === 0, errors, data: { permissionIds } };
 }
 
+// ── Permission Matrix ────────────────────────────────────────────────────────
+
+// GET /permission-matrix query. Rejects bad status/category before Prisma,
+// and clamps role/permission counts so the payload stays bounded.
+function validatePermissionMatrixQuery(q = {}) {
+  const errors = [];
+
+  const roleStatus = q.roleStatus ? String(q.roleStatus).toUpperCase() : "ALL";
+  if (!LIST_STATUS_FILTERS.has(roleStatus)) {
+    errors.push("roleStatus must be one of ACTIVE, INACTIVE, ALL.");
+  }
+
+  let category = null;
+  if (q.category !== undefined && q.category !== null && String(q.category).trim() !== "") {
+    const c = String(q.category).toUpperCase();
+    if (c !== "ALL") {
+      if (!VALID_PERMISSION_CATEGORIES.has(c)) {
+        errors.push("category is not a valid permission category.");
+      } else {
+        category = c;
+      }
+    }
+  }
+
+  const search = typeof q.search === "string" ? q.search.trim() : "";
+
+  let maxRoles = Number(q.maxRoles);
+  maxRoles = Number.isInteger(maxRoles) && maxRoles > 0
+    ? Math.min(maxRoles, MATRIX_MAX_ROLES)
+    : MATRIX_DEFAULT_ROLES;
+
+  let maxPermissions = Number(q.maxPermissions);
+  maxPermissions = Number.isInteger(maxPermissions) && maxPermissions > 0
+    ? Math.min(maxPermissions, MATRIX_MAX_PERMISSIONS)
+    : MATRIX_DEFAULT_PERMISSIONS;
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    data: { roleStatus, category, search, maxRoles, maxPermissions },
+  };
+}
+
+// POST /permission-matrix/toggle body.
+function validateMatrixToggle(body = {}) {
+  const errors = [];
+
+  const roleIdErr = validateId(body.roleId, "roleId");
+  if (roleIdErr) errors.push(roleIdErr);
+
+  const permissionIdErr = validateId(body.permissionId, "permissionId");
+  if (permissionIdErr) errors.push(permissionIdErr);
+
+  if (typeof body.enabled !== "boolean") {
+    errors.push("enabled must be a boolean.");
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    data: {
+      roleId: typeof body.roleId === "string" ? body.roleId.trim() : body.roleId,
+      permissionId: typeof body.permissionId === "string" ? body.permissionId.trim() : body.permissionId,
+      enabled: body.enabled,
+    },
+  };
+}
+
 module.exports = {
   validateId,
   validateListRolesQuery,
   validateCreateRole,
   validateUpdateRole,
   validateAssignPermissions,
+  validatePermissionMatrixQuery,
+  validateMatrixToggle,
 };

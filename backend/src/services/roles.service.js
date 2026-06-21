@@ -214,6 +214,108 @@ async function assignPermissionsToRole(roleId, permissionIds, adminId) {
   return getRolePermissions(roleId);
 }
 
+// ── Permission Matrix ────────────────────────────────────────────────────────
+
+// One compact payload for the matrix tab: roles, permissions, and the cells
+// (assignments) connecting them. Three queries total — no per-role/per-permission
+// loops. Caps are applied by the caller (validator) so the payload stays bounded.
+async function getPermissionMatrix({ roleStatus, category, search, maxRoles, maxPermissions } = {}) {
+  const roleWhere = {};
+  if (roleStatus && roleStatus !== "ALL") roleWhere.status = roleStatus;
+  if (search) roleWhere.name = { contains: search, mode: "insensitive" };
+
+  const permWhere = {};
+  if (category) permWhere.category = category;
+  if (search) permWhere.name = { contains: search, mode: "insensitive" };
+
+  // Roles, permissions, and the user-count map fetched in parallel.
+  const [roles, permissions, countByEnum] = await Promise.all([
+    prisma.role.findMany({
+      where: roleWhere,
+      take: maxRoles,
+      orderBy: { name: "asc" },
+      select: {
+        id: true, name: true, description: true, status: true,
+        _count: { select: { rolePermissions: true } },
+      },
+    }),
+    prisma.permission.findMany({
+      where: permWhere,
+      take: maxPermissions,
+      orderBy: [{ category: "asc" }, { name: "asc" }],
+      select: { id: true, name: true, description: true, category: true },
+    }),
+    getUserCountByEnum(),
+  ]);
+
+  const roleIds       = roles.map((r) => r.id);
+  const permissionIds = permissions.map((p) => p.id);
+
+  // Scope assignments to the returned roles AND permissions so the matrix never
+  // contains a cell referencing something outside the (capped/filtered) lists.
+  const assignments = roleIds.length && permissionIds.length
+    ? await prisma.rolePermission.findMany({
+        where: { roleId: { in: roleIds }, permissionId: { in: permissionIds } },
+        select: { roleId: true, permissionId: true },
+      })
+    : [];
+
+  const rolesOut = roles.map((r) => {
+    const { _count, ...rest } = r;
+    const enumVal = roleNameToEnum(r.name);
+    return {
+      ...rest,
+      userCount: enumVal ? (countByEnum[enumVal] ?? 0) : 0,
+      permissionCount: _count.rolePermissions,
+    };
+  });
+
+  return {
+    roles: rolesOut,
+    permissions,
+    assignments,
+    summary: {
+      totalRoles: rolesOut.length,
+      totalPermissions: permissions.length,
+      totalAssignments: assignments.length,
+    },
+  };
+}
+
+// Toggle a single matrix cell. Idempotent both ways, and the write + audit log
+// happen together in one transaction.
+async function togglePermissionMatrixCell({ roleId, permissionId, enabled }, adminId) {
+  // Existence checks (parallel) → clean 404s instead of a raw FK error.
+  const [role, permission] = await Promise.all([
+    prisma.role.findUnique({ where: { id: roleId }, select: { id: true } }),
+    prisma.permission.findUnique({ where: { id: permissionId }, select: { id: true } }),
+  ]);
+  if (!role)       throw Object.assign(new Error("ROLE_NOT_FOUND"), { code: "ROLE_NOT_FOUND" });
+  if (!permission) throw Object.assign(new Error("PERMISSION_NOT_FOUND"), { code: "PERMISSION_NOT_FOUND" });
+
+  await prisma.$transaction(async (tx) => {
+    if (enabled) {
+      // skipDuplicates makes the create idempotent (no error if the cell exists).
+      await tx.rolePermission.createMany({
+        data: [{ roleId, permissionId }],
+        skipDuplicates: true,
+      });
+    } else {
+      // deleteMany is idempotent (no error if the cell is already absent).
+      await tx.rolePermission.deleteMany({ where: { roleId, permissionId } });
+    }
+    await tx.auditLog.create({
+      data: {
+        adminId: adminId ?? null,
+        action: "ROLE_PERMISSIONS_UPDATED",
+        details: { roleId, permissionId, enabled, source: "matrix" },
+      },
+    });
+  });
+
+  return { roleId, permissionId, enabled };
+}
+
 // ── Permissions ────────────────────────────────────────────────────────────────
 
 async function listPermissions({ search, category, page, limit } = {}) {
@@ -359,4 +461,5 @@ module.exports = {
   getRolePermissions, assignPermissionsToRole,
   listPermissions, getPermission, createPermission, updatePermission, deletePermission,
   getRolesStats, duplicateRole,
+  getPermissionMatrix, togglePermissionMatrixCell,
 };

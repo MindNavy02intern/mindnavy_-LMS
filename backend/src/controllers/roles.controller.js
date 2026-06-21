@@ -5,6 +5,8 @@ const {
   validateCreateRole,
   validateUpdateRole,
   validateAssignPermissions,
+  validatePermissionMatrixQuery,
+  validateMatrixToggle,
 } = require("../validators/roles.validator");
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -151,6 +153,34 @@ async function assignPermissionsToRole(req, res) {
   }
 }
 
+// ── Permission Matrix ────────────────────────────────────────────────────────
+
+async function getPermissionMatrix(req, res) {
+  try {
+    const v = validatePermissionMatrixQuery(req.query);
+    if (!v.isValid) return badRequest(res, v.errors[0]);
+    const data = await svc.getPermissionMatrix(v.data);
+    return res.json({ success: true, data });
+  } catch (err) { return serverError(res, err); }
+}
+
+async function togglePermissionMatrixCell(req, res) {
+  try {
+    const v = validateMatrixToggle(req.body);
+    if (!v.isValid) return badRequest(res, v.errors[0]);
+    const cell = await svc.togglePermissionMatrixCell(v.data, req.admin?.id);
+    return res.json({
+      success: true,
+      message: "Permission matrix updated successfully.",
+      data: cell,
+    });
+  } catch (err) {
+    if (err.code === "ROLE_NOT_FOUND")       return notFound(res, "Role not found.");
+    if (err.code === "PERMISSION_NOT_FOUND") return notFound(res, "Permission not found.");
+    return serverError(res, err);
+  }
+}
+
 // ── Permissions ────────────────────────────────────────────────────────────────
 
 async function listPermissions(req, res) {
@@ -202,5 +232,6 @@ async function deletePermission(req, res) {
 module.exports = {
   listRoles, getRolesStats, getRole, createRole, updateRole, deleteRole, duplicateRole,
   getRolePermissions, assignPermissionsToRole,
+  getPermissionMatrix, togglePermissionMatrixCell,
   listPermissions, getPermission, createPermission, updatePermission, deletePermission,
 };
