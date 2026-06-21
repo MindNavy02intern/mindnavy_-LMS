@@ -8,15 +8,10 @@ import {
   getRolesPageStats,
   getRolesPageList,
   deleteRolePage,
+  duplicateRolePage,
+  RolesPageError,
 } from '../api/rolesPage';
-import type {
-  RolePage,
-  RolePageStats,
-  RoleLevel,
-  PageRoleStatus,
-  RiskClassification,
-  AccessScope,
-} from '../types/rolesPage';
+import type { RolePage, RolePageStats, RoleStatus } from '../types/rolesPage';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -32,56 +27,22 @@ const TABS = [
 
 const STATUS_OPTIONS: { value: string; label: string }[] = [
   { value: '',         label: 'All Statuses' },
-  { value: 'Active',   label: 'Active'       },
-  { value: 'Inactive', label: 'Inactive'     },
-  { value: 'Archived', label: 'Archived'     },
+  { value: 'ACTIVE',   label: 'Active'       },
+  { value: 'INACTIVE', label: 'Inactive'     },
 ];
 
-const LEVEL_OPTIONS: { value: string; label: string }[] = [
-  { value: '',           label: 'All Levels'  },
-  { value: 'System',     label: 'System'      },
-  { value: 'Department', label: 'Department'  },
-  { value: 'Branch',     label: 'Branch'      },
-  { value: 'Functional', label: 'Functional'  },
-  { value: 'Default',    label: 'Default'     },
-];
-
-const LEVEL_BADGE: Record<RoleLevel, { bg: string; color: string }> = {
-  System:     { bg: '#eff6ff', color: '#1d4ed8' },
-  Department: { bg: '#f5f3ff', color: '#6d28d9' },
-  Branch:     { bg: '#f0fdf4', color: '#15803d' },
-  Functional: { bg: '#fff7ed', color: '#c2410c' },
-  Default:    { bg: '#f9fafb', color: '#6b7280' },
-};
-
-const STATUS_BADGE: Record<PageRoleStatus, { bg: string; color: string }> = {
-  Active:   { bg: '#f0fdf4', color: '#16a34a' },
-  Inactive: { bg: '#f9fafb', color: '#6b7280' },
-  Archived: { bg: '#fffbeb', color: '#b45309' },
-};
-
-const RISK_BADGE: Record<RiskClassification, { bg: string; color: string }> = {
-  Low:      { bg: '#f0fdf4', color: '#16a34a' },
-  Medium:   { bg: '#fffbeb', color: '#b45309' },
-  High:     { bg: '#fff7ed', color: '#c2410c' },
-  Critical: { bg: '#fef2f2', color: '#b91c1c' },
-};
-
-const SCOPE_DISPLAY: Record<AccessScope, string> = {
-  Global:     'Global',
-  Department: 'Department',
-  Branch:     'Branch',
-  Course:     'Course',
+const STATUS_BADGE: Record<RoleStatus, { bg: string; color: string }> = {
+  ACTIVE:   { bg: '#f0fdf4', color: '#16a34a' },
+  INACTIVE: { bg: '#f9fafb', color: '#6b7280' },
 };
 
 // ── Small helpers ─────────────────────────────────────────────────────────────
 
 function KpiCard({
-  label, value, change, loading,
+  label, value, loading,
 }: {
-  label: string; value: number; change: number; loading: boolean;
+  label: string; value: number; loading: boolean;
 }) {
-  const positive = change >= 0;
   return (
     <div style={{
       background: '#fff', borderRadius: 12, padding: '16px 18px',
@@ -98,11 +59,6 @@ function KpiCard({
           <div style={{ fontSize: 11, color: '#6b7280', fontWeight: 600, marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.4px' }}>{label}</div>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8 }}>
             <span style={{ fontSize: 24, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{value.toLocaleString()}</span>
-            {change !== 0 && (
-              <span style={{ fontSize: 11, fontWeight: 600, color: positive ? '#16a34a' : '#dc2626', paddingBottom: 2 }}>
-                {positive ? '↑' : '↓'} {Math.abs(change)}
-              </span>
-            )}
           </div>
         </>
       )}
@@ -113,7 +69,7 @@ function KpiCard({
 function SkeletonRow() {
   return (
     <tr>
-      {[44, 160, 70, 60, 70, 70, 70, 80].map((w, i) => (
+      {[44, 160, 60, 70, 70, 80].map((w, i) => (
         <td key={i} style={{ padding: '12px 14px' }}>
           <div style={{ width: w, height: 12, borderRadius: 4, background: '#f0f0f0', animation: 'rp-pulse 1.4s ease-in-out infinite' }} />
         </td>
@@ -144,7 +100,7 @@ export default function RolesPermissionsStandalonePage() {
   const { toasts, showToast, dismiss } = useToast();
 
   // ── Stats ──────────────────────────────────────────────────────────────────
-  const [stats, setStats]           = useState<RolePageStats | null>(null);
+  const [stats, setStats]               = useState<RolePageStats | null>(null);
   const [statsLoading, setStatsLoading] = useState(true);
 
   const fetchStats = useCallback(() => {
@@ -156,16 +112,15 @@ export default function RolesPermissionsStandalonePage() {
   }, []);
 
   // ── List ───────────────────────────────────────────────────────────────────
-  const [roles, setRoles]         = useState<RolePage[]>([]);
-  const [listLoading, setListLoading] = useState(true);
-  const [totalPages, setTotalPages]   = useState(1);
-  const [totalRoles, setTotalRoles]   = useState(0);
+  const [roles, setRoles]               = useState<RolePage[]>([]);
+  const [listLoading, setListLoading]   = useState(true);
+  const [totalPages, setTotalPages]     = useState(1);
+  const [totalRoles, setTotalRoles]     = useState(0);
 
   const [page,         setPage]         = useState(1);
   const [search,       setSearch]       = useState('');
   const [searchInput,  setSearchInput]  = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [levelFilter,  setLevelFilter]  = useState('');
 
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -180,10 +135,10 @@ export default function RolesPermissionsStandalonePage() {
 
   const fetchList = useCallback(() => {
     setListLoading(true);
-    getRolesPageList({ page, limit: 15, search, status: statusFilter, level: levelFilter })
+    getRolesPageList({ page, limit: 15, search, status: statusFilter })
       .then(res => {
-        setRoles(res.roles);
-        setTotalPages(res.pagination.totalPages);
+        setRoles(res.data);
+        setTotalPages(res.pagination.pages);
         setTotalRoles(res.pagination.total);
       })
       .catch(() => {
@@ -191,7 +146,7 @@ export default function RolesPermissionsStandalonePage() {
         showToast('error', 'Failed to load roles');
       })
       .finally(() => setListLoading(false));
-  }, [page, search, statusFilter, levelFilter, showToast]);
+  }, [page, search, statusFilter, showToast]);
 
   useEffect(() => { fetchStats(); }, [fetchStats]);
   useEffect(() => { fetchList(); }, [fetchList]);
@@ -217,9 +172,9 @@ export default function RolesPermissionsStandalonePage() {
   };
 
   // ── Modal / drawer ─────────────────────────────────────────────────────────
-  const [createOpen,    setCreateOpen]    = useState(false);
-  const [editRole,      setEditRole]      = useState<RolePage | null>(null);
-  const [viewRoleId,    setViewRoleId]    = useState<string | null>(null);
+  const [createOpen,  setCreateOpen]  = useState(false);
+  const [editRole,    setEditRole]    = useState<RolePage | null>(null);
+  const [viewRoleId,  setViewRoleId]  = useState<string | null>(null);
 
   const handleCreateSuccess = () => {
     setCreateOpen(false);
@@ -237,11 +192,6 @@ export default function RolesPermissionsStandalonePage() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleDelete = async (roleId: string, roleName: string) => {
-    const role = roles.find(r => r.id === roleId);
-    if (role && role.usersCount > 0) {
-      showToast('error', `Cannot delete "${roleName}" — ${role.usersCount} user(s) are assigned to this role. Reassign them first.`);
-      return;
-    }
     const confirmed = window.confirm(`Delete role "${roleName}"? This action cannot be undone.`);
     if (!confirmed) return;
     setDeletingId(roleId);
@@ -253,20 +203,46 @@ export default function RolesPermissionsStandalonePage() {
       fetchStats();
       fetchList();
     } catch (err) {
-      showToast('error', err instanceof Error ? err.message : 'Failed to delete role');
+      if (err instanceof RolesPageError && err.code === 'ROLE_HAS_USERS') {
+        showToast('error', `Cannot delete: ${err.roleName ?? roleName} has ${err.count ?? 0} users assigned.`);
+      } else {
+        showToast('error', err instanceof Error ? err.message : 'Failed to delete role');
+      }
     } finally {
       setDeletingId(null);
     }
   };
 
+  // ── Duplicate ──────────────────────────────────────────────────────────────
+  const [duplicatingId, setDuplicatingId] = useState<string | null>(null);
+
+  const handleDuplicateRow = async (roleId: string, roleName: string) => {
+    setDuplicatingId(roleId);
+    try {
+      const dup = await duplicateRolePage(roleId);
+      showToast('success', `Role duplicated as "${dup.name}"`);
+      window.dispatchEvent(new CustomEvent('rolesUpdated'));
+      window.dispatchEvent(new CustomEvent('analyticsUpdated'));
+      fetchStats();
+      fetchList();
+    } catch (err) {
+      if (err instanceof RolesPageError && err.status === 404) {
+        showToast('error', 'Role not found');
+      } else {
+        showToast('error', err instanceof Error ? err.message : `Failed to duplicate "${roleName}"`);
+      }
+    } finally {
+      setDuplicatingId(null);
+    }
+  };
+
   // ── KPI data ───────────────────────────────────────────────────────────────
   const kpis = [
-    { label: 'Total Roles',           value: stats?.totalRoles            ?? 0, change: stats?.totalRolesChange            ?? 0 },
-    { label: 'Active Roles',          value: stats?.activeRoles           ?? 0, change: stats?.activeRolesChange           ?? 0 },
-    { label: 'Users with Roles',      value: stats?.usersWithRoles        ?? 0, change: stats?.usersWithRolesChange        ?? 0 },
-    { label: 'Permission Sets',       value: stats?.permissionSets        ?? 0, change: stats?.permissionSetsChange        ?? 0 },
-    { label: 'Access Policies',       value: stats?.accessPolicies        ?? 0, change: stats?.accessPoliciesChange        ?? 0 },
-    { label: 'High Risk Permissions', value: stats?.highRiskPermissions   ?? 0, change: stats?.highRiskPermissionsChange   ?? 0 },
+    { label: 'Total Roles',       value: stats?.totalRoles       ?? 0 },
+    { label: 'Active Roles',      value: stats?.activeRoles      ?? 0 },
+    { label: 'Inactive Roles',    value: stats?.inactiveRoles    ?? 0 },
+    { label: 'Total Permissions', value: stats?.totalPermissions ?? 0 },
+    { label: 'Users with Roles',  value: stats?.usersWithRoles   ?? 0 },
   ];
 
   return (
@@ -293,7 +269,7 @@ export default function RolesPermissionsStandalonePage() {
         {/* KPI cards */}
         <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
           {kpis.map(k => (
-            <KpiCard key={k.label} label={k.label} value={k.value} change={k.change} loading={statsLoading} />
+            <KpiCard key={k.label} label={k.label} value={k.value} loading={statsLoading} />
           ))}
         </div>
 
@@ -360,15 +336,6 @@ export default function RolesPermissionsStandalonePage() {
                   {STATUS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
 
-                {/* Level filter */}
-                <select
-                  className="rp-filter-select"
-                  value={levelFilter}
-                  onChange={e => { setLevelFilter(e.target.value); setPage(1); }}
-                >
-                  {LEVEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                </select>
-
                 <div style={{ flex: 1 }} />
 
                 {/* Result count */}
@@ -407,10 +374,8 @@ export default function RolesPermissionsStandalonePage() {
                         />
                       </th>
                       <th style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#6b7280', fontSize: 12, minWidth: 200 }}>ROLE NAME</th>
-                      <th style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#6b7280', fontSize: 12 }}>LEVEL</th>
                       <th style={{ padding: '10px 14px', textAlign: 'right', fontWeight: 600, color: '#6b7280', fontSize: 12 }}>USERS</th>
                       <th style={{ padding: '10px 14px', textAlign: 'right', fontWeight: 600, color: '#6b7280', fontSize: 12 }}>PERMISSIONS</th>
-                      <th style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#6b7280', fontSize: 12 }}>SCOPE</th>
                       <th style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#6b7280', fontSize: 12 }}>STATUS</th>
                       <th style={{ padding: '10px 14px', textAlign: 'center', fontWeight: 600, color: '#6b7280', fontSize: 12 }}>ACTIONS</th>
                     </tr>
@@ -420,7 +385,7 @@ export default function RolesPermissionsStandalonePage() {
 
                     {!listLoading && roles.length === 0 && (
                       <tr>
-                        <td colSpan={8} style={{ padding: 48, textAlign: 'center', color: '#9ca3af' }}>
+                        <td colSpan={6} style={{ padding: 48, textAlign: 'center', color: '#9ca3af' }}>
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
                               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -433,17 +398,16 @@ export default function RolesPermissionsStandalonePage() {
                     )}
 
                     {!listLoading && roles.map(role => {
-                      const levelBadge  = LEVEL_BADGE[role.level];
-                      const statusBadge = STATUS_BADGE[role.status];
-                      const riskBadge   = RISK_BADGE[role.riskClassification];
+                      const statusBadge = STATUS_BADGE[role.status] ?? { bg: '#f9fafb', color: '#6b7280' };
                       const isDeleting  = deletingId === role.id;
+                      const isDuplicating = duplicatingId === role.id;
                       return (
                         <tr
                           key={role.id}
                           style={{
                             borderBottom: '1px solid #f9fafb',
                             background: selectedIds.has(role.id) ? '#f0f9ff' : '#fff',
-                            opacity: isDeleting ? 0.5 : 1,
+                            opacity: isDeleting || isDuplicating ? 0.5 : 1,
                             transition: 'background 0.1s',
                           }}
                         >
@@ -458,33 +422,20 @@ export default function RolesPermissionsStandalonePage() {
                           <td style={{ padding: '12px 14px' }}>
                             <div style={{ fontWeight: 600, color: '#111827', marginBottom: 2 }}>{role.name}</div>
                             {role.description && (
-                              <div style={{ fontSize: 12, color: '#9ca3af', maxWidth: 240, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              <div style={{ fontSize: 12, color: '#9ca3af', maxWidth: 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                 {role.description}
                               </div>
                             )}
-                            <div style={{ marginTop: 3 }}>
-                              <span style={{ background: riskBadge.bg, color: riskBadge.color, borderRadius: 100, fontSize: 10, fontWeight: 600, padding: '1px 7px' }}>
-                                {role.riskClassification} Risk
-                              </span>
-                            </div>
-                          </td>
-                          <td style={{ padding: '12px 14px' }}>
-                            <span style={{ background: levelBadge.bg, color: levelBadge.color, borderRadius: 100, fontSize: 11, fontWeight: 600, padding: '3px 9px' }}>
-                              {role.level}
-                            </span>
                           </td>
                           <td style={{ padding: '12px 14px', textAlign: 'right', fontWeight: 500, color: '#374151' }}>
-                            {role.usersCount}
+                            {role.userCount}
                           </td>
                           <td style={{ padding: '12px 14px', textAlign: 'right', fontWeight: 500, color: '#374151' }}>
-                            {role.permissionsCount}
-                          </td>
-                          <td style={{ padding: '12px 14px', color: '#6b7280', fontSize: 12 }}>
-                            {SCOPE_DISPLAY[role.scope]}
+                            {role.permissionCount}
                           </td>
                           <td style={{ padding: '12px 14px' }}>
                             <span style={{ background: statusBadge.bg, color: statusBadge.color, borderRadius: 100, fontSize: 11, fontWeight: 600, padding: '3px 9px' }}>
-                              {role.status}
+                              {role.status === 'ACTIVE' ? 'Active' : 'Inactive'}
                             </span>
                           </td>
                           <td style={{ padding: '12px 14px' }}>
@@ -509,7 +460,8 @@ export default function RolesPermissionsStandalonePage() {
                               <button
                                 className="rp-action-btn"
                                 title="Duplicate role"
-                                onClick={() => setViewRoleId(role.id)}
+                                disabled={isDuplicating}
+                                onClick={() => handleDuplicateRow(role.id, role.name)}
                               >
                                 📋
                               </button>

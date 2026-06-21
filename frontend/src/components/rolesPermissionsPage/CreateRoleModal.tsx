@@ -1,39 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ToastType } from '../users/Toast';
-import type {
-  RolePage,
-  RoleLevel,
-  AccessScope,
-  RiskClassification,
-  CreateRolePagePayload,
-  PermissionsByCategory,
-} from '../../types/rolesPage';
-import { createRolePage, updateRolePage } from '../../api/rolesPage';
-
-// ── Permission categories ──────────────────────────────────────────────────────
-
-const PERM_CATEGORIES: { key: string; label: string; actions: string[] }[] = [
-  { key: 'USERS',           label: 'Users',           actions: ['View', 'Create', 'Edit', 'Delete', 'Manage', 'Export'] },
-  { key: 'COURSES',         label: 'Courses',         actions: ['View', 'Create', 'Edit', 'Delete', 'Publish', 'Approve'] },
-  { key: 'LEARNING_PATHS',  label: 'Learning Paths',  actions: ['View', 'Create', 'Edit', 'Delete', 'Assign'] },
-  { key: 'LIVE_SESSIONS',   label: 'Live Sessions',   actions: ['View', 'Create', 'Manage', 'Moderate'] },
-  { key: 'QUIZZES',         label: 'Quizzes',         actions: ['View', 'Create', 'Edit', 'Delete', 'Approve'] },
-  { key: 'CERTIFICATES',    label: 'Certificates',    actions: ['View', 'Create', 'Issue', 'Revoke'] },
-  { key: 'FINANCE',         label: 'Finance',         actions: ['View', 'Manage', 'Approve', 'Export'] },
-  { key: 'REPORTS',         label: 'Reports',         actions: ['View', 'Create', 'Export'] },
-  { key: 'ANALYTICS',       label: 'Analytics',       actions: ['View', 'Export'] },
-  { key: 'NOTIFICATIONS',   label: 'Notifications',   actions: ['View', 'Create', 'Send'] },
-  { key: 'SECURITY',        label: 'Security',        actions: ['View', 'Manage'] },
-  { key: 'SYSTEM_SETTINGS', label: 'System Settings', actions: ['View', 'Manage'] },
-];
-
-const ROLE_LEVELS:   RoleLevel[]          = ['System', 'Department', 'Branch', 'Functional', 'Default'];
-const ACCESS_SCOPES: AccessScope[]        = ['Global', 'Department', 'Branch', 'Course'];
-const RISK_LEVELS:   RiskClassification[] = ['Low', 'Medium', 'High', 'Critical'];
-
-function initPermissions(): PermissionsByCategory {
-  return Object.fromEntries(PERM_CATEGORIES.map(c => [c.key, []]));
-}
+import type { RolePage, Permission, CreateRolePagePayload, RoleStatus } from '../../types/rolesPage';
+import {
+  createRolePage,
+  updateRolePage,
+  assignRolePermissions,
+  getRolePermissions,
+  getAllPermissions,
+  RolesPageError,
+} from '../../api/rolesPage';
 
 // ── Shared styles ──────────────────────────────────────────────────────────────
 
@@ -83,44 +58,76 @@ interface Props {
 export default function CreateRoleModal({ onClose, onSuccess, showToast, editRole }: Props) {
   const isEdit = Boolean(editRole);
 
-  // Basic Info
+  // Basic fields
   const [name,        setName]        = useState(editRole?.name ?? '');
   const [description, setDescription] = useState(editRole?.description ?? '');
-  const [level,       setLevel]       = useState<RoleLevel>(editRole?.level ?? 'Functional');
-  const [risk,        setRisk]        = useState<RiskClassification>(editRole?.riskClassification ?? 'Low');
-  const [priority,    setPriority]    = useState<number>(editRole?.priority ?? 3);
-
-  // Scope
-  const [scope,        setScope]       = useState<AccessScope>(editRole?.scope ?? 'Global');
-  const [deptScope,    setDeptScope]   = useState(editRole?.departmentScope ?? '');
-  const [branchScope,  setBranchScope] = useState(editRole?.branchScope ?? '');
+  const [status,      setStatus]      = useState<RoleStatus>(editRole?.status ?? 'ACTIVE');
 
   // Permissions
-  const [permissions, setPermissions] = useState<PermissionsByCategory>(initPermissions);
+  const [allPermissions,  setAllPermissions]  = useState<Permission[]>([]);
+  const [selectedPermIds, setSelectedPermIds] = useState<Set<string>>(new Set());
+  const [permsLoading,    setPermsLoading]    = useState(true);
+  const [permsError,      setPermsError]      = useState<string | null>(null);
 
-  // State
+  // Form state
   const [nameError,   setNameError]   = useState<string | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
   const [submitting,  setSubmitting]  = useState(false);
 
-  function toggleAction(catKey: string, action: string) {
-    setPermissions(prev => {
-      const curr = prev[catKey] ?? [];
-      const next = curr.includes(action)
-        ? curr.filter(a => a !== action)
-        : [...curr, action];
-      return { ...prev, [catKey]: next };
+  // ── Load permissions on mount ──────────────────────────────────────────────
+  useEffect(() => {
+    let cancelled = false;
+    setPermsLoading(true);
+    setPermsError(null);
+
+    const fetchAll = async () => {
+      try {
+        const [perms, existingPerms] = await Promise.all([
+          getAllPermissions(),
+          isEdit && editRole ? getRolePermissions(editRole.id) : Promise.resolve([]),
+        ]);
+        if (cancelled) return;
+        setAllPermissions(perms);
+        setSelectedPermIds(new Set((existingPerms as Permission[]).map(p => p.id)));
+      } catch {
+        if (!cancelled) setPermsError('Failed to load permissions');
+      } finally {
+        if (!cancelled) setPermsLoading(false);
+      }
+    };
+
+    fetchAll();
+    return () => { cancelled = true; };
+  }, [isEdit, editRole]);
+
+  // ── Permission toggles ────────────────────────────────────────────────────
+  function togglePerm(id: string) {
+    setSelectedPermIds(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
     });
   }
 
-  function toggleCategory(catKey: string, actions: string[]) {
-    setPermissions(prev => {
-      const curr     = prev[catKey] ?? [];
-      const allSelected = actions.every(a => curr.includes(a));
-      return { ...prev, [catKey]: allSelected ? [] : [...actions] };
+  function toggleCategory(ids: string[]) {
+    const allSelected = ids.every(id => selectedPermIds.has(id));
+    setSelectedPermIds(prev => {
+      const next = new Set(prev);
+      if (allSelected) ids.forEach(id => next.delete(id));
+      else ids.forEach(id => next.add(id));
+      return next;
     });
   }
 
+  // ── Group permissions by category ─────────────────────────────────────────
+  const grouped = allPermissions.reduce<Record<string, Permission[]>>((acc, perm) => {
+    const cat = perm.category || 'OTHER';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(perm);
+    return acc;
+  }, {});
+
+  // ── Submit ────────────────────────────────────────────────────────────────
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setServerError(null);
@@ -128,33 +135,43 @@ export default function CreateRoleModal({ onClose, onSuccess, showToast, editRol
     setNameError(null);
 
     const payload: CreateRolePagePayload = {
-      name:               name.trim(),
-      description:        description.trim() || null,
-      level,
-      riskClassification: risk,
-      priority,
-      scope,
-      departmentScope:    scope === 'Department' ? (deptScope.trim() || null) : null,
-      branchScope:        scope === 'Branch'     ? (branchScope.trim() || null) : null,
-      permissions,
+      name:        name.trim(),
+      description: description.trim() || null,
+      status,
     };
 
     setSubmitting(true);
     try {
+      let roleId: string;
+
       if (isEdit && editRole) {
         await updateRolePage(editRole.id, payload);
+        roleId = editRole.id;
         showToast('success', 'Role updated successfully');
       } else {
-        await createRolePage(payload);
+        const newRole = await createRolePage(payload);
+        roleId = newRole.id;
         showToast('success', 'Role created successfully');
       }
+
+      // Assign permissions if any selected
+      if (selectedPermIds.size > 0) {
+        await assignRolePermissions(roleId, Array.from(selectedPermIds));
+      }
+
       window.dispatchEvent(new CustomEvent('rolesUpdated'));
       window.dispatchEvent(new CustomEvent('analyticsUpdated'));
       onSuccess();
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Failed to save role';
-      setServerError(msg);
-      showToast('error', msg);
+      if (err instanceof RolesPageError && err.status === 409) {
+        const msg = 'A role with this name already exists.';
+        setServerError(msg);
+        showToast('error', msg);
+      } else {
+        const msg = err instanceof Error ? err.message : 'Failed to save role';
+        setServerError(msg);
+        showToast('error', msg);
+      }
     } finally {
       setSubmitting(false);
     }
@@ -186,7 +203,7 @@ export default function CreateRoleModal({ onClose, onSuccess, showToast, editRol
               {isEdit ? 'Edit Role' : 'Create Role'}
             </h3>
             <p style={{ margin: '3px 0 0', fontSize: 13, color: '#6b7280' }}>
-              {isEdit ? 'Update role details and permissions.' : 'Define a new role with scope and permissions.'}
+              {isEdit ? 'Update role details and permissions.' : 'Define a new role and assign permissions.'}
             </p>
           </div>
           <button
@@ -217,6 +234,7 @@ export default function CreateRoleModal({ onClose, onSuccess, showToast, editRol
           <div style={{ marginBottom: 24 }}>
             <SectionHeader title="Basic Information" />
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+
               {/* Role Name */}
               <div style={{ gridColumn: '1 / -1' }}>
                 <label style={LABEL}>Role Name <span style={{ color: '#ef4444' }}>*</span></label>
@@ -244,162 +262,109 @@ export default function CreateRoleModal({ onClose, onSuccess, showToast, editRol
                 />
               </div>
 
-              {/* Role Level */}
+              {/* Status */}
               <div>
-                <label style={LABEL}>Role Level <span style={{ color: '#ef4444' }}>*</span></label>
+                <label style={LABEL}>Status</label>
                 <select
-                  value={level}
-                  onChange={e => setLevel(e.target.value as RoleLevel)}
+                  value={status}
+                  onChange={e => setStatus(e.target.value as RoleStatus)}
                   style={{ ...INPUT, cursor: 'pointer' }}
                   onFocus={focusIn} onBlur={focusOut}
                 >
-                  {ROLE_LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
-                </select>
-              </div>
-
-              {/* Risk Classification */}
-              <div>
-                <label style={LABEL}>Risk Classification</label>
-                <select
-                  value={risk}
-                  onChange={e => setRisk(e.target.value as RiskClassification)}
-                  style={{ ...INPUT, cursor: 'pointer' }}
-                  onFocus={focusIn} onBlur={focusOut}
-                >
-                  {RISK_LEVELS.map(r => <option key={r} value={r}>{r}</option>)}
-                </select>
-              </div>
-
-              {/* Priority */}
-              <div>
-                <label style={LABEL}>Priority Level</label>
-                <select
-                  value={priority}
-                  onChange={e => setPriority(Number(e.target.value))}
-                  style={{ ...INPUT, cursor: 'pointer' }}
-                  onFocus={focusIn} onBlur={focusOut}
-                >
-                  {[1, 2, 3, 4, 5].map(p => (
-                    <option key={p} value={p}>{p} {p === 1 ? '(Lowest)' : p === 5 ? '(Highest)' : ''}</option>
-                  ))}
+                  <option value="ACTIVE">Active</option>
+                  <option value="INACTIVE">Inactive</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* ── Section 2: Scope ── */}
-          <div style={{ marginBottom: 24 }}>
-            <SectionHeader title="Access Scope" />
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-              <div>
-                <label style={LABEL}>Access Scope</label>
-                <select
-                  value={scope}
-                  onChange={e => setScope(e.target.value as AccessScope)}
-                  style={{ ...INPUT, cursor: 'pointer' }}
-                  onFocus={focusIn} onBlur={focusOut}
-                >
-                  {ACCESS_SCOPES.map(s => <option key={s} value={s}>{s}</option>)}
-                </select>
-              </div>
-
-              {scope === 'Department' && (
-                <div>
-                  <label style={LABEL}>Department</label>
-                  <input
-                    type="text"
-                    value={deptScope}
-                    onChange={e => setDeptScope(e.target.value)}
-                    placeholder="e.g. Engineering"
-                    style={INPUT}
-                    onFocus={focusIn} onBlur={focusOut}
-                  />
-                </div>
-              )}
-
-              {scope === 'Branch' && (
-                <div>
-                  <label style={LABEL}>Branch</label>
-                  <input
-                    type="text"
-                    value={branchScope}
-                    onChange={e => setBranchScope(e.target.value)}
-                    placeholder="e.g. Riyadh Branch"
-                    style={INPUT}
-                    onFocus={focusIn} onBlur={focusOut}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* ── Section 3: Permissions ── */}
+          {/* ── Section 2: Permissions ── */}
           <div style={{ marginBottom: 24 }}>
             <SectionHeader title="Permissions" />
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              {PERM_CATEGORIES.map(cat => {
-                const selected = permissions[cat.key] ?? [];
-                const allSelected = cat.actions.every(a => selected.includes(a));
-                return (
-                  <div
-                    key={cat.key}
-                    style={{
-                      border: '1px solid #e5e7eb', borderRadius: 8, overflow: 'hidden',
-                    }}
-                  >
-                    {/* Category header */}
-                    <div style={{
-                      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                      padding: '7px 10px', background: '#f8fafc',
-                      borderBottom: '1px solid #e5e7eb',
-                    }}>
-                      <span style={{ fontSize: 11, fontWeight: 700, color: '#374151', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
-                        {cat.label}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => toggleCategory(cat.key, cat.actions)}
-                        style={{
-                          fontSize: 10, padding: '2px 7px',
-                          border: '1px solid #d1d5db', borderRadius: 4,
-                          cursor: 'pointer', background: allSelected ? '#dbeafe' : 'white',
-                          color: allSelected ? '#1d4ed8' : '#6b7280', fontFamily: 'inherit',
-                        }}
-                      >
-                        {allSelected ? 'Clear' : 'All'}
-                      </button>
+
+            {permsLoading && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#9ca3af', fontSize: 13, padding: '12px 0' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ animation: 'rp-spin 1s linear infinite' }}>
+                  <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
+                <style>{`@keyframes rp-spin { to { transform: rotate(360deg); } }`}</style>
+                Loading permissions…
+              </div>
+            )}
+
+            {!permsLoading && permsError && (
+              <div style={{ color: '#b91c1c', fontSize: 12, padding: '8px 0' }}>{permsError}</div>
+            )}
+
+            {!permsLoading && !permsError && allPermissions.length === 0 && (
+              <div style={{ color: '#9ca3af', fontSize: 13, padding: '8px 0' }}>No permissions found in the system.</div>
+            )}
+
+            {!permsLoading && !permsError && allPermissions.length > 0 && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                {Object.entries(grouped).map(([category, perms]) => {
+                  const permIds = perms.map(p => p.id);
+                  const allSelected = permIds.every(id => selectedPermIds.has(id));
+                  return (
+                    <div
+                      key={category}
+                      style={{ border: '1px solid #e5e7eb', borderRadius: 8, overflow: 'hidden' }}
+                    >
+                      {/* Category header */}
+                      <div style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        padding: '7px 10px', background: '#f8fafc',
+                        borderBottom: '1px solid #e5e7eb',
+                      }}>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: '#374151', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+                          {category}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => toggleCategory(permIds)}
+                          style={{
+                            fontSize: 10, padding: '2px 7px',
+                            border: '1px solid #d1d5db', borderRadius: 4,
+                            cursor: 'pointer', background: allSelected ? '#dbeafe' : 'white',
+                            color: allSelected ? '#1d4ed8' : '#6b7280', fontFamily: 'inherit',
+                          }}
+                        >
+                          {allSelected ? 'Clear' : 'All'}
+                        </button>
+                      </div>
+                      {/* Permission checkboxes */}
+                      <div style={{ padding: '6px 10px', display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                        {perms.map(perm => {
+                          const checked = selectedPermIds.has(perm.id);
+                          return (
+                            <label
+                              key={perm.id}
+                              title={perm.description ?? undefined}
+                              style={{
+                                display: 'flex', alignItems: 'center', gap: 4,
+                                fontSize: 11, color: '#374151', cursor: 'pointer',
+                                padding: '2px 6px', borderRadius: 4,
+                                background: checked ? '#eff6ff' : 'transparent',
+                                border: `1px solid ${checked ? '#bfdbfe' : 'transparent'}`,
+                                userSelect: 'none',
+                              }}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={checked}
+                                onChange={() => togglePerm(perm.id)}
+                                style={{ accentColor: '#2563eb', cursor: 'pointer' }}
+                              />
+                              {perm.name}
+                            </label>
+                          );
+                        })}
+                      </div>
                     </div>
-                    {/* Actions */}
-                    <div style={{ padding: '6px 10px', display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                      {cat.actions.map(action => {
-                        const checked = selected.includes(action);
-                        return (
-                          <label
-                            key={action}
-                            style={{
-                              display: 'flex', alignItems: 'center', gap: 4,
-                              fontSize: 11, color: '#374151', cursor: 'pointer',
-                              padding: '2px 6px', borderRadius: 4,
-                              background: checked ? '#eff6ff' : 'transparent',
-                              border: `1px solid ${checked ? '#bfdbfe' : 'transparent'}`,
-                              userSelect: 'none',
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={checked}
-                              onChange={() => toggleAction(cat.key, action)}
-                              style={{ accentColor: '#2563eb', cursor: 'pointer' }}
-                            />
-                            {action}
-                          </label>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Footer */}
