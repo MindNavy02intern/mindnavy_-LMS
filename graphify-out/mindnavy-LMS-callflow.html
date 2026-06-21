@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>mindnavy LMS — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 1483 nodes, 2569 edges, 73 communities. Commit: 6dc654e</p>
+<p class="subtitle">Generated from graphify knowledge graph: 1483 nodes, 2569 edges, 73 communities. Commit: 4446a33</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -92,7 +92,7 @@ flowchart LR
     class BUILD_GRAPH_321CBB04 module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>17 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>397 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>398 nodes</small>")
     class SERVE_API_35EC8E86 module;
     COMMUNITY_6_7D637A07("Community 6<br/><small>64 nodes</small>")
     class COMMUNITY_6_7D637A07 module;
@@ -116,14 +116,14 @@ flowchart LR
     class COMMUNITY_39_0A1375C5 module;
     COMMUNITY_5_2966028D("Community 5<br/><small>27 nodes</small>")
     class COMMUNITY_5_2966028D module;
-    OTHER_D0941E68("Other<br/><small>464 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>463 nodes</small>")
     class OTHER_D0941E68 module;
-    SERVE_API_35EC8E86 -->|imports x130| OTHER_D0941E68
-    OTHER_D0941E68 -->|imports x55| SERVE_API_35EC8E86
+    SERVE_API_35EC8E86 -->|imports x132| OTHER_D0941E68
+    OTHER_D0941E68 -->|imports x50| SERVE_API_35EC8E86
     COMMUNITY_6_7D637A07 -->|imports x23| COMMUNITY_21_47BA4108
     SERVE_API_35EC8E86 -->|imports x22| COMMUNITY_32_4867BAA9
     COMMUNITY_5_2966028D -->|imports x19| OTHER_D0941E68
-    SERVE_API_35EC8E86 -->|imports x15| COMMUNITY_50_C81354CC
+    SERVE_API_35EC8E86 -->|imports x14| COMMUNITY_50_C81354CC
     COMMUNITY_50_C81354CC -->|imports x12| OTHER_D0941E68
     COMMUNITY_32_4867BAA9 -->|contains x12| OTHER_D0941E68
     COMMUNITY_19_9462A0B9 -->|imports x11| OTHER_D0941E68
@@ -146,7 +146,7 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>114</td><td><code>3, 4, 7, 8, 10, 12, 14</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>17</td><td><code>53, 18</code></td></tr><tr><td>Serving API</td><td>397</td><td><code>9, 31, 24, 2, 42, 26, 27, 25, 55, 30, 59, 22, 35, 66, 51, 69, 13</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 33</td><td>63</td><td><code>33</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>54</td><td><code>32</code></td></tr><tr><td>Community 50</td><td>47</td><td><code>50</code></td></tr><tr><td>Community 34</td><td>39</td><td><code>34</code></td></tr><tr><td>Community 58</td><td>31</td><td><code>58</code></td></tr><tr><td>Community 19</td><td>28</td><td><code>19</code></td></tr><tr><td>Community 39</td><td>28</td><td><code>39</code></td></tr><tr><td>Community 5</td><td>27</td><td><code>5</code></td></tr><tr><td>Other</td><td>464</td><td><code>0, 41, 20, 28, 37, 49, 62, 67, 40, 44, 45, 46, 54, 38, 52, 60, 64, 65, 29, 61, 36, 43, 56, 1, 47, 63, 68, 48, 71, 70, 72, 11, 23, 15, 16, 17</code></td></tr>
+      <tr><td>Graph Build</td><td>114</td><td><code>3, 4, 7, 8, 10, 12, 14</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>17</td><td><code>53, 18</code></td></tr><tr><td>Serving API</td><td>398</td><td><code>9, 31, 24, 2, 42, 26, 27, 25, 55, 30, 60, 22, 35, 66, 51, 69, 13</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 33</td><td>63</td><td><code>33</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>54</td><td><code>32</code></td></tr><tr><td>Community 50</td><td>47</td><td><code>50</code></td></tr><tr><td>Community 34</td><td>39</td><td><code>34</code></td></tr><tr><td>Community 58</td><td>31</td><td><code>58</code></td></tr><tr><td>Community 19</td><td>28</td><td><code>19</code></td></tr><tr><td>Community 39</td><td>28</td><td><code>39</code></td></tr><tr><td>Community 5</td><td>27</td><td><code>5</code></td></tr><tr><td>Other</td><td>463</td><td><code>0, 41, 20, 28, 37, 49, 62, 67, 40, 44, 45, 46, 54, 38, 52, 64, 65, 59, 29, 61, 36, 43, 56, 1, 47, 63, 68, 48, 71, 70, 72, 11, 23, 15, 16, 17</code></td></tr>
     </table>
   </div>
   <div class="card">
@@ -748,12 +748,12 @@ flowchart LR
 
 <!-- ====== 4. Serving API ====== -->
 <h2 id="serve-api">4. Serving API</h2>
-<p>Serving API groups implementation around frontend, api, components, backend, mostly in src/api/organization.ts, src/controllers/users.controller.js, src/api/users.ts. This section covers 397 nodes and 665 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around frontend, components, api, backend, mostly in src/api/organization.ts, src/controllers/users.controller.js, src/api/users.ts. This section covers 398 nodes and 665 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (397 nodes, 665 edges)
+    %% Section: Serving API (398 nodes, 665 edges)
     subgraph serve_api_src_controllers_users_controller_js_8d60ab07["src/controllers/users.controller.js"]
         backend_src_controllers_users_controller_js_108e1036("users.controller.js")
         controllers_users_controller_createuser_1d4bed69("createUser()<br/><small>src/controllers/users.controller.js</small>")
@@ -798,7 +798,7 @@ flowchart LR
     backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validateresetuserpass_7d038d6c
     frontend_src_authcontext_tsx_62479c75 -->|imports| api_adminauth_getstoredtoken_6da5b8df
     api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_organization_ts_fd854e3d
-    %% Omitted for readability: 379 nodes, 0 edges
+    %% Omitted for readability: 380 nodes, 0 edges
     class backend_src_controllers_users_controller_js_108e1036 module;
     class controllers_users_controller_createuser_1d4bed69 function;
     class controllers_users_controller_updateuser_09b2ac67 function;
@@ -1117,7 +1117,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x338, imports x149, calls x100, imports x75. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x339, imports x149, calls x99, imports x75. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4961,12 +4961,12 @@ flowchart LR
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around frontend, components, backend, users, mostly in src/services/roles.service.js, components/users/UserTable.tsx, src/layouts/AdminLayout.tsx. This section covers 464 nodes and 591 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around frontend, components, backend, users, mostly in src/services/roles.service.js, components/users/UserTable.tsx, src/layouts/AdminLayout.tsx. This section covers 463 nodes and 594 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (464 nodes, 591 edges)
+    %% Section: Other (463 nodes, 594 edges)
     subgraph other_src_middlewares_auth_middleware_js_9e83ff1f["src/middlewares/auth.middleware.js"]
         middlewares_auth_middleware_getcachedsession_097d8955("getCachedSession()<br/><small>src/middlewares/auth.middleware.js</small>")
         middlewares_auth_middleware_requireadminauth_78c06910("requireAdminAuth()<br/><small>src/middlewares/auth.middleware.js</small>")
@@ -4978,7 +4978,7 @@ flowchart LR
         services_admin_service_sendadminotp_3504d1ec("sendAdminOtp()<br/><small>src/services/admin.service.js</small>")
         services_admin_service_resetadminpassword_17ee2f6d("resetAdminPassword()<br/><small>src/services/admin.service.js</small>")
     end
-    frontend_src_components_rolespermissionspage_cre_aba939cb("CreateRoleModal.tsx")
+    frontend_src_components_auth_passwordstrengthmet_d823f3ae("PasswordStrengthMeter.tsx")
     frontend_src_components_rolespermissionspage_rol_98bc44d1("RoleDetailsDrawer.tsx")
     frontend_src_app_tsx_cd342beb("App.tsx")
     src_authcontext_useauth_410e9db1("useAuth()<br/><small>frontend/src/AuthContext.tsx</small>")
@@ -4998,7 +4998,7 @@ flowchart LR
     scripts_resetfirstadminpassword_resetfirstadminp_76a7133b -->|calls| utils_passwordpolicy_validatepasswordstrength_56dae8f5
     services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_sendadminotp_3504d1ec
     services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_resetadminpassword_17ee2f6d
-    %% Omitted for readability: 446 nodes, 0 edges
+    %% Omitted for readability: 445 nodes, 0 edges
     class middlewares_auth_middleware_getcachedsession_097d8955 function;
     class middlewares_auth_middleware_requireadminauth_78c06910 function;
     class middlewares_auth_middleware_setcachedsession_c091796c function;
@@ -5006,7 +5006,7 @@ flowchart LR
     class services_admin_service_createauditlog_45451904 function;
     class services_admin_service_sendadminotp_3504d1ec function;
     class services_admin_service_resetadminpassword_17ee2f6d function;
-    class frontend_src_components_rolespermissionspage_cre_aba939cb ui;
+    class frontend_src_components_auth_passwordstrengthmet_d823f3ae ui;
     class frontend_src_components_rolespermissionspage_rol_98bc44d1 ui;
     class frontend_src_app_tsx_cd342beb ui;
     class src_authcontext_useauth_410e9db1 ui;
@@ -5297,7 +5297,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x378, imports x83, calls x75, imports x55. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x377, imports x84, calls x76, imports x57. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -5327,7 +5327,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>mindnavy LMS — Architecture Documentation</p>
-  <p>Generated: 2026-06-21 14:51 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-06-21 15:50 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

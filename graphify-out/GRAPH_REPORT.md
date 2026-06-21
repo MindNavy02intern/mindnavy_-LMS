@@ -1,7 +1,7 @@
 # Graph Report - mindnavy LMS  (2026-06-21)
 
 ## Corpus Check
-- 144 files · ~139,678 words
+- 144 files · ~139,786 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6dc654eb`
+- Built from commit: `4446a334`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -332,12 +332,12 @@ Cohesion: 0.08
 Nodes (9): buildPagination(), getTeamMembers(), HIERARCHY_DEFAULTS, listBranches(), listDepartments(), listTeams(), paginate(), prisma (+1 more)
 
 ### Community 59 - "Community 59"
-Cohesion: 0.14
-Nodes (10): RolesPageError, LEVEL_BADGE, LEVEL_OPTIONS, RISK_BADGE, RolesPermissionsStandalonePage(), SCOPE_DISPLAY, STATUS_BADGE, STATUS_OPTIONS (+2 more)
+Cohesion: 0.15
+Nodes (10): deleteRolePage(), LEVEL_BADGE, LEVEL_OPTIONS, RISK_BADGE, RolesPermissionsStandalonePage(), SCOPE_DISPLAY, STATUS_BADGE, STATUS_OPTIONS (+2 more)
 
 ### Community 60 - "Community 60"
-Cohesion: 0.13
-Nodes (9): updateRolePage(), ACCESS_SCOPES, INPUT, LABEL, PERM_CATEGORIES, Props, RISK_LEVELS, ROLE_LEVELS (+1 more)
+Cohesion: 0.12
+Nodes (9): RolesPageError, updateRolePage(), ACCESS_SCOPES, INPUT, LABEL, PERM_CATEGORIES, Props, RISK_LEVELS (+1 more)
 
 ### Community 61 - "Community 61"
 Cohesion: 0.22
@@ -361,7 +361,7 @@ Nodes (14): autoExpire(), cancelInvitation(), countPendingInvitations(), listInv
 
 ### Community 66 - "Community 66"
 Cohesion: 0.18
-Nodes (11): apiFetch(), assignRolePermissions(), createRolePage(), deleteRolePage(), duplicateRolePage(), getAllPermissions(), getRolePermissions(), getRolesPageList() (+3 more)
+Nodes (11): apiFetch(), assignRolePermissions(), createRolePage(), duplicateRolePage(), getAllPermissions(), getRolePermissions(), getRolesPageList(), getRolesPageStats() (+3 more)
 
 ### Community 67 - "Community 67"
 Cohesion: 0.12
@@ -369,7 +369,7 @@ Nodes (11): INPUT, Props, INPUT, LABEL, MESSAGE_TYPE_OPTIONS, PRIORITY_OPTIONS, 
 
 ### Community 68 - "Community 68"
 Cohesion: 0.20
-Nodes (9): AccessScope, CreateRolePagePayload, PageRoleStatus, RiskClassification, RoleLevel, RolePageDetails, RolesPagePagination, RolesPageResponse (+1 more)
+Nodes (9): AccessScope, CreateRolePagePayload, PageRoleStatus, PermissionsByCategory, RiskClassification, RoleLevel, RolePageDetails, RolesPageResponse (+1 more)
 
 ### Community 69 - "Community 69"
 Cohesion: 0.28
