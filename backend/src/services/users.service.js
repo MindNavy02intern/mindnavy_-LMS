@@ -473,7 +473,8 @@ async function createUser(body, admin = {}) {
 }
 
 async function updateUser(id, body, admin = {}) {
-  await assertUserExists(id);
+  console.log("SERVICE RECEIVED:", body);
+  const existing = await assertUserExists(id);
 
   const updateData = {};
   const changedFields = [];
@@ -542,11 +543,20 @@ async function updateUser(id, body, admin = {}) {
 
   if (body.role !== undefined && body.role !== null) {
     const normalizedRole = body.role.trim().toUpperCase().replace(/[\s-]+/g, "_");
-    if (!VALID_ROLES.has(normalizedRole)) {
-      throw makeError(`Invalid role. Valid values: ${[...VALID_ROLES].join(", ")}.`, 400);
+    if (VALID_ROLES.has(normalizedRole)) {
+      updateData.role = normalizedRole;
+      changedFields.push("role");
     }
-    updateData.role = normalizedRole;
-    changedFields.push("role");
+    // Custom role names don't map to AppUserRole enum — skip silently
+  }
+
+  // Nothing to persist (e.g. only a custom role name was sent, which doesn't map to the enum)
+  if (Object.keys(updateData).length === 0) {
+    return {
+      success: true,
+      message: "User updated successfully.",
+      user: { ...mapUser(existing), updatedAt: existing.updatedAt.toISOString() },
+    };
   }
 
   let user;
@@ -557,6 +567,9 @@ async function updateUser(id, body, admin = {}) {
       select: USER_SELECT,
     });
   } catch (err) {
+    console.error("UPDATE USER SERVICE ERROR:", err.message);
+    console.error("ERROR CODE:", err.code);
+    console.error("ERROR META:", JSON.stringify(err.meta));
     if (err.code === "P2002") {
       throw makeError("A user with this email already exists.", 409);
     }

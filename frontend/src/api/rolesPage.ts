@@ -4,17 +4,29 @@ import type {
   RolePage,
   RolePageDetails,
   RolesPageResponse,
+  RolesPagePagination,
   CreateRolePagePayload,
+  Permission,
 } from '../types/rolesPage';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
-class RolesPageError extends Error {
+export class RolesPageError extends Error {
   status: number;
-  constructor(status: number, message: string) {
+  code?: string;
+  count?: number;
+  roleName?: string;
+  constructor(
+    status: number,
+    message: string,
+    extra?: { code?: string; count?: number; roleName?: string },
+  ) {
     super(message);
     this.status = status;
     this.name = 'RolesPageError';
+    this.code = extra?.code;
+    this.count = extra?.count;
+    this.roleName = extra?.roleName;
   }
 }
 
@@ -30,70 +42,92 @@ async function apiFetch<T>(path: string, method = 'GET', body?: unknown): Promis
   });
   const json = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
   if (!res.ok) {
-    throw new RolesPageError(
-      res.status,
-      (json as { message?: string }).message ?? `HTTP ${res.status}`,
-    );
+    const j = json as { message?: string; error?: string; count?: number; roleName?: string };
+    throw new RolesPageError(res.status, j.message ?? `HTTP ${res.status}`, {
+      code: j.error,
+      count: j.count,
+      roleName: j.roleName,
+    });
   }
   return json as T;
 }
 
 export async function getRolesPageStats(): Promise<RolePageStats> {
-  const json = await apiFetch<{ stats: RolePageStats }>('/roles-page/stats');
-  return json.stats;
+  const json = await apiFetch<{ success: boolean; data: RolePageStats }>('/roles/stats');
+  return json.data;
 }
 
 export async function getRolesPageList(params: {
-  page:   number;
-  limit:  number;
+  page: number;
+  limit: number;
   search: string;
   status: string;
-  level:  string;
 }): Promise<RolesPageResponse> {
   const qs = new URLSearchParams();
-  qs.set('page',  String(params.page));
+  qs.set('page', String(params.page));
   qs.set('limit', String(params.limit));
   if (params.search) qs.set('search', params.search);
-  if (params.status) qs.set('status', params.status);
-  if (params.level)  qs.set('level',  params.level);
-  return apiFetch<RolesPageResponse>(`/roles-page/roles?${qs.toString()}`);
+  if (params.status && params.status !== 'ALL') qs.set('status', params.status);
+  const json = await apiFetch<{ success: boolean; data: RolePage[]; pagination: RolesPagePagination }>(
+    `/roles?${qs.toString()}`,
+  );
+  return { data: json.data, pagination: json.pagination };
 }
 
 export async function getRolePageDetails(id: string): Promise<RolePageDetails> {
-  const json = await apiFetch<{ role: RolePageDetails }>(
-    `/roles-page/roles/${encodeURIComponent(id)}`,
+  const json = await apiFetch<{ success: boolean; data: RolePageDetails }>(
+    `/roles/${encodeURIComponent(id)}`,
   );
-  return json.role;
+  return json.data;
 }
 
 export async function createRolePage(data: CreateRolePagePayload): Promise<RolePage> {
-  const json = await apiFetch<{ role: RolePage }>('/roles-page/roles', 'POST', data);
-  return json.role;
+  const json = await apiFetch<{ success: boolean; data: RolePage }>('/roles', 'POST', data);
+  return json.data;
 }
 
 export async function updateRolePage(
   id: string,
   data: Partial<CreateRolePagePayload>,
 ): Promise<RolePage> {
-  const json = await apiFetch<{ role: RolePage }>(
-    `/roles-page/roles/${encodeURIComponent(id)}`,
+  const json = await apiFetch<{ success: boolean; data: RolePage }>(
+    `/roles/${encodeURIComponent(id)}`,
     'PATCH',
     data,
   );
-  return json.role;
+  return json.data;
 }
 
 export async function deleteRolePage(id: string): Promise<void> {
-  await apiFetch<{ message: string }>(
-    `/roles-page/roles/${encodeURIComponent(id)}`,
-    'DELETE',
-  );
+  await apiFetch<{ success: boolean }>(`/roles/${encodeURIComponent(id)}`, 'DELETE');
 }
 
 export async function duplicateRolePage(id: string): Promise<RolePage> {
-  const json = await apiFetch<{ role: RolePage }>(
-    `/roles-page/roles/${encodeURIComponent(id)}/duplicate`,
+  const json = await apiFetch<{ success: boolean; data: RolePage }>(
+    `/roles/${encodeURIComponent(id)}/duplicate`,
     'POST',
   );
-  return json.role;
+  return json.data;
+}
+
+export async function getRolePermissions(roleId: string): Promise<Permission[]> {
+  const json = await apiFetch<{ success: boolean; data: Permission[] }>(
+    `/roles/${encodeURIComponent(roleId)}/permissions`,
+  );
+  return json.data;
+}
+
+export async function assignRolePermissions(roleId: string, permissionIds: string[]): Promise<void> {
+  await apiFetch<{ success: boolean; data: Permission[] }>(
+    `/roles/${encodeURIComponent(roleId)}/permissions`,
+    'POST',
+    { permissionIds },
+  );
+}
+
+export async function getAllPermissions(): Promise<Permission[]> {
+  const json = await apiFetch<{ success: boolean; data: Permission[]; pagination: unknown }>(
+    '/permissions?limit=500',
+  );
+  return json.data;
 }

@@ -59,7 +59,7 @@ function validateUpdateUserInput(body) {
   const errors = [];
   const ALLOWED_FIELDS = new Set([
     "fullName", "email", "avatar", "verificationState", "riskScore",
-    "phone", "department", "branch", "groupId", "accessLevel", "managerId", "skills",
+    "phone", "department", "branch", "groupId", "accessLevel", "managerId", "skills", "role",
   ]);
 
   const provided = Object.keys(body || {});
