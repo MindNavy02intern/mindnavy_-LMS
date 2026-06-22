@@ -382,10 +382,19 @@
       "norm_label": "permissionsroutes"
     },
     {
-      "label": "groupsRoutes",
+      "label": "permissionMatrixRoutes",
       "file_type": "code",
       "source_file": "backend/server.js",
       "source_location": "L11",
+      "id": "backend_server_permissionmatrixroutes",
+      "community": 52,
+      "norm_label": "permissionmatrixroutes"
+    },
+    {
+      "label": "groupsRoutes",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L12",
       "id": "backend_server_groupsroutes",
       "community": 52,
       "norm_label": "groupsroutes"
@@ -394,7 +403,7 @@
       "label": "invitationsRoutes",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L12",
+      "source_location": "L13",
       "id": "backend_server_invitationsroutes",
       "community": 52,
       "norm_label": "invitationsroutes"
@@ -403,7 +412,7 @@
       "label": "messagesRoutes",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L13",
+      "source_location": "L14",
       "id": "backend_server_messagesroutes",
       "community": 52,
       "norm_label": "messagesroutes"
@@ -412,7 +421,7 @@
       "label": "app",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L15",
+      "source_location": "L16",
       "id": "backend_server_app",
       "community": 52,
       "norm_label": "app"
@@ -421,7 +430,7 @@
       "label": "corsOptions",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "backend_server_corsoptions",
       "community": 52,
       "norm_label": "corsoptions"
@@ -430,7 +439,7 @@
       "label": "server",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L74",
+      "source_location": "L76",
       "id": "backend_server_server",
       "community": 52,
       "norm_label": "server"
@@ -522,7 +531,7 @@
       "source_file": "backend/prisma/seed-groups.js",
       "source_location": "L1",
       "id": "backend_prisma_seed_groups_js",
-      "community": 53,
+      "community": 66,
       "norm_label": "seed-groups.js"
     },
     {
@@ -531,7 +540,7 @@
       "source_file": "backend/prisma/seed-groups.js",
       "source_location": "L1",
       "id": "prisma_seed_groups_prisma",
-      "community": 53,
+      "community": 66,
       "norm_label": "prisma"
     },
     {
@@ -540,7 +549,7 @@
       "source_file": "backend/prisma/seed-groups.js",
       "source_location": "L3",
       "id": "prisma_seed_groups_main",
-      "community": 53,
+      "community": 66,
       "norm_label": "main()"
     },
     {
@@ -549,7 +558,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L1",
       "id": "backend_prisma_seed_js",
-      "community": 53,
+      "community": 66,
       "norm_label": "seed.js"
     },
     {
@@ -558,7 +567,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L2",
       "id": "prisma_seed_prisma",
-      "community": 53,
+      "community": 66,
       "norm_label": "prisma"
     },
     {
@@ -567,7 +576,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L4",
       "id": "prisma_seed_permissions",
-      "community": 53,
+      "community": 66,
       "norm_label": "permissions"
     },
     {
@@ -576,7 +585,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L19",
       "id": "prisma_seed_roles",
-      "community": 53,
+      "community": 66,
       "norm_label": "roles"
     },
     {
@@ -585,7 +594,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L26",
       "id": "prisma_seed_main",
-      "community": 53,
+      "community": 66,
       "norm_label": "main()"
     },
     {
@@ -594,7 +603,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L1",
       "id": "backend_src_config_prisma_js",
-      "community": 53,
+      "community": 66,
       "norm_label": "prisma.js"
     },
     {
@@ -603,7 +612,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L1",
       "id": "config_prisma_prismaclient",
-      "community": 53,
+      "community": 66,
       "norm_label": "{ prismaclient }"
     },
     {
@@ -612,7 +621,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L2",
       "id": "config_prisma_prismapg",
-      "community": 53,
+      "community": 66,
       "norm_label": "{ prismapg }"
     },
     {
@@ -621,7 +630,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L4",
       "id": "config_prisma_adapter",
-      "community": 53,
+      "community": 66,
       "norm_label": "adapter"
     },
     {
@@ -630,7 +639,7 @@
       "source_file": "backend/src/config/prisma.js",
       "source_location": "L8",
       "id": "config_prisma_prisma",
-      "community": 53,
+      "community": 66,
       "norm_label": "prisma"
     },
     {
@@ -702,7 +711,7 @@
       "source_file": "backend/src/controllers/admin.controller.js",
       "source_location": "L91",
       "id": "controllers_admin_controller_adminsendotpcontroller",
-      "community": 71,
+      "community": 74,
       "norm_label": "adminsendotpcontroller()"
     },
     {
@@ -1327,19 +1336,19 @@
       "norm_label": "svc"
     },
     {
-      "label": "{\r\n  validateId,\r\n  validateListRolesQuery,\r\n  validateCreateRole,\r\n  validateUpdateRole,\r\n  validateAssignPermissions,\r\n}",
+      "label": "{\r\n  validateId,\r\n  validateListRolesQuery,\r\n  validateCreateRole,\r\n  validateUpdateRole,\r\n  validateAssignPermissions,\r\n  validatePermissionMatrixQuery,\r\n  validateMatrixToggle,\r\n}",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
       "source_location": "L2",
-      "id": "controllers_roles_controller_validateid_validatelistrolesquery_validatecreaterole_validateupdaterole_validateassignpermissions",
+      "id": "controllers_roles_controller_validateid_validatelistrolesquery_validatecreaterole_validateupdaterole_validateassignpermissions_validatepermissionmatrixquery_validatematrixtoggle",
       "community": 19,
-      "norm_label": "{\r\n  validateid,\r\n  validatelistrolesquery,\r\n  validatecreaterole,\r\n  validateupdaterole,\r\n  validateassignpermissions,\r\n}"
+      "norm_label": "{\r\n  validateid,\r\n  validatelistrolesquery,\r\n  validatecreaterole,\r\n  validateupdaterole,\r\n  validateassignpermissions,\r\n  validatepermissionmatrixquery,\r\n  validatematrixtoggle,\r\n}"
     },
     {
       "label": "badRequest()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L12",
+      "source_location": "L14",
       "id": "controllers_roles_controller_badrequest",
       "community": 19,
       "norm_label": "badrequest()"
@@ -1348,7 +1357,7 @@
       "label": "notFound()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L16",
+      "source_location": "L18",
       "id": "controllers_roles_controller_notfound",
       "community": 19,
       "norm_label": "notfound()"
@@ -1357,7 +1366,7 @@
       "label": "serverError()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L20",
+      "source_location": "L22",
       "id": "controllers_roles_controller_servererror",
       "community": 19,
       "norm_label": "servererror()"
@@ -1366,7 +1375,7 @@
       "label": "listRoles()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L36",
+      "source_location": "L38",
       "id": "controllers_roles_controller_listroles",
       "community": 19,
       "norm_label": "listroles()"
@@ -1375,7 +1384,7 @@
       "label": "getRolesStats()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L45",
+      "source_location": "L47",
       "id": "controllers_roles_controller_getrolesstats",
       "community": 19,
       "norm_label": "getrolesstats()"
@@ -1384,7 +1393,7 @@
       "label": "getRole()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L52",
+      "source_location": "L54",
       "id": "controllers_roles_controller_getrole",
       "community": 19,
       "norm_label": "getrole()"
@@ -1393,7 +1402,7 @@
       "label": "createRole()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L60",
+      "source_location": "L62",
       "id": "controllers_roles_controller_createrole",
       "community": 19,
       "norm_label": "createrole()"
@@ -1402,7 +1411,7 @@
       "label": "updateRole()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L73",
+      "source_location": "L75",
       "id": "controllers_roles_controller_updaterole",
       "community": 19,
       "norm_label": "updaterole()"
@@ -1411,7 +1420,7 @@
       "label": "deleteRole()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L91",
+      "source_location": "L93",
       "id": "controllers_roles_controller_deleterole",
       "community": 19,
       "norm_label": "deleterole()"
@@ -1420,7 +1429,7 @@
       "label": "duplicateRole()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L112",
+      "source_location": "L114",
       "id": "controllers_roles_controller_duplicaterole",
       "community": 19,
       "norm_label": "duplicaterole()"
@@ -1429,7 +1438,7 @@
       "label": "getRolePermissions()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L126",
+      "source_location": "L128",
       "id": "controllers_roles_controller_getrolepermissions",
       "community": 19,
       "norm_label": "getrolepermissions()"
@@ -1438,16 +1447,34 @@
       "label": "assignPermissionsToRole()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L133",
+      "source_location": "L135",
       "id": "controllers_roles_controller_assignpermissionstorole",
       "community": 19,
       "norm_label": "assignpermissionstorole()"
     },
     {
+      "label": "getPermissionMatrix()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L158",
+      "id": "controllers_roles_controller_getpermissionmatrix",
+      "community": 19,
+      "norm_label": "getpermissionmatrix()"
+    },
+    {
+      "label": "togglePermissionMatrixCell()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L167",
+      "id": "controllers_roles_controller_togglepermissionmatrixcell",
+      "community": 19,
+      "norm_label": "togglepermissionmatrixcell()"
+    },
+    {
       "label": "listPermissions()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L156",
+      "source_location": "L186",
       "id": "controllers_roles_controller_listpermissions",
       "community": 19,
       "norm_label": "listpermissions()"
@@ -1456,7 +1483,7 @@
       "label": "getPermission()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L164",
+      "source_location": "L194",
       "id": "controllers_roles_controller_getpermission",
       "community": 19,
       "norm_label": "getpermission()"
@@ -1465,7 +1492,7 @@
       "label": "createPermission()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L172",
+      "source_location": "L202",
       "id": "controllers_roles_controller_createpermission",
       "community": 19,
       "norm_label": "createpermission()"
@@ -1474,7 +1501,7 @@
       "label": "updatePermission()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L182",
+      "source_location": "L212",
       "id": "controllers_roles_controller_updatepermission",
       "community": 19,
       "norm_label": "updatepermission()"
@@ -1483,7 +1510,7 @@
       "label": "deletePermission()",
       "file_type": "code",
       "source_file": "backend/src/controllers/roles.controller.js",
-      "source_location": "L192",
+      "source_location": "L222",
       "id": "controllers_roles_controller_deletepermission",
       "community": 19,
       "norm_label": "deletepermission()"
@@ -1737,7 +1764,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L31",
       "id": "middlewares_auth_middleware_clearallcachedsessions",
-      "community": 54,
+      "community": 53,
       "norm_label": "clearallcachedsessions()"
     },
     {
@@ -1971,7 +1998,7 @@
       "source_file": "backend/src/routes/groups.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_groups_routes_js",
-      "community": 36,
+      "community": 30,
       "norm_label": "groups.routes.js"
     },
     {
@@ -1980,7 +2007,7 @@
       "source_file": "backend/src/routes/groups.routes.js",
       "source_location": "L1",
       "id": "routes_groups_routes_express",
-      "community": 36,
+      "community": 30,
       "norm_label": "express"
     },
     {
@@ -1989,7 +2016,7 @@
       "source_file": "backend/src/routes/groups.routes.js",
       "source_location": "L2",
       "id": "routes_groups_routes_requireadminauth",
-      "community": 36,
+      "community": 30,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -1998,7 +2025,7 @@
       "source_file": "backend/src/routes/groups.routes.js",
       "source_location": "L3",
       "id": "routes_groups_routes_adminuseractionratelimiter",
-      "community": 36,
+      "community": 30,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -2007,7 +2034,7 @@
       "source_file": "backend/src/routes/groups.routes.js",
       "source_location": "L4",
       "id": "routes_groups_routes_ctrl",
-      "community": 36,
+      "community": 30,
       "norm_label": "ctrl"
     },
     {
@@ -2016,7 +2043,7 @@
       "source_file": "backend/src/routes/groups.routes.js",
       "source_location": "L6",
       "id": "routes_groups_routes_router",
-      "community": 36,
+      "community": 30,
       "norm_label": "router"
     },
     {
@@ -2079,7 +2106,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_messages_routes_js",
-      "community": 30,
+      "community": 36,
       "norm_label": "messages.routes.js"
     },
     {
@@ -2088,7 +2115,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L1",
       "id": "routes_messages_routes_express",
-      "community": 30,
+      "community": 36,
       "norm_label": "express"
     },
     {
@@ -2097,7 +2124,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L2",
       "id": "routes_messages_routes_requireadminauth",
-      "community": 30,
+      "community": 36,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -2106,7 +2133,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L3",
       "id": "routes_messages_routes_adminuseractionratelimiter",
-      "community": 30,
+      "community": 36,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -2115,7 +2142,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L4",
       "id": "routes_messages_routes_sendmessage_getmessages",
-      "community": 30,
+      "community": 36,
       "norm_label": "{ sendmessage, getmessages }"
     },
     {
@@ -2124,7 +2151,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L6",
       "id": "routes_messages_routes_router",
-      "community": 30,
+      "community": 36,
       "norm_label": "router"
     },
     {
@@ -2179,6 +2206,60 @@
       "source_location": "L14",
       "id": "routes_organization_routes_router",
       "community": 57,
+      "norm_label": "router"
+    },
+    {
+      "label": "permissionMatrix.routes.js",
+      "file_type": "code",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L1",
+      "id": "backend_src_routes_permissionmatrix_routes_js",
+      "community": 36,
+      "norm_label": "permissionmatrix.routes.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L1",
+      "id": "routes_permissionmatrix_routes_express",
+      "community": 36,
+      "norm_label": "express"
+    },
+    {
+      "label": "{ requireAdminAuth }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L2",
+      "id": "routes_permissionmatrix_routes_requireadminauth",
+      "community": 36,
+      "norm_label": "{ requireadminauth }"
+    },
+    {
+      "label": "{ adminUserActionRateLimiter }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L3",
+      "id": "routes_permissionmatrix_routes_adminuseractionratelimiter",
+      "community": 36,
+      "norm_label": "{ adminuseractionratelimiter }"
+    },
+    {
+      "label": "{\r\n  getPermissionMatrix, togglePermissionMatrixCell,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L4",
+      "id": "routes_permissionmatrix_routes_getpermissionmatrix_togglepermissionmatrixcell",
+      "community": 36,
+      "norm_label": "{\r\n  getpermissionmatrix, togglepermissionmatrixcell,\r\n}"
+    },
+    {
+      "label": "router",
+      "file_type": "code",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L8",
+      "id": "routes_permissionmatrix_routes_router",
+      "community": 36,
       "norm_label": "router"
     },
     {
@@ -2358,7 +2439,7 @@
       "source_file": "backend/src/scripts/addUsersImportedEnum.js",
       "source_location": "L1",
       "id": "backend_src_scripts_addusersimportedenum_js",
-      "community": 53,
+      "community": 66,
       "norm_label": "addusersimportedenum.js"
     },
     {
@@ -2367,7 +2448,7 @@
       "source_file": "backend/src/scripts/addUsersImportedEnum.js",
       "source_location": "L2",
       "id": "scripts_addusersimportedenum_prisma",
-      "community": 53,
+      "community": 66,
       "norm_label": "prisma"
     },
     {
@@ -2376,7 +2457,7 @@
       "source_file": "backend/src/scripts/addUsersImportedEnum.js",
       "source_location": "L4",
       "id": "scripts_addusersimportedenum_main",
-      "community": 53,
+      "community": 66,
       "norm_label": "main()"
     },
     {
@@ -2385,7 +2466,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L1",
       "id": "backend_src_scripts_createfirstadmin_js",
-      "community": 64,
+      "community": 69,
       "norm_label": "createfirstadmin.js"
     },
     {
@@ -2394,7 +2475,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L3",
       "id": "scripts_createfirstadmin_bcrypt",
-      "community": 64,
+      "community": 69,
       "norm_label": "bcrypt"
     },
     {
@@ -2403,7 +2484,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L4",
       "id": "scripts_createfirstadmin_prisma",
-      "community": 64,
+      "community": 69,
       "norm_label": "prisma"
     },
     {
@@ -2412,7 +2493,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L5",
       "id": "scripts_createfirstadmin_validatepasswordstrength",
-      "community": 64,
+      "community": 69,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -2421,7 +2502,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L7",
       "id": "scripts_createfirstadmin_createfirstadmin",
-      "community": 64,
+      "community": 69,
       "norm_label": "createfirstadmin()"
     },
     {
@@ -2430,7 +2511,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L1",
       "id": "backend_src_scripts_resetfirstadminpassword_js",
-      "community": 64,
+      "community": 69,
       "norm_label": "resetfirstadminpassword.js"
     },
     {
@@ -2439,7 +2520,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L3",
       "id": "scripts_resetfirstadminpassword_bcrypt",
-      "community": 64,
+      "community": 69,
       "norm_label": "bcrypt"
     },
     {
@@ -2448,7 +2529,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L4",
       "id": "scripts_resetfirstadminpassword_prisma",
-      "community": 64,
+      "community": 69,
       "norm_label": "prisma"
     },
     {
@@ -2457,7 +2538,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L5",
       "id": "scripts_resetfirstadminpassword_validatepasswordstrength",
-      "community": 64,
+      "community": 69,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -2466,7 +2547,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L7",
       "id": "scripts_resetfirstadminpassword_resetfirstadminpassword",
-      "community": 64,
+      "community": 69,
       "norm_label": "resetfirstadminpassword()"
     },
     {
@@ -2475,7 +2556,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L1",
       "id": "backend_src_services_admin_service_js",
-      "community": 54,
+      "community": 53,
       "norm_label": "admin.service.js"
     },
     {
@@ -2484,7 +2565,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L1",
       "id": "services_admin_service_bcrypt",
-      "community": 54,
+      "community": 53,
       "norm_label": "bcrypt"
     },
     {
@@ -2493,7 +2574,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L2",
       "id": "services_admin_service_prisma",
-      "community": 54,
+      "community": 53,
       "norm_label": "prisma"
     },
     {
@@ -2502,7 +2583,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L3",
       "id": "services_admin_service_generatesessiontoken_getsessionexpirydate",
-      "community": 54,
+      "community": 53,
       "norm_label": "{ generatesessiontoken, getsessionexpirydate }"
     },
     {
@@ -2511,7 +2592,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L4",
       "id": "services_admin_service_clearallcachedsessions",
-      "community": 54,
+      "community": 53,
       "norm_label": "{ clearallcachedsessions }"
     },
     {
@@ -2520,7 +2601,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L6",
       "id": "services_admin_service_generateotpcode_hashotpcode_compareotpcode_getotpexpirydate",
-      "community": 54,
+      "community": 53,
       "norm_label": "{\r\n  generateotpcode,\r\n  hashotpcode,\r\n  compareotpcode,\r\n  getotpexpirydate,\r\n}"
     },
     {
@@ -2529,7 +2610,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L17",
       "id": "services_admin_service_recordloginattempt",
-      "community": 54,
+      "community": 53,
       "norm_label": "recordloginattempt()"
     },
     {
@@ -2538,7 +2619,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L37",
       "id": "services_admin_service_createauditlog",
-      "community": 54,
+      "community": 53,
       "norm_label": "createauditlog()"
     },
     {
@@ -2547,7 +2628,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L55",
       "id": "services_admin_service_islogintemporarilyblocked",
-      "community": 54,
+      "community": 53,
       "norm_label": "islogintemporarilyblocked()"
     },
     {
@@ -2556,7 +2637,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L73",
       "id": "services_admin_service_loginadmin",
-      "community": 54,
+      "community": 53,
       "norm_label": "loginadmin()"
     },
     {
@@ -2565,7 +2646,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L230",
       "id": "services_admin_service_logoutadmin",
-      "community": 54,
+      "community": 53,
       "norm_label": "logoutadmin()"
     },
     {
@@ -2574,7 +2655,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L267",
       "id": "services_admin_service_sendadminotp",
-      "community": 71,
+      "community": 74,
       "norm_label": "sendadminotp()"
     },
     {
@@ -2583,7 +2664,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L329",
       "id": "services_admin_service_verifyadminotp",
-      "community": 54,
+      "community": 53,
       "norm_label": "verifyadminotp()"
     },
     {
@@ -2601,7 +2682,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L481",
       "id": "services_admin_service_revokeadmintrusteddevice",
-      "community": 54,
+      "community": 53,
       "norm_label": "revokeadmintrusteddevice()"
     },
     {
@@ -2610,7 +2691,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L528",
       "id": "services_admin_service_forgotadminpassword",
-      "community": 71,
+      "community": 74,
       "norm_label": "forgotadminpassword()"
     },
     {
@@ -2619,7 +2700,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L587",
       "id": "services_admin_service_resetadminpassword",
-      "community": 54,
+      "community": 53,
       "norm_label": "resetadminpassword()"
     },
     {
@@ -2628,7 +2709,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L1",
       "id": "backend_src_services_dashboard_service_js",
-      "community": 33,
+      "community": 56,
       "norm_label": "dashboard.service.js"
     },
     {
@@ -2637,7 +2718,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L1",
       "id": "services_dashboard_service_prisma",
-      "community": 33,
+      "community": 56,
       "norm_label": "prisma"
     },
     {
@@ -2646,7 +2727,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L8",
       "id": "services_dashboard_service_pending_approval_where",
-      "community": 33,
+      "community": 56,
       "norm_label": "pending_approval_where"
     },
     {
@@ -2655,7 +2736,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L10",
       "id": "services_dashboard_service_parsedateinput",
-      "community": 33,
+      "community": 56,
       "norm_label": "parsedateinput()"
     },
     {
@@ -2664,7 +2745,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L16",
       "id": "services_dashboard_service_endofutcday",
-      "community": 33,
+      "community": 56,
       "norm_label": "endofutcday()"
     },
     {
@@ -2673,7 +2754,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L24",
       "id": "services_dashboard_service_builduserscope",
-      "community": 33,
+      "community": 56,
       "norm_label": "builduserscope()"
     },
     {
@@ -2682,7 +2763,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L40",
       "id": "services_dashboard_service_enumerateutcdays",
-      "community": 33,
+      "community": 56,
       "norm_label": "enumerateutcdays()"
     },
     {
@@ -2691,7 +2772,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L53",
       "id": "services_dashboard_service_action_type",
-      "community": 33,
+      "community": 56,
       "norm_label": "action_type"
     },
     {
@@ -2700,7 +2781,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L68",
       "id": "services_dashboard_service_action_title",
-      "community": 33,
+      "community": 56,
       "norm_label": "action_title"
     },
     {
@@ -2709,7 +2790,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L90",
       "id": "services_dashboard_service_mapaudittoactivity",
-      "community": 33,
+      "community": 56,
       "norm_label": "mapaudittoactivity()"
     },
     {
@@ -2718,7 +2799,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L102",
       "id": "services_dashboard_service_getdashboardcore",
-      "community": 33,
+      "community": 56,
       "norm_label": "getdashboardcore()"
     },
     {
@@ -2727,7 +2808,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L171",
       "id": "services_dashboard_service_getdashboardanalytics",
-      "community": 33,
+      "community": 56,
       "norm_label": "getdashboardanalytics()"
     },
     {
@@ -2736,7 +2817,7 @@
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L315",
       "id": "services_dashboard_service_getdashboardadminwidgets",
-      "community": 33,
+      "community": 56,
       "norm_label": "getdashboardadminwidgets()"
     },
     {
@@ -3505,10 +3586,28 @@
       "norm_label": "assignpermissionstorole()"
     },
     {
+      "label": "getPermissionMatrix()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roles.service.js",
+      "source_location": "L222",
+      "id": "services_roles_service_getpermissionmatrix",
+      "community": 41,
+      "norm_label": "getpermissionmatrix()"
+    },
+    {
+      "label": "togglePermissionMatrixCell()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roles.service.js",
+      "source_location": "L287",
+      "id": "services_roles_service_togglepermissionmatrixcell",
+      "community": 41,
+      "norm_label": "togglepermissionmatrixcell()"
+    },
+    {
       "label": "listPermissions()",
       "file_type": "code",
       "source_file": "backend/src/services/roles.service.js",
-      "source_location": "L219",
+      "source_location": "L321",
       "id": "services_roles_service_listpermissions",
       "community": 41,
       "norm_label": "listpermissions()"
@@ -3517,7 +3616,7 @@
       "label": "getPermission()",
       "file_type": "code",
       "source_file": "backend/src/services/roles.service.js",
-      "source_location": "L243",
+      "source_location": "L345",
       "id": "services_roles_service_getpermission",
       "community": 41,
       "norm_label": "getpermission()"
@@ -3526,7 +3625,7 @@
       "label": "createPermission()",
       "file_type": "code",
       "source_file": "backend/src/services/roles.service.js",
-      "source_location": "L253",
+      "source_location": "L355",
       "id": "services_roles_service_createpermission",
       "community": 41,
       "norm_label": "createpermission()"
@@ -3535,7 +3634,7 @@
       "label": "updatePermission()",
       "file_type": "code",
       "source_file": "backend/src/services/roles.service.js",
-      "source_location": "L267",
+      "source_location": "L369",
       "id": "services_roles_service_updatepermission",
       "community": 41,
       "norm_label": "updatepermission()"
@@ -3544,7 +3643,7 @@
       "label": "deletePermission()",
       "file_type": "code",
       "source_file": "backend/src/services/roles.service.js",
-      "source_location": "L283",
+      "source_location": "L385",
       "id": "services_roles_service_deletepermission",
       "community": 41,
       "norm_label": "deletepermission()"
@@ -3553,7 +3652,7 @@
       "label": "getRolesStats()",
       "file_type": "code",
       "source_file": "backend/src/services/roles.service.js",
-      "source_location": "L290",
+      "source_location": "L392",
       "id": "services_roles_service_getrolesstats",
       "community": 41,
       "norm_label": "getrolesstats()"
@@ -3562,7 +3661,7 @@
       "label": "duplicateRole()",
       "file_type": "code",
       "source_file": "backend/src/services/roles.service.js",
-      "source_location": "L311",
+      "source_location": "L413",
       "id": "services_roles_service_duplicaterole",
       "community": 41,
       "norm_label": "duplicaterole()"
@@ -3852,7 +3951,7 @@
       "source_file": "backend/src/services/users.service.js",
       "source_location": "L781",
       "id": "services_users_service_getusersanalytics",
-      "community": 33,
+      "community": 56,
       "norm_label": "getusersanalytics()"
     },
     {
@@ -3915,7 +4014,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L1",
       "id": "backend_src_utils_otp_js",
-      "community": 71,
+      "community": 74,
       "norm_label": "otp.js"
     },
     {
@@ -3924,7 +4023,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L1",
       "id": "utils_otp_crypto",
-      "community": 71,
+      "community": 74,
       "norm_label": "crypto"
     },
     {
@@ -3933,7 +4032,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L2",
       "id": "utils_otp_bcrypt",
-      "community": 71,
+      "community": 74,
       "norm_label": "bcrypt"
     },
     {
@@ -3942,7 +4041,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L4",
       "id": "utils_otp_generateotpcode",
-      "community": 71,
+      "community": 74,
       "norm_label": "generateotpcode()"
     },
     {
@@ -3951,7 +4050,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L8",
       "id": "utils_otp_hashotpcode",
-      "community": 71,
+      "community": 74,
       "norm_label": "hashotpcode()"
     },
     {
@@ -3960,7 +4059,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L12",
       "id": "utils_otp_compareotpcode",
-      "community": 54,
+      "community": 53,
       "norm_label": "compareotpcode()"
     },
     {
@@ -3969,7 +4068,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L16",
       "id": "utils_otp_getotpexpirydate",
-      "community": 71,
+      "community": 74,
       "norm_label": "getotpexpirydate()"
     },
     {
@@ -3978,7 +4077,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "backend_src_utils_passwordpolicy_js",
-      "community": 64,
+      "community": 69,
       "norm_label": "passwordpolicy.js"
     },
     {
@@ -3987,7 +4086,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "utils_passwordpolicy_validatepasswordstrength",
-      "community": 64,
+      "community": 69,
       "norm_label": "validatepasswordstrength()"
     },
     {
@@ -3996,7 +4095,7 @@
       "source_file": "backend/src/validators/adminAuth.validator.js",
       "source_location": "L1",
       "id": "backend_src_validators_adminauth_validator_js",
-      "community": 64,
+      "community": 69,
       "norm_label": "adminauth.validator.js"
     },
     {
@@ -4005,7 +4104,7 @@
       "source_file": "backend/src/validators/adminAuth.validator.js",
       "source_location": "L1",
       "id": "validators_adminauth_validator_validatepasswordstrength",
-      "community": 64,
+      "community": 69,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -4041,7 +4140,7 @@
       "source_file": "backend/src/validators/adminAuth.validator.js",
       "source_location": "L67",
       "id": "validators_adminauth_validator_validateresetpasswordinput",
-      "community": 64,
+      "community": 69,
       "norm_label": "validateresetpasswordinput()"
     },
     {
@@ -4261,10 +4360,19 @@
       "norm_label": "list_status_filters"
     },
     {
+      "label": "VALID_PERMISSION_CATEGORIES",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roles.validator.js",
+      "source_location": "L7",
+      "id": "validators_roles_validator_valid_permission_categories",
+      "community": 19,
+      "norm_label": "valid_permission_categories"
+    },
+    {
       "label": "validateId()",
       "file_type": "code",
       "source_file": "backend/src/validators/roles.validator.js",
-      "source_location": "L12",
+      "source_location": "L22",
       "id": "validators_roles_validator_validateid",
       "community": 19,
       "norm_label": "validateid()"
@@ -4273,7 +4381,7 @@
       "label": "validateListRolesQuery()",
       "file_type": "code",
       "source_file": "backend/src/validators/roles.validator.js",
-      "source_location": "L19",
+      "source_location": "L29",
       "id": "validators_roles_validator_validatelistrolesquery",
       "community": 19,
       "norm_label": "validatelistrolesquery()"
@@ -4282,7 +4390,7 @@
       "label": "validateCreateRole()",
       "file_type": "code",
       "source_file": "backend/src/validators/roles.validator.js",
-      "source_location": "L37",
+      "source_location": "L47",
       "id": "validators_roles_validator_validatecreaterole",
       "community": 19,
       "norm_label": "validatecreaterole()"
@@ -4291,7 +4399,7 @@
       "label": "validateUpdateRole()",
       "file_type": "code",
       "source_file": "backend/src/validators/roles.validator.js",
-      "source_location": "L57",
+      "source_location": "L67",
       "id": "validators_roles_validator_validateupdaterole",
       "community": 19,
       "norm_label": "validateupdaterole()"
@@ -4300,10 +4408,28 @@
       "label": "validateAssignPermissions()",
       "file_type": "code",
       "source_file": "backend/src/validators/roles.validator.js",
-      "source_location": "L88",
+      "source_location": "L98",
       "id": "validators_roles_validator_validateassignpermissions",
       "community": 19,
       "norm_label": "validateassignpermissions()"
+    },
+    {
+      "label": "validatePermissionMatrixQuery()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roles.validator.js",
+      "source_location": "L125",
+      "id": "validators_roles_validator_validatepermissionmatrixquery",
+      "community": 19,
+      "norm_label": "validatepermissionmatrixquery()"
+    },
+    {
+      "label": "validateMatrixToggle()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roles.validator.js",
+      "source_location": "L165",
+      "id": "validators_roles_validator_validatematrixtoggle",
+      "community": 19,
+      "norm_label": "validatematrixtoggle()"
     },
     {
       "label": "users.validator.js",
@@ -5382,7 +5508,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L1",
       "id": "frontend_src_supabase_ts",
-      "community": 55,
+      "community": 1,
       "norm_label": "supabase.ts"
     },
     {
@@ -5391,7 +5517,7 @@
       "source_file": "frontend/src/supabase.ts",
       "source_location": "L10",
       "id": "src_supabase_supabase",
-      "community": 55,
+      "community": 1,
       "norm_label": "supabase"
     },
     {
@@ -5400,7 +5526,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L1",
       "id": "frontend_src_api_adminauth_ts",
-      "community": 25,
+      "community": 55,
       "norm_label": "adminauth.ts"
     },
     {
@@ -5418,7 +5544,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L22",
       "id": "api_adminauth_getstoredtoken",
-      "community": 69,
+      "community": 22,
       "norm_label": "getstoredtoken()"
     },
     {
@@ -5445,7 +5571,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L36",
       "id": "api_adminauth_adminfetch",
-      "community": 25,
+      "community": 55,
       "norm_label": "adminfetch()"
     },
     {
@@ -5454,7 +5580,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L47",
       "id": "api_adminauth_bearer",
-      "community": 25,
+      "community": 55,
       "norm_label": "bearer()"
     },
     {
@@ -5463,7 +5589,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L53",
       "id": "api_adminauth_apilogin",
-      "community": 25,
+      "community": 55,
       "norm_label": "apilogin()"
     },
     {
@@ -5472,7 +5598,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L63",
       "id": "api_adminauth_apigetme",
-      "community": 25,
+      "community": 55,
       "norm_label": "apigetme()"
     },
     {
@@ -5481,7 +5607,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L67",
       "id": "api_adminauth_apilogout",
-      "community": 25,
+      "community": 55,
       "norm_label": "apilogout()"
     },
     {
@@ -5508,7 +5634,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L94",
       "id": "api_adminauth_apisendotp",
-      "community": 25,
+      "community": 55,
       "norm_label": "apisendotp()"
     },
     {
@@ -5517,7 +5643,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L102",
       "id": "api_adminauth_apiverifyotp",
-      "community": 25,
+      "community": 55,
       "norm_label": "apiverifyotp()"
     },
     {
@@ -5589,7 +5715,7 @@
       "source_file": "frontend/src/api/groups.ts",
       "source_location": "L7",
       "id": "api_groups_groupsfetch",
-      "community": 24,
+      "community": 22,
       "norm_label": "groupsfetch()"
     },
     {
@@ -5949,14 +6075,14 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L1",
       "id": "frontend_src_api_rolespage_ts",
-      "community": 66,
+      "community": 68,
       "norm_label": "rolespage.ts"
     },
     {
       "label": "RolesPageError",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "api_rolespage_rolespageerror",
       "community": 60,
       "norm_label": "rolespageerror"
@@ -5965,7 +6091,7 @@
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "api_rolespage_rolespageerror_constructor",
       "community": 60,
       "norm_label": ".constructor()"
@@ -5974,34 +6100,34 @@
       "label": "apiFetch()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L33",
+      "source_location": "L34",
       "id": "api_rolespage_apifetch",
-      "community": 66,
+      "community": 68,
       "norm_label": "apifetch()"
     },
     {
       "label": "getRolesPageStats()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L55",
+      "source_location": "L56",
       "id": "api_rolespage_getrolespagestats",
-      "community": 66,
+      "community": 68,
       "norm_label": "getrolespagestats()"
     },
     {
       "label": "getRolesPageList()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L60",
+      "source_location": "L61",
       "id": "api_rolespage_getrolespagelist",
-      "community": 66,
+      "community": 68,
       "norm_label": "getrolespagelist()"
     },
     {
       "label": "getRolePageDetails()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L77",
+      "source_location": "L78",
       "id": "api_rolespage_getrolepagedetails",
       "community": 46,
       "norm_label": "getrolepagedetails()"
@@ -6010,16 +6136,16 @@
       "label": "createRolePage()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L84",
+      "source_location": "L85",
       "id": "api_rolespage_createrolepage",
-      "community": 66,
+      "community": 68,
       "norm_label": "createrolepage()"
     },
     {
       "label": "updateRolePage()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L89",
+      "source_location": "L90",
       "id": "api_rolespage_updaterolepage",
       "community": 60,
       "norm_label": "updaterolepage()"
@@ -6028,46 +6154,64 @@
       "label": "deleteRolePage()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L101",
+      "source_location": "L102",
       "id": "api_rolespage_deleterolepage",
-      "community": 59,
+      "community": 68,
       "norm_label": "deleterolepage()"
     },
     {
       "label": "duplicateRolePage()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L105",
+      "source_location": "L106",
       "id": "api_rolespage_duplicaterolepage",
-      "community": 66,
+      "community": 46,
       "norm_label": "duplicaterolepage()"
     },
     {
       "label": "getRolePermissions()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L113",
+      "source_location": "L114",
       "id": "api_rolespage_getrolepermissions",
-      "community": 66,
+      "community": 60,
       "norm_label": "getrolepermissions()"
     },
     {
       "label": "assignRolePermissions()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L120",
+      "source_location": "L121",
       "id": "api_rolespage_assignrolepermissions",
-      "community": 66,
+      "community": 60,
       "norm_label": "assignrolepermissions()"
     },
     {
       "label": "getAllPermissions()",
       "file_type": "code",
       "source_file": "frontend/src/api/rolesPage.ts",
-      "source_location": "L128",
+      "source_location": "L129",
       "id": "api_rolespage_getallpermissions",
-      "community": 66,
+      "community": 68,
       "norm_label": "getallpermissions()"
+    },
+    {
+      "label": "getPermissionMatrix()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/rolesPage.ts",
+      "source_location": "L136",
+      "id": "api_rolespage_getpermissionmatrix",
+      "community": 54,
+      "norm_label": "getpermissionmatrix()"
+    },
+    {
+      "label": "togglePermission()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/rolesPage.ts",
+      "source_location": "L152",
+      "id": "api_rolespage_togglepermission",
+      "community": 71,
+      "norm_label": "togglepermission()"
     },
     {
       "label": "rolesPermissions.ts",
@@ -6210,7 +6354,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L48",
       "id": "api_users_apierror",
-      "community": 51,
+      "community": 67,
       "norm_label": "apierror"
     },
     {
@@ -6219,7 +6363,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L50",
       "id": "api_users_apierror_constructor",
-      "community": 51,
+      "community": 67,
       "norm_label": ".constructor()"
     },
     {
@@ -6228,7 +6372,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L59",
       "id": "api_users_getusers",
-      "community": 37,
+      "community": 24,
       "norm_label": "getusers()"
     },
     {
@@ -6318,7 +6462,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L151",
       "id": "api_users_getuserdetails",
-      "community": 69,
+      "community": 22,
       "norm_label": "getuserdetails()"
     },
     {
@@ -6363,7 +6507,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L254",
       "id": "api_users_getinvitations",
-      "community": 69,
+      "community": 22,
       "norm_label": "getinvitations()"
     },
     {
@@ -6417,7 +6561,7 @@
       "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_forgotpasswordform_tsx",
-      "community": 55,
+      "community": 0,
       "norm_label": "forgotpasswordform.tsx"
     },
     {
@@ -6426,7 +6570,7 @@
       "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
       "source_location": "L6",
       "id": "auth_forgotpasswordform_props",
-      "community": 55,
+      "community": 0,
       "norm_label": "props"
     },
     {
@@ -6435,7 +6579,7 @@
       "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
       "source_location": "L12",
       "id": "auth_forgotpasswordform_isvalidemail",
-      "community": 55,
+      "community": 0,
       "norm_label": "isvalidemail()"
     },
     {
@@ -6444,7 +6588,7 @@
       "source_file": "frontend/src/components/auth/ForgotPasswordForm.tsx",
       "source_location": "L16",
       "id": "auth_forgotpasswordform_forgotpasswordform",
-      "community": 55,
+      "community": 0,
       "norm_label": "forgotpasswordform()"
     },
     {
@@ -6453,7 +6597,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_loginform_tsx",
-      "community": 55,
+      "community": 45,
       "norm_label": "loginform.tsx"
     },
     {
@@ -6462,7 +6606,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L4",
       "id": "auth_loginform_props",
-      "community": 55,
+      "community": 45,
       "norm_label": "props"
     },
     {
@@ -6471,7 +6615,7 @@
       "source_file": "frontend/src/components/auth/LoginForm.tsx",
       "source_location": "L8",
       "id": "auth_loginform_loginform",
-      "community": 55,
+      "community": 45,
       "norm_label": "loginform()"
     },
     {
@@ -6633,7 +6777,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_signupform_tsx",
-      "community": 55,
+      "community": 1,
       "norm_label": "signupform.tsx"
     },
     {
@@ -6642,7 +6786,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L5",
       "id": "auth_signupform_props",
-      "community": 55,
+      "community": 1,
       "norm_label": "props"
     },
     {
@@ -6651,7 +6795,7 @@
       "source_file": "frontend/src/components/auth/SignupForm.tsx",
       "source_location": "L9",
       "id": "auth_signupform_signupform",
-      "community": 55,
+      "community": 1,
       "norm_label": "signupform()"
     },
     {
@@ -6741,7 +6885,7 @@
       "source_file": "frontend/src/components/groups/CreateGroupModal.tsx",
       "source_location": "L28",
       "id": "groups_creategroupmodal_creategroupmodal",
-      "community": 50,
+      "community": 63,
       "norm_label": "creategroupmodal()"
     },
     {
@@ -6804,7 +6948,7 @@
       "source_file": "frontend/src/components/groups/EditGroupModal.tsx",
       "source_location": "L30",
       "id": "groups_editgroupmodal_editgroupmodal",
-      "community": 50,
+      "community": 63,
       "norm_label": "editgroupmodal()"
     },
     {
@@ -7299,7 +7443,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_organization_organizationtab_tsx",
-      "community": 44,
+      "community": 51,
       "norm_label": "organizationtab.tsx"
     },
     {
@@ -7308,7 +7452,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L8",
       "id": "organization_organizationtab_props",
-      "community": 44,
+      "community": 51,
       "norm_label": "props"
     },
     {
@@ -7317,7 +7461,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L12",
       "id": "organization_organizationtab_subtab",
-      "community": 44,
+      "community": 51,
       "norm_label": "subtab"
     },
     {
@@ -7326,7 +7470,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L14",
       "id": "organization_organizationtab_sub_tabs",
-      "community": 44,
+      "community": 51,
       "norm_label": "sub_tabs"
     },
     {
@@ -7335,7 +7479,7 @@
       "source_file": "frontend/src/components/organization/OrganizationTab.tsx",
       "source_location": "L22",
       "id": "organization_organizationtab_organizationtab",
-      "community": 44,
+      "community": 51,
       "norm_label": "organizationtab()"
     },
     {
@@ -7695,7 +7839,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_assignuserstorolemodal_tsx",
-      "community": 69,
+      "community": 22,
       "norm_label": "assignuserstorolemodal.tsx"
     },
     {
@@ -7704,7 +7848,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L8",
       "id": "rolespermissionspage_assignuserstorolemodal_fetchallusers",
-      "community": 69,
+      "community": 22,
       "norm_label": "fetchallusers()"
     },
     {
@@ -7713,7 +7857,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L17",
       "id": "rolespermissionspage_assignuserstorolemodal_patchuserrole",
-      "community": 69,
+      "community": 22,
       "norm_label": "patchuserrole()"
     },
     {
@@ -7722,7 +7866,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L40",
       "id": "rolespermissionspage_assignuserstorolemodal_avatar",
-      "community": 69,
+      "community": 22,
       "norm_label": "avatar()"
     },
     {
@@ -7731,7 +7875,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L74",
       "id": "rolespermissionspage_assignuserstorolemodal_props",
-      "community": 69,
+      "community": 22,
       "norm_label": "props"
     },
     {
@@ -7740,7 +7884,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L84",
       "id": "rolespermissionspage_assignuserstorolemodal_assignuserstorolemodal",
-      "community": 69,
+      "community": 22,
       "norm_label": "assignuserstorolemodal()"
     },
     {
@@ -7814,6 +7958,186 @@
       "id": "rolespermissionspage_createrolemodal_createrolemodal",
       "community": 60,
       "norm_label": "createrolemodal()"
+    },
+    {
+      "label": "PermissionMatrixPreview.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "community": 54,
+      "norm_label": "permissionmatrixpreview.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L8",
+      "id": "rolespermissionspage_permissionmatrixpreview_props",
+      "community": 54,
+      "norm_label": "props"
+    },
+    {
+      "label": "PreviewSkeleton()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L14",
+      "id": "rolespermissionspage_permissionmatrixpreview_previewskeleton",
+      "community": 54,
+      "norm_label": "previewskeleton()"
+    },
+    {
+      "label": "CheckIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L31",
+      "id": "rolespermissionspage_permissionmatrixpreview_checkicon",
+      "community": 54,
+      "norm_label": "checkicon()"
+    },
+    {
+      "label": "MinusIcon()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L39",
+      "id": "rolespermissionspage_permissionmatrixpreview_minusicon",
+      "community": 54,
+      "norm_label": "minusicon()"
+    },
+    {
+      "label": "LEGEND",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L49",
+      "id": "rolespermissionspage_permissionmatrixpreview_legend",
+      "community": 54,
+      "norm_label": "legend"
+    },
+    {
+      "label": "PermissionMatrixPreview()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L58",
+      "id": "rolespermissionspage_permissionmatrixpreview_permissionmatrixpreview",
+      "community": 54,
+      "norm_label": "permissionmatrixpreview()"
+    },
+    {
+      "label": "PermissionMatrixTab.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "community": 71,
+      "norm_label": "permissionmatrixtab.tsx"
+    },
+    {
+      "label": "CatMeta",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L15",
+      "id": "rolespermissionspage_permissionmatrixtab_catmeta",
+      "community": 71,
+      "norm_label": "catmeta"
+    },
+    {
+      "label": "CATEGORY_META",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L17",
+      "id": "rolespermissionspage_permissionmatrixtab_category_meta",
+      "community": 71,
+      "norm_label": "category_meta"
+    },
+    {
+      "label": "CATEGORY_ORDER",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L27",
+      "id": "rolespermissionspage_permissionmatrixtab_category_order",
+      "community": 71,
+      "norm_label": "category_order"
+    },
+    {
+      "label": "AccessState",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L33",
+      "id": "rolespermissionspage_permissionmatrixtab_accessstate",
+      "community": 71,
+      "norm_label": "accessstate"
+    },
+    {
+      "label": "STATE_META",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L35",
+      "id": "rolespermissionspage_permissionmatrixtab_state_meta",
+      "community": 71,
+      "norm_label": "state_meta"
+    },
+    {
+      "label": "LEGEND",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L42",
+      "id": "rolespermissionspage_permissionmatrixtab_legend",
+      "community": 71,
+      "norm_label": "legend"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L49",
+      "id": "rolespermissionspage_permissionmatrixtab_props",
+      "community": 71,
+      "norm_label": "props"
+    },
+    {
+      "label": "IconCheck()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L56",
+      "id": "rolespermissionspage_permissionmatrixtab_iconcheck",
+      "community": 71,
+      "norm_label": "iconcheck()"
+    },
+    {
+      "label": "IconMinus()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L64",
+      "id": "rolespermissionspage_permissionmatrixtab_iconminus",
+      "community": 71,
+      "norm_label": "iconminus()"
+    },
+    {
+      "label": "IconSpinner()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L72",
+      "id": "rolespermissionspage_permissionmatrixtab_iconspinner",
+      "community": 71,
+      "norm_label": "iconspinner()"
+    },
+    {
+      "label": "MatrixSkeleton()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L86",
+      "id": "rolespermissionspage_permissionmatrixtab_matrixskeleton",
+      "community": 71,
+      "norm_label": "matrixskeleton()"
+    },
+    {
+      "label": "PermissionMatrixTab()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L123",
+      "id": "rolespermissionspage_permissionmatrixtab_permissionmatrixtab",
+      "community": 71,
+      "norm_label": "permissionmatrixtab()"
     },
     {
       "label": "RoleDetailsDrawer.tsx",
@@ -7920,7 +8244,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_ui_loadingspinner_tsx",
-      "community": 45,
+      "community": 25,
       "norm_label": "loadingspinner.tsx"
     },
     {
@@ -7929,7 +8253,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "ui_loadingspinner_loadingspinner",
-      "community": 45,
+      "community": 25,
       "norm_label": "loadingspinner()"
     },
     {
@@ -7992,7 +8316,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L48",
       "id": "users_addusermodal_addusermodal",
-      "community": 50,
+      "community": 63,
       "norm_label": "addusermodal()"
     },
     {
@@ -8001,7 +8325,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_archivedtab_tsx",
-      "community": 37,
+      "community": 76,
       "norm_label": "archivedtab.tsx"
     },
     {
@@ -8010,7 +8334,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L5",
       "id": "users_archivedtab_formatdate",
-      "community": 37,
+      "community": 76,
       "norm_label": "formatdate()"
     },
     {
@@ -8019,7 +8343,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L9",
       "id": "users_archivedtab_initials",
-      "community": 37,
+      "community": 76,
       "norm_label": "initials()"
     },
     {
@@ -8028,7 +8352,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L14",
       "id": "users_archivedtab_sk",
-      "community": 37,
+      "community": 76,
       "norm_label": "sk()"
     },
     {
@@ -8037,7 +8361,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L23",
       "id": "users_archivedtab_skeletonrow",
-      "community": 37,
+      "community": 76,
       "norm_label": "skeletonrow()"
     },
     {
@@ -8046,7 +8370,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L44",
       "id": "users_archivedtab_th",
-      "community": 37,
+      "community": 76,
       "norm_label": "th"
     },
     {
@@ -8055,7 +8379,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L49",
       "id": "users_archivedtab_td",
-      "community": 37,
+      "community": 76,
       "norm_label": "td"
     },
     {
@@ -8064,7 +8388,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L54",
       "id": "users_archivedtab_archivedtab",
-      "community": 37,
+      "community": 76,
       "norm_label": "archivedtab()"
     },
     {
@@ -8073,7 +8397,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_assignrolemodal_tsx",
-      "community": 32,
+      "community": 67,
       "norm_label": "assignrolemodal.tsx"
     },
     {
@@ -8082,7 +8406,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L8",
       "id": "users_assignrolemodal_props",
-      "community": 32,
+      "community": 67,
       "norm_label": "props"
     },
     {
@@ -8091,7 +8415,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L15",
       "id": "users_assignrolemodal_types",
-      "community": 32,
+      "community": 67,
       "norm_label": "types"
     },
     {
@@ -8100,7 +8424,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L21",
       "id": "users_assignrolemodal_input",
-      "community": 32,
+      "community": 67,
       "norm_label": "input"
     },
     {
@@ -8109,7 +8433,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L28",
       "id": "users_assignrolemodal_assignrolemodal",
-      "community": 32,
+      "community": 67,
       "norm_label": "assignrolemodal()"
     },
     {
@@ -8289,7 +8613,7 @@
       "source_file": "frontend/src/components/users/EditUserModal.tsx",
       "source_location": "L54",
       "id": "users_editusermodal_editusermodal",
-      "community": 50,
+      "community": 63,
       "norm_label": "editusermodal()"
     },
     {
@@ -8577,7 +8901,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_pendingverificationtab_tsx",
-      "community": 63,
+      "community": 27,
       "norm_label": "pendingverificationtab.tsx"
     },
     {
@@ -8586,7 +8910,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L5",
       "id": "users_pendingverificationtab_formatdate",
-      "community": 63,
+      "community": 27,
       "norm_label": "formatdate()"
     },
     {
@@ -8595,7 +8919,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L9",
       "id": "users_pendingverificationtab_initials",
-      "community": 63,
+      "community": 27,
       "norm_label": "initials()"
     },
     {
@@ -8604,7 +8928,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L13",
       "id": "users_pendingverificationtab_palettes",
-      "community": 63,
+      "community": 27,
       "norm_label": "palettes"
     },
     {
@@ -8613,7 +8937,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L18",
       "id": "users_pendingverificationtab_palette",
-      "community": 63,
+      "community": 27,
       "norm_label": "palette()"
     },
     {
@@ -8622,7 +8946,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L23",
       "id": "users_pendingverificationtab_sk",
-      "community": 63,
+      "community": 27,
       "norm_label": "sk()"
     },
     {
@@ -8631,7 +8955,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L32",
       "id": "users_pendingverificationtab_skeletonrow",
-      "community": 63,
+      "community": 27,
       "norm_label": "skeletonrow()"
     },
     {
@@ -8640,7 +8964,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L53",
       "id": "users_pendingverificationtab_th",
-      "community": 63,
+      "community": 27,
       "norm_label": "th"
     },
     {
@@ -8649,7 +8973,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L58",
       "id": "users_pendingverificationtab_td",
-      "community": 63,
+      "community": 27,
       "norm_label": "td"
     },
     {
@@ -8658,7 +8982,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L63",
       "id": "users_pendingverificationtab_pendingverificationtab",
-      "community": 63,
+      "community": 27,
       "norm_label": "pendingverificationtab()"
     },
     {
@@ -8667,7 +8991,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_sendinvitationmodal_tsx",
-      "community": 50,
+      "community": 63,
       "norm_label": "sendinvitationmodal.tsx"
     },
     {
@@ -8676,7 +9000,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L7",
       "id": "users_sendinvitationmodal_props",
-      "community": 50,
+      "community": 63,
       "norm_label": "props"
     },
     {
@@ -8685,7 +9009,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L13",
       "id": "users_sendinvitationmodal_expiry_options",
-      "community": 50,
+      "community": 63,
       "norm_label": "expiry_options"
     },
     {
@@ -8694,7 +9018,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L20",
       "id": "users_sendinvitationmodal_input",
-      "community": 50,
+      "community": 63,
       "norm_label": "input"
     },
     {
@@ -8703,7 +9027,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L27",
       "id": "users_sendinvitationmodal_label",
-      "community": 50,
+      "community": 63,
       "norm_label": "label"
     },
     {
@@ -8712,7 +9036,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L31",
       "id": "users_sendinvitationmodal_focusin",
-      "community": 50,
+      "community": 63,
       "norm_label": "focusin()"
     },
     {
@@ -8721,7 +9045,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L35",
       "id": "users_sendinvitationmodal_focusout",
-      "community": 50,
+      "community": 63,
       "norm_label": "focusout()"
     },
     {
@@ -8730,7 +9054,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L40",
       "id": "users_sendinvitationmodal_sendinvitationmodal",
-      "community": 50,
+      "community": 63,
       "norm_label": "sendinvitationmodal()"
     },
     {
@@ -8739,7 +9063,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_sendmessagemodal_tsx",
-      "community": 67,
+      "community": 37,
       "norm_label": "sendmessagemodal.tsx"
     },
     {
@@ -8748,7 +9072,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L7",
       "id": "users_sendmessagemodal_message_type_options",
-      "community": 67,
+      "community": 37,
       "norm_label": "message_type_options"
     },
     {
@@ -8757,7 +9081,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L15",
       "id": "users_sendmessagemodal_priority_options",
-      "community": 67,
+      "community": 37,
       "norm_label": "priority_options"
     },
     {
@@ -8766,7 +9090,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L21",
       "id": "users_sendmessagemodal_input",
-      "community": 67,
+      "community": 37,
       "norm_label": "input"
     },
     {
@@ -8775,7 +9099,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L28",
       "id": "users_sendmessagemodal_label",
-      "community": 67,
+      "community": 37,
       "norm_label": "label"
     },
     {
@@ -8784,7 +9108,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L32",
       "id": "users_sendmessagemodal_focusin",
-      "community": 67,
+      "community": 37,
       "norm_label": "focusin()"
     },
     {
@@ -8793,7 +9117,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L36",
       "id": "users_sendmessagemodal_focusout",
-      "community": 67,
+      "community": 37,
       "norm_label": "focusout()"
     },
     {
@@ -8802,7 +9126,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L41",
       "id": "users_sendmessagemodal_props",
-      "community": 67,
+      "community": 37,
       "norm_label": "props"
     },
     {
@@ -8811,7 +9135,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L49",
       "id": "users_sendmessagemodal_sendmessagemodal",
-      "community": 67,
+      "community": 37,
       "norm_label": "sendmessagemodal()"
     },
     {
@@ -8820,7 +9144,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_suspendedtab_tsx",
-      "community": 1,
+      "community": 73,
       "norm_label": "suspendedtab.tsx"
     },
     {
@@ -8829,7 +9153,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L5",
       "id": "users_suspendedtab_formatdate",
-      "community": 1,
+      "community": 73,
       "norm_label": "formatdate()"
     },
     {
@@ -8838,7 +9162,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L9",
       "id": "users_suspendedtab_initials",
-      "community": 1,
+      "community": 73,
       "norm_label": "initials()"
     },
     {
@@ -8847,7 +9171,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L13",
       "id": "users_suspendedtab_palettes",
-      "community": 1,
+      "community": 73,
       "norm_label": "palettes"
     },
     {
@@ -8856,7 +9180,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L18",
       "id": "users_suspendedtab_palette",
-      "community": 1,
+      "community": 73,
       "norm_label": "palette()"
     },
     {
@@ -8865,7 +9189,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L23",
       "id": "users_suspendedtab_sk",
-      "community": 1,
+      "community": 73,
       "norm_label": "sk()"
     },
     {
@@ -8874,7 +9198,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L32",
       "id": "users_suspendedtab_skeletonrow",
-      "community": 1,
+      "community": 73,
       "norm_label": "skeletonrow()"
     },
     {
@@ -8883,7 +9207,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L56",
       "id": "users_suspendedtab_th",
-      "community": 1,
+      "community": 73,
       "norm_label": "th"
     },
     {
@@ -8892,7 +9216,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L61",
       "id": "users_suspendedtab_td",
-      "community": 1,
+      "community": 73,
       "norm_label": "td"
     },
     {
@@ -8901,7 +9225,7 @@
       "source_file": "frontend/src/components/users/SuspendedTab.tsx",
       "source_location": "L66",
       "id": "users_suspendedtab_suspendedtab",
-      "community": 1,
+      "community": 73,
       "norm_label": "suspendedtab()"
     },
     {
@@ -8910,7 +9234,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_suspenduserdialog_tsx",
-      "community": 27,
+      "community": 67,
       "norm_label": "suspenduserdialog.tsx"
     },
     {
@@ -8919,7 +9243,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L6",
       "id": "users_suspenduserdialog_props",
-      "community": 27,
+      "community": 67,
       "norm_label": "props"
     },
     {
@@ -8928,7 +9252,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L14",
       "id": "users_suspenduserdialog_ta",
-      "community": 27,
+      "community": 67,
       "norm_label": "ta"
     },
     {
@@ -8937,7 +9261,7 @@
       "source_file": "frontend/src/components/users/SuspendUserDialog.tsx",
       "source_location": "L22",
       "id": "users_suspenduserdialog_suspenduserdialog",
-      "community": 27,
+      "community": 67,
       "norm_label": "suspenduserdialog()"
     },
     {
@@ -8991,7 +9315,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L34",
       "id": "users_toast_toastcontainer",
-      "community": 67,
+      "community": 59,
       "norm_label": "toastcontainer()"
     },
     {
@@ -9711,7 +10035,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_charts_usersbydepartmentchart_tsx",
-      "community": 70,
+      "community": 32,
       "norm_label": "usersbydepartmentchart.tsx"
     },
     {
@@ -9720,7 +10044,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L4",
       "id": "charts_usersbydepartmentchart_props",
-      "community": 70,
+      "community": 32,
       "norm_label": "props"
     },
     {
@@ -9729,7 +10053,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L9",
       "id": "charts_usersbydepartmentchart_bar_colors",
-      "community": 70,
+      "community": 32,
       "norm_label": "bar_colors"
     },
     {
@@ -9738,7 +10062,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L14",
       "id": "charts_usersbydepartmentchart_skeleton",
-      "community": 70,
+      "community": 32,
       "norm_label": "skeleton()"
     },
     {
@@ -9747,7 +10071,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L27",
       "id": "charts_usersbydepartmentchart_truncate",
-      "community": 70,
+      "community": 32,
       "norm_label": "truncate()"
     },
     {
@@ -9756,7 +10080,7 @@
       "source_file": "frontend/src/components/users/charts/UsersByDepartmentChart.tsx",
       "source_location": "L31",
       "id": "charts_usersbydepartmentchart_usersbydepartmentchart",
-      "community": 70,
+      "community": 32,
       "norm_label": "usersbydepartmentchart()"
     },
     {
@@ -9927,7 +10251,7 @@
       "source_file": "frontend/src/hooks/useOrgOptions.ts",
       "source_location": "L5",
       "id": "hooks_useorgoptions_useorgoptions",
-      "community": 50,
+      "community": 63,
       "norm_label": "useorgoptions()"
     },
     {
@@ -9981,7 +10305,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L23",
       "id": "hooks_useroles_useroles",
-      "community": 50,
+      "community": 63,
       "norm_label": "useroles()"
     },
     {
@@ -10539,7 +10863,7 @@
       "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_forgotpasswordpage_tsx",
-      "community": 28,
+      "community": 0,
       "norm_label": "forgotpasswordpage.tsx"
     },
     {
@@ -10548,7 +10872,7 @@
       "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
       "source_location": "L7",
       "id": "pages_forgotpasswordpage_iconarrowleft",
-      "community": 28,
+      "community": 0,
       "norm_label": "iconarrowleft()"
     },
     {
@@ -10557,7 +10881,7 @@
       "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
       "source_location": "L16",
       "id": "pages_forgotpasswordpage_iconmail",
-      "community": 28,
+      "community": 0,
       "norm_label": "iconmail()"
     },
     {
@@ -10566,7 +10890,7 @@
       "source_file": "frontend/src/pages/ForgotPasswordPage.tsx",
       "source_location": "L27",
       "id": "pages_forgotpasswordpage_forgotpasswordpage",
-      "community": 28,
+      "community": 0,
       "norm_label": "forgotpasswordpage()"
     },
     {
@@ -10611,7 +10935,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_resetpasswordpage_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "resetpasswordpage.tsx"
     },
     {
@@ -10620,7 +10944,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L7",
       "id": "pages_resetpasswordpage_iconshieldcheck",
-      "community": 0,
+      "community": 1,
       "norm_label": "iconshieldcheck()"
     },
     {
@@ -10629,7 +10953,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L18",
       "id": "pages_resetpasswordpage_authshell",
-      "community": 0,
+      "community": 1,
       "norm_label": "authshell()"
     },
     {
@@ -10638,7 +10962,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L34",
       "id": "pages_resetpasswordpage_resetpasswordpage",
-      "community": 0,
+      "community": 1,
       "norm_label": "resetpasswordpage()"
     },
     {
@@ -10681,7 +11005,7 @@
       "label": "TABS",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L18",
+      "source_location": "L20",
       "id": "pages_rolespermissionsstandalonepage_tabs",
       "community": 59,
       "norm_label": "tabs"
@@ -10690,7 +11014,7 @@
       "label": "STATUS_OPTIONS",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L28",
+      "source_location": "L34",
       "id": "pages_rolespermissionsstandalonepage_status_options",
       "community": 59,
       "norm_label": "status_options"
@@ -10699,16 +11023,52 @@
       "label": "STATUS_BADGE",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L34",
+      "source_location": "L40",
       "id": "pages_rolespermissionsstandalonepage_status_badge",
       "community": 59,
       "norm_label": "status_badge"
     },
     {
+      "label": "LevelMeta",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L47",
+      "id": "pages_rolespermissionsstandalonepage_levelmeta",
+      "community": 59,
+      "norm_label": "levelmeta"
+    },
+    {
+      "label": "getLevelMeta()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L49",
+      "id": "pages_rolespermissionsstandalonepage_getlevelmeta",
+      "community": 59,
+      "norm_label": "getlevelmeta()"
+    },
+    {
+      "label": "getScopeLabel()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L58",
+      "id": "pages_rolespermissionsstandalonepage_getscopelabel",
+      "community": 59,
+      "norm_label": "getscopelabel()"
+    },
+    {
+      "label": "KpiDef",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L69",
+      "id": "pages_rolespermissionsstandalonepage_kpidef",
+      "community": 59,
+      "norm_label": "kpidef"
+    },
+    {
       "label": "KpiCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L41",
+      "source_location": "L78",
       "id": "pages_rolespermissionsstandalonepage_kpicard",
       "community": 59,
       "norm_label": "kpicard()"
@@ -10717,7 +11077,7 @@
       "label": "SkeletonRow()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L69",
+      "source_location": "L117",
       "id": "pages_rolespermissionsstandalonepage_skeletonrow",
       "community": 59,
       "norm_label": "skeletonrow()"
@@ -10726,16 +11086,25 @@
       "label": "ComingSoon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L81",
+      "source_location": "L131",
       "id": "pages_rolespermissionsstandalonepage_comingsoon",
       "community": 59,
       "norm_label": "comingsoon()"
     },
     {
+      "label": "InfoCard()",
+      "file_type": "code",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L145",
+      "id": "pages_rolespermissionsstandalonepage_infocard",
+      "community": 59,
+      "norm_label": "infocard()"
+    },
+    {
       "label": "RolesPermissionsStandalonePage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L99",
+      "source_location": "L169",
       "id": "pages_rolespermissionsstandalonepage_rolespermissionsstandalonepage",
       "community": 59,
       "norm_label": "rolespermissionsstandalonepage()"
@@ -10881,7 +11250,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_usermanagementpage_tsx",
-      "community": 37,
+      "community": 50,
       "norm_label": "usermanagementpage.tsx"
     },
     {
@@ -10890,7 +11259,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L31",
       "id": "pages_usermanagementpage_tabs",
-      "community": 37,
+      "community": 50,
       "norm_label": "tabs"
     },
     {
@@ -10899,7 +11268,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L43",
       "id": "pages_usermanagementpage_tabkey",
-      "community": 37,
+      "community": 50,
       "norm_label": "tabkey"
     },
     {
@@ -10908,7 +11277,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L45",
       "id": "pages_usermanagementpage_limit_options",
-      "community": 37,
+      "community": 50,
       "norm_label": "limit_options"
     },
     {
@@ -10917,7 +11286,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L49",
       "id": "pages_usermanagementpage_pagerange",
-      "community": 50,
+      "community": 63,
       "norm_label": "pagerange()"
     },
     {
@@ -10926,7 +11295,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L60",
       "id": "pages_usermanagementpage_comingsoon",
-      "community": 37,
+      "community": 50,
       "norm_label": "comingsoon()"
     },
     {
@@ -10935,7 +11304,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L74",
       "id": "pages_usermanagementpage_input_base",
-      "community": 37,
+      "community": 50,
       "norm_label": "input_base"
     },
     {
@@ -10944,7 +11313,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L80",
       "id": "pages_usermanagementpage_focusin",
-      "community": 37,
+      "community": 50,
       "norm_label": "focusin()"
     },
     {
@@ -10953,7 +11322,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L84",
       "id": "pages_usermanagementpage_focusout",
-      "community": 37,
+      "community": 50,
       "norm_label": "focusout()"
     },
     {
@@ -10962,7 +11331,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L91",
       "id": "pages_usermanagementpage_usermanagementpage",
-      "community": 50,
+      "community": 63,
       "norm_label": "usermanagementpage()"
     },
     {
@@ -10989,7 +11358,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L1",
       "id": "frontend_src_routes_protectedroute_tsx",
-      "community": 45,
+      "community": 25,
       "norm_label": "protectedroute.tsx"
     },
     {
@@ -10998,7 +11367,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L6",
       "id": "routes_protectedroute_props",
-      "community": 45,
+      "community": 25,
       "norm_label": "props"
     },
     {
@@ -11007,7 +11376,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L12",
       "id": "routes_protectedroute_protectedroute",
-      "community": 45,
+      "community": 25,
       "norm_label": "protectedroute()"
     },
     {
@@ -11016,7 +11385,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "frontend_src_types_auth_ts",
-      "community": 45,
+      "community": 25,
       "norm_label": "auth.ts"
     },
     {
@@ -11025,7 +11394,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "types_auth_profile",
-      "community": 45,
+      "community": 25,
       "norm_label": "profile"
     },
     {
@@ -11034,7 +11403,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L8",
       "id": "types_auth_userrole",
-      "community": 45,
+      "community": 25,
       "norm_label": "userrole"
     },
     {
@@ -11655,7 +12024,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L1",
       "id": "frontend_src_types_organization_ts",
-      "community": 42,
+      "community": 44,
       "norm_label": "organization.ts"
     },
     {
@@ -11691,7 +12060,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L6",
       "id": "types_organization_teamstatus",
-      "community": 42,
+      "community": 44,
       "norm_label": "teamstatus"
     },
     {
@@ -11727,7 +12096,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L34",
       "id": "types_organization_createdepartmentbody",
-      "community": 42,
+      "community": 44,
       "norm_label": "createdepartmentbody"
     },
     {
@@ -11799,7 +12168,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L132",
       "id": "types_organization_orgchartedge",
-      "community": 42,
+      "community": 44,
       "norm_label": "orgchartedge"
     },
     {
@@ -11826,7 +12195,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L165",
       "id": "types_organization_orgpagination",
-      "community": 42,
+      "community": 44,
       "norm_label": "orgpagination"
     },
     {
@@ -11835,7 +12204,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L172",
       "id": "types_organization_departmentsresponse",
-      "community": 42,
+      "community": 44,
       "norm_label": "departmentsresponse"
     },
     {
@@ -11844,7 +12213,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L173",
       "id": "types_organization_branchesresponse",
-      "community": 42,
+      "community": 44,
       "norm_label": "branchesresponse"
     },
     {
@@ -11853,7 +12222,7 @@
       "source_file": "frontend/src/types/organization.ts",
       "source_location": "L174",
       "id": "types_organization_teamsresponse",
-      "community": 42,
+      "community": 44,
       "norm_label": "teamsresponse"
     },
     {
@@ -11871,7 +12240,7 @@
       "source_file": "frontend/src/types/passwordRecovery.ts",
       "source_location": "L7",
       "id": "types_passwordrecovery_forgotpasswordstep",
-      "community": 55,
+      "community": 0,
       "norm_label": "forgotpasswordstep"
     },
     {
@@ -11880,7 +12249,7 @@
       "source_file": "frontend/src/types/passwordRecovery.ts",
       "source_location": "L14",
       "id": "types_passwordrecovery_resetpasswordstep",
-      "community": 0,
+      "community": 1,
       "norm_label": "resetpasswordstep"
     },
     {
@@ -11952,7 +12321,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L4",
       "id": "types_rolespage_rolestatus",
-      "community": 68,
+      "community": 46,
       "norm_label": "rolestatus"
     },
     {
@@ -11961,7 +12330,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L6",
       "id": "types_rolespage_rolepage",
-      "community": 66,
+      "community": 68,
       "norm_label": "rolepage"
     },
     {
@@ -11970,7 +12339,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L18",
       "id": "types_rolespage_permission",
-      "community": 46,
+      "community": 68,
       "norm_label": "permission"
     },
     {
@@ -11988,7 +12357,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L31",
       "id": "types_rolespage_rolepagestats",
-      "community": 66,
+      "community": 68,
       "norm_label": "rolepagestats"
     },
     {
@@ -11997,7 +12366,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L39",
       "id": "types_rolespage_rolespagepagination",
-      "community": 66,
+      "community": 68,
       "norm_label": "rolespagepagination"
     },
     {
@@ -12017,6 +12386,51 @@
       "id": "types_rolespage_createrolepagepayload",
       "community": 68,
       "norm_label": "createrolepagepayload"
+    },
+    {
+      "label": "PermissionCategory",
+      "file_type": "code",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L59",
+      "id": "types_rolespage_permissioncategory",
+      "community": 71,
+      "norm_label": "permissioncategory"
+    },
+    {
+      "label": "MatrixRole",
+      "file_type": "code",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L63",
+      "id": "types_rolespage_matrixrole",
+      "community": 68,
+      "norm_label": "matrixrole"
+    },
+    {
+      "label": "MatrixPermission",
+      "file_type": "code",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L72",
+      "id": "types_rolespage_matrixpermission",
+      "community": 71,
+      "norm_label": "matrixpermission"
+    },
+    {
+      "label": "MatrixAssignment",
+      "file_type": "code",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L79",
+      "id": "types_rolespage_matrixassignment",
+      "community": 68,
+      "norm_label": "matrixassignment"
+    },
+    {
+      "label": "PermissionMatrixData",
+      "file_type": "code",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L84",
+      "id": "types_rolespage_permissionmatrixdata",
+      "community": 54,
+      "norm_label": "permissionmatrixdata"
     },
     {
       "label": "rolesPermissions.ts",
@@ -12105,7 +12519,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L44",
       "id": "types_users_usersresponse",
-      "community": 37,
+      "community": 50,
       "norm_label": "usersresponse"
     },
     {
@@ -12114,7 +12528,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L52",
       "id": "types_users_roletype",
-      "community": 32,
+      "community": 67,
       "norm_label": "roletype"
     },
     {
@@ -12213,7 +12627,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L140",
       "id": "types_users_suspenduserrequest",
-      "community": 27,
+      "community": 67,
       "norm_label": "suspenduserrequest"
     },
     {
@@ -12222,7 +12636,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L145",
       "id": "types_users_assignrolerequest",
-      "community": 32,
+      "community": 67,
       "norm_label": "assignrolerequest"
     },
     {
@@ -12249,7 +12663,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L159",
       "id": "types_users_departmentanalyticsitem",
-      "community": 70,
+      "community": 32,
       "norm_label": "departmentanalyticsitem"
     },
     {
@@ -12402,7 +12816,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "frontend_src_utils_autherrors_ts",
-      "community": 55,
+      "community": 0,
       "norm_label": "autherrors.ts"
     },
     {
@@ -12411,7 +12825,7 @@
       "source_file": "frontend/src/utils/authErrors.ts",
       "source_location": "L1",
       "id": "utils_autherrors_getautherrormessage",
-      "community": 55,
+      "community": 0,
       "norm_label": "getautherrormessage()"
     },
     {
@@ -12476,6 +12890,15 @@
       "id": "frontend_readme_codeblock_2",
       "community": 11,
       "norm_label": "code:js (// eslint.config.js)"
+    },
+    {
+      "label": "{\r\n  validateId,\r\n  validateListRolesQuery,\r\n  validateCreateRole,\r\n  validateUpdateRole,\r\n  validateAssignPermissions,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L2",
+      "community": 19,
+      "norm_label": "{\r\n  validateid,\r\n  validatelistrolesquery,\r\n  validatecreaterole,\r\n  validateupdaterole,\r\n  validateassignpermissions,\r\n}",
+      "id": "controllers_roles_controller_validateid_validatelistrolesquery_validatecreaterole_validateupdaterole_validateassignpermissions"
     },
     {
       "label": "{\r\n  listRoles, getRole, createRole, updateRole, deleteRole,\r\n  getRolePermissions, assignPermissionsToRole,\r\n}",
@@ -12599,7 +13022,7 @@
       "file_type": "code",
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L4",
-      "community": 68,
+      "community": 46,
       "norm_label": "rolelevel",
       "id": "types_rolespage_rolelevel"
     },
@@ -12608,7 +13031,7 @@
       "file_type": "code",
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L5",
-      "community": 68,
+      "community": 60,
       "norm_label": "accessscope",
       "id": "types_rolespage_accessscope"
     },
@@ -12680,7 +13103,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L12",
-      "community": 50,
+      "community": 63,
       "norm_label": "role_options",
       "id": "users_sendinvitationmodal_role_options"
     },
@@ -12707,7 +13130,7 @@
       "file_type": "code",
       "source_file": "backend/src/services/dashboard.service.js",
       "source_location": "L2",
-      "community": 33,
+      "community": 56,
       "norm_label": "{ getusersanalytics }",
       "id": "services_dashboard_service_getusersanalytics"
     },
@@ -12752,7 +13175,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L13",
-      "community": 32,
+      "community": 67,
       "norm_label": "roles",
       "id": "users_assignrolemodal_roles"
     },
@@ -13229,7 +13652,7 @@
       "file_type": "code",
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L19",
-      "community": 0,
+      "community": 1,
       "norm_label": "iconalerttriangle()",
       "id": "pages_resetpasswordpage_iconalerttriangle"
     },
@@ -13807,6 +14230,27 @@
       "confidence_score": 1.0,
       "source": "backend_server_js",
       "target": "backend_server_permissionsroutes"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_src_routes_permissionmatrix_routes_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_server_permissionmatrixroutes"
     },
     {
       "relation": "imports_from",
@@ -17244,6 +17688,28 @@
       "target": "validators_roles_validator_validateassignpermissions"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roles_controller_js",
+      "target": "validators_roles_validator_validatepermissionmatrixquery"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roles_controller_js",
+      "target": "validators_roles_validator_validatematrixtoggle"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/controllers/roles.controller.js",
@@ -17251,7 +17717,7 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_controllers_roles_controller_js",
-      "target": "controllers_roles_controller_validateid_validatelistrolesquery_validatecreaterole_validateupdaterole_validateassignpermissions"
+      "target": "controllers_roles_controller_validateid_validatelistrolesquery_validatecreaterole_validateupdaterole_validateassignpermissions_validatepermissionmatrixquery_validatematrixtoggle"
     },
     {
       "relation": "contains",
@@ -17377,6 +17843,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L158",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roles_controller_js",
+      "target": "controllers_roles_controller_getpermissionmatrix"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L167",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roles_controller_js",
+      "target": "controllers_roles_controller_togglepermissionmatrixcell"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
       "source_location": "L102",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -17427,6 +17913,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "backend_src_controllers_roles_controller_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L4",
       "weight": 1.0,
@@ -17444,6 +17941,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_roles_routes_js",
       "target": "backend_src_controllers_roles_controller_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roles_controller_js",
+      "target": "controllers_roles_controller_validateid_validatelistrolesquery_validatecreaterole_validateupdaterole_validateassignpermissions"
     },
     {
       "relation": "calls",
@@ -17516,6 +18023,28 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L161",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roles_controller_getpermissionmatrix",
+      "target": "controllers_roles_controller_badrequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L170",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roles_controller_togglepermissionmatrixcell",
+      "target": "controllers_roles_controller_badrequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
       "source_location": "L121",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -17575,6 +18104,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "controllers_roles_controller_assignpermissionstorole",
+      "target": "controllers_roles_controller_notfound"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L178",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roles_controller_togglepermissionmatrixcell",
       "target": "controllers_roles_controller_notfound"
     },
     {
@@ -17707,6 +18247,28 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "controllers_roles_controller_assignpermissionstorole",
+      "target": "controllers_roles_controller_servererror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roles_controller_getpermissionmatrix",
+      "target": "controllers_roles_controller_servererror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L180",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roles_controller_togglepermissionmatrixcell",
       "target": "controllers_roles_controller_servererror"
     },
     {
@@ -17906,6 +18468,50 @@
       "weight": 1.0,
       "source": "controllers_roles_controller_assignpermissionstorole",
       "target": "validators_roles_validator_validateassignpermissions"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "controllers_roles_controller_getpermissionmatrix"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L160",
+      "weight": 1.0,
+      "source": "controllers_roles_controller_getpermissionmatrix",
+      "target": "validators_roles_validator_validatepermissionmatrixquery"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "controllers_roles_controller_togglepermissionmatrixcell"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/roles.controller.js",
+      "source_location": "L169",
+      "weight": 1.0,
+      "source": "controllers_roles_controller_togglepermissionmatrixcell",
+      "target": "validators_roles_validator_validatematrixtoggle"
     },
     {
       "relation": "imports",
@@ -18881,6 +19487,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "backend_src_middlewares_auth_middleware_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -19035,6 +19652,17 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "middlewares_auth_middleware_requireadminauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -19173,6 +19801,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "backend_src_middlewares_ratelimit_middleware_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L3",
       "weight": 1.0,
@@ -19266,6 +19905,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_routes_organization_routes_js",
+      "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
       "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter"
     },
     {
@@ -19734,6 +20384,56 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_organization_routes_js",
       "target": "routes_organization_routes_router"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "routes_permissionmatrix_routes_express"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "routes_permissionmatrix_routes_requireadminauth"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "routes_permissionmatrix_routes_adminuseractionratelimiter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "routes_permissionmatrix_routes_getpermissionmatrix_togglepermissionmatrixcell"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/permissionMatrix.routes.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_permissionmatrix_routes_js",
+      "target": "routes_permissionmatrix_routes_router"
     },
     {
       "relation": "contains",
@@ -21923,6 +22623,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/services/roles.service.js",
+      "source_location": "L222",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roles_service_js",
+      "target": "services_roles_service_getpermissionmatrix"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roles.service.js",
+      "source_location": "L287",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roles_service_js",
+      "target": "services_roles_service_togglepermissionmatrixcell"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roles.service.js",
       "source_location": "L125",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -22031,6 +22751,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "services_roles_service_listroles",
+      "target": "services_roles_service_getusercountbyenum"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roles.service.js",
+      "source_location": "L248",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roles_service_getpermissionmatrix",
       "target": "services_roles_service_getusercountbyenum"
     },
     {
@@ -23683,6 +24414,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/validators/roles.validator.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_validators_roles_validator_js",
+      "target": "validators_roles_validator_valid_permission_categories"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roles.validator.js",
       "source_location": "L12",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -23728,6 +24469,37 @@
       "confidence_score": 1.0,
       "source": "backend_src_validators_roles_validator_js",
       "target": "validators_roles_validator_validateassignpermissions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roles.validator.js",
+      "source_location": "L125",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_validators_roles_validator_js",
+      "target": "validators_roles_validator_validatepermissionmatrixquery"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roles.validator.js",
+      "source_location": "L165",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_validators_roles_validator_js",
+      "target": "validators_roles_validator_validatematrixtoggle"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roles.validator.js",
+      "source_location": "L168",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "validators_roles_validator_validatematrixtoggle",
+      "target": "validators_roles_validator_validateid"
     },
     {
       "relation": "contains",
@@ -27895,6 +28667,17 @@
       "target": "types_rolespage_permission"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/rolesPage.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_rolespage_ts",
+      "target": "types_rolespage_permissionmatrixdata"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/api/rolesPage.ts",
@@ -28015,6 +28798,26 @@
       "target": "api_rolespage_getallpermissions"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/rolesPage.ts",
+      "source_location": "L136",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_rolespage_ts",
+      "target": "api_rolespage_getpermissionmatrix"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/rolesPage.ts",
+      "source_location": "L152",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_api_rolespage_ts",
+      "target": "api_rolespage_togglepermission"
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -28023,6 +28826,28 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createrolemodal_tsx",
+      "target": "frontend_src_api_rolespage_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "frontend_src_api_rolespage_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
       "target": "frontend_src_api_rolespage_ts"
     },
     {
@@ -28221,6 +29046,39 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createrolemodal_tsx",
       "target": "api_rolespage_getallpermissions"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "api_rolespage_getpermissionmatrix"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "api_rolespage_getpermissionmatrix"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "api_rolespage_togglepermission"
     },
     {
       "relation": "contains",
@@ -32640,6 +33498,296 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createrolemodal_tsx",
       "target": "rolespermissionspage_createrolemodal_initpermissions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "frontend_src_types_rolespage_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "types_rolespage_permissionmatrixdata"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "rolespermissionspage_permissionmatrixpreview_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "rolespermissionspage_permissionmatrixpreview_previewskeleton"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "rolespermissionspage_permissionmatrixpreview_checkicon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "rolespermissionspage_permissionmatrixpreview_minusicon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "rolespermissionspage_permissionmatrixpreview_legend"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
+      "target": "rolespermissionspage_permissionmatrixpreview_permissionmatrixpreview"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "frontend_src_components_users_toast_tsx"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "users_toast_toasttype"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "frontend_src_types_rolespage_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "types_rolespage_permissionmatrixdata"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "types_rolespage_permissioncategory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "types_rolespage_matrixpermission"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_catmeta"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_category_meta"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_category_order"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_accessstate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_state_meta"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_legend"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_props"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_iconcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_iconminus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L71",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_iconspinner"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_matrixskeleton"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixTab.tsx",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx",
+      "target": "rolespermissionspage_permissionmatrixtab_permissionmatrixtab"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "frontend_src_components_rolespermissionspage_permissionmatrixtab_tsx"
     },
     {
       "relation": "imports_from",
@@ -38172,6 +39320,46 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "pages_rolespermissionsstandalonepage_levelmeta"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "pages_rolespermissionsstandalonepage_getlevelmeta"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "pages_rolespermissionsstandalonepage_getscopelabel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "pages_rolespermissionsstandalonepage_kpidef"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
       "source_location": "L79",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -38197,6 +39385,16 @@
       "confidence_score": 1.0,
       "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
       "target": "pages_rolespermissionsstandalonepage_comingsoon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L145",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "pages_rolespermissionsstandalonepage_infocard"
     },
     {
       "relation": "contains",
@@ -39747,6 +40945,56 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_rolespage_ts",
+      "target": "types_rolespage_permissioncategory"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_rolespage_ts",
+      "target": "types_rolespage_matrixrole"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_rolespage_ts",
+      "target": "types_rolespage_matrixpermission"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L79",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_rolespage_ts",
+      "target": "types_rolespage_matrixassignment"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/rolesPage.ts",
+      "source_location": "L84",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_types_rolespage_ts",
+      "target": "types_rolespage_permissionmatrixdata"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L4",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -40275,5 +41523,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4446a334ebb4d48e8bddd555099f33e77d167ebb"
+  "built_at_commit": "60008b0f035f9606e609161f47c3fdc3c6ae4416"
 }

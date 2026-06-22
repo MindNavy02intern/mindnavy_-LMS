@@ -159,7 +159,8 @@ interface Props {
 export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboard' }: Props) {
   const { user, profile, signOut, isDemoMode } = useAuth();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [open,             setOpen]             = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [qaOpen, setQaOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [qaToast, setQaToast] = useState<string | null>(null);
@@ -205,7 +206,14 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
   return (
     <>
       {/* ── Sidebar (dark) ── */}
-      <aside className={`mn-sidebar${open ? ' open' : ''}`}>
+      <aside
+        className={`mn-sidebar${open ? ' open' : ''}`}
+        style={{
+          width:      sidebarCollapsed ? 0      : undefined,
+          overflow:   sidebarCollapsed ? 'hidden': undefined,
+          transition: 'width 0.28s ease, transform 0.25s ease',
+        }}
+      >
         <div className="mn-sidebar-logo-wrap">
           <img src="/brand/logowhite.png" alt="MindNavy LMS" />
           <span className="mn-sidebar-tagline">Enterprise</span>
@@ -257,12 +265,27 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
       <div className={`mn-overlay${open ? ' open' : ''}`} onClick={() => setOpen(false)} />
 
       {/* ── Main (light) ── */}
-      <main className="mn-main mn-main-light">
+      <main
+        className="mn-main mn-main-light"
+        style={{
+          marginLeft: sidebarCollapsed ? 0       : undefined,
+          width:      sidebarCollapsed ? '100%'  : undefined,
+          transition: 'margin-left 0.28s ease, width 0.28s ease',
+        }}
+      >
 
         {/* ── Topbar ── */}
         <header className="mn-topbar">
           <div className="mn-topbar-left">
-            <button className="mn-hamburger" onClick={() => setOpen(!open)} aria-label="Toggle sidebar">
+            <button
+              className="mn-hamburger"
+              style={{ display: 'flex' }}
+              aria-label="Toggle sidebar"
+              onClick={() => {
+                if (window.innerWidth <= 768) setOpen(o => !o);
+                else setSidebarCollapsed(c => !c);
+              }}
+            >
               <IconMenu />
             </button>
 

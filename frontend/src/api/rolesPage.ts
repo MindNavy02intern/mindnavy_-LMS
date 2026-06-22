@@ -7,6 +7,7 @@ import type {
   RolesPagePagination,
   CreateRolePagePayload,
   Permission,
+  PermissionMatrixData,
 } from '../types/rolesPage';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
@@ -129,5 +130,33 @@ export async function getAllPermissions(): Promise<Permission[]> {
   const json = await apiFetch<{ success: boolean; data: Permission[]; pagination: unknown }>(
     '/permissions?limit=500',
   );
+  return json.data;
+}
+
+export async function getPermissionMatrix(params?: {
+  roleStatus?: 'ACTIVE' | 'INACTIVE';
+  category?: string;
+  search?: string;
+}): Promise<PermissionMatrixData> {
+  const qs = new URLSearchParams();
+  if (params?.roleStatus) qs.set('roleStatus', params.roleStatus);
+  if (params?.category)   qs.set('category',   params.category);
+  if (params?.search)     qs.set('search',      params.search);
+  const query = qs.toString();
+  const json = await apiFetch<{ success: boolean; data: PermissionMatrixData }>(
+    `/permission-matrix${query ? `?${query}` : ''}`,
+  );
+  return json.data;
+}
+
+export async function togglePermission(payload: {
+  roleId: string;
+  permissionId: string;
+  enabled: boolean;
+}): Promise<{ roleId: string; permissionId: string; enabled: boolean }> {
+  const json = await apiFetch<{
+    success: boolean;
+    data: { roleId: string; permissionId: string; enabled: boolean };
+  }>('/permission-matrix/toggle', 'POST', payload);
   return json.data;
 }

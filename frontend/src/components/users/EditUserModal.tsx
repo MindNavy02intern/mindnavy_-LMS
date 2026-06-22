@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { updateUser, ApiError } from '../../api/users';
+import { useEffect, useState } from 'react';
+import { updateUser, getUsers, ApiError } from '../../api/users';
 import type { UpdateUserRequest } from '../../types/users';
 import type { ToastType } from './Toast';
 import { ACCESS_LEVEL_OPTIONS } from '../../constants/userOptions';
 import useRoles from '../../hooks/useRoles';
 import useOrgOptions from '../../hooks/useOrgOptions';
+import { groupsAPI } from '../../api/groups';
 
 export interface EditInitialData {
   fullName:    string;
@@ -54,6 +55,37 @@ function Field({ label, required, error, children }: {
 export default function EditUserModal({ userId, initialData, onClose, onSuccess, showToast }: Props) {
   const { options: roleOptions, loading: rolesLoading, hasError: rolesError } = useRoles();
   const { depts, branches, loading: orgLoading, deptsError, branchesError } = useOrgOptions();
+
+  // Groups dropdown
+  const [groups,         setGroups]         = useState<{ id: string; name: string; dept: string | null }[]>([]);
+  const [groupsLoading,  setGroupsLoading]  = useState(false);
+
+  // Managers dropdown (manager + admin_assistant roles)
+  const [managers,        setManagers]        = useState<{ id: string; fullName: string; role: string }[]>([]);
+  const [managersLoading, setManagersLoading] = useState(false);
+
+  useEffect(() => {
+    setGroupsLoading(true);
+    groupsAPI.listGroups({ limit: 200, status: 'ACTIVE' })
+      .then(res => setGroups(res.data.map(g => ({ id: g.id, name: g.name, dept: g.department?.name ?? null }))))
+      .catch(() => {})
+      .finally(() => setGroupsLoading(false));
+
+    setManagersLoading(true);
+    Promise.allSettled([
+      getUsers({ role: 'manager',         limit: 200 }),
+      getUsers({ role: 'admin_assistant', limit: 200 }),
+    ]).then(results => {
+      const seen = new Set<string>();
+      const combined: { id: string; fullName: string; role: string }[] = [];
+      results.forEach(r => {
+        if (r.status === 'fulfilled')
+          r.value.users.forEach(u => { if (!seen.has(u.id)) { seen.add(u.id); combined.push({ id: u.id, fullName: u.fullName, role: u.role }); } });
+      });
+      setManagers(combined);
+    }).catch(() => {})
+      .finally(() => setManagersLoading(false));
+  }, []);
 
   const [form, setForm] = useState({
     fullName:    initialData.fullName,
@@ -116,6 +148,8 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
     try {
       const res = await updateUser(userId, body);
       showToast('success', res.message || 'User updated successfully');
+      window.dispatchEvent(new CustomEvent('groupsUpdated'));
+      window.dispatchEvent(new CustomEvent('userDataChanged'));
       onSuccess({ ...body, role: form.role || null });
     } catch (err) {
       if (err instanceof ApiError) {
@@ -208,10 +242,30 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <Field label="Group Assignment">
-              <input style={INPUT} value={form.groupId} onChange={set('groupId')} placeholder="Group ID or name" />
+              <select style={selectStyle()} value={form.groupId} onChange={set('groupId')} disabled={groupsLoading}>
+                <option value="">{groupsLoading ? 'Loading groups…' : '— None —'}</option>
+                {groups.map(g => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}{g.dept ? ` (${g.dept})` : ''}
+                  </option>
+                ))}
+                {form.groupId && !groups.find(g => g.id === form.groupId) && (
+                  <option value={form.groupId}>{form.groupId}</option>
+                )}
+              </select>
             </Field>
             <Field label="Manager">
-              <input style={INPUT} value={form.managerId} onChange={set('managerId')} placeholder="Manager ID" />
+              <select style={selectStyle()} value={form.managerId} onChange={set('managerId')} disabled={managersLoading}>
+                <option value="">{managersLoading ? 'Loading managers…' : '— None —'}</option>
+                {managers.map(m => (
+                  <option key={m.id} value={m.id}>
+                    {m.fullName} ({m.role})
+                  </option>
+                ))}
+                {form.managerId && !managers.find(m => m.id === form.managerId) && (
+                  <option value={form.managerId}>{form.managerId}</option>
+                )}
+              </select>
             </Field>
           </div>
 

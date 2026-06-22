@@ -771,7 +771,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
       {editOpen && u && (
         <EditUserModal
           userId={u.id}
-          initialData={{ fullName: u.fullName, phone: u.phone, role: u.role ?? null, department: u.department, branch: u.branch, groupId: null, accessLevel: null, managerId: null, skills: null }}
+          initialData={{ fullName: u.fullName, phone: u.phone, role: u.role ?? null, department: u.department, branch: u.branch, groupId: u.groupId ?? null, accessLevel: null, managerId: u.managerId ?? null, skills: null }}
           onClose={() => setEditOpen(false)}
           onSuccess={(updated: EditInitialData) => {
             // 1. Immediately apply what the user submitted so the drawer reflects it at once

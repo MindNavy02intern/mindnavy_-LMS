@@ -531,7 +531,7 @@ export default function UserManagementPage() {
       {editUser && (
         <EditUserModal
           userId={editUser.id}
-          initialData={{ fullName: editUser.fullName, phone: editUser.phone ?? null, department: editUser.department, branch: editUser.branch, groupId: null, accessLevel: null, managerId: null, skills: null, role: editUser.role ?? null }}
+          initialData={{ fullName: editUser.fullName, phone: editUser.phone ?? null, department: editUser.department, branch: editUser.branch, groupId: editUser.groupId ?? null, accessLevel: null, managerId: editUser.managerId ?? null, skills: null, role: editUser.role ?? null }}
           onClose={() => setEditUser(null)}
           onSuccess={() => { setEditUser(null); load(); notifyDashboard(); }}
           showToast={showToast}

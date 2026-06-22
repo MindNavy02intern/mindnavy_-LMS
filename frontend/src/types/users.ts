@@ -13,6 +13,8 @@ export interface User {
   phone:             string | null;
   department:        string | null;
   branch:            string | null;
+  groupId:           string | null;
+  managerId:         string | null;
   status:            UserStatus;
   verificationState: VerificationState;
   lastActivityAt:    string | null;
@@ -62,6 +64,8 @@ export interface UserDetails {
   role:              string;
   department:        string | null;
   branch:            string | null;
+  groupId:           string | null;
+  managerId:         string | null;
   status:            UserStatus;
   verificationState: VerificationState;
   emailVerified:     boolean;

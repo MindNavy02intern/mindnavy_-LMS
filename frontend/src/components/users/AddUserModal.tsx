@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { createUser, ApiError } from '../../api/users';
+import { useEffect, useState } from 'react';
+import { createUser, getUsers, ApiError } from '../../api/users';
 import type { CreateUserRequest } from '../../types/users';
 import type { ToastType } from './Toast';
 import { ACCESS_LEVEL_OPTIONS } from '../../constants/userOptions';
 import useRoles from '../../hooks/useRoles';
 import useOrgOptions from '../../hooks/useOrgOptions';
+import { groupsAPI } from '../../api/groups';
 
 interface Props {
   onClose:   () => void;
@@ -48,6 +49,40 @@ type FormKey = 'fullName' | 'email' | 'password' | 'confirmPassword' | 'phone' |
 export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
   const { options: roleOptions, loading: rolesLoading, hasError: rolesError } = useRoles();
   const { depts, branches, loading: orgLoading, deptsError, branchesError } = useOrgOptions();
+
+  // Groups dropdown
+  const [groups,         setGroups]         = useState<{ id: string; name: string; dept: string | null }[]>([]);
+  const [groupsLoading,  setGroupsLoading]  = useState(false);
+  const [groupsError,    setGroupsError]    = useState(false);
+
+  // Managers dropdown (manager + admin_assistant roles)
+  const [managers,        setManagers]        = useState<{ id: string; fullName: string; role: string }[]>([]);
+  const [managersLoading, setManagersLoading] = useState(false);
+  const [managersError,   setManagersError]   = useState(false);
+
+  useEffect(() => {
+    setGroupsLoading(true);
+    groupsAPI.listGroups({ limit: 200, status: 'ACTIVE' })
+      .then(res => { setGroups(res.data.map(g => ({ id: g.id, name: g.name, dept: g.department?.name ?? null }))); setGroupsError(false); })
+      .catch(() => setGroupsError(true))
+      .finally(() => setGroupsLoading(false));
+
+    setManagersLoading(true);
+    Promise.allSettled([
+      getUsers({ role: 'manager',         limit: 200 }),
+      getUsers({ role: 'admin_assistant', limit: 200 }),
+    ]).then(results => {
+      const seen = new Set<string>();
+      const combined: { id: string; fullName: string; role: string }[] = [];
+      results.forEach(r => {
+        if (r.status === 'fulfilled')
+          r.value.users.forEach(u => { if (!seen.has(u.id)) { seen.add(u.id); combined.push({ id: u.id, fullName: u.fullName, role: u.role }); } });
+      });
+      setManagers(combined);
+      setManagersError(false);
+    }).catch(() => setManagersError(true))
+      .finally(() => setManagersLoading(false));
+  }, []);
 
   const [form, setForm] = useState({
     fullName: '', email: '', password: '', confirmPassword: '', phone: '', role: '',
@@ -106,6 +141,8 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
     try {
       const res = await createUser(body);
       showToast('success', res.message || 'User created successfully');
+      window.dispatchEvent(new CustomEvent('groupsUpdated'));
+      window.dispatchEvent(new CustomEvent('userDataChanged'));
       onSuccess();
     } catch (err) {
       if (err instanceof ApiError) {
@@ -212,7 +249,16 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
           {/* Row 4 */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <Field label="Group Assignment">
-              <input style={INPUT} value={form.groupId} onChange={set('groupId')} placeholder="Group ID or name" />
+              <select style={selectStyle()} value={form.groupId} onChange={set('groupId')} disabled={groupsLoading}>
+                <option value="">
+                  {groupsLoading ? 'Loading groups…' : groupsError ? 'Failed to load groups' : 'No group assigned'}
+                </option>
+                {groups.map(g => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}{g.dept ? ` (${g.dept})` : ''}
+                  </option>
+                ))}
+              </select>
             </Field>
             <Field label="Access Level">
               <select style={selectStyle()} value={form.accessLevel} onChange={set('accessLevel')}>
@@ -223,7 +269,16 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
 
           {/* Row 5 */}
           <Field label="Manager">
-            <input style={INPUT} value={form.managerId} onChange={set('managerId')} placeholder="Manager ID or name" />
+            <select style={selectStyle()} value={form.managerId} onChange={set('managerId')} disabled={managersLoading}>
+              <option value="">
+                {managersLoading ? 'Loading managers…' : managersError ? 'Failed to load managers' : 'No manager assigned'}
+              </option>
+              {managers.map(m => (
+                <option key={m.id} value={m.id}>
+                  {m.fullName} ({m.role})
+                </option>
+              ))}
+            </select>
           </Field>
 
           {/* Skills */}

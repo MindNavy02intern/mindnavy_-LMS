@@ -53,3 +53,41 @@ export interface CreateRolePagePayload {
   description: string | null;
   status: RoleStatus;
 }
+
+// ── Permission Matrix ─────────────────────────────────────────────────────────
+
+export type PermissionCategory =
+  | 'USERS' | 'REPORTS' | 'SETTINGS' | 'ORGANIZATION'
+  | 'LEARNERS' | 'COURSES' | 'ADMIN';
+
+export interface MatrixRole {
+  id: string;
+  name: string;
+  description: string | null;
+  status: 'ACTIVE' | 'INACTIVE';
+  userCount: number;
+  permissionCount: number;
+}
+
+export interface MatrixPermission {
+  id: string;
+  name: string;
+  description: string | null;
+  category: PermissionCategory;
+}
+
+export interface MatrixAssignment {
+  roleId: string;
+  permissionId: string;
+}
+
+export interface PermissionMatrixData {
+  roles: MatrixRole[];
+  permissions: MatrixPermission[];
+  assignments: MatrixAssignment[];
+  summary: {
+    totalRoles: number;
+    totalPermissions: number;
+    totalAssignments: number;
+  };
+}
