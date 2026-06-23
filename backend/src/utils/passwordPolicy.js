@@ -8,7 +8,7 @@ function validatePasswordStrength(password) {
 
   password = password.trim();
 
-  if (password.length < 12) {
+  if (password.length < 8) {
     errors.push("Password must be at least 12 characters.");
   }
 

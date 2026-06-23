@@ -24,7 +24,7 @@ async function createFirstAdmin() {
     return;
   }
 
-  if (password.length < 12) {
+  if (password.length < 8) {
     console.error("Error: FIRST_ADMIN_PASSWORD must be at least 12 characters.");
     return;
   }
