@@ -204,7 +204,7 @@ export default function SuspendedTab() {
                         <span style={{ background: '#f3f4f6', borderRadius: 12, fontSize: 11, fontWeight: 600, padding: '3px 8px', color: '#374151' }}>{user.role}</span>
                       </td>
                       <td style={{ ...TD, color: '#6b7280' }}>{user.department ?? <span style={{ color: '#d1d5db' }}>—</span>}</td>
-                      <td style={{ ...TD, color: '#9ca3af', fontSize: 12 }}>{formatDate(user.createdAt)}</td>
+                      <td style={{ ...TD, color: '#9ca3af', fontSize: 12 }}>{user.suspendedAt ? formatDate(user.suspendedAt) : 'Unknown'}</td>
                       <td style={{ ...TD, textAlign: 'right' }}>
                         {isConfirming ? (
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6 }}>

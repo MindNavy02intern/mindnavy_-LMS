@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getUsers, reactivateUser } from '../../api/users';
 import type { User } from '../../types/users';
+import { getStoredToken } from '../../api/adminAuth';
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
@@ -57,9 +60,10 @@ export default function ArchivedTab() {
   const [page,        setPage]        = useState(1);
   const [loading,     setLoading]     = useState(true);
   const [error,       setError]       = useState<string | null>(null);
-  const [confirmId,   setConfirmId]   = useState<string | null>(null);
-  const [actionBusy,  setActionBusy]  = useState<string | null>(null);
-  const [actionError, setActionError] = useState<string | null>(null);
+  const [confirmId,        setConfirmId]        = useState<string | null>(null);
+  const [deleteConfirmId,  setDeleteConfirmId]  = useState<string | null>(null);
+  const [actionBusy,       setActionBusy]       = useState<string | null>(null);
+  const [actionError,      setActionError]      = useState<string | null>(null);
 
   const LIMIT = 10;
 
@@ -91,6 +95,29 @@ export default function ArchivedTab() {
     setConfirmId(null);
     try {
       await reactivateUser(userId);
+      notify();
+      load();
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Action failed.');
+    } finally {
+      setActionBusy(null);
+    }
+  }
+
+  async function handlePermanentDelete(userId: string) {
+    setActionBusy(userId);
+    setActionError(null);
+    setDeleteConfirmId(null);
+    try {
+      const token = getStoredToken();
+      const res = await fetch(`${BASE_URL}/users/${encodeURIComponent(userId)}/permanent`, {
+        method: 'DELETE',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
+        throw new Error((json as { message?: string }).message ?? `HTTP ${res.status}`);
+      }
       notify();
       load();
     } catch (err) {
@@ -148,6 +175,7 @@ export default function ArchivedTab() {
               : users.map(user => {
                   const isBusy = actionBusy === user.id;
                   const isConfirming = confirmId === user.id;
+                  const isDeleteConfirming = deleteConfirmId === user.id;
                   return (
                     <tr key={user.id}
                       style={{ opacity: 0.85 }}
@@ -187,6 +215,21 @@ export default function ArchivedTab() {
                               Cancel
                             </button>
                           </div>
+                        ) : isDeleteConfirming ? (
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6 }}>
+                            <span style={{ fontSize: 12, color: '#b91c1c', fontWeight: 600 }}>Delete permanently?</span>
+                            <button
+                              onClick={() => handlePermanentDelete(user.id)}
+                              disabled={isBusy}
+                              style={{ fontSize: 12, fontWeight: 600, padding: '4px 10px', borderRadius: 5, border: 'none', cursor: 'pointer', fontFamily: 'inherit', color: '#fff', background: '#dc2626' }}
+                            >
+                              Delete
+                            </button>
+                            <button onClick={() => setDeleteConfirmId(null)}
+                              style={{ fontSize: 12, padding: '4px 8px', borderRadius: 5, border: '1px solid #e5e7eb', background: '#f9fafb', cursor: 'pointer', fontFamily: 'inherit', color: '#6b7280' }}>
+                              Cancel
+                            </button>
+                          </div>
                         ) : (
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6 }}>
                             <button
@@ -199,9 +242,11 @@ export default function ArchivedTab() {
                               {isBusy ? '…' : '↩ Restore'}
                             </button>
                             <button
-                              disabled
-                              title="Permanent delete coming soon"
-                              style={{ fontSize: 12, fontWeight: 600, padding: '5px 10px', borderRadius: 5, border: '1px solid #e5e7eb', background: '#f9fafb', cursor: 'not-allowed', fontFamily: 'inherit', color: '#9ca3af', opacity: 0.5 }}
+                              onClick={() => setDeleteConfirmId(user.id)}
+                              disabled={isBusy}
+                              style={{ fontSize: 12, fontWeight: 600, padding: '5px 10px', borderRadius: 5, border: '1px solid #fecaca', background: '#fef2f2', cursor: 'pointer', fontFamily: 'inherit', color: '#dc2626' }}
+                              onMouseEnter={e => { e.currentTarget.style.background = '#fee2e2'; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = '#fef2f2'; }}
                             >
                               Delete
                             </button>

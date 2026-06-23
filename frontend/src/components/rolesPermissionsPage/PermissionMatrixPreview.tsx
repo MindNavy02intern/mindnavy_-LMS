@@ -103,14 +103,14 @@ export default function PermissionMatrixPreview({ onViewFullMatrix }: Props) {
 
         {/* Legend */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10, flexWrap: 'wrap' }}>
-          {LEGEND.map(({ label, dot, ring }) => (
-            <span key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#374151' }}>
+          {LEGEND.map((item) => (
+            <span key={item.label} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#374151' }}>
               <span style={{
                 width: 8, height: 8, borderRadius: '50%', display: 'inline-block', flexShrink: 0,
-                background: dot,
-                boxShadow: ring ? `0 0 0 1.5px #bfdbfe` : undefined,
+                background: item.dot,
+                boxShadow: 'ring' in item && item.ring ? `0 0 0 1.5px #bfdbfe` : undefined,
               }} />
-              {label}
+              {item.label}
             </span>
           ))}
         </div>

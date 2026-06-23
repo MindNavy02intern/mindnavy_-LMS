@@ -66,6 +66,7 @@ const USER_SELECT = {
   skills: true,
   lastActivityAt: true,
   riskScore: true,
+  suspendedAt: true,
   createdAt: true,
   updatedAt: true,
 };
@@ -92,6 +93,7 @@ function mapUser(u) {
     skills: u.skills ?? [],
     lastActivityAt: u.lastActivityAt ? u.lastActivityAt.toISOString() : null,
     riskScore: u.riskScore ?? null,
+    suspendedAt: u.suspendedAt ? u.suspendedAt.toISOString() : null,
     enrollmentCount: 0,
     createdAt: u.createdAt.toISOString(),
   };
@@ -154,6 +156,9 @@ async function getUsersList(query = {}, admin = {}) {
   const rawDepartment = typeof query.department === "string"
     ? query.department.trim()
     : "";
+  const rawBranch = typeof query.branch === "string"
+    ? query.branch.trim()
+    : "";
 
   const VALID_VERIFICATION_STATES = new Set(["VERIFIED", "PENDING", "REJECTED", "EXPIRED"]);
 
@@ -161,6 +166,7 @@ async function getUsersList(query = {}, admin = {}) {
   const statusFilter            = VALID_STATUSES.has(rawStatus)         ? rawStatus            : null;
   const verificationStateFilter = VALID_VERIFICATION_STATES.has(rawVerificationState) ? rawVerificationState : null;
   const departmentFilter        = rawDepartment || null;
+  const branchFilter            = rawBranch     || null;
 
   const rawCreatedAfter  = typeof query.createdAfter  === "string" ? query.createdAfter.trim()  : "";
   const rawCreatedBefore = typeof query.createdBefore === "string" ? query.createdBefore.trim() : "";
@@ -192,6 +198,7 @@ async function getUsersList(query = {}, admin = {}) {
   }
   if (verificationStateFilter) where.verificationState = verificationStateFilter;
   if (departmentFilter)        where.department        = { equals: departmentFilter, mode: "insensitive" };
+  if (branchFilter)            where.branch            = { equals: branchFilter,     mode: "insensitive" };
   if (createdAfterDate && !isNaN(createdAfterDate.getTime()))  where.createdAt = { ...where.createdAt, gte: createdAfterDate };
   if (createdBeforeDate && !isNaN(createdBeforeDate.getTime())) where.createdAt = { ...where.createdAt, lte: createdBeforeDate };
 
@@ -286,6 +293,9 @@ async function exportUsers(query = {}, admin = {}) {
   const rawDepartment = typeof query.department === "string"
     ? query.department.trim()
     : "";
+  const rawBranch = typeof query.branch === "string"
+    ? query.branch.trim()
+    : "";
 
   const VALID_VERIFICATION_STATES = new Set(["VERIFIED", "PENDING", "REJECTED", "EXPIRED"]);
 
@@ -293,6 +303,7 @@ async function exportUsers(query = {}, admin = {}) {
   const statusFilter            = VALID_STATUSES.has(rawStatus) ? rawStatus : null;
   const verificationStateFilter = VALID_VERIFICATION_STATES.has(rawVerificationState) ? rawVerificationState : null;
   const departmentFilter        = rawDepartment || null;
+  const branchFilter            = rawBranch     || null;
 
   const rawCreatedAfter  = typeof query.createdAfter  === "string" ? query.createdAfter.trim()  : "";
   const rawCreatedBefore = typeof query.createdBefore === "string" ? query.createdBefore.trim() : "";
@@ -317,6 +328,7 @@ async function exportUsers(query = {}, admin = {}) {
   if (statusFilter)            where.status            = statusFilter;
   if (verificationStateFilter) where.verificationState = verificationStateFilter;
   if (departmentFilter)        where.department        = { equals: departmentFilter, mode: "insensitive" };
+  if (branchFilter)            where.branch            = { equals: branchFilter,     mode: "insensitive" };
   if (createdAfterDate  && !isNaN(createdAfterDate.getTime()))  where.createdAt = { ...where.createdAt, gte: createdAfterDate };
   if (createdBeforeDate && !isNaN(createdBeforeDate.getTime())) where.createdAt = { ...where.createdAt, lte: createdBeforeDate };
 
@@ -638,7 +650,7 @@ async function suspendUser(id, body, admin = {}) {
 
   const user = await prisma.appUser.update({
     where: { id },
-    data: { status: "SUSPENDED" },
+    data: { status: "SUSPENDED", suspendedAt: new Date() },
     select: USER_SELECT,
   });
 
@@ -773,6 +785,50 @@ async function deleteUser(id, admin = {}) {
   return {
     success: true,
     message: "User archived successfully.",
+  };
+}
+
+async function permanentDeleteUser(id, admin = {}) {
+  const existing = await assertUserExists(id);
+
+  if (existing.status !== "ARCHIVED") {
+    throw makeError("Only archived users can be permanently deleted.", 400);
+  }
+
+  await prisma.appUser.delete({ where: { id } });
+
+  await createUserAuditLog(admin.id, "USER_PERMANENTLY_DELETED", {
+    userId: id,
+    email:  existing.email,
+  });
+
+  return {
+    success: true,
+    message: "User permanently deleted.",
+  };
+}
+
+async function rejectVerification(id, admin = {}) {
+  const existing = await assertUserExists(id);
+
+  const user = await prisma.appUser.update({
+    where: { id },
+    data: { verificationState: "REJECTED", status: "SUSPENDED" },
+    select: USER_SELECT,
+  });
+
+  await createUserAuditLog(admin.id, "USER_VERIFICATION_REJECTED", {
+    userId: id,
+    oldVerificationState: existing.verificationState,
+    newVerificationState: "REJECTED",
+    oldStatus: existing.status,
+    newStatus: "SUSPENDED",
+  });
+
+  return {
+    success: true,
+    message: "User verification rejected.",
+    user: { ...mapUser(user), updatedAt: user.updatedAt.toISOString() },
   };
 }
 
@@ -1062,7 +1118,8 @@ async function bulkActionUsers(body, admin) {
   if (action === "suspend" || action === "reactivate" || action === "archive" || action === "delete") {
     const newStatus   = action === "reactivate" ? "ACTIVE" : action === "suspend" ? "SUSPENDED" : "ARCHIVED";
     const auditAction = action === "reactivate" ? "USER_REACTIVATED" : action === "suspend" ? "USER_SUSPENDED" : "USER_DELETED";
-    const result      = await prisma.appUser.updateMany({ where: { id: { in: userIds } }, data: { status: newStatus } });
+    const statusData  = action === "suspend" ? { status: newStatus, suspendedAt: new Date() } : { status: newStatus };
+    const result      = await prisma.appUser.updateMany({ where: { id: { in: userIds } }, data: statusData });
     createUserAuditLog(admin.id, auditAction, { userIds, count: result.count, reason: params.reason || "Bulk action" });
     return {
       success:   true,
@@ -1246,9 +1303,11 @@ module.exports = {
   suspendUser,
   reactivateUser,
   approveVerification,
+  rejectVerification,
   resetUserPassword,
   assignUserRole,
   deleteUser,
+  permanentDeleteUser,
   getUsersAnalytics,
   importUsersFromCsv,
   bulkActionUsers,

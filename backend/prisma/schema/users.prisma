@@ -9,6 +9,7 @@ model AppUser {
   verificationState AppUserVerificationState @default(PENDING)
   lastActivityAt    DateTime?
   riskScore         Int?
+  suspendedAt       DateTime?                @map("suspended_at")
   createdAt         DateTime                 @default(now())
   updatedAt         DateTime                 @updatedAt
   accessLevel       String?

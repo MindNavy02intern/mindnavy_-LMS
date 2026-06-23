@@ -238,6 +238,45 @@ async function approveVerification(req, res) {
   }
 }
 
+async function rejectVerification(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  try {
+    const result = await usersService.rejectVerification(req.params.id, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[users] rejectVerification error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to reject verification." });
+  }
+}
+
+async function permanentDeleteUser(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) {
+    return res.status(400).json({ success: false, message: idError });
+  }
+
+  try {
+    const result = await usersService.permanentDeleteUser(req.params.id, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    if (error.statusCode === 400) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+    console.error("[users] permanentDeleteUser error:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to permanently delete user." });
+  }
+}
+
 async function deleteUser(req, res) {
   const idError = validateUuidParam(req.params.id);
   if (idError) {
@@ -382,9 +421,11 @@ module.exports = {
   suspendUser,
   reactivateUser,
   approveVerification,
+  rejectVerification,
   resetUserPassword,
   assignUserRole,
   deleteUser,
+  permanentDeleteUser,
   getUsersAnalytics,
   exportUsers,
   importUsers,

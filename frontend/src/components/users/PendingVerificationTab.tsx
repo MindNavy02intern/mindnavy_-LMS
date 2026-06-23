@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getUsers, approveVerification, deleteUser } from '../../api/users';
+import { getUsers, approveVerification } from '../../api/users';
 import type { User } from '../../types/users';
+import { getStoredToken } from '../../api/adminAuth';
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
@@ -115,7 +118,15 @@ export default function PendingVerificationTab() {
     setActionError(null);
     setConfirmId(null);
     try {
-      await deleteUser(userId);
+      const token = getStoredToken();
+      const res = await fetch(`${BASE_URL}/users/${encodeURIComponent(userId)}/reject-verification`, {
+        method: 'PATCH',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
+        throw new Error((json as { message?: string }).message ?? `HTTP ${res.status}`);
+      }
       notify();
       load();
     } catch (err) {

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../layouts/AdminLayout';
 import { useAuth } from '../AuthContext';
 import { getDashboardCore, getDashboardAnalytics, getAdminWidgets } from '../api/dashboard';
@@ -186,7 +187,28 @@ function EmptyMsg({ msg }: { msg: string }) {
 // ── Learning Activity Chart (wired to analytics API) ─────────────────────────
 
 function LearningActivityChart({ data }: { data: LearningActivityItem[] }) {
-  if (data.length === 0) return <EmptyMsg msg="No learning activity data for this period." />;
+  const navigate = useNavigate();
+  if (data.length === 0) return (
+    <div style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center',
+      justifyContent: 'center', height: '200px', gap: '12px', color: '#94a3b8',
+    }}>
+      <div style={{ fontSize: '40px' }}>📚</div>
+      <p style={{ fontWeight: 600, color: '#475569', margin: 0 }}>Learning Activity Coming Soon</p>
+      <p style={{ fontSize: '14px', margin: 0, textAlign: 'center' }}>
+        Activity data will appear here once courses and enrollments are configured in Learning Management module.
+      </p>
+      <button
+        onClick={() => navigate('/courses')}
+        style={{
+          padding: '8px 16px', background: '#3b82f6', color: 'white',
+          border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '14px',
+        }}
+      >
+        Set up Learning Management →
+      </button>
+    </div>
+  );
 
   const labels   = data.map(d => { const dt = new Date(d.date); return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); });
   const enrolled = data.map(d => d.enrolled);
@@ -388,27 +410,27 @@ function NotifIcon({ type }: { type: NotificationType }) {
 // ── Analytics widgets ─────────────────────────────────────────────────────────
 
 function RevenueCard({ data, loading }: { data: RevenueOverview | undefined; loading: boolean }) {
-  const grow = data?.growthPercentage ?? 0;
+  const isPhase2 = !data || (data.annualRevenue === 0 && data.monthlyRevenue === 0 && data.dailyRevenue === 0);
   return (
     <div className="mn-db-card">
       <div className="mn-db-card-header">
         <div className="mn-db-card-title">Revenue Overview</div>
-        {data && (
-          <span style={{ fontSize: '0.7rem', fontWeight: 600, color: grow >= 0 ? '#16a34a' : '#ef4444' }}>
-            {grow >= 0 ? '+' : ''}{grow.toFixed(1)}% growth
-          </span>
-        )}
       </div>
-      {loading ? <AnalyticsSpin /> : data ? (
+      {loading ? <AnalyticsSpin /> : isPhase2 ? (
+        <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 8 }}>
+          <div style={{ fontSize: '1.5rem' }}>🚀</div>
+          <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Finance module</div>
+        </div>
+      ) : (
         <>
-          <StatRow label="Daily Revenue"      value={`$${data.dailyRevenue.toLocaleString()}`} />
-          <StatRow label="Monthly Revenue"    value={`$${data.monthlyRevenue.toLocaleString()}`} />
-          <StatRow label="Annual Revenue"     value={`$${data.annualRevenue.toLocaleString()}`} />
-          <StatRow label="Subscriptions"      value={`$${data.subscriptionRevenue.toLocaleString()}`} />
-          <StatRow label="Refunds"            value={`$${data.refundTotal.toLocaleString()}`} />
-          <StatRow label="Instructor Payouts" value={`$${data.instructorPayouts.toLocaleString()}`} />
+          <StatRow label="Daily Revenue"      value={`$${data!.dailyRevenue.toLocaleString()}`} />
+          <StatRow label="Monthly Revenue"    value={`$${data!.monthlyRevenue.toLocaleString()}`} />
+          <StatRow label="Annual Revenue"     value={`$${data!.annualRevenue.toLocaleString()}`} />
+          <StatRow label="Subscriptions"      value={`$${data!.subscriptionRevenue.toLocaleString()}`} />
+          <StatRow label="Refunds"            value={`$${data!.refundTotal.toLocaleString()}`} />
+          <StatRow label="Instructor Payouts" value={`$${data!.instructorPayouts.toLocaleString()}`} />
         </>
-      ) : <EmptyMsg msg="No revenue data." />}
+      )}
     </div>
   );
 }
@@ -431,41 +453,53 @@ function UserAnalyticsCard({ data, loading }: { data: UserAnalytics | undefined;
 }
 
 function CourseAnalyticsCard({ data, loading }: { data: CourseAnalytics | undefined; loading: boolean }) {
+  const isPhase2 = !data || data.totalCourses === 0;
   return (
     <div className="mn-db-card">
       <div className="mn-db-card-header"><div className="mn-db-card-title">Course Analytics</div></div>
-      {loading ? <AnalyticsSpin /> : data ? (
+      {loading ? <AnalyticsSpin /> : isPhase2 ? (
+        <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 8 }}>
+          <div style={{ fontSize: '1.5rem' }}>🚀</div>
+          <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Learning Management module</div>
+        </div>
+      ) : (
         <>
-          <StatRow label="Total Courses"      value={data.totalCourses.toLocaleString()} />
-          <StatRow label="Active Courses"     value={data.activeCourses.toLocaleString()} />
-          <StatRow label="Pending Approval"   value={data.pendingApprovalCourses.toLocaleString()} />
-          <StatRow label="Avg Completion"     value={`${data.averageCompletionRate.toFixed(1)}%`} />
-          <StatRow label="Avg Quiz Score"     value={`${data.averageQuizScore.toFixed(1)}%`} />
-          {data.mostPopularCourse && (
+          <StatRow label="Total Courses"    value={data!.totalCourses.toLocaleString()} />
+          <StatRow label="Active Courses"   value={data!.activeCourses.toLocaleString()} />
+          <StatRow label="Pending Approval" value={data!.pendingApprovalCourses.toLocaleString()} />
+          <StatRow label="Avg Completion"   value={`${data!.averageCompletionRate.toFixed(1)}%`} />
+          <StatRow label="Avg Quiz Score"   value={`${data!.averageQuizScore.toFixed(1)}%`} />
+          {data!.mostPopularCourse && (
             <div style={{ marginTop: 6, padding: '5px 0', borderTop: '1px solid #f8fafc' }}>
               <div style={{ fontSize: '0.65rem', color: '#64748b', marginBottom: 2 }}>Most Popular</div>
               <div style={{ fontSize: '0.72rem', fontWeight: 600, color: '#2563eb', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {data.mostPopularCourse}
+                {data!.mostPopularCourse}
               </div>
             </div>
           )}
         </>
-      ) : <EmptyMsg msg="No course analytics." />}
+      )}
     </div>
   );
 }
 
 function InstructorPerformanceCard({ data, loading }: { data: InstructorPerformance | undefined; loading: boolean }) {
+  const isPhase2 = !data || (data.averageRating === 0 && data.averageCompletionRate === 0 && data.averageAttendanceRate === 0);
   return (
     <div className="mn-db-card">
       <div className="mn-db-card-header"><div className="mn-db-card-title">Instructor Performance</div></div>
-      {loading ? <AnalyticsSpin /> : data ? (
+      {loading ? <AnalyticsSpin /> : isPhase2 ? (
+        <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 8 }}>
+          <div style={{ fontSize: '1.5rem' }}>🚀</div>
+          <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Learning Management module</div>
+        </div>
+      ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 4 }}>
           {[
-            { label: 'Avg Rating',     value: `${data.averageRating.toFixed(1)}/5`, color: '#f59e0b' },
-            { label: 'Completion',     value: `${data.averageCompletionRate.toFixed(1)}%`, color: '#16a34a' },
-            { label: 'Attendance',     value: `${data.averageAttendanceRate.toFixed(1)}%`, color: '#2563eb' },
-            { label: 'Review Score',   value: `${data.averageReviewScore.toFixed(1)}/5`, color: '#8b5cf6' },
+            { label: 'Avg Rating',   value: `${data!.averageRating.toFixed(1)}/5`,           color: '#f59e0b' },
+            { label: 'Completion',   value: `${data!.averageCompletionRate.toFixed(1)}%`,     color: '#16a34a' },
+            { label: 'Attendance',   value: `${data!.averageAttendanceRate.toFixed(1)}%`,     color: '#2563eb' },
+            { label: 'Review Score', value: `${data!.averageReviewScore.toFixed(1)}/5`,       color: '#8b5cf6' },
           ].map(m => (
             <div key={m.label} style={{ background: '#f8fafc', borderRadius: 8, padding: '8px 10px' }}>
               <div style={{ fontSize: '0.625rem', color: '#64748b', marginBottom: 4 }}>{m.label}</div>
@@ -473,7 +507,7 @@ function InstructorPerformanceCard({ data, loading }: { data: InstructorPerforma
             </div>
           ))}
         </div>
-      ) : <EmptyMsg msg="No instructor data." />}
+      )}
     </div>
   );
 }
@@ -485,10 +519,10 @@ function StudentEngagementCard({ data, loading }: { data: StudentEngagement | un
       {loading ? <AnalyticsSpin /> : data ? (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 4 }}>
           {[
-            { label: 'Daily Active',      value: data.dailyActiveStudents.toLocaleString(), color: '#2563eb' },
-            { label: 'Quiz Participation',value: `${data.quizParticipationRate.toFixed(1)}%`, color: '#16a34a' },
-            { label: 'Assignment Compl.', value: `${data.assignmentCompletionRate.toFixed(1)}%`, color: '#8b5cf6' },
-            { label: 'Avg Learn Time',    value: `${data.averageLearningTimeMinutes}m`, color: '#f59e0b' },
+            { label: 'Daily Active',      value: data.dailyActiveStudents.toLocaleString(),                                                  color: '#2563eb' },
+            { label: 'Quiz Participation',value: data.quizParticipationRate > 0 ? `${data.quizParticipationRate.toFixed(1)}%` : '—',         color: '#16a34a' },
+            { label: 'Assignment Compl.', value: data.assignmentCompletionRate > 0 ? `${data.assignmentCompletionRate.toFixed(1)}%` : '—',   color: '#8b5cf6' },
+            { label: 'Avg Learn Time',    value: data.averageLearningTimeMinutes > 0 ? `${data.averageLearningTimeMinutes}m` : '—',           color: '#f59e0b' },
           ].map(m => (
             <div key={m.label} style={{ background: '#f8fafc', borderRadius: 8, padding: '8px 10px' }}>
               <div style={{ fontSize: '0.625rem', color: '#64748b', marginBottom: 4 }}>{m.label}</div>
@@ -539,6 +573,7 @@ const CS_BTN: React.CSSProperties = {
 // ── Pending Approvals widget ───────────────────────────────────────────────────
 
 function PendingApprovalsCard({ data, loading }: { data: PendingApprovals | undefined; loading: boolean }) {
+  const navigate = useNavigate();
   return (
     <div className="mn-db-card">
       <div className="mn-db-card-header">
@@ -550,7 +585,7 @@ function PendingApprovalsCard({ data, loading }: { data: PendingApprovals | unde
             </span>
           )}
         </div>
-        <button style={CS_BTN} disabled title="Coming Soon">View All</button>
+        <button className="mn-db-view-all" onClick={() => navigate('/users?tab=pending-verification')}>View All</button>
       </div>
       {loading ? <AnalyticsSpin /> : !data || data.items.length === 0 ? (
         <EmptyMsg msg="No pending approvals." />
@@ -570,7 +605,12 @@ function PendingApprovalsCard({ data, loading }: { data: PendingApprovals | unde
                 <span style={{ fontSize: '0.6rem', fontWeight: 600, padding: '2px 6px', borderRadius: 10, ...PRIORITY_STYLE[item.priority] }}>
                   {item.priority}
                 </span>
-                <button style={CS_BTN} disabled title="Coming Soon">Review →</button>
+                <button
+                  onClick={() => navigate('/users?tab=pending-verification')}
+                  style={{ fontSize: '0.6rem', padding: '2px 7px', borderRadius: 4, border: '1px solid #bfdbfe', background: '#eff6ff', color: '#2563eb', cursor: 'pointer' }}
+                >
+                  Review →
+                </button>
               </div>
             </div>
           ))}
@@ -612,7 +652,7 @@ function LiveSessionsCard({ data, loading }: { data: LiveSessions | undefined; l
               {s.status === 'active' && (
                 <span style={{ fontSize: '0.6rem', color: '#64748b', flexShrink: 0 }}>{s.attendanceCount} 👥</span>
               )}
-              <button style={CS_BTN} disabled title="Coming Soon">End</button>
+              <button style={CS_BTN} disabled title="Live sessions coming in Learning Mgmt">End</button>
             </div>
           ))}
         </>
@@ -787,6 +827,7 @@ function AiInsightsCard({ data, loading }: { data: AiInsightItem[]; loading: boo
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   // Core dashboard state (TASK 5A)
@@ -942,11 +983,11 @@ export default function DashboardPage() {
           Array.from({ length: 5 }, (_, i) => <KpiSkeleton key={i} />)
         ) : kpis ? (
           <>
-            <LKpiCard label="Total Users"     value={kpis.totalUsers.toLocaleString()}          iconType="users"       iconBg="#f3e8ff" iconColor="#9333ea" />
-            <LKpiCard label="Active Learners" value={kpis.activeStudents.toLocaleString()}      iconType="learners"    iconBg="#dcfce7" iconColor="#16a34a" />
-            <LKpiCard label="Courses"         value={kpis.publishedCourses.toLocaleString()}    iconType="courses"     iconBg="#dbeafe" iconColor="#2563eb" />
-            <LKpiCard label="Completions"     value={kpis.certificatesIssued.toLocaleString()}  iconType="completions" iconBg="#fed7aa" iconColor="#ea580c" />
-            <LKpiCard label="Revenue"         value={`$${kpis.totalRevenue.toLocaleString()}`}  iconType="revenue"     iconBg="#d1fae5" iconColor="#059669" />
+            <LKpiCard label="Total Users"     value={kpis.totalUsers.toLocaleString()}                                                        iconType="users"       iconBg="#f3e8ff" iconColor="#9333ea" />
+            <LKpiCard label="Active Learners" value={kpis.activeStudents.toLocaleString()}                                                     iconType="learners"    iconBg="#dcfce7" iconColor="#16a34a" />
+            <LKpiCard label="Courses"         value={kpis.publishedCourses > 0 ? kpis.publishedCourses.toLocaleString() : '—'}                 iconType="courses"     iconBg="#dbeafe" iconColor="#2563eb" />
+            <LKpiCard label="Completions"     value={kpis.certificatesIssued > 0 ? kpis.certificatesIssued.toLocaleString() : '—'}             iconType="completions" iconBg="#fed7aa" iconColor="#ea580c" />
+            <LKpiCard label="Revenue"         value={kpis.totalRevenue > 0 ? `$${kpis.totalRevenue.toLocaleString()}` : '—'}                   iconType="revenue"     iconBg="#d1fae5" iconColor="#059669" />
           </>
         ) : null}
       </div>
@@ -966,9 +1007,9 @@ export default function DashboardPage() {
         </div>
         {/* Right: compact date / dept filter */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
-          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} style={fi} title="Date filtering coming soon" />
+          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} style={fi} />
           <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>–</span>
-          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} style={fi} title="Date filtering coming soon" />
+          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} style={fi} />
           <input type="text" placeholder="Dept. ID" value={departmentId}
             onChange={e => setDeptId(e.target.value)} style={{ ...fi, width: 74 }} />
           <input type="text" placeholder="Course ID" value={courseId}
@@ -1026,7 +1067,7 @@ export default function DashboardPage() {
         <div className="mn-db-card">
           <div className="mn-db-card-header">
             <div className="mn-db-card-title">Recent Activity</div>
-            <button className="mn-db-view-all" onClick={() => { window.location.href = '/users'; }}>View All</button>
+            <button className="mn-db-view-all" onClick={() => navigate('/users')}>View All</button>
           </div>
           {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: 32 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
@@ -1124,7 +1165,7 @@ export default function DashboardPage() {
         <div className="mn-db-card">
           <div className="mn-db-card-header">
             <div className="mn-db-card-title">Notifications</div>
-            <button className="mn-db-view-all" disabled title="Coming soon" style={{ opacity: 0.4, cursor: 'not-allowed' }}>View All</button>
+            <button className="mn-db-view-all" onClick={() => window.dispatchEvent(new CustomEvent('openNotificationsPanel'))}>View All</button>
           </div>
           {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: 32 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
@@ -1174,7 +1215,7 @@ export default function DashboardPage() {
           ) : (
             (data?.quickActions ?? []).map((qa: QuickActionItem) => (
               <button key={qa.key} className="mn-db-qa-btn" disabled={!qa.enabled}
-                onClick={() => { if (qa.path) window.location.href = qa.path; }}
+                onClick={() => { if (qa.path) navigate(qa.path); }}
                 style={{ opacity: qa.enabled ? 1 : 0.45, cursor: qa.enabled ? 'pointer' : 'not-allowed' }}>
                 <div className="mn-db-qa-icon"><QaIcon actionKey={qa.key} /></div>
                 <span className="mn-db-qa-label">{qa.label}</span>

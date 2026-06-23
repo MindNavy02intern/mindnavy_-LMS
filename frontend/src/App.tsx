@@ -12,6 +12,8 @@ const TrustedDevicesPage = lazy(() => import('./pages/TrustedDevicesPage'));
 const VerifyDevicePage   = lazy(() => import('./pages/VerifyDevicePage'));
 const NotFoundPage                  = lazy(() => import('./pages/NotFoundPage'));
 const RolesPermissionsStandalonePage = lazy(() => import('./pages/RolesPermissionsStandalonePage'));
+const SystemSettingsPage             = lazy(() => import('./pages/SystemSettingsPage'));
+const ProfilePage                    = lazy(() => import('./pages/ProfilePage'));
 
 function PageLoader() {
   return (
@@ -98,6 +100,23 @@ export default function App() {
           element={
             <ProtectedRoute>
               <RolesPermissionsStandalonePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <SystemSettingsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
             </ProtectedRoute>
           }
         />

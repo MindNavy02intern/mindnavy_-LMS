@@ -142,7 +142,7 @@ function ComingSoon({ label }: { label: string }) {
 
 // ── Bottom info card ──────────────────────────────────────────────────────────
 
-function InfoCard({ title, subtitle }: { title: string; subtitle: string }) {
+function InfoCard({ title, subtitle, onViewAll }: { title: string; subtitle: string; onViewAll?: () => void }) {
   return (
     <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderBottom: '1px solid #f3f4f6' }}>
@@ -150,7 +150,10 @@ function InfoCard({ title, subtitle }: { title: string; subtitle: string }) {
           <div style={{ fontWeight: 700, fontSize: 13, color: '#111827' }}>{title}</div>
           <div style={{ fontSize: 11, color: '#9ca3af', marginTop: 1 }}>{subtitle}</div>
         </div>
-        <button style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 600, color: '#3b82f6', fontFamily: 'inherit', padding: 0 }}>
+        <button
+          onClick={onViewAll}
+          style={{ background: 'none', border: 'none', cursor: onViewAll ? 'pointer' : 'default', fontSize: 12, fontWeight: 600, color: '#3b82f6', fontFamily: 'inherit', padding: 0 }}
+        >
           View All
         </button>
       </div>
@@ -191,6 +194,7 @@ export default function RolesPermissionsStandalonePage() {
   const [search,       setSearch]       = useState('');
   const [searchInput,  setSearchInput]  = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [levelFilter,  setLevelFilter]  = useState('');
 
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -228,11 +232,12 @@ export default function RolesPermissionsStandalonePage() {
   const [fullMatrixView,  setFullMatrixView]  = useState(false);
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const displayedRoles = levelFilter ? roles.filter(r => getLevelMeta(r).label === levelFilter) : roles;
   const toggleSelect = (id: string) =>
     setSelectedIds(prev => { const s = new Set(prev); s.has(id) ? s.delete(id) : s.add(id); return s; });
   const toggleAll = () => {
-    if (selectedIds.size === roles.length) setSelectedIds(new Set());
-    else setSelectedIds(new Set(roles.map(r => r.id)));
+    if (selectedIds.size === displayedRoles.length) setSelectedIds(new Set());
+    else setSelectedIds(new Set(displayedRoles.map(r => r.id)));
   };
 
   // ── Modal / drawer ─────────────────────────────────────────────────────────
@@ -307,12 +312,12 @@ export default function RolesPermissionsStandalonePage() {
       icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c2410c" strokeWidth="2" strokeLinecap="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>,
     },
     {
-      label: 'Access Policies', value: stats?.activeRoles ?? 16,
+      label: 'Access Policies', value: 0,  // Phase 2 — no access policies table yet
       iconBg: '#f0fdfa', trendUp: true, trendPct: '14.3%',
       icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f766e" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
     },
     {
-      label: 'High Risk Perms', value: stats?.inactiveRoles ?? 7,
+      label: 'Inactive Roles', value: stats?.inactiveRoles ?? 0,
       iconBg: '#fef2f2', trendUp: false, trendPct: '12.3%',
       icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
     },
@@ -460,15 +465,15 @@ export default function RolesPermissionsStandalonePage() {
                       <select className="rp-select" value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1); }}>
                         {STATUS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                       </select>
-                      {/* Levels filter (visual) */}
-                      <select className="rp-select">
-                        <option>All Levels</option>
-                        <option>System</option>
-                        <option>Department</option>
-                        <option>Branch</option>
-                        <option>Functional</option>
-                        <option>Default</option>
-                        <option>Custom</option>
+                      {/* Levels filter */}
+                      <select className="rp-select" value={levelFilter} onChange={e => { setLevelFilter(e.target.value); setPage(1); }}>
+                        <option value="">All Levels</option>
+                        <option value="System">System</option>
+                        <option value="Department">Department</option>
+                        <option value="Branch">Branch</option>
+                        <option value="Functional">Functional</option>
+                        <option value="Default">Default</option>
+                        <option value="Custom">Custom</option>
                       </select>
                       {/* Filters button */}
                       <button style={{ padding: '6px 10px', fontSize: 12, border: '1px solid #e5e7eb', borderRadius: 7, background: '#fff', cursor: 'pointer', fontFamily: 'inherit', color: '#374151', display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -497,7 +502,7 @@ export default function RolesPermissionsStandalonePage() {
                         <tbody>
                           {listLoading && Array.from({ length: 8 }).map((_, i) => <SkeletonRow key={i} />)}
 
-                          {!listLoading && roles.length === 0 && (
+                          {!listLoading && displayedRoles.length === 0 && (
                             <tr>
                               <td colSpan={8} style={{ padding: 48, textAlign: 'center', color: '#9ca3af' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -511,7 +516,7 @@ export default function RolesPermissionsStandalonePage() {
                             </tr>
                           )}
 
-                          {!listLoading && roles.map(role => {
+                          {!listLoading && displayedRoles.map(role => {
                             const statusBadge   = STATUS_BADGE[role.status] ?? { bg: '#f9fafb', color: '#6b7280' };
                             const levelMeta     = getLevelMeta(role);
                             const scope         = getScopeLabel(levelMeta.label);
@@ -618,10 +623,10 @@ export default function RolesPermissionsStandalonePage() {
 
               {/* ── Bottom 4 info cards ─────────────────────────────────────── */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginTop: 20 }}>
-                <InfoCard title="Access Policies"      subtitle="Active access control policies"  />
-                <InfoCard title="Role Templates"        subtitle="Predefined role templates"       />
-                <InfoCard title="User Role Assignments" subtitle="Oversee user role distribution" />
-                <InfoCard title="Recent Role Activity"  subtitle="Latest role related activities" />
+                <InfoCard title="Access Policies"      subtitle="Active access control policies"  onViewAll={() => setActiveTab('access')} />
+                <InfoCard title="Role Templates"        subtitle="Predefined role templates"       onViewAll={() => setActiveTab('templates')} />
+                <InfoCard title="User Role Assignments" subtitle="Oversee user role distribution" onViewAll={() => setActiveTab('assignments')} />
+                <InfoCard title="Recent Role Activity"  subtitle="Latest role related activities" onViewAll={() => setActiveTab('audit')} />
               </div>
             </>
           )}

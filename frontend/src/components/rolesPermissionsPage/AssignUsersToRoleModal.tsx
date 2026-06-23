@@ -14,10 +14,9 @@ async function fetchAllUsers(): Promise<User[]> {
   return (json as { users?: User[] }).users ?? [];
 }
 
-async function patchUserRole(userId: string, roleName: string): Promise<void> {
-  const url  = `${BASE}/users/${encodeURIComponent(userId)}`;
-  const body = { role: roleName };
-  console.log('CALLING API', url, body);
+async function patchUserRole(userId: string, roleId: string): Promise<void> {
+  const url  = `${BASE}/users/${encodeURIComponent(userId)}/role`;
+  const body = { roleId };
   const token = getStoredToken();
   const res = await fetch(url, {
     method: 'PATCH',
@@ -30,7 +29,6 @@ async function patchUserRole(userId: string, roleName: string): Promise<void> {
   if (!res.ok) {
     const json = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
     const err = new Error((json as { message?: string }).message ?? `HTTP ${res.status}`);
-    console.error('ASSIGN ERROR', err);
     throw err;
   }
 }
@@ -81,7 +79,7 @@ interface Props {
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export default function AssignUsersToRoleModal({ roleId: _roleId, roleName, onClose, onSuccess, showToast }: Props) {
+export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSuccess, showToast }: Props) {
   const [users,        setUsers]        = useState<User[]>([]);
   const [loading,      setLoading]      = useState(true);
   const [fetchError,   setFetchError]   = useState<string | null>(null);
@@ -113,7 +111,6 @@ export default function AssignUsersToRoleModal({ roleId: _roleId, roleName, onCl
     setSelectedIds(prev => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
-      console.log('SELECTED', Array.from(next));
       return next;
     });
   }
@@ -130,12 +127,11 @@ export default function AssignUsersToRoleModal({ roleId: _roleId, roleName, onCl
   }
 
   async function handleAssign() {
-    console.log('ASSIGN CLICKED', Array.from(selectedIds));
     if (selectedIds.size === 0) return;
     setSubmitting(true);
 
     const ids = Array.from(selectedIds);
-    const results = await Promise.allSettled(ids.map(id => patchUserRole(id, roleName)));
+    const results = await Promise.allSettled(ids.map(id => patchUserRole(id, roleId)));
 
     const failed = results.filter(r => r.status === 'rejected');
     const succeeded = results.length - failed.length;

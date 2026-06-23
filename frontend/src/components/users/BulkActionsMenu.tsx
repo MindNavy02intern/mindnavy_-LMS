@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { bulkAction } from '../../api/users';
 import type { BulkActionType } from '../../types/users';
 import type { User } from '../../types/users';
+import useRoles from '../../hooks/useRoles';
 
 interface Props {
   selectedIds:      string[];
@@ -10,13 +11,6 @@ interface Props {
   onSuccess:        () => void;
   showToast:        (type: 'success' | 'error', message: string) => void;
 }
-
-const ROLE_OPTIONS = [
-  { value: 'LEARNER',         label: 'Learner'         },
-  { value: 'INSTRUCTOR',      label: 'Instructor'      },
-  { value: 'MANAGER',         label: 'Manager'         },
-  { value: 'ADMIN_ASSISTANT', label: 'Admin Assistant' },
-];
 
 type ActionKey = BulkActionType;
 
@@ -31,10 +25,11 @@ const ACTION_LABELS: Record<ActionKey, string> = {
 export default function BulkActionsMenu({ selectedIds, users: _users, onClearSelection, onSuccess, showToast }: Props) {
   const [open,          setOpen]          = useState(false);
   const [confirmAction, setConfirmAction] = useState<ActionKey | null>(null);
-  const [assignRoleVal, setAssignRoleVal] = useState('LEARNER');
+  const [assignRoleVal, setAssignRoleVal] = useState('');
   const [notifyMsg,     setNotifyMsg]     = useState('');
   const [busy,          setBusy]          = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const { options: roleOptions, loading: rolesLoading } = useRoles();
 
   useEffect(() => {
     function handler(e: MouseEvent) {
@@ -173,11 +168,15 @@ export default function BulkActionsMenu({ selectedIds, users: _users, onClearSel
                 Assign role to {count} user{count !== 1 ? 's' : ''}
               </div>
               <select
-                value={assignRoleVal}
+                value={assignRoleVal || (roleOptions[0]?.value ?? '')}
                 onChange={e => setAssignRoleVal(e.target.value)}
+                disabled={rolesLoading}
                 style={{ width: '100%', padding: '7px 8px', fontSize: 13, borderRadius: 6, border: '1px solid #d1d5db', marginBottom: 8, fontFamily: 'inherit', color: '#374151', background: '#fff' }}
               >
-                {ROLE_OPTIONS.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
+                {rolesLoading
+                  ? <option value="">Loading roles…</option>
+                  : roleOptions.map(r => <option key={r.value} value={r.value}>{r.label}</option>)
+                }
               </select>
               <div style={{ display: 'flex', gap: 6 }}>
                 <button

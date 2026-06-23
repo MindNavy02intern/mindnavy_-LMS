@@ -125,6 +125,12 @@ export default function UserManagementPage() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
+    const tab = searchParams.get('tab') as TabKey | null;
+    if (tab && TABS.some(t => t.key === tab)) {
+      setActiveTab(tab);
+      setSearchParams({}, { replace: true });
+      return;
+    }
     if (searchParams.get('modal') === 'addUser') {
       setAddUserOpen(true);
       setSearchParams({}, { replace: true });
@@ -266,7 +272,7 @@ export default function UserManagementPage() {
         {activeTab === 'analytics' && <UserAnalytics />}
 
         {/* Per-tab components */}
-        {activeTab === 'invitations'          && <InvitationsTab showToast={showToast} onUserUpdated={notifyDashboard} />}
+        {activeTab === 'invitations'          && <InvitationsTab showToast={showToast} onUserUpdated={notifyDashboard} onViewUsers={() => handleTabChange('users')} />}
         {activeTab === 'suspended'            && <SuspendedTab />}
         {activeTab === 'pending-verification' && <PendingVerificationTab />}
         {activeTab === 'archived'             && <ArchivedTab />}

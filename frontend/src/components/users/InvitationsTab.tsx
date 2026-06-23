@@ -128,11 +128,12 @@ function ActionBtn({ label, onClick, disabled, danger, color }: {
 interface Props {
   showToast:     (type: ToastType, message: string) => void;
   onUserUpdated?: () => void;
+  onViewUsers?: () => void;
 }
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
-export default function InvitationsTab({ showToast, onUserUpdated }: Props) {
+export default function InvitationsTab({ showToast, onUserUpdated, onViewUsers }: Props) {
   const [invitations,  setInvitations]  = useState<Invitation[]>([]);
   const [total,        setTotal]        = useState(0);
   const [page,         setPage]         = useState(1);
@@ -456,7 +457,7 @@ export default function InvitationsTab({ showToast, onUserUpdated }: Props) {
                               {/* ACCEPTED — navigate to Users tab */}
                               {inv.status === 'accepted' && (
                                 <button
-                                  onClick={() => { window.dispatchEvent(new CustomEvent('userDataChanged')); }}
+                                  onClick={() => { window.dispatchEvent(new CustomEvent('userDataChanged')); onViewUsers?.(); }}
                                   style={{ fontSize: 11, fontWeight: 600, padding: '4px 9px', borderRadius: 5, border: '1px solid #e5e7eb', background: '#f9fafb', cursor: 'pointer', fontFamily: 'inherit', color: '#374151' }}
                                 >
                                   View Users

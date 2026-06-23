@@ -20,9 +20,11 @@ const {
   suspendUser,
   reactivateUser,
   approveVerification,
+  rejectVerification,
   resetUserPassword,
   assignUserRole,
   deleteUser,
+  permanentDeleteUser,
   getUsersAnalytics,
   importUsers,
   bulkActionUsers,
@@ -95,6 +97,20 @@ router.patch(
   requireAdminAuth,
   adminUserActionRateLimiter,
   approveVerification
+);
+
+router.patch(
+  "/:id/reject-verification",
+  requireAdminAuth,
+  adminUserActionRateLimiter,
+  rejectVerification
+);
+
+router.delete(
+  "/:id/permanent",
+  requireAdminAuth,
+  adminUserActionRateLimiter,
+  permanentDeleteUser
 );
 
 router.post(

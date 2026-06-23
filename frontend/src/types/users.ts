@@ -19,6 +19,7 @@ export interface User {
   verificationState: VerificationState;
   lastActivityAt:    string | null;
   riskScore:         null;
+  suspendedAt:       string | null;
   enrollmentCount:   number;
   createdAt:         string;
 }
