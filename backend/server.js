@@ -9,6 +9,7 @@ const organizationRoutes = require("./src/routes/organization.routes");
 const rolesRoutes = require("./src/routes/roles.routes");
 const permissionsRoutes = require("./src/routes/permissions.routes");
 const permissionMatrixRoutes = require("./src/routes/permissionMatrix.routes");
+const accessPoliciesRoutes = require("./src/routes/accessPolicies.routes");
 const groupsRoutes       = require("./src/routes/groups.routes");
 const invitationsRoutes  = require("./src/routes/invitations.routes");
 const messagesRoutes     = require("./src/routes/messages.routes");
@@ -47,6 +48,7 @@ app.use("/api/admin/organization", organizationRoutes);
 app.use("/api/admin/roles", rolesRoutes);
 app.use("/api/admin/permissions", permissionsRoutes);
 app.use("/api/admin/permission-matrix", permissionMatrixRoutes);
+app.use("/api/admin/access-policies", accessPoliciesRoutes);
 
 // Groups routes
 app.use("/api/admin/groups", groupsRoutes);

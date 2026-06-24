@@ -7,6 +7,7 @@ model Role {
   updatedAt   DateTime   @updatedAt
 
   rolePermissions RolePermission[]
+  accessPolicies  AccessPolicy[]
 
   @@index([status])
   @@map("roles")
