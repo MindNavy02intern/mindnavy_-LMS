@@ -20,10 +20,15 @@ test.describe.serial('Invitation lifecycle', () => {
     await expect(async () => {
       expect(await roleSelect.locator('option').count()).toBeGreaterThan(1)
     }).toPass({ timeout: 10000 })
-    await roleSelect.selectOption({ index: 1 })
+    // Must be one of the 4 system roles — backend invitations.service.js
+    // rejects anything else with "Invalid role" (400). This dropdown lists
+    // every Role record including custom test roles, so an arbitrary index
+    // is unsafe once those accumulate.
+    await roleSelect.selectOption({ label: 'Instructor' })
     const sendPromise = page.waitForResponse(resp => resp.url().includes('/invitations') && resp.request().method() === 'POST')
     await page.getByRole('button', { name: '✉ Send Invitation', exact: true }).click()
-    await sendPromise
+    const sendResp = await sendPromise
+    expect(sendResp.ok()).toBeTruthy() // surface backend errors here, not as a confusing "row not found" later
     await gotoInvitations(page)
     await expect(page.locator('tr', { hasText: email })).toBeVisible({ timeout: 10000 })
     await expect(page.locator('tr', { hasText: email })).toContainText('Pending')
@@ -43,7 +48,9 @@ test.describe.serial('Invitation lifecycle', () => {
     const future = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10)
     await row.locator('input[type="date"]').fill(future)
     await row.getByRole('button', { name: 'Save', exact: true }).click()
-    await expect(page.getByText(/expir/i)).toBeVisible({ timeout: 10000 })
+    await expect(
+      page.getByText(/expiry updated|date updated|saved/i).first()
+    ).toBeVisible({ timeout: 10000 })
   })
 
   test('Cancel Invitation → verify status changes', async ({ page }) => {

@@ -160,18 +160,28 @@ test('Assign Role to User → verify role updated', async ({ page }) => {
   await page.goto('/users')
   await openDrawerFor(page, email)
   await page.getByRole('button', { name: 'Assign Role' }).click()
-  // Scope to the small VISIBLE panel containing the Primary/Secondary/Temporary
-  // type buttons — closed modals from earlier tests stay mounted (hidden) in
-  // the DOM, so `.last()` alone can pick a stale, zero-option instance.
-  const modal = page.locator('div:visible').filter({ has: page.getByRole('button', { name: 'Temporary', exact: true }) }).last()
+  // AssignRoleModal renders as a `position: fixed; inset: 0` overlay (same as
+  // UserDetailsDrawer's own root, so anchor on "Type" — unique to this modal's
+  // content — rather than "has a Temporary button", which previously matched
+  // the Type field's own narrow <div> instead of the modal that contains both
+  // the Type field AND the Role <select> as siblings).
+  const modal = page.locator('[style*="position: fixed"]:visible').filter({ hasText: 'Type *' }).last()
   const roleSelect = modal.locator('select')
   await expect(async () => {
     expect(await roleSelect.locator('option').count()).toBeGreaterThan(1)
-  }).toPass({ timeout: 10000 })
-  await roleSelect.selectOption({ index: 1 })
+  }).toPass({ timeout: 20000 })
+  // Must pick one of the 4 system roles (Learner/Instructor/Manager/
+  // Administrator) — the backend's PATCH /users/:id/role only accepts role
+  // names that map to its AppUserRole enum (see users.service.js
+  // roleNameToAppEnum). Any custom role (e.g. "MatrixRole 123...") 400s with
+  // "has no matching system role", so an arbitrary index is unsafe once the
+  // dropdown accumulates custom roles from other tests.
+  await roleSelect.selectOption({ label: 'Instructor' })
   await modal.getByRole('button', { name: 'Primary', exact: true }).click()
   await modal.getByRole('button', { name: 'Assign Role', exact: true }).click()
-  await expect(roleSelect).not.toBeVisible({ timeout: 10000 })
+  // AssignRoleModal shows a toast on success and closes via onSuccess() — the
+  // toast is the documented, guaranteed signal (close timing isn't).
+  await expect(page.getByText(/role assigned/i)).toBeVisible({ timeout: 15000 })
 })
 
 test('Send Message to User → verify success toast', async ({ page }) => {
@@ -265,20 +275,27 @@ test('Bulk Assign Role → verify multiple users updated', async ({ page }) => {
   }
   await page.getByRole('button', { name: 'Bulk Actions' }).click()
   await page.getByRole('button', { name: 'Assign Role' }).click()
-  // Scope to the VISIBLE panel containing the Apply button — closed panels
-  // from earlier tests stay mounted (hidden) in the DOM.
-  const panel = page.locator('div:visible').filter({ has: page.getByRole('button', { name: 'Apply', exact: true }) }).last()
+  // BulkActionsMenu's panel is `position: absolute` (not `fixed`), so there's
+  // no cheap way to exclude nested divs by style. "Assign role to N user(s)"
+  // is its own text-only <div>, a sibling of the <select> — not an ancestor —
+  // so requiring `has: select` is needed to land on the actual containing panel.
+  const panel = page.locator('div:visible').filter({ hasText: 'Assign role to', has: page.locator('select') }).last()
   const roleSelect = panel.locator('select')
   await expect(async () => {
     expect(await roleSelect.locator('option').count()).toBeGreaterThan(1)
-  }).toPass({ timeout: 10000 })
-  const options = await roleSelect.locator('option').allTextContents()
-  const targetIndex = options.findIndex(o => o.trim() && !/learner|select/i.test(o))
-  await roleSelect.selectOption({ index: targetIndex >= 0 ? targetIndex : 1 })
+  }).toPass({ timeout: 20000 })
+  // Must pick one of the 4 system roles — same backend constraint as
+  // AssignRoleModal (see users.service.js bulkActionUsers' assign_role
+  // branch). Picking any other option (custom test roles like "MatrixRole
+  // 123...") 400s with "Invalid role", which is why this previously left the
+  // row's role unchanged at "learner".
+  await roleSelect.selectOption({ label: 'Instructor' })
+  const applyPromise = page.waitForResponse(resp => resp.url().includes('/bulk-action') && resp.request().method() === 'POST')
   await panel.getByRole('button', { name: 'Apply', exact: true }).click()
-  await page.waitForTimeout(1500)
+  const applyResp = await applyPromise
+  expect(applyResp.ok()).toBeTruthy()
   await page.goto('/users')
   for (const email of emails) {
-    await expect(page.locator('tr', { hasText: email })).not.toContainText('learner', { timeout: 10000 })
+    await expect(page.locator('tr', { hasText: email })).toContainText('instructor', { timeout: 10000 })
   }
 })

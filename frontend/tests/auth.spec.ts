@@ -9,7 +9,7 @@ test('Login page loads', async ({ page }) => {
 test('Login with valid credentials', async ({ page }) => {
   await page.goto('/')
   await page.fill('input[type="email"]', 'mindnavy@gmail.com')
-  await page.fill('input[type="password"]', '12345@1234')
+  await page.fill('input[type="password"]', 'Mindnavy@12345678')
   await page.click('button[type="submit"]')
   await expect(page).toHaveURL(/dashboard/)
 })

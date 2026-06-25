@@ -22,7 +22,11 @@ async function addPlainUser(page: Page, name: string, email: string) {
 }
 
 function extractCount(text: string): number {
-  const m = text.match(/(\d+)/)
+  // The row's own name contains a 13-digit timestamp (e.g. "MemberGroup
+  // 1782346141182500") — a bare /(\d+)/ match grabs that instead of the
+  // member-count badge. The count itself is always a short number, so match
+  // a standalone 1–3 digit run instead.
+  const m = text.match(/\b(\d{1,3})\b/)
   return m ? parseInt(m[1], 10) : -1
 }
 
@@ -89,12 +93,14 @@ test.describe.serial('Group Members', () => {
 
     await row.getByRole('button', { name: '👤 Members' }).click()
     await page.getByRole('button', { name: 'Add Members', exact: true }).click()
-    await page.getByPlaceholder('Search by name or email…').fill(userEmail)
+    // Anchor on the "Add Members" tab label — a placeholder string isn't real
+    // textContent, so `hasText` can't match it. The outer "👤 Members" trigger
+    // button isn't `position: fixed`, so it's excluded by that requirement.
+    const modal = modalScope(page, 'Add Members')
+    await modal.getByPlaceholder('Search by name or email…').fill(userEmail)
     await page.waitForTimeout(500)
-    // Anchor on the placeholder text itself (unique to this modal) rather than
-    // the "Add Members" tab label, which also matches the tab button.
-    const modal = modalScope(page, 'Search by name or email…')
-    await modal.getByRole('checkbox', { name: userEmail }).check()
+    // Search narrows to this one user, so the first checkbox is theirs.
+    await modal.locator('input[type="checkbox"]').first().check()
     await modal.getByRole('button', { name: /Add \d+ Member/ }).click()
     await page.waitForTimeout(1000)
     await page.keyboard.press('Escape')
