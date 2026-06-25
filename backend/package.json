@@ -7,6 +7,8 @@
     "start": "node server.js",
     "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:unit": "node --test tests/roleTemplates.validator.test.js",
+    "test:e2e": "node --test tests/roleTemplates.e2e.test.js",
     "prisma:generate": "prisma generate",
     "prisma:validate": "prisma validate",
     "create:first-admin": "node src/scripts/createFirstAdmin.js",

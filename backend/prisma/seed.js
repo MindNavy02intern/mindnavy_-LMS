@@ -23,6 +23,31 @@ const ROLES = [
   { name: "Learner",       description: "Take courses and view content", status: "ACTIVE" },
 ];
 
+// Predefined permission bundles. Permission NAMES (stable) are resolved to IDs at
+// seed time — the RoleTemplate.permissions JSON stores the resolved IDs.
+const ROLE_TEMPLATES = [
+  {
+    name: "Instructor Template",
+    description: "Course delivery: manage and assign courses, track learner progress.",
+    permissionNames: ["Manage Courses", "Assign Courses", "View Learner Progress"],
+  },
+  {
+    name: "HR Manager Template",
+    description: "People management: create/edit/view users and view reports.",
+    permissionNames: ["Create User", "Edit User", "View Users", "View Reports"],
+  },
+  {
+    name: "Finance Manager Template",
+    description: "Financial oversight: view and export reports.",
+    permissionNames: ["View Reports", "Export Reports"],
+  },
+  {
+    name: "Branch Manager Template",
+    description: "Branch operations: view users, reports, manage org, assign courses.",
+    permissionNames: ["View Users", "View Reports", "Manage Organization", "Assign Courses"],
+  },
+];
+
 async function main() {
   console.log("Seeding roles & permissions…");
 
@@ -80,6 +105,20 @@ async function main() {
   }
 
   console.log("  Permissions assigned to roles");
+
+  // Upsert default role templates (idempotent by unique name).
+  for (const tpl of ROLE_TEMPLATES) {
+    const ids = tpl.permissionNames
+      .map((n) => byName[n]?.id)
+      .filter(Boolean); // skip any name not present in PERMISSIONS
+    await prisma.roleTemplate.upsert({
+      where:  { name: tpl.name },
+      update: { description: tpl.description, permissions: ids },
+      create: { name: tpl.name, description: tpl.description, permissions: ids },
+    });
+  }
+  console.log(`  ${ROLE_TEMPLATES.length} role templates upserted`);
+
   console.log("Done.");
 }
 
