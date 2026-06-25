@@ -9,6 +9,14 @@ async function gotoGroups(page: Page) {
   await page.getByRole('button', { name: 'Groups' }).click()
 }
 
+// Waits for the actual API response before checking the UI — confirmed via
+// isolated runs that CreateGroupModal/EditGroupModal correctly call
+// onSaved() → close the modal on success; the modal-closing race only shows
+// up under full-suite backend load, not as an app defect.
+function waitForApi(page: Page, urlSubstr: string, method: string) {
+  return page.waitForResponse(resp => resp.url().includes(urlSubstr) && resp.request().method() === method, { timeout: 20000 })
+}
+
 async function addPlainUser(page: Page, name: string, email: string) {
   await page.goto('/users')
   await page.getByRole('button', { name: '+ Add User', exact: true }).click()
@@ -19,6 +27,17 @@ async function addPlainUser(page: Page, name: string, email: string) {
   await page.locator('select:has(option:text-is("Select role…"))').selectOption('LEARNER')
   await page.getByRole('button', { name: '+ Add User', exact: true }).last().click()
   await expect(page.getByText('User created successfully')).toBeVisible({ timeout: 10000 })
+}
+
+async function createGroup(page: Page, name: string) {
+  await gotoGroups(page)
+  await page.getByRole('button', { name: '+ Add Group', exact: true }).click()
+  await page.getByPlaceholder('e.g. Development Team').fill(name)
+  const respPromise = waitForApi(page, '/groups', 'POST')
+  await page.getByRole('button', { name: 'Create Group', exact: true }).click()
+  const resp = await respPromise
+  expect(resp.ok()).toBeTruthy()
+  await expect(page.getByPlaceholder('e.g. Development Team')).not.toBeVisible({ timeout: 10000 })
 }
 
 function extractCount(text: string): number {
@@ -41,11 +60,7 @@ test.describe.serial('Group CRUD', () => {
   const name = `Group ${uid()}`
 
   test('Create Group → verify appears in table', async ({ page }) => {
-    await gotoGroups(page)
-    await page.getByRole('button', { name: '+ Add Group', exact: true }).click()
-    await page.getByPlaceholder('e.g. Development Team').fill(name)
-    await page.getByRole('button', { name: 'Create Group', exact: true }).click()
-    await expect(page.getByPlaceholder('e.g. Development Team')).not.toBeVisible({ timeout: 10000 })
+    await createGroup(page, name)
     await expect(page.locator('tr', { hasText: name })).toBeVisible()
   })
 
@@ -55,7 +70,10 @@ test.describe.serial('Group CRUD', () => {
     await row.getByRole('button', { name: '✏️ Edit' }).click()
     const newDesc = `Edited group desc ${uid()}`
     await page.locator('textarea').fill(newDesc)
+    const respPromise = waitForApi(page, '/groups', 'PATCH')
     await page.getByRole('button', { name: 'Save Changes', exact: true }).click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText('Save Changes')).not.toBeVisible({ timeout: 10000 })
   })
 
@@ -64,7 +82,10 @@ test.describe.serial('Group CRUD', () => {
     const row = page.locator('tr', { hasText: name })
     await row.getByRole('button', { name: '🗑️ Delete' }).click()
     await expect(page.getByText('Delete Group?')).toBeVisible()
+    const respPromise = waitForApi(page, '/groups', 'DELETE')
     await page.getByRole('button', { name: 'Yes, Delete', exact: true }).click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.locator('tr', { hasText: name })).not.toBeVisible({ timeout: 10000 })
   })
 })
@@ -77,11 +98,7 @@ test.describe.serial('Group Members', () => {
 
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage({ storageState: 'tests/setup/.auth.json' })
-    await gotoGroups(page)
-    await page.getByRole('button', { name: '+ Add Group', exact: true }).click()
-    await page.getByPlaceholder('e.g. Development Team').fill(groupName)
-    await page.getByRole('button', { name: 'Create Group', exact: true }).click()
-    await expect(page.getByPlaceholder('e.g. Development Team')).not.toBeVisible({ timeout: 10000 })
+    await createGroup(page, groupName)
     await addPlainUser(page, userName, userEmail)
     await page.close()
   })
@@ -101,8 +118,10 @@ test.describe.serial('Group Members', () => {
     await page.waitForTimeout(500)
     // Search narrows to this one user, so the first checkbox is theirs.
     await modal.locator('input[type="checkbox"]').first().check()
+    const respPromise = waitForApi(page, '/groups', 'POST')
     await modal.getByRole('button', { name: /Add \d+ Member/ }).click()
-    await page.waitForTimeout(1000)
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await page.keyboard.press('Escape')
 
     await gotoGroups(page)
@@ -120,8 +139,10 @@ test.describe.serial('Group Members', () => {
     const memberRow = page.locator('div')
       .filter({ hasText: userEmail, has: page.getByRole('button', { name: 'Remove', exact: true }) })
       .last()
+    const respPromise = waitForApi(page, '/groups', 'DELETE')
     await memberRow.getByRole('button', { name: 'Remove', exact: true }).click()
-    await page.waitForTimeout(1000)
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await page.keyboard.press('Escape')
 
     await gotoGroups(page)
@@ -133,11 +154,7 @@ test.describe.serial('Group Members', () => {
 
 test('Search Groups → verify filtered results', async ({ page }) => {
   const name = `SearchGroup ${uid()}`
-  await gotoGroups(page)
-  await page.getByRole('button', { name: '+ Add Group', exact: true }).click()
-  await page.getByPlaceholder('e.g. Development Team').fill(name)
-  await page.getByRole('button', { name: 'Create Group', exact: true }).click()
-  await expect(page.getByPlaceholder('e.g. Development Team')).not.toBeVisible({ timeout: 10000 })
+  await createGroup(page, name)
 
   await gotoGroups(page)
   await page.getByPlaceholder('Search groups…').fill(name)

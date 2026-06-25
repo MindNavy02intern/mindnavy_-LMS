@@ -68,13 +68,22 @@ test('Filter by Status → verify correct items shown', async ({ page }) => {
   await gotoInvitations(page)
   const statusFilter = page.locator('select:has(option:text-is("Revoked"))')
   await expect(statusFilter).toHaveCount(1)
+  // Let the initial (unfiltered) mount-time fetch settle BEFORE registering
+  // the filter's waitForResponse — otherwise that stale in-flight request
+  // can satisfy the listener instead of the one triggered by selectOption,
+  // making the assertions below run against the unfiltered list.
+  await page.waitForLoadState('networkidle')
   const listPromise = page.waitForResponse(resp => resp.url().includes('/invitations') && resp.request().method() === 'GET')
   await statusFilter.selectOption('pending')
   await listPromise
-  await page.waitForTimeout(300)
-  const rows = page.locator('tbody tr')
-  const count = await rows.count()
-  for (let i = 0; i < count; i++) {
-    await expect(rows.nth(i)).toContainText('Pending')
-  }
+  // Poll rather than trust a single snapshot — the table re-render can lag
+  // one tick behind the response resolving.
+  await expect(async () => {
+    const rows = page.locator('tbody tr')
+    const count = await rows.count()
+    expect(count).toBeGreaterThan(0)
+    for (let i = 0; i < count; i++) {
+      await expect(rows.nth(i)).toContainText('Pending')
+    }
+  }).toPass({ timeout: 10000 })
 })

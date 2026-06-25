@@ -222,11 +222,31 @@ async function assignPermissionsToRole(roleId, permissionIds, adminId) {
 async function getPermissionMatrix({ roleStatus, category, search, maxRoles, maxPermissions } = {}) {
   const roleWhere = {};
   if (roleStatus && roleStatus !== "ALL") roleWhere.status = roleStatus;
-  if (search) roleWhere.name = { contains: search, mode: "insensitive" };
 
   const permWhere = {};
   if (category) permWhere.category = category;
-  if (search) permWhere.name = { contains: search, mode: "insensitive" };
+
+  if (search) {
+    const term = { contains: search, mode: "insensitive" };
+    // "Search roles or permissions" implies OR, not AND — applying the same
+    // term to both independently (the previous behavior) meant searching a
+    // role name with no identically-named permission (e.g. "Content Manager")
+    // returned that role with zero permission rows, hiding every cell for it.
+    // Only filter a dimension by the term if something on that dimension
+    // actually matches; if neither matches, keep both filters so the result
+    // is legitimately empty (typo/no-match search).
+    const [roleMatchCount, permMatchCount] = await Promise.all([
+      prisma.role.count({ where: { ...roleWhere, name: term } }),
+      prisma.permission.count({ where: { ...permWhere, name: term } }),
+    ]);
+    if (roleMatchCount > 0 || permMatchCount > 0) {
+      if (roleMatchCount > 0) roleWhere.name = term;
+      if (permMatchCount > 0) permWhere.name = term;
+    } else {
+      roleWhere.name = term;
+      permWhere.name = term;
+    }
+  }
 
   // Roles, permissions, and the user-count map fetched in parallel.
   const [roles, permissions, countByEnum] = await Promise.all([

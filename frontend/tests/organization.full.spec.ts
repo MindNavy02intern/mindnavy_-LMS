@@ -10,6 +10,15 @@ async function gotoOrgSubTab(page: Page, subTab: string) {
   await page.getByRole('button', { name: subTab }).click()
 }
 
+// Waits for the actual API response before checking the UI — toast text +
+// a fixed timeout is a race against backend latency, which grows
+// substantially over a long full-suite run (confirmed independently: every
+// test in this file passes 100% of the time in isolation, but is flaky in
+// the full run purely from cumulative backend load, not an app defect).
+function waitForApi(page: Page, urlSubstr: string, method: string) {
+  return page.waitForResponse(resp => resp.url().includes(urlSubstr) && resp.request().method() === method, { timeout: 20000 })
+}
+
 async function createBranch(page: Page, name: string) {
   await gotoOrgSubTab(page, 'Branches')
   await page.getByRole('button', { name: '+ Add Branch', exact: true }).click()
@@ -17,7 +26,10 @@ async function createBranch(page: Page, name: string) {
   await page.getByPlaceholder('Street address').fill('123 Test St')
   await page.getByPlaceholder('City').fill('Testville')
   await page.getByPlaceholder('Country').fill('Testland')
+  const respPromise = waitForApi(page, '/organization/branches', 'POST')
   await page.getByRole('button', { name: 'Create', exact: true }).click()
+  const resp = await respPromise
+  expect(resp.ok()).toBeTruthy()
   await expect(page.getByText(/Branch created/i)).toBeVisible({ timeout: 10000 })
 }
 
@@ -26,7 +38,10 @@ async function createDepartment(page: Page, name: string, branchName: string) {
   await page.getByRole('button', { name: '+ Add Department', exact: true }).click()
   await page.getByPlaceholder('e.g. IT Department').fill(name)
   await page.locator('select:has(option:text-is("Select branch…"))').selectOption({ label: branchName })
+  const respPromise = waitForApi(page, '/organization/departments', 'POST')
   await page.getByRole('button', { name: 'Create', exact: true }).click()
+  const resp = await respPromise
+  expect(resp.ok()).toBeTruthy()
   await expect(page.getByText(/Department created/i)).toBeVisible({ timeout: 10000 })
 }
 
@@ -44,7 +59,10 @@ test.describe.serial('Branches', () => {
     await row.getByRole('button', { name: 'Edit', exact: true }).click()
     const newCity = `EditedCity${uid()}`
     await page.getByPlaceholder('City').fill(newCity)
+    const respPromise = waitForApi(page, '/organization/branches', 'PATCH')
     await page.getByRole('button', { name: 'Save Changes', exact: true }).click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText(/Branch updated/i)).toBeVisible({ timeout: 10000 })
     await expect(page.locator('tr', { hasText: name })).toContainText(newCity)
   })
@@ -54,7 +72,10 @@ test.describe.serial('Branches', () => {
     const row = page.locator('tr', { hasText: name })
     await row.getByRole('button', { name: 'Delete', exact: true }).click()
     await expect(page.getByText('Delete Branch?')).toBeVisible()
+    const respPromise = waitForApi(page, '/organization/branches', 'DELETE')
     await page.getByRole('button', { name: 'Delete', exact: true }).last().click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText(/Branch deleted/i)).toBeVisible({ timeout: 10000 })
     await expect(page.locator('tr', { hasText: name })).not.toBeVisible()
   })
@@ -81,7 +102,10 @@ test.describe.serial('Departments', () => {
     await row.getByRole('button', { name: 'Edit', exact: true }).click()
     const newCode = `EDT${uid()}`
     await page.getByPlaceholder('e.g. IT', { exact: true }).fill(newCode)
+    const respPromise = waitForApi(page, '/organization/departments', 'PATCH')
     await page.getByRole('button', { name: 'Save Changes', exact: true }).click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText(/Department updated/i)).toBeVisible({ timeout: 10000 })
   })
 
@@ -90,7 +114,10 @@ test.describe.serial('Departments', () => {
     const row = page.locator('tr', { hasText: name })
     await row.getByRole('button', { name: 'Delete', exact: true }).click()
     await expect(page.getByText('Delete Department?')).toBeVisible()
+    const respPromise = waitForApi(page, '/organization/departments', 'DELETE')
     await page.getByRole('button', { name: 'Delete', exact: true }).last().click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText(/Department deleted/i)).toBeVisible({ timeout: 10000 })
     await expect(page.locator('tr', { hasText: name })).not.toBeVisible()
   })
@@ -113,7 +140,10 @@ test.describe.serial('Teams', () => {
     await page.getByRole('button', { name: '+ Add Team', exact: true }).click()
     await page.getByPlaceholder('e.g. Frontend Team').fill(name)
     await page.locator('select:has(option:text-is("Select department…"))').selectOption({ label: deptName })
+    const respPromise = waitForApi(page, '/organization/teams', 'POST')
     await page.getByRole('button', { name: 'Create', exact: true }).click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText(/Team created/i)).toBeVisible({ timeout: 10000 })
     await expect(page.locator('tr', { hasText: name })).toBeVisible()
   })
@@ -124,7 +154,10 @@ test.describe.serial('Teams', () => {
     await row.getByRole('button', { name: 'Edit', exact: true }).click()
     const newName = `${name} Edited`
     await page.getByPlaceholder('e.g. Frontend Team').fill(newName)
+    const respPromise = waitForApi(page, '/organization/teams', 'PATCH')
     await page.getByRole('button', { name: 'Save Changes', exact: true }).click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText(/Team updated/i)).toBeVisible({ timeout: 10000 })
   })
 
@@ -133,7 +166,10 @@ test.describe.serial('Teams', () => {
     const row = page.locator('tr', { hasText: name })
     await row.getByRole('button', { name: 'Delete', exact: true }).click()
     await expect(page.getByText('Delete Team?')).toBeVisible()
+    const respPromise = waitForApi(page, '/organization/teams', 'DELETE')
     await page.getByRole('button', { name: 'Delete', exact: true }).last().click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText(/Team deleted/i)).toBeVisible({ timeout: 10000 })
   })
 })

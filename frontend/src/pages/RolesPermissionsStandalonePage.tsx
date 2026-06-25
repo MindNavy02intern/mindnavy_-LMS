@@ -6,6 +6,7 @@ import CreateRoleModal from '../components/rolesPermissionsPage/CreateRoleModal'
 import RoleDetailsDrawer from '../components/rolesPermissionsPage/RoleDetailsDrawer';
 import PermissionMatrixTab from '../components/rolesPermissionsPage/PermissionMatrixTab';
 import PermissionMatrixPreview from '../components/rolesPermissionsPage/PermissionMatrixPreview';
+import AccessPoliciesTab from '../components/rolesPermissionsPage/AccessPoliciesTab';
 import {
   getRolesPageStats,
   getRolesPageList,
@@ -636,8 +637,13 @@ export default function RolesPermissionsStandalonePage() {
             <PermissionMatrixTab showToast={showToast as (type: ToastType, message: string) => void} />
           )}
 
+          {/* ── Access Policies tab ─────────────────────────────────────────── */}
+          {activeTab === 'access' && (
+            <AccessPoliciesTab showToast={showToast as (type: ToastType, message: string) => void} />
+          )}
+
           {/* ── All other tabs ──────────────────────────────────────────────── */}
-          {activeTab !== 'lms' && activeTab !== 'matrix' && (
+          {activeTab !== 'lms' && activeTab !== 'matrix' && activeTab !== 'access' && (
             <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
               <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? activeTab} />
             </div>

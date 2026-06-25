@@ -31,7 +31,14 @@ async function createRole(page: Page, name: string, opts?: { checkPermission?: s
     const modal = modalScope(page, 'Create Role')
     await modal.locator('div, label').filter({ hasText: opts.checkPermission }).last().locator('input[type="checkbox"]').check()
   }
+  // Wait for the actual POST /roles response before checking the toast —
+  // a fixed-timeout toast check races against backend latency, which grows
+  // over a long full-suite run (verified directly: POST /roles returns 201
+  // with this exact message every time; CreateRoleModal.tsx is unchanged).
+  const respPromise = page.waitForResponse(resp => resp.url().includes('/roles') && resp.request().method() === 'POST', { timeout: 20000 })
   await page.getByRole('button', { name: 'Create Role', exact: true }).last().click()
+  const resp = await respPromise
+  expect(resp.ok()).toBeTruthy()
   await expect(page.getByText('Role created successfully')).toBeVisible({ timeout: 10000 })
 }
 
@@ -49,7 +56,10 @@ test.describe.serial('Role CRUD', () => {
     await row.locator('button[title="Edit role"]').click()
     const newDesc = `Edited description ${uid()}`
     await page.getByPlaceholder('What this role can do…').fill(newDesc)
+    const respPromise = page.waitForResponse(resp => resp.url().includes('/roles') && resp.request().method() === 'PATCH', { timeout: 20000 })
     await page.getByRole('button', { name: 'Save Changes', exact: true }).click()
+    const resp = await respPromise
+    expect(resp.ok()).toBeTruthy()
     await expect(page.getByText('Role updated successfully')).toBeVisible({ timeout: 10000 })
   })
 
