@@ -79,7 +79,9 @@ function loadSettings(): GeneralSettings {
   try {
     const raw = localStorage.getItem(LS_KEY);
     if (raw) return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
-  } catch {}
+  } catch {
+    // Corrupted or unparseable localStorage data — fall back to defaults below.
+  }
   return { ...DEFAULT_SETTINGS };
 }
 

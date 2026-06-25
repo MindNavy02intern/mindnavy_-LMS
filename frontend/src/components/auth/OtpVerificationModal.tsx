@@ -66,11 +66,13 @@ export default function OtpVerificationModal({
     if (!isOpen) return;
 
     // Reset state when the modal opens fresh
-    setDigits(Array(OTP_LENGTH).fill(''));
-    setStatus('idle');
-    setError(null);
-    setAttemptsLeft(3);
-    setCountdown(RESEND_COOLDOWN);
+    (() => {
+      setDigits(Array(OTP_LENGTH).fill(''));
+      setStatus('idle');
+      setError(null);
+      setAttemptsLeft(3);
+      setCountdown(RESEND_COOLDOWN);
+    })();
 
     // TODO: BACKEND — this will auto-send an OTP email on modal open
     sendOtp({ email }).catch(() => {

@@ -65,13 +65,13 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
   const [managersLoading, setManagersLoading] = useState(false);
 
   useEffect(() => {
-    setGroupsLoading(true);
+    (() => setGroupsLoading(true))();
     groupsAPI.listGroups({ limit: 200, status: 'ACTIVE' })
       .then(res => setGroups(res.data.map(g => ({ id: g.id, name: g.name, dept: g.department?.name ?? null }))))
       .catch(() => {})
       .finally(() => setGroupsLoading(false));
 
-    setManagersLoading(true);
+    (() => setManagersLoading(true))();
     Promise.allSettled([
       getUsers({ role: 'manager',         limit: 200 }),
       getUsers({ role: 'admin_assistant', limit: 200 }),

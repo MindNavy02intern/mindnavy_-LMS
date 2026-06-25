@@ -51,8 +51,6 @@ const GroupsTab: React.FC = () => {
   const [deleteName, setDeleteName] = useState('');
   const [deleteBusy, setDeleteBusy] = useState(false);
 
-  useEffect(() => { load(); }, []);
-
   async function load() {
     setLoading(true);
     setError('');
@@ -65,6 +63,8 @@ const GroupsTab: React.FC = () => {
       setLoading(false);
     }
   }
+
+  useEffect(() => { load(); }, []);
 
   function afterMutation() {
     load();

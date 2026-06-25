@@ -18,5 +18,14 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      // Codebase convention: prefix an intentionally-unused param/destructured
+      // field with `_` (e.g. discarding read-only fields before spreading the
+      // rest into editable form state) instead of suppressing the rule inline.
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
+      ],
+    },
   },
 ])

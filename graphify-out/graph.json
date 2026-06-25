@@ -1701,7 +1701,7 @@
       "source_file": "backend/src/controllers/roles.controller.js",
       "source_location": "L194",
       "id": "controllers_roles_controller_getpermission",
-      "community": 30,
+      "community": 19,
       "norm_label": "getpermission()"
     },
     {
@@ -2556,7 +2556,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_permissions_routes_js",
-      "community": 30,
+      "community": 36,
       "norm_label": "permissions.routes.js"
     },
     {
@@ -2565,7 +2565,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L1",
       "id": "routes_permissions_routes_express",
-      "community": 30,
+      "community": 36,
       "norm_label": "express"
     },
     {
@@ -2574,7 +2574,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L2",
       "id": "routes_permissions_routes_requireadminauth",
-      "community": 30,
+      "community": 36,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -2583,7 +2583,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L3",
       "id": "routes_permissions_routes_adminuseractionratelimiter",
-      "community": 30,
+      "community": 36,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -2592,7 +2592,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L4",
       "id": "routes_permissions_routes_listpermissions_getpermission_createpermission_updatepermission_deletepermission",
-      "community": 30,
+      "community": 36,
       "norm_label": "{\r\n  listpermissions, getpermission, createpermission, updatepermission, deletepermission,\r\n}"
     },
     {
@@ -2601,7 +2601,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L8",
       "id": "routes_permissions_routes_router",
-      "community": 30,
+      "community": 36,
       "norm_label": "router"
     },
     {
@@ -6165,7 +6165,7 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L12",
       "id": "api_accesspoliciespage_policystatus",
-      "community": 104,
+      "community": 72,
       "norm_label": "policystatus"
     },
     {
@@ -6300,7 +6300,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L22",
       "id": "api_adminauth_getstoredtoken",
-      "community": 22,
+      "community": 102,
       "norm_label": "getstoredtoken()"
     },
     {
@@ -6840,7 +6840,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L15",
       "id": "api_rolespage_rolespageerror",
-      "community": 60,
+      "community": 46,
       "norm_label": "rolespageerror"
     },
     {
@@ -6849,7 +6849,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L20",
       "id": "api_rolespage_rolespageerror_constructor",
-      "community": 60,
+      "community": 46,
       "norm_label": ".constructor()"
     },
     {
@@ -6975,7 +6975,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L1",
       "id": "frontend_src_api_rolespermissions_ts",
-      "community": 55,
+      "community": 104,
       "norm_label": "rolespermissions.ts"
     },
     {
@@ -6984,7 +6984,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L5",
       "id": "api_rolespermissions_rolesapierror",
-      "community": 55,
+      "community": 104,
       "norm_label": "rolesapierror"
     },
     {
@@ -6993,7 +6993,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L7",
       "id": "api_rolespermissions_rolesapierror_constructor",
-      "community": 55,
+      "community": 104,
       "norm_label": ".constructor()"
     },
     {
@@ -7002,7 +7002,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L14",
       "id": "api_rolespermissions_apicall",
-      "community": 55,
+      "community": 104,
       "norm_label": "apicall()"
     },
     {
@@ -7011,7 +7011,7 @@
       "source_file": "frontend/src/api/rolesPermissions.ts",
       "source_location": "L37",
       "id": "api_rolespermissions_rolespermissionsapi",
-      "community": 55,
+      "community": 104,
       "norm_label": "rolespermissionsapi"
     },
     {
@@ -7128,7 +7128,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L59",
       "id": "api_users_getusers",
-      "community": 24,
+      "community": 102,
       "norm_label": "getusers()"
     },
     {
@@ -7146,7 +7146,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L117",
       "id": "api_users_createuser",
-      "community": 27,
+      "community": 50,
       "norm_label": "createuser()"
     },
     {
@@ -7182,7 +7182,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L133",
       "id": "api_users_approveverification",
-      "community": 105,
+      "community": 102,
       "norm_label": "approveverification()"
     },
     {
@@ -7218,7 +7218,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L151",
       "id": "api_users_getuserdetails",
-      "community": 22,
+      "community": 102,
       "norm_label": "getuserdetails()"
     },
     {
@@ -7236,7 +7236,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L195",
       "id": "api_users_bulkaction",
-      "community": 92,
+      "community": 27,
       "norm_label": "bulkaction()"
     },
     {
@@ -7641,7 +7641,7 @@
       "source_file": "frontend/src/components/groups/CreateGroupModal.tsx",
       "source_location": "L28",
       "id": "groups_creategroupmodal_creategroupmodal",
-      "community": 37,
+      "community": 30,
       "norm_label": "creategroupmodal()"
     },
     {
@@ -7704,7 +7704,7 @@
       "source_file": "frontend/src/components/groups/EditGroupModal.tsx",
       "source_location": "L30",
       "id": "groups_editgroupmodal_editgroupmodal",
-      "community": 37,
+      "community": 30,
       "norm_label": "editgroupmodal()"
     },
     {
@@ -8676,7 +8676,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_assignuserstorolemodal_tsx",
-      "community": 22,
+      "community": 102,
       "norm_label": "assignuserstorolemodal.tsx"
     },
     {
@@ -8685,7 +8685,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L9",
       "id": "rolespermissionspage_assignuserstorolemodal_patchuserrole",
-      "community": 22,
+      "community": 102,
       "norm_label": "patchuserrole()"
     },
     {
@@ -8694,7 +8694,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L30",
       "id": "rolespermissionspage_assignuserstorolemodal_avatar",
-      "community": 22,
+      "community": 102,
       "norm_label": "avatar()"
     },
     {
@@ -8703,7 +8703,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L64",
       "id": "rolespermissionspage_assignuserstorolemodal_props",
-      "community": 22,
+      "community": 102,
       "norm_label": "props"
     },
     {
@@ -8712,7 +8712,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L74",
       "id": "rolespermissionspage_assignuserstorolemodal_assignuserstorolemodal",
-      "community": 22,
+      "community": 102,
       "norm_label": "assignuserstorolemodal()"
     },
     {
@@ -8721,7 +8721,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "community": 104,
+      "community": 72,
       "norm_label": "createpolicymodal.tsx"
     },
     {
@@ -8730,7 +8730,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L20",
       "id": "rolespermissionspage_createpolicymodal_resource_options",
-      "community": 104,
+      "community": 72,
       "norm_label": "resource_options"
     },
     {
@@ -8739,7 +8739,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L21",
       "id": "rolespermissionspage_createpolicymodal_action_options",
-      "community": 104,
+      "community": 72,
       "norm_label": "action_options"
     },
     {
@@ -8748,7 +8748,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L25",
       "id": "rolespermissionspage_createpolicymodal_input",
-      "community": 104,
+      "community": 72,
       "norm_label": "input"
     },
     {
@@ -8757,7 +8757,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L32",
       "id": "rolespermissionspage_createpolicymodal_label",
-      "community": 104,
+      "community": 72,
       "norm_label": "label"
     },
     {
@@ -8766,7 +8766,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L36",
       "id": "rolespermissionspage_createpolicymodal_focusin",
-      "community": 104,
+      "community": 72,
       "norm_label": "focusin()"
     },
     {
@@ -8775,7 +8775,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L40",
       "id": "rolespermissionspage_createpolicymodal_focusout",
-      "community": 104,
+      "community": 72,
       "norm_label": "focusout()"
     },
     {
@@ -8784,7 +8784,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L45",
       "id": "rolespermissionspage_createpolicymodal_sectionheader",
-      "community": 104,
+      "community": 72,
       "norm_label": "sectionheader()"
     },
     {
@@ -8793,7 +8793,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L59",
       "id": "rolespermissionspage_createpolicymodal_props",
-      "community": 104,
+      "community": 72,
       "norm_label": "props"
     },
     {
@@ -8802,7 +8802,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L68",
       "id": "rolespermissionspage_createpolicymodal_createpolicymodal",
-      "community": 104,
+      "community": 72,
       "norm_label": "createpolicymodal()"
     },
     {
@@ -9234,7 +9234,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L49",
       "id": "users_addusermodal_addusermodal",
-      "community": 37,
+      "community": 30,
       "norm_label": "addusermodal()"
     },
     {
@@ -9360,7 +9360,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "community": 92,
+      "community": 27,
       "norm_label": "bulkactionsmenu.tsx"
     },
     {
@@ -9369,7 +9369,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L7",
       "id": "users_bulkactionsmenu_props",
-      "community": 92,
+      "community": 27,
       "norm_label": "props"
     },
     {
@@ -9378,7 +9378,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L15",
       "id": "users_bulkactionsmenu_actionkey",
-      "community": 92,
+      "community": 27,
       "norm_label": "actionkey"
     },
     {
@@ -9387,7 +9387,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L17",
       "id": "users_bulkactionsmenu_action_labels",
-      "community": 92,
+      "community": 27,
       "norm_label": "action_labels"
     },
     {
@@ -9396,7 +9396,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L25",
       "id": "users_bulkactionsmenu_bulkactionsmenu",
-      "community": 37,
+      "community": 30,
       "norm_label": "bulkactionsmenu()"
     },
     {
@@ -9405,7 +9405,7 @@
       "source_file": "frontend/src/components/users/ConfirmDialog.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_confirmdialog_tsx",
-      "community": 112,
+      "community": 34,
       "norm_label": "confirmdialog.tsx"
     },
     {
@@ -9414,7 +9414,7 @@
       "source_file": "frontend/src/components/users/ConfirmDialog.tsx",
       "source_location": "L1",
       "id": "users_confirmdialog_props",
-      "community": 112,
+      "community": 34,
       "norm_label": "props"
     },
     {
@@ -9423,7 +9423,7 @@
       "source_file": "frontend/src/components/users/ConfirmDialog.tsx",
       "source_location": "L11",
       "id": "users_confirmdialog_confirmdialog",
-      "community": 112,
+      "community": 34,
       "norm_label": "confirmdialog()"
     },
     {
@@ -9522,7 +9522,7 @@
       "source_file": "frontend/src/components/users/EditUserModal.tsx",
       "source_location": "L55",
       "id": "users_editusermodal_editusermodal",
-      "community": 37,
+      "community": 30,
       "norm_label": "editusermodal()"
     },
     {
@@ -9810,7 +9810,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_pendingverificationtab_tsx",
-      "community": 105,
+      "community": 102,
       "norm_label": "pendingverificationtab.tsx"
     },
     {
@@ -9819,7 +9819,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L8",
       "id": "users_pendingverificationtab_formatdate",
-      "community": 105,
+      "community": 102,
       "norm_label": "formatdate()"
     },
     {
@@ -9828,7 +9828,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L12",
       "id": "users_pendingverificationtab_initials",
-      "community": 105,
+      "community": 102,
       "norm_label": "initials()"
     },
     {
@@ -9837,7 +9837,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L16",
       "id": "users_pendingverificationtab_palettes",
-      "community": 105,
+      "community": 102,
       "norm_label": "palettes"
     },
     {
@@ -9846,7 +9846,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L21",
       "id": "users_pendingverificationtab_palette",
-      "community": 105,
+      "community": 102,
       "norm_label": "palette()"
     },
     {
@@ -9855,7 +9855,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L26",
       "id": "users_pendingverificationtab_sk",
-      "community": 105,
+      "community": 102,
       "norm_label": "sk()"
     },
     {
@@ -9864,7 +9864,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L35",
       "id": "users_pendingverificationtab_skeletonrow",
-      "community": 105,
+      "community": 102,
       "norm_label": "skeletonrow()"
     },
     {
@@ -9873,7 +9873,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L56",
       "id": "users_pendingverificationtab_th",
-      "community": 105,
+      "community": 102,
       "norm_label": "th"
     },
     {
@@ -9882,7 +9882,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L61",
       "id": "users_pendingverificationtab_td",
-      "community": 105,
+      "community": 102,
       "norm_label": "td"
     },
     {
@@ -9891,7 +9891,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L66",
       "id": "users_pendingverificationtab_pendingverificationtab",
-      "community": 105,
+      "community": 102,
       "norm_label": "pendingverificationtab()"
     },
     {
@@ -9900,7 +9900,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_sendinvitationmodal_tsx",
-      "community": 109,
+      "community": 55,
       "norm_label": "sendinvitationmodal.tsx"
     },
     {
@@ -9909,7 +9909,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L7",
       "id": "users_sendinvitationmodal_props",
-      "community": 109,
+      "community": 55,
       "norm_label": "props"
     },
     {
@@ -9918,7 +9918,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L13",
       "id": "users_sendinvitationmodal_expiry_options",
-      "community": 109,
+      "community": 55,
       "norm_label": "expiry_options"
     },
     {
@@ -9927,7 +9927,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L20",
       "id": "users_sendinvitationmodal_input",
-      "community": 109,
+      "community": 55,
       "norm_label": "input"
     },
     {
@@ -9936,7 +9936,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L27",
       "id": "users_sendinvitationmodal_label",
-      "community": 109,
+      "community": 55,
       "norm_label": "label"
     },
     {
@@ -9945,7 +9945,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L31",
       "id": "users_sendinvitationmodal_focusin",
-      "community": 109,
+      "community": 55,
       "norm_label": "focusin()"
     },
     {
@@ -9954,7 +9954,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L35",
       "id": "users_sendinvitationmodal_focusout",
-      "community": 109,
+      "community": 55,
       "norm_label": "focusout()"
     },
     {
@@ -9963,7 +9963,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L40",
       "id": "users_sendinvitationmodal_sendinvitationmodal",
-      "community": 37,
+      "community": 30,
       "norm_label": "sendinvitationmodal()"
     },
     {
@@ -10269,7 +10269,7 @@
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
       "source_location": "L20",
       "id": "users_userdetailsdrawer_initials",
-      "community": 111,
+      "community": 34,
       "norm_label": "initials()"
     },
     {
@@ -10278,7 +10278,7 @@
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
       "source_location": "L24",
       "id": "users_userdetailsdrawer_formatdate",
-      "community": 111,
+      "community": 34,
       "norm_label": "formatdate()"
     },
     {
@@ -10287,7 +10287,7 @@
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
       "source_location": "L28",
       "id": "users_userdetailsdrawer_formatrelative",
-      "community": 111,
+      "community": 34,
       "norm_label": "formatrelative()"
     },
     {
@@ -10314,7 +10314,7 @@
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
       "source_location": "L61",
       "id": "users_userdetailsdrawer_avatarpalette",
-      "community": 111,
+      "community": 34,
       "norm_label": "avatarpalette()"
     },
     {
@@ -10530,7 +10530,7 @@
       "source_file": "frontend/src/components/users/UserDetailsDrawer.tsx",
       "source_location": "L205",
       "id": "users_userdetailsdrawer_userdetailsdrawer",
-      "community": 111,
+      "community": 34,
       "norm_label": "userdetailsdrawer()"
     },
     {
@@ -11160,7 +11160,7 @@
       "source_file": "frontend/src/hooks/useOrgOptions.ts",
       "source_location": "L5",
       "id": "hooks_useorgoptions_useorgoptions",
-      "community": 37,
+      "community": 30,
       "norm_label": "useorgoptions()"
     },
     {
@@ -11169,7 +11169,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L1",
       "id": "frontend_src_hooks_useroles_ts",
-      "community": 55,
+      "community": 104,
       "norm_label": "useroles.ts"
     },
     {
@@ -11178,7 +11178,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L4",
       "id": "hooks_useroles_roleoption",
-      "community": 55,
+      "community": 104,
       "norm_label": "roleoption"
     },
     {
@@ -11187,7 +11187,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L11",
       "id": "hooks_useroles_enum_roles",
-      "community": 55,
+      "community": 104,
       "norm_label": "enum_roles"
     },
     {
@@ -11196,7 +11196,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L12",
       "id": "hooks_useroles_role_alias",
-      "community": 55,
+      "community": 104,
       "norm_label": "role_alias"
     },
     {
@@ -11205,7 +11205,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L17",
       "id": "hooks_useroles_rolenametoenum",
-      "community": 55,
+      "community": 104,
       "norm_label": "rolenametoenum()"
     },
     {
@@ -11214,7 +11214,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L23",
       "id": "hooks_useroles_useroles",
-      "community": 37,
+      "community": 30,
       "norm_label": "useroles()"
     },
     {
@@ -11626,7 +11626,7 @@
       "label": "CompletionDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L322",
+      "source_location": "L324",
       "id": "pages_dashboardpage_completiondonut",
       "community": 6,
       "norm_label": "completiondonut()"
@@ -11635,7 +11635,7 @@
       "label": "AVATAR_COLORS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L363",
+      "source_location": "L365",
       "id": "pages_dashboardpage_avatar_colors",
       "community": 6,
       "norm_label": "avatar_colors"
@@ -11644,7 +11644,7 @@
       "label": "ActivityAvatar()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L365",
+      "source_location": "L367",
       "id": "pages_dashboardpage_activityavatar",
       "community": 6,
       "norm_label": "activityavatar()"
@@ -11653,7 +11653,7 @@
       "label": "ACTIVITY_ICON_BG",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L379",
+      "source_location": "L381",
       "id": "pages_dashboardpage_activity_icon_bg",
       "community": 6,
       "norm_label": "activity_icon_bg"
@@ -11662,7 +11662,7 @@
       "label": "ACTIVITY_ICON_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L382",
+      "source_location": "L384",
       "id": "pages_dashboardpage_activity_icon_color",
       "community": 6,
       "norm_label": "activity_icon_color"
@@ -11671,7 +11671,7 @@
       "label": "NOTIF_BG",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L385",
+      "source_location": "L387",
       "id": "pages_dashboardpage_notif_bg",
       "community": 6,
       "norm_label": "notif_bg"
@@ -11680,7 +11680,7 @@
       "label": "NOTIF_ICON_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L388",
+      "source_location": "L390",
       "id": "pages_dashboardpage_notif_icon_color",
       "community": 6,
       "norm_label": "notif_icon_color"
@@ -11689,7 +11689,7 @@
       "label": "NotifIcon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L392",
+      "source_location": "L394",
       "id": "pages_dashboardpage_notificon",
       "community": 6,
       "norm_label": "notificon()"
@@ -11698,7 +11698,7 @@
       "label": "RevenueCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L412",
+      "source_location": "L414",
       "id": "pages_dashboardpage_revenuecard",
       "community": 6,
       "norm_label": "revenuecard()"
@@ -11707,7 +11707,7 @@
       "label": "UserAnalyticsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L438",
+      "source_location": "L440",
       "id": "pages_dashboardpage_useranalyticscard",
       "community": 6,
       "norm_label": "useranalyticscard()"
@@ -11716,7 +11716,7 @@
       "label": "CourseAnalyticsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L455",
+      "source_location": "L457",
       "id": "pages_dashboardpage_courseanalyticscard",
       "community": 6,
       "norm_label": "courseanalyticscard()"
@@ -11725,7 +11725,7 @@
       "label": "InstructorPerformanceCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L486",
+      "source_location": "L488",
       "id": "pages_dashboardpage_instructorperformancecard",
       "community": 6,
       "norm_label": "instructorperformancecard()"
@@ -11734,7 +11734,7 @@
       "label": "StudentEngagementCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L515",
+      "source_location": "L517",
       "id": "pages_dashboardpage_studentengagementcard",
       "community": 6,
       "norm_label": "studentengagementcard()"
@@ -11743,7 +11743,7 @@
       "label": "PRIORITY_STYLE",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L540",
+      "source_location": "L542",
       "id": "pages_dashboardpage_priority_style",
       "community": 6,
       "norm_label": "priority_style"
@@ -11752,7 +11752,7 @@
       "label": "TX_STATUS_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L547",
+      "source_location": "L549",
       "id": "pages_dashboardpage_tx_status_color",
       "community": 6,
       "norm_label": "tx_status_color"
@@ -11761,7 +11761,7 @@
       "label": "TX_TYPE_LABEL",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L551",
+      "source_location": "L553",
       "id": "pages_dashboardpage_tx_type_label",
       "community": 6,
       "norm_label": "tx_type_label"
@@ -11770,7 +11770,7 @@
       "label": "CALENDAR_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L556",
+      "source_location": "L558",
       "id": "pages_dashboardpage_calendar_color",
       "community": 6,
       "norm_label": "calendar_color"
@@ -11779,7 +11779,7 @@
       "label": "INSIGHT_STYLE",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L561",
+      "source_location": "L563",
       "id": "pages_dashboardpage_insight_style",
       "community": 6,
       "norm_label": "insight_style"
@@ -11788,7 +11788,7 @@
       "label": "CS_BTN",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L567",
+      "source_location": "L569",
       "id": "pages_dashboardpage_cs_btn",
       "community": 6,
       "norm_label": "cs_btn"
@@ -11797,7 +11797,7 @@
       "label": "PendingApprovalsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L575",
+      "source_location": "L577",
       "id": "pages_dashboardpage_pendingapprovalscard",
       "community": 6,
       "norm_label": "pendingapprovalscard()"
@@ -11806,7 +11806,7 @@
       "label": "LiveSessionsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L625",
+      "source_location": "L627",
       "id": "pages_dashboardpage_livesessionscard",
       "community": 6,
       "norm_label": "livesessionscard()"
@@ -11815,7 +11815,7 @@
       "label": "TasksRemindersCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L666",
+      "source_location": "L668",
       "id": "pages_dashboardpage_tasksreminderscard",
       "community": 6,
       "norm_label": "tasksreminderscard()"
@@ -11824,7 +11824,7 @@
       "label": "RecentTransactionsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L704",
+      "source_location": "L706",
       "id": "pages_dashboardpage_recenttransactionscard",
       "community": 6,
       "norm_label": "recenttransactionscard()"
@@ -11833,7 +11833,7 @@
       "label": "CalendarEventsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L735",
+      "source_location": "L737",
       "id": "pages_dashboardpage_calendareventscard",
       "community": 6,
       "norm_label": "calendareventscard()"
@@ -11842,7 +11842,7 @@
       "label": "ReportsSnapshotCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L771",
+      "source_location": "L773",
       "id": "pages_dashboardpage_reportssnapshotcard",
       "community": 6,
       "norm_label": "reportssnapshotcard()"
@@ -11851,7 +11851,7 @@
       "label": "AiInsightsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L800",
+      "source_location": "L802",
       "id": "pages_dashboardpage_aiinsightscard",
       "community": 6,
       "norm_label": "aiinsightscard()"
@@ -11860,7 +11860,7 @@
       "label": "DashboardPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L829",
+      "source_location": "L831",
       "id": "pages_dashboardpage_dashboardpage",
       "community": 23,
       "norm_label": "dashboardpage()"
@@ -12015,7 +12015,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_rolespermissionspage_tsx",
-      "community": 93,
+      "community": 92,
       "norm_label": "rolespermissionspage.tsx"
     },
     {
@@ -12024,7 +12024,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L11",
       "id": "pages_rolespermissionspage_tab_style_base",
-      "community": 93,
+      "community": 92,
       "norm_label": "tab_style_base"
     },
     {
@@ -12033,7 +12033,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L19",
       "id": "pages_rolespermissionspage_rolespermissionspage",
-      "community": 93,
+      "community": 92,
       "norm_label": "rolespermissionspage()"
     },
     {
@@ -12049,7 +12049,7 @@
       "label": "TABS",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "id": "pages_rolespermissionsstandalonepage_tabs",
       "community": 59,
       "norm_label": "tabs"
@@ -12058,7 +12058,7 @@
       "label": "STATUS_OPTIONS",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L35",
+      "source_location": "L36",
       "id": "pages_rolespermissionsstandalonepage_status_options",
       "community": 59,
       "norm_label": "status_options"
@@ -12067,7 +12067,7 @@
       "label": "STATUS_BADGE",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L41",
+      "source_location": "L42",
       "id": "pages_rolespermissionsstandalonepage_status_badge",
       "community": 59,
       "norm_label": "status_badge"
@@ -12076,7 +12076,7 @@
       "label": "LevelMeta",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L48",
+      "source_location": "L49",
       "id": "pages_rolespermissionsstandalonepage_levelmeta",
       "community": 59,
       "norm_label": "levelmeta"
@@ -12085,7 +12085,7 @@
       "label": "getLevelMeta()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L50",
+      "source_location": "L51",
       "id": "pages_rolespermissionsstandalonepage_getlevelmeta",
       "community": 59,
       "norm_label": "getlevelmeta()"
@@ -12094,7 +12094,7 @@
       "label": "getScopeLabel()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L59",
+      "source_location": "L60",
       "id": "pages_rolespermissionsstandalonepage_getscopelabel",
       "community": 59,
       "norm_label": "getscopelabel()"
@@ -12103,7 +12103,7 @@
       "label": "KpiDef",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L70",
+      "source_location": "L71",
       "id": "pages_rolespermissionsstandalonepage_kpidef",
       "community": 59,
       "norm_label": "kpidef"
@@ -12112,7 +12112,7 @@
       "label": "KpiCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L79",
+      "source_location": "L80",
       "id": "pages_rolespermissionsstandalonepage_kpicard",
       "community": 59,
       "norm_label": "kpicard()"
@@ -12121,7 +12121,7 @@
       "label": "SkeletonRow()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L118",
+      "source_location": "L119",
       "id": "pages_rolespermissionsstandalonepage_skeletonrow",
       "community": 59,
       "norm_label": "skeletonrow()"
@@ -12130,7 +12130,7 @@
       "label": "ComingSoon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L132",
+      "source_location": "L133",
       "id": "pages_rolespermissionsstandalonepage_comingsoon",
       "community": 59,
       "norm_label": "comingsoon()"
@@ -12139,7 +12139,7 @@
       "label": "InfoCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L146",
+      "source_location": "L147",
       "id": "pages_rolespermissionsstandalonepage_infocard",
       "community": 59,
       "norm_label": "infocard()"
@@ -12148,7 +12148,7 @@
       "label": "RolesPermissionsStandalonePage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L173",
+      "source_location": "L174",
       "id": "pages_rolespermissionsstandalonepage_rolespermissionsstandalonepage",
       "community": 59,
       "norm_label": "rolespermissionsstandalonepage()"
@@ -12265,7 +12265,7 @@
       "label": "ToastType",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L88",
+      "source_location": "L90",
       "id": "pages_systemsettingspage_toasttype",
       "community": 37,
       "norm_label": "toasttype"
@@ -12274,7 +12274,7 @@
       "label": "Toast",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L89",
+      "source_location": "L91",
       "id": "pages_systemsettingspage_toast",
       "community": 37,
       "norm_label": "toast"
@@ -12283,7 +12283,7 @@
       "label": "ToastList()",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L91",
+      "source_location": "L93",
       "id": "pages_systemsettingspage_toastlist",
       "community": 37,
       "norm_label": "toastlist()"
@@ -12292,7 +12292,7 @@
       "label": "ComingSoonTab()",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L114",
+      "source_location": "L116",
       "id": "pages_systemsettingspage_comingsoontab",
       "community": 37,
       "norm_label": "comingsoontab()"
@@ -12301,7 +12301,7 @@
       "label": "Section()",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L130",
+      "source_location": "L132",
       "id": "pages_systemsettingspage_section",
       "community": 37,
       "norm_label": "section()"
@@ -12310,7 +12310,7 @@
       "label": "Field()",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L145",
+      "source_location": "L147",
       "id": "pages_systemsettingspage_field",
       "community": 37,
       "norm_label": "field()"
@@ -12319,7 +12319,7 @@
       "label": "inputStyle",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L155",
+      "source_location": "L157",
       "id": "pages_systemsettingspage_inputstyle",
       "community": 37,
       "norm_label": "inputstyle"
@@ -12328,16 +12328,16 @@
       "label": "selectStyle",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L163",
+      "source_location": "L165",
       "id": "pages_systemsettingspage_selectstyle",
-      "community": 37,
+      "community": 30,
       "norm_label": "selectstyle"
     },
     {
       "label": "GeneralSettingsTab()",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L167",
+      "source_location": "L169",
       "id": "pages_systemsettingspage_generalsettingstab",
       "community": 37,
       "norm_label": "generalsettingstab()"
@@ -12346,7 +12346,7 @@
       "label": "SystemSettingsPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
-      "source_location": "L288",
+      "source_location": "L290",
       "id": "pages_systemsettingspage_systemsettingspage",
       "community": 37,
       "norm_label": "systemsettingspage()"
@@ -12474,7 +12474,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_usermanagementpage_tsx",
-      "community": 50,
+      "community": 20,
       "norm_label": "usermanagementpage.tsx"
     },
     {
@@ -12483,7 +12483,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L31",
       "id": "pages_usermanagementpage_tabs",
-      "community": 50,
+      "community": 20,
       "norm_label": "tabs"
     },
     {
@@ -12492,7 +12492,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L43",
       "id": "pages_usermanagementpage_tabkey",
-      "community": 50,
+      "community": 20,
       "norm_label": "tabkey"
     },
     {
@@ -12501,7 +12501,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L45",
       "id": "pages_usermanagementpage_limit_options",
-      "community": 50,
+      "community": 20,
       "norm_label": "limit_options"
     },
     {
@@ -12510,7 +12510,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L49",
       "id": "pages_usermanagementpage_pagerange",
-      "community": 37,
+      "community": 30,
       "norm_label": "pagerange()"
     },
     {
@@ -12519,7 +12519,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L60",
       "id": "pages_usermanagementpage_comingsoon",
-      "community": 50,
+      "community": 20,
       "norm_label": "comingsoon()"
     },
     {
@@ -12528,7 +12528,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L74",
       "id": "pages_usermanagementpage_input_base",
-      "community": 50,
+      "community": 20,
       "norm_label": "input_base"
     },
     {
@@ -12537,7 +12537,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L80",
       "id": "pages_usermanagementpage_focusin",
-      "community": 50,
+      "community": 20,
       "norm_label": "focusin()"
     },
     {
@@ -12546,7 +12546,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L84",
       "id": "pages_usermanagementpage_focusout",
-      "community": 50,
+      "community": 20,
       "norm_label": "focusout()"
     },
     {
@@ -12555,7 +12555,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L91",
       "id": "pages_usermanagementpage_usermanagementpage",
-      "community": 37,
+      "community": 30,
       "norm_label": "usermanagementpage()"
     },
     {
@@ -13536,7 +13536,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L1",
       "id": "frontend_src_types_rolespage_ts",
-      "community": 53,
+      "community": 60,
       "norm_label": "rolespage.ts"
     },
     {
@@ -13545,7 +13545,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L4",
       "id": "types_rolespage_rolestatus",
-      "community": 46,
+      "community": 60,
       "norm_label": "rolestatus"
     },
     {
@@ -13554,7 +13554,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L6",
       "id": "types_rolespage_rolepage",
-      "community": 53,
+      "community": 46,
       "norm_label": "rolepage"
     },
     {
@@ -13572,7 +13572,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L27",
       "id": "types_rolespage_rolepagedetails",
-      "community": 53,
+      "community": 60,
       "norm_label": "rolepagedetails"
     },
     {
@@ -13608,7 +13608,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L51",
       "id": "types_rolespage_createrolepagepayload",
-      "community": 53,
+      "community": 60,
       "norm_label": "createrolepagepayload"
     },
     {
@@ -13626,7 +13626,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L63",
       "id": "types_rolespage_matrixrole",
-      "community": 53,
+      "community": 60,
       "norm_label": "matrixrole"
     },
     {
@@ -13644,7 +13644,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L79",
       "id": "types_rolespage_matrixassignment",
-      "community": 53,
+      "community": 60,
       "norm_label": "matrixassignment"
     },
     {
@@ -13662,7 +13662,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L1",
       "id": "frontend_src_types_rolespermissions_ts",
-      "community": 31,
+      "community": 93,
       "norm_label": "rolespermissions.ts"
     },
     {
@@ -13671,7 +13671,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L1",
       "id": "types_rolespermissions_role",
-      "community": 31,
+      "community": 27,
       "norm_label": "role"
     },
     {
@@ -13680,7 +13680,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L12",
       "id": "types_rolespermissions_permission",
-      "community": 31,
+      "community": 93,
       "norm_label": "permission"
     },
     {
@@ -13698,7 +13698,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L4",
       "id": "types_users_userstatus",
-      "community": 20,
+      "community": 34,
       "norm_label": "userstatus"
     },
     {
@@ -13743,7 +13743,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L47",
       "id": "types_users_usersresponse",
-      "community": 50,
+      "community": 27,
       "norm_label": "usersresponse"
     },
     {
@@ -13761,7 +13761,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L56",
       "id": "types_users_riskscore",
-      "community": 34,
+      "community": 32,
       "norm_label": "riskscore"
     },
     {
@@ -13770,7 +13770,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L57",
       "id": "types_users_coursestatus",
-      "community": 34,
+      "community": 32,
       "norm_label": "coursestatus"
     },
     {
@@ -13824,7 +13824,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L108",
       "id": "types_users_userdetailsresponse",
-      "community": 34,
+      "community": 27,
       "norm_label": "userdetailsresponse"
     },
     {
@@ -14013,7 +14013,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L242",
       "id": "types_users_bulkactiontype",
-      "community": 92,
+      "community": 27,
       "norm_label": "bulkactiontype"
     },
     {
@@ -14782,10 +14782,19 @@
       "norm_label": "rows"
     },
     {
+      "label": "respPromise",
+      "file_type": "code",
+      "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L87",
+      "id": "tests_users_full_spec_resppromise",
+      "community": 63,
+      "norm_label": "resppromise"
+    },
+    {
       "label": "modal",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L168",
+      "source_location": "L174",
       "id": "tests_users_full_spec_modal",
       "community": 63,
       "norm_label": "modal"
@@ -14794,7 +14803,7 @@
       "label": "roleSelect",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L169",
+      "source_location": "L175",
       "id": "tests_users_full_spec_roleselect",
       "community": 63,
       "norm_label": "roleselect"
@@ -14803,7 +14812,7 @@
       "label": "csvPath",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L215",
+      "source_location": "L221",
       "id": "tests_users_full_spec_csvpath",
       "community": 63,
       "norm_label": "csvpath"
@@ -14812,7 +14821,7 @@
       "label": "downloadPromise",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L236",
+      "source_location": "L242",
       "id": "tests_users_full_spec_downloadpromise",
       "community": 63,
       "norm_label": "downloadpromise"
@@ -14821,7 +14830,7 @@
       "label": "emails",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L243",
+      "source_location": "L249",
       "id": "tests_users_full_spec_emails",
       "community": 63,
       "norm_label": "emails"
@@ -14830,7 +14839,7 @@
       "label": "panel",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L282",
+      "source_location": "L288",
       "id": "tests_users_full_spec_panel",
       "community": 63,
       "norm_label": "panel"
@@ -14839,7 +14848,7 @@
       "label": "applyPromise",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L293",
+      "source_location": "L299",
       "id": "tests_users_full_spec_applypromise",
       "community": 63,
       "norm_label": "applypromise"
@@ -16181,7 +16190,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L8",
-      "community": 22,
+      "community": 102,
       "norm_label": "fetchallusers()",
       "id": "rolespermissionspage_assignuserstorolemodal_fetchallusers"
     },
@@ -16460,7 +16469,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L14",
-      "community": 92,
+      "community": 27,
       "norm_label": "role_options",
       "id": "users_bulkactionsmenu_role_options"
     },
@@ -16604,7 +16613,7 @@
       "file_type": "code",
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L4",
-      "community": 53,
+      "community": 60,
       "norm_label": "rolelevel",
       "id": "types_rolespage_rolelevel"
     },
@@ -16613,7 +16622,7 @@
       "file_type": "code",
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L5",
-      "community": 53,
+      "community": 60,
       "norm_label": "accessscope",
       "id": "types_rolespage_accessscope"
     },
@@ -16631,7 +16640,7 @@
       "file_type": "code",
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L7",
-      "community": 53,
+      "community": 60,
       "norm_label": "pagerolestatus",
       "id": "types_rolespage_pagerolestatus"
     },
@@ -16640,7 +16649,7 @@
       "file_type": "code",
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L81",
-      "community": 53,
+      "community": 60,
       "norm_label": "permissionsbycategory",
       "id": "types_rolespage_permissionsbycategory"
     },
@@ -16685,7 +16694,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L12",
-      "community": 109,
+      "community": 55,
       "norm_label": "role_options",
       "id": "users_sendinvitationmodal_role_options"
     },
@@ -16802,7 +16811,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L8",
-      "community": 92,
+      "community": 27,
       "norm_label": "actions",
       "id": "users_bulkactionsmenu_actions"
     },
@@ -17841,9 +17850,9 @@
       "source_file": "backend/server.js",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_server_js",
-      "target": "backend_src_routes_accesspolicies_routes_js",
-      "confidence_score": 1.0
+      "target": "backend_src_routes_accesspolicies_routes_js"
     },
     {
       "relation": "contains",
@@ -17851,9 +17860,9 @@
       "source_file": "backend/server.js",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_server_js",
-      "target": "backend_server_accesspoliciesroutes",
-      "confidence_score": 1.0
+      "target": "backend_server_accesspoliciesroutes"
     },
     {
       "relation": "imports_from",
@@ -18312,9 +18321,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "backend_src_config_prisma_js",
-      "confidence_score": 1.0
+      "target": "backend_src_config_prisma_js"
     },
     {
       "relation": "imports_from",
@@ -18411,9 +18420,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "backend_src_services_accesspolicies_service_js",
-      "confidence_score": 1.0
+      "target": "backend_src_services_accesspolicies_service_js"
     },
     {
       "relation": "contains",
@@ -18421,9 +18430,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_svc",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_svc"
     },
     {
       "relation": "imports_from",
@@ -18432,9 +18441,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "backend_src_validators_accesspolicies_validator_js",
-      "confidence_score": 1.0
+      "target": "backend_src_validators_accesspolicies_validator_js"
     },
     {
       "relation": "imports",
@@ -18443,9 +18452,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "validators_accesspolicies_validator_validateid",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_validateid"
     },
     {
       "relation": "imports",
@@ -18454,9 +18463,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "validators_accesspolicies_validator_validatelistquery",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_validatelistquery"
     },
     {
       "relation": "imports",
@@ -18465,9 +18474,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "validators_accesspolicies_validator_validatecreate",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_validatecreate"
     },
     {
       "relation": "imports",
@@ -18476,9 +18485,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "validators_accesspolicies_validator_validateupdate",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_validateupdate"
     },
     {
       "relation": "contains",
@@ -18486,9 +18495,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_validateid_validatelistquery_validatecreate_validateupdate",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_validateid_validatelistquery_validatecreate_validateupdate"
     },
     {
       "relation": "contains",
@@ -18496,9 +18505,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_badrequest",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_badrequest"
     },
     {
       "relation": "contains",
@@ -18506,9 +18515,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_notfound",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_notfound"
     },
     {
       "relation": "contains",
@@ -18516,9 +18525,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_servererror",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_servererror"
     },
     {
       "relation": "contains",
@@ -18526,9 +18535,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_listaccesspolicies",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_listaccesspolicies"
     },
     {
       "relation": "contains",
@@ -18536,9 +18545,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_getaccesspolicystats",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_getaccesspolicystats"
     },
     {
       "relation": "contains",
@@ -18546,9 +18555,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_getaccesspolicy",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_getaccesspolicy"
     },
     {
       "relation": "contains",
@@ -18556,9 +18565,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L61",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_createaccesspolicy",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_createaccesspolicy"
     },
     {
       "relation": "contains",
@@ -18566,9 +18575,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_updateaccesspolicy",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_updateaccesspolicy"
     },
     {
       "relation": "contains",
@@ -18576,9 +18585,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_accesspolicies_controller_js",
-      "target": "controllers_accesspolicies_controller_deleteaccesspolicy",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_deleteaccesspolicy"
     },
     {
       "relation": "imports_from",
@@ -18587,9 +18596,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "backend_src_controllers_accesspolicies_controller_js",
-      "confidence_score": 1.0
+      "target": "backend_src_controllers_accesspolicies_controller_js"
     },
     {
       "relation": "calls",
@@ -18598,9 +18607,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_listaccesspolicies",
-      "target": "controllers_accesspolicies_controller_badrequest",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_badrequest"
     },
     {
       "relation": "calls",
@@ -18609,9 +18618,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_getaccesspolicy",
-      "target": "controllers_accesspolicies_controller_badrequest",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_badrequest"
     },
     {
       "relation": "calls",
@@ -18620,9 +18629,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_createaccesspolicy",
-      "target": "controllers_accesspolicies_controller_badrequest",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_badrequest"
     },
     {
       "relation": "calls",
@@ -18631,9 +18640,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_updateaccesspolicy",
-      "target": "controllers_accesspolicies_controller_badrequest",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_badrequest"
     },
     {
       "relation": "calls",
@@ -18642,9 +18651,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_deleteaccesspolicy",
-      "target": "controllers_accesspolicies_controller_badrequest",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_badrequest"
     },
     {
       "relation": "calls",
@@ -18653,9 +18662,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_getaccesspolicy",
-      "target": "controllers_accesspolicies_controller_notfound",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_notfound"
     },
     {
       "relation": "calls",
@@ -18664,9 +18673,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_createaccesspolicy",
-      "target": "controllers_accesspolicies_controller_notfound",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_notfound"
     },
     {
       "relation": "calls",
@@ -18675,9 +18684,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L90",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_updateaccesspolicy",
-      "target": "controllers_accesspolicies_controller_notfound",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_notfound"
     },
     {
       "relation": "calls",
@@ -18686,9 +18695,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_deleteaccesspolicy",
-      "target": "controllers_accesspolicies_controller_notfound",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_notfound"
     },
     {
       "relation": "calls",
@@ -18697,9 +18706,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_listaccesspolicies",
-      "target": "controllers_accesspolicies_controller_servererror",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_servererror"
     },
     {
       "relation": "calls",
@@ -18708,9 +18717,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_getaccesspolicystats",
-      "target": "controllers_accesspolicies_controller_servererror",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_servererror"
     },
     {
       "relation": "calls",
@@ -18719,9 +18728,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_getaccesspolicy",
-      "target": "controllers_accesspolicies_controller_servererror",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_servererror"
     },
     {
       "relation": "calls",
@@ -18730,9 +18739,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_createaccesspolicy",
-      "target": "controllers_accesspolicies_controller_servererror",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_servererror"
     },
     {
       "relation": "calls",
@@ -18741,9 +18750,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_updateaccesspolicy",
-      "target": "controllers_accesspolicies_controller_servererror",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_servererror"
     },
     {
       "relation": "calls",
@@ -18752,9 +18761,9 @@
       "source_file": "backend/src/controllers/accessPolicies.controller.js",
       "source_location": "L104",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "controllers_accesspolicies_controller_deleteaccesspolicy",
-      "target": "controllers_accesspolicies_controller_servererror",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_servererror"
     },
     {
       "relation": "imports",
@@ -18763,9 +18772,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "controllers_accesspolicies_controller_listaccesspolicies",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_listaccesspolicies"
     },
     {
       "relation": "calls",
@@ -18785,9 +18794,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "controllers_accesspolicies_controller_getaccesspolicystats",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_getaccesspolicystats"
     },
     {
       "relation": "imports",
@@ -18796,9 +18805,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "controllers_accesspolicies_controller_getaccesspolicy",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_getaccesspolicy"
     },
     {
       "relation": "imports",
@@ -18807,9 +18816,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "controllers_accesspolicies_controller_createaccesspolicy",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_createaccesspolicy"
     },
     {
       "relation": "calls",
@@ -18829,9 +18838,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "controllers_accesspolicies_controller_updateaccesspolicy",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_updateaccesspolicy"
     },
     {
       "relation": "calls",
@@ -18851,9 +18860,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "controllers_accesspolicies_controller_deleteaccesspolicy",
-      "confidence_score": 1.0
+      "target": "controllers_accesspolicies_controller_deleteaccesspolicy"
     },
     {
       "relation": "imports_from",
@@ -23664,9 +23673,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "backend_src_middlewares_auth_middleware_js",
-      "confidence_score": 1.0
+      "target": "backend_src_middlewares_auth_middleware_js"
     },
     {
       "relation": "imports_from",
@@ -23840,9 +23849,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "middlewares_auth_middleware_requireadminauth",
-      "confidence_score": 1.0
+      "target": "middlewares_auth_middleware_requireadminauth"
     },
     {
       "relation": "imports",
@@ -24011,9 +24020,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "backend_src_middlewares_ratelimit_middleware_js",
-      "confidence_score": 1.0
+      "target": "backend_src_middlewares_ratelimit_middleware_js"
     },
     {
       "relation": "imports_from",
@@ -24132,9 +24141,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter",
-      "confidence_score": 1.0
+      "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter"
     },
     {
       "relation": "imports",
@@ -24345,9 +24354,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "routes_accesspolicies_routes_express",
-      "confidence_score": 1.0
+      "target": "routes_accesspolicies_routes_express"
     },
     {
       "relation": "contains",
@@ -24355,9 +24364,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "routes_accesspolicies_routes_requireadminauth",
-      "confidence_score": 1.0
+      "target": "routes_accesspolicies_routes_requireadminauth"
     },
     {
       "relation": "contains",
@@ -24365,9 +24374,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "routes_accesspolicies_routes_adminuseractionratelimiter",
-      "confidence_score": 1.0
+      "target": "routes_accesspolicies_routes_adminuseractionratelimiter"
     },
     {
       "relation": "contains",
@@ -24375,9 +24384,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "routes_accesspolicies_routes_listaccesspolicies_getaccesspolicystats_getaccesspolicy_createaccesspolicy_updateaccesspolicy_deleteaccesspolicy",
-      "confidence_score": 1.0
+      "target": "routes_accesspolicies_routes_listaccesspolicies_getaccesspolicystats_getaccesspolicy_createaccesspolicy_updateaccesspolicy_deleteaccesspolicy"
     },
     {
       "relation": "contains",
@@ -24385,9 +24394,9 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_accesspolicies_routes_js",
-      "target": "routes_accesspolicies_routes_router",
-      "confidence_score": 1.0
+      "target": "routes_accesspolicies_routes_router"
     },
     {
       "relation": "contains",
@@ -25241,9 +25250,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_prisma",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_prisma"
     },
     {
       "relation": "contains",
@@ -25251,9 +25260,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_paginate",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_paginate"
     },
     {
       "relation": "contains",
@@ -25261,9 +25270,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_buildpagination",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_buildpagination"
     },
     {
       "relation": "contains",
@@ -25271,9 +25280,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_createpolicyauditlog",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_createpolicyauditlog"
     },
     {
       "relation": "contains",
@@ -25281,9 +25290,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_policy_select",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_policy_select"
     },
     {
       "relation": "contains",
@@ -25291,9 +25300,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_assertroleexists",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_assertroleexists"
     },
     {
       "relation": "contains",
@@ -25301,9 +25310,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_listaccesspolicies",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_listaccesspolicies"
     },
     {
       "relation": "contains",
@@ -25311,9 +25320,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L71",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_getaccesspolicy",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_getaccesspolicy"
     },
     {
       "relation": "contains",
@@ -25321,9 +25330,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_createaccesspolicy",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_createaccesspolicy"
     },
     {
       "relation": "contains",
@@ -25331,9 +25340,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_updateaccesspolicy",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_updateaccesspolicy"
     },
     {
       "relation": "contains",
@@ -25341,9 +25350,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L110",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_deleteaccesspolicy",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_deleteaccesspolicy"
     },
     {
       "relation": "contains",
@@ -25351,9 +25360,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_services_accesspolicies_service_js",
-      "target": "services_accesspolicies_service_getaccesspolicystats",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_getaccesspolicystats"
     },
     {
       "relation": "calls",
@@ -25362,9 +25371,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accesspolicies_service_listaccesspolicies",
-      "target": "services_accesspolicies_service_paginate",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_paginate"
     },
     {
       "relation": "calls",
@@ -25373,9 +25382,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accesspolicies_service_listaccesspolicies",
-      "target": "services_accesspolicies_service_buildpagination",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_buildpagination"
     },
     {
       "relation": "calls",
@@ -25384,9 +25393,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accesspolicies_service_createaccesspolicy",
-      "target": "services_accesspolicies_service_createpolicyauditlog",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_createpolicyauditlog"
     },
     {
       "relation": "calls",
@@ -25395,9 +25404,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accesspolicies_service_updateaccesspolicy",
-      "target": "services_accesspolicies_service_createpolicyauditlog",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_createpolicyauditlog"
     },
     {
       "relation": "calls",
@@ -25406,9 +25415,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accesspolicies_service_deleteaccesspolicy",
-      "target": "services_accesspolicies_service_createpolicyauditlog",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_createpolicyauditlog"
     },
     {
       "relation": "calls",
@@ -25417,9 +25426,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L76",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accesspolicies_service_createaccesspolicy",
-      "target": "services_accesspolicies_service_assertroleexists",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_assertroleexists"
     },
     {
       "relation": "calls",
@@ -25428,9 +25437,9 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L98",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accesspolicies_service_updateaccesspolicy",
-      "target": "services_accesspolicies_service_assertroleexists",
-      "confidence_score": 1.0
+      "target": "services_accesspolicies_service_assertroleexists"
     },
     {
       "relation": "contains",
@@ -28672,9 +28681,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_valid_statuses",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_valid_statuses"
     },
     {
       "relation": "contains",
@@ -28682,9 +28691,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_list_status_filters",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_list_status_filters"
     },
     {
       "relation": "contains",
@@ -28692,9 +28701,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_valid_effects",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_valid_effects"
     },
     {
       "relation": "contains",
@@ -28702,9 +28711,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_list_effect_filters",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_list_effect_filters"
     },
     {
       "relation": "contains",
@@ -28712,9 +28721,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_valid_resources",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_valid_resources"
     },
     {
       "relation": "contains",
@@ -28722,9 +28731,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_valid_actions",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_valid_actions"
     },
     {
       "relation": "contains",
@@ -28732,9 +28741,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_validateid",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_validateid"
     },
     {
       "relation": "contains",
@@ -28742,9 +28751,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_validatelistquery",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_validatelistquery"
     },
     {
       "relation": "contains",
@@ -28752,9 +28761,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_validatecreate",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_validatecreate"
     },
     {
       "relation": "contains",
@@ -28762,9 +28771,9 @@
       "source_file": "backend/src/validators/accessPolicies.validator.js",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_validators_accesspolicies_validator_js",
-      "target": "validators_accesspolicies_validator_validateupdate",
-      "confidence_score": 1.0
+      "target": "validators_accesspolicies_validator_validateupdate"
     },
     {
       "relation": "contains",
@@ -31138,9 +31147,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "frontend_src_api_adminauth_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_adminauth_ts"
     },
     {
       "relation": "imports",
@@ -31149,9 +31158,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_adminauth_getstoredtoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_getstoredtoken"
     },
     {
       "relation": "contains",
@@ -31159,9 +31168,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_policyresource",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyresource"
     },
     {
       "relation": "contains",
@@ -31169,9 +31178,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_policyaction",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyaction"
     },
     {
       "relation": "contains",
@@ -31179,9 +31188,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_policyeffect",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyeffect"
     },
     {
       "relation": "contains",
@@ -31189,9 +31198,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_policystatus",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policystatus"
     },
     {
       "relation": "contains",
@@ -31199,9 +31208,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_accesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicy"
     },
     {
       "relation": "contains",
@@ -31209,9 +31218,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_accesspolicystats",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicystats"
     },
     {
       "relation": "contains",
@@ -31219,9 +31228,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_createpolicypayload",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_createpolicypayload"
     },
     {
       "relation": "contains",
@@ -31229,9 +31238,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_accesspolicyerror",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicyerror"
     },
     {
       "relation": "contains",
@@ -31239,9 +31248,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_apifetch",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_apifetch"
     },
     {
       "relation": "contains",
@@ -31249,9 +31258,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L81",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_listaccesspolicies",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_listaccesspolicies"
     },
     {
       "relation": "contains",
@@ -31259,9 +31268,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L105",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_getaccesspolicystats",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_getaccesspolicystats"
     },
     {
       "relation": "contains",
@@ -31269,9 +31278,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_getaccesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_getaccesspolicy"
     },
     {
       "relation": "contains",
@@ -31279,9 +31288,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L119",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_createaccesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_createaccesspolicy"
     },
     {
       "relation": "contains",
@@ -31289,9 +31298,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L128",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_updateaccesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_updateaccesspolicy"
     },
     {
       "relation": "contains",
@@ -31299,9 +31308,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L137",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_api_accesspoliciespage_ts",
-      "target": "api_accesspoliciespage_deleteaccesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_deleteaccesspolicy"
     },
     {
       "relation": "imports_from",
@@ -31310,9 +31319,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "frontend_src_api_accesspoliciespage_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_accesspoliciespage_ts"
     },
     {
       "relation": "imports_from",
@@ -31321,9 +31330,20 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "frontend_src_api_accesspoliciespage_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_accesspoliciespage_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "frontend_src_api_accesspoliciespage_ts"
     },
     {
       "relation": "imports",
@@ -31332,9 +31352,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_policyresource",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyresource"
     },
     {
       "relation": "imports",
@@ -31343,9 +31363,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_accesspoliciespage_policyresource",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyresource"
     },
     {
       "relation": "imports",
@@ -31354,9 +31374,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_policyaction",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyaction"
     },
     {
       "relation": "imports",
@@ -31365,9 +31385,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_accesspoliciespage_policyaction",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyaction"
     },
     {
       "relation": "imports",
@@ -31376,9 +31396,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_policyeffect",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyeffect"
     },
     {
       "relation": "imports",
@@ -31387,9 +31407,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_accesspoliciespage_policyeffect",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policyeffect"
     },
     {
       "relation": "imports",
@@ -31398,9 +31418,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_policystatus",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policystatus"
     },
     {
       "relation": "imports",
@@ -31409,9 +31429,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_accesspoliciespage_policystatus",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_policystatus"
     },
     {
       "relation": "imports",
@@ -31420,9 +31440,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_accesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicy"
     },
     {
       "relation": "imports",
@@ -31431,9 +31451,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_accesspoliciespage_accesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicy"
     },
     {
       "relation": "imports",
@@ -31442,9 +31462,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_accesspolicystats",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicystats"
     },
     {
       "relation": "method",
@@ -31452,9 +31472,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_accesspoliciespage_accesspolicyerror",
-      "target": "api_accesspoliciespage_accesspolicyerror_constructor",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicyerror_constructor"
     },
     {
       "relation": "imports",
@@ -31463,9 +31483,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_accesspolicyerror",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicyerror"
     },
     {
       "relation": "imports",
@@ -31474,9 +31494,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_accesspoliciespage_accesspolicyerror",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_accesspolicyerror"
     },
     {
       "relation": "calls",
@@ -31485,9 +31505,9 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L98",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_accesspoliciespage_listaccesspolicies",
-      "target": "api_accesspoliciespage_apifetch",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_apifetch"
     },
     {
       "relation": "calls",
@@ -31507,9 +31527,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_listaccesspolicies",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_listaccesspolicies"
     },
     {
       "relation": "imports",
@@ -31518,9 +31538,20 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_getaccesspolicystats",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_getaccesspolicystats"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "api_accesspoliciespage_getaccesspolicystats"
     },
     {
       "relation": "imports",
@@ -31529,9 +31560,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_accesspoliciespage_createaccesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_createaccesspolicy"
     },
     {
       "relation": "imports",
@@ -31540,9 +31571,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_accesspoliciespage_updateaccesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_updateaccesspolicy"
     },
     {
       "relation": "imports",
@@ -31551,9 +31582,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "api_accesspoliciespage_deleteaccesspolicy",
-      "confidence_score": 1.0
+      "target": "api_accesspoliciespage_deleteaccesspolicy"
     },
     {
       "relation": "contains",
@@ -34543,9 +34574,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "frontend_src_api_rolespermissions_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_rolespermissions_ts"
     },
     {
       "relation": "imports_from",
@@ -34608,9 +34639,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "api_rolespermissions_rolespermissionsapi",
-      "confidence_score": 1.0
+      "target": "api_rolespermissions_rolespermissionsapi"
     },
     {
       "relation": "imports",
@@ -38619,9 +38650,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "frontend_src_components_users_toast_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_toast_tsx"
     },
     {
       "relation": "imports",
@@ -38630,9 +38661,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "users_toast_toasttype",
-      "confidence_score": 1.0
+      "target": "users_toast_toasttype"
     },
     {
       "relation": "imports_from",
@@ -38641,9 +38672,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx"
     },
     {
       "relation": "contains",
@@ -38651,9 +38682,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "rolespermissionspage_accesspoliciestab_resource_options",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_accesspoliciestab_resource_options"
     },
     {
       "relation": "contains",
@@ -38661,9 +38692,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "rolespermissionspage_accesspoliciestab_action_options",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_accesspoliciestab_action_options"
     },
     {
       "relation": "contains",
@@ -38671,9 +38702,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "rolespermissionspage_accesspoliciestab_resource_badge",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_accesspoliciestab_resource_badge"
     },
     {
       "relation": "contains",
@@ -38681,9 +38712,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "rolespermissionspage_accesspoliciestab_status_badge",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_accesspoliciestab_status_badge"
     },
     {
       "relation": "contains",
@@ -38691,9 +38722,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "rolespermissionspage_accesspoliciestab_statcard",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_accesspoliciestab_statcard"
     },
     {
       "relation": "contains",
@@ -38701,9 +38732,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "rolespermissionspage_accesspoliciestab_skeletonrow",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_accesspoliciestab_skeletonrow"
     },
     {
       "relation": "contains",
@@ -38711,9 +38742,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L89",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "rolespermissionspage_accesspoliciestab_props",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_accesspoliciestab_props"
     },
     {
       "relation": "contains",
@@ -38721,9 +38752,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AccessPoliciesTab.tsx",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "target": "rolespermissionspage_accesspoliciestab_accesspoliciestab",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_accesspoliciestab_accesspoliciestab"
     },
     {
       "relation": "imports_from",
@@ -38732,9 +38763,9 @@
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
-      "target": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_rolespermissionspage_accesspoliciestab_tsx"
     },
     {
       "relation": "imports_from",
@@ -38848,9 +38879,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "frontend_src_components_users_toast_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_users_toast_tsx"
     },
     {
       "relation": "imports",
@@ -38859,9 +38890,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "users_toast_toasttype",
-      "confidence_score": 1.0
+      "target": "users_toast_toasttype"
     },
     {
       "relation": "imports_from",
@@ -38870,9 +38901,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "frontend_src_types_rolespermissions_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_rolespermissions_ts"
     },
     {
       "relation": "imports",
@@ -38881,9 +38912,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "types_rolespermissions_role",
-      "confidence_score": 1.0
+      "target": "types_rolespermissions_role"
     },
     {
       "relation": "contains",
@@ -38891,9 +38922,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_resource_options",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_resource_options"
     },
     {
       "relation": "contains",
@@ -38901,9 +38932,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_action_options",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_action_options"
     },
     {
       "relation": "contains",
@@ -38911,9 +38942,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_input",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_input"
     },
     {
       "relation": "contains",
@@ -38921,9 +38952,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_label",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_label"
     },
     {
       "relation": "contains",
@@ -38931,9 +38962,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_focusin",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_focusin"
     },
     {
       "relation": "contains",
@@ -38941,9 +38972,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_focusout",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_focusout"
     },
     {
       "relation": "contains",
@@ -38951,9 +38982,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_sectionheader",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_sectionheader"
     },
     {
       "relation": "contains",
@@ -38961,9 +38992,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_props",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_props"
     },
     {
       "relation": "contains",
@@ -38971,9 +39002,9 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "target": "rolespermissionspage_createpolicymodal_createpolicymodal",
-      "confidence_score": 1.0
+      "target": "rolespermissionspage_createpolicymodal_createpolicymodal"
     },
     {
       "relation": "imports_from",
@@ -47581,9 +47612,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_uid",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_uid"
     },
     {
       "relation": "contains",
@@ -47591,9 +47622,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_gotoaccesspolicies",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_gotoaccesspolicies"
     },
     {
       "relation": "contains",
@@ -47601,9 +47632,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_modalscope",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_modalscope"
     },
     {
       "relation": "contains",
@@ -47611,9 +47642,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_waitforapi",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_waitforapi"
     },
     {
       "relation": "contains",
@@ -47621,9 +47652,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_policyrow",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_policyrow"
     },
     {
       "relation": "contains",
@@ -47631,9 +47662,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_createpolicyopts",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_createpolicyopts"
     },
     {
       "relation": "contains",
@@ -47641,9 +47672,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_createpolicy",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_createpolicy"
     },
     {
       "relation": "contains",
@@ -47651,9 +47682,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L71",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_card",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_card"
     },
     {
       "relation": "contains",
@@ -47661,9 +47692,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L95",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_modal",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_modal"
     },
     {
       "relation": "contains",
@@ -47671,9 +47702,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L209",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_resppromise",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_resppromise"
     },
     {
       "relation": "contains",
@@ -47681,9 +47712,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L196",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_access_policies_full_spec_ts",
-      "target": "tests_access_policies_full_spec_rows",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_rows"
     },
     {
       "relation": "calls",
@@ -47692,9 +47723,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_access_policies_full_spec_createpolicy",
-      "target": "tests_access_policies_full_spec_gotoaccesspolicies",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_gotoaccesspolicies"
     },
     {
       "relation": "calls",
@@ -47703,9 +47734,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_access_policies_full_spec_createpolicy",
-      "target": "tests_access_policies_full_spec_modalscope",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_modalscope"
     },
     {
       "relation": "calls",
@@ -47714,9 +47745,9 @@
       "source_file": "frontend/tests/access-policies.full.spec.ts",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_access_policies_full_spec_createpolicy",
-      "target": "tests_access_policies_full_spec_waitforapi",
-      "confidence_score": 1.0
+      "target": "tests_access_policies_full_spec_waitforapi"
     },
     {
       "relation": "contains",
@@ -48400,6 +48431,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "frontend_tests_users_full_spec_ts",
+      "target": "tests_users_full_spec_resppromise",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/users.full.spec.ts",
       "source_location": "L166",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -48513,9 +48554,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_md",
-      "target": "backend_access_policies_api_access_policies_api_frontend_contract",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_access_policies_api_frontend_contract"
     },
     {
       "relation": "contains",
@@ -48523,9 +48564,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_access_policies_api_frontend_contract",
-      "target": "backend_access_policies_api_1_basics",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_1_basics"
     },
     {
       "relation": "contains",
@@ -48533,9 +48574,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_access_policies_api_frontend_contract",
-      "target": "backend_access_policies_api_2_allowed_enum_values_use_these_exact_strings",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_2_allowed_enum_values_use_these_exact_strings"
     },
     {
       "relation": "contains",
@@ -48543,9 +48584,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_access_policies_api_frontend_contract",
-      "target": "backend_access_policies_api_3_the_policy_object_what_every_endpoint_returns",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_3_the_policy_object_what_every_endpoint_returns"
     },
     {
       "relation": "contains",
@@ -48553,9 +48594,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_access_policies_api_frontend_contract",
-      "target": "backend_access_policies_api_4_endpoints",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_4_endpoints"
     },
     {
       "relation": "contains",
@@ -48563,9 +48604,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L200",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_access_policies_api_frontend_contract",
-      "target": "backend_access_policies_api_5_error_reference_handle_these_in_the_ui",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_5_error_reference_handle_these_in_the_ui"
     },
     {
       "relation": "contains",
@@ -48573,9 +48614,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L219",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_access_policies_api_frontend_contract",
-      "target": "backend_access_policies_api_6_ready_to_use_typescript_api_client",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_6_ready_to_use_typescript_api_client"
     },
     {
       "relation": "contains",
@@ -48583,9 +48624,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L351",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_access_policies_api_frontend_contract",
-      "target": "backend_access_policies_api_7_notes_for_the_role_dropdown",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_7_notes_for_the_role_dropdown"
     },
     {
       "relation": "contains",
@@ -48593,9 +48634,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_1_basics",
-      "target": "backend_access_policies_api_codeblock_1",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_1"
     },
     {
       "relation": "contains",
@@ -48603,9 +48644,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_1_basics",
-      "target": "backend_access_policies_api_response_envelope_always",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_response_envelope_always"
     },
     {
       "relation": "contains",
@@ -48613,9 +48654,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_3_the_policy_object_what_every_endpoint_returns",
-      "target": "backend_access_policies_api_codeblock_2",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_2"
     },
     {
       "relation": "contains",
@@ -48623,9 +48664,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_endpoints",
-      "target": "backend_access_policies_api_4_1_list_policies",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_4_1_list_policies"
     },
     {
       "relation": "contains",
@@ -48633,9 +48674,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_endpoints",
-      "target": "backend_access_policies_api_4_2_stats_for_the_header_stat_cards",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_4_2_stats_for_the_header_stat_cards"
     },
     {
       "relation": "contains",
@@ -48643,9 +48684,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L131",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_endpoints",
-      "target": "backend_access_policies_api_4_3_get_one_policy",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_4_3_get_one_policy"
     },
     {
       "relation": "contains",
@@ -48653,9 +48694,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L140",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_endpoints",
-      "target": "backend_access_policies_api_4_4_create_policy",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_4_4_create_policy"
     },
     {
       "relation": "contains",
@@ -48663,9 +48704,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L176",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_endpoints",
-      "target": "backend_access_policies_api_4_5_update_policy",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_4_5_update_policy"
     },
     {
       "relation": "contains",
@@ -48673,9 +48714,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L191",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_endpoints",
-      "target": "backend_access_policies_api_4_6_delete_policy",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_4_6_delete_policy"
     },
     {
       "relation": "contains",
@@ -48683,9 +48724,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_1_list_policies",
-      "target": "backend_access_policies_api_codeblock_3",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_3"
     },
     {
       "relation": "contains",
@@ -48693,9 +48734,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_1_list_policies",
-      "target": "backend_access_policies_api_codeblock_4",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_4"
     },
     {
       "relation": "contains",
@@ -48703,9 +48744,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_2_stats_for_the_header_stat_cards",
-      "target": "backend_access_policies_api_codeblock_5",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_5"
     },
     {
       "relation": "contains",
@@ -48713,9 +48754,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_2_stats_for_the_header_stat_cards",
-      "target": "backend_access_policies_api_codeblock_6",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_6"
     },
     {
       "relation": "contains",
@@ -48723,9 +48764,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L132",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_3_get_one_policy",
-      "target": "backend_access_policies_api_codeblock_7",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_7"
     },
     {
       "relation": "contains",
@@ -48733,9 +48774,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L141",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_4_create_policy",
-      "target": "backend_access_policies_api_codeblock_8",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_8"
     },
     {
       "relation": "contains",
@@ -48743,9 +48784,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L145",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_4_create_policy",
-      "target": "backend_access_policies_api_codeblock_9",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_9"
     },
     {
       "relation": "contains",
@@ -48753,9 +48794,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L177",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_5_update_policy",
-      "target": "backend_access_policies_api_codeblock_10",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_10"
     },
     {
       "relation": "contains",
@@ -48763,9 +48804,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L183",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_5_update_policy",
-      "target": "backend_access_policies_api_codeblock_11",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_11"
     },
     {
       "relation": "contains",
@@ -48773,9 +48814,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L192",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_4_6_delete_policy",
-      "target": "backend_access_policies_api_codeblock_12",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_12"
     },
     {
       "relation": "contains",
@@ -48783,9 +48824,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L223",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_6_ready_to_use_typescript_api_client",
-      "target": "backend_access_policies_api_codeblock_13",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_13"
     },
     {
       "relation": "contains",
@@ -48793,9 +48834,9 @@
       "source_file": "backend/ACCESS_POLICIES_API.md",
       "source_location": "L355",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_access_policies_api_7_notes_for_the_role_dropdown",
-      "target": "backend_access_policies_api_codeblock_14",
-      "confidence_score": 1.0
+      "target": "backend_access_policies_api_codeblock_14"
     },
     {
       "relation": "contains",
@@ -50069,5 +50110,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1fe0b382e7d842080551dc4ec57ca2f549a2a250"
+  "built_at_commit": "238732fd82ded2f476873c2eb6d75e9f25332bcd"
 }

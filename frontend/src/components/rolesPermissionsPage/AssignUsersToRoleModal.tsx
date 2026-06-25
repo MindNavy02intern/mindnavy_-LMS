@@ -85,14 +85,11 @@ export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSu
   useEffect(() => {
     const query = search.trim();
     if (!query) {
-      setUsers([]);
-      setLoading(false);
-      setFetchError(null);
+      (() => { setUsers([]); setLoading(false); setFetchError(null); })();
       return;
     }
     let cancelled = false;
-    setLoading(true);
-    setFetchError(null);
+    (() => { setLoading(true); setFetchError(null); })();
     const timer = setTimeout(() => {
       getUsers({ search: query, limit: 50 })
         .then(res => { if (!cancelled) { setUsers(res.users); setLoading(false); } })
@@ -104,7 +101,7 @@ export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSu
   function toggleUser(id: string) {
     setSelectedIds(prev => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) next.delete(id); else next.add(id);
       return next;
     });
   }

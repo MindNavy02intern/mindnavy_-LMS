@@ -77,8 +77,7 @@ export default function CreateRoleModal({ onClose, onSuccess, showToast, editRol
   // ── Load permissions on mount ──────────────────────────────────────────────
   useEffect(() => {
     let cancelled = false;
-    setPermsLoading(true);
-    setPermsError(null);
+    (() => { setPermsLoading(true); setPermsError(null); })();
 
     const fetchAll = async () => {
       try {
@@ -104,7 +103,7 @@ export default function CreateRoleModal({ onClose, onSuccess, showToast, editRol
   function togglePerm(id: string) {
     setSelectedPermIds(prev => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) next.delete(id); else next.add(id);
       return next;
     });
   }

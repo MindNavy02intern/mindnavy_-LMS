@@ -80,7 +80,13 @@ test.describe.serial('Add / Edit / Search / Filter', () => {
 
   test('Filter by Status → verify correct users shown', async ({ page }) => {
     await page.goto('/users')
-    await page.locator('select:has(option:text-is("All Status"))').selectOption('active')
+    // AddUserModal has no status field — every UI-created user gets the
+    // backend default of PENDING (see users.service.js createUser), never
+    // "active". Filtering by "active" would correctly exclude this user;
+    // filter by the status it actually has.
+    const respPromise = page.waitForResponse(resp => resp.url().includes('/users') && resp.request().method() === 'GET', { timeout: 20000 })
+    await page.locator('select:has(option:text-is("All Status"))').selectOption('pending')
+    await respPromise
     await expect(page.locator('tr', { hasText: email })).toBeVisible({ timeout: 10000 })
   })
 })

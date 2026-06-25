@@ -233,8 +233,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
   // Fetch user details
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    setError(null);
+    (() => { setLoading(true); setError(null); })();
     getUserDetails(userId)
       .then(d  => { if (!cancelled) { setData(d);  setLoading(false); } })
       .catch(e => { if (!cancelled) { setError(e instanceof Error ? e.message : 'Failed to load'); setLoading(false); } });

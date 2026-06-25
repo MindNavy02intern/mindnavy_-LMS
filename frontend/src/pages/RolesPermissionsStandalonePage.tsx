@@ -15,6 +15,7 @@ import {
   RolesPageError,
 } from '../api/rolesPage';
 import type { RolePage, RolePageStats, RoleStatus } from '../types/rolesPage';
+import { getAccessPolicyStats } from '../api/accessPoliciesPage';
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 
@@ -185,6 +186,14 @@ export default function RolesPermissionsStandalonePage() {
       .finally(() => setStatsLoading(false));
   }, []);
 
+  const [accessPolicyCount, setAccessPolicyCount] = useState(0);
+
+  const fetchAccessPolicyCount = useCallback(() => {
+    getAccessPolicyStats()
+      .then(s => setAccessPolicyCount(s.totalPolicies))
+      .catch(() => setAccessPolicyCount(0));
+  }, []);
+
   // ── List ───────────────────────────────────────────────────────────────────
   const [roles, setRoles]             = useState<RolePage[]>([]);
   const [listLoading, setListLoading] = useState(true);
@@ -221,12 +230,13 @@ export default function RolesPermissionsStandalonePage() {
 
   useEffect(() => { fetchStats(); }, [fetchStats]);
   useEffect(() => { fetchList();  }, [fetchList]);
+  useEffect(() => { fetchAccessPolicyCount(); }, [fetchAccessPolicyCount]);
 
   useEffect(() => {
-    const handler = () => { fetchStats(); fetchList(); };
+    const handler = () => { fetchStats(); fetchList(); fetchAccessPolicyCount(); };
     window.addEventListener('rolesUpdated', handler);
     return () => window.removeEventListener('rolesUpdated', handler);
-  }, [fetchStats, fetchList]);
+  }, [fetchStats, fetchList, fetchAccessPolicyCount]);
 
   // ── UI state ───────────────────────────────────────────────────────────────
   const [activeTab,       setActiveTab]       = useState('lms');
@@ -235,7 +245,7 @@ export default function RolesPermissionsStandalonePage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const displayedRoles = levelFilter ? roles.filter(r => getLevelMeta(r).label === levelFilter) : roles;
   const toggleSelect = (id: string) =>
-    setSelectedIds(prev => { const s = new Set(prev); s.has(id) ? s.delete(id) : s.add(id); return s; });
+    setSelectedIds(prev => { const s = new Set(prev); if (s.has(id)) s.delete(id); else s.add(id); return s; });
   const toggleAll = () => {
     if (selectedIds.size === displayedRoles.length) setSelectedIds(new Set());
     else setSelectedIds(new Set(displayedRoles.map(r => r.id)));
@@ -313,7 +323,7 @@ export default function RolesPermissionsStandalonePage() {
       icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c2410c" strokeWidth="2" strokeLinecap="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>,
     },
     {
-      label: 'Access Policies', value: 0,  // Phase 2 — no access policies table yet
+      label: 'Access Policies', value: accessPolicyCount,
       iconBg: '#f0fdfa', trendUp: true, trendPct: '14.3%',
       icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f766e" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
     },

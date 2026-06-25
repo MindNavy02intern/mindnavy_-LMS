@@ -42,7 +42,8 @@ const CreateGroupModal: React.FC<Props> = ({ onClose, onSaved }) => {
 
   // Load users for leader dropdown
   useEffect(() => {
-    setUsersLoading(true);
+    // usersLoading already starts true (see useState above); this effect
+    // only ever runs once per mount ([] deps), so no need to set it again.
     getUsers({ limit: 100, status: 'active' })
       .then((res) => setUsers(res.users ?? []))
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load users.'))

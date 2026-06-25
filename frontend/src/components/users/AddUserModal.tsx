@@ -61,13 +61,13 @@ export default function AddUserModal({ onClose, onSuccess, showToast }: Props) {
   const [managersError,   setManagersError]   = useState(false);
 
   useEffect(() => {
-    setGroupsLoading(true);
+    (() => setGroupsLoading(true))();
     groupsAPI.listGroups({ limit: 200, status: 'ACTIVE' })
       .then(res => { setGroups(res.data.map(g => ({ id: g.id, name: g.name, dept: g.department?.name ?? null }))); setGroupsError(false); })
       .catch(() => setGroupsError(true))
       .finally(() => setGroupsLoading(false));
 
-    setManagersLoading(true);
+    (() => setManagersLoading(true))();
     Promise.allSettled([
       getUsers({ role: 'manager',         limit: 200 }),
       getUsers({ role: 'admin_assistant', limit: 200 }),

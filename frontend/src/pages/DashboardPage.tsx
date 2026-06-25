@@ -280,13 +280,15 @@ function UsersRoleDonut({ data }: { data: UsersByRoleItem[] }) {
   if (data.length === 0) return <EmptyMsg msg="No role data available." />;
   const R = 36, cx = 50, cy = 50;
   const circ = 2 * Math.PI * R;
-  let offset = 0;
-  const segments = data.map((d) => {
-    const dashLen = (d.percentage / 100) * circ;
-    const seg = { ...d, dashLen, offset };
-    offset += dashLen;
-    return seg;
-  });
+  const segments = data.reduce(
+    (acc, d) => {
+      const dashLen = (d.percentage / 100) * circ;
+      acc.segs.push({ ...d, dashLen, offset: acc.offset });
+      acc.offset += dashLen;
+      return acc;
+    },
+    { segs: [] as (UsersByRoleItem & { dashLen: number; offset: number })[], offset: 0 }
+  ).segs;
   const total = data.reduce((a, b) => a + b.count, 0);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
