@@ -1,18 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ToastType } from '../users/Toast';
 import type { User } from '../../types/users';
 import { getStoredToken } from '../../api/adminAuth';
+import { getUsers } from '../../api/users';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
-
-async function fetchAllUsers(): Promise<User[]> {
-  const token = getStoredToken();
-  const res = await fetch(`${BASE}/users?limit=200`, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-  });
-  const json = await res.json().catch(() => ({ users: [] }));
-  return (json as { users?: User[] }).users ?? [];
-}
 
 async function patchUserRole(userId: string, roleId: string): Promise<void> {
   const url  = `${BASE}/users/${encodeURIComponent(userId)}/role`;
@@ -81,31 +73,33 @@ interface Props {
 
 export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSuccess, showToast }: Props) {
   const [users,        setUsers]        = useState<User[]>([]);
-  const [loading,      setLoading]      = useState(true);
+  const [loading,      setLoading]      = useState(false);
   const [fetchError,   setFetchError]   = useState<string | null>(null);
   const [search,       setSearch]       = useState('');
   const [selectedIds,  setSelectedIds]  = useState<Set<string>>(new Set());
   const [submitting,   setSubmitting]   = useState(false);
 
+  // Server-side search, debounced — avoids the old hardcoded ?limit=200
+  // fetch-everything approach, which silently missed users once the table
+  // grew past 200 rows.
   useEffect(() => {
+    const query = search.trim();
+    if (!query) {
+      setUsers([]);
+      setLoading(false);
+      setFetchError(null);
+      return;
+    }
     let cancelled = false;
     setLoading(true);
     setFetchError(null);
-    fetchAllUsers()
-      .then(list => { if (!cancelled) { setUsers(list); setLoading(false); } })
-      .catch(() => { if (!cancelled) { setFetchError('Failed to load users'); setLoading(false); } });
-    return () => { cancelled = true; };
-  }, []);
-
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    if (!q) return users;
-    return users.filter(u =>
-      u.fullName.toLowerCase().includes(q) ||
-      u.email.toLowerCase().includes(q) ||
-      (u.role ?? '').toLowerCase().includes(q),
-    );
-  }, [users, search]);
+    const timer = setTimeout(() => {
+      getUsers({ search: query, limit: 50 })
+        .then(res => { if (!cancelled) { setUsers(res.users); setLoading(false); } })
+        .catch(() => { if (!cancelled) { setFetchError('Failed to load users'); setLoading(false); } });
+    }, 300);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [search]);
 
   function toggleUser(id: string) {
     setSelectedIds(prev => {
@@ -116,12 +110,12 @@ export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSu
   }
 
   function toggleAll() {
-    const filteredIds = filtered.map(u => u.id);
-    const allSelected = filteredIds.every(id => selectedIds.has(id));
+    const visibleIds = users.map(u => u.id);
+    const allSelected = visibleIds.every(id => selectedIds.has(id));
     setSelectedIds(prev => {
       const next = new Set(prev);
-      if (allSelected) filteredIds.forEach(id => next.delete(id));
-      else filteredIds.forEach(id => next.add(id));
+      if (allSelected) visibleIds.forEach(id => next.delete(id));
+      else visibleIds.forEach(id => next.add(id));
       return next;
     });
   }
@@ -148,8 +142,8 @@ export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSu
     setSubmitting(false);
   }
 
-  const allFilteredSelected =
-    filtered.length > 0 && filtered.every(u => selectedIds.has(u.id));
+  const allVisibleSelected =
+    users.length > 0 && users.every(u => selectedIds.has(u.id));
 
   return (
     <div style={{
@@ -208,9 +202,10 @@ export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSu
             </svg>
             <input
               type="text"
-              placeholder="Search by name, email, or role…"
+              placeholder="Search for a user to assign…"
               value={search}
               onChange={e => setSearch(e.target.value)}
+              autoFocus
               style={{
                 width: '100%', paddingLeft: 30, paddingRight: 10,
                 paddingTop: 7, paddingBottom: 7,
@@ -222,16 +217,16 @@ export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSu
               onBlur={e => (e.target.style.borderColor = '#e5e7eb')}
             />
           </div>
-          {!loading && !fetchError && filtered.length > 0 && (
+          {!loading && !fetchError && users.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}>
               <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#6b7280', cursor: 'pointer', userSelect: 'none' }}>
                 <input
                   type="checkbox"
-                  checked={allFilteredSelected}
+                  checked={allVisibleSelected}
                   onChange={toggleAll}
                   style={{ cursor: 'pointer', accentColor: '#2563eb' }}
                 />
-                Select all ({filtered.length})
+                Select all ({users.length})
               </label>
               {selectedIds.size > 0 && (
                 <span style={{ fontSize: 11, color: '#2563eb', fontWeight: 600 }}>
@@ -263,15 +258,22 @@ export default function AssignUsersToRoleModal({ roleId, roleName, onClose, onSu
             </div>
           )}
 
-          {/* Empty */}
-          {!loading && !fetchError && filtered.length === 0 && (
+          {/* Empty — no search typed yet */}
+          {!loading && !fetchError && !search.trim() && (
             <div style={{ padding: '32px 20px', textAlign: 'center', color: '#9ca3af', fontSize: 13 }}>
-              {search ? 'No users match your search.' : 'No users found.'}
+              Search for a user to assign…
+            </div>
+          )}
+
+          {/* Empty — search typed, no matches */}
+          {!loading && !fetchError && search.trim() && users.length === 0 && (
+            <div style={{ padding: '32px 20px', textAlign: 'center', color: '#9ca3af', fontSize: 13 }}>
+              No users match your search.
             </div>
           )}
 
           {/* Rows */}
-          {!loading && !fetchError && filtered.map(user => {
+          {!loading && !fetchError && users.map(user => {
             const selected = selectedIds.has(user.id);
             return (
               <div
