@@ -1,0 +1,33 @@
+// User Role Assignments — links an AppUser to a Role with an assignment type
+// (PRIMARY | SECONDARY | TEMPORARY | EMERGENCY) and an optional expiry.
+//
+// `status` follows the Invitations pattern: ACTIVE rows are live; an expired
+// TEMPORARY/EMERGENCY assignment is flipped to EXPIRED (lazily on read + by a
+// throttled background job) so it stops granting the role but is kept for the
+// "Expired Role Assignments" stat / reporting.
+//
+// Real FK relations (not bare strings) give referential integrity and let the
+// list join the user + role in a single query (no N+1).
+
+model UserRoleAssignment {
+  id             String    @id @default(uuid())
+  userId         String
+  roleId         String
+  assignmentType String    @default("PRIMARY")
+  status         String    @default("ACTIVE")
+  expiresAt      DateTime?
+  assignedBy     String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user AppUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role    @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  // One row per (user, role): the same role can't be assigned to a user twice.
+  @@unique([userId, roleId])
+  @@index([userId])
+  @@index([roleId])
+  @@index([status])
+  @@index([expiresAt])
+  @@map("user_role_assignments")
+}

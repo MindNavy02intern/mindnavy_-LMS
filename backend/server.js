@@ -10,6 +10,8 @@ const rolesRoutes = require("./src/routes/roles.routes");
 const permissionsRoutes = require("./src/routes/permissions.routes");
 const permissionMatrixRoutes = require("./src/routes/permissionMatrix.routes");
 const roleTemplatesRoutes = require("./src/routes/roleTemplates.routes");
+const userRoleAssignmentsRoutes = require("./src/routes/userRoleAssignments.routes");
+const { expireNow: expireRoleAssignments } = require("./src/services/userRoleAssignments.service");
 const accessPoliciesRoutes = require("./src/routes/accessPolicies.routes");
 const groupsRoutes       = require("./src/routes/groups.routes");
 const invitationsRoutes  = require("./src/routes/invitations.routes");
@@ -50,6 +52,7 @@ app.use("/api/admin/roles", rolesRoutes);
 app.use("/api/admin/permissions", permissionsRoutes);
 app.use("/api/admin/permission-matrix", permissionMatrixRoutes);
 app.use("/api/admin/role-templates", roleTemplatesRoutes);
+app.use("/api/admin/user-role-assignments", userRoleAssignmentsRoutes);
 app.use("/api/admin/access-policies", accessPoliciesRoutes);
 
 // Groups routes
@@ -80,6 +83,16 @@ app.use((error, req, res, next) => {
 const server = app.listen(PORT, () => {
   console.log(`Server is alive on http://localhost:${PORT}`);
 });
+
+// Background job: auto-expire temporary/emergency role assignments whose
+// expiry has passed (flips ACTIVE → EXPIRED). One bounded updateMany every
+// 5 minutes; errors are swallowed inside expireRoleAssignments so a DB hiccup
+// can never crash the server. .unref() lets the process exit cleanly in tests.
+const ASSIGNMENT_EXPIRY_INTERVAL_MS = 5 * 60 * 1000;
+const assignmentExpiryTimer = setInterval(() => {
+  expireRoleAssignments().catch(() => {});
+}, ASSIGNMENT_EXPIRY_INTERVAL_MS);
+assignmentExpiryTimer.unref();
 
 server.on("error", (error) => {
   console.error("Server failed to start:", error.message);

@@ -8,6 +8,7 @@ model Role {
 
   rolePermissions RolePermission[]
   accessPolicies  AccessPolicy[]
+  userAssignments UserRoleAssignment[]
 
   @@index([status])
   @@map("roles")

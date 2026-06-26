@@ -38,6 +38,7 @@ model AppUser {
   leadingGroups      Group[]          @relation("GroupLeader")
   receivedMessages   AdminMessage[]   @relation("UserReceivedMessages")
   sessions           AppUserSession[]
+  roleAssignments    UserRoleAssignment[]
 
   @@index([branchId])
   @@index([departmentId])
