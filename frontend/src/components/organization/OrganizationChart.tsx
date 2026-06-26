@@ -156,19 +156,21 @@ export default function OrganizationChart({ showToast }: Props) {
   const [error,   setError]   = useState<string | null>(null);
   const [search,  setSearch]  = useState('');
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getOrgChart();
-      setChart(data);
-    } catch (err) {
-      const msg = err instanceof ApiError ? err.message : 'Failed to load organization chart';
-      setError(msg);
-      showToast('error', msg);
-    } finally {
-      setLoading(false);
-    }
+  const load = useCallback(() => {
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await getOrgChart();
+        setChart(data);
+      } catch (err) {
+        const msg = err instanceof ApiError ? err.message : 'Failed to load organization chart';
+        setError(msg);
+        showToast('error', msg);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [showToast]);
 
   useEffect(() => { load(); }, [load]);

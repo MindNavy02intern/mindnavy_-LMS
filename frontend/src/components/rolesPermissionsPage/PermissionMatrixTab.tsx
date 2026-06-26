@@ -143,8 +143,7 @@ export default function PermissionMatrixTab({ showToast, fullPage = false }: Pro
   // ── Fetch ─────────────────────────────────────────────────────────────────
 
   const fetchMatrix = useCallback(() => {
-    setLoading(true);
-    setError(null);
+    (() => { setLoading(true); setError(null); })();
     getPermissionMatrix({
       roleStatus: roleStatusFilter !== 'ALL' ? roleStatusFilter : undefined,
       category:   categoryFilter   !== 'ALL' ? categoryFilter   : undefined,

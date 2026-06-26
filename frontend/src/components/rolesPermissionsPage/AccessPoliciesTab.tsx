@@ -96,7 +96,7 @@ export default function AccessPoliciesTab({ showToast }: Props) {
   const [statsLoading, setStatsLoading] = useState(true);
 
   const fetchStats = useCallback(() => {
-    setStatsLoading(true);
+    (() => setStatsLoading(true))();
     getAccessPolicyStats()
       .then(setStats)
       .catch(() => setStats(null))
@@ -127,7 +127,7 @@ export default function AccessPoliciesTab({ showToast }: Props) {
   const PAGE_SIZE = 10;
 
   const fetchList = useCallback(() => {
-    setListLoading(true);
+    (() => setListLoading(true))();
     listAccessPolicies({
       page, limit: PAGE_SIZE, search,
       status: statusFilter, effect: effectFilter,

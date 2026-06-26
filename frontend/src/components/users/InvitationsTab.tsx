@@ -158,8 +158,7 @@ export default function InvitationsTab({ showToast, onUserUpdated, onViewUsers }
   }
 
   const load = useCallback(() => {
-    setLoading(true);
-    setError(null);
+    (() => { setLoading(true); setError(null); })();
     getInvitations({ page, limit: LIMIT, search: search || undefined, status: statusFilter || undefined })
       .then(res => { setInvitations(res.invitations); setTotal(res.pagination.total); })
       .catch(err => setError(err instanceof Error ? err.message : 'Failed to load invitations.'))

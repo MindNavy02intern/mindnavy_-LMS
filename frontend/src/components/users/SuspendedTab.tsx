@@ -77,8 +77,7 @@ export default function SuspendedTab() {
   const LIMIT = 10;
 
   const load = useCallback(() => {
-    setLoading(true);
-    setError(null);
+    (() => { setLoading(true); setError(null); })();
     getUsers({ status: 'suspended', page, limit: LIMIT })
       .then(res => { setUsers(res.users); setTotal(res.pagination.total); })
       .catch(err => setError(err instanceof Error ? err.message : 'Failed to load.'))

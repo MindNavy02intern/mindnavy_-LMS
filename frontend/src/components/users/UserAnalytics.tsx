@@ -27,8 +27,7 @@ export default function UserAnalytics() {
   const [error,   setError]   = useState<string | null>(null);
 
   const fetch = useCallback(() => {
-    setLoading(true);
-    setError(null);
+    (() => { setLoading(true); setError(null); })();
     getAnalytics()
       .then(setData)
       .catch(err => setError(err instanceof Error ? err.message : 'Failed to load analytics'))

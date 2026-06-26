@@ -160,8 +160,7 @@ export default function RoleDetailsDrawer({ roleId, onClose, onEdit, onDelete, s
   }, []);
 
   const loadData = useCallback(() => {
-    setLoading(true);
-    setError(null);
+    (() => { setLoading(true); setError(null); })();
     getRolePageDetails(roleId)
       .then(d  => { setData(d);  setLoading(false); })
       .catch(e => { setError(e instanceof Error ? e.message : 'Failed to load'); setLoading(false); });

@@ -7,6 +7,7 @@ import RoleDetailsDrawer from '../components/rolesPermissionsPage/RoleDetailsDra
 import PermissionMatrixTab from '../components/rolesPermissionsPage/PermissionMatrixTab';
 import PermissionMatrixPreview from '../components/rolesPermissionsPage/PermissionMatrixPreview';
 import AccessPoliciesTab from '../components/rolesPermissionsPage/AccessPoliciesTab';
+import RoleTemplatesTab from '../components/rolesPermissionsPage/RoleTemplatesTab';
 import {
   getRolesPageStats,
   getRolesPageList,
@@ -179,7 +180,7 @@ export default function RolesPermissionsStandalonePage() {
   const [statsLoading, setStatsLoading] = useState(true);
 
   const fetchStats = useCallback(() => {
-    setStatsLoading(true);
+    (() => setStatsLoading(true))();
     getRolesPageStats()
       .then(setStats)
       .catch(() => setStats(null))
@@ -217,7 +218,7 @@ export default function RolesPermissionsStandalonePage() {
   const PAGE_SIZE = 10;
 
   const fetchList = useCallback(() => {
-    setListLoading(true);
+    (() => setListLoading(true))();
     getRolesPageList({ page, limit: PAGE_SIZE, search, status: statusFilter })
       .then(res => {
         setRoles(res.data);
@@ -652,8 +653,13 @@ export default function RolesPermissionsStandalonePage() {
             <AccessPoliciesTab showToast={showToast as (type: ToastType, message: string) => void} />
           )}
 
+          {/* ── Role Templates tab ──────────────────────────────────────────── */}
+          {activeTab === 'templates' && (
+            <RoleTemplatesTab showToast={showToast as (type: ToastType, message: string) => void} />
+          )}
+
           {/* ── All other tabs ──────────────────────────────────────────────── */}
-          {activeTab !== 'lms' && activeTab !== 'matrix' && activeTab !== 'access' && (
+          {activeTab !== 'lms' && activeTab !== 'matrix' && activeTab !== 'access' && activeTab !== 'templates' && (
             <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
               <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? activeTab} />
             </div>

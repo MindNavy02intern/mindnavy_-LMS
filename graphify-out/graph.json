@@ -85,10 +85,28 @@
       "norm_label": "test"
     },
     {
-      "label": "prisma:generate",
+      "label": "test:unit",
       "file_type": "code",
       "source_file": "backend/package.json",
       "source_location": "L10",
+      "id": "backend_package_scripts_test_unit",
+      "community": 3,
+      "norm_label": "test:unit"
+    },
+    {
+      "label": "test:e2e",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L11",
+      "id": "backend_package_scripts_test_e2e",
+      "community": 3,
+      "norm_label": "test:e2e"
+    },
+    {
+      "label": "prisma:generate",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L12",
       "id": "backend_package_scripts_prisma_generate",
       "community": 3,
       "norm_label": "prisma:generate"
@@ -97,7 +115,7 @@
       "label": "prisma:validate",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L11",
+      "source_location": "L13",
       "id": "backend_package_scripts_prisma_validate",
       "community": 3,
       "norm_label": "prisma:validate"
@@ -106,7 +124,7 @@
       "label": "create:first-admin",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L12",
+      "source_location": "L14",
       "id": "backend_package_scripts_create_first_admin",
       "community": 3,
       "norm_label": "create:first-admin"
@@ -115,7 +133,7 @@
       "label": "reset:first-admin-password",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L13",
+      "source_location": "L15",
       "id": "backend_package_scripts_reset_first_admin_password",
       "community": 3,
       "norm_label": "reset:first-admin-password"
@@ -124,7 +142,7 @@
       "label": "keywords",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L15",
+      "source_location": "L17",
       "id": "backend_package_keywords",
       "community": 3,
       "norm_label": "keywords"
@@ -133,7 +151,7 @@
       "label": "author",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L16",
+      "source_location": "L18",
       "id": "backend_package_author",
       "community": 3,
       "norm_label": "author"
@@ -142,7 +160,7 @@
       "label": "license",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L17",
+      "source_location": "L19",
       "id": "backend_package_license",
       "community": 3,
       "norm_label": "license"
@@ -151,7 +169,7 @@
       "label": "type",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L18",
+      "source_location": "L20",
       "id": "backend_package_type",
       "community": 3,
       "norm_label": "type"
@@ -160,7 +178,7 @@
       "label": "dependencies",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L19",
+      "source_location": "L21",
       "id": "backend_package_dependencies",
       "community": 3,
       "norm_label": "dependencies"
@@ -169,7 +187,7 @@
       "label": "@prisma/adapter-pg",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L20",
+      "source_location": "L22",
       "id": "backend_package_dependencies_prisma_adapter_pg",
       "community": 3,
       "norm_label": "@prisma/adapter-pg"
@@ -178,7 +196,7 @@
       "label": "@prisma/client",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L21",
+      "source_location": "L23",
       "id": "backend_package_dependencies_prisma_client",
       "community": 3,
       "norm_label": "@prisma/client"
@@ -187,7 +205,7 @@
       "label": "bcryptjs",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L22",
+      "source_location": "L24",
       "id": "backend_package_dependencies_bcryptjs",
       "community": 3,
       "norm_label": "bcryptjs"
@@ -196,7 +214,7 @@
       "label": "cors",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L23",
+      "source_location": "L25",
       "id": "backend_package_dependencies_cors",
       "community": 3,
       "norm_label": "cors"
@@ -205,7 +223,7 @@
       "label": "csv-parse",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L24",
+      "source_location": "L26",
       "id": "backend_package_dependencies_csv_parse",
       "community": 3,
       "norm_label": "csv-parse"
@@ -214,7 +232,7 @@
       "label": "dotenv",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L25",
+      "source_location": "L27",
       "id": "backend_package_dependencies_dotenv",
       "community": 3,
       "norm_label": "dotenv"
@@ -223,7 +241,7 @@
       "label": "express",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L26",
+      "source_location": "L28",
       "id": "backend_package_dependencies_express",
       "community": 3,
       "norm_label": "express"
@@ -232,7 +250,7 @@
       "label": "express-rate-limit",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L27",
+      "source_location": "L29",
       "id": "backend_package_dependencies_express_rate_limit",
       "community": 3,
       "norm_label": "express-rate-limit"
@@ -241,7 +259,7 @@
       "label": "multer",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L28",
+      "source_location": "L30",
       "id": "backend_package_dependencies_multer",
       "community": 3,
       "norm_label": "multer"
@@ -250,7 +268,7 @@
       "label": "pg",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L29",
+      "source_location": "L31",
       "id": "backend_package_dependencies_pg",
       "community": 3,
       "norm_label": "pg"
@@ -259,7 +277,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L31",
+      "source_location": "L33",
       "id": "backend_package_devdependencies",
       "community": 3,
       "norm_label": "devdependencies"
@@ -268,7 +286,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L32",
+      "source_location": "L34",
       "id": "backend_package_devdependencies_types_node",
       "community": 3,
       "norm_label": "@types/node"
@@ -277,7 +295,7 @@
       "label": "nodemon",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L33",
+      "source_location": "L35",
       "id": "backend_package_devdependencies_nodemon",
       "community": 3,
       "norm_label": "nodemon"
@@ -286,7 +304,7 @@
       "label": "prisma",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L34",
+      "source_location": "L36",
       "id": "backend_package_devdependencies_prisma",
       "community": 3,
       "norm_label": "prisma"
@@ -391,10 +409,19 @@
       "norm_label": "permissionmatrixroutes"
     },
     {
-      "label": "accessPoliciesRoutes",
+      "label": "roleTemplatesRoutes",
       "file_type": "code",
       "source_file": "backend/server.js",
       "source_location": "L12",
+      "id": "backend_server_roletemplatesroutes",
+      "community": 52,
+      "norm_label": "roletemplatesroutes"
+    },
+    {
+      "label": "accessPoliciesRoutes",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L13",
       "id": "backend_server_accesspoliciesroutes",
       "community": 52,
       "norm_label": "accesspoliciesroutes"
@@ -403,7 +430,7 @@
       "label": "groupsRoutes",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L13",
+      "source_location": "L14",
       "id": "backend_server_groupsroutes",
       "community": 52,
       "norm_label": "groupsroutes"
@@ -412,7 +439,7 @@
       "label": "invitationsRoutes",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "backend_server_invitationsroutes",
       "community": 52,
       "norm_label": "invitationsroutes"
@@ -421,7 +448,7 @@
       "label": "messagesRoutes",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L15",
+      "source_location": "L16",
       "id": "backend_server_messagesroutes",
       "community": 52,
       "norm_label": "messagesroutes"
@@ -430,7 +457,7 @@
       "label": "app",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L17",
+      "source_location": "L18",
       "id": "backend_server_app",
       "community": 52,
       "norm_label": "app"
@@ -439,7 +466,7 @@
       "label": "corsOptions",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L21",
+      "source_location": "L22",
       "id": "backend_server_corsoptions",
       "community": 52,
       "norm_label": "corsoptions"
@@ -448,7 +475,7 @@
       "label": "server",
       "file_type": "code",
       "source_file": "backend/server.js",
-      "source_location": "L78",
+      "source_location": "L80",
       "id": "backend_server_server",
       "community": 52,
       "norm_label": "server"
@@ -598,10 +625,19 @@
       "norm_label": "roles"
     },
     {
+      "label": "ROLE_TEMPLATES",
+      "file_type": "code",
+      "source_file": "backend/prisma/seed.js",
+      "source_location": "L28",
+      "id": "prisma_seed_role_templates",
+      "community": 110,
+      "norm_label": "role_templates"
+    },
+    {
       "label": "main()",
       "file_type": "code",
       "source_file": "backend/prisma/seed.js",
-      "source_location": "L26",
+      "source_location": "L51",
       "id": "prisma_seed_main",
       "community": 110,
       "norm_label": "main()"
@@ -1732,6 +1768,114 @@
       "norm_label": "deletepermission()"
     },
     {
+      "label": "roleTemplates.controller.js",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L1",
+      "id": "backend_src_controllers_roletemplates_controller_js",
+      "community": 92,
+      "norm_label": "roletemplates.controller.js"
+    },
+    {
+      "label": "svc",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L1",
+      "id": "controllers_roletemplates_controller_svc",
+      "community": 92,
+      "norm_label": "svc"
+    },
+    {
+      "label": "{\r\n  validateId,\r\n  validateListTemplatesQuery,\r\n  validateCreateTemplate,\r\n  validateApplyTemplate,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L2",
+      "id": "controllers_roletemplates_controller_validateid_validatelisttemplatesquery_validatecreatetemplate_validateapplytemplate",
+      "community": 92,
+      "norm_label": "{\r\n  validateid,\r\n  validatelisttemplatesquery,\r\n  validatecreatetemplate,\r\n  validateapplytemplate,\r\n}"
+    },
+    {
+      "label": "badRequest()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L11",
+      "id": "controllers_roletemplates_controller_badrequest",
+      "community": 92,
+      "norm_label": "badrequest()"
+    },
+    {
+      "label": "notFound()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L15",
+      "id": "controllers_roletemplates_controller_notfound",
+      "community": 92,
+      "norm_label": "notfound()"
+    },
+    {
+      "label": "serverError()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L19",
+      "id": "controllers_roletemplates_controller_servererror",
+      "community": 92,
+      "norm_label": "servererror()"
+    },
+    {
+      "label": "invalidPermissions()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L30",
+      "id": "controllers_roletemplates_controller_invalidpermissions",
+      "community": 92,
+      "norm_label": "invalidpermissions()"
+    },
+    {
+      "label": "listRoleTemplates()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L40",
+      "id": "controllers_roletemplates_controller_listroletemplates",
+      "community": 92,
+      "norm_label": "listroletemplates()"
+    },
+    {
+      "label": "getRoleTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L49",
+      "id": "controllers_roletemplates_controller_getroletemplate",
+      "community": 92,
+      "norm_label": "getroletemplate()"
+    },
+    {
+      "label": "createRoleTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L59",
+      "id": "controllers_roletemplates_controller_createroletemplate",
+      "community": 92,
+      "norm_label": "createroletemplate()"
+    },
+    {
+      "label": "applyRoleTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L71",
+      "id": "controllers_roletemplates_controller_applyroletemplate",
+      "community": 92,
+      "norm_label": "applyroletemplate()"
+    },
+    {
+      "label": "deleteRoleTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L92",
+      "id": "controllers_roletemplates_controller_deleteroletemplate",
+      "community": 92,
+      "norm_label": "deleteroletemplate()"
+    },
+    {
       "label": "users.controller.js",
       "file_type": "code",
       "source_file": "backend/src/controllers/users.controller.js",
@@ -2394,7 +2538,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_messages_routes_js",
-      "community": 75,
+      "community": 36,
       "norm_label": "messages.routes.js"
     },
     {
@@ -2403,7 +2547,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L1",
       "id": "routes_messages_routes_express",
-      "community": 75,
+      "community": 36,
       "norm_label": "express"
     },
     {
@@ -2412,7 +2556,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L2",
       "id": "routes_messages_routes_requireadminauth",
-      "community": 75,
+      "community": 36,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -2421,7 +2565,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L3",
       "id": "routes_messages_routes_adminuseractionratelimiter",
-      "community": 75,
+      "community": 36,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -2430,7 +2574,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L4",
       "id": "routes_messages_routes_sendmessage_getmessages",
-      "community": 75,
+      "community": 36,
       "norm_label": "{ sendmessage, getmessages }"
     },
     {
@@ -2439,7 +2583,7 @@
       "source_file": "backend/src/routes/messages.routes.js",
       "source_location": "L6",
       "id": "routes_messages_routes_router",
-      "community": 75,
+      "community": 36,
       "norm_label": "router"
     },
     {
@@ -2556,7 +2700,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_permissions_routes_js",
-      "community": 36,
+      "community": 101,
       "norm_label": "permissions.routes.js"
     },
     {
@@ -2565,7 +2709,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L1",
       "id": "routes_permissions_routes_express",
-      "community": 36,
+      "community": 101,
       "norm_label": "express"
     },
     {
@@ -2574,7 +2718,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L2",
       "id": "routes_permissions_routes_requireadminauth",
-      "community": 36,
+      "community": 101,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -2583,7 +2727,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L3",
       "id": "routes_permissions_routes_adminuseractionratelimiter",
-      "community": 36,
+      "community": 101,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -2592,7 +2736,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L4",
       "id": "routes_permissions_routes_listpermissions_getpermission_createpermission_updatepermission_deletepermission",
-      "community": 36,
+      "community": 101,
       "norm_label": "{\r\n  listpermissions, getpermission, createpermission, updatepermission, deletepermission,\r\n}"
     },
     {
@@ -2601,7 +2745,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L8",
       "id": "routes_permissions_routes_router",
-      "community": 36,
+      "community": 101,
       "norm_label": "router"
     },
     {
@@ -2610,7 +2754,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_roles_routes_js",
-      "community": 19,
+      "community": 113,
       "norm_label": "roles.routes.js"
     },
     {
@@ -2619,7 +2763,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L1",
       "id": "routes_roles_routes_express",
-      "community": 19,
+      "community": 113,
       "norm_label": "express"
     },
     {
@@ -2628,7 +2772,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L2",
       "id": "routes_roles_routes_requireadminauth",
-      "community": 19,
+      "community": 113,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -2637,7 +2781,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L3",
       "id": "routes_roles_routes_adminuseractionratelimiter",
-      "community": 19,
+      "community": 113,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -2646,7 +2790,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L4",
       "id": "routes_roles_routes_listroles_getrolesstats_getrole_createrole_updaterole_deleterole_duplicaterole_getrolepermissions_assignpermissionstorole",
-      "community": 19,
+      "community": 113,
       "norm_label": "{\r\n  listroles, getrolesstats, getrole, createrole, updaterole, deleterole, duplicaterole,\r\n  getrolepermissions, assignpermissionstorole,\r\n}"
     },
     {
@@ -2655,7 +2799,61 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L9",
       "id": "routes_roles_routes_router",
-      "community": 19,
+      "community": 113,
+      "norm_label": "router"
+    },
+    {
+      "label": "roleTemplates.routes.js",
+      "file_type": "code",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L1",
+      "id": "backend_src_routes_roletemplates_routes_js",
+      "community": 92,
+      "norm_label": "roletemplates.routes.js"
+    },
+    {
+      "label": "express",
+      "file_type": "code",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L1",
+      "id": "routes_roletemplates_routes_express",
+      "community": 92,
+      "norm_label": "express"
+    },
+    {
+      "label": "{ requireAdminAuth }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L2",
+      "id": "routes_roletemplates_routes_requireadminauth",
+      "community": 92,
+      "norm_label": "{ requireadminauth }"
+    },
+    {
+      "label": "{ adminUserActionRateLimiter }",
+      "file_type": "code",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L3",
+      "id": "routes_roletemplates_routes_adminuseractionratelimiter",
+      "community": 92,
+      "norm_label": "{ adminuseractionratelimiter }"
+    },
+    {
+      "label": "{\r\n  listRoleTemplates, getRoleTemplate, createRoleTemplate,\r\n  applyRoleTemplate, deleteRoleTemplate,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L4",
+      "id": "routes_roletemplates_routes_listroletemplates_getroletemplate_createroletemplate_applyroletemplate_deleteroletemplate",
+      "community": 92,
+      "norm_label": "{\r\n  listroletemplates, getroletemplate, createroletemplate,\r\n  applyroletemplate, deleteroletemplate,\r\n}"
+    },
+    {
+      "label": "router",
+      "file_type": "code",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L9",
+      "id": "routes_roletemplates_routes_router",
+      "community": 92,
       "norm_label": "router"
     },
     {
@@ -2844,7 +3042,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L1",
       "id": "backend_src_services_accesspolicies_service_js",
-      "community": 101,
+      "community": 105,
       "norm_label": "accesspolicies.service.js"
     },
     {
@@ -2853,7 +3051,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L1",
       "id": "services_accesspolicies_service_prisma",
-      "community": 101,
+      "community": 105,
       "norm_label": "prisma"
     },
     {
@@ -2862,7 +3060,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L5",
       "id": "services_accesspolicies_service_paginate",
-      "community": 101,
+      "community": 105,
       "norm_label": "paginate()"
     },
     {
@@ -2871,7 +3069,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L11",
       "id": "services_accesspolicies_service_buildpagination",
-      "community": 101,
+      "community": 105,
       "norm_label": "buildpagination()"
     },
     {
@@ -2880,7 +3078,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L16",
       "id": "services_accesspolicies_service_createpolicyauditlog",
-      "community": 101,
+      "community": 105,
       "norm_label": "createpolicyauditlog()"
     },
     {
@@ -2889,7 +3087,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L28",
       "id": "services_accesspolicies_service_policy_select",
-      "community": 101,
+      "community": 105,
       "norm_label": "policy_select"
     },
     {
@@ -2898,7 +3096,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L38",
       "id": "services_accesspolicies_service_assertroleexists",
-      "community": 101,
+      "community": 105,
       "norm_label": "assertroleexists()"
     },
     {
@@ -2907,7 +3105,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L46",
       "id": "services_accesspolicies_service_listaccesspolicies",
-      "community": 101,
+      "community": 105,
       "norm_label": "listaccesspolicies()"
     },
     {
@@ -2916,7 +3114,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L71",
       "id": "services_accesspolicies_service_getaccesspolicy",
-      "community": 101,
+      "community": 105,
       "norm_label": "getaccesspolicy()"
     },
     {
@@ -2925,7 +3123,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L75",
       "id": "services_accesspolicies_service_createaccesspolicy",
-      "community": 101,
+      "community": 105,
       "norm_label": "createaccesspolicy()"
     },
     {
@@ -2934,7 +3132,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L96",
       "id": "services_accesspolicies_service_updateaccesspolicy",
-      "community": 101,
+      "community": 105,
       "norm_label": "updateaccesspolicy()"
     },
     {
@@ -2943,7 +3141,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L110",
       "id": "services_accesspolicies_service_deleteaccesspolicy",
-      "community": 101,
+      "community": 105,
       "norm_label": "deleteaccesspolicy()"
     },
     {
@@ -2952,7 +3150,7 @@
       "source_file": "backend/src/services/accessPolicies.service.js",
       "source_location": "L117",
       "id": "services_accesspolicies_service_getaccesspolicystats",
-      "community": 101,
+      "community": 105,
       "norm_label": "getaccesspolicystats()"
     },
     {
@@ -4081,6 +4279,114 @@
       "norm_label": "duplicaterole()"
     },
     {
+      "label": "roleTemplates.service.js",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L1",
+      "id": "backend_src_services_roletemplates_service_js",
+      "community": 92,
+      "norm_label": "roletemplates.service.js"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L1",
+      "id": "services_roletemplates_service_prisma",
+      "community": 92,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "paginate()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L5",
+      "id": "services_roletemplates_service_paginate",
+      "community": 92,
+      "norm_label": "paginate()"
+    },
+    {
+      "label": "buildPagination()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L11",
+      "id": "services_roletemplates_service_buildpagination",
+      "community": 92,
+      "norm_label": "buildpagination()"
+    },
+    {
+      "label": "createTemplateAuditLog()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L16",
+      "id": "services_roletemplates_service_createtemplateauditlog",
+      "community": 92,
+      "norm_label": "createtemplateauditlog()"
+    },
+    {
+      "label": "permissionIdsOf()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L27",
+      "id": "services_roletemplates_service_permissionidsof",
+      "community": 92,
+      "norm_label": "permissionidsof()"
+    },
+    {
+      "label": "assertPermissionsExist()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L33",
+      "id": "services_roletemplates_service_assertpermissionsexist",
+      "community": 92,
+      "norm_label": "assertpermissionsexist()"
+    },
+    {
+      "label": "listRoleTemplates()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L50",
+      "id": "services_roletemplates_service_listroletemplates",
+      "community": 92,
+      "norm_label": "listroletemplates()"
+    },
+    {
+      "label": "getRoleTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L80",
+      "id": "services_roletemplates_service_getroletemplate",
+      "community": 92,
+      "norm_label": "getroletemplate()"
+    },
+    {
+      "label": "createRoleTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L110",
+      "id": "services_roletemplates_service_createroletemplate",
+      "community": 92,
+      "norm_label": "createroletemplate()"
+    },
+    {
+      "label": "applyRoleTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L132",
+      "id": "services_roletemplates_service_applyroletemplate",
+      "community": 92,
+      "norm_label": "applyroletemplate()"
+    },
+    {
+      "label": "deleteRoleTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L168",
+      "id": "services_roletemplates_service_deleteroletemplate",
+      "community": 92,
+      "norm_label": "deleteroletemplate()"
+    },
+    {
       "label": "users.service.js",
       "file_type": "code",
       "source_file": "backend/src/services/users.service.js",
@@ -4963,6 +5269,60 @@
       "norm_label": "validatematrixtoggle()"
     },
     {
+      "label": "roleTemplates.validator.js",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L1",
+      "id": "backend_src_validators_roletemplates_validator_js",
+      "community": 92,
+      "norm_label": "roletemplates.validator.js"
+    },
+    {
+      "label": "validateId()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L9",
+      "id": "validators_roletemplates_validator_validateid",
+      "community": 92,
+      "norm_label": "validateid()"
+    },
+    {
+      "label": "validateListTemplatesQuery()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L16",
+      "id": "validators_roletemplates_validator_validatelisttemplatesquery",
+      "community": 92,
+      "norm_label": "validatelisttemplatesquery()"
+    },
+    {
+      "label": "normalisePermissionIds()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L29",
+      "id": "validators_roletemplates_validator_normalisepermissionids",
+      "community": 92,
+      "norm_label": "normalisepermissionids()"
+    },
+    {
+      "label": "validateCreateTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L47",
+      "id": "validators_roletemplates_validator_validatecreatetemplate",
+      "community": 92,
+      "norm_label": "validatecreatetemplate()"
+    },
+    {
+      "label": "validateApplyTemplate()",
+      "file_type": "code",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L72",
+      "id": "validators_roletemplates_validator_validateapplytemplate",
+      "community": 92,
+      "norm_label": "validateapplytemplate()"
+    },
+    {
       "label": "users.validator.js",
       "file_type": "code",
       "source_file": "backend/src/validators/users.validator.js",
@@ -5213,6 +5573,105 @@
       "id": "test_results_last_run_failedtests",
       "community": 83,
       "norm_label": "failedtests"
+    },
+    {
+      "label": "roleTemplates.e2e.test.js",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L1",
+      "id": "backend_tests_roletemplates_e2e_test_js",
+      "community": 114,
+      "norm_label": "roletemplates.e2e.test.js"
+    },
+    {
+      "label": "{ test, describe, before, after }",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L18",
+      "id": "tests_roletemplates_e2e_test_test_describe_before_after",
+      "community": 114,
+      "norm_label": "{ test, describe, before, after }"
+    },
+    {
+      "label": "assert",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L19",
+      "id": "tests_roletemplates_e2e_test_assert",
+      "community": 114,
+      "norm_label": "assert"
+    },
+    {
+      "label": "api()",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L25",
+      "id": "tests_roletemplates_e2e_test_api",
+      "community": 114,
+      "norm_label": "api()"
+    },
+    {
+      "label": "state",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L40",
+      "id": "tests_roletemplates_e2e_test_state",
+      "community": 114,
+      "norm_label": "state"
+    },
+    {
+      "label": "roleTemplates.validator.test.js",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L1",
+      "id": "backend_tests_roletemplates_validator_test_js",
+      "community": 92,
+      "norm_label": "roletemplates.validator.test.js"
+    },
+    {
+      "label": "{ test, describe }",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L6",
+      "id": "tests_roletemplates_validator_test_test_describe",
+      "community": 92,
+      "norm_label": "{ test, describe }"
+    },
+    {
+      "label": "assert",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L7",
+      "id": "tests_roletemplates_validator_test_assert",
+      "community": 92,
+      "norm_label": "assert"
+    },
+    {
+      "label": "{\r\n  validateId,\r\n  validateListTemplatesQuery,\r\n  validateCreateTemplate,\r\n  validateApplyTemplate,\r\n}",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L9",
+      "id": "tests_roletemplates_validator_test_validateid_validatelisttemplatesquery_validatecreatetemplate_validateapplytemplate",
+      "community": 92,
+      "norm_label": "{\r\n  validateid,\r\n  validatelisttemplatesquery,\r\n  validatecreatetemplate,\r\n  validateapplytemplate,\r\n}"
+    },
+    {
+      "label": "{ isValid, data }",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L31",
+      "id": "tests_roletemplates_validator_test_isvalid_data",
+      "community": 92,
+      "norm_label": "{ isvalid, data }"
+    },
+    {
+      "label": "many",
+      "file_type": "code",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L93",
+      "id": "tests_roletemplates_validator_test_many",
+      "community": 92,
+      "norm_label": "many"
     },
     {
       "label": "eslint.config.js",
@@ -6091,7 +6550,7 @@
       "label": "useAuth()",
       "file_type": "code",
       "source_file": "frontend/src/AuthContext.tsx",
-      "source_location": "L143",
+      "source_location": "L145",
       "id": "src_authcontext_useauth",
       "community": 45,
       "norm_label": "useauth()"
@@ -6165,7 +6624,7 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L12",
       "id": "api_accesspoliciespage_policystatus",
-      "community": 72,
+      "community": 30,
       "norm_label": "policystatus"
     },
     {
@@ -6300,7 +6759,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L22",
       "id": "api_adminauth_getstoredtoken",
-      "community": 102,
+      "community": 22,
       "norm_label": "getstoredtoken()"
     },
     {
@@ -6831,7 +7290,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L1",
       "id": "frontend_src_api_rolespage_ts",
-      "community": 53,
+      "community": 60,
       "norm_label": "rolespage.ts"
     },
     {
@@ -6858,7 +7317,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L34",
       "id": "api_rolespage_apifetch",
-      "community": 53,
+      "community": 59,
       "norm_label": "apifetch()"
     },
     {
@@ -6867,7 +7326,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L56",
       "id": "api_rolespage_getrolespagestats",
-      "community": 53,
+      "community": 60,
       "norm_label": "getrolespagestats()"
     },
     {
@@ -6876,7 +7335,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L61",
       "id": "api_rolespage_getrolespagelist",
-      "community": 53,
+      "community": 59,
       "norm_label": "getrolespagelist()"
     },
     {
@@ -6885,7 +7344,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L78",
       "id": "api_rolespage_getrolepagedetails",
-      "community": 46,
+      "community": 60,
       "norm_label": "getrolepagedetails()"
     },
     {
@@ -6894,7 +7353,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L85",
       "id": "api_rolespage_createrolepage",
-      "community": 53,
+      "community": 60,
       "norm_label": "createrolepage()"
     },
     {
@@ -6912,7 +7371,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L102",
       "id": "api_rolespage_deleterolepage",
-      "community": 53,
+      "community": 60,
       "norm_label": "deleterolepage()"
     },
     {
@@ -6921,7 +7380,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L106",
       "id": "api_rolespage_duplicaterolepage",
-      "community": 53,
+      "community": 46,
       "norm_label": "duplicaterolepage()"
     },
     {
@@ -6930,7 +7389,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L114",
       "id": "api_rolespage_getrolepermissions",
-      "community": 53,
+      "community": 60,
       "norm_label": "getrolepermissions()"
     },
     {
@@ -6939,7 +7398,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L121",
       "id": "api_rolespage_assignrolepermissions",
-      "community": 53,
+      "community": 60,
       "norm_label": "assignrolepermissions()"
     },
     {
@@ -6957,7 +7416,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L136",
       "id": "api_rolespage_getpermissionmatrix",
-      "community": 54,
+      "community": 71,
       "norm_label": "getpermissionmatrix()"
     },
     {
@@ -7013,6 +7472,132 @@
       "id": "api_rolespermissions_rolespermissionsapi",
       "community": 104,
       "norm_label": "rolespermissionsapi"
+    },
+    {
+      "label": "roleTemplates.ts",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L1",
+      "id": "frontend_src_api_roletemplates_ts",
+      "community": 54,
+      "norm_label": "roletemplates.ts"
+    },
+    {
+      "label": "RoleTemplateListItem",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L5",
+      "id": "api_roletemplates_roletemplatelistitem",
+      "community": 54,
+      "norm_label": "roletemplatelistitem"
+    },
+    {
+      "label": "RoleTemplatePermission",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L14",
+      "id": "api_roletemplates_roletemplatepermission",
+      "community": 54,
+      "norm_label": "roletemplatepermission"
+    },
+    {
+      "label": "RoleTemplateDetails",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L21",
+      "id": "api_roletemplates_roletemplatedetails",
+      "community": 54,
+      "norm_label": "roletemplatedetails"
+    },
+    {
+      "label": "Pagination",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L25",
+      "id": "api_roletemplates_pagination",
+      "community": 54,
+      "norm_label": "pagination"
+    },
+    {
+      "label": "ApplyRoleTemplateResult",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L32",
+      "id": "api_roletemplates_applyroletemplateresult",
+      "community": 54,
+      "norm_label": "applyroletemplateresult"
+    },
+    {
+      "label": "RoleTemplateError",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L38",
+      "id": "api_roletemplates_roletemplateerror",
+      "community": 53,
+      "norm_label": "roletemplateerror"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L41",
+      "id": "api_roletemplates_roletemplateerror_constructor",
+      "community": 53,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": "apiFetch()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L49",
+      "id": "api_roletemplates_apifetch",
+      "community": 54,
+      "norm_label": "apifetch()"
+    },
+    {
+      "label": "getRoleTemplates()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L67",
+      "id": "api_roletemplates_getroletemplates",
+      "community": 54,
+      "norm_label": "getroletemplates()"
+    },
+    {
+      "label": "getRoleTemplateDetails()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L82",
+      "id": "api_roletemplates_getroletemplatedetails",
+      "community": 54,
+      "norm_label": "getroletemplatedetails()"
+    },
+    {
+      "label": "createRoleTemplate()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L89",
+      "id": "api_roletemplates_createroletemplate",
+      "community": 53,
+      "norm_label": "createroletemplate()"
+    },
+    {
+      "label": "applyRoleTemplate()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L102",
+      "id": "api_roletemplates_applyroletemplate",
+      "community": 54,
+      "norm_label": "applyroletemplate()"
+    },
+    {
+      "label": "deleteRoleTemplate()",
+      "file_type": "code",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L111",
+      "id": "api_roletemplates_deleteroletemplate",
+      "community": 54,
+      "norm_label": "deleteroletemplate()"
     },
     {
       "label": "trustedDevices.ts",
@@ -7128,7 +7713,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L59",
       "id": "api_users_getusers",
-      "community": 102,
+      "community": 24,
       "norm_label": "getusers()"
     },
     {
@@ -7146,7 +7731,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L117",
       "id": "api_users_createuser",
-      "community": 50,
+      "community": 27,
       "norm_label": "createuser()"
     },
     {
@@ -7173,7 +7758,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L129",
       "id": "api_users_reactivateuser",
-      "community": 102,
+      "community": 27,
       "norm_label": "reactivateuser()"
     },
     {
@@ -7182,7 +7767,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L133",
       "id": "api_users_approveverification",
-      "community": 102,
+      "community": 27,
       "norm_label": "approveverification()"
     },
     {
@@ -7191,7 +7776,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L137",
       "id": "api_users_deleteuser",
-      "community": 73,
+      "community": 27,
       "norm_label": "deleteuser()"
     },
     {
@@ -7218,7 +7803,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L151",
       "id": "api_users_getuserdetails",
-      "community": 102,
+      "community": 22,
       "norm_label": "getuserdetails()"
     },
     {
@@ -7236,7 +7821,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L195",
       "id": "api_users_bulkaction",
-      "community": 27,
+      "community": 55,
       "norm_label": "bulkaction()"
     },
     {
@@ -7641,7 +8226,7 @@
       "source_file": "frontend/src/components/groups/CreateGroupModal.tsx",
       "source_location": "L28",
       "id": "groups_creategroupmodal_creategroupmodal",
-      "community": 30,
+      "community": 37,
       "norm_label": "creategroupmodal()"
     },
     {
@@ -7704,7 +8289,7 @@
       "source_file": "frontend/src/components/groups/EditGroupModal.tsx",
       "source_location": "L30",
       "id": "groups_editgroupmodal_editgroupmodal",
-      "community": 30,
+      "community": 37,
       "norm_label": "editgroupmodal()"
     },
     {
@@ -8671,12 +9256,84 @@
       "norm_label": "accesspoliciestab()"
     },
     {
+      "label": "ApplyRoleTemplateModal.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "community": 54,
+      "norm_label": "applyroletemplatemodal.tsx"
+    },
+    {
+      "label": "INPUT",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L12",
+      "id": "rolespermissionspage_applyroletemplatemodal_input",
+      "community": 54,
+      "norm_label": "input"
+    },
+    {
+      "label": "LABEL",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L19",
+      "id": "rolespermissionspage_applyroletemplatemodal_label",
+      "community": 54,
+      "norm_label": "label"
+    },
+    {
+      "label": "focusIn()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L23",
+      "id": "rolespermissionspage_applyroletemplatemodal_focusin",
+      "community": 54,
+      "norm_label": "focusin()"
+    },
+    {
+      "label": "focusOut()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L27",
+      "id": "rolespermissionspage_applyroletemplatemodal_focusout",
+      "community": 54,
+      "norm_label": "focusout()"
+    },
+    {
+      "label": "SectionHeader()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L32",
+      "id": "rolespermissionspage_applyroletemplatemodal_sectionheader",
+      "community": 54,
+      "norm_label": "sectionheader()"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L44",
+      "id": "rolespermissionspage_applyroletemplatemodal_props",
+      "community": 54,
+      "norm_label": "props"
+    },
+    {
+      "label": "ApplyRoleTemplateModal()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L52",
+      "id": "rolespermissionspage_applyroletemplatemodal_applyroletemplatemodal",
+      "community": 54,
+      "norm_label": "applyroletemplatemodal()"
+    },
+    {
       "label": "AssignUsersToRoleModal.tsx",
       "file_type": "code",
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_assignuserstorolemodal_tsx",
-      "community": 102,
+      "community": 24,
       "norm_label": "assignuserstorolemodal.tsx"
     },
     {
@@ -8685,7 +9342,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L9",
       "id": "rolespermissionspage_assignuserstorolemodal_patchuserrole",
-      "community": 102,
+      "community": 24,
       "norm_label": "patchuserrole()"
     },
     {
@@ -8694,7 +9351,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L30",
       "id": "rolespermissionspage_assignuserstorolemodal_avatar",
-      "community": 102,
+      "community": 24,
       "norm_label": "avatar()"
     },
     {
@@ -8703,7 +9360,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L64",
       "id": "rolespermissionspage_assignuserstorolemodal_props",
-      "community": 102,
+      "community": 24,
       "norm_label": "props"
     },
     {
@@ -8712,7 +9369,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L74",
       "id": "rolespermissionspage_assignuserstorolemodal_assignuserstorolemodal",
-      "community": 102,
+      "community": 24,
       "norm_label": "assignuserstorolemodal()"
     },
     {
@@ -8721,7 +9378,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "community": 72,
+      "community": 30,
       "norm_label": "createpolicymodal.tsx"
     },
     {
@@ -8730,7 +9387,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L20",
       "id": "rolespermissionspage_createpolicymodal_resource_options",
-      "community": 72,
+      "community": 30,
       "norm_label": "resource_options"
     },
     {
@@ -8739,7 +9396,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L21",
       "id": "rolespermissionspage_createpolicymodal_action_options",
-      "community": 72,
+      "community": 30,
       "norm_label": "action_options"
     },
     {
@@ -8748,7 +9405,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L25",
       "id": "rolespermissionspage_createpolicymodal_input",
-      "community": 72,
+      "community": 30,
       "norm_label": "input"
     },
     {
@@ -8757,7 +9414,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L32",
       "id": "rolespermissionspage_createpolicymodal_label",
-      "community": 72,
+      "community": 30,
       "norm_label": "label"
     },
     {
@@ -8766,7 +9423,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L36",
       "id": "rolespermissionspage_createpolicymodal_focusin",
-      "community": 72,
+      "community": 30,
       "norm_label": "focusin()"
     },
     {
@@ -8775,7 +9432,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L40",
       "id": "rolespermissionspage_createpolicymodal_focusout",
-      "community": 72,
+      "community": 30,
       "norm_label": "focusout()"
     },
     {
@@ -8784,7 +9441,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L45",
       "id": "rolespermissionspage_createpolicymodal_sectionheader",
-      "community": 72,
+      "community": 30,
       "norm_label": "sectionheader()"
     },
     {
@@ -8793,7 +9450,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L59",
       "id": "rolespermissionspage_createpolicymodal_props",
-      "community": 72,
+      "community": 30,
       "norm_label": "props"
     },
     {
@@ -8802,7 +9459,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L68",
       "id": "rolespermissionspage_createpolicymodal_createpolicymodal",
-      "community": 72,
+      "community": 30,
       "norm_label": "createpolicymodal()"
     },
     {
@@ -8878,12 +9535,84 @@
       "norm_label": "createrolemodal()"
     },
     {
+      "label": "CreateRoleTemplateModal.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "community": 53,
+      "norm_label": "createroletemplatemodal.tsx"
+    },
+    {
+      "label": "INPUT",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L9",
+      "id": "rolespermissionspage_createroletemplatemodal_input",
+      "community": 53,
+      "norm_label": "input"
+    },
+    {
+      "label": "LABEL",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L16",
+      "id": "rolespermissionspage_createroletemplatemodal_label",
+      "community": 53,
+      "norm_label": "label"
+    },
+    {
+      "label": "focusIn()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L20",
+      "id": "rolespermissionspage_createroletemplatemodal_focusin",
+      "community": 53,
+      "norm_label": "focusin()"
+    },
+    {
+      "label": "focusOut()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L24",
+      "id": "rolespermissionspage_createroletemplatemodal_focusout",
+      "community": 53,
+      "norm_label": "focusout()"
+    },
+    {
+      "label": "SectionHeader()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L29",
+      "id": "rolespermissionspage_createroletemplatemodal_sectionheader",
+      "community": 53,
+      "norm_label": "sectionheader()"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L43",
+      "id": "rolespermissionspage_createroletemplatemodal_props",
+      "community": 53,
+      "norm_label": "props"
+    },
+    {
+      "label": "CreateRoleTemplateModal()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L51",
+      "id": "rolespermissionspage_createroletemplatemodal_createroletemplatemodal",
+      "community": 53,
+      "norm_label": "createroletemplatemodal()"
+    },
+    {
       "label": "PermissionMatrixPreview.tsx",
       "file_type": "code",
       "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_permissionmatrixpreview_tsx",
-      "community": 54,
+      "community": 71,
       "norm_label": "permissionmatrixpreview.tsx"
     },
     {
@@ -8892,7 +9621,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
       "source_location": "L8",
       "id": "rolespermissionspage_permissionmatrixpreview_props",
-      "community": 54,
+      "community": 71,
       "norm_label": "props"
     },
     {
@@ -8901,7 +9630,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
       "source_location": "L14",
       "id": "rolespermissionspage_permissionmatrixpreview_previewskeleton",
-      "community": 54,
+      "community": 71,
       "norm_label": "previewskeleton()"
     },
     {
@@ -8910,7 +9639,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
       "source_location": "L31",
       "id": "rolespermissionspage_permissionmatrixpreview_checkicon",
-      "community": 54,
+      "community": 71,
       "norm_label": "checkicon()"
     },
     {
@@ -8919,7 +9648,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
       "source_location": "L39",
       "id": "rolespermissionspage_permissionmatrixpreview_minusicon",
-      "community": 54,
+      "community": 71,
       "norm_label": "minusicon()"
     },
     {
@@ -8928,7 +9657,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
       "source_location": "L49",
       "id": "rolespermissionspage_permissionmatrixpreview_legend",
-      "community": 54,
+      "community": 71,
       "norm_label": "legend"
     },
     {
@@ -8937,7 +9666,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/PermissionMatrixPreview.tsx",
       "source_location": "L58",
       "id": "rolespermissionspage_permissionmatrixpreview_permissionmatrixpreview",
-      "community": 54,
+      "community": 71,
       "norm_label": "permissionmatrixpreview()"
     },
     {
@@ -9157,6 +9886,33 @@
       "norm_label": "roledetailsdrawer()"
     },
     {
+      "label": "RoleTemplatesTab.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L1",
+      "id": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "community": 54,
+      "norm_label": "roletemplatestab.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L14",
+      "id": "rolespermissionspage_roletemplatestab_props",
+      "community": 54,
+      "norm_label": "props"
+    },
+    {
+      "label": "RoleTemplatesTab()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L18",
+      "id": "rolespermissionspage_roletemplatestab_roletemplatestab",
+      "community": 54,
+      "norm_label": "roletemplatestab()"
+    },
+    {
       "label": "LoadingSpinner.tsx",
       "file_type": "code",
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
@@ -9234,7 +9990,7 @@
       "source_file": "frontend/src/components/users/AddUserModal.tsx",
       "source_location": "L49",
       "id": "users_addusermodal_addusermodal",
-      "community": 30,
+      "community": 37,
       "norm_label": "addusermodal()"
     },
     {
@@ -9315,7 +10071,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_assignrolemodal_tsx",
-      "community": 27,
+      "community": 104,
       "norm_label": "assignrolemodal.tsx"
     },
     {
@@ -9324,7 +10080,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L8",
       "id": "users_assignrolemodal_props",
-      "community": 27,
+      "community": 104,
       "norm_label": "props"
     },
     {
@@ -9333,7 +10089,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L15",
       "id": "users_assignrolemodal_types",
-      "community": 27,
+      "community": 104,
       "norm_label": "types"
     },
     {
@@ -9342,7 +10098,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L21",
       "id": "users_assignrolemodal_input",
-      "community": 27,
+      "community": 104,
       "norm_label": "input"
     },
     {
@@ -9351,7 +10107,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L28",
       "id": "users_assignrolemodal_assignrolemodal",
-      "community": 27,
+      "community": 104,
       "norm_label": "assignrolemodal()"
     },
     {
@@ -9360,7 +10116,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_bulkactionsmenu_tsx",
-      "community": 27,
+      "community": 55,
       "norm_label": "bulkactionsmenu.tsx"
     },
     {
@@ -9369,7 +10125,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L7",
       "id": "users_bulkactionsmenu_props",
-      "community": 27,
+      "community": 55,
       "norm_label": "props"
     },
     {
@@ -9378,7 +10134,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L15",
       "id": "users_bulkactionsmenu_actionkey",
-      "community": 27,
+      "community": 55,
       "norm_label": "actionkey"
     },
     {
@@ -9387,7 +10143,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L17",
       "id": "users_bulkactionsmenu_action_labels",
-      "community": 27,
+      "community": 55,
       "norm_label": "action_labels"
     },
     {
@@ -9396,7 +10152,7 @@
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L25",
       "id": "users_bulkactionsmenu_bulkactionsmenu",
-      "community": 30,
+      "community": 37,
       "norm_label": "bulkactionsmenu()"
     },
     {
@@ -9522,7 +10278,7 @@
       "source_file": "frontend/src/components/users/EditUserModal.tsx",
       "source_location": "L55",
       "id": "users_editusermodal_editusermodal",
-      "community": 30,
+      "community": 37,
       "norm_label": "editusermodal()"
     },
     {
@@ -9810,7 +10566,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_pendingverificationtab_tsx",
-      "community": 102,
+      "community": 27,
       "norm_label": "pendingverificationtab.tsx"
     },
     {
@@ -9819,7 +10575,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L8",
       "id": "users_pendingverificationtab_formatdate",
-      "community": 102,
+      "community": 27,
       "norm_label": "formatdate()"
     },
     {
@@ -9828,7 +10584,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L12",
       "id": "users_pendingverificationtab_initials",
-      "community": 102,
+      "community": 27,
       "norm_label": "initials()"
     },
     {
@@ -9837,7 +10593,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L16",
       "id": "users_pendingverificationtab_palettes",
-      "community": 102,
+      "community": 27,
       "norm_label": "palettes"
     },
     {
@@ -9846,7 +10602,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L21",
       "id": "users_pendingverificationtab_palette",
-      "community": 102,
+      "community": 27,
       "norm_label": "palette()"
     },
     {
@@ -9855,7 +10611,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L26",
       "id": "users_pendingverificationtab_sk",
-      "community": 102,
+      "community": 27,
       "norm_label": "sk()"
     },
     {
@@ -9864,7 +10620,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L35",
       "id": "users_pendingverificationtab_skeletonrow",
-      "community": 102,
+      "community": 27,
       "norm_label": "skeletonrow()"
     },
     {
@@ -9873,7 +10629,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L56",
       "id": "users_pendingverificationtab_th",
-      "community": 102,
+      "community": 27,
       "norm_label": "th"
     },
     {
@@ -9882,7 +10638,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L61",
       "id": "users_pendingverificationtab_td",
-      "community": 102,
+      "community": 27,
       "norm_label": "td"
     },
     {
@@ -9891,7 +10647,7 @@
       "source_file": "frontend/src/components/users/PendingVerificationTab.tsx",
       "source_location": "L66",
       "id": "users_pendingverificationtab_pendingverificationtab",
-      "community": 102,
+      "community": 27,
       "norm_label": "pendingverificationtab()"
     },
     {
@@ -9963,7 +10719,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L40",
       "id": "users_sendinvitationmodal_sendinvitationmodal",
-      "community": 30,
+      "community": 37,
       "norm_label": "sendinvitationmodal()"
     },
     {
@@ -9972,7 +10728,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_sendmessagemodal_tsx",
-      "community": 66,
+      "community": 34,
       "norm_label": "sendmessagemodal.tsx"
     },
     {
@@ -9981,7 +10737,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L7",
       "id": "users_sendmessagemodal_message_type_options",
-      "community": 66,
+      "community": 34,
       "norm_label": "message_type_options"
     },
     {
@@ -9990,7 +10746,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L15",
       "id": "users_sendmessagemodal_priority_options",
-      "community": 66,
+      "community": 34,
       "norm_label": "priority_options"
     },
     {
@@ -9999,7 +10755,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L21",
       "id": "users_sendmessagemodal_input",
-      "community": 66,
+      "community": 34,
       "norm_label": "input"
     },
     {
@@ -10008,7 +10764,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L28",
       "id": "users_sendmessagemodal_label",
-      "community": 66,
+      "community": 34,
       "norm_label": "label"
     },
     {
@@ -10017,7 +10773,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L32",
       "id": "users_sendmessagemodal_focusin",
-      "community": 66,
+      "community": 34,
       "norm_label": "focusin()"
     },
     {
@@ -10026,7 +10782,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L36",
       "id": "users_sendmessagemodal_focusout",
-      "community": 66,
+      "community": 34,
       "norm_label": "focusout()"
     },
     {
@@ -10035,7 +10791,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L41",
       "id": "users_sendmessagemodal_props",
-      "community": 66,
+      "community": 34,
       "norm_label": "props"
     },
     {
@@ -10044,7 +10800,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L49",
       "id": "users_sendmessagemodal_sendmessagemodal",
-      "community": 66,
+      "community": 34,
       "norm_label": "sendmessagemodal()"
     },
     {
@@ -10224,7 +10980,7 @@
       "source_file": "frontend/src/components/users/Toast.tsx",
       "source_location": "L34",
       "id": "users_toast_toastcontainer",
-      "community": 66,
+      "community": 20,
       "norm_label": "toastcontainer()"
     },
     {
@@ -11160,7 +11916,7 @@
       "source_file": "frontend/src/hooks/useOrgOptions.ts",
       "source_location": "L5",
       "id": "hooks_useorgoptions_useorgoptions",
-      "community": 30,
+      "community": 37,
       "norm_label": "useorgoptions()"
     },
     {
@@ -11169,7 +11925,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L1",
       "id": "frontend_src_hooks_useroles_ts",
-      "community": 104,
+      "community": 55,
       "norm_label": "useroles.ts"
     },
     {
@@ -11178,7 +11934,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L4",
       "id": "hooks_useroles_roleoption",
-      "community": 104,
+      "community": 55,
       "norm_label": "roleoption"
     },
     {
@@ -11187,7 +11943,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L11",
       "id": "hooks_useroles_enum_roles",
-      "community": 104,
+      "community": 55,
       "norm_label": "enum_roles"
     },
     {
@@ -11196,7 +11952,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L12",
       "id": "hooks_useroles_role_alias",
-      "community": 104,
+      "community": 55,
       "norm_label": "role_alias"
     },
     {
@@ -11205,7 +11961,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L17",
       "id": "hooks_useroles_rolenametoenum",
-      "community": 104,
+      "community": 55,
       "norm_label": "rolenametoenum()"
     },
     {
@@ -11214,7 +11970,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L23",
       "id": "hooks_useroles_useroles",
-      "community": 30,
+      "community": 37,
       "norm_label": "useroles()"
     },
     {
@@ -12015,7 +12771,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_rolespermissionspage_tsx",
-      "community": 92,
+      "community": 93,
       "norm_label": "rolespermissionspage.tsx"
     },
     {
@@ -12024,7 +12780,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L11",
       "id": "pages_rolespermissionspage_tab_style_base",
-      "community": 92,
+      "community": 93,
       "norm_label": "tab_style_base"
     },
     {
@@ -12033,7 +12789,7 @@
       "source_file": "frontend/src/pages/RolesPermissionsPage.tsx",
       "source_location": "L19",
       "id": "pages_rolespermissionspage_rolespermissionspage",
-      "community": 92,
+      "community": 93,
       "norm_label": "rolespermissionspage()"
     },
     {
@@ -12049,7 +12805,7 @@
       "label": "TABS",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "id": "pages_rolespermissionsstandalonepage_tabs",
       "community": 59,
       "norm_label": "tabs"
@@ -12058,7 +12814,7 @@
       "label": "STATUS_OPTIONS",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L36",
+      "source_location": "L37",
       "id": "pages_rolespermissionsstandalonepage_status_options",
       "community": 59,
       "norm_label": "status_options"
@@ -12067,7 +12823,7 @@
       "label": "STATUS_BADGE",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L42",
+      "source_location": "L43",
       "id": "pages_rolespermissionsstandalonepage_status_badge",
       "community": 59,
       "norm_label": "status_badge"
@@ -12076,7 +12832,7 @@
       "label": "LevelMeta",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L49",
+      "source_location": "L50",
       "id": "pages_rolespermissionsstandalonepage_levelmeta",
       "community": 59,
       "norm_label": "levelmeta"
@@ -12085,7 +12841,7 @@
       "label": "getLevelMeta()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L51",
+      "source_location": "L52",
       "id": "pages_rolespermissionsstandalonepage_getlevelmeta",
       "community": 59,
       "norm_label": "getlevelmeta()"
@@ -12094,7 +12850,7 @@
       "label": "getScopeLabel()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L60",
+      "source_location": "L61",
       "id": "pages_rolespermissionsstandalonepage_getscopelabel",
       "community": 59,
       "norm_label": "getscopelabel()"
@@ -12103,7 +12859,7 @@
       "label": "KpiDef",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L71",
+      "source_location": "L72",
       "id": "pages_rolespermissionsstandalonepage_kpidef",
       "community": 59,
       "norm_label": "kpidef"
@@ -12112,7 +12868,7 @@
       "label": "KpiCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L80",
+      "source_location": "L81",
       "id": "pages_rolespermissionsstandalonepage_kpicard",
       "community": 59,
       "norm_label": "kpicard()"
@@ -12121,7 +12877,7 @@
       "label": "SkeletonRow()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L119",
+      "source_location": "L120",
       "id": "pages_rolespermissionsstandalonepage_skeletonrow",
       "community": 59,
       "norm_label": "skeletonrow()"
@@ -12130,7 +12886,7 @@
       "label": "ComingSoon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L133",
+      "source_location": "L134",
       "id": "pages_rolespermissionsstandalonepage_comingsoon",
       "community": 59,
       "norm_label": "comingsoon()"
@@ -12139,7 +12895,7 @@
       "label": "InfoCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L147",
+      "source_location": "L148",
       "id": "pages_rolespermissionsstandalonepage_infocard",
       "community": 59,
       "norm_label": "infocard()"
@@ -12148,7 +12904,7 @@
       "label": "RolesPermissionsStandalonePage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
-      "source_location": "L174",
+      "source_location": "L175",
       "id": "pages_rolespermissionsstandalonepage_rolespermissionsstandalonepage",
       "community": 59,
       "norm_label": "rolespermissionsstandalonepage()"
@@ -12330,7 +13086,7 @@
       "source_file": "frontend/src/pages/SystemSettingsPage.tsx",
       "source_location": "L165",
       "id": "pages_systemsettingspage_selectstyle",
-      "community": 30,
+      "community": 37,
       "norm_label": "selectstyle"
     },
     {
@@ -12510,7 +13266,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L49",
       "id": "pages_usermanagementpage_pagerange",
-      "community": 30,
+      "community": 37,
       "norm_label": "pagerange()"
     },
     {
@@ -12555,7 +13311,7 @@
       "source_file": "frontend/src/pages/UserManagementPage.tsx",
       "source_location": "L91",
       "id": "pages_usermanagementpage_usermanagementpage",
-      "community": 30,
+      "community": 37,
       "norm_label": "usermanagementpage()"
     },
     {
@@ -13554,7 +14310,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L6",
       "id": "types_rolespage_rolepage",
-      "community": 46,
+      "community": 54,
       "norm_label": "rolepage"
     },
     {
@@ -13563,7 +14319,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L18",
       "id": "types_rolespage_permission",
-      "community": 46,
+      "community": 53,
       "norm_label": "permission"
     },
     {
@@ -13581,7 +14337,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L31",
       "id": "types_rolespage_rolepagestats",
-      "community": 53,
+      "community": 60,
       "norm_label": "rolepagestats"
     },
     {
@@ -13590,7 +14346,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L39",
       "id": "types_rolespage_rolespagepagination",
-      "community": 53,
+      "community": 60,
       "norm_label": "rolespagepagination"
     },
     {
@@ -13599,7 +14355,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L46",
       "id": "types_rolespage_rolespageresponse",
-      "community": 53,
+      "community": 60,
       "norm_label": "rolespageresponse"
     },
     {
@@ -13653,7 +14409,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L84",
       "id": "types_rolespage_permissionmatrixdata",
-      "community": 54,
+      "community": 71,
       "norm_label": "permissionmatrixdata"
     },
     {
@@ -13662,7 +14418,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L1",
       "id": "frontend_src_types_rolespermissions_ts",
-      "community": 93,
+      "community": 31,
       "norm_label": "rolespermissions.ts"
     },
     {
@@ -13671,7 +14427,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L1",
       "id": "types_rolespermissions_role",
-      "community": 27,
+      "community": 31,
       "norm_label": "role"
     },
     {
@@ -13680,7 +14436,7 @@
       "source_file": "frontend/src/types/rolesPermissions.ts",
       "source_location": "L12",
       "id": "types_rolespermissions_permission",
-      "community": 93,
+      "community": 31,
       "norm_label": "permission"
     },
     {
@@ -13698,7 +14454,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L4",
       "id": "types_users_userstatus",
-      "community": 34,
+      "community": 20,
       "norm_label": "userstatus"
     },
     {
@@ -13743,7 +14499,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L47",
       "id": "types_users_usersresponse",
-      "community": 27,
+      "community": 20,
       "norm_label": "usersresponse"
     },
     {
@@ -13752,7 +14508,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L55",
       "id": "types_users_roletype",
-      "community": 27,
+      "community": 104,
       "norm_label": "roletype"
     },
     {
@@ -13770,7 +14526,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L57",
       "id": "types_users_coursestatus",
-      "community": 32,
+      "community": 34,
       "norm_label": "coursestatus"
     },
     {
@@ -13824,7 +14580,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L108",
       "id": "types_users_userdetailsresponse",
-      "community": 27,
+      "community": 34,
       "norm_label": "userdetailsresponse"
     },
     {
@@ -13860,7 +14616,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L150",
       "id": "types_users_assignrolerequest",
-      "community": 27,
+      "community": 104,
       "norm_label": "assignrolerequest"
     },
     {
@@ -13869,7 +14625,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L156",
       "id": "types_users_actionresponse",
-      "community": 27,
+      "community": 32,
       "norm_label": "actionresponse"
     },
     {
@@ -13986,7 +14742,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L218",
       "id": "types_users_invitationsresponse",
-      "community": 27,
+      "community": 32,
       "norm_label": "invitationsresponse"
     },
     {
@@ -13995,7 +14751,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L224",
       "id": "types_users_sendinvitationrequest",
-      "community": 27,
+      "community": 32,
       "norm_label": "sendinvitationrequest"
     },
     {
@@ -14013,7 +14769,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L242",
       "id": "types_users_bulkactiontype",
-      "community": 27,
+      "community": 55,
       "norm_label": "bulkactiontype"
     },
     {
@@ -14031,7 +14787,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L249",
       "id": "types_users_bulkactionresponse",
-      "community": 27,
+      "community": 32,
       "norm_label": "bulkactionresponse"
     },
     {
@@ -14701,6 +15457,132 @@
       "norm_label": "roles.spec.ts"
     },
     {
+      "label": "stats-consistency.full.spec.ts",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L1",
+      "id": "frontend_tests_stats_consistency_full_spec_ts",
+      "community": 109,
+      "norm_label": "stats-consistency.full.spec.ts"
+    },
+    {
+      "label": "waitForApi()",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L3",
+      "id": "tests_stats_consistency_full_spec_waitforapi",
+      "community": 109,
+      "norm_label": "waitforapi()"
+    },
+    {
+      "label": "readStatCardValue()",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L15",
+      "id": "tests_stats_consistency_full_spec_readstatcardvalue",
+      "community": 109,
+      "norm_label": "readstatcardvalue()"
+    },
+    {
+      "label": "headerStatsPromise",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L23",
+      "id": "tests_stats_consistency_full_spec_headerstatspromise",
+      "community": 109,
+      "norm_label": "headerstatspromise"
+    },
+    {
+      "label": "kpiGrid",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L29",
+      "id": "tests_stats_consistency_full_spec_kpigrid",
+      "community": 109,
+      "norm_label": "kpigrid"
+    },
+    {
+      "label": "tabStatsPromise",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L33",
+      "id": "tests_stats_consistency_full_spec_tabstatspromise",
+      "community": 109,
+      "norm_label": "tabstatspromise"
+    },
+    {
+      "label": "tabStatsGrid",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L39",
+      "id": "tests_stats_consistency_full_spec_tabstatsgrid",
+      "community": 109,
+      "norm_label": "tabstatsgrid"
+    },
+    {
+      "label": "readKpiCardValue()",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L57",
+      "id": "tests_stats_consistency_full_spec_readkpicardvalue",
+      "community": 109,
+      "norm_label": "readkpicardvalue()"
+    },
+    {
+      "label": "dashboardPromise",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L64",
+      "id": "tests_stats_consistency_full_spec_dashboardpromise",
+      "community": 109,
+      "norm_label": "dashboardpromise"
+    },
+    {
+      "label": "dashboardCard",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L70",
+      "id": "tests_stats_consistency_full_spec_dashboardcard",
+      "community": 109,
+      "norm_label": "dashboardcard"
+    },
+    {
+      "label": "usersPromise",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L76",
+      "id": "tests_stats_consistency_full_spec_userspromise",
+      "community": 109,
+      "norm_label": "userspromise"
+    },
+    {
+      "label": "readUserKpiCardValue()",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L111",
+      "id": "tests_stats_consistency_full_spec_readuserkpicardvalue",
+      "community": 109,
+      "norm_label": "readuserkpicardvalue()"
+    },
+    {
+      "label": "tabPromise",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L191",
+      "id": "tests_stats_consistency_full_spec_tabpromise",
+      "community": 109,
+      "norm_label": "tabpromise"
+    },
+    {
+      "label": "tabCardValue",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L201",
+      "id": "tests_stats_consistency_full_spec_tabcardvalue",
+      "community": 109,
+      "norm_label": "tabcardvalue"
+    },
+    {
       "label": "users.full.spec.ts",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
@@ -14746,10 +15628,19 @@
       "norm_label": "adduser()"
     },
     {
+      "label": "importUsersCsv()",
+      "file_type": "code",
+      "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L49",
+      "id": "tests_users_full_spec_importuserscsv",
+      "community": 63,
+      "norm_label": "importuserscsv()"
+    },
+    {
       "label": "findUserRow()",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L29",
+      "source_location": "L71",
       "id": "tests_users_full_spec_finduserrow",
       "community": 63,
       "norm_label": "finduserrow()"
@@ -14758,7 +15649,7 @@
       "label": "openDrawerFor()",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L33",
+      "source_location": "L75",
       "id": "tests_users_full_spec_opendrawerfor",
       "community": 63,
       "norm_label": "opendrawerfor()"
@@ -14767,7 +15658,7 @@
       "label": "fullNameInput",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L53",
+      "source_location": "L95",
       "id": "tests_users_full_spec_fullnameinput",
       "community": 63,
       "norm_label": "fullnameinput"
@@ -14776,7 +15667,7 @@
       "label": "rows",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L73",
+      "source_location": "L115",
       "id": "tests_users_full_spec_rows",
       "community": 63,
       "norm_label": "rows"
@@ -14785,7 +15676,7 @@
       "label": "respPromise",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L87",
+      "source_location": "L129",
       "id": "tests_users_full_spec_resppromise",
       "community": 63,
       "norm_label": "resppromise"
@@ -14794,7 +15685,7 @@
       "label": "modal",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L174",
+      "source_location": "L216",
       "id": "tests_users_full_spec_modal",
       "community": 63,
       "norm_label": "modal"
@@ -14803,7 +15694,7 @@
       "label": "roleSelect",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L175",
+      "source_location": "L217",
       "id": "tests_users_full_spec_roleselect",
       "community": 63,
       "norm_label": "roleselect"
@@ -14812,7 +15703,7 @@
       "label": "csvPath",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L221",
+      "source_location": "L263",
       "id": "tests_users_full_spec_csvpath",
       "community": 63,
       "norm_label": "csvpath"
@@ -14821,7 +15712,7 @@
       "label": "downloadPromise",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L242",
+      "source_location": "L284",
       "id": "tests_users_full_spec_downloadpromise",
       "community": 63,
       "norm_label": "downloadpromise"
@@ -14830,16 +15721,34 @@
       "label": "emails",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L249",
+      "source_location": "L291",
       "id": "tests_users_full_spec_emails",
       "community": 63,
       "norm_label": "emails"
     },
     {
+      "label": "fixtures",
+      "file_type": "code",
+      "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L292",
+      "id": "tests_users_full_spec_fixtures",
+      "community": 63,
+      "norm_label": "fixtures"
+    },
+    {
+      "label": "suspendPromise",
+      "file_type": "code",
+      "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L306",
+      "id": "tests_users_full_spec_suspendpromise",
+      "community": 63,
+      "norm_label": "suspendpromise"
+    },
+    {
       "label": "panel",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L288",
+      "source_location": "L339",
       "id": "tests_users_full_spec_panel",
       "community": 63,
       "norm_label": "panel"
@@ -14848,7 +15757,7 @@
       "label": "applyPromise",
       "file_type": "code",
       "source_file": "frontend/tests/users.full.spec.ts",
-      "source_location": "L299",
+      "source_location": "L351",
       "id": "tests_users_full_spec_applypromise",
       "community": 63,
       "norm_label": "applypromise"
@@ -15239,6 +16148,33 @@
       "id": "frontend_readme_codeblock_2",
       "community": 11,
       "norm_label": "code:js (// eslint.config.js)"
+    },
+    {
+      "label": "labelSpan",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L98",
+      "community": 109,
+      "norm_label": "labelspan",
+      "id": "tests_stats_consistency_full_spec_labelspan"
+    },
+    {
+      "label": "usersValueDiv",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L99",
+      "community": 109,
+      "norm_label": "usersvaluediv",
+      "id": "tests_stats_consistency_full_spec_usersvaluediv"
+    },
+    {
+      "label": "usersCardValue",
+      "file_type": "code",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L101",
+      "community": 109,
+      "norm_label": "userscardvalue",
+      "id": "tests_stats_consistency_full_spec_userscardvalue"
     },
     {
       "label": "error-context.md",
@@ -16190,7 +17126,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L8",
-      "community": 102,
+      "community": 24,
       "norm_label": "fetchallusers()",
       "id": "rolespermissionspage_assignuserstorolemodal_fetchallusers"
     },
@@ -16469,7 +17405,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L14",
-      "community": 27,
+      "community": 55,
       "norm_label": "role_options",
       "id": "users_bulkactionsmenu_role_options"
     },
@@ -16496,7 +17432,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L4",
-      "community": 19,
+      "community": 113,
       "norm_label": "{\r\n  listroles, getrole, createrole, updaterole, deleterole,\r\n  getrolepermissions, assignpermissionstorole,\r\n}",
       "id": "routes_roles_routes_listroles_getrole_createrole_updaterole_deleterole_getrolepermissions_assignpermissionstorole"
     },
@@ -16613,7 +17549,7 @@
       "file_type": "code",
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L4",
-      "community": 60,
+      "community": 46,
       "norm_label": "rolelevel",
       "id": "types_rolespage_rolelevel"
     },
@@ -16640,7 +17576,7 @@
       "file_type": "code",
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L7",
-      "community": 60,
+      "community": 46,
       "norm_label": "pagerolestatus",
       "id": "types_rolespage_pagerolestatus"
     },
@@ -16766,7 +17702,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L13",
-      "community": 27,
+      "community": 104,
       "norm_label": "roles",
       "id": "users_assignrolemodal_roles"
     },
@@ -16811,7 +17747,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/BulkActionsMenu.tsx",
       "source_location": "L8",
-      "community": 27,
+      "community": 55,
       "norm_label": "actions",
       "id": "users_bulkactionsmenu_actions"
     },
@@ -17514,6 +18450,26 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_package_scripts",
+      "target": "backend_package_scripts_test_unit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_scripts",
+      "target": "backend_package_scripts_test_e2e"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_package_scripts",
       "target": "backend_package_scripts_prisma_generate"
     },
     {
@@ -17852,6 +18808,27 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_server_js",
+      "target": "backend_src_routes_roletemplates_routes_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
+      "target": "backend_server_roletemplatesroutes"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/server.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_server_js",
       "target": "backend_src_routes_accesspolicies_routes_js"
     },
     {
@@ -18108,6 +19085,16 @@
       "confidence_score": 1.0,
       "source": "backend_prisma_seed_js",
       "target": "prisma_seed_roles"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/prisma/seed.js",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_prisma_seed_js",
+      "target": "prisma_seed_role_templates"
     },
     {
       "relation": "contains",
@@ -18400,6 +19387,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_services_roles_service_js",
+      "target": "backend_src_config_prisma_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
       "target": "backend_src_config_prisma_js"
     },
     {
@@ -22757,6 +23755,446 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "backend_src_services_roletemplates_service_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_svc"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "backend_src_validators_roletemplates_validator_js"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "validators_roletemplates_validator_validateid"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "validators_roletemplates_validator_validatelisttemplatesquery"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "validators_roletemplates_validator_validatecreatetemplate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "validators_roletemplates_validator_validateapplytemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_validateid_validatelisttemplatesquery_validatecreatetemplate_validateapplytemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_badrequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_notfound"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_servererror"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_invalidpermissions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_listroletemplates"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_getroletemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_createroletemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L71",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_applyroletemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L92",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_roletemplates_controller_js",
+      "target": "controllers_roletemplates_controller_deleteroletemplate"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "backend_src_controllers_roletemplates_controller_js"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L43",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_listroletemplates",
+      "target": "controllers_roletemplates_controller_badrequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_getroletemplate",
+      "target": "controllers_roletemplates_controller_badrequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_createroletemplate",
+      "target": "controllers_roletemplates_controller_badrequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_applyroletemplate",
+      "target": "controllers_roletemplates_controller_badrequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L95",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_deleteroletemplate",
+      "target": "controllers_roletemplates_controller_badrequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_getroletemplate",
+      "target": "controllers_roletemplates_controller_notfound"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L85",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_applyroletemplate",
+      "target": "controllers_roletemplates_controller_notfound"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L99",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_deleteroletemplate",
+      "target": "controllers_roletemplates_controller_notfound"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L46",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_listroletemplates",
+      "target": "controllers_roletemplates_controller_servererror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L56",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_getroletemplate",
+      "target": "controllers_roletemplates_controller_servererror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_createroletemplate",
+      "target": "controllers_roletemplates_controller_servererror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L88",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_applyroletemplate",
+      "target": "controllers_roletemplates_controller_servererror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L100",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_deleteroletemplate",
+      "target": "controllers_roletemplates_controller_servererror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_createroletemplate",
+      "target": "controllers_roletemplates_controller_invalidpermissions"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L87",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_roletemplates_controller_applyroletemplate",
+      "target": "controllers_roletemplates_controller_invalidpermissions"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "controllers_roletemplates_controller_listroletemplates"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "controllers_roletemplates_controller_listroletemplates",
+      "target": "validators_roletemplates_validator_validatelisttemplatesquery"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "controllers_roletemplates_controller_getroletemplate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "controllers_roletemplates_controller_createroletemplate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "controllers_roletemplates_controller_createroletemplate",
+      "target": "validators_roletemplates_validator_validatecreatetemplate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "controllers_roletemplates_controller_applyroletemplate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/roleTemplates.controller.js",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "controllers_roletemplates_controller_applyroletemplate",
+      "target": "validators_roletemplates_validator_validateapplytemplate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "controllers_roletemplates_controller_deleteroletemplate"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/controllers/users.controller.js",
       "source_location": "L1",
       "weight": 1.0,
@@ -23780,6 +25218,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "backend_src_middlewares_auth_middleware_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -23956,6 +25405,17 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "middlewares_auth_middleware_requireadminauth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L2",
       "weight": 1.0,
@@ -24116,6 +25576,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "backend_src_middlewares_ratelimit_middleware_js"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L3",
       "weight": 1.0,
@@ -24231,6 +25702,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_routes_roles_routes_js",
+      "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
       "target": "middlewares_ratelimit_middleware_adminuseractionratelimiter"
     },
     {
@@ -24887,6 +26369,56 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_roles_routes_js",
       "target": "routes_roles_routes_listroles_getrole_createrole_updaterole_deleterole_getrolepermissions_assignpermissionstorole"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "routes_roletemplates_routes_express"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "routes_roletemplates_routes_requireadminauth"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "routes_roletemplates_routes_adminuseractionratelimiter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "routes_roletemplates_routes_listroletemplates_getroletemplate_createroletemplate_applyroletemplate_deleteroletemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/roleTemplates.routes.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_roletemplates_routes_js",
+      "target": "routes_roletemplates_routes_router"
     },
     {
       "relation": "contains",
@@ -27448,6 +28980,226 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_prisma"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_paginate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_buildpagination"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_createtemplateauditlog"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_permissionidsof"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_assertpermissionsexist"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L50",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_listroletemplates"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L80",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_getroletemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L110",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_createroletemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L132",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_applyroletemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L168",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_services_roletemplates_service_js",
+      "target": "services_roletemplates_service_deleteroletemplate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L51",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_listroletemplates",
+      "target": "services_roletemplates_service_paginate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L75",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_listroletemplates",
+      "target": "services_roletemplates_service_buildpagination"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L122",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_createroletemplate",
+      "target": "services_roletemplates_service_createtemplateauditlog"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L142",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_applyroletemplate",
+      "target": "services_roletemplates_service_createtemplateauditlog"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L170",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_deleteroletemplate",
+      "target": "services_roletemplates_service_createtemplateauditlog"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L90",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_getroletemplate",
+      "target": "services_roletemplates_service_permissionidsof"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L127",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_createroletemplate",
+      "target": "services_roletemplates_service_permissionidsof"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L140",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_applyroletemplate",
+      "target": "services_roletemplates_service_permissionidsof"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_createroletemplate",
+      "target": "services_roletemplates_service_assertpermissionsexist"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/services/roleTemplates.service.js",
+      "source_location": "L147",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_roletemplates_service_applyroletemplate",
+      "target": "services_roletemplates_service_assertpermissionsexist"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/services/users.service.js",
       "source_location": "L1",
       "weight": 1.0,
@@ -29250,6 +31002,133 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_validators_roletemplates_validator_js",
+      "target": "validators_roletemplates_validator_validateid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_validators_roletemplates_validator_js",
+      "target": "validators_roletemplates_validator_validatelisttemplatesquery"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_validators_roletemplates_validator_js",
+      "target": "validators_roletemplates_validator_normalisepermissionids"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_validators_roletemplates_validator_js",
+      "target": "validators_roletemplates_validator_validatecreatetemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L72",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_validators_roletemplates_validator_js",
+      "target": "validators_roletemplates_validator_validateapplytemplate"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "backend_src_validators_roletemplates_validator_js"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "validators_roletemplates_validator_validateapplytemplate",
+      "target": "validators_roletemplates_validator_validateid"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "validators_roletemplates_validator_validateid"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "validators_roletemplates_validator_validatelisttemplatesquery"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/validators/roleTemplates.validator.js",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "validators_roletemplates_validator_validatecreatetemplate",
+      "target": "validators_roletemplates_validator_normalisepermissionids"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "validators_roletemplates_validator_validatecreatetemplate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "validators_roletemplates_validator_validateapplytemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L1",
       "weight": 1.0,
@@ -29547,6 +31426,96 @@
       "confidence_score": 1.0,
       "source": "test_results_last_run_json",
       "target": "test_results_last_run_failedtests"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_e2e_test_js",
+      "target": "tests_roletemplates_e2e_test_test_describe_before_after"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_e2e_test_js",
+      "target": "tests_roletemplates_e2e_test_assert"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_e2e_test_js",
+      "target": "tests_roletemplates_e2e_test_api"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.e2e.test.js",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_e2e_test_js",
+      "target": "tests_roletemplates_e2e_test_state"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "tests_roletemplates_validator_test_test_describe"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "tests_roletemplates_validator_test_assert"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "tests_roletemplates_validator_test_validateid_validatelisttemplatesquery_validatecreatetemplate_validateapplytemplate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L106",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "tests_roletemplates_validator_test_isvalid_data"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/tests/roleTemplates.validator.test.js",
+      "source_location": "L93",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_tests_roletemplates_validator_test_js",
+      "target": "tests_roletemplates_validator_test_many"
     },
     {
       "relation": "contains",
@@ -31786,6 +33755,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "frontend_src_api_adminauth_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/api/trustedDevices.ts",
       "source_location": "L7",
       "weight": 1.0,
@@ -31924,6 +33904,17 @@
       "confidence_score": 1.0,
       "source": "frontend_src_api_rolespermissions_ts",
       "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_adminauth_getstoredtoken",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -32088,6 +34079,17 @@
       "source_location": "L15",
       "weight": 1.0,
       "source": "api_rolespermissions_apicall",
+      "target": "api_adminauth_getstoredtoken"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "api_roletemplates_apifetch",
       "target": "api_adminauth_getstoredtoken"
     },
     {
@@ -34256,12 +36258,34 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "frontend_src_api_rolespage_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleModal.tsx",
       "source_location": "L11",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createrolemodal_tsx",
       "target": "frontend_src_api_rolespage_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "frontend_src_api_rolespage_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -34376,6 +36400,17 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "api_rolespage_getrolespagelist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
       "source_location": "L7",
       "weight": 1.0,
@@ -34481,6 +36516,17 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createrolemodal_tsx",
       "target": "api_rolespage_getallpermissions"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "api_rolespage_getallpermissions",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -34664,6 +36710,290 @@
       "confidence_score": 1.0,
       "source": "frontend_src_hooks_useroles_ts",
       "target": "api_rolespermissions_rolespermissionsapi"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_roletemplatelistitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_roletemplatepermission",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_roletemplatedetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_pagination",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_applyroletemplateresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_roletemplateerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_apifetch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_getroletemplates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_getroletemplatedetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_createroletemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_applyroletemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L111",
+      "weight": 1.0,
+      "source": "frontend_src_api_roletemplates_ts",
+      "target": "api_roletemplates_deleteroletemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "frontend_src_api_roletemplates_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "frontend_src_api_roletemplates_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "frontend_src_api_roletemplates_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "api_roletemplates_roletemplatelistitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "api_roletemplates_roletemplatepermission",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "api_roletemplates_roletemplatedetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/api/roleTemplates.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "api_roletemplates_roletemplateerror",
+      "target": "api_roletemplates_roletemplateerror_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "api_roletemplates_roletemplateerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "api_roletemplates_roletemplateerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "api_roletemplates_getroletemplates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "api_roletemplates_getroletemplatedetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "api_roletemplates_getroletemplatedetails",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "api_roletemplates_createroletemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "api_roletemplates_applyroletemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "api_roletemplates_deleteroletemplate",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -38771,6 +41101,131 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "frontend_src_components_users_toast_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "users_toast_toasttype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "frontend_src_types_rolespage_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "types_rolespage_rolepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "rolespermissionspage_applyroletemplatemodal_input",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "rolespermissionspage_applyroletemplatemodal_label",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "rolespermissionspage_applyroletemplatemodal_focusin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "rolespermissionspage_applyroletemplatemodal_focusout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "rolespermissionspage_applyroletemplatemodal_sectionheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "rolespermissionspage_applyroletemplatemodal_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/ApplyRoleTemplateModal.tsx",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "target": "rolespermissionspage_applyroletemplatemodal_applyroletemplatemodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "frontend_src_components_rolespermissionspage_applyroletemplatemodal_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L2",
       "weight": 1.0,
@@ -39257,6 +41712,131 @@
       "confidence_score": 1.0,
       "source": "frontend_src_components_rolespermissionspage_createrolemodal_tsx",
       "target": "rolespermissionspage_createrolemodal_initpermissions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "frontend_src_components_users_toast_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "users_toast_toasttype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "frontend_src_types_rolespage_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "types_rolespage_permission",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "rolespermissionspage_createroletemplatemodal_input",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "rolespermissionspage_createroletemplatemodal_label",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "rolespermissionspage_createroletemplatemodal_focusin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "rolespermissionspage_createroletemplatemodal_focusout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "rolespermissionspage_createroletemplatemodal_sectionheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "rolespermissionspage_createroletemplatemodal_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/CreateRoleTemplateModal.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "target": "rolespermissionspage_createroletemplatemodal_createroletemplatemodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "frontend_src_components_rolespermissionspage_createroletemplatemodal_tsx",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -39809,6 +42389,59 @@
       "confidence_score": 1.0,
       "source": "rolespermissionspage_roledetailsdrawer_roledetailsdrawer",
       "target": "rolespermissionspage_roledetailsdrawer_formatdate"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "frontend_src_components_users_toast_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "users_toast_toasttype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "rolespermissionspage_roletemplatestab_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/rolesPermissionsPage/RoleTemplatesTab.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "target": "rolespermissionspage_roletemplatestab_roletemplatestab",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/RolesPermissionsStandalonePage.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "frontend_src_pages_rolespermissionsstandalonepage_tsx",
+      "target": "frontend_src_components_rolespermissionspage_roletemplatestab_tsx",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -48350,6 +50983,166 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_waitforapi"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_readstatcardvalue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_headerstatspromise"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_kpigrid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_tabstatspromise"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_tabstatsgrid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_readkpicardvalue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_dashboardpromise"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L70",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_dashboardcard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_userspromise"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L111",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_readuserkpicardvalue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L191",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_tabpromise"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L201",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_tabcardvalue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L98",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_labelspan"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L99",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_usersvaluediv"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/stats-consistency.full.spec.ts",
+      "source_location": "L101",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_stats_consistency_full_spec_ts",
+      "target": "tests_stats_consistency_full_spec_userscardvalue"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/tests/users.full.spec.ts",
       "source_location": "L6",
       "weight": 1.0,
@@ -48386,6 +51179,16 @@
       "confidence_score": 1.0,
       "source": "frontend_tests_users_full_spec_ts",
       "target": "tests_users_full_spec_adduser"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_users_full_spec_ts",
+      "target": "tests_users_full_spec_importuserscsv"
     },
     {
       "relation": "contains",
@@ -48433,9 +51236,9 @@
       "source_file": "frontend/tests/users.full.spec.ts",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_users_full_spec_ts",
-      "target": "tests_users_full_spec_resppromise",
-      "confidence_score": 1.0
+      "target": "tests_users_full_spec_resppromise"
     },
     {
       "relation": "contains",
@@ -48491,6 +51294,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L321",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_users_full_spec_ts",
+      "target": "tests_users_full_spec_fixtures"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L306",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_users_full_spec_ts",
+      "target": "tests_users_full_spec_suspendpromise"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/users.full.spec.ts",
       "source_location": "L270",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -48516,6 +51339,17 @@
       "confidence_score": 1.0,
       "source": "frontend_tests_users_full_spec_ts",
       "target": "tests_users_full_spec_targetindex"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/users.full.spec.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tests_users_full_spec_importuserscsv",
+      "target": "tests_users_full_spec_uid"
     },
     {
       "relation": "calls",
@@ -50110,5 +52944,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "238732fd82ded2f476873c2eb6d75e9f25332bcd"
+  "built_at_commit": "e33fdc326579a07c9c3c2037f1f06cc3f24b820d"
 }

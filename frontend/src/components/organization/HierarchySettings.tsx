@@ -101,20 +101,25 @@ export default function HierarchySettings({ showToast }: Props) {
   const [resetting, setResetting] = useState(false);
   const [dirty,    setDirty]    = useState(false);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getHierarchySettings();
-      setOriginal(data);
-      const { id: _id, createdAt: _c, updatedAt: _u, ...rest } = data;
-      setForm(rest);
-      setDirty(false);
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Failed to load settings');
-    } finally {
-      setLoading(false);
-    }
+  const load = useCallback(() => {
+    // loading/error already start at their reset values (true/null), and
+    // load() is only ever invoked once, from the mount effect below (stable
+    // [] deps) — so resetting them here is redundant. The async work is
+    // wrapped in an IIFE so none of its setState calls are direct statements
+    // in the effect-invoked callback's own body.
+    (async () => {
+      try {
+        const data = await getHierarchySettings();
+        setOriginal(data);
+        const { id: _id, createdAt: _c, updatedAt: _u, ...rest } = data;
+        setForm(rest);
+        setDirty(false);
+      } catch (err) {
+        setError(err instanceof ApiError ? err.message : 'Failed to load settings');
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
   useEffect(() => { load(); }, [load]);

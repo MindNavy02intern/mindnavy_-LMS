@@ -259,19 +259,21 @@ export default function BranchesTab({ showToast }: Props) {
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await getBranches({ search: debSearch || undefined, page, limit: LIMIT });
-      setBranches(res.data);
-      setTotal(res.pagination.total);
-      setTotalPages(res.pagination.pages);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load branches');
-    } finally {
-      setLoading(false);
-    }
+  const load = useCallback(() => {
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await getBranches({ search: debSearch || undefined, page, limit: LIMIT });
+        setBranches(res.data);
+        setTotal(res.pagination.total);
+        setTotalPages(res.pagination.pages);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load branches');
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [debSearch, page]);
 
   useEffect(() => { load(); }, [load]);

@@ -258,19 +258,21 @@ export default function TeamsTab({ showToast }: Props) {
       .catch(() => {});
   }, []);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await getTeams({ search: debSearch || undefined, departmentId: deptFilter || undefined, page, limit: LIMIT });
-      setTeams(res.data);
-      setTotal(res.pagination.total);
-      setTotalPages(res.pagination.pages);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load teams');
-    } finally {
-      setLoading(false);
-    }
+  const load = useCallback(() => {
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await getTeams({ search: debSearch || undefined, departmentId: deptFilter || undefined, page, limit: LIMIT });
+        setTeams(res.data);
+        setTotal(res.pagination.total);
+        setTotalPages(res.pagination.pages);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load teams');
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [debSearch, deptFilter, page]);
 
   useEffect(() => { load(); }, [load]);

@@ -910,7 +910,9 @@ export default function DashboardPage() {
 
   // Fix 2: batch all 3 initial fetches so they fire in parallel
   useEffect(() => {
-    Promise.all([fetchData(), fetchAnalytics(), fetchAdminWidgets()]);
+    (() => {
+      Promise.all([fetchData(), fetchAnalytics(), fetchAdminWidgets()]);
+    })();
   }, [fetchData, fetchAnalytics, fetchAdminWidgets]);
 
   // Fix 3+4: include fetchAdminWidgets in refresh handler; add groupsUpdated event

@@ -147,19 +147,13 @@ async function applyRoleTemplate(id, roleId, adminId) {
   await assertPermissionsExist(ids);
 
   // skipDuplicates makes this a non-destructive merge; result.count = rows added.
-  const result = await prisma.$transaction(async (tx) => {
-    const r = await tx.rolePermission.createMany({
-      data: ids.map((permissionId) => ({ roleId, permissionId })),
-      skipDuplicates: true,
-    });
-    await tx.auditLog.create({
-      data: {
-        adminId: adminId ?? null,
-        action: "ROLE_TEMPLATE_APPLIED",
-        details: { templateId: id, templateName: template.name, roleId, applied: r.count },
-      },
-    });
-    return r;
+  const result = await prisma.rolePermission.createMany({
+    data: ids.map((permissionId) => ({ roleId, permissionId })),
+    skipDuplicates: true,
+  });
+
+  await createTemplateAuditLog(adminId, "ROLE_TEMPLATE_APPLIED", {
+    templateId: id, templateName: template.name, roleId, applied: result.count,
   });
 
   return { templateId: id, roleId, applied: result.count };

@@ -127,13 +127,17 @@ export default function UserManagementPage() {
   useEffect(() => {
     const tab = searchParams.get('tab') as TabKey | null;
     if (tab && TABS.some(t => t.key === tab)) {
-      setActiveTab(tab);
-      setSearchParams({}, { replace: true });
+      (() => {
+        setActiveTab(tab);
+        setSearchParams({}, { replace: true });
+      })();
       return;
     }
     if (searchParams.get('modal') === 'addUser') {
-      setAddUserOpen(true);
-      setSearchParams({}, { replace: true });
+      (() => {
+        setAddUserOpen(true);
+        setSearchParams({}, { replace: true });
+      })();
     }
   }, [searchParams, setSearchParams]);
 
@@ -177,27 +181,29 @@ export default function UserManagementPage() {
     window.dispatchEvent(new CustomEvent('analyticsUpdated'));
   };
 
-  const load = useCallback(async () => {
+  const load = useCallback(() => {
     if (activeTab !== 'users') return;
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await getUsers({
-        page, limit,
-        search:        debouncedSearch || undefined,
-        role:          role            || undefined,
-        department:    department      || undefined,
-        branch:        branch          || undefined,
-        status:        status          || undefined,
-        createdAfter:  dateFrom        || undefined,
-        createdBefore: dateTo          || undefined,
-      });
-      setData(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load users.');
-    } finally {
-      setLoading(false);
-    }
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const result = await getUsers({
+          page, limit,
+          search:        debouncedSearch || undefined,
+          role:          role            || undefined,
+          department:    department      || undefined,
+          branch:        branch          || undefined,
+          status:        status          || undefined,
+          createdAfter:  dateFrom        || undefined,
+          createdBefore: dateTo          || undefined,
+        });
+        setData(result);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load users.');
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [activeTab, page, limit, debouncedSearch, role, department, branch, status, dateFrom, dateTo]);
 
   useEffect(() => { load(); }, [load]);

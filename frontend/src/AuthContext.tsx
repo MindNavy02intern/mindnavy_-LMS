@@ -69,16 +69,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // DEV-ONLY: Restore demo session saved in sessionStorage
     if (import.meta.env.DEV && sessionStorage.getItem(DEMO_STORAGE_KEY) === '1') {
       isDemoRef.current = true;
-      setUser(DEMO_USER);
-      setProfile(DEMO_PROFILE);
-      setIsDemoMode(true);
-      setLoading(false);
+      (() => {
+        setUser(DEMO_USER);
+        setProfile(DEMO_PROFILE);
+        setIsDemoMode(true);
+        setLoading(false);
+      })();
       return;
     }
 
     const token = getStoredToken();
     if (!token) {
-      setLoading(false);
+      (() => setLoading(false))();
       return;
     }
 

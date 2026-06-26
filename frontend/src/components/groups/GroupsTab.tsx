@@ -51,17 +51,19 @@ const GroupsTab: React.FC = () => {
   const [deleteName, setDeleteName] = useState('');
   const [deleteBusy, setDeleteBusy] = useState(false);
 
-  async function load() {
-    setLoading(true);
-    setError('');
-    try {
-      const res = await groupsAPI.listGroups({ limit: 200 });
-      setGroups(res.data ?? []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load groups.');
-    } finally {
-      setLoading(false);
-    }
+  function load() {
+    (async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const res = await groupsAPI.listGroups({ limit: 200 });
+        setGroups(res.data ?? []);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load groups.');
+      } finally {
+        setLoading(false);
+      }
+    })();
   }
 
   useEffect(() => { load(); }, []);

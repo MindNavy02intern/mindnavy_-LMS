@@ -322,19 +322,21 @@ export default function DepartmentsTab({ showToast }: Props) {
       .catch(() => {});
   }, []);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await getDepartments({ search: debSearch || undefined, status: status || undefined, page, limit: LIMIT });
-      setDepartments(res.data);
-      setTotal(res.pagination.total);
-      setTotalPages(res.pagination.pages);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load departments');
-    } finally {
-      setLoading(false);
-    }
+  const load = useCallback(() => {
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await getDepartments({ search: debSearch || undefined, status: status || undefined, page, limit: LIMIT });
+        setDepartments(res.data);
+        setTotal(res.pagination.total);
+        setTotalPages(res.pagination.pages);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load departments');
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [debSearch, status, page]);
 
   useEffect(() => { load(); }, [load]);

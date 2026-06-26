@@ -22,8 +22,50 @@ async function addUser(page: Page, opts: { name: string; email: string }) {
   await page.getByPlaceholder('Enter password').fill('TestPass@123')
   await page.getByPlaceholder('Confirm password').fill('TestPass@123')
   await page.locator('select:has(option:text-is("Select role…"))').selectOption('LEARNER')
+  const respPromise = page.waitForResponse(resp => resp.url().includes('/users') && resp.request().method() === 'POST', { timeout: 20000 })
   await page.getByRole('button', { name: '+ Add User', exact: true }).last().click()
+  const resp = await respPromise
+  if (resp.status() === 429) {
+    throw new Error(
+      `addUser() was rate-limited (429) creating ${opts.email}. adminUserActionRateLimiter ` +
+      `allows 60 writes/10min shared across every users.routes.js write endpoint — this usually ` +
+      `means the suite was re-run multiple times within the same 10-minute window and the budget ` +
+      `is exhausted, not an app bug. Wait for the window to reset, or seed bulk fixtures via CSV ` +
+      `import (see importUsersCsv) instead of repeated addUser() calls.`
+    )
+  }
+  expect(resp.ok()).toBeTruthy()
   await expect(page.getByText('User created successfully')).toBeVisible({ timeout: 10000 })
+}
+
+// Seeds multiple users via CSV import in a single request, instead of N
+// addUser() calls. Import goes through adminUsersImportRateLimiter (5/10min)
+// — a separate budget from adminUserActionRateLimiter (60/10min, shared by
+// every other write in this file: create/edit/suspend/archive/restore/etc).
+// Bulk tests run last in the file and need 2 fixture users each; seeding
+// them this way means they don't draw down the same shared budget that
+// earlier tests (and earlier re-runs within the same window) have already
+// been consuming.
+async function importUsersCsv(page: Page, users: { name: string; email: string }[]) {
+  const csvPath = path.join(__dirname, `bulk-import-${uid()}.csv`)
+  const rows = users.map(u => `${u.name},${u.email},TestPass@123,LEARNER`).join('\n')
+  fs.writeFileSync(csvPath, `fullName,email,password,role\n${rows}\n`)
+
+  await page.goto('/users')
+  await page.getByRole('button', { name: 'Import', exact: true }).click()
+  await page.locator('input[type="file"]').setInputFiles(csvPath)
+  await expect(page.getByText(/data row/i)).toBeVisible({ timeout: 10000 })
+  const respPromise = page.waitForResponse(resp => resp.url().includes('/import') && resp.request().method() === 'POST', { timeout: 20000 })
+  await page.getByRole('button', { name: 'Import Users' }).click()
+  const resp = await respPromise
+  if (resp.status() === 429) {
+    throw new Error('importUsersCsv() was rate-limited (429) — adminUsersImportRateLimiter allows 5 imports/10min.')
+  }
+  expect(resp.ok()).toBeTruthy()
+  await expect(page.getByText(/Imported \d+ users? successfully/i)).toBeVisible({ timeout: 15000 })
+  await page.getByRole('button', { name: 'Done' }).click()
+
+  fs.unlinkSync(csvPath)
 }
 
 async function findUserRow(page: Page, email: string) {
@@ -247,11 +289,13 @@ test('Export Users → verify file downloads', async ({ page }) => {
 
 test('Bulk Suspend → verify multiple users suspended', async ({ page }) => {
   const emails: string[] = []
+  const fixtures: { name: string; email: string }[] = []
   for (let i = 0; i < 2; i++) {
     const email = `bulksuspend${i}.${uid()}@mindnavy.com`
-    await addUser(page, { name: `Bulk Suspend ${i} ${uid()}`, email })
+    fixtures.push({ name: `Bulk Suspend ${i} ${uid()}`, email })
     emails.push(email)
   }
+  await importUsersCsv(page, fixtures)
   await page.goto('/users')
   for (const email of emails) {
     const row = await findUserRow(page, email)
@@ -259,7 +303,12 @@ test('Bulk Suspend → verify multiple users suspended', async ({ page }) => {
   }
   await page.getByRole('button', { name: 'Bulk Actions' }).click()
   await page.getByRole('button', { name: 'Suspend All' }).click()
+  const suspendPromise = page.waitForResponse(resp => resp.url().includes('/bulk-action') && resp.request().method() === 'POST', { timeout: 20000 })
   await page.getByRole('button', { name: 'Confirm' }).click()
+  const suspendResp = await suspendPromise
+  expect(suspendResp.ok()).toBeTruthy()
+  const suspendBody = await suspendResp.json()
+  expect(suspendBody.succeeded).toBe(2)
   await page.waitForTimeout(1500)
   await gotoUsersTab(page, 'Suspended')
   for (const email of emails) {
@@ -269,11 +318,13 @@ test('Bulk Suspend → verify multiple users suspended', async ({ page }) => {
 
 test('Bulk Assign Role → verify multiple users updated', async ({ page }) => {
   const emails: string[] = []
+  const fixtures: { name: string; email: string }[] = []
   for (let i = 0; i < 2; i++) {
     const email = `bulkrole${i}.${uid()}@mindnavy.com`
-    await addUser(page, { name: `Bulk Role ${i} ${uid()}`, email })
+    fixtures.push({ name: `Bulk Role ${i} ${uid()}`, email })
     emails.push(email)
   }
+  await importUsersCsv(page, fixtures)
   await page.goto('/users')
   for (const email of emails) {
     const row = await findUserRow(page, email)
@@ -296,9 +347,19 @@ test('Bulk Assign Role → verify multiple users updated', async ({ page }) => {
   // 123...") 400s with "Invalid role", which is why this previously left the
   // row's role unchanged at "learner".
   await roleSelect.selectOption({ label: 'Instructor' })
+  const roleValueAtClick = await roleSelect.inputValue()
   const applyPromise = page.waitForResponse(resp => resp.url().includes('/bulk-action') && resp.request().method() === 'POST')
   await panel.getByRole('button', { name: 'Apply', exact: true }).click()
   const applyResp = await applyPromise
+  if (!applyResp.ok()) {
+    const errorBody = await applyResp.json().catch(() => null)
+    console.log('Bulk Assign Role failed:', {
+      status: applyResp.status(),
+      errorBody,
+      roleSelectValueAtClick: roleValueAtClick,
+      requestBodySent: applyResp.request().postData(),
+    })
+  }
   expect(applyResp.ok()).toBeTruthy()
   await page.goto('/users')
   for (const email of emails) {

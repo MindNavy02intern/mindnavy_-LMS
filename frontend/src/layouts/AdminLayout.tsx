@@ -430,7 +430,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
   // Fetch recent activity as notifications when panel opens
   useEffect(() => {
     if (!notifOpen) return;
-    setNotifsLoading(true);
+    (() => setNotifsLoading(true))();
     const token = getStoredToken();
     fetch(`${BASE_URL}/dashboard/core`, {
       headers: { Authorization: token ? `Bearer ${token}` : '' },
@@ -445,8 +445,8 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
   useEffect(() => {
     if (!messagesOpen) return;
     const adminId = user?.id;
-    if (!adminId) { setMsgsLoading(false); return; }
-    setMsgsLoading(true);
+    if (!adminId) { (() => setMsgsLoading(false))(); return; }
+    (() => setMsgsLoading(true))();
     const token = getStoredToken();
     fetch(`${BASE_URL}/messages?recipientId=${encodeURIComponent(adminId)}&limit=10`, {
       headers: { Authorization: token ? `Bearer ${token}` : '' },

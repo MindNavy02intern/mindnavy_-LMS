@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>mindnavy LMS — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 1929 nodes, 3135 edges, 109 communities. Commit: 238732f</p>
+<p class="subtitle">Generated from graphify knowledge graph: 2033 nodes, 3316 edges, 113 communities. Commit: e33fdc3</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -74,9 +74,9 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#community-21">Community 21</a>
     <a href="#community-57">Community 57</a>
     <a href="#community-32">Community 32</a>
-    <a href="#community-19">Community 19</a>
     <a href="#community-34">Community 34</a>
-    <a href="#community-50">Community 50</a>
+    <a href="#community-19">Community 19</a>
+    <a href="#community-20">Community 20</a>
     <a href="#community-58">Community 58</a>
     <a href="#other">Other</a>
 </div>
@@ -88,13 +88,13 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>124 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>126 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>12 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>490 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>554 nodes</small>")
     class SERVE_API_35EC8E86 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>231 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>298 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
     COMMUNITY_5_2966028D("Community 5<br/><small>67 nodes</small>")
     class COMMUNITY_5_2966028D module;
@@ -106,30 +106,30 @@ flowchart LR
     class COMMUNITY_21_47BA4108 module;
     COMMUNITY_57_508B74B3("Community 57<br/><small>55 nodes</small>")
     class COMMUNITY_57_508B74B3 module;
-    COMMUNITY_32_4867BAA9("Community 32<br/><small>51 nodes</small>")
+    COMMUNITY_32_4867BAA9("Community 32<br/><small>54 nodes</small>")
     class COMMUNITY_32_4867BAA9 module;
-    COMMUNITY_19_9462A0B9("Community 19<br/><small>41 nodes</small>")
-    class COMMUNITY_19_9462A0B9 module;
-    COMMUNITY_34_80350725("Community 34<br/><small>37 nodes</small>")
+    COMMUNITY_34_80350725("Community 34<br/><small>47 nodes</small>")
     class COMMUNITY_34_80350725 module;
-    COMMUNITY_50_C81354CC("Community 50<br/><small>31 nodes</small>")
-    class COMMUNITY_50_C81354CC module;
+    COMMUNITY_19_9462A0B9("Community 19<br/><small>34 nodes</small>")
+    class COMMUNITY_19_9462A0B9 module;
+    COMMUNITY_20_C86C0F59("Community 20<br/><small>31 nodes</small>")
+    class COMMUNITY_20_C86C0F59 module;
     COMMUNITY_58_FF1295B9("Community 58<br/><small>31 nodes</small>")
     class COMMUNITY_58_FF1295B9 module;
-    OTHER_D0941E68("Other<br/><small>574 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>539 nodes</small>")
     class OTHER_D0941E68 module;
-    SERVE_API_35EC8E86 -->|imports x154| OTHER_D0941E68
-    OTHER_D0941E68 -->|imports x42| SERVE_API_35EC8E86
+    SERVE_API_35EC8E86 -->|imports x161| OTHER_D0941E68
+    OTHER_D0941E68 -->|imports x38| SERVE_API_35EC8E86
     COMMUNITY_6_7D637A07 -->|imports x23| COMMUNITY_21_47BA4108
-    SERVE_API_35EC8E86 -->|imports x16| COMMUNITY_32_4867BAA9
-    SERVE_API_35EC8E86 -->|imports x15| COMMUNITY_50_C81354CC
-    COMMUNITY_50_C81354CC -->|imports x12| OTHER_D0941E68
-    COMMUNITY_32_4867BAA9 -->|contains x11| SERVE_API_35EC8E86
-    COMMUNITY_19_9462A0B9 -->|imports x9| SERVE_API_35EC8E86
+    OTHER_D0941E68 -->|imports x20| COMMUNITY_20_C86C0F59
+    SERVE_API_35EC8E86 -->|imports x18| COMMUNITY_32_4867BAA9
+    COMMUNITY_19_9462A0B9 -->|imports x17| OTHER_D0941E68
+    SERVE_API_35EC8E86 -->|imports x11| COMMUNITY_34_80350725
     SERVE_API_35EC8E86 -->|imports x8| COMMUNITY_5_2966028D
-    SERVE_API_35EC8E86 -->|imports x8| COMMUNITY_34_80350725
+    SERVE_API_35EC8E86 -->|imports x8| COMMUNITY_20_C86C0F59
+    OTHER_D0941E68 -->|imports x8| COMMUNITY_32_4867BAA9
+    COMMUNITY_32_4867BAA9 -->|contains x7| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x6| COMMUNITY_6_7D637A07
-    OTHER_D0941E68 -->|imports x6| COMMUNITY_32_4867BAA9
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -146,22 +146,22 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>124</td><td><code>3, 4, 7, 8, 10, 83, 12, 14, 84</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>12</td><td><code>106, 18</code></td></tr><tr><td>Serving API</td><td>490</td><td><code>9, 27, 24, 2, 72, 45, 36, 48, 102, 42, 26, 46, 22, 25, 35, 53, 51, 104, 13</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>231</td><td><code>63, 65, 67, 103, 107, 74, 76, 77, 78, 79, 82, 100, 68, 69, 70, 80, 91, 94, 95, 96, 97, 98, 99, 81</code></td></tr><tr><td>Community 5</td><td>67</td><td><code>5</code></td></tr><tr><td>Community 33</td><td>66</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>51</td><td><code>32</code></td></tr><tr><td>Community 19</td><td>41</td><td><code>19</code></td></tr><tr><td>Community 34</td><td>37</td><td><code>34</code></td></tr><tr><td>Community 50</td><td>31</td><td><code>50</code></td></tr><tr><td>Community 58</td><td>31</td><td><code>58</code></td></tr><tr><td>Other</td><td>574</td><td><code>62, 64, 20, 39, 0, 41, 60, 28, 37, 49, 59, 66, 44, 52, 1, 31, 71, 93, 38, 40, 75, 101, 29, 61, 43, 56, 30, 73, 47, 54, 108, 55, 11, 110, 23, 92, 15, 16, 17, 85, 86, 87, 88, 89, 90</code></td></tr>
+      <tr><td>Graph Build</td><td>126</td><td><code>3, 4, 7, 8, 10, 83, 12, 14, 84</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>12</td><td><code>106, 18</code></td></tr><tr><td>Serving API</td><td>554</td><td><code>9, 24, 2, 60, 27, 45, 36, 48, 42, 26, 71, 72, 54, 59, 46, 22, 104, 25, 35, 53, 51, 13</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>298</td><td><code>92, 63, 109, 65, 67, 103, 107, 74, 76, 77, 78, 79, 82, 100, 68, 69, 70, 80, 91, 94, 95, 96, 97, 98, 99, 81, 114</code></td></tr><tr><td>Community 5</td><td>67</td><td><code>5</code></td></tr><tr><td>Community 33</td><td>66</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>54</td><td><code>32</code></td></tr><tr><td>Community 34</td><td>47</td><td><code>34</code></td></tr><tr><td>Community 19</td><td>34</td><td><code>19</code></td></tr><tr><td>Community 20</td><td>31</td><td><code>20</code></td></tr><tr><td>Community 58</td><td>31</td><td><code>58</code></td></tr><tr><td>Other</td><td>539</td><td><code>37, 50, 62, 64, 39, 0, 41, 28, 55, 31, 49, 52, 44, 93, 1, 38, 40, 105, 29, 61, 43, 56, 30, 47, 73, 75, 102, 108, 66, 113, 101, 11, 110, 23, 15, 16, 17, 85, 86, 87, 88, 89, 90</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">Graph Build -&gt; CLI &amp; Skill Installers -&gt; Other -&gt; Serving API -&gt; Community 32 -&gt; Community 50 -&gt; Community 34</div>
+    <div class="arrow-chain">Graph Build -&gt; CLI &amp; Skill Installers -&gt; Other -&gt; Serving API -&gt; Community 32 -&gt; Community 20 -&gt; Tests &amp; Fixtures</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>1929 nodes · 3135 edges · 109 communities (103 shown, 6 thin omitted)</li>
+      <li>2033 nodes · 3316 edges · 113 communities (108 shown, 5 thin omitted)</li>
       <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)</li>
       <li>Token cost: 0 input · 0 output</li>
-      <li>1. `getStoredToken()` - 37 edges</li>
+      <li>1. `getStoredToken()` - 39 edges</li>
       <li>2. `serverError()` - 26 edges</li>
       <li>3. `orgFetch()` - 26 edges</li>
     </ul>
@@ -170,20 +170,20 @@ flowchart LR
 <hr>
 <!-- ====== 2. Graph Build ====== -->
 <h2 id="build-graph">2. Graph Build</h2>
-<p>Graph Build groups implementation around frontend, packagejson, backend, tsconfigappjson, mostly in backend/package.json, frontend/package.json, frontend/tsconfig.app.json. This section covers 124 nodes and 117 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around frontend, packagejson, backend, tsconfigappjson, mostly in backend/package.json, frontend/package.json, frontend/tsconfig.app.json. This section covers 126 nodes and 119 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (124 nodes, 117 edges)
+    %% Section: Graph Build (126 nodes, 119 edges)
     subgraph build_graph_backend_package_json_fef74fa2["backend/package.json"]
         backend_package_json_c3759217("package.json")
         backend_package_dependencies_4ff26931("dependencies<br/><small>backend/package.json</small>")
+        backend_package_scripts_95503ce5("scripts<br/><small>backend/package.json</small>")
         backend_package_name_693d9dbf("name<br/><small>backend/package.json</small>")
         backend_package_version_92d585db("version<br/><small>backend/package.json</small>")
         backend_package_description_fadbf070("description<br/><small>backend/package.json</small>")
         backend_package_main_58e1bdcd("main<br/><small>backend/package.json</small>")
-        backend_package_scripts_95503ce5("scripts<br/><small>backend/package.json</small>")
         backend_package_keywords_7d58d358("keywords<br/><small>backend/package.json</small>")
         backend_package_author_b226627f("author<br/><small>backend/package.json</small>")
         backend_package_license_1a5009bf("license<br/><small>backend/package.json</small>")
@@ -191,11 +191,9 @@ flowchart LR
         backend_package_devdependencies_da9c727c("devDependencies<br/><small>backend/package.json</small>")
         backend_package_scripts_start_8887ff42("start<br/><small>backend/package.json</small>")
         backend_package_scripts_dev_156e5cf6("dev<br/><small>backend/package.json</small>")
+        backend_package_scripts_test_fd10c1d1("test<br/><small>backend/package.json</small>")
     end
-    subgraph build_graph_frontend_package_json_640d842e["frontend/package.json"]
-        frontend_package_devdependencies_ea29f362("devDependencies<br/><small>frontend/package.json</small>")
-        frontend_package_json_cb6b69be("package.json")
-    end
+    frontend_package_devdependencies_ea29f362("devDependencies<br/><small>frontend/package.json</small>")
     frontend_tsconfig_app_compileroptions_9b2d8a0b("compilerOptions<br/><small>frontend/tsconfig.app.json</small>")
     frontend_tsconfig_node_compileroptions_72668723("compilerOptions<br/><small>frontend/tsconfig.node.json</small>")
     backend_package_json_c3759217 -->|contains| backend_package_name_693d9dbf
@@ -211,15 +209,15 @@ flowchart LR
     backend_package_json_c3759217 -->|contains| backend_package_devdependencies_da9c727c
     backend_package_scripts_95503ce5 -->|contains| backend_package_scripts_start_8887ff42
     backend_package_scripts_95503ce5 -->|contains| backend_package_scripts_dev_156e5cf6
-    frontend_package_json_cb6b69be -->|contains| frontend_package_devdependencies_ea29f362
-    %% Omitted for readability: 106 nodes, 0 edges
+    backend_package_scripts_95503ce5 -->|contains| backend_package_scripts_test_fd10c1d1
+    %% Omitted for readability: 108 nodes, 0 edges
     class backend_package_json_c3759217 function;
     class backend_package_dependencies_4ff26931 function;
+    class backend_package_scripts_95503ce5 function;
     class backend_package_name_693d9dbf function;
     class backend_package_version_92d585db function;
     class backend_package_description_fadbf070 function;
     class backend_package_main_58e1bdcd function;
-    class backend_package_scripts_95503ce5 function;
     class backend_package_keywords_7d58d358 function;
     class backend_package_author_b226627f function;
     class backend_package_license_1a5009bf function;
@@ -227,8 +225,8 @@ flowchart LR
     class backend_package_devdependencies_da9c727c function;
     class backend_package_scripts_start_8887ff42 function;
     class backend_package_scripts_dev_156e5cf6 function;
+    class backend_package_scripts_test_fd10c1d1 function;
     class frontend_package_devdependencies_ea29f362 function;
-    class frontend_package_json_cb6b69be function;
     class frontend_tsconfig_app_compileroptions_9b2d8a0b function;
     class frontend_tsconfig_node_compileroptions_72668723 function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
@@ -326,6 +324,22 @@ flowchart LR
 </tr>
 <tr>
   <td>10</td>
+  <td><code>test:unit</code><br><small style="color:var(--muted)">backend/package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>test:e2e</code><br><small style="color:var(--muted)">backend/package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>12</td>
   <td><code>prisma:generate</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -333,7 +347,7 @@ flowchart LR
   <td>prisma:generate node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>11</td>
+  <td>13</td>
   <td><code>prisma:validate</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -341,7 +355,7 @@ flowchart LR
   <td>prisma:validate node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>14</td>
   <td><code>create:first-admin</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -349,7 +363,7 @@ flowchart LR
   <td>create:first-admin node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>15</td>
   <td><code>reset:first-admin-password</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -357,7 +371,7 @@ flowchart LR
   <td>reset:first-admin-password node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>14</td>
+  <td>16</td>
   <td><code>keywords</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -365,7 +379,7 @@ flowchart LR
   <td>keywords node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>15</td>
+  <td>17</td>
   <td><code>author</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -373,7 +387,7 @@ flowchart LR
   <td>author node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>18</td>
   <td><code>license</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -381,7 +395,7 @@ flowchart LR
   <td>license node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>19</td>
   <td><code>type</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -389,7 +403,7 @@ flowchart LR
   <td>type node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>20</td>
   <td><code>dependencies</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -397,7 +411,7 @@ flowchart LR
   <td>dependencies node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>21</td>
   <td><code>@prisma/adapter-pg</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -405,7 +419,7 @@ flowchart LR
   <td>@prisma/adapter-pg node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>22</td>
   <td><code>@prisma/client</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-cmd">Entry</span></td>
   <td>External entry / no inbound edge</td>
@@ -413,7 +427,7 @@ flowchart LR
   <td>@prisma/client node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>23</td>
   <td><code>bcryptjs</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -421,7 +435,7 @@ flowchart LR
   <td>bcryptjs node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>24</td>
   <td><code>cors</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -429,7 +443,7 @@ flowchart LR
   <td>cors node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>25</td>
   <td><code>csv-parse</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -437,7 +451,7 @@ flowchart LR
   <td>csv-parse node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>26</td>
   <td><code>dotenv</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -445,7 +459,7 @@ flowchart LR
   <td>dotenv node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>27</td>
   <td><code>express</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -453,7 +467,7 @@ flowchart LR
   <td>express node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>28</td>
   <td><code>express-rate-limit</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -461,7 +475,7 @@ flowchart LR
   <td>express-rate-limit node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>29</td>
   <td><code>multer</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -469,28 +483,12 @@ flowchart LR
   <td>multer node in backend/package.json.</td>
 </tr>
 <tr>
-  <td>28</td>
+  <td>30</td>
   <td><code>pg</code><br><small style="color:var(--muted)">backend/package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>pg node in backend/package.json.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>devDependencies</code><br><small style="color:var(--muted)">backend/package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>devDependencies node in backend/package.json.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>@types/node</code><br><small style="color:var(--muted)">backend/package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>@types/node node in backend/package.json.</td>
 </tr>
 </table>
 
@@ -499,7 +497,7 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>backend/package.json</code></td><td>32 nodes</td></tr>
+      <tr><td><code>backend/package.json</code></td><td>34 nodes</td></tr>
 <tr><td><code>frontend/package.json</code></td><td>32 nodes</td></tr>
 <tr><td><code>frontend/tsconfig.app.json</code></td><td>19 nodes</td></tr>
 <tr><td><code>frontend/tsconfig.node.json</code></td><td>18 nodes</td></tr>
@@ -511,7 +509,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x117. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x119. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -695,12 +693,12 @@ flowchart LR
 
 <!-- ====== 4. Serving API ====== -->
 <h2 id="serve-api">4. Serving API</h2>
-<p>Serving API groups implementation around frontend, api, components, backend, mostly in backend/ACCESS_POLICIES_API.md, src/api/organization.ts, src/controllers/users.controller.js. This section covers 490 nodes and 816 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around frontend, components, api, backend, mostly in backend/ACCESS_POLICIES_API.md, src/api/organization.ts, src/controllers/users.controller.js. This section covers 554 nodes and 941 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (490 nodes, 816 edges)
+    %% Section: Serving API (554 nodes, 941 edges)
     subgraph serve_api_src_controllers_users_controller_js_8d60ab07["src/controllers/users.controller.js"]
         controllers_users_controller_createuser_1d4bed69("createUser()<br/><small>src/controllers/users.controller.js</small>")
         controllers_users_controller_updateuser_09b2ac67("updateUser()<br/><small>src/controllers/users.controller.js</small>")
@@ -726,7 +724,7 @@ flowchart LR
         frontend_src_api_organization_ts_fd854e3d("organization.ts")
     end
     api_adminauth_getstoredtoken_6da5b8df("getStoredToken()<br/><small>src/api/adminAuth.ts</small>")
-    frontend_src_api_users_ts_f0590af5("users.ts")
+    frontend_src_api_rolespage_ts_4960119c("rolesPage.ts")
     controllers_users_controller_createuser_1d4bed69 -->|calls| validators_users_validator_validatecreateuserinp_e973ca38
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateuuidparam_36622e78
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateupdateuserinp_415e7af4
@@ -740,9 +738,8 @@ flowchart LR
     api_adminauth_getstoredtoken_6da5b8df -->|calls| api_organization_orgfetch_7fc4eb51
     frontend_src_authcontext_tsx_62479c75 -->|imports| api_adminauth_getstoredtoken_6da5b8df
     api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_organization_ts_fd854e3d
-    api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_users_ts_f0590af5
-    frontend_src_api_organization_ts_fd854e3d -->|imports| frontend_src_api_users_ts_f0590af5
-    %% Omitted for readability: 472 nodes, 0 edges
+    api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_rolespage_ts_4960119c
+    %% Omitted for readability: 536 nodes, 0 edges
     class controllers_users_controller_createuser_1d4bed69 function;
     class controllers_users_controller_updateuser_09b2ac67 function;
     class controllers_users_controller_suspenduser_34b180c2 function;
@@ -760,7 +757,7 @@ flowchart LR
     class api_organization_orgfetch_7fc4eb51 function;
     class frontend_src_api_organization_ts_fd854e3d module;
     class api_adminauth_getstoredtoken_6da5b8df ui;
-    class frontend_src_api_users_ts_f0590af5 module;
+    class frontend_src_api_rolespage_ts_4960119c module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1052,89 +1049,94 @@ flowchart LR
       <tr><td><code>backend/ACCESS_POLICIES_API.md</code></td><td>30 nodes</td></tr>
 <tr><td><code>src/api/organization.ts</code></td><td>29 nodes</td></tr>
 <tr><td><code>src/controllers/users.controller.js</code></td><td>27 nodes</td></tr>
-<tr><td><code>src/api/users.ts</code></td><td>23 nodes</td></tr>
+<tr><td><code>src/api/users.ts</code></td><td>24 nodes</td></tr>
 <tr><td><code>src/routes/users.routes.js</code></td><td>20 nodes</td></tr>
-<tr><td><code>src/api/accessPoliciesPage.ts</code></td><td>17 nodes</td></tr>
-<tr><td><code>src/validators/users.validator.js</code></td><td>14 nodes</td></tr>
-<tr><td><code>src/api/adminAuth.ts</code></td><td>14 nodes</td></tr>
+<tr><td><code>src/types/rolesPage.ts</code></td><td>19 nodes</td></tr>
+<tr><td><code>src/pages/RolesPermissionsStandalonePage.tsx</code></td><td>17 nodes</td></tr>
+<tr><td><code>src/api/accessPoliciesPage.ts</code></td><td>16 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x412, imports x204, calls x110, imports x86. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x482, imports x237, calls x112, imports x105. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 5. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">5. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around frontend, error, test, contextmd, mostly in frontend/tests/users.full.spec.ts, frontend/tests/roles.full.spec.ts, frontend/tests/groups.full.spec.ts. This section covers 231 nodes and 221 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around frontend, error, test, contextmd, mostly in frontend/tests/users.full.spec.ts, frontend/tests/stats-consistency.full.spec.ts, frontend/tests/roles.full.spec.ts. This section covers 298 nodes and 329 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (231 nodes, 221 edges)
-    subgraph tests_fixtures_frontend_tests_access_policies_fu_1e47427d["frontend/tests/access-policies.full.spec.ts"]
-        tests_access_policies_full_spec_gotoaccesspolici_286f940d("gotoAccessPolicies()<br/><small>frontend/tests/access-policies.full.spec.ts</small>")
-        tests_access_policies_full_spec_modalscope_39f1f50b("modalScope()<br/><small>frontend/tests/access-policies.full.spec.ts</small>")
-        tests_access_policies_full_spec_waitforapi_38dfea96("waitForApi()<br/><small>frontend/tests/access-policies.full.spec.ts</small>")
-        tests_access_policies_full_spec_createpolicy_50baf161("createPolicy()<br/><small>frontend/tests/access-policies.full.spec.ts</small>")
+    %% Section: Tests &amp; Fixtures (298 nodes, 329 edges)
+    subgraph tests_fixtures_src_controllers_roleTemplates_con_5b73d8ed["src/controllers/roleTemplates.controller.js"]
+        backend_src_controllers_roletemplates_controller_1e11e77f("roleTemplates.controller.js")
+        controllers_roletemplates_controller_badrequest_5c41d20d("badRequest()<br/><small>src/controllers/roleTemplates.controller.js</small>")
+        controllers_roletemplates_controller_servererror_087cd678("serverError()<br/><small>src/controllers/roleTemplates.controller.js</small>")
+        controllers_roletemplates_controller_notfound_c67ca888("notFound()<br/><small>src/controllers/roleTemplates.controller.js</small>")
+        controllers_roletemplates_controller_listroletem_97e7c9cd("listRoleTemplates()<br/><small>src/controllers/roleTemplates.controller.js</small>")
+        controllers_roletemplates_controller_getroletemp_00a3e756("getRoleTemplate()<br/><small>src/controllers/roleTemplates.controller.js</small>")
+        controllers_roletemplates_controller_createrolet_58063158("createRoleTemplate()<br/><small>src/controllers/roleTemplates.controller.js</small>")
+        controllers_roletemplates_controller_applyrolete_3c4942be("applyRoleTemplate()<br/><small>src/controllers/roleTemplates.controller.js</small>")
+        controllers_roletemplates_controller_deleterolet_826a5cea("deleteRoleTemplate()<br/><small>src/controllers/roleTemplates.controller.js</small>")
+        controllers_roletemplates_controller_invalidperm_1ba0c3c0("invalidPermissions()<br/><small>src/controllers/roleTemplates.controller.js</small>")
     end
-    subgraph tests_fixtures_frontend_tests_organization_full_488e3bd0["frontend/tests/organization.full.spec.ts"]
-        tests_organization_full_spec_gotoorgsubtab_79ea8fc7("gotoOrgSubTab()<br/><small>frontend/tests/organization.full.spec.ts</small>")
-        tests_organization_full_spec_waitforapi_cca03b48("waitForApi()<br/><small>frontend/tests/organization.full.spec.ts</small>")
-        tests_organization_full_spec_createbranch_080b5435("createBranch()<br/><small>frontend/tests/organization.full.spec.ts</small>")
-        tests_organization_full_spec_createdepartment_69a4af68("createDepartment()<br/><small>frontend/tests/organization.full.spec.ts</small>")
+    subgraph tests_fixtures_src_services_roleTemplates_servic_22407100["src/services/roleTemplates.service.js"]
+        services_roletemplates_service_createtemplateaud_c371d46a("createTemplateAuditLog()<br/><small>src/services/roleTemplates.service.js</small>")
+        services_roletemplates_service_permissionidsof_9478552c("permissionIdsOf()<br/><small>src/services/roleTemplates.service.js</small>")
+        services_roletemplates_service_paginate_0bae37dd("paginate()<br/><small>src/services/roleTemplates.service.js</small>")
+        services_roletemplates_service_listroletemplates_7848aa94("listRoleTemplates()<br/><small>src/services/roleTemplates.service.js</small>")
+        services_roletemplates_service_buildpagination_7ea85f35("buildPagination()<br/><small>src/services/roleTemplates.service.js</small>")
     end
-    subgraph tests_fixtures_frontend_tests_groups_full_spec_t_0206a06b["frontend/tests/groups.full.spec.ts"]
-        tests_groups_full_spec_gotogroups_b4551279("gotoGroups()<br/><small>frontend/tests/groups.full.spec.ts</small>")
-        tests_groups_full_spec_creategroup_92a88a9c("createGroup()<br/><small>frontend/tests/groups.full.spec.ts</small>")
-        tests_groups_full_spec_waitforapi_8ed2c561("waitForApi()<br/><small>frontend/tests/groups.full.spec.ts</small>")
+    subgraph tests_fixtures_src_validators_roleTemplates_vali_41c70d36["src/validators/roleTemplates.validator.js"]
+        validators_roletemplates_validator_validatelistt_cf7b57e4("validateListTemplatesQuery()<br/><small>src/validators/roleTemplates.validator.js</small>")
+        validators_roletemplates_validator_validatecreat_34332274("validateCreateTemplate()<br/><small>src/validators/roleTemplates.validator.js</small>")
+        validators_roletemplates_validator_validateapply_dde6d922("validateApplyTemplate()<br/><small>src/validators/roleTemplates.validator.js</small>")
     end
-    subgraph tests_fixtures_frontend_tests_roles_full_spec_ts_9258c536["frontend/tests/roles.full.spec.ts"]
-        tests_roles_full_spec_gotoroles_6c9fec26("gotoRoles()<br/><small>frontend/tests/roles.full.spec.ts</small>")
-        tests_roles_full_spec_createrole_4af4e246("createRole()<br/><small>frontend/tests/roles.full.spec.ts</small>")
-        tests_roles_full_spec_modalscope_4f69a7f7("modalScope()<br/><small>frontend/tests/roles.full.spec.ts</small>")
-    end
-    subgraph tests_fixtures_backend_scripts_cleanup_test_data_2e724fe8["backend/scripts/cleanup-test-data.js"]
-        scripts_cleanup_test_data_branch_name_prefixes_2b57e529("BRANCH_NAME_PREFIXES<br/><small>backend/scripts/cleanup-test-data.js</small>")
-        scripts_cleanup_test_data_department_prefixes_5aa1655b("DEPARTMENT_PREFIXES<br/><small>backend/scripts/cleanup-test-data.js</small>")
-    end
-    subgraph tests_fixtures_frontend_tests_users_full_spec_ts_d5710d94["frontend/tests/users.full.spec.ts"]
-        tests_users_full_spec_finduserrow_fd7bf56e("findUserRow()<br/><small>frontend/tests/users.full.spec.ts</small>")
-        tests_users_full_spec_opendrawerfor_fabb90c0("openDrawerFor()<br/><small>frontend/tests/users.full.spec.ts</small>")
-    end
-    tests_access_policies_full_spec_gotoaccesspolici_286f940d -->|calls| tests_access_policies_full_spec_createpolicy_50baf161
-    tests_access_policies_full_spec_modalscope_39f1f50b -->|calls| tests_access_policies_full_spec_createpolicy_50baf161
-    tests_access_policies_full_spec_waitforapi_38dfea96 -->|calls| tests_access_policies_full_spec_createpolicy_50baf161
-    tests_groups_full_spec_gotogroups_b4551279 -->|calls| tests_groups_full_spec_creategroup_92a88a9c
-    tests_groups_full_spec_waitforapi_8ed2c561 -->|calls| tests_groups_full_spec_creategroup_92a88a9c
-    tests_organization_full_spec_gotoorgsubtab_79ea8fc7 -->|calls| tests_organization_full_spec_createbranch_080b5435
-    tests_organization_full_spec_gotoorgsubtab_79ea8fc7 -->|calls| tests_organization_full_spec_createdepartment_69a4af68
-    tests_organization_full_spec_waitforapi_cca03b48 -->|calls| tests_organization_full_spec_createbranch_080b5435
-    tests_organization_full_spec_waitforapi_cca03b48 -->|calls| tests_organization_full_spec_createdepartment_69a4af68
-    tests_roles_full_spec_gotoroles_6c9fec26 -->|calls| tests_roles_full_spec_createrole_4af4e246
-    tests_roles_full_spec_modalscope_4f69a7f7 -->|calls| tests_roles_full_spec_createrole_4af4e246
-    tests_users_full_spec_finduserrow_fd7bf56e -->|calls| tests_users_full_spec_opendrawerfor_fabb90c0
-    %% Omitted for readability: 213 nodes, 0 edges
-    class tests_access_policies_full_spec_gotoaccesspolici_286f940d test;
-    class tests_access_policies_full_spec_modalscope_39f1f50b test;
-    class tests_access_policies_full_spec_waitforapi_38dfea96 test;
-    class tests_access_policies_full_spec_createpolicy_50baf161 test;
-    class tests_organization_full_spec_gotoorgsubtab_79ea8fc7 test;
-    class tests_organization_full_spec_waitforapi_cca03b48 test;
-    class tests_organization_full_spec_createbranch_080b5435 test;
-    class tests_organization_full_spec_createdepartment_69a4af68 test;
-    class tests_groups_full_spec_gotogroups_b4551279 test;
-    class tests_groups_full_spec_creategroup_92a88a9c test;
-    class tests_groups_full_spec_waitforapi_8ed2c561 test;
-    class tests_roles_full_spec_gotoroles_6c9fec26 test;
-    class tests_roles_full_spec_createrole_4af4e246 test;
-    class tests_roles_full_spec_modalscope_4f69a7f7 test;
-    class scripts_cleanup_test_data_branch_name_prefixes_2b57e529 test;
-    class scripts_cleanup_test_data_department_prefixes_5aa1655b test;
-    class tests_users_full_spec_finduserrow_fd7bf56e test;
-    class tests_users_full_spec_opendrawerfor_fabb90c0 test;
+    controllers_roletemplates_controller_badrequest_5c41d20d -->|calls| controllers_roletemplates_controller_listroletem_97e7c9cd
+    controllers_roletemplates_controller_badrequest_5c41d20d -->|calls| controllers_roletemplates_controller_getroletemp_00a3e756
+    controllers_roletemplates_controller_badrequest_5c41d20d -->|calls| controllers_roletemplates_controller_createrolet_58063158
+    controllers_roletemplates_controller_badrequest_5c41d20d -->|calls| controllers_roletemplates_controller_applyrolete_3c4942be
+    controllers_roletemplates_controller_badrequest_5c41d20d -->|calls| controllers_roletemplates_controller_deleterolet_826a5cea
+    controllers_roletemplates_controller_notfound_c67ca888 -->|calls| controllers_roletemplates_controller_getroletemp_00a3e756
+    controllers_roletemplates_controller_notfound_c67ca888 -->|calls| controllers_roletemplates_controller_applyrolete_3c4942be
+    controllers_roletemplates_controller_notfound_c67ca888 -->|calls| controllers_roletemplates_controller_deleterolet_826a5cea
+    controllers_roletemplates_controller_servererror_087cd678 -->|calls| controllers_roletemplates_controller_listroletem_97e7c9cd
+    controllers_roletemplates_controller_servererror_087cd678 -->|calls| controllers_roletemplates_controller_getroletemp_00a3e756
+    controllers_roletemplates_controller_servererror_087cd678 -->|calls| controllers_roletemplates_controller_createrolet_58063158
+    controllers_roletemplates_controller_servererror_087cd678 -->|calls| controllers_roletemplates_controller_applyrolete_3c4942be
+    controllers_roletemplates_controller_servererror_087cd678 -->|calls| controllers_roletemplates_controller_deleterolet_826a5cea
+    controllers_roletemplates_controller_invalidperm_1ba0c3c0 -->|calls| controllers_roletemplates_controller_createrolet_58063158
+    controllers_roletemplates_controller_invalidperm_1ba0c3c0 -->|calls| controllers_roletemplates_controller_applyrolete_3c4942be
+    controllers_roletemplates_controller_listroletem_97e7c9cd -->|calls| validators_roletemplates_validator_validatelistt_cf7b57e4
+    controllers_roletemplates_controller_createrolet_58063158 -->|calls| validators_roletemplates_validator_validatecreat_34332274
+    controllers_roletemplates_controller_applyrolete_3c4942be -->|calls| validators_roletemplates_validator_validateapply_dde6d922
+    services_roletemplates_service_paginate_0bae37dd -->|calls| services_roletemplates_service_listroletemplates_7848aa94
+    services_roletemplates_service_buildpagination_7ea85f35 -->|calls| services_roletemplates_service_listroletemplates_7848aa94
+    backend_src_controllers_roletemplates_controller_1e11e77f -->|imports| validators_roletemplates_validator_validatelistt_cf7b57e4
+    backend_src_controllers_roletemplates_controller_1e11e77f -->|imports| validators_roletemplates_validator_validatecreat_34332274
+    backend_src_controllers_roletemplates_controller_1e11e77f -->|imports| validators_roletemplates_validator_validateapply_dde6d922
+    %% Omitted for readability: 280 nodes, 0 edges
+    class backend_src_controllers_roletemplates_controller_1e11e77f module;
+    class controllers_roletemplates_controller_badrequest_5c41d20d function;
+    class controllers_roletemplates_controller_servererror_087cd678 function;
+    class controllers_roletemplates_controller_notfound_c67ca888 function;
+    class controllers_roletemplates_controller_listroletem_97e7c9cd function;
+    class controllers_roletemplates_controller_getroletemp_00a3e756 function;
+    class controllers_roletemplates_controller_createrolet_58063158 function;
+    class controllers_roletemplates_controller_applyrolete_3c4942be function;
+    class controllers_roletemplates_controller_deleterolet_826a5cea function;
+    class controllers_roletemplates_controller_invalidperm_1ba0c3c0 function;
+    class services_roletemplates_service_createtemplateaud_c371d46a function;
+    class services_roletemplates_service_permissionidsof_9478552c function;
+    class services_roletemplates_service_paginate_0bae37dd function;
+    class services_roletemplates_service_listroletemplates_7848aa94 function;
+    class services_roletemplates_service_buildpagination_7ea85f35 function;
+    class validators_roletemplates_validator_validatelistt_cf7b57e4 function;
+    class validators_roletemplates_validator_validatecreat_34332274 function;
+    class validators_roletemplates_validator_validateapply_dde6d922 function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1158,243 +1160,259 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>users.full.spec.ts</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>roleTemplates.controller.js</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Module file in frontend/tests/users.full.spec.ts.</td>
+  <td><code>roleTemplates.routes.js</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small><br><code>roleTemplates.service.js</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>roleTemplates.validator.js</code><br><small style="color:var(--muted)">src/validators/roleTemplates.validator.js</small><br>+4 more</td>
+  <td>roleTemplates.controller.js node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>__dirname</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>__dirname node in frontend/tests/users.full.spec.ts.</td>
+  <td>svc node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>uid()</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>{
+  validateId,
+  validateListTemplatesQuery,
+  validateCreateTemplate,
+  validateApplyTemplate,
+}</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>uid() node in frontend/tests/users.full.spec.ts.</td>
+  <td>{
+  validateId,
+  validateListTemplatesQuery,
+  validateCreateTemplate,
+  validateApplyTemplate,
+} node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>gotoUsersTab()</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>gotoUsersTab() node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>deleteRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br>+2 more</td>
+  <td>badRequest() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>addUser()</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>addUser() node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>deleteRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>getRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td>notFound() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>findUserRow()</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>openDrawerFor()</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td>findUserRow() node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>deleteRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br>+2 more</td>
+  <td>serverError() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>openDrawerFor()</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>findUserRow()</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td>No direct outbound edge</td>
-  <td>openDrawerFor() node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>invalidPermissions()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td>invalidPermissions() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>fullNameInput</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>fullNameInput node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>listRoleTemplates()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><code>roleTemplates.routes.js</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small><br><code>validateListTemplatesQuery()</code><br><small style="color:var(--muted)">src/validators/roleTemplates.validator.js</small></td>
+  <td>listRoleTemplates() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>rows</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>rows node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>getRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><code>roleTemplates.routes.js</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small></td>
+  <td>getRoleTemplate() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>respPromise</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>respPromise node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>invalidPermissions()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><code>roleTemplates.routes.js</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small><br><code>validateCreateTemplate()</code><br><small style="color:var(--muted)">src/validators/roleTemplates.validator.js</small></td>
+  <td>createRoleTemplate() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>modal</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>modal node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>invalidPermissions()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br>+1 more</td>
+  <td><code>roleTemplates.routes.js</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small><br><code>validateApplyTemplate()</code><br><small style="color:var(--muted)">src/validators/roleTemplates.validator.js</small></td>
+  <td>applyRoleTemplate() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>roleSelect</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>roleSelect node in frontend/tests/users.full.spec.ts.</td>
+  <td><code>deleteRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
+  <td><code>roleTemplates.routes.js</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small></td>
+  <td>deleteRoleTemplate() node in src/controllers/roleTemplates.controller.js.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>csvPath</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>roleTemplates.routes.js</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small></td>
+  <td><span class="tag tag-endpoint">API</span></td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br><code>deleteRoleTemplate()</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small><br>+3 more</td>
   <td>No direct outbound edge</td>
-  <td>csvPath node in frontend/tests/users.full.spec.ts.</td>
+  <td>roleTemplates.routes.js node in src/routes/roleTemplates.routes.js.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>downloadPromise</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>express</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>downloadPromise node in frontend/tests/users.full.spec.ts.</td>
+  <td>express node in src/routes/roleTemplates.routes.js.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>emails</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>{ requireAdminAuth }</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>emails node in frontend/tests/users.full.spec.ts.</td>
+  <td>{ requireAdminAuth } node in src/routes/roleTemplates.routes.js.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>panel</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>{ adminUserActionRateLimiter }</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>panel node in frontend/tests/users.full.spec.ts.</td>
+  <td>{ adminUserActionRateLimiter } node in src/routes/roleTemplates.routes.js.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>applyPromise</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>{
+  listRoleTemplates, getRoleTemplate, createRoleTemplate,
+  applyRoleTemplate, deleteRoleTemplate,
+}</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>applyPromise node in frontend/tests/users.full.spec.ts.</td>
+  <td>{
+  listRoleTemplates, getRoleTemplate, createRoleTemplate,
+  applyRoleTemplate, deleteRoleTemplate,
+} node in src/routes/roleTemplates.routes.js.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>targetIndex</code><br><small style="color:var(--muted)">frontend/tests/users.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>router</code><br><small style="color:var(--muted)">src/routes/roleTemplates.routes.js</small></td>
+  <td><span class="tag tag-endpoint">API</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>targetIndex node in frontend/tests/users.full.spec.ts.</td>
+  <td>router node in src/routes/roleTemplates.routes.js.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>roles.full.spec.ts</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>roleTemplates.service.js</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>roleTemplates.controller.js</code><br><small style="color:var(--muted)">src/controllers/roleTemplates.controller.js</small></td>
   <td>No direct outbound edge</td>
-  <td>Module file in frontend/tests/roles.full.spec.ts.</td>
+  <td>roleTemplates.service.js node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>uid()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>uid() node in frontend/tests/roles.full.spec.ts.</td>
+  <td>prisma node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>gotoRoles()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>paginate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>createRole()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td>gotoRoles() node in frontend/tests/roles.full.spec.ts.</td>
+  <td><code>listRoleTemplates()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td>paginate() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>roleRow()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>buildPagination()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>roleRow() node in frontend/tests/roles.full.spec.ts.</td>
+  <td><code>listRoleTemplates()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td>buildPagination() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>modalScope()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>createTemplateAuditLog()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>createRole()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td>modalScope() node in frontend/tests/roles.full.spec.ts.</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>deleteRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td>createTemplateAuditLog() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>createRole()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>gotoRoles()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small><br><code>modalScope()</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td>No direct outbound edge</td>
-  <td>createRole() node in frontend/tests/roles.full.spec.ts.</td>
+  <td><code>permissionIdsOf()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>getRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td>permissionIdsOf() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>row</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>assertPermissionsExist()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-async">Async</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>row node in frontend/tests/roles.full.spec.ts.</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td>assertPermissionsExist() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>respPromise</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>listRoleTemplates()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>buildPagination()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>paginate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
   <td>No direct outbound edge</td>
-  <td>respPromise node in frontend/tests/roles.full.spec.ts.</td>
+  <td>listRoleTemplates() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>assignModal</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>getRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>permissionIdsOf()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
   <td>No direct outbound edge</td>
-  <td>assignModal node in frontend/tests/roles.full.spec.ts.</td>
+  <td>getRoleTemplate() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>assignPromise</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>createRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>assertPermissionsExist()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>createTemplateAuditLog()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>permissionIdsOf()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
   <td>No direct outbound edge</td>
-  <td>assignPromise node in frontend/tests/roles.full.spec.ts.</td>
+  <td>createRoleTemplate() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>roleRowAfter</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>applyRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>assertPermissionsExist()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>createTemplateAuditLog()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small><br><code>permissionIdsOf()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
   <td>No direct outbound edge</td>
-  <td>roleRowAfter node in frontend/tests/roles.full.spec.ts.</td>
+  <td>applyRoleTemplate() node in src/services/roleTemplates.service.js.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>modal</code><br><small style="color:var(--muted)">frontend/tests/roles.full.spec.ts</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>deleteRoleTemplate()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>createTemplateAuditLog()</code><br><small style="color:var(--muted)">src/services/roleTemplates.service.js</small></td>
   <td>No direct outbound edge</td>
-  <td>modal node in frontend/tests/roles.full.spec.ts.</td>
+  <td>deleteRoleTemplate() node in src/services/roleTemplates.service.js.</td>
 </tr>
 </table>
 
@@ -1403,19 +1421,19 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>frontend/tests/users.full.spec.ts</code></td><td>18 nodes</td></tr>
+      <tr><td><code>frontend/tests/users.full.spec.ts</code></td><td>21 nodes</td></tr>
+<tr><td><code>frontend/tests/stats-consistency.full.spec.ts</code></td><td>17 nodes</td></tr>
 <tr><td><code>frontend/tests/groups.full.spec.ts</code></td><td>15 nodes</td></tr>
 <tr><td><code>frontend/tests/roles.full.spec.ts</code></td><td>15 nodes</td></tr>
+<tr><td><code>src/controllers/roleTemplates.controller.js</code></td><td>12 nodes</td></tr>
+<tr><td><code>src/services/roleTemplates.service.js</code></td><td>12 nodes</td></tr>
 <tr><td><code>frontend/tests/access-policies.full.spec.ts</code></td><td>12 nodes</td></tr>
 <tr><td><code>backend/scripts/cleanup-test-data.js</code></td><td>11 nodes</td></tr>
-<tr><td><code>test-results/groups.full-Group-Members--6e4e0-rify-member-count-increases-authenticated/error-context.md</code></td><td>10 nodes</td></tr>
-<tr><td><code>test-results/roles.full-Delete-Role-with-users-→-verify-error-shown-authenticated/error-context.md</code></td><td>10 nodes</td></tr>
-<tr><td><code>frontend/tests/invitations.full.spec.ts</code></td><td>10 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x209, calls x12. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x269, calls x43, imports x13, imports x4. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -3220,12 +3238,12 @@ flowchart LR
 
 <!-- ====== 11. Community 32 ====== -->
 <h2 id="community-32">11. Community 32</h2>
-<p>Community 32 groups implementation around frontend, components, users, charts, mostly in src/types/users.ts, users/charts/UsersByDepartmentChart.tsx, users/charts/UsersByRoleChart.tsx. This section covers 51 nodes and 61 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Community 32 groups implementation around frontend, components, users, usersts, mostly in src/types/users.ts, users/charts/UsersByDepartmentChart.tsx, users/charts/UsersByRoleChart.tsx. This section covers 54 nodes and 64 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 32 (51 nodes, 61 edges)
+    %% Section: Community 32 (54 nodes, 64 edges)
     subgraph community_32_src_types_users_ts_971a3f6a["src/types/users.ts"]
         frontend_src_types_users_ts_8f94ab14("users.ts")
         types_users_analyticsresponse_ca5ed142("AnalyticsResponse<br/><small>src/types/users.ts</small>")
@@ -3234,8 +3252,8 @@ flowchart LR
         types_users_departmentanalyticsitem_0a5dec62("DepartmentAnalyticsItem<br/><small>src/types/users.ts</small>")
         types_users_roleanalyticsitem_68dbef1f("RoleAnalyticsItem<br/><small>src/types/users.ts</small>")
         types_users_verificationstatusitem_c9f35ea3("VerificationStatusItem<br/><small>src/types/users.ts</small>")
+        types_users_actionresponse_704bebaa("ActionResponse<br/><small>src/types/users.ts</small>")
         types_users_activityitem_2ad33c58("ActivityItem<br/><small>src/types/users.ts</small>")
-        types_users_bulkactionerror_165cdbc3("BulkActionError<br/><small>src/types/users.ts</small>")
     end
     subgraph community_32_components_users_UserAnalytics_tsx_32aa25c5["components/users/UserAnalytics.tsx"]
         frontend_src_components_users_useranalytics_tsx_3e6b949c("UserAnalytics.tsx")
@@ -3266,7 +3284,7 @@ flowchart LR
     frontend_src_components_users_charts_usersbyrole_91ed3063 -->|imports| types_users_roleanalyticsitem_68dbef1f
     frontend_src_components_users_charts_verificatio_fff827f0 -->|imports| frontend_src_types_users_ts_8f94ab14
     frontend_src_components_users_charts_verificatio_fff827f0 -->|imports| types_users_verificationstatusitem_c9f35ea3
-    %% Omitted for readability: 33 nodes, 0 edges
+    %% Omitted for readability: 36 nodes, 0 edges
     class frontend_src_types_users_ts_8f94ab14 module;
     class types_users_analyticsresponse_ca5ed142 klass;
     class types_users_newusersthismonth_06c7b862 klass;
@@ -3274,8 +3292,8 @@ flowchart LR
     class types_users_departmentanalyticsitem_0a5dec62 klass;
     class types_users_roleanalyticsitem_68dbef1f klass;
     class types_users_verificationstatusitem_c9f35ea3 klass;
+    class types_users_actionresponse_704bebaa klass;
     class types_users_activityitem_2ad33c58 klass;
-    class types_users_bulkactionerror_165cdbc3 klass;
     class frontend_src_components_users_useranalytics_tsx_3e6b949c ui;
     class users_useranalytics_chartcard_72ab0f67 ui;
     class users_useranalytics_useranalytics_2b2b073d ui;
@@ -3553,7 +3571,7 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/types/users.ts</code></td><td>21 nodes</td></tr>
+      <tr><td><code>src/types/users.ts</code></td><td>24 nodes</td></tr>
 <tr><td><code>users/charts/UsersByDepartmentChart.tsx</code></td><td>6 nodes</td></tr>
 <tr><td><code>users/charts/UsersByRoleChart.tsx</code></td><td>6 nodes</td></tr>
 <tr><td><code>users/charts/VerificationStatusChart.tsx</code></td><td>6 nodes</td></tr>
@@ -3565,37 +3583,382 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x43, imports x11, imports x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x46, imports x11, imports x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 12. Community 19 ====== -->
-<h2 id="community-19">12. Community 19</h2>
-<p>Community 19 groups implementation around backend, rolescontrollerjs, controllers, rolesvalidatorjs, mostly in src/controllers/roles.controller.js, src/validators/roles.validator.js, src/routes/roles.routes.js. This section covers 41 nodes and 97 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 12. Community 34 ====== -->
+<h2 id="community-34">12. Community 34</h2>
+<p>Community 34 groups implementation around frontend, components, users, userdetailsdrawertsx, mostly in components/users/UserDetailsDrawer.tsx, components/users/SendMessageModal.tsx, components/users/ConfirmDialog.tsx. This section covers 47 nodes and 51 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 19 (41 nodes, 97 edges)
-    controllers_roles_controller_servererror_017a0b75("serverError()<br/><small>src/controllers/roles.controller.js</small>")
-    backend_src_controllers_roles_controller_js_e02de260("roles.controller.js")
-    controllers_roles_controller_badrequest_8f588ee8("badRequest()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_notfound_e408a089("notFound()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_createrole_b0935261("createRole()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_listroles_43c35228("listRoles()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_updaterole_6e7cadd4("updateRole()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_deleterole_58f8644c("deleteRole()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_duplicaterole_0492208e("duplicateRole()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_assignpermissionsto_5f55dfa6("assignPermissionsToRole()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_getpermissionmatrix_7ae2fae9("getPermissionMatrix()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_togglepermissionmat_378a4335("togglePermissionMatrixCell()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_createpermission_00807c96("createPermission()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_getrole_fd859f79("getRole()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_getpermission_12f024a9("getPermission()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_updatepermission_f378b8d8("updatePermission()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_deletepermission_a0da2d3f("deletePermission()<br/><small>src/controllers/roles.controller.js</small>")
-    controllers_roles_controller_getrolesstats_0cdab6d2("getRolesStats()<br/><small>src/controllers/roles.controller.js</small>")
+    %% Section: Community 34 (47 nodes, 51 edges)
+    subgraph community_34_components_users_SendMessageModal_t_3e373153["components/users/SendMessageModal.tsx"]
+        frontend_src_components_users_sendmessagemodal_t_c8a9713a("SendMessageModal.tsx")
+        users_sendmessagemodal_input_a88026be("INPUT<br/><small>components/users/SendMessageModal.tsx</small>")
+        users_sendmessagemodal_label_b21cc91a("LABEL<br/><small>components/users/SendMessageModal.tsx</small>")
+        users_sendmessagemodal_message_type_options_4bdaf99a("MESSAGE_TYPE_OPTIONS<br/><small>components/users/SendMessageModal.tsx</small>")
+        users_sendmessagemodal_priority_options_d7058647("PRIORITY_OPTIONS<br/><small>components/users/SendMessageModal.tsx</small>")
+        users_sendmessagemodal_props_8983dd92("Props<br/><small>components/users/SendMessageModal.tsx</small>")
+        users_sendmessagemodal_sendmessagemodal_550f44c6("SendMessageModal()<br/><small>components/users/SendMessageModal.tsx</small>")
+    end
+    subgraph community_34_components_users_UserDetailsDrawer_1a1cf0cd["components/users/UserDetailsDrawer.tsx"]
+        users_userdetailsdrawer_formatdate_7f166829("formatDate()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_avatarpalette_baabd122("avatarPalette()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_initials_67060d8b("initials()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        frontend_src_components_users_userdetailsdrawer_75152e55("UserDetailsDrawer.tsx")
+        users_userdetailsdrawer_userdetailsdrawer_ecf20f63("UserDetailsDrawer()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+        users_userdetailsdrawer_formatrelative_c29d72fe("formatRelative()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+    end
+    subgraph community_34_components_users_ConfirmDialog_tsx_71b12d29["components/users/ConfirmDialog.tsx"]
+        frontend_src_components_users_confirmdialog_tsx_caf75547("ConfirmDialog.tsx")
+        users_confirmdialog_confirmdialog_4bb8cca2("ConfirmDialog()<br/><small>components/users/ConfirmDialog.tsx</small>")
+        users_confirmdialog_props_ab2c09bb("Props<br/><small>components/users/ConfirmDialog.tsx</small>")
+    end
+    subgraph community_34_src_types_users_ts_93301fd8["src/types/users.ts"]
+        types_users_userdetailsresponse_06f51bdb("UserDetailsResponse<br/><small>src/types/users.ts</small>")
+        types_users_coursestatus_4a51235b("CourseStatus<br/><small>src/types/users.ts</small>")
+    end
+    users_userdetailsdrawer_initials_67060d8b -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
+    users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_formatrelative_c29d72fe
+    users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
+    users_userdetailsdrawer_formatrelative_c29d72fe -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
+    users_userdetailsdrawer_avatarpalette_baabd122 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
+    frontend_src_components_users_confirmdialog_tsx_caf75547 -->|imports| frontend_src_components_users_userdetailsdrawer_75152e55
+    frontend_src_components_users_sendmessagemodal_t_c8a9713a -->|imports| frontend_src_components_users_userdetailsdrawer_75152e55
+    frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_userdetailsresponse_06f51bdb
+    frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_coursestatus_4a51235b
+    %% Omitted for readability: 29 nodes, 0 edges
+    class frontend_src_components_users_sendmessagemodal_t_c8a9713a ui;
+    class users_sendmessagemodal_input_a88026be ui;
+    class users_sendmessagemodal_label_b21cc91a ui;
+    class users_sendmessagemodal_message_type_options_4bdaf99a ui;
+    class users_sendmessagemodal_priority_options_d7058647 ui;
+    class users_sendmessagemodal_props_8983dd92 ui;
+    class users_sendmessagemodal_sendmessagemodal_550f44c6 ui;
+    class users_userdetailsdrawer_formatdate_7f166829 ui;
+    class users_userdetailsdrawer_avatarpalette_baabd122 ui;
+    class users_userdetailsdrawer_initials_67060d8b ui;
+    class frontend_src_components_users_userdetailsdrawer_75152e55 ui;
+    class users_userdetailsdrawer_userdetailsdrawer_ecf20f63 ui;
+    class users_userdetailsdrawer_formatrelative_c29d72fe ui;
+    class frontend_src_components_users_confirmdialog_tsx_caf75547 ui;
+    class users_confirmdialog_confirmdialog_4bb8cca2 ui;
+    class users_confirmdialog_props_ab2c09bb ui;
+    class types_users_userdetailsresponse_06f51bdb klass;
+    class types_users_coursestatus_4a51235b klass;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>ConfirmDialog.tsx</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>Module file in components/users/ConfirmDialog.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Props node in components/users/ConfirmDialog.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>ConfirmDialog()</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ConfirmDialog() node in components/users/ConfirmDialog.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>SendMessageModal.tsx</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>Module file in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>MESSAGE_TYPE_OPTIONS</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>MESSAGE_TYPE_OPTIONS node in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>PRIORITY_OPTIONS</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>PRIORITY_OPTIONS node in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INPUT node in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>LABEL</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LABEL node in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>focusIn()</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>focusIn() node in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>focusOut()</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>focusOut() node in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Props node in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>SendMessageModal()</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SendMessageModal() node in components/users/SendMessageModal.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ConfirmDialog.tsx</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small><br><code>SendMessageModal.tsx</code><br><small style="color:var(--muted)">components/users/SendMessageModal.tsx</small></td>
+  <td><code>CourseStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>UserDetailsResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td>Module file in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>initials()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>initials() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small><br><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>formatDate() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>formatRelative() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>STATUS_STYLE</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>STATUS_STYLE node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>AVATAR_PALETTES</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AVATAR_PALETTES node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>avatarPalette()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td>avatarPalette() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>roleTypeBadge()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>roleTypeBadge() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>riskBadge()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>riskBadge() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>courseStatusStyle()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>courseStatusStyle() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>ROLE_DISPLAY</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ROLE_DISPLAY node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>IcoBack()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoBack() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>IcoClose()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoClose() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>IcoMail()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoMail() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>IcoPhone()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoPhone() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>IcoAlert()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoAlert() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>IcoPencil()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoPencil() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>IcoKey()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>IcoKey() node in components/users/UserDetailsDrawer.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>components/users/UserDetailsDrawer.tsx</code></td><td>33 nodes</td></tr>
+<tr><td><code>components/users/SendMessageModal.tsx</code></td><td>9 nodes</td></tr>
+<tr><td><code>components/users/ConfirmDialog.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/types/users.ts</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x42, calls x5, imports x2, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 13. Community 19 ====== -->
+<h2 id="community-19">13. Community 19</h2>
+<p>Community 19 groups implementation around backend, rolescontrollerjs, controllers, rolesvalidatorjs, mostly in src/controllers/roles.controller.js, src/validators/roles.validator.js. This section covers 34 nodes and 81 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 19 (34 nodes, 81 edges)
+    subgraph community_19_src_controllers_roles_controller_js_104f90d1["src/controllers/roles.controller.js"]
+        controllers_roles_controller_servererror_017a0b75("serverError()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_badrequest_8f588ee8("badRequest()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_notfound_e408a089("notFound()<br/><small>src/controllers/roles.controller.js</small>")
+        backend_src_controllers_roles_controller_js_e02de260("roles.controller.js")
+        controllers_roles_controller_listroles_43c35228("listRoles()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_createrole_b0935261("createRole()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_updaterole_6e7cadd4("updateRole()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_deleterole_58f8644c("deleteRole()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_duplicaterole_0492208e("duplicateRole()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_assignpermissionsto_5f55dfa6("assignPermissionsToRole()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_getpermissionmatrix_7ae2fae9("getPermissionMatrix()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_togglepermissionmat_378a4335("togglePermissionMatrixCell()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_createpermission_00807c96("createPermission()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_getrole_fd859f79("getRole()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_getpermission_12f024a9("getPermission()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_updatepermission_f378b8d8("updatePermission()<br/><small>src/controllers/roles.controller.js</small>")
+        controllers_roles_controller_deletepermission_a0da2d3f("deletePermission()<br/><small>src/controllers/roles.controller.js</small>")
+    end
+    validators_roles_validator_validateid_7a50a4ea("validateId()<br/><small>src/validators/roles.validator.js</small>")
     controllers_roles_controller_badrequest_8f588ee8 -->|calls| controllers_roles_controller_listroles_43c35228
     controllers_roles_controller_badrequest_8f588ee8 -->|calls| controllers_roles_controller_createrole_b0935261
     controllers_roles_controller_badrequest_8f588ee8 -->|calls| controllers_roles_controller_updaterole_6e7cadd4
@@ -3615,18 +3978,18 @@ flowchart LR
     controllers_roles_controller_notfound_e408a089 -->|calls| controllers_roles_controller_updatepermission_f378b8d8
     controllers_roles_controller_notfound_e408a089 -->|calls| controllers_roles_controller_deletepermission_a0da2d3f
     controllers_roles_controller_servererror_017a0b75 -->|calls| controllers_roles_controller_listroles_43c35228
-    controllers_roles_controller_servererror_017a0b75 -->|calls| controllers_roles_controller_getrolesstats_0cdab6d2
     controllers_roles_controller_servererror_017a0b75 -->|calls| controllers_roles_controller_getrole_fd859f79
     controllers_roles_controller_servererror_017a0b75 -->|calls| controllers_roles_controller_createrole_b0935261
     controllers_roles_controller_servererror_017a0b75 -->|calls| controllers_roles_controller_updaterole_6e7cadd4
     controllers_roles_controller_servererror_017a0b75 -->|calls| controllers_roles_controller_deleterole_58f8644c
-    %% Omitted for readability: 23 nodes, 8 edges
+    controllers_roles_controller_servererror_017a0b75 -->|calls| controllers_roles_controller_duplicaterole_0492208e
+    %% Omitted for readability: 16 nodes, 8 edges
     class controllers_roles_controller_servererror_017a0b75 function;
-    class backend_src_controllers_roles_controller_js_e02de260 module;
     class controllers_roles_controller_badrequest_8f588ee8 function;
     class controllers_roles_controller_notfound_e408a089 function;
-    class controllers_roles_controller_createrole_b0935261 function;
+    class backend_src_controllers_roles_controller_js_e02de260 module;
     class controllers_roles_controller_listroles_43c35228 function;
+    class controllers_roles_controller_createrole_b0935261 function;
     class controllers_roles_controller_updaterole_6e7cadd4 function;
     class controllers_roles_controller_deleterole_58f8644c function;
     class controllers_roles_controller_duplicaterole_0492208e function;
@@ -3638,7 +4001,7 @@ flowchart LR
     class controllers_roles_controller_getpermission_12f024a9 function;
     class controllers_roles_controller_updatepermission_f378b8d8 function;
     class controllers_roles_controller_deletepermission_a0da2d3f function;
-    class controllers_roles_controller_getrolesstats_0cdab6d2 function;
+    class validators_roles_validator_validateid_7a50a4ea function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -3665,7 +4028,7 @@ flowchart LR
   <td><code>roles.controller.js</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>roles.validator.js</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small><br><code>validateAssignPermissions()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small><br>+6 more</td>
+  <td><code>roles.validator.js</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small><br><code>validateAssignPermissions()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small><br><code>validateCreateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small><br>+5 more</td>
   <td>roles.controller.js node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3729,7 +4092,7 @@ flowchart LR
   <td><code>listRoles()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>validateListRolesQuery()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><code>validateListRolesQuery()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
   <td>listRoles() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3737,7 +4100,7 @@ flowchart LR
   <td><code>getRolesStats()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
+  <td>No direct outbound edge</td>
   <td>getRolesStats() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3745,7 +4108,7 @@ flowchart LR
   <td><code>getRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
+  <td>No direct outbound edge</td>
   <td>getRole() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3753,7 +4116,7 @@ flowchart LR
   <td><code>createRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>validateCreateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><code>validateCreateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
   <td>createRole() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3761,7 +4124,7 @@ flowchart LR
   <td><code>updateRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>validateUpdateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><code>validateUpdateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
   <td>updateRole() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3769,7 +4132,7 @@ flowchart LR
   <td><code>deleteRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
+  <td>No direct outbound edge</td>
   <td>deleteRole() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3777,7 +4140,7 @@ flowchart LR
   <td><code>duplicateRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
+  <td>No direct outbound edge</td>
   <td>duplicateRole() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3785,7 +4148,7 @@ flowchart LR
   <td><code>getRolePermissions()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
+  <td>No direct outbound edge</td>
   <td>getRolePermissions() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3793,7 +4156,7 @@ flowchart LR
   <td><code>assignPermissionsToRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>validateAssignPermissions()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><code>validateAssignPermissions()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
   <td>assignPermissionsToRole() node in src/controllers/roles.controller.js.</td>
 </tr>
 <tr>
@@ -3854,60 +4217,6 @@ flowchart LR
 </tr>
 <tr>
   <td>23</td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td><code>assignPermissionsToRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>createRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>deleteRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br>+7 more</td>
-  <td>No direct outbound edge</td>
-  <td>roles.routes.js node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>express</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>express node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>{ requireAdminAuth }</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ requireAdminAuth } node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>{ adminUserActionRateLimiter }</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ adminUserActionRateLimiter } node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>{
-  listRoles, getRolesStats, getRole, createRole, updateRole, deleteRole, duplicateRole,
-  getRolePermissions, assignPermissionsToRole,
-}</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{
-  listRoles, getRolesStats, getRole, createRole, updateRole, deleteRole, duplicateRole,
-  getRolePermissions, assignPermissionsToRole,
-} node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>router</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>router node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>29</td>
   <td><code>roles.validator.js</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td><code>roles.controller.js</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
@@ -3915,12 +4224,60 @@ flowchart LR
   <td>roles.validator.js node in src/validators/roles.validator.js.</td>
 </tr>
 <tr>
-  <td>30</td>
+  <td>24</td>
   <td><code>VALID_ROLE_STATUSES</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>VALID_ROLE_STATUSES node in src/validators/roles.validator.js.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>LIST_STATUS_FILTERS</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LIST_STATUS_FILTERS node in src/validators/roles.validator.js.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>VALID_PERMISSION_CATEGORIES</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>VALID_PERMISSION_CATEGORIES node in src/validators/roles.validator.js.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>validateId()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>roles.controller.js</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
+  <td><code>validateMatrixToggle()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td>validateId() node in src/validators/roles.validator.js.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>validateListRolesQuery()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>listRoles()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>roles.controller.js</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>validateListRolesQuery() node in src/validators/roles.validator.js.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>validateCreateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>createRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>roles.controller.js</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>validateCreateRole() node in src/validators/roles.validator.js.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>validateUpdateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>roles.controller.js</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>updateRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>validateUpdateRole() node in src/validators/roles.validator.js.</td>
 </tr>
 </table>
 
@@ -3931,418 +4288,72 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>src/controllers/roles.controller.js</code></td><td>23 nodes</td></tr>
 <tr><td><code>src/validators/roles.validator.js</code></td><td>11 nodes</td></tr>
-<tr><td><code>src/routes/roles.routes.js</code></td><td>7 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x41, contains x38, imports x16, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x41, contains x32, imports x7, imports x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 13. Community 34 ====== -->
-<h2 id="community-34">13. Community 34</h2>
-<p>Community 34 groups implementation around frontend, components, users, userdetailsdrawertsx, mostly in components/users/UserDetailsDrawer.tsx, components/users/ConfirmDialog.tsx, src/types/users.ts. This section covers 37 nodes and 41 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 14. Community 20 ====== -->
+<h2 id="community-20">14. Community 20</h2>
+<p>Community 20 groups implementation around frontend, components, users, usertabletsx, mostly in components/users/UserTable.tsx, src/pages/UserManagementPage.tsx, src/types/users.ts. This section covers 31 nodes and 34 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 34 (37 nodes, 41 edges)
-    subgraph community_34_components_users_UserDetailsDrawer_1a1cf0cd["components/users/UserDetailsDrawer.tsx"]
-        users_userdetailsdrawer_formatdate_7f166829("formatDate()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_avatarpalette_baabd122("avatarPalette()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_initials_67060d8b("initials()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        frontend_src_components_users_userdetailsdrawer_75152e55("UserDetailsDrawer.tsx")
-        users_userdetailsdrawer_formatrelative_c29d72fe("formatRelative()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_userdetailsdrawer_ecf20f63("UserDetailsDrawer()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_avatar_palettes_42ecd4bb("AVATAR_PALETTES<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_actionbtn_769aa332("ActionBtn()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_drawer_tabs_ab44ef6b("DRAWER_TABS<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_drawertab_2f4d7722("DrawerTab<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_emptystate_9d89976c("EmptyState()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_icoalert_05dbbbec("IcoAlert()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_icoback_4fe1faa2("IcoBack()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
-        users_userdetailsdrawer_icoban_c5237deb("IcoBan()<br/><small>components/users/UserDetailsDrawer.tsx</small>")
+    %% Section: Community 20 (31 nodes, 34 edges)
+    subgraph community_20_components_users_UserTable_tsx_e9c62743["components/users/UserTable.tsx"]
+        frontend_src_components_users_usertable_tsx_b000fd6a("UserTable.tsx")
+        users_usertable_colkey_6b3d0d49("ColKey<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_columns_4e660554("COLUMNS<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_loadvisiblecols_3453fc30("loadVisibleCols()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_sk_3e429f97("sk()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_skeletonrow_d27d32dd("SkeletonRow()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_avatar_palettes_802f86a7("AVATAR_PALETTES<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_icondots_ac9b4d63("IconDots()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_iconeye_3ca19b55("IconEye()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_iconpencil_19ee51b0("IconPencil()<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_props_2a67671c("Props<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_status_map_83d623e7("STATUS_MAP<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_td_6b579c07("TD<br/><small>components/users/UserTable.tsx</small>")
+        users_usertable_th_46a86316("TH<br/><small>components/users/UserTable.tsx</small>")
     end
-    subgraph community_34_components_users_ConfirmDialog_tsx_71b12d29["components/users/ConfirmDialog.tsx"]
-        frontend_src_components_users_confirmdialog_tsx_caf75547("ConfirmDialog.tsx")
-        users_confirmdialog_confirmdialog_4bb8cca2("ConfirmDialog()<br/><small>components/users/ConfirmDialog.tsx</small>")
-        users_confirmdialog_props_ab2c09bb("Props<br/><small>components/users/ConfirmDialog.tsx</small>")
+    subgraph community_20_src_types_users_ts_6c272d6b["src/types/users.ts"]
+        types_users_userstatus_814945a0("UserStatus<br/><small>src/types/users.ts</small>")
+        types_users_usersresponse_affd438f("UsersResponse<br/><small>src/types/users.ts</small>")
     end
-    types_users_userstatus_814945a0("UserStatus<br/><small>src/types/users.ts</small>")
-    users_userdetailsdrawer_initials_67060d8b -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
-    users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_formatrelative_c29d72fe
-    users_userdetailsdrawer_formatdate_7f166829 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
-    users_userdetailsdrawer_formatrelative_c29d72fe -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
-    users_userdetailsdrawer_avatarpalette_baabd122 -->|calls| users_userdetailsdrawer_userdetailsdrawer_ecf20f63
-    frontend_src_components_users_confirmdialog_tsx_caf75547 -->|imports| frontend_src_components_users_userdetailsdrawer_75152e55
-    frontend_src_components_users_userdetailsdrawer_75152e55 -->|imports| types_users_userstatus_814945a0
-    %% Omitted for readability: 19 nodes, 0 edges
-    class users_userdetailsdrawer_formatdate_7f166829 ui;
-    class users_userdetailsdrawer_avatarpalette_baabd122 ui;
-    class users_userdetailsdrawer_initials_67060d8b ui;
-    class frontend_src_components_users_userdetailsdrawer_75152e55 ui;
-    class users_userdetailsdrawer_formatrelative_c29d72fe ui;
-    class users_userdetailsdrawer_userdetailsdrawer_ecf20f63 ui;
-    class users_userdetailsdrawer_avatar_palettes_42ecd4bb ui;
-    class users_userdetailsdrawer_actionbtn_769aa332 ui;
-    class users_userdetailsdrawer_drawer_tabs_ab44ef6b ui;
-    class users_userdetailsdrawer_drawertab_2f4d7722 ui;
-    class users_userdetailsdrawer_emptystate_9d89976c ui;
-    class users_userdetailsdrawer_icoalert_05dbbbec ui;
-    class users_userdetailsdrawer_icoback_4fe1faa2 ui;
-    class users_userdetailsdrawer_icoban_c5237deb ui;
-    class frontend_src_components_users_confirmdialog_tsx_caf75547 ui;
-    class users_confirmdialog_confirmdialog_4bb8cca2 ui;
-    class users_confirmdialog_props_ab2c09bb ui;
-    class types_users_userstatus_814945a0 klass;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>ConfirmDialog.tsx</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>Module file in components/users/ConfirmDialog.tsx.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Props node in components/users/ConfirmDialog.tsx.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>ConfirmDialog()</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ConfirmDialog() node in components/users/ConfirmDialog.tsx.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>UserDetailsDrawer.tsx</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>ConfirmDialog.tsx</code><br><small style="color:var(--muted)">components/users/ConfirmDialog.tsx</small></td>
-  <td><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td>Module file in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>initials()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>initials() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small><br><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>formatDate() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>formatRelative() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>STATUS_STYLE</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>STATUS_STYLE node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>AVATAR_PALETTES</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>AVATAR_PALETTES node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>avatarPalette()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>UserDetailsDrawer()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td>avatarPalette() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>roleTypeBadge()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>roleTypeBadge() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>riskBadge()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>riskBadge() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>courseStatusStyle()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>courseStatusStyle() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>ROLE_DISPLAY</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROLE_DISPLAY node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>IcoBack()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoBack() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>IcoClose()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoClose() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>IcoMail()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoMail() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>IcoPhone()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoPhone() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>IcoAlert()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoAlert() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>IcoPencil()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoPencil() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>IcoKey()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoKey() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>IcoLogout()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoLogout() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>IcoShield()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IcoShield() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>IcoChat()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>Section()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Section() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>InfoRow()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>InfoRow() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>EmptyState()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>EmptyState() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>DrawerTab</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>DrawerTab node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>DRAWER_TABS</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>DRAWER_TABS node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>ActionBtn()</code><br><small style="color:var(--muted)">components/users/UserDetailsDrawer.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ActionBtn() node in components/users/UserDetailsDrawer.tsx.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>components/users/UserDetailsDrawer.tsx</code></td><td>33 nodes</td></tr>
-<tr><td><code>components/users/ConfirmDialog.tsx</code></td><td>3 nodes</td></tr>
-<tr><td><code>src/types/users.ts</code></td><td>1 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x34, calls x5, imports x1, imports x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 14. Community 50 ====== -->
-<h2 id="community-50">14. Community 50</h2>
-<p>Community 50 groups implementation around frontend, components, users, addusermodaltsx, mostly in components/users/AddUserModal.tsx, components/users/EditUserModal.tsx, components/users/UserFilters.tsx. This section covers 31 nodes and 39 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 50 (31 nodes, 39 edges)
-    subgraph community_50_components_users_AddUserModal_tsx_26759872["components/users/AddUserModal.tsx"]
-        frontend_src_components_users_addusermodal_tsx_8c841bc6("AddUserModal.tsx")
-        users_addusermodal_access_2d067391("ACCESS<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_err_input_b966e8a7("ERR_INPUT<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_field_0071b2fd("Field()<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_formkey_8cf34955("FormKey<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_input_f214f331("INPUT<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_props_748ef0d7("Props<br/><small>components/users/AddUserModal.tsx</small>")
-        users_addusermodal_roles_b146054b("ROLES<br/><small>components/users/AddUserModal.tsx</small>")
-    end
-    subgraph community_50_src_constants_userOptions_ts_7840d3f8["src/constants/userOptions.ts"]
-        frontend_src_constants_useroptions_ts_5fc4b7e1("userOptions.ts")
-        constants_useroptions_access_level_options_16b22fa0("ACCESS_LEVEL_OPTIONS<br/><small>src/constants/userOptions.ts</small>")
-        constants_useroptions_department_options_bf09096c("DEPARTMENT_OPTIONS<br/><small>src/constants/userOptions.ts</small>")
-        constants_useroptions_branch_options_aff8df75("BRANCH_OPTIONS<br/><small>src/constants/userOptions.ts</small>")
-        constants_useroptions_role_options_2ea025e3("ROLE_OPTIONS<br/><small>src/constants/userOptions.ts</small>")
-    end
-    subgraph community_50_src_types_users_ts_895a74f7["src/types/users.ts"]
-        types_users_createuserrequest_d520b347("CreateUserRequest<br/><small>src/types/users.ts</small>")
-        types_users_updateuserrequest_d11d1b5c("UpdateUserRequest<br/><small>src/types/users.ts</small>")
-    end
-    frontend_src_components_users_editusermodal_tsx_6bc1a820("EditUserModal.tsx")
-    frontend_src_components_users_userfilters_tsx_762c9c33("UserFilters.tsx")
-    api_users_createuser_684aac80("createUser()<br/><small>src/api/users.ts</small>")
-    api_users_createuser_684aac80 -->|imports| frontend_src_components_users_addusermodal_tsx_8c841bc6
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| types_users_createuserrequest_d520b347
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| frontend_src_constants_useroptions_ts_5fc4b7e1
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| constants_useroptions_access_level_options_16b22fa0
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| constants_useroptions_department_options_bf09096c
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| constants_useroptions_branch_options_aff8df75
-    frontend_src_components_users_addusermodal_tsx_8c841bc6 -->|imports| constants_useroptions_role_options_2ea025e3
-    frontend_src_components_users_editusermodal_tsx_6bc1a820 -->|imports| types_users_updateuserrequest_d11d1b5c
-    frontend_src_components_users_editusermodal_tsx_6bc1a820 -->|imports| frontend_src_constants_useroptions_ts_5fc4b7e1
-    frontend_src_components_users_editusermodal_tsx_6bc1a820 -->|imports| constants_useroptions_access_level_options_16b22fa0
-    frontend_src_components_users_editusermodal_tsx_6bc1a820 -->|imports| constants_useroptions_department_options_bf09096c
-    frontend_src_components_users_editusermodal_tsx_6bc1a820 -->|imports| constants_useroptions_branch_options_aff8df75
-    frontend_src_components_users_userfilters_tsx_762c9c33 -->|imports| frontend_src_constants_useroptions_ts_5fc4b7e1
-    frontend_src_components_users_userfilters_tsx_762c9c33 -->|imports| constants_useroptions_department_options_bf09096c
-    frontend_src_components_users_userfilters_tsx_762c9c33 -->|imports| constants_useroptions_role_options_2ea025e3
+    users_toast_toastcontainer_5b85f290("ToastContainer()<br/><small>components/users/Toast.tsx</small>")
+    frontend_src_pages_usermanagementpage_tsx_70e66d93("UserManagementPage.tsx")
+    users_usertable_sk_3e429f97 -->|calls| users_usertable_skeletonrow_d27d32dd
+    users_toast_toastcontainer_5b85f290 -->|imports| frontend_src_pages_usermanagementpage_tsx_70e66d93
+    frontend_src_components_users_usertable_tsx_b000fd6a -->|imports| types_users_userstatus_814945a0
+    frontend_src_components_users_usertable_tsx_b000fd6a -->|imports| frontend_src_pages_usermanagementpage_tsx_70e66d93
+    users_usertable_colkey_6b3d0d49 -->|imports| frontend_src_pages_usermanagementpage_tsx_70e66d93
+    users_usertable_columns_4e660554 -->|imports| frontend_src_pages_usermanagementpage_tsx_70e66d93
+    users_usertable_loadvisiblecols_3453fc30 -->|imports| frontend_src_pages_usermanagementpage_tsx_70e66d93
+    frontend_src_pages_usermanagementpage_tsx_70e66d93 -->|imports| types_users_usersresponse_affd438f
     %% Omitted for readability: 13 nodes, 0 edges
-    class frontend_src_components_users_addusermodal_tsx_8c841bc6 ui;
-    class users_addusermodal_access_2d067391 ui;
-    class users_addusermodal_err_input_b966e8a7 ui;
-    class users_addusermodal_field_0071b2fd ui;
-    class users_addusermodal_formkey_8cf34955 ui;
-    class users_addusermodal_input_f214f331 ui;
-    class users_addusermodal_props_748ef0d7 ui;
-    class users_addusermodal_roles_b146054b ui;
-    class frontend_src_constants_useroptions_ts_5fc4b7e1 module;
-    class constants_useroptions_access_level_options_16b22fa0 klass;
-    class constants_useroptions_department_options_bf09096c klass;
-    class constants_useroptions_branch_options_aff8df75 klass;
-    class constants_useroptions_role_options_2ea025e3 klass;
-    class types_users_createuserrequest_d520b347 klass;
-    class types_users_updateuserrequest_d11d1b5c klass;
-    class frontend_src_components_users_editusermodal_tsx_6bc1a820 ui;
-    class frontend_src_components_users_userfilters_tsx_762c9c33 ui;
-    class api_users_createuser_684aac80 function;
+    class frontend_src_components_users_usertable_tsx_b000fd6a ui;
+    class users_usertable_colkey_6b3d0d49 ui;
+    class users_usertable_columns_4e660554 ui;
+    class users_usertable_loadvisiblecols_3453fc30 ui;
+    class users_usertable_sk_3e429f97 ui;
+    class users_usertable_skeletonrow_d27d32dd ui;
+    class users_usertable_avatar_palettes_802f86a7 ui;
+    class users_usertable_icondots_ac9b4d63 ui;
+    class users_usertable_iconeye_3ca19b55 ui;
+    class users_usertable_iconpencil_19ee51b0 ui;
+    class users_usertable_props_2a67671c ui;
+    class users_usertable_status_map_83d623e7 ui;
+    class users_usertable_td_6b579c07 ui;
+    class users_usertable_th_46a86316 ui;
+    class types_users_userstatus_814945a0 klass;
+    class types_users_usersresponse_affd438f klass;
+    class users_toast_toastcontainer_5b85f290 ui;
+    class frontend_src_pages_usermanagementpage_tsx_70e66d93 ui;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -4366,243 +4377,243 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>createUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ToastContainer()</code><br><small style="color:var(--muted)">components/users/Toast.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
-  <td>createUser() node in src/api/users.ts.</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>ToastContainer() node in components/users/Toast.tsx.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>UserTable.tsx</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td><code>createUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
-  <td><code>ACCESS_LEVEL_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>BRANCH_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>CreateUserRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small><br>+3 more</td>
-  <td>Module file in components/users/AddUserModal.tsx.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small><br><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td>Module file in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>ColKey</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Props node in components/users/AddUserModal.tsx.</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>ColKey node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>COLUMNS</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>INPUT node in components/users/AddUserModal.tsx.</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>COLUMNS node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>ERR_INPUT</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>loadVisibleCols()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ERR_INPUT node in components/users/AddUserModal.tsx.</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>loadVisibleCols() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>Field()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Field() node in components/users/AddUserModal.tsx.</td>
+  <td>Props node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>FormKey</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>getRoleStyle()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>FormKey node in components/users/AddUserModal.tsx.</td>
+  <td>getRoleStyle() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td><code>STATUS_MAP</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>ACCESS_LEVEL_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>BRANCH_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>DEPARTMENT_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br>+2 more</td>
-  <td>Module file in components/users/EditUserModal.tsx.</td>
+  <td>No direct outbound edge</td>
+  <td>STATUS_MAP node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>EditInitialData</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td><code>initials()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>EditInitialData node in components/users/EditUserModal.tsx.</td>
+  <td>initials() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td><code>AVATAR_PALETTES</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Props node in components/users/EditUserModal.tsx.</td>
+  <td>AVATAR_PALETTES node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td><code>avatarPalette()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>INPUT node in components/users/EditUserModal.tsx.</td>
+  <td>avatarPalette() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>ERR_INPUT</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td><code>formatLastActivity()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ERR_INPUT node in components/users/EditUserModal.tsx.</td>
+  <td>formatLastActivity() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>Field()</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Field() node in components/users/EditUserModal.tsx.</td>
+  <td>formatDate() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>UserFilters.tsx</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>DEPARTMENT_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>ROLE_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small><br><code>userOptions.ts</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td>Module file in components/users/UserFilters.tsx.</td>
+  <td><code>SkeletonRow()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td>sk() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>SkeletonRow()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>Props node in components/users/UserFilters.tsx.</td>
+  <td>SkeletonRow() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>IconEye()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>INPUT node in components/users/UserFilters.tsx.</td>
+  <td>IconEye() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>SELECT</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>IconPencil()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>SELECT node in components/users/UserFilters.tsx.</td>
+  <td>IconPencil() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>UserFilters()</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>IconDots()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>UserFilters() node in components/users/UserFilters.tsx.</td>
+  <td>IconDots() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>userOptions.ts</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br><code>UserFilters.tsx</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>TH</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Module file in src/constants/userOptions.ts.</td>
+  <td>TH node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>DEPARTMENT_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br><code>UserFilters.tsx</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>TD</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>DEPARTMENT_OPTIONS node in src/constants/userOptions.ts.</td>
+  <td>TD node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>BRANCH_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td><code>UserTable()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>BRANCH_OPTIONS node in src/constants/userOptions.ts.</td>
+  <td>UserTable() node in components/users/UserTable.tsx.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>ACCESS_LEVEL_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
-  <td>No direct outbound edge</td>
-  <td>ACCESS_LEVEL_OPTIONS node in src/constants/userOptions.ts.</td>
+  <td><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ColKey</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small><br><code>COLUMNS</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small><br><code>loadVisibleCols()</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small><br>+2 more</td>
+  <td><code>UsersResponse</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td>Module file in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>ROLE_OPTIONS</code><br><small style="color:var(--muted)">src/constants/userOptions.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>UserFilters.tsx</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>TABS</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ROLE_OPTIONS node in src/constants/userOptions.ts.</td>
+  <td>TABS node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>CreateUserRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>AddUserModal.tsx</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>TabKey</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>CreateUserRequest node in src/types/users.ts.</td>
+  <td>TabKey node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>UpdateUserRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>EditUserModal.tsx</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
+  <td><code>LIMIT_OPTIONS</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>UpdateUserRequest node in src/types/users.ts.</td>
+  <td>LIMIT_OPTIONS node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>ICON_BTN</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>ComingSoon()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ICON_BTN node in components/users/UserFilters.tsx.</td>
+  <td>ComingSoon() node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>ACTION_BTN</code><br><small style="color:var(--muted)">components/users/UserFilters.tsx</small></td>
+  <td><code>INPUT_BASE</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ACTION_BTN node in components/users/UserFilters.tsx.</td>
+  <td>INPUT_BASE node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>ROLES</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>focusIn()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ROLES node in components/users/AddUserModal.tsx.</td>
+  <td>focusIn() node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>ACCESS</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
+  <td><code>focusOut()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ACCESS node in components/users/AddUserModal.tsx.</td>
+  <td>focusOut() node in src/pages/UserManagementPage.tsx.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>DISABLED</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>UserStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>UserTable.tsx</code><br><small style="color:var(--muted)">components/users/UserTable.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>DISABLED node in components/users/EditUserModal.tsx.</td>
+  <td>UserStatus node in src/types/users.ts.</td>
 </tr>
 </table>
 
@@ -4611,17 +4622,15 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>components/users/AddUserModal.tsx</code></td><td>8 nodes</td></tr>
-<tr><td><code>components/users/EditUserModal.tsx</code></td><td>8 nodes</td></tr>
-<tr><td><code>components/users/UserFilters.tsx</code></td><td>7 nodes</td></tr>
-<tr><td><code>src/constants/userOptions.ts</code></td><td>5 nodes</td></tr>
+      <tr><td><code>components/users/UserTable.tsx</code></td><td>20 nodes</td></tr>
+<tr><td><code>src/pages/UserManagementPage.tsx</code></td><td>8 nodes</td></tr>
 <tr><td><code>src/types/users.ts</code></td><td>2 nodes</td></tr>
-<tr><td><code>src/api/users.ts</code></td><td>1 nodes</td></tr>
+<tr><td><code>components/users/Toast.tsx</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x24, imports x12, imports x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x26, imports x6, imports x1, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4959,12 +4968,12 @@ flowchart LR
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around frontend, components, backend, users, mostly in src/layouts/AdminLayout.tsx, src/services/roles.service.js, components/users/UserTable.tsx. This section covers 574 nodes and 746 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around frontend, components, backend, users, mostly in src/layouts/AdminLayout.tsx, src/services/roles.service.js, src/pages/SystemSettingsPage.tsx. This section covers 539 nodes and 681 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (574 nodes, 746 edges)
+    %% Section: Other (539 nodes, 681 edges)
     subgraph other_src_controllers_accessPolicies_controller_9fb054bb["src/controllers/accessPolicies.controller.js"]
         backend_src_controllers_accesspolicies_controlle_14038ecd("accessPolicies.controller.js")
         controllers_accesspolicies_controller_servererro_a802c419("serverError()<br/><small>src/controllers/accessPolicies.controller.js</small>")
@@ -4987,8 +4996,8 @@ flowchart LR
         validators_accesspolicies_validator_validatecrea_e7e74d8e("validateCreate()<br/><small>src/validators/accessPolicies.validator.js</small>")
         validators_accesspolicies_validator_validateupda_e4bbe1a8("validateUpdate()<br/><small>src/validators/accessPolicies.validator.js</small>")
     end
-    frontend_src_components_rolespermissionspage_cre_aba939cb("CreateRoleModal.tsx")
-    frontend_src_app_tsx_cd342beb("App.tsx")
+    frontend_src_components_users_addusermodal_tsx_8c841bc6("AddUserModal.tsx")
+    frontend_src_components_users_editusermodal_tsx_6bc1a820("EditUserModal.tsx")
     controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_listaccess_da2be073
     controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_getaccessp_1c51e92e
     controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_createacce_1138d482
@@ -5010,7 +5019,7 @@ flowchart LR
     backend_src_controllers_accesspolicies_controlle_14038ecd -->|imports| validators_accesspolicies_validator_validatelist_a270741d
     backend_src_controllers_accesspolicies_controlle_14038ecd -->|imports| validators_accesspolicies_validator_validatecrea_e7e74d8e
     backend_src_controllers_accesspolicies_controlle_14038ecd -->|imports| validators_accesspolicies_validator_validateupda_e4bbe1a8
-    %% Omitted for readability: 556 nodes, 0 edges
+    %% Omitted for readability: 521 nodes, 0 edges
     class backend_src_controllers_accesspolicies_controlle_14038ecd module;
     class controllers_accesspolicies_controller_servererro_a802c419 function;
     class controllers_accesspolicies_controller_badrequest_a8be4144 function;
@@ -5027,8 +5036,8 @@ flowchart LR
     class validators_accesspolicies_validator_validatelist_a270741d function;
     class validators_accesspolicies_validator_validatecrea_e7e74d8e function;
     class validators_accesspolicies_validator_validateupda_e4bbe1a8 function;
-    class frontend_src_components_rolespermissionspage_cre_aba939cb ui;
-    class frontend_src_app_tsx_cd342beb ui;
+    class frontend_src_components_users_addusermodal_tsx_8c841bc6 ui;
+    class frontend_src_components_users_editusermodal_tsx_6bc1a820 ui;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -5052,243 +5061,243 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>AdminLayout.tsx</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>CreateGroupModal()</code><br><small style="color:var(--muted)">components/groups/CreateGroupModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>RolesPermissionsStandalonePage.tsx</code><br><small style="color:var(--muted)">src/pages/RolesPermissionsStandalonePage.tsx</small><br><code>SystemSettingsPage.tsx</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small><br><code>UserManagementPage.tsx</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
-  <td>Module file in src/layouts/AdminLayout.tsx.</td>
+  <td><code>useOrgOptions()</code><br><small style="color:var(--muted)">src/hooks/useOrgOptions.ts</small></td>
+  <td>CreateGroupModal() node in components/groups/CreateGroupModal.tsx.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>IconGrid()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>EditGroupModal()</code><br><small style="color:var(--muted)">components/groups/EditGroupModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IconGrid() node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>useOrgOptions()</code><br><small style="color:var(--muted)">src/hooks/useOrgOptions.ts</small></td>
+  <td>EditGroupModal() node in components/groups/EditGroupModal.tsx.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>IconBook()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>AddUserModal()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IconBook() node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>selectStyle</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small><br><code>useOrgOptions()</code><br><small style="color:var(--muted)">src/hooks/useOrgOptions.ts</small><br><code>useRoles()</code><br><small style="color:var(--muted)">src/hooks/useRoles.ts</small></td>
+  <td>AddUserModal() node in components/users/AddUserModal.tsx.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>IconUsers()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>BulkActionsMenu()</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IconUsers() node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>useRoles()</code><br><small style="color:var(--muted)">src/hooks/useRoles.ts</small></td>
+  <td>BulkActionsMenu() node in components/users/BulkActionsMenu.tsx.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>IconShield()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>EditUserModal()</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IconShield() node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>selectStyle</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small><br><code>useOrgOptions()</code><br><small style="color:var(--muted)">src/hooks/useOrgOptions.ts</small><br><code>useRoles()</code><br><small style="color:var(--muted)">src/hooks/useRoles.ts</small></td>
+  <td>EditUserModal() node in components/users/EditUserModal.tsx.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>IconKey()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>SendInvitationModal()</code><br><small style="color:var(--muted)">components/users/SendInvitationModal.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IconKey() node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>useOrgOptions()</code><br><small style="color:var(--muted)">src/hooks/useOrgOptions.ts</small><br><code>useRoles()</code><br><small style="color:var(--muted)">src/hooks/useRoles.ts</small></td>
+  <td>SendInvitationModal() node in components/users/SendInvitationModal.tsx.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>IconSettings()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>useOrgOptions()</code><br><small style="color:var(--muted)">src/hooks/useOrgOptions.ts</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IconSettings() node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>AddUserModal()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>CreateGroupModal()</code><br><small style="color:var(--muted)">components/groups/CreateGroupModal.tsx</small><br><code>EditGroupModal()</code><br><small style="color:var(--muted)">components/groups/EditGroupModal.tsx</small><br>+2 more</td>
+  <td><code>UserManagementPage()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>useOrgOptions() node in src/hooks/useOrgOptions.ts.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>IconMenu()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>useRoles()</code><br><small style="color:var(--muted)">src/hooks/useRoles.ts</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>IconMenu() node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>AddUserModal()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>BulkActionsMenu()</code><br><small style="color:var(--muted)">components/users/BulkActionsMenu.tsx</small><br><code>EditUserModal()</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small><br>+1 more</td>
+  <td><code>UserManagementPage()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>useRoles() node in src/hooks/useRoles.ts.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>IconBell()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>SystemSettingsPage.tsx</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>AdminLayout.tsx</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>IconBell() node in src/layouts/AdminLayout.tsx.</td>
+  <td>Module file in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>IconMessage()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>TABS</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconMessage() node in src/layouts/AdminLayout.tsx.</td>
+  <td>TABS node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>IconSearch()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>TabKey</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconSearch() node in src/layouts/AdminLayout.tsx.</td>
+  <td>TabKey node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>IconChevronDown()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>TIMEZONES</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>IconChevronDown() node in src/layouts/AdminLayout.tsx.</td>
+  <td>TIMEZONES node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>formatAgo()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>LANGUAGES</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>formatAgo() node in src/layouts/AdminLayout.tsx.</td>
+  <td>LANGUAGES node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>NotifPanelItem</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>DATE_FORMATS</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>NotifPanelItem node in src/layouts/AdminLayout.tsx.</td>
+  <td>DATE_FORMATS node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>MsgPanelItem</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>CURRENCIES</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>MsgPanelItem node in src/layouts/AdminLayout.tsx.</td>
+  <td>CURRENCIES node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>PanelSpinner()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>GeneralSettings</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>PanelSpinner() node in src/layouts/AdminLayout.tsx.</td>
+  <td>GeneralSettings node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>NOTIF_ICON_BG</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>DEFAULT_SETTINGS</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>NOTIF_ICON_BG node in src/layouts/AdminLayout.tsx.</td>
+  <td>DEFAULT_SETTINGS node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>NOTIF_ICON_COLOR</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>loadSettings()</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>NOTIF_ICON_COLOR node in src/layouts/AdminLayout.tsx.</td>
+  <td>loadSettings() node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>NotifTypeIcon()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>ToastType</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>NotifTypeIcon() node in src/layouts/AdminLayout.tsx.</td>
+  <td>ToastType node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>NotificationsPanel()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>Toast</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>NotificationsPanel() node in src/layouts/AdminLayout.tsx.</td>
+  <td>Toast node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>MSG_TYPE_LABEL</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>ToastList()</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>MSG_TYPE_LABEL node in src/layouts/AdminLayout.tsx.</td>
+  <td>ToastList() node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>MessageAvatar()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>ComingSoonTab()</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>MessageAvatar() node in src/layouts/AdminLayout.tsx.</td>
+  <td>ComingSoonTab() node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>MessagesPanel()</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>Section()</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>MessagesPanel() node in src/layouts/AdminLayout.tsx.</td>
+  <td>Section() node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>QA_TOPBAR_ACTIONS</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>Field()</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>QA_TOPBAR_ACTIONS node in src/layouts/AdminLayout.tsx.</td>
+  <td>Field() node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>NavItem</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>inputStyle</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>NavItem node in src/layouts/AdminLayout.tsx.</td>
+  <td>inputStyle node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>NavSection</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>selectStyle</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>AddUserModal()</code><br><small style="color:var(--muted)">components/users/AddUserModal.tsx</small><br><code>EditUserModal()</code><br><small style="color:var(--muted)">components/users/EditUserModal.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>NavSection node in src/layouts/AdminLayout.tsx.</td>
+  <td>selectStyle node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>NAV_SECTIONS</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>GeneralSettingsTab()</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>NAV_SECTIONS node in src/layouts/AdminLayout.tsx.</td>
+  <td>GeneralSettingsTab() node in src/pages/SystemSettingsPage.tsx.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>Props</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>SystemSettingsPage()</code><br><small style="color:var(--muted)">src/pages/SystemSettingsPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Props node in src/layouts/AdminLayout.tsx.</td>
+  <td>Organizes documentation pages, navigation, or content lookup.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>NAV</code><br><small style="color:var(--muted)">src/layouts/AdminLayout.tsx</small></td>
+  <td><code>pageRange()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>NAV node in src/layouts/AdminLayout.tsx.</td>
+  <td><code>UserManagementPage()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td>Organizes documentation pages, navigation, or content lookup.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>accessPolicies.controller.js</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small><br><code>accessPolicies.service.js</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small><br><code>accessPolicies.validator.js</code><br><small style="color:var(--muted)">src/validators/accessPolicies.validator.js</small><br>+4 more</td>
-  <td>accessPolicies.controller.js node in src/controllers/accessPolicies.controller.js.</td>
+  <td><code>UserManagementPage()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>pageRange()</code><br><small style="color:var(--muted)">src/pages/UserManagementPage.tsx</small><br><code>useOrgOptions()</code><br><small style="color:var(--muted)">src/hooks/useOrgOptions.ts</small><br><code>useRoles()</code><br><small style="color:var(--muted)">src/hooks/useRoles.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>Organizes documentation pages, navigation, or content lookup.</td>
 </tr>
 </table>
 
@@ -5299,17 +5308,17 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>src/layouts/AdminLayout.tsx</code></td><td>29 nodes</td></tr>
 <tr><td><code>src/services/roles.service.js</code></td><td>25 nodes</td></tr>
-<tr><td><code>components/users/UserTable.tsx</code></td><td>20 nodes</td></tr>
 <tr><td><code>src/pages/SystemSettingsPage.tsx</code></td><td>20 nodes</td></tr>
-<tr><td><code>backend/server.js</code></td><td>17 nodes</td></tr>
-<tr><td><code>src/pages/RolesPermissionsStandalonePage.tsx</code></td><td>17 nodes</td></tr>
+<tr><td><code>backend/server.js</code></td><td>18 nodes</td></tr>
 <tr><td><code>components/rolesPermissions/RolesTab.tsx</code></td><td>16 nodes</td></tr>
 <tr><td><code>components/users/InvitationsTab.tsx</code></td><td>16 nodes</td></tr>
+<tr><td><code>src/services/groups.service.js</code></td><td>15 nodes</td></tr>
+<tr><td><code>src/services/invitations.service.js</code></td><td>15 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x477, calls x108, imports x90, imports x69. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x442, calls x106, imports x74, imports x57. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -5320,17 +5329,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>1929</td></tr>
-      <tr><td>Edges</td><td>3135</td></tr>
+      <tr><td>Nodes</td><td>2033</td></tr>
+      <tr><td>Edges</td><td>3316</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>109</td></tr>
+      <tr><td>Communities</td><td>113</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>3133</td></tr>
+      <tr><td>EXTRACTED</td><td>3314</td></tr>
       <tr><td>INFERRED</td><td>2</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -5339,7 +5348,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>mindnavy LMS — Architecture Documentation</p>
-  <p>Generated: 2026-06-25 18:17 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-06-26 15:15 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->
