@@ -1,0 +1,135 @@
+// Learning Management module — course catalog, enrollments, content items,
+// live sessions and certificates. Powers the LM Overview tab (/api/admin/lm/*).
+//
+// IDs use uuid to match the recent modules (users, roles, access policies).
+// Status/level/type are enums (clean + indexable); the service maps them to the
+// title-case display strings the API contract returns ("Beginner", "Published").
+
+model Course {
+  id           String       @id @default(uuid())
+  title        String
+  category     String
+  level        CourseLevel  @default(BEGINNER)
+  status       CourseStatus @default(DRAFT)
+  thumbnail    String?
+  instructorId String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  instructor   AppUser?           @relation("CourseInstructor", fields: [instructorId], references: [id], onDelete: SetNull)
+  enrollments  CourseEnrollment[]
+  contents     CourseContent[]
+  liveSessions LiveSession[]
+  certificates Certificate[]
+
+  @@index([status])
+  @@index([category])
+  @@index([level])
+  @@index([instructorId])
+  @@index([createdAt])
+  @@map("courses")
+}
+
+model CourseEnrollment {
+  id          String           @id @default(uuid())
+  courseId    String
+  userId      String
+  progress    Int              @default(0) // 0-100
+  status      EnrollmentStatus @default(NOT_STARTED)
+  completedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user   AppUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, userId])
+  @@index([courseId])
+  @@index([userId])
+  @@index([status])
+  @@index([completedAt])
+  @@index([createdAt])
+  @@map("course_enrollments")
+}
+
+model CourseContent {
+  id        String      @id @default(uuid())
+  courseId  String
+  title     String
+  type      ContentType
+  createdAt DateTime    @default(now())
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("course_contents")
+}
+
+model LiveSession {
+  id        String            @id @default(uuid())
+  title     String
+  courseId  String?
+  startTime DateTime
+  status    LiveSessionStatus @default(UPCOMING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  course Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([startTime])
+  @@index([courseId])
+  @@map("live_sessions")
+}
+
+model Certificate {
+  id       String   @id @default(uuid())
+  courseId String
+  userId   String
+  issuedAt DateTime @default(now())
+
+  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user   AppUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, userId])
+  @@index([courseId])
+  @@index([userId])
+  @@index([issuedAt])
+  @@map("certificates")
+}
+
+enum CourseLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum CourseStatus {
+  PUBLISHED
+  DRAFT
+  PENDING
+  ARCHIVED
+}
+
+enum EnrollmentStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+}
+
+enum ContentType {
+  VIDEO
+  DOCUMENT
+  PDF
+  QUIZ
+  SCORM
+}
+
+enum LiveSessionStatus {
+  UPCOMING
+  LIVE
+  ENDED
+}

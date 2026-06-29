@@ -40,6 +40,11 @@ model AppUser {
   sessions           AppUserSession[]
   roleAssignments    UserRoleAssignment[]
 
+  // Learning Management relations (virtual — no extra columns on app_users)
+  coursesInstructed  Course[]             @relation("CourseInstructor")
+  courseEnrollments  CourseEnrollment[]
+  certificates       Certificate[]
+
   @@index([branchId])
   @@index([departmentId])
   @@index([teamId])
