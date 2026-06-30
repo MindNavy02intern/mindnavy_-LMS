@@ -8,6 +8,11 @@ import PermissionMatrixTab from '../components/rolesPermissionsPage/PermissionMa
 import PermissionMatrixPreview from '../components/rolesPermissionsPage/PermissionMatrixPreview';
 import AccessPoliciesTab from '../components/rolesPermissionsPage/AccessPoliciesTab';
 import RoleTemplatesTab from '../components/rolesPermissionsPage/RoleTemplatesTab';
+import UserRoleAssignmentsTab from '../components/rolesPermissionsPage/UserRoleAssignmentsTab';
+import AccessPoliciesPreviewCard from '../components/rolesPermissionsPage/AccessPoliciesPreviewCard';
+import RoleTemplatesPreviewCard from '../components/rolesPermissionsPage/RoleTemplatesPreviewCard';
+import UserRoleAssignmentsPreviewCard from '../components/rolesPermissionsPage/UserRoleAssignmentsPreviewCard';
+import RecentRoleActivityPreviewCard from '../components/rolesPermissionsPage/RecentRoleActivityPreviewCard';
 import {
   getRolesPageStats,
   getRolesPageList,
@@ -139,33 +144,6 @@ function ComingSoon({ label }: { label: string }) {
       </svg>
       <div style={{ fontSize: 14, fontWeight: 600 }}>{label} — Coming Soon</div>
       <div style={{ fontSize: 12 }}>This section is under construction</div>
-    </div>
-  );
-}
-
-// ── Bottom info card ──────────────────────────────────────────────────────────
-
-function InfoCard({ title, subtitle, onViewAll }: { title: string; subtitle: string; onViewAll?: () => void }) {
-  return (
-    <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderBottom: '1px solid #f3f4f6' }}>
-        <div>
-          <div style={{ fontWeight: 700, fontSize: 13, color: '#111827' }}>{title}</div>
-          <div style={{ fontSize: 11, color: '#9ca3af', marginTop: 1 }}>{subtitle}</div>
-        </div>
-        <button
-          onClick={onViewAll}
-          style={{ background: 'none', border: 'none', cursor: onViewAll ? 'pointer' : 'default', fontSize: 12, fontWeight: 600, color: '#3b82f6', fontFamily: 'inherit', padding: 0 }}
-        >
-          View All
-        </button>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 130, color: '#d1d5db' }}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-        </svg>
-        <div style={{ fontSize: 11, fontWeight: 500, marginTop: 6 }}>Coming Soon</div>
-      </div>
     </div>
   );
 }
@@ -635,10 +613,17 @@ export default function RolesPermissionsStandalonePage() {
 
               {/* ── Bottom 4 info cards ─────────────────────────────────────── */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginTop: 20 }}>
-                <InfoCard title="Access Policies"      subtitle="Active access control policies"  onViewAll={() => setActiveTab('access')} />
-                <InfoCard title="Role Templates"        subtitle="Predefined role templates"       onViewAll={() => setActiveTab('templates')} />
-                <InfoCard title="User Role Assignments" subtitle="Oversee user role distribution" onViewAll={() => setActiveTab('assignments')} />
-                <InfoCard title="Recent Role Activity"  subtitle="Latest role related activities" onViewAll={() => setActiveTab('audit')} />
+                <AccessPoliciesPreviewCard onViewAll={() => setActiveTab('access')} />
+                <RoleTemplatesPreviewCard
+                  onViewAll={() => setActiveTab('templates')}
+                  showToast={showToast as (type: ToastType, message: string) => void}
+                />
+                <UserRoleAssignmentsPreviewCard
+                  stats={stats}
+                  loading={statsLoading}
+                  onViewAll={() => setActiveTab('assignments')}
+                />
+                <RecentRoleActivityPreviewCard onViewAll={() => setActiveTab('audit')} />
               </div>
             </>
           )}
@@ -658,8 +643,13 @@ export default function RolesPermissionsStandalonePage() {
             <RoleTemplatesTab showToast={showToast as (type: ToastType, message: string) => void} />
           )}
 
+          {/* ── User Role Assignments tab ───────────────────────────────────── */}
+          {activeTab === 'assignments' && (
+            <UserRoleAssignmentsTab showToast={showToast as (type: ToastType, message: string) => void} />
+          )}
+
           {/* ── All other tabs ──────────────────────────────────────────────── */}
-          {activeTab !== 'lms' && activeTab !== 'matrix' && activeTab !== 'access' && activeTab !== 'templates' && (
+          {activeTab !== 'lms' && activeTab !== 'matrix' && activeTab !== 'access' && activeTab !== 'templates' && activeTab !== 'assignments' && (
             <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
               <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? activeTab} />
             </div>

@@ -36,10 +36,12 @@ export default function useRoles() {
         .then((res) => {
           if (!cancelled) {
             setOptions(
-              (res.data ?? []).map((r) => ({
-                value: roleNameToEnum(r.name),
-                label: r.name,
-              }))
+              (res.data ?? [])
+                .filter((r) => !r.isCustomRole)
+                .map((r) => ({
+                  value: roleNameToEnum(r.name),
+                  label: r.name,
+                }))
             );
           }
         })

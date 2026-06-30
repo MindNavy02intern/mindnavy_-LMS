@@ -1,0 +1,53 @@
+import { useState } from 'react';
+import '../styles/learningManagement.css';
+import AdminLayout from '../layouts/AdminLayout';
+import LmPageHeader from '../components/learningManagement/LmPageHeader';
+import KpiCards from '../components/learningManagement/KpiCards';
+import LmTabs, { LM_TABS } from '../components/learningManagement/LmTabs';
+import type { LmTab } from '../components/learningManagement/LmTabs';
+import DistributionChart from '../components/learningManagement/DistributionChart';
+import ProgressChart from '../components/learningManagement/ProgressChart';
+import TopCourses from '../components/learningManagement/TopCourses';
+import CoursesTable from '../components/learningManagement/CoursesTable';
+import LmGuide from '../components/learningManagement/LmGuide';
+import ContentStats from '../components/learningManagement/ContentStats';
+import RecentActivities from '../components/learningManagement/RecentActivities';
+import LiveSessions from '../components/learningManagement/LiveSessions';
+
+export default function LearningManagementPage() {
+  const [tab, setTab] = useState<LmTab>(LM_TABS[0]);
+
+  return (
+    <AdminLayout pageTitle="Learning Management">
+      <div className="lm-page-root tw:mx-auto tw:flex tw:max-w-[1440px] tw:flex-col tw:gap-5 tw:font-lm-sans">
+        <LmPageHeader />
+        <KpiCards />
+        <LmTabs active={tab} onChange={setTab} />
+
+        {tab === 'Overview' ? (
+          <div className="tw:grid tw:grid-cols-[1fr_340px] tw:gap-5">
+            <div className="tw:flex tw:min-w-0 tw:flex-col tw:gap-5">
+              <div className="tw:grid tw:grid-cols-3 tw:gap-5">
+                <DistributionChart />
+                <ProgressChart />
+                <TopCourses />
+              </div>
+              <CoursesTable />
+            </div>
+
+            <div className="tw:flex tw:flex-col tw:gap-5">
+              <LmGuide />
+              <ContentStats />
+              <RecentActivities />
+              <LiveSessions />
+            </div>
+          </div>
+        ) : (
+          <div className="tw:flex tw:items-center tw:justify-center tw:rounded-xl tw:border tw:border-dashed tw:border-slate-300 tw:bg-white tw:py-24 tw:text-[14px] tw:text-slate-400">
+            {tab} content coming soon
+          </div>
+        )}
+      </div>
+    </AdminLayout>
+  );
+}

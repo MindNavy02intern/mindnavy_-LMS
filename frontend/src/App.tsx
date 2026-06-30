@@ -14,6 +14,7 @@ const NotFoundPage                  = lazy(() => import('./pages/NotFoundPage'))
 const RolesPermissionsStandalonePage = lazy(() => import('./pages/RolesPermissionsStandalonePage'));
 const SystemSettingsPage             = lazy(() => import('./pages/SystemSettingsPage'));
 const ProfilePage                    = lazy(() => import('./pages/ProfilePage'));
+const LearningManagementPage         = lazy(() => import('./pages/LearningManagementPage'));
 
 function PageLoader() {
   return (
@@ -117,6 +118,15 @@ export default function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/learning-management"
+          element={
+            <ProtectedRoute>
+              <LearningManagementPage />
             </ProtectedRoute>
           }
         />

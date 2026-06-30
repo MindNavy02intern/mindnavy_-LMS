@@ -1,0 +1,31 @@
+/* Scoped Tailwind entry for the Learning Management page only.
+   Deliberately skips tailwindcss/preflight.css (the global `*` reset) and
+   prefixes every utility with `tw:` so nothing here can collide with the
+   app-wide Bootstrap CSS or the `mn-*` AdminLayout classes loaded globally
+   in main.tsx. */
+/* `important` is required here: this app loads Bootstrap's CSS globally
+   (unlayered) in main.tsx, and CSS Cascade Layers always rank ANY layered
+   rule below ALL unlayered rules regardless of specificity — so without
+   `important`, Bootstrap's bare-tag resets (h1-h6, button, ul/li, kbd, ...)
+   would silently win over every Tailwind utility class on those tags. */
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(tw) important;
+
+/* Design tokens specific to the mockup that aren't already in Tailwind's
+   default palette (page bg/border/text/growth colors below all map 1:1 to
+   slate-50/slate-200/slate-500/green-600/red-500 and are used directly). */
+@theme {
+  --font-lm-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Plain <button> elements have no author CSS rule (Bootstrap only resets
+   `.btn`, not the bare tag) competing with our `!important` utilities, so
+   the browser's own native button chrome (grey face + outset border) wins
+   wherever a button doesn't set its own bg/border utility. Scoped to this
+   page; `important` utilities above still take priority over this when set. */
+.lm-page-root button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
