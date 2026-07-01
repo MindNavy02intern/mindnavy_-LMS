@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../layouts/AdminLayout';
+import '../styles/dashboard.css';
 import { useAuth } from '../AuthContext';
 import { getDashboardCore, getDashboardAnalytics, getAdminWidgets } from '../api/dashboard';
 import type {
@@ -174,14 +175,14 @@ function StatRow({ label, value }: { label: string; value: string | number }) {
 
 function AnalyticsSpin() {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 28 }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 12 }}>
       <div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} />
     </div>
   );
 }
 
 function EmptyMsg({ msg }: { msg: string }) {
-  return <p style={{ fontSize: '0.8rem', color: '#94a3b8', textAlign: 'center', padding: '24px 0', margin: 0 }}>{msg}</p>;
+  return <p style={{ fontSize: '0.8rem', color: '#94a3b8', textAlign: 'center', padding: '10px 0', margin: 0 }}>{msg}</p>;
 }
 
 // ── Learning Activity Chart (wired to analytics API) ─────────────────────────
@@ -191,18 +192,18 @@ function LearningActivityChart({ data }: { data: LearningActivityItem[] }) {
   if (data.length === 0) return (
     <div style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center',
-      justifyContent: 'center', height: '200px', gap: '12px', color: '#94a3b8',
+      justifyContent: 'center', padding: '12px 0', gap: '8px', color: '#94a3b8',
     }}>
-      <div style={{ fontSize: '40px' }}>📚</div>
-      <p style={{ fontWeight: 600, color: '#475569', margin: 0 }}>Learning Activity Coming Soon</p>
-      <p style={{ fontSize: '14px', margin: 0, textAlign: 'center' }}>
-        Activity data will appear here once courses and enrollments are configured in Learning Management module.
+      <div style={{ fontSize: '26px' }}>📚</div>
+      <p style={{ fontWeight: 600, color: '#475569', margin: 0, fontSize: '0.78rem' }}>Learning Activity Coming Soon</p>
+      <p style={{ fontSize: '0.72rem', margin: 0, textAlign: 'center', color: '#94a3b8' }}>
+        Appears once courses and enrollments are configured.
       </p>
       <button
         onClick={() => navigate('/courses')}
         style={{
-          padding: '8px 16px', background: '#3b82f6', color: 'white',
-          border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '14px',
+          padding: '5px 12px', background: '#3b82f6', color: 'white',
+          border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '0.72rem',
         }}
       >
         Set up Learning Management →
@@ -419,8 +420,8 @@ function RevenueCard({ data, loading }: { data: RevenueOverview | undefined; loa
         <div className="mn-db-card-title">Revenue Overview</div>
       </div>
       {loading ? <AnalyticsSpin /> : isPhase2 ? (
-        <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 8 }}>
-          <div style={{ fontSize: '1.5rem' }}>🚀</div>
+        <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 6 }}>
+          <div style={{ fontSize: '1.1rem' }}>🚀</div>
           <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Finance module</div>
         </div>
       ) : (
@@ -460,8 +461,8 @@ function CourseAnalyticsCard({ data, loading }: { data: CourseAnalytics | undefi
     <div className="mn-db-card">
       <div className="mn-db-card-header"><div className="mn-db-card-title">Course Analytics</div></div>
       {loading ? <AnalyticsSpin /> : isPhase2 ? (
-        <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 8 }}>
-          <div style={{ fontSize: '1.5rem' }}>🚀</div>
+        <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 6 }}>
+          <div style={{ fontSize: '1.1rem' }}>🚀</div>
           <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Learning Management module</div>
         </div>
       ) : (
@@ -491,8 +492,8 @@ function InstructorPerformanceCard({ data, loading }: { data: InstructorPerforma
     <div className="mn-db-card">
       <div className="mn-db-card-header"><div className="mn-db-card-title">Instructor Performance</div></div>
       {loading ? <AnalyticsSpin /> : isPhase2 ? (
-        <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 8 }}>
-          <div style={{ fontSize: '1.5rem' }}>🚀</div>
+        <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 6 }}>
+          <div style={{ fontSize: '1.1rem' }}>🚀</div>
           <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Learning Management module</div>
         </div>
       ) : (
@@ -1047,7 +1048,7 @@ export default function DashboardPage() {
             </div>
           </div>
           {analyticsLoading ? (
-            <div className="mn-skeleton" style={{ height: 130, borderRadius: 8 }} />
+            <div className="mn-skeleton" style={{ height: 80, borderRadius: 8 }} />
           ) : (
             <LearningActivityChart data={activity} />
           )}
@@ -1059,8 +1060,8 @@ export default function DashboardPage() {
             <div className="mn-db-card-title">Users by Role</div>
           </div>
           {analyticsLoading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', padding: 28 }}>
-              <div className="mn-skeleton" style={{ width: 100, height: 100, borderRadius: '50%' }} />
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
+              <div className="mn-skeleton" style={{ width: 80, height: 80, borderRadius: '50%' }} />
             </div>
           ) : (
             <UsersRoleDonut data={roles} />
@@ -1074,12 +1075,12 @@ export default function DashboardPage() {
             <button className="mn-db-view-all" onClick={() => navigate('/users')}>View All</button>
           </div>
           {loading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', padding: 32 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
           ) : (data?.recentActivities ?? []).length === 0 ? (
             <EmptyMsg msg="No recent activity." />
           ) : (
             <div>
-              {(data?.recentActivities ?? []).map((item: ActivityItem, i: number) => (
+              {(data?.recentActivities ?? []).slice(0, 4).map((item: ActivityItem, i: number) => (
                 <div key={item.id} className="mn-db-activity-row">
                   <ActivityAvatar name={item.actorName} index={i} />
                   <div className="mn-db-activity-icon-badge" style={{ background: ACTIVITY_ICON_BG[item.type], color: ACTIVITY_ICON_COLOR[item.type] }}>
@@ -1105,8 +1106,8 @@ export default function DashboardPage() {
             <div className="mn-db-card-title">Course Completion Rate</div>
           </div>
           {analyticsLoading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', padding: 24 }}>
-              <div className="mn-skeleton" style={{ width: 96, height: 96, borderRadius: '50%' }} />
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
+              <div className="mn-skeleton" style={{ width: 80, height: 80, borderRadius: '50%' }} />
             </div>
           ) : (
             <CompletionDonut
@@ -1172,7 +1173,7 @@ export default function DashboardPage() {
             <button className="mn-db-view-all" onClick={() => window.dispatchEvent(new CustomEvent('openNotificationsPanel'))}>View All</button>
           </div>
           {loading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', padding: 32 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 10 }}><div className="mn-spinner" style={{ borderTopColor: '#2563eb' }} /></div>
           ) : (data?.notificationsPreview ?? []).length === 0 ? (
             <EmptyMsg msg="No notifications." />
           ) : (
@@ -1196,20 +1197,20 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Extended analytics row 1: Revenue | User Analytics | Course Analytics ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 10, marginBottom: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 6, marginBottom: 6, alignItems: 'start' }}>
         <RevenueCard        data={analytics?.revenueOverview}  loading={analyticsLoading} />
         <UserAnalyticsCard  data={analytics?.userAnalytics}    loading={analyticsLoading} />
         <CourseAnalyticsCard data={analytics?.courseAnalytics} loading={analyticsLoading} />
       </div>
 
       {/* ── Extended analytics row 2: Instructor Performance | Student Engagement ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 10, marginBottom: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 6, marginBottom: 6, alignItems: 'start' }}>
         <InstructorPerformanceCard data={analytics?.instructorPerformance} loading={analyticsLoading} />
         <StudentEngagementCard     data={analytics?.studentEngagement}     loading={analyticsLoading} />
       </div>
 
       {/* ── Quick Actions ── */}
-      <div className="mn-db-card" style={{ marginBottom: 10 }}>
+      <div className="mn-db-card" style={{ marginBottom: 6 }}>
         <div className="mn-db-card-header" style={{ marginBottom: 8 }}>
           <div className="mn-db-card-title">Quick Actions</div>
         </div>
@@ -1252,14 +1253,14 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Admin widgets row 1: Pending Approvals | Live Sessions | Tasks & Reminders ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 10, marginBottom: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 6, marginBottom: 6, alignItems: 'start' }}>
         <PendingApprovalsCard data={adminWidgets?.pendingApprovals}        loading={widgetsLoading} />
         <LiveSessionsCard     data={adminWidgets?.liveSessions}            loading={widgetsLoading} />
         <TasksRemindersCard   data={adminWidgets?.tasksAndReminders ?? []} loading={widgetsLoading} />
       </div>
 
       {/* ── Admin widgets row 2: Recent Transactions | Calendar Events | AI Insights ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 10, marginBottom: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 6, marginBottom: 6, alignItems: 'start' }}>
         <RecentTransactionsCard data={adminWidgets?.recentTransactions ?? []} loading={widgetsLoading} />
         <CalendarEventsCard     data={adminWidgets?.calendarEvents    ?? []} loading={widgetsLoading} />
         <AiInsightsCard         data={adminWidgets?.aiInsights         ?? []} loading={widgetsLoading} />

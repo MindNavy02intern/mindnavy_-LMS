@@ -11,8 +11,8 @@ import TopCourses from '../components/learningManagement/TopCourses';
 import CoursesTable from '../components/learningManagement/CoursesTable';
 import LmGuide from '../components/learningManagement/LmGuide';
 import ContentStats from '../components/learningManagement/ContentStats';
-import RecentActivities from '../components/learningManagement/RecentActivities';
 import LiveSessions from '../components/learningManagement/LiveSessions';
+import RecentActivities from '../components/learningManagement/RecentActivities';
 
 export default function LearningManagementPage() {
   const [tab, setTab] = useState<LmTab>(LM_TABS[0]);
@@ -25,8 +25,8 @@ export default function LearningManagementPage() {
         <LmTabs active={tab} onChange={setTab} />
 
         {tab === 'Overview' ? (
-          <div className="tw:grid tw:grid-cols-[1fr_340px] tw:gap-5">
-            <div className="tw:flex tw:min-w-0 tw:flex-col tw:gap-5">
+          <div className="tw:flex tw:gap-5">
+            <div className="tw:flex tw:min-w-0 tw:flex-1 tw:flex-col tw:gap-5">
               <div className="tw:grid tw:grid-cols-3 tw:gap-5">
                 <DistributionChart />
                 <ProgressChart />
@@ -35,11 +35,11 @@ export default function LearningManagementPage() {
               <CoursesTable />
             </div>
 
-            <div className="tw:flex tw:flex-col tw:gap-5">
+            <div className="tw:flex tw:w-[340px] tw:shrink-0 tw:flex-col tw:gap-5">
               <LmGuide />
               <ContentStats />
-              <RecentActivities />
               <LiveSessions />
+              <RecentActivities />
             </div>
           </div>
         ) : (

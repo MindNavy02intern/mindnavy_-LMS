@@ -47,9 +47,9 @@ export default function TopCourses() {
   if (loading) return <TopCoursesSkeleton />;
 
   return (
-    <div className="tw:rounded-xl tw:border tw:border-slate-200 tw:bg-white tw:p-5">
-      <div className="tw:flex tw:items-center tw:justify-between">
-        <h3 className="tw:m-0 tw:text-[14px] tw:font-semibold tw:text-slate-900">Top Performing Courses</h3>
+    <div className="tw:overflow-hidden tw:rounded-xl tw:border tw:border-slate-200 tw:bg-white tw:p-5">
+      <div className="tw:flex tw:items-center tw:justify-between tw:gap-2">
+        <h3 className="tw:m-0 tw:min-w-0 tw:flex-1 tw:text-[14px] tw:font-semibold tw:text-slate-900">Top Performing Courses</h3>
         <button type="button" className="tw:text-[12px] tw:font-medium tw:text-blue-600 tw:hover:text-blue-700">
           View All
         </button>
@@ -63,7 +63,7 @@ export default function TopCourses() {
             <div key={c.id} className="tw:flex tw:items-center tw:gap-3">
               <div className={`tw:h-9 tw:w-9 tw:shrink-0 tw:rounded-lg tw:bg-gradient-to-br ${GRADIENTS[i % GRADIENTS.length]}`} />
               <div className="tw:min-w-[44px] tw:flex-1">
-                <div className="tw:truncate tw:text-[13px] tw:font-medium tw:text-slate-900">{c.title}</div>
+                <div className="tw:line-clamp-2 tw:text-[13px] tw:font-medium tw:leading-tight tw:text-slate-900">{c.title}</div>
                 <div className="tw:truncate tw:text-[11px] tw:text-slate-500">By {c.instructor}</div>
               </div>
               <div className="tw:w-16 tw:shrink-0 tw:text-right">

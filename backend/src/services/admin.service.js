@@ -53,6 +53,10 @@ async function createAuditLog({
 }
 
 async function isLoginTemporarilyBlocked({ email }) {
+  // In development the lockout is disabled so failed-attempt loops during
+  // testing don't lock out the developer. Production behaviour is unchanged.
+  if (process.env.NODE_ENV !== "production") return false;
+
   const windowStart = new Date();
   windowStart.setMinutes(windowStart.getMinutes() - FAILED_LOGIN_WINDOW_MINUTES);
 

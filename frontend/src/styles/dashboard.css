@@ -1,0 +1,54 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Dashboard density overrides
+   Import ONLY from DashboardPage.tsx.
+   All mn-db-* and mn-lkpi-* classes are dashboard-exclusive, so these
+   overrides cannot leak to other pages.
+
+   TO REVERT: remove the import in DashboardPage.tsx and delete this file.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Welcome strip ───────────────────────────────────────────────────────── */
+.mn-db-welcome       { margin-bottom: 6px; }
+.mn-db-welcome-title { font-size: 0.9375rem; }       /* 16.875px vs 20.25px */
+.mn-db-welcome-sub   { font-size: 0.7rem; }
+.mn-db-date-pill     { font-size: 0.64rem; padding: 3px 7px; }
+
+/* ── KPI card grid ───────────────────────────────────────────────────────── */
+.mn-lkpi-grid { gap: 6px; margin-bottom: 6px; }
+
+/* ── KPI card itself ─────────────────────────────────────────────────────── */
+.mn-lkpi-card { padding: 11px 14px; }                /* was 18px 20px, saves 14px T+B */
+
+/* The icon-row wrapper has marginBottom:14 as inline style; override it so
+   the gap between the label+icon row and the value number is tighter.       */
+.mn-lkpi-card > div:first-child { margin-bottom: 8px !important; }
+
+.mn-lkpi-icon  { width: 36px; height: 36px; border-radius: 10px; } /* was 44px */
+.mn-lkpi-label { font-size: 0.69rem; margin-bottom: 2px; }
+.mn-lkpi-value { font-size: 1.5rem; margin-bottom: 4px; }           /* was 1.875rem */
+
+/* ── White cards (all dashboard sections) ───────────────────────────────── */
+.mn-db-card        { padding: 8px 10px; margin-bottom: 6px; }       /* was 10px 12px + 10px */
+.mn-db-card-header { margin-bottom: 5px; }                           /* was 7px */
+.mn-db-card-title  { font-size: 0.75rem; }                           /* was 0.8125rem */
+.mn-db-card-sub    { font-size: 0.625rem; }
+
+/* ── Row grids ───────────────────────────────────────────────────────────── */
+/* align-items:start prevents grid from stretching short cards to the tallest
+   neighbour's height, which was causing large empty white gaps at card bottoms. */
+.mn-db-charts-row    { gap: 6px; margin-bottom: 6px; align-items: start; }
+.mn-db-analytics-row { gap: 6px; margin-bottom: 6px; align-items: start; }
+
+/* ── Quick Actions ───────────────────────────────────────────────────────── */
+.mn-db-qa-grid { gap: 6px; }
+.mn-db-qa-btn  { padding: 6px 5px; gap: 4px; }
+.mn-db-qa-icon { width: 26px; height: 26px; }                       /* was 30px */
+
+/* ── Activity rows ───────────────────────────────────────────────────────── */
+.mn-db-activity-row { padding: 4px 0; }                              /* was 5px */
+.mn-db-notif-row    { padding: 4px 0; }
+.mn-db-notif-icon   { width: 22px; height: 22px; }                  /* was 26px */
+
+/* ── Misc ────────────────────────────────────────────────────────────────── */
+.mn-db-pill     { padding: 2px 8px; font-size: 0.68rem; }
+.mn-db-view-all { font-size: 0.7rem; }

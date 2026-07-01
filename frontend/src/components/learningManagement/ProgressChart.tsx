@@ -34,9 +34,9 @@ export default function ProgressChart() {
   }, [range]);
 
   return (
-    <div className="tw:rounded-xl tw:border tw:border-slate-200 tw:bg-white tw:p-5">
-      <div className="tw:flex tw:items-center tw:justify-between">
-        <h3 className="tw:m-0 tw:text-[14px] tw:font-semibold tw:text-slate-900">Learning Progress Overview</h3>
+    <div className="tw:overflow-hidden tw:rounded-xl tw:border tw:border-slate-200 tw:bg-white tw:p-5">
+      <div className="tw:flex tw:items-center tw:justify-between tw:gap-2">
+        <h3 className="tw:m-0 tw:min-w-0 tw:flex-1 tw:text-[14px] tw:font-semibold tw:text-slate-900">Learning Progress Overview</h3>
         <select
           aria-label="Progress range"
           value={range}
@@ -47,7 +47,7 @@ export default function ProgressChart() {
         </select>
       </div>
 
-      <div className="tw:mt-3 tw:flex tw:items-center tw:gap-4">
+      <div className="tw:mt-3 tw:flex tw:flex-wrap tw:items-center tw:gap-x-3 tw:gap-y-1">
         {SERIES.map((s) => (
           <div key={s.key} className="tw:flex tw:items-center tw:gap-1.5 tw:text-[11px] tw:text-slate-500">
             <span className="tw:h-2 tw:w-2 tw:shrink-0 tw:rounded-sm" style={{ background: s.color }} />

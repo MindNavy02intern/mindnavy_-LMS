@@ -306,7 +306,7 @@
       "source_file": "backend/server.js",
       "source_location": "L1",
       "id": "backend_server_js",
-      "community": 52,
+      "community": 106,
       "norm_label": "server.js"
     },
     {
@@ -315,7 +315,7 @@
       "source_file": "backend/server.js",
       "source_location": "L1",
       "id": "backend_server_express",
-      "community": 52,
+      "community": 106,
       "norm_label": "express"
     },
     {
@@ -324,7 +324,7 @@
       "source_file": "backend/server.js",
       "source_location": "L2",
       "id": "backend_server_cors",
-      "community": 52,
+      "community": 106,
       "norm_label": "cors"
     },
     {
@@ -333,7 +333,7 @@
       "source_file": "backend/server.js",
       "source_location": "L5",
       "id": "backend_server_adminroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "adminroutes"
     },
     {
@@ -342,7 +342,7 @@
       "source_file": "backend/server.js",
       "source_location": "L6",
       "id": "backend_server_dashboardroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "dashboardroutes"
     },
     {
@@ -351,7 +351,7 @@
       "source_file": "backend/server.js",
       "source_location": "L7",
       "id": "backend_server_usersroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "usersroutes"
     },
     {
@@ -360,7 +360,7 @@
       "source_file": "backend/server.js",
       "source_location": "L8",
       "id": "backend_server_organizationroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "organizationroutes"
     },
     {
@@ -369,7 +369,7 @@
       "source_file": "backend/server.js",
       "source_location": "L9",
       "id": "backend_server_rolesroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "rolesroutes"
     },
     {
@@ -378,7 +378,7 @@
       "source_file": "backend/server.js",
       "source_location": "L10",
       "id": "backend_server_permissionsroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "permissionsroutes"
     },
     {
@@ -387,7 +387,7 @@
       "source_file": "backend/server.js",
       "source_location": "L11",
       "id": "backend_server_permissionmatrixroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "permissionmatrixroutes"
     },
     {
@@ -396,7 +396,7 @@
       "source_file": "backend/server.js",
       "source_location": "L12",
       "id": "backend_server_roletemplatesroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "roletemplatesroutes"
     },
     {
@@ -405,7 +405,7 @@
       "source_file": "backend/server.js",
       "source_location": "L13",
       "id": "backend_server_userroleassignmentsroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "userroleassignmentsroutes"
     },
     {
@@ -414,7 +414,7 @@
       "source_file": "backend/server.js",
       "source_location": "L14",
       "id": "backend_server_expirenow_expireroleassignments",
-      "community": 52,
+      "community": 106,
       "norm_label": "{ expirenow: expireroleassignments }"
     },
     {
@@ -423,7 +423,7 @@
       "source_file": "backend/server.js",
       "source_location": "L15",
       "id": "backend_server_accesspoliciesroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "accesspoliciesroutes"
     },
     {
@@ -432,7 +432,7 @@
       "source_file": "backend/server.js",
       "source_location": "L16",
       "id": "backend_server_groupsroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "groupsroutes"
     },
     {
@@ -441,7 +441,7 @@
       "source_file": "backend/server.js",
       "source_location": "L17",
       "id": "backend_server_invitationsroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "invitationsroutes"
     },
     {
@@ -450,7 +450,7 @@
       "source_file": "backend/server.js",
       "source_location": "L18",
       "id": "backend_server_messagesroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "messagesroutes"
     },
     {
@@ -459,7 +459,7 @@
       "source_file": "backend/server.js",
       "source_location": "L19",
       "id": "backend_server_lmroutes",
-      "community": 52,
+      "community": 106,
       "norm_label": "lmroutes"
     },
     {
@@ -468,7 +468,7 @@
       "source_file": "backend/server.js",
       "source_location": "L21",
       "id": "backend_server_app",
-      "community": 52,
+      "community": 106,
       "norm_label": "app"
     },
     {
@@ -477,7 +477,7 @@
       "source_file": "backend/server.js",
       "source_location": "L25",
       "id": "backend_server_corsoptions",
-      "community": 52,
+      "community": 106,
       "norm_label": "corsoptions"
     },
     {
@@ -486,7 +486,7 @@
       "source_file": "backend/server.js",
       "source_location": "L87",
       "id": "backend_server_server",
-      "community": 52,
+      "community": 106,
       "norm_label": "server"
     },
     {
@@ -495,7 +495,7 @@
       "source_file": "backend/server.js",
       "source_location": "L96",
       "id": "backend_server_assignmentexpirytimer",
-      "community": 52,
+      "community": 106,
       "norm_label": "assignmentexpirytimer"
     },
     {
@@ -1039,6 +1039,33 @@
       "norm_label": "main()"
     },
     {
+      "label": "resetLoginLockout.js",
+      "file_type": "code",
+      "source_file": "backend/scripts/resetLoginLockout.js",
+      "source_location": "L1",
+      "id": "backend_scripts_resetloginlockout_js",
+      "community": 116,
+      "norm_label": "resetloginlockout.js"
+    },
+    {
+      "label": "prisma",
+      "file_type": "code",
+      "source_file": "backend/scripts/resetLoginLockout.js",
+      "source_location": "L14",
+      "id": "scripts_resetloginlockout_prisma",
+      "community": 116,
+      "norm_label": "prisma"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "backend/scripts/resetLoginLockout.js",
+      "source_location": "L16",
+      "id": "scripts_resetloginlockout_main",
+      "community": 116,
+      "norm_label": "main()"
+    },
+    {
       "label": "prisma.js",
       "file_type": "code",
       "source_file": "backend/src/config/prisma.js",
@@ -1260,7 +1287,7 @@
       "source_file": "backend/src/controllers/admin.controller.js",
       "source_location": "L91",
       "id": "controllers_admin_controller_adminsendotpcontroller",
-      "community": 106,
+      "community": 5,
       "norm_label": "adminsendotpcontroller()"
     },
     {
@@ -1287,7 +1314,7 @@
       "source_file": "backend/src/controllers/admin.controller.js",
       "source_location": "L169",
       "id": "controllers_admin_controller_adminrevoketrusteddevicecontroller",
-      "community": 106,
+      "community": 5,
       "norm_label": "adminrevoketrusteddevicecontroller()"
     },
     {
@@ -2151,7 +2178,7 @@
       "source_file": "backend/src/controllers/roles.controller.js",
       "source_location": "L186",
       "id": "controllers_roles_controller_listpermissions",
-      "community": 19,
+      "community": 120,
       "norm_label": "listpermissions()"
     },
     {
@@ -2475,7 +2502,7 @@
       "source_file": "backend/src/controllers/users.controller.js",
       "source_location": "L66",
       "id": "controllers_users_controller_createuser",
-      "community": 120,
+      "community": 9,
       "norm_label": "createuser()"
     },
     {
@@ -2484,7 +2511,7 @@
       "source_file": "backend/src/controllers/users.controller.js",
       "source_location": "L84",
       "id": "controllers_users_controller_updateuser",
-      "community": 120,
+      "community": 9,
       "norm_label": "updateuser()"
     },
     {
@@ -2511,7 +2538,7 @@
       "source_file": "backend/src/controllers/users.controller.js",
       "source_location": "L159",
       "id": "controllers_users_controller_resetuserpassword",
-      "community": 115,
+      "community": 9,
       "norm_label": "resetuserpassword()"
     },
     {
@@ -2592,7 +2619,7 @@
       "source_file": "backend/src/controllers/users.controller.js",
       "source_location": "L345",
       "id": "controllers_users_controller_sendmessage",
-      "community": 120,
+      "community": 9,
       "norm_label": "sendmessage()"
     },
     {
@@ -2673,7 +2700,7 @@
       "source_file": "backend/src/middlewares/auth.middleware.js",
       "source_location": "L31",
       "id": "middlewares_auth_middleware_clearallcachedsessions",
-      "community": 106,
+      "community": 5,
       "norm_label": "clearallcachedsessions()"
     },
     {
@@ -2736,7 +2763,7 @@
       "source_file": "backend/src/middlewares/rateLimit.middleware.js",
       "source_location": "L39",
       "id": "middlewares_ratelimit_middleware_adminusersimportratelimiter",
-      "community": 111,
+      "community": 36,
       "norm_label": "adminusersimportratelimiter"
     },
     {
@@ -2745,7 +2772,7 @@
       "source_file": "backend/src/middlewares/upload.middleware.js",
       "source_location": "L1",
       "id": "backend_src_middlewares_upload_middleware_js",
-      "community": 126,
+      "community": 9,
       "norm_label": "upload.middleware.js"
     },
     {
@@ -2754,7 +2781,7 @@
       "source_file": "backend/src/middlewares/upload.middleware.js",
       "source_location": "L1",
       "id": "middlewares_upload_middleware_multer",
-      "community": 126,
+      "community": 9,
       "norm_label": "multer"
     },
     {
@@ -2763,7 +2790,7 @@
       "source_file": "backend/src/middlewares/upload.middleware.js",
       "source_location": "L3",
       "id": "middlewares_upload_middleware_allowed_mime_types",
-      "community": 126,
+      "community": 9,
       "norm_label": "allowed_mime_types"
     },
     {
@@ -2772,7 +2799,7 @@
       "source_file": "backend/src/middlewares/upload.middleware.js",
       "source_location": "L5",
       "id": "middlewares_upload_middleware_storage",
-      "community": 126,
+      "community": 9,
       "norm_label": "storage"
     },
     {
@@ -2781,7 +2808,7 @@
       "source_file": "backend/src/middlewares/upload.middleware.js",
       "source_location": "L7",
       "id": "middlewares_upload_middleware_csvfilefilter",
-      "community": 126,
+      "community": 9,
       "norm_label": "csvfilefilter()"
     },
     {
@@ -2790,7 +2817,7 @@
       "source_file": "backend/src/middlewares/upload.middleware.js",
       "source_location": "L18",
       "id": "middlewares_upload_middleware_upload",
-      "community": 126,
+      "community": 9,
       "norm_label": "_upload"
     },
     {
@@ -2799,7 +2826,7 @@
       "source_file": "backend/src/middlewares/upload.middleware.js",
       "source_location": "L26",
       "id": "middlewares_upload_middleware_uploaduserscsv",
-      "community": 126,
+      "community": 9,
       "norm_label": "uploaduserscsv()"
     },
     {
@@ -2808,7 +2835,7 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_accesspolicies_routes_js",
-      "community": 36,
+      "community": 64,
       "norm_label": "accesspolicies.routes.js"
     },
     {
@@ -2817,7 +2844,7 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L1",
       "id": "routes_accesspolicies_routes_express",
-      "community": 36,
+      "community": 64,
       "norm_label": "express"
     },
     {
@@ -2826,7 +2853,7 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L2",
       "id": "routes_accesspolicies_routes_requireadminauth",
-      "community": 36,
+      "community": 64,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -2835,7 +2862,7 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L3",
       "id": "routes_accesspolicies_routes_adminuseractionratelimiter",
-      "community": 36,
+      "community": 64,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -2844,7 +2871,7 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L4",
       "id": "routes_accesspolicies_routes_listaccesspolicies_getaccesspolicystats_getaccesspolicy_createaccesspolicy_updateaccesspolicy_deleteaccesspolicy",
-      "community": 36,
+      "community": 64,
       "norm_label": "{\r\n  listaccesspolicies, getaccesspolicystats, getaccesspolicy,\r\n  createaccesspolicy, updateaccesspolicy, deleteaccesspolicy,\r\n}"
     },
     {
@@ -2853,7 +2880,7 @@
       "source_file": "backend/src/routes/accessPolicies.routes.js",
       "source_location": "L9",
       "id": "routes_accesspolicies_routes_router",
-      "community": 36,
+      "community": 64,
       "norm_label": "router"
     },
     {
@@ -3285,7 +3312,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_permissions_routes_js",
-      "community": 19,
+      "community": 120,
       "norm_label": "permissions.routes.js"
     },
     {
@@ -3294,7 +3321,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L1",
       "id": "routes_permissions_routes_express",
-      "community": 19,
+      "community": 120,
       "norm_label": "express"
     },
     {
@@ -3303,7 +3330,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L2",
       "id": "routes_permissions_routes_requireadminauth",
-      "community": 19,
+      "community": 120,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -3312,7 +3339,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L3",
       "id": "routes_permissions_routes_adminuseractionratelimiter",
-      "community": 19,
+      "community": 120,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -3321,7 +3348,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L4",
       "id": "routes_permissions_routes_listpermissions_getpermission_createpermission_updatepermission_deletepermission",
-      "community": 19,
+      "community": 120,
       "norm_label": "{\r\n  listpermissions, getpermission, createpermission, updatepermission, deletepermission,\r\n}"
     },
     {
@@ -3330,7 +3357,7 @@
       "source_file": "backend/src/routes/permissions.routes.js",
       "source_location": "L8",
       "id": "routes_permissions_routes_router",
-      "community": 19,
+      "community": 120,
       "norm_label": "router"
     },
     {
@@ -3339,7 +3366,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_roles_routes_js",
-      "community": 19,
+      "community": 126,
       "norm_label": "roles.routes.js"
     },
     {
@@ -3348,7 +3375,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L1",
       "id": "routes_roles_routes_express",
-      "community": 19,
+      "community": 126,
       "norm_label": "express"
     },
     {
@@ -3357,7 +3384,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L2",
       "id": "routes_roles_routes_requireadminauth",
-      "community": 19,
+      "community": 126,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -3366,7 +3393,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L3",
       "id": "routes_roles_routes_adminuseractionratelimiter",
-      "community": 19,
+      "community": 126,
       "norm_label": "{ adminuseractionratelimiter }"
     },
     {
@@ -3375,7 +3402,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L4",
       "id": "routes_roles_routes_listroles_getrolesstats_getrole_createrole_updaterole_deleterole_duplicaterole_getrolepermissions_assignpermissionstorole",
-      "community": 19,
+      "community": 126,
       "norm_label": "{\r\n  listroles, getrolesstats, getrole, createrole, updaterole, deleterole, duplicaterole,\r\n  getrolepermissions, assignpermissionstorole,\r\n}"
     },
     {
@@ -3384,7 +3411,7 @@
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L9",
       "id": "routes_roles_routes_router",
-      "community": 19,
+      "community": 126,
       "norm_label": "router"
     },
     {
@@ -3501,7 +3528,7 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L1",
       "id": "backend_src_routes_users_routes_js",
-      "community": 111,
+      "community": 9,
       "norm_label": "users.routes.js"
     },
     {
@@ -3510,7 +3537,7 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L1",
       "id": "routes_users_routes_express",
-      "community": 111,
+      "community": 9,
       "norm_label": "express"
     },
     {
@@ -3519,7 +3546,7 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L3",
       "id": "routes_users_routes_requireadminauth",
-      "community": 111,
+      "community": 9,
       "norm_label": "{ requireadminauth }"
     },
     {
@@ -3528,7 +3555,7 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L5",
       "id": "routes_users_routes_adminuseractionratelimiter_adminusersanalyticsratelimiter_adminusersimportratelimiter",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  adminuseractionratelimiter,\r\n  adminusersanalyticsratelimiter,\r\n  adminusersimportratelimiter,\r\n}"
     },
     {
@@ -3537,7 +3564,7 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L11",
       "id": "routes_users_routes_uploaduserscsv",
-      "community": 111,
+      "community": 9,
       "norm_label": "{ uploaduserscsv }"
     },
     {
@@ -3546,7 +3573,7 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L13",
       "id": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_rejectverification_resetuserpassword_assignuserrole_deleteuser_permanentdeleteuser_getusersanalytics_importusers_bulkactionusers_sendmessage_getusermessageslist_forcelogoutuser",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  exportusers,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  approveverification,\r\n  rejectverification,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  permanentdeleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n  sendmessage,\r\n  getusermessageslist,\r\n  forcelogoutuser,\r\n}"
     },
     {
@@ -3555,7 +3582,7 @@
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L36",
       "id": "routes_users_routes_router",
-      "community": 111,
+      "community": 9,
       "norm_label": "router"
     },
     {
@@ -3591,7 +3618,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L1",
       "id": "backend_src_scripts_createfirstadmin_js",
-      "community": 115,
+      "community": 5,
       "norm_label": "createfirstadmin.js"
     },
     {
@@ -3600,7 +3627,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L3",
       "id": "scripts_createfirstadmin_bcrypt",
-      "community": 115,
+      "community": 5,
       "norm_label": "bcrypt"
     },
     {
@@ -3609,7 +3636,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L4",
       "id": "scripts_createfirstadmin_prisma",
-      "community": 115,
+      "community": 5,
       "norm_label": "prisma"
     },
     {
@@ -3618,7 +3645,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L5",
       "id": "scripts_createfirstadmin_validatepasswordstrength",
-      "community": 115,
+      "community": 5,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -3627,7 +3654,7 @@
       "source_file": "backend/src/scripts/createFirstAdmin.js",
       "source_location": "L7",
       "id": "scripts_createfirstadmin_createfirstadmin",
-      "community": 115,
+      "community": 5,
       "norm_label": "createfirstadmin()"
     },
     {
@@ -3636,7 +3663,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L1",
       "id": "backend_src_scripts_resetfirstadminpassword_js",
-      "community": 115,
+      "community": 5,
       "norm_label": "resetfirstadminpassword.js"
     },
     {
@@ -3645,7 +3672,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L3",
       "id": "scripts_resetfirstadminpassword_bcrypt",
-      "community": 115,
+      "community": 5,
       "norm_label": "bcrypt"
     },
     {
@@ -3654,7 +3681,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L4",
       "id": "scripts_resetfirstadminpassword_prisma",
-      "community": 115,
+      "community": 5,
       "norm_label": "prisma"
     },
     {
@@ -3663,7 +3690,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L5",
       "id": "scripts_resetfirstadminpassword_validatepasswordstrength",
-      "community": 115,
+      "community": 5,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -3672,7 +3699,7 @@
       "source_file": "backend/src/scripts/resetFirstAdminPassword.js",
       "source_location": "L7",
       "id": "scripts_resetfirstadminpassword_resetfirstadminpassword",
-      "community": 115,
+      "community": 5,
       "norm_label": "resetfirstadminpassword()"
     },
     {
@@ -3798,7 +3825,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L1",
       "id": "backend_src_services_admin_service_js",
-      "community": 106,
+      "community": 5,
       "norm_label": "admin.service.js"
     },
     {
@@ -3807,7 +3834,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L1",
       "id": "services_admin_service_bcrypt",
-      "community": 106,
+      "community": 5,
       "norm_label": "bcrypt"
     },
     {
@@ -3816,7 +3843,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L2",
       "id": "services_admin_service_prisma",
-      "community": 106,
+      "community": 5,
       "norm_label": "prisma"
     },
     {
@@ -3825,7 +3852,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L3",
       "id": "services_admin_service_generatesessiontoken_getsessionexpirydate",
-      "community": 106,
+      "community": 5,
       "norm_label": "{ generatesessiontoken, getsessionexpirydate }"
     },
     {
@@ -3834,7 +3861,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L4",
       "id": "services_admin_service_clearallcachedsessions",
-      "community": 106,
+      "community": 5,
       "norm_label": "{ clearallcachedsessions }"
     },
     {
@@ -3843,7 +3870,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L6",
       "id": "services_admin_service_generateotpcode_hashotpcode_compareotpcode_getotpexpirydate",
-      "community": 106,
+      "community": 5,
       "norm_label": "{\r\n  generateotpcode,\r\n  hashotpcode,\r\n  compareotpcode,\r\n  getotpexpirydate,\r\n}"
     },
     {
@@ -3852,7 +3879,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L17",
       "id": "services_admin_service_recordloginattempt",
-      "community": 106,
+      "community": 5,
       "norm_label": "recordloginattempt()"
     },
     {
@@ -3861,7 +3888,7 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L37",
       "id": "services_admin_service_createauditlog",
-      "community": 106,
+      "community": 5,
       "norm_label": "createauditlog()"
     },
     {
@@ -3870,23 +3897,23 @@
       "source_file": "backend/src/services/admin.service.js",
       "source_location": "L55",
       "id": "services_admin_service_islogintemporarilyblocked",
-      "community": 106,
+      "community": 5,
       "norm_label": "islogintemporarilyblocked()"
     },
     {
       "label": "loginAdmin()",
       "file_type": "code",
       "source_file": "backend/src/services/admin.service.js",
-      "source_location": "L73",
+      "source_location": "L77",
       "id": "services_admin_service_loginadmin",
-      "community": 106,
+      "community": 5,
       "norm_label": "loginadmin()"
     },
     {
       "label": "logoutAdmin()",
       "file_type": "code",
       "source_file": "backend/src/services/admin.service.js",
-      "source_location": "L230",
+      "source_location": "L234",
       "id": "services_admin_service_logoutadmin",
       "community": 5,
       "norm_label": "logoutadmin()"
@@ -3895,16 +3922,16 @@
       "label": "sendAdminOtp()",
       "file_type": "code",
       "source_file": "backend/src/services/admin.service.js",
-      "source_location": "L267",
+      "source_location": "L271",
       "id": "services_admin_service_sendadminotp",
-      "community": 106,
+      "community": 5,
       "norm_label": "sendadminotp()"
     },
     {
       "label": "verifyAdminOtp()",
       "file_type": "code",
       "source_file": "backend/src/services/admin.service.js",
-      "source_location": "L329",
+      "source_location": "L333",
       "id": "services_admin_service_verifyadminotp",
       "community": 5,
       "norm_label": "verifyadminotp()"
@@ -3913,7 +3940,7 @@
       "label": "getAdminTrustedDevices()",
       "file_type": "code",
       "source_file": "backend/src/services/admin.service.js",
-      "source_location": "L450",
+      "source_location": "L454",
       "id": "services_admin_service_getadmintrusteddevices",
       "community": 5,
       "norm_label": "getadmintrusteddevices()"
@@ -3922,27 +3949,27 @@
       "label": "revokeAdminTrustedDevice()",
       "file_type": "code",
       "source_file": "backend/src/services/admin.service.js",
-      "source_location": "L481",
+      "source_location": "L485",
       "id": "services_admin_service_revokeadmintrusteddevice",
-      "community": 106,
+      "community": 5,
       "norm_label": "revokeadmintrusteddevice()"
     },
     {
       "label": "forgotAdminPassword()",
       "file_type": "code",
       "source_file": "backend/src/services/admin.service.js",
-      "source_location": "L528",
+      "source_location": "L532",
       "id": "services_admin_service_forgotadminpassword",
-      "community": 106,
+      "community": 5,
       "norm_label": "forgotadminpassword()"
     },
     {
       "label": "resetAdminPassword()",
       "file_type": "code",
       "source_file": "backend/src/services/admin.service.js",
-      "source_location": "L587",
+      "source_location": "L591",
       "id": "services_admin_service_resetadminpassword",
-      "community": 106,
+      "community": 5,
       "norm_label": "resetadminpassword()"
     },
     {
@@ -4554,7 +4581,7 @@
       "source_file": "backend/src/services/messages.service.js",
       "source_location": "L1",
       "id": "backend_src_services_messages_service_js",
-      "community": 132,
+      "community": 115,
       "norm_label": "messages.service.js"
     },
     {
@@ -4563,7 +4590,7 @@
       "source_file": "backend/src/services/messages.service.js",
       "source_location": "L1",
       "id": "services_messages_service_prisma",
-      "community": 132,
+      "community": 115,
       "norm_label": "prisma"
     },
     {
@@ -4572,7 +4599,7 @@
       "source_file": "backend/src/services/messages.service.js",
       "source_location": "L3",
       "id": "services_messages_service_message_select",
-      "community": 132,
+      "community": 115,
       "norm_label": "message_select"
     },
     {
@@ -4581,7 +4608,7 @@
       "source_file": "backend/src/services/messages.service.js",
       "source_location": "L15",
       "id": "services_messages_service_makeerror",
-      "community": 132,
+      "community": 115,
       "norm_label": "makeerror()"
     },
     {
@@ -4590,7 +4617,7 @@
       "source_file": "backend/src/services/messages.service.js",
       "source_location": "L21",
       "id": "services_messages_service_createuserauditlog",
-      "community": 132,
+      "community": 115,
       "norm_label": "createuserauditlog()"
     },
     {
@@ -4599,7 +4626,7 @@
       "source_file": "backend/src/services/messages.service.js",
       "source_location": "L35",
       "id": "services_messages_service_mapmessage",
-      "community": 132,
+      "community": 115,
       "norm_label": "mapmessage()"
     },
     {
@@ -4608,7 +4635,7 @@
       "source_file": "backend/src/services/messages.service.js",
       "source_location": "L49",
       "id": "services_messages_service_sendadminmessage",
-      "community": 132,
+      "community": 115,
       "norm_label": "sendadminmessage()"
     },
     {
@@ -4617,7 +4644,7 @@
       "source_file": "backend/src/services/messages.service.js",
       "source_location": "L98",
       "id": "services_messages_service_getadminmessages",
-      "community": 132,
+      "community": 115,
       "norm_label": "getadminmessages()"
     },
     {
@@ -4905,7 +4932,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L1",
       "id": "backend_src_services_roles_service_js",
-      "community": 19,
+      "community": 49,
       "norm_label": "roles.service.js"
     },
     {
@@ -4914,7 +4941,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L2",
       "id": "services_roles_service_prisma",
-      "community": 19,
+      "community": 49,
       "norm_label": "prisma"
     },
     {
@@ -4923,7 +4950,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L8",
       "id": "services_roles_service_app_user_roles",
-      "community": 19,
+      "community": 49,
       "norm_label": "app_user_roles"
     },
     {
@@ -4932,7 +4959,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L9",
       "id": "services_roles_service_role_name_alias",
-      "community": 19,
+      "community": 49,
       "norm_label": "role_name_alias"
     },
     {
@@ -4941,7 +4968,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L11",
       "id": "services_roles_service_rolenametoenum",
-      "community": 19,
+      "community": 49,
       "norm_label": "rolenametoenum()"
     },
     {
@@ -4950,7 +4977,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L18",
       "id": "services_roles_service_getusercountbyenum",
-      "community": 19,
+      "community": 49,
       "norm_label": "getusercountbyenum()"
     },
     {
@@ -4959,7 +4986,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L28",
       "id": "services_roles_service_paginate",
-      "community": 19,
+      "community": 49,
       "norm_label": "paginate()"
     },
     {
@@ -4968,7 +4995,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L34",
       "id": "services_roles_service_buildpagination",
-      "community": 19,
+      "community": 49,
       "norm_label": "buildpagination()"
     },
     {
@@ -4977,7 +5004,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L39",
       "id": "services_roles_service_createroleauditlog",
-      "community": 19,
+      "community": 49,
       "norm_label": "createroleauditlog()"
     },
     {
@@ -4986,7 +5013,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L51",
       "id": "services_roles_service_listroles",
-      "community": 19,
+      "community": 49,
       "norm_label": "listroles()"
     },
     {
@@ -4995,7 +5022,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L87",
       "id": "services_roles_service_getrole",
-      "community": 19,
+      "community": 49,
       "norm_label": "getrole()"
     },
     {
@@ -5004,7 +5031,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L124",
       "id": "services_roles_service_createrole",
-      "community": 19,
+      "community": 49,
       "norm_label": "createrole()"
     },
     {
@@ -5013,7 +5040,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L140",
       "id": "services_roles_service_updaterole",
-      "community": 19,
+      "community": 49,
       "norm_label": "updaterole()"
     },
     {
@@ -5022,7 +5049,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L158",
       "id": "services_roles_service_deleterole",
-      "community": 19,
+      "community": 49,
       "norm_label": "deleterole()"
     },
     {
@@ -5031,7 +5058,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L175",
       "id": "services_roles_service_getrolepermissions",
-      "community": 19,
+      "community": 49,
       "norm_label": "getrolepermissions()"
     },
     {
@@ -5040,7 +5067,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L184",
       "id": "services_roles_service_assignpermissionstorole",
-      "community": 19,
+      "community": 49,
       "norm_label": "assignpermissionstorole()"
     },
     {
@@ -5049,7 +5076,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L222",
       "id": "services_roles_service_getpermissionmatrix",
-      "community": 19,
+      "community": 49,
       "norm_label": "getpermissionmatrix()"
     },
     {
@@ -5058,7 +5085,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L307",
       "id": "services_roles_service_togglepermissionmatrixcell",
-      "community": 19,
+      "community": 49,
       "norm_label": "togglepermissionmatrixcell()"
     },
     {
@@ -5067,7 +5094,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L341",
       "id": "services_roles_service_listpermissions",
-      "community": 19,
+      "community": 49,
       "norm_label": "listpermissions()"
     },
     {
@@ -5076,7 +5103,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L365",
       "id": "services_roles_service_getpermission",
-      "community": 19,
+      "community": 49,
       "norm_label": "getpermission()"
     },
     {
@@ -5085,7 +5112,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L375",
       "id": "services_roles_service_createpermission",
-      "community": 19,
+      "community": 49,
       "norm_label": "createpermission()"
     },
     {
@@ -5094,7 +5121,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L389",
       "id": "services_roles_service_updatepermission",
-      "community": 19,
+      "community": 49,
       "norm_label": "updatepermission()"
     },
     {
@@ -5103,7 +5130,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L405",
       "id": "services_roles_service_deletepermission",
-      "community": 19,
+      "community": 49,
       "norm_label": "deletepermission()"
     },
     {
@@ -5112,7 +5139,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L412",
       "id": "services_roles_service_getrolesstats",
-      "community": 19,
+      "community": 49,
       "norm_label": "getrolesstats()"
     },
     {
@@ -5121,7 +5148,7 @@
       "source_file": "backend/src/services/roles.service.js",
       "source_location": "L433",
       "id": "services_roles_service_duplicaterole",
-      "community": 19,
+      "community": 49,
       "norm_label": "duplicaterole()"
     },
     {
@@ -5715,7 +5742,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L1",
       "id": "backend_src_utils_otp_js",
-      "community": 106,
+      "community": 5,
       "norm_label": "otp.js"
     },
     {
@@ -5724,7 +5751,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L1",
       "id": "utils_otp_crypto",
-      "community": 106,
+      "community": 5,
       "norm_label": "crypto"
     },
     {
@@ -5733,7 +5760,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L2",
       "id": "utils_otp_bcrypt",
-      "community": 106,
+      "community": 5,
       "norm_label": "bcrypt"
     },
     {
@@ -5742,7 +5769,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L4",
       "id": "utils_otp_generateotpcode",
-      "community": 106,
+      "community": 5,
       "norm_label": "generateotpcode()"
     },
     {
@@ -5751,7 +5778,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L8",
       "id": "utils_otp_hashotpcode",
-      "community": 106,
+      "community": 5,
       "norm_label": "hashotpcode()"
     },
     {
@@ -5760,7 +5787,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L12",
       "id": "utils_otp_compareotpcode",
-      "community": 106,
+      "community": 5,
       "norm_label": "compareotpcode()"
     },
     {
@@ -5769,7 +5796,7 @@
       "source_file": "backend/src/utils/otp.js",
       "source_location": "L16",
       "id": "utils_otp_getotpexpirydate",
-      "community": 106,
+      "community": 5,
       "norm_label": "getotpexpirydate()"
     },
     {
@@ -5778,7 +5805,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "backend_src_utils_passwordpolicy_js",
-      "community": 115,
+      "community": 5,
       "norm_label": "passwordpolicy.js"
     },
     {
@@ -5787,7 +5814,7 @@
       "source_file": "backend/src/utils/passwordPolicy.js",
       "source_location": "L1",
       "id": "utils_passwordpolicy_validatepasswordstrength",
-      "community": 115,
+      "community": 5,
       "norm_label": "validatepasswordstrength()"
     },
     {
@@ -6435,7 +6462,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L1",
       "id": "backend_src_validators_users_validator_js",
-      "community": 120,
+      "community": 9,
       "norm_label": "users.validator.js"
     },
     {
@@ -6444,7 +6471,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L1",
       "id": "validators_users_validator_validatepasswordstrength",
-      "community": 120,
+      "community": 9,
       "norm_label": "{ validatepasswordstrength }"
     },
     {
@@ -6453,7 +6480,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L3",
       "id": "validators_users_validator_valid_roles",
-      "community": 120,
+      "community": 9,
       "norm_label": "valid_roles"
     },
     {
@@ -6462,7 +6489,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L4",
       "id": "validators_users_validator_valid_statuses",
-      "community": 120,
+      "community": 9,
       "norm_label": "valid_statuses"
     },
     {
@@ -6471,7 +6498,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L5",
       "id": "validators_users_validator_valid_verification_states",
-      "community": 120,
+      "community": 9,
       "norm_label": "valid_verification_states"
     },
     {
@@ -6489,7 +6516,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L17",
       "id": "validators_users_validator_validatecreateuserinput",
-      "community": 120,
+      "community": 9,
       "norm_label": "validatecreateuserinput()"
     },
     {
@@ -6498,7 +6525,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L58",
       "id": "validators_users_validator_validateupdateuserinput",
-      "community": 120,
+      "community": 9,
       "norm_label": "validateupdateuserinput()"
     },
     {
@@ -6534,7 +6561,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L212",
       "id": "validators_users_validator_validateresetuserpasswordinput",
-      "community": 115,
+      "community": 9,
       "norm_label": "validateresetuserpasswordinput()"
     },
     {
@@ -6543,7 +6570,7 @@
       "source_file": "backend/src/validators/users.validator.js",
       "source_location": "L222",
       "id": "validators_users_validator_validatesendmessageinput",
-      "community": 120,
+      "community": 9,
       "norm_label": "validatesendmessageinput()"
     },
     {
@@ -7704,7 +7731,7 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L48",
       "id": "api_accesspoliciespage_accesspolicyerror",
-      "community": 72,
+      "community": 55,
       "norm_label": "accesspolicyerror"
     },
     {
@@ -7713,7 +7740,7 @@
       "source_file": "frontend/src/api/accessPoliciesPage.ts",
       "source_location": "L50",
       "id": "api_accesspoliciespage_accesspolicyerror_constructor",
-      "community": 72,
+      "community": 55,
       "norm_label": ".constructor()"
     },
     {
@@ -7884,7 +7911,7 @@
       "source_file": "frontend/src/api/adminAuth.ts",
       "source_location": "L81",
       "id": "api_adminauth_apiresetpassword",
-      "community": 1,
+      "community": 25,
       "norm_label": "apiresetpassword()"
     },
     {
@@ -7974,7 +8001,7 @@
       "source_file": "frontend/src/api/groups.ts",
       "source_location": "L7",
       "id": "api_groups_groupsfetch",
-      "community": 24,
+      "community": 22,
       "norm_label": "groupsfetch()"
     },
     {
@@ -8334,7 +8361,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L1",
       "id": "frontend_src_api_rolespage_ts",
-      "community": 113,
+      "community": 111,
       "norm_label": "rolespage.ts"
     },
     {
@@ -8361,7 +8388,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L34",
       "id": "api_rolespage_apifetch",
-      "community": 113,
+      "community": 111,
       "norm_label": "apifetch()"
     },
     {
@@ -8370,7 +8397,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L56",
       "id": "api_rolespage_getrolespagestats",
-      "community": 113,
+      "community": 111,
       "norm_label": "getrolespagestats()"
     },
     {
@@ -8379,7 +8406,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L61",
       "id": "api_rolespage_getrolespagelist",
-      "community": 113,
+      "community": 111,
       "norm_label": "getrolespagelist()"
     },
     {
@@ -8388,7 +8415,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L78",
       "id": "api_rolespage_getrolepagedetails",
-      "community": 113,
+      "community": 111,
       "norm_label": "getrolepagedetails()"
     },
     {
@@ -8397,7 +8424,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L85",
       "id": "api_rolespage_createrolepage",
-      "community": 113,
+      "community": 111,
       "norm_label": "createrolepage()"
     },
     {
@@ -8415,7 +8442,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L102",
       "id": "api_rolespage_deleterolepage",
-      "community": 113,
+      "community": 111,
       "norm_label": "deleterolepage()"
     },
     {
@@ -8424,7 +8451,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L106",
       "id": "api_rolespage_duplicaterolepage",
-      "community": 113,
+      "community": 111,
       "norm_label": "duplicaterolepage()"
     },
     {
@@ -8433,7 +8460,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L114",
       "id": "api_rolespage_getrolepermissions",
-      "community": 113,
+      "community": 111,
       "norm_label": "getrolepermissions()"
     },
     {
@@ -8442,7 +8469,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L121",
       "id": "api_rolespage_assignrolepermissions",
-      "community": 113,
+      "community": 111,
       "norm_label": "assignrolepermissions()"
     },
     {
@@ -8469,7 +8496,7 @@
       "source_file": "frontend/src/api/rolesPage.ts",
       "source_location": "L152",
       "id": "api_rolespage_togglepermission",
-      "community": 113,
+      "community": 111,
       "norm_label": "togglepermission()"
     },
     {
@@ -8829,7 +8856,7 @@
       "source_file": "frontend/src/api/userRoleAssignments.ts",
       "source_location": "L96",
       "id": "api_userroleassignments_createassignment",
-      "community": 108,
+      "community": 101,
       "norm_label": "createassignment()"
     },
     {
@@ -8838,7 +8865,7 @@
       "source_file": "frontend/src/api/userRoleAssignments.ts",
       "source_location": "L101",
       "id": "api_userroleassignments_updateassignment",
-      "community": 107,
+      "community": 101,
       "norm_label": "updateassignment()"
     },
     {
@@ -8865,7 +8892,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L22",
       "id": "api_users_usersparams",
-      "community": 27,
+      "community": 52,
       "norm_label": "usersparams"
     },
     {
@@ -8874,7 +8901,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L35",
       "id": "api_users_exportparams",
-      "community": 27,
+      "community": 52,
       "norm_label": "exportparams"
     },
     {
@@ -8901,7 +8928,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L59",
       "id": "api_users_getusers",
-      "community": 24,
+      "community": 113,
       "norm_label": "getusers()"
     },
     {
@@ -9018,7 +9045,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L220",
       "id": "api_users_exportallusers",
-      "community": 27,
+      "community": 52,
       "norm_label": "exportallusers()"
     },
     {
@@ -9036,7 +9063,7 @@
       "source_file": "frontend/src/api/users.ts",
       "source_location": "L254",
       "id": "api_users_getinvitations",
-      "community": 49,
+      "community": 107,
       "norm_label": "getinvitations()"
     },
     {
@@ -9252,7 +9279,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_auth_resetpasswordform_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "resetpasswordform.tsx"
     },
     {
@@ -9261,7 +9288,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L5",
       "id": "auth_resetpasswordform_props",
-      "community": 0,
+      "community": 1,
       "norm_label": "props"
     },
     {
@@ -9270,7 +9297,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L13",
       "id": "auth_resetpasswordform_eyeicon",
-      "community": 0,
+      "community": 1,
       "norm_label": "eyeicon()"
     },
     {
@@ -9279,7 +9306,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L22",
       "id": "auth_resetpasswordform_eyeofficon",
-      "community": 0,
+      "community": 1,
       "norm_label": "eyeofficon()"
     },
     {
@@ -9288,7 +9315,7 @@
       "source_file": "frontend/src/components/auth/ResetPasswordForm.tsx",
       "source_location": "L32",
       "id": "auth_resetpasswordform_matchokicon",
-      "community": 0,
+      "community": 1,
       "norm_label": "matchokicon()"
     },
     {
@@ -11025,7 +11052,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_assignrolemodal_tsx",
-      "community": 108,
+      "community": 101,
       "norm_label": "assignrolemodal.tsx"
     },
     {
@@ -11034,7 +11061,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L15",
       "id": "rolespermissionspage_assignrolemodal_input",
-      "community": 108,
+      "community": 101,
       "norm_label": "input"
     },
     {
@@ -11043,7 +11070,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L22",
       "id": "rolespermissionspage_assignrolemodal_label",
-      "community": 108,
+      "community": 101,
       "norm_label": "label"
     },
     {
@@ -11052,7 +11079,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L26",
       "id": "rolespermissionspage_assignrolemodal_focusin",
-      "community": 108,
+      "community": 101,
       "norm_label": "focusin()"
     },
     {
@@ -11061,7 +11088,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L30",
       "id": "rolespermissionspage_assignrolemodal_focusout",
-      "community": 108,
+      "community": 101,
       "norm_label": "focusout()"
     },
     {
@@ -11070,7 +11097,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L35",
       "id": "rolespermissionspage_assignrolemodal_sectionheader",
-      "community": 108,
+      "community": 101,
       "norm_label": "sectionheader()"
     },
     {
@@ -11079,7 +11106,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L47",
       "id": "rolespermissionspage_assignrolemodal_tomorrowisodate",
-      "community": 108,
+      "community": 101,
       "norm_label": "tomorrowisodate()"
     },
     {
@@ -11088,7 +11115,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L55",
       "id": "rolespermissionspage_assignrolemodal_avatar",
-      "community": 108,
+      "community": 101,
       "norm_label": "avatar()"
     },
     {
@@ -11097,7 +11124,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L84",
       "id": "rolespermissionspage_assignrolemodal_type_options",
-      "community": 108,
+      "community": 101,
       "norm_label": "type_options"
     },
     {
@@ -11106,7 +11133,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L93",
       "id": "rolespermissionspage_assignrolemodal_props",
-      "community": 108,
+      "community": 101,
       "norm_label": "props"
     },
     {
@@ -11115,7 +11142,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignRoleModal.tsx",
       "source_location": "L101",
       "id": "rolespermissionspage_assignrolemodal_assignrolemodal",
-      "community": 108,
+      "community": 101,
       "norm_label": "assignrolemodal()"
     },
     {
@@ -11124,7 +11151,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_assignuserstorolemodal_tsx",
-      "community": 24,
+      "community": 22,
       "norm_label": "assignuserstorolemodal.tsx"
     },
     {
@@ -11133,7 +11160,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L9",
       "id": "rolespermissionspage_assignuserstorolemodal_patchuserrole",
-      "community": 24,
+      "community": 22,
       "norm_label": "patchuserrole()"
     },
     {
@@ -11142,7 +11169,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L30",
       "id": "rolespermissionspage_assignuserstorolemodal_avatar",
-      "community": 24,
+      "community": 22,
       "norm_label": "avatar()"
     },
     {
@@ -11151,7 +11178,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L64",
       "id": "rolespermissionspage_assignuserstorolemodal_props",
-      "community": 24,
+      "community": 22,
       "norm_label": "props"
     },
     {
@@ -11160,7 +11187,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L74",
       "id": "rolespermissionspage_assignuserstorolemodal_assignuserstorolemodal",
-      "community": 24,
+      "community": 22,
       "norm_label": "assignuserstorolemodal()"
     },
     {
@@ -11169,7 +11196,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_createpolicymodal_tsx",
-      "community": 72,
+      "community": 55,
       "norm_label": "createpolicymodal.tsx"
     },
     {
@@ -11178,7 +11205,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L20",
       "id": "rolespermissionspage_createpolicymodal_resource_options",
-      "community": 72,
+      "community": 55,
       "norm_label": "resource_options"
     },
     {
@@ -11187,7 +11214,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L21",
       "id": "rolespermissionspage_createpolicymodal_action_options",
-      "community": 72,
+      "community": 55,
       "norm_label": "action_options"
     },
     {
@@ -11196,7 +11223,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L25",
       "id": "rolespermissionspage_createpolicymodal_input",
-      "community": 72,
+      "community": 55,
       "norm_label": "input"
     },
     {
@@ -11205,7 +11232,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L32",
       "id": "rolespermissionspage_createpolicymodal_label",
-      "community": 72,
+      "community": 55,
       "norm_label": "label"
     },
     {
@@ -11214,7 +11241,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L36",
       "id": "rolespermissionspage_createpolicymodal_focusin",
-      "community": 72,
+      "community": 55,
       "norm_label": "focusin()"
     },
     {
@@ -11223,7 +11250,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L40",
       "id": "rolespermissionspage_createpolicymodal_focusout",
-      "community": 72,
+      "community": 55,
       "norm_label": "focusout()"
     },
     {
@@ -11232,7 +11259,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L45",
       "id": "rolespermissionspage_createpolicymodal_sectionheader",
-      "community": 72,
+      "community": 55,
       "norm_label": "sectionheader()"
     },
     {
@@ -11241,7 +11268,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L59",
       "id": "rolespermissionspage_createpolicymodal_props",
-      "community": 72,
+      "community": 55,
       "norm_label": "props"
     },
     {
@@ -11250,7 +11277,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/CreatePolicyModal.tsx",
       "source_location": "L68",
       "id": "rolespermissionspage_createpolicymodal_createpolicymodal",
-      "community": 72,
+      "community": 55,
       "norm_label": "createpolicymodal()"
     },
     {
@@ -11403,7 +11430,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_rolespermissionspage_editassignmentmodal_tsx",
-      "community": 107,
+      "community": 101,
       "norm_label": "editassignmentmodal.tsx"
     },
     {
@@ -11412,7 +11439,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L11",
       "id": "rolespermissionspage_editassignmentmodal_input",
-      "community": 107,
+      "community": 101,
       "norm_label": "input"
     },
     {
@@ -11421,7 +11448,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L18",
       "id": "rolespermissionspage_editassignmentmodal_label",
-      "community": 107,
+      "community": 101,
       "norm_label": "label"
     },
     {
@@ -11430,7 +11457,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L22",
       "id": "rolespermissionspage_editassignmentmodal_focusin",
-      "community": 107,
+      "community": 101,
       "norm_label": "focusin()"
     },
     {
@@ -11439,7 +11466,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L26",
       "id": "rolespermissionspage_editassignmentmodal_focusout",
-      "community": 107,
+      "community": 101,
       "norm_label": "focusout()"
     },
     {
@@ -11448,7 +11475,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L31",
       "id": "rolespermissionspage_editassignmentmodal_sectionheader",
-      "community": 107,
+      "community": 101,
       "norm_label": "sectionheader()"
     },
     {
@@ -11457,7 +11484,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L43",
       "id": "rolespermissionspage_editassignmentmodal_tomorrowisodate",
-      "community": 107,
+      "community": 101,
       "norm_label": "tomorrowisodate()"
     },
     {
@@ -11466,7 +11493,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L51",
       "id": "rolespermissionspage_editassignmentmodal_type_options",
-      "community": 107,
+      "community": 101,
       "norm_label": "type_options"
     },
     {
@@ -11475,7 +11502,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L60",
       "id": "rolespermissionspage_editassignmentmodal_props",
-      "community": 107,
+      "community": 101,
       "norm_label": "props"
     },
     {
@@ -11484,7 +11511,7 @@
       "source_file": "frontend/src/components/rolesPermissionsPage/EditAssignmentModal.tsx",
       "source_location": "L69",
       "id": "rolespermissionspage_editassignmentmodal_editassignmentmodal",
-      "community": 107,
+      "community": 101,
       "norm_label": "editassignmentmodal()"
     },
     {
@@ -12042,7 +12069,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_ui_loadingspinner_tsx",
-      "community": 0,
+      "community": 108,
       "norm_label": "loadingspinner.tsx"
     },
     {
@@ -12051,7 +12078,7 @@
       "source_file": "frontend/src/components/ui/LoadingSpinner.tsx",
       "source_location": "L1",
       "id": "ui_loadingspinner_loadingspinner",
-      "community": 0,
+      "community": 108,
       "norm_label": "loadingspinner()"
     },
     {
@@ -12123,7 +12150,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_archivedtab_tsx",
-      "community": 134,
+      "community": 113,
       "norm_label": "archivedtab.tsx"
     },
     {
@@ -12132,7 +12159,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L8",
       "id": "users_archivedtab_formatdate",
-      "community": 134,
+      "community": 113,
       "norm_label": "formatdate()"
     },
     {
@@ -12141,7 +12168,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L12",
       "id": "users_archivedtab_initials",
-      "community": 134,
+      "community": 113,
       "norm_label": "initials()"
     },
     {
@@ -12150,7 +12177,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L17",
       "id": "users_archivedtab_sk",
-      "community": 134,
+      "community": 113,
       "norm_label": "sk()"
     },
     {
@@ -12159,7 +12186,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L26",
       "id": "users_archivedtab_skeletonrow",
-      "community": 134,
+      "community": 113,
       "norm_label": "skeletonrow()"
     },
     {
@@ -12168,7 +12195,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L47",
       "id": "users_archivedtab_th",
-      "community": 134,
+      "community": 113,
       "norm_label": "th"
     },
     {
@@ -12177,7 +12204,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L52",
       "id": "users_archivedtab_td",
-      "community": 134,
+      "community": 113,
       "norm_label": "td"
     },
     {
@@ -12186,7 +12213,7 @@
       "source_file": "frontend/src/components/users/ArchivedTab.tsx",
       "source_location": "L57",
       "id": "users_archivedtab_archivedtab",
-      "community": 134,
+      "community": 113,
       "norm_label": "archivedtab()"
     },
     {
@@ -12195,7 +12222,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_assignrolemodal_tsx",
-      "community": 34,
+      "community": 104,
       "norm_label": "assignrolemodal.tsx"
     },
     {
@@ -12204,7 +12231,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L8",
       "id": "users_assignrolemodal_props",
-      "community": 34,
+      "community": 104,
       "norm_label": "props"
     },
     {
@@ -12213,7 +12240,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L15",
       "id": "users_assignrolemodal_types",
-      "community": 34,
+      "community": 104,
       "norm_label": "types"
     },
     {
@@ -12222,7 +12249,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L21",
       "id": "users_assignrolemodal_input",
-      "community": 34,
+      "community": 104,
       "norm_label": "input"
     },
     {
@@ -12231,7 +12258,7 @@
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L28",
       "id": "users_assignrolemodal_assignrolemodal",
-      "community": 34,
+      "community": 104,
       "norm_label": "assignrolemodal()"
     },
     {
@@ -12411,7 +12438,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_exportusersmodal_tsx",
-      "community": 27,
+      "community": 52,
       "norm_label": "exportusersmodal.tsx"
     },
     {
@@ -12420,7 +12447,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L6",
       "id": "users_exportusersmodal_props",
-      "community": 27,
+      "community": 52,
       "norm_label": "props"
     },
     {
@@ -12429,7 +12456,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L12",
       "id": "users_exportusersmodal_formats",
-      "community": 27,
+      "community": 52,
       "norm_label": "formats"
     },
     {
@@ -12438,7 +12465,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L17",
       "id": "users_exportusersmodal_fields",
-      "community": 27,
+      "community": 52,
       "norm_label": "fields"
     },
     {
@@ -12447,7 +12474,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L29",
       "id": "users_exportusersmodal_formatkey",
-      "community": 27,
+      "community": 52,
       "norm_label": "formatkey"
     },
     {
@@ -12456,7 +12483,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L30",
       "id": "users_exportusersmodal_fieldkey",
-      "community": 27,
+      "community": 52,
       "norm_label": "fieldkey"
     },
     {
@@ -12465,7 +12492,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L32",
       "id": "users_exportusersmodal_csvescape",
-      "community": 27,
+      "community": 52,
       "norm_label": "csvescape()"
     },
     {
@@ -12474,7 +12501,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L41",
       "id": "users_exportusersmodal_buildcsv",
-      "community": 27,
+      "community": 52,
       "norm_label": "buildcsv()"
     },
     {
@@ -12483,7 +12510,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L47",
       "id": "users_exportusersmodal_triggerdownload",
-      "community": 27,
+      "community": 52,
       "norm_label": "triggerdownload()"
     },
     {
@@ -12492,7 +12519,7 @@
       "source_file": "frontend/src/components/users/ExportUsersModal.tsx",
       "source_location": "L57",
       "id": "users_exportusersmodal_exportusersmodal",
-      "community": 27,
+      "community": 52,
       "norm_label": "exportusersmodal()"
     },
     {
@@ -12573,7 +12600,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_invitationstab_tsx",
-      "community": 49,
+      "community": 107,
       "norm_label": "invitationstab.tsx"
     },
     {
@@ -12582,7 +12609,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L14",
       "id": "users_invitationstab_formatdate",
-      "community": 49,
+      "community": 107,
       "norm_label": "formatdate()"
     },
     {
@@ -12591,7 +12618,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L18",
       "id": "users_invitationstab_formatrelative",
-      "community": 49,
+      "community": 107,
       "norm_label": "formatrelative()"
     },
     {
@@ -12600,7 +12627,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L32",
       "id": "users_invitationstab_mindatestr",
-      "community": 49,
+      "community": 107,
       "norm_label": "mindatestr()"
     },
     {
@@ -12609,7 +12636,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L40",
       "id": "users_invitationstab_status_style",
-      "community": 49,
+      "community": 107,
       "norm_label": "status_style"
     },
     {
@@ -12618,7 +12645,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L47",
       "id": "users_invitationstab_role_display",
-      "community": 49,
+      "community": 107,
       "norm_label": "role_display"
     },
     {
@@ -12627,7 +12654,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L56",
       "id": "users_invitationstab_sk",
-      "community": 49,
+      "community": 107,
       "norm_label": "sk()"
     },
     {
@@ -12636,7 +12663,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L65",
       "id": "users_invitationstab_skeletonrow",
-      "community": 49,
+      "community": 107,
       "norm_label": "skeletonrow()"
     },
     {
@@ -12645,7 +12672,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L86",
       "id": "users_invitationstab_th",
-      "community": 49,
+      "community": 107,
       "norm_label": "th"
     },
     {
@@ -12654,7 +12681,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L91",
       "id": "users_invitationstab_td",
-      "community": 49,
+      "community": 107,
       "norm_label": "td"
     },
     {
@@ -12663,7 +12690,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L98",
       "id": "users_invitationstab_actionbtn",
-      "community": 49,
+      "community": 107,
       "norm_label": "actionbtn()"
     },
     {
@@ -12672,7 +12699,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L128",
       "id": "users_invitationstab_props",
-      "community": 49,
+      "community": 107,
       "norm_label": "props"
     },
     {
@@ -12681,7 +12708,7 @@
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L136",
       "id": "users_invitationstab_invitationstab",
-      "community": 49,
+      "community": 107,
       "norm_label": "invitationstab()"
     },
     {
@@ -12780,7 +12807,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_sendinvitationmodal_tsx",
-      "community": 55,
+      "community": 131,
       "norm_label": "sendinvitationmodal.tsx"
     },
     {
@@ -12789,7 +12816,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L7",
       "id": "users_sendinvitationmodal_props",
-      "community": 55,
+      "community": 131,
       "norm_label": "props"
     },
     {
@@ -12798,7 +12825,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L13",
       "id": "users_sendinvitationmodal_expiry_options",
-      "community": 55,
+      "community": 131,
       "norm_label": "expiry_options"
     },
     {
@@ -12807,7 +12834,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L20",
       "id": "users_sendinvitationmodal_input",
-      "community": 55,
+      "community": 131,
       "norm_label": "input"
     },
     {
@@ -12816,7 +12843,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L27",
       "id": "users_sendinvitationmodal_label",
-      "community": 55,
+      "community": 131,
       "norm_label": "label"
     },
     {
@@ -12825,7 +12852,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L31",
       "id": "users_sendinvitationmodal_focusin",
-      "community": 55,
+      "community": 131,
       "norm_label": "focusin()"
     },
     {
@@ -12834,7 +12861,7 @@
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L35",
       "id": "users_sendinvitationmodal_focusout",
-      "community": 55,
+      "community": 131,
       "norm_label": "focusout()"
     },
     {
@@ -12852,7 +12879,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L1",
       "id": "frontend_src_components_users_sendmessagemodal_tsx",
-      "community": 129,
+      "community": 34,
       "norm_label": "sendmessagemodal.tsx"
     },
     {
@@ -12861,7 +12888,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L7",
       "id": "users_sendmessagemodal_message_type_options",
-      "community": 129,
+      "community": 34,
       "norm_label": "message_type_options"
     },
     {
@@ -12870,7 +12897,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L15",
       "id": "users_sendmessagemodal_priority_options",
-      "community": 129,
+      "community": 34,
       "norm_label": "priority_options"
     },
     {
@@ -12879,7 +12906,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L21",
       "id": "users_sendmessagemodal_input",
-      "community": 129,
+      "community": 34,
       "norm_label": "input"
     },
     {
@@ -12888,7 +12915,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L28",
       "id": "users_sendmessagemodal_label",
-      "community": 129,
+      "community": 34,
       "norm_label": "label"
     },
     {
@@ -12897,7 +12924,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L32",
       "id": "users_sendmessagemodal_focusin",
-      "community": 129,
+      "community": 34,
       "norm_label": "focusin()"
     },
     {
@@ -12906,7 +12933,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L36",
       "id": "users_sendmessagemodal_focusout",
-      "community": 129,
+      "community": 34,
       "norm_label": "focusout()"
     },
     {
@@ -12915,7 +12942,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L41",
       "id": "users_sendmessagemodal_props",
-      "community": 129,
+      "community": 34,
       "norm_label": "props"
     },
     {
@@ -12924,7 +12951,7 @@
       "source_file": "frontend/src/components/users/SendMessageModal.tsx",
       "source_location": "L49",
       "id": "users_sendmessagemodal_sendmessagemodal",
-      "community": 129,
+      "community": 34,
       "norm_label": "sendmessagemodal()"
     },
     {
@@ -14049,7 +14076,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L1",
       "id": "frontend_src_hooks_useroles_ts",
-      "community": 104,
+      "community": 131,
       "norm_label": "useroles.ts"
     },
     {
@@ -14058,7 +14085,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L4",
       "id": "hooks_useroles_roleoption",
-      "community": 104,
+      "community": 131,
       "norm_label": "roleoption"
     },
     {
@@ -14067,7 +14094,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L11",
       "id": "hooks_useroles_enum_roles",
-      "community": 104,
+      "community": 131,
       "norm_label": "enum_roles"
     },
     {
@@ -14076,7 +14103,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L12",
       "id": "hooks_useroles_role_alias",
-      "community": 104,
+      "community": 131,
       "norm_label": "role_alias"
     },
     {
@@ -14085,7 +14112,7 @@
       "source_file": "frontend/src/hooks/useRoles.ts",
       "source_location": "L17",
       "id": "hooks_useroles_rolenametoenum",
-      "community": 104,
+      "community": 131,
       "norm_label": "rolenametoenum()"
     },
     {
@@ -14326,7 +14353,7 @@
       "label": "getGreeting()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L35",
+      "source_location": "L36",
       "id": "pages_dashboardpage_getgreeting",
       "community": 23,
       "norm_label": "getgreeting()"
@@ -14335,7 +14362,7 @@
       "label": "formatRelative()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L42",
+      "source_location": "L43",
       "id": "pages_dashboardpage_formatrelative",
       "community": 6,
       "norm_label": "formatrelative()"
@@ -14344,7 +14371,7 @@
       "label": "formatDate()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L52",
+      "source_location": "L53",
       "id": "pages_dashboardpage_formatdate",
       "community": 23,
       "norm_label": "formatdate()"
@@ -14353,7 +14380,7 @@
       "label": "KpiIcon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L63",
+      "source_location": "L64",
       "id": "pages_dashboardpage_kpiicon",
       "community": 6,
       "norm_label": "kpiicon()"
@@ -14362,7 +14389,7 @@
       "label": "QaIcon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L95",
+      "source_location": "L96",
       "id": "pages_dashboardpage_qaicon",
       "community": 6,
       "norm_label": "qaicon()"
@@ -14371,7 +14398,7 @@
       "label": "LKpiCardProps",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L135",
+      "source_location": "L136",
       "id": "pages_dashboardpage_lkpicardprops",
       "community": 6,
       "norm_label": "lkpicardprops"
@@ -14380,7 +14407,7 @@
       "label": "LKpiCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L136",
+      "source_location": "L137",
       "id": "pages_dashboardpage_lkpicard",
       "community": 6,
       "norm_label": "lkpicard()"
@@ -14389,7 +14416,7 @@
       "label": "KpiSkeleton()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L150",
+      "source_location": "L151",
       "id": "pages_dashboardpage_kpiskeleton",
       "community": 6,
       "norm_label": "kpiskeleton()"
@@ -14398,7 +14425,7 @@
       "label": "StatRow()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L164",
+      "source_location": "L165",
       "id": "pages_dashboardpage_statrow",
       "community": 6,
       "norm_label": "statrow()"
@@ -14407,7 +14434,7 @@
       "label": "AnalyticsSpin()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L175",
+      "source_location": "L176",
       "id": "pages_dashboardpage_analyticsspin",
       "community": 6,
       "norm_label": "analyticsspin()"
@@ -14416,7 +14443,7 @@
       "label": "EmptyMsg()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L183",
+      "source_location": "L184",
       "id": "pages_dashboardpage_emptymsg",
       "community": 6,
       "norm_label": "emptymsg()"
@@ -14425,7 +14452,7 @@
       "label": "LearningActivityChart()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L189",
+      "source_location": "L190",
       "id": "pages_dashboardpage_learningactivitychart",
       "community": 6,
       "norm_label": "learningactivitychart()"
@@ -14434,7 +14461,7 @@
       "label": "ROLE_COLORS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L266",
+      "source_location": "L267",
       "id": "pages_dashboardpage_role_colors",
       "community": 6,
       "norm_label": "role_colors"
@@ -14443,7 +14470,7 @@
       "label": "ROLE_LABELS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L274",
+      "source_location": "L275",
       "id": "pages_dashboardpage_role_labels",
       "community": 6,
       "norm_label": "role_labels"
@@ -14452,7 +14479,7 @@
       "label": "UsersRoleDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L279",
+      "source_location": "L280",
       "id": "pages_dashboardpage_usersroledonut",
       "community": 6,
       "norm_label": "usersroledonut()"
@@ -14461,7 +14488,7 @@
       "label": "CompletionDonut()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L324",
+      "source_location": "L325",
       "id": "pages_dashboardpage_completiondonut",
       "community": 6,
       "norm_label": "completiondonut()"
@@ -14470,7 +14497,7 @@
       "label": "AVATAR_COLORS",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L365",
+      "source_location": "L366",
       "id": "pages_dashboardpage_avatar_colors",
       "community": 6,
       "norm_label": "avatar_colors"
@@ -14479,7 +14506,7 @@
       "label": "ActivityAvatar()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L367",
+      "source_location": "L368",
       "id": "pages_dashboardpage_activityavatar",
       "community": 6,
       "norm_label": "activityavatar()"
@@ -14488,7 +14515,7 @@
       "label": "ACTIVITY_ICON_BG",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L381",
+      "source_location": "L382",
       "id": "pages_dashboardpage_activity_icon_bg",
       "community": 6,
       "norm_label": "activity_icon_bg"
@@ -14497,7 +14524,7 @@
       "label": "ACTIVITY_ICON_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L384",
+      "source_location": "L385",
       "id": "pages_dashboardpage_activity_icon_color",
       "community": 6,
       "norm_label": "activity_icon_color"
@@ -14506,7 +14533,7 @@
       "label": "NOTIF_BG",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L387",
+      "source_location": "L388",
       "id": "pages_dashboardpage_notif_bg",
       "community": 6,
       "norm_label": "notif_bg"
@@ -14515,7 +14542,7 @@
       "label": "NOTIF_ICON_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L390",
+      "source_location": "L391",
       "id": "pages_dashboardpage_notif_icon_color",
       "community": 6,
       "norm_label": "notif_icon_color"
@@ -14524,7 +14551,7 @@
       "label": "NotifIcon()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L394",
+      "source_location": "L395",
       "id": "pages_dashboardpage_notificon",
       "community": 6,
       "norm_label": "notificon()"
@@ -14533,7 +14560,7 @@
       "label": "RevenueCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L414",
+      "source_location": "L415",
       "id": "pages_dashboardpage_revenuecard",
       "community": 6,
       "norm_label": "revenuecard()"
@@ -14542,7 +14569,7 @@
       "label": "UserAnalyticsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L440",
+      "source_location": "L441",
       "id": "pages_dashboardpage_useranalyticscard",
       "community": 6,
       "norm_label": "useranalyticscard()"
@@ -14551,7 +14578,7 @@
       "label": "CourseAnalyticsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L457",
+      "source_location": "L458",
       "id": "pages_dashboardpage_courseanalyticscard",
       "community": 6,
       "norm_label": "courseanalyticscard()"
@@ -14560,7 +14587,7 @@
       "label": "InstructorPerformanceCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L488",
+      "source_location": "L489",
       "id": "pages_dashboardpage_instructorperformancecard",
       "community": 6,
       "norm_label": "instructorperformancecard()"
@@ -14569,7 +14596,7 @@
       "label": "StudentEngagementCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L517",
+      "source_location": "L518",
       "id": "pages_dashboardpage_studentengagementcard",
       "community": 6,
       "norm_label": "studentengagementcard()"
@@ -14578,7 +14605,7 @@
       "label": "PRIORITY_STYLE",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L542",
+      "source_location": "L543",
       "id": "pages_dashboardpage_priority_style",
       "community": 6,
       "norm_label": "priority_style"
@@ -14587,7 +14614,7 @@
       "label": "TX_STATUS_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L549",
+      "source_location": "L550",
       "id": "pages_dashboardpage_tx_status_color",
       "community": 6,
       "norm_label": "tx_status_color"
@@ -14596,7 +14623,7 @@
       "label": "TX_TYPE_LABEL",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L553",
+      "source_location": "L554",
       "id": "pages_dashboardpage_tx_type_label",
       "community": 6,
       "norm_label": "tx_type_label"
@@ -14605,7 +14632,7 @@
       "label": "CALENDAR_COLOR",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L558",
+      "source_location": "L559",
       "id": "pages_dashboardpage_calendar_color",
       "community": 6,
       "norm_label": "calendar_color"
@@ -14614,7 +14641,7 @@
       "label": "INSIGHT_STYLE",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L563",
+      "source_location": "L564",
       "id": "pages_dashboardpage_insight_style",
       "community": 6,
       "norm_label": "insight_style"
@@ -14623,7 +14650,7 @@
       "label": "CS_BTN",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L569",
+      "source_location": "L570",
       "id": "pages_dashboardpage_cs_btn",
       "community": 6,
       "norm_label": "cs_btn"
@@ -14632,7 +14659,7 @@
       "label": "PendingApprovalsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L577",
+      "source_location": "L578",
       "id": "pages_dashboardpage_pendingapprovalscard",
       "community": 6,
       "norm_label": "pendingapprovalscard()"
@@ -14641,7 +14668,7 @@
       "label": "LiveSessionsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L627",
+      "source_location": "L628",
       "id": "pages_dashboardpage_livesessionscard",
       "community": 6,
       "norm_label": "livesessionscard()"
@@ -14650,7 +14677,7 @@
       "label": "TasksRemindersCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L668",
+      "source_location": "L669",
       "id": "pages_dashboardpage_tasksreminderscard",
       "community": 6,
       "norm_label": "tasksreminderscard()"
@@ -14659,7 +14686,7 @@
       "label": "RecentTransactionsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L706",
+      "source_location": "L707",
       "id": "pages_dashboardpage_recenttransactionscard",
       "community": 6,
       "norm_label": "recenttransactionscard()"
@@ -14668,7 +14695,7 @@
       "label": "CalendarEventsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L737",
+      "source_location": "L738",
       "id": "pages_dashboardpage_calendareventscard",
       "community": 6,
       "norm_label": "calendareventscard()"
@@ -14677,7 +14704,7 @@
       "label": "ReportsSnapshotCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L773",
+      "source_location": "L774",
       "id": "pages_dashboardpage_reportssnapshotcard",
       "community": 6,
       "norm_label": "reportssnapshotcard()"
@@ -14686,7 +14713,7 @@
       "label": "AiInsightsCard()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L802",
+      "source_location": "L803",
       "id": "pages_dashboardpage_aiinsightscard",
       "community": 6,
       "norm_label": "aiinsightscard()"
@@ -14695,7 +14722,7 @@
       "label": "DashboardPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/DashboardPage.tsx",
-      "source_location": "L831",
+      "source_location": "L832",
       "id": "pages_dashboardpage_dashboardpage",
       "community": 23,
       "norm_label": "dashboardpage()"
@@ -14832,7 +14859,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L1",
       "id": "frontend_src_pages_resetpasswordpage_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "resetpasswordpage.tsx"
     },
     {
@@ -14841,7 +14868,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L7",
       "id": "pages_resetpasswordpage_iconshieldcheck",
-      "community": 0,
+      "community": 1,
       "norm_label": "iconshieldcheck()"
     },
     {
@@ -14850,7 +14877,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L18",
       "id": "pages_resetpasswordpage_authshell",
-      "community": 0,
+      "community": 1,
       "norm_label": "authshell()"
     },
     {
@@ -14859,7 +14886,7 @@
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L34",
       "id": "pages_resetpasswordpage_resetpasswordpage",
-      "community": 0,
+      "community": 1,
       "norm_label": "resetpasswordpage()"
     },
     {
@@ -15426,7 +15453,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L1",
       "id": "frontend_src_routes_protectedroute_tsx",
-      "community": 45,
+      "community": 108,
       "norm_label": "protectedroute.tsx"
     },
     {
@@ -15435,7 +15462,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L6",
       "id": "routes_protectedroute_props",
-      "community": 45,
+      "community": 108,
       "norm_label": "props"
     },
     {
@@ -15444,7 +15471,7 @@
       "source_file": "frontend/src/routes/ProtectedRoute.tsx",
       "source_location": "L12",
       "id": "routes_protectedroute_protectedroute",
-      "community": 45,
+      "community": 108,
       "norm_label": "protectedroute()"
     },
     {
@@ -15705,7 +15732,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "frontend_src_types_auth_ts",
-      "community": 45,
+      "community": 108,
       "norm_label": "auth.ts"
     },
     {
@@ -15714,7 +15741,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L1",
       "id": "types_auth_profile",
-      "community": 45,
+      "community": 108,
       "norm_label": "profile"
     },
     {
@@ -15723,7 +15750,7 @@
       "source_file": "frontend/src/types/auth.ts",
       "source_location": "L8",
       "id": "types_auth_userrole",
-      "community": 45,
+      "community": 108,
       "norm_label": "userrole"
     },
     {
@@ -16740,7 +16767,7 @@
       "source_file": "frontend/src/types/passwordRecovery.ts",
       "source_location": "L7",
       "id": "types_passwordrecovery_forgotpasswordstep",
-      "community": 1,
+      "community": 0,
       "norm_label": "forgotpasswordstep"
     },
     {
@@ -16749,7 +16776,7 @@
       "source_file": "frontend/src/types/passwordRecovery.ts",
       "source_location": "L14",
       "id": "types_passwordrecovery_resetpasswordstep",
-      "community": 0,
+      "community": 1,
       "norm_label": "resetpasswordstep"
     },
     {
@@ -16848,7 +16875,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L27",
       "id": "types_rolespage_rolepagedetails",
-      "community": 113,
+      "community": 111,
       "norm_label": "rolepagedetails"
     },
     {
@@ -16866,7 +16893,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L39",
       "id": "types_rolespage_rolespagepagination",
-      "community": 113,
+      "community": 111,
       "norm_label": "rolespagepagination"
     },
     {
@@ -16875,7 +16902,7 @@
       "source_file": "frontend/src/types/rolesPage.ts",
       "source_location": "L46",
       "id": "types_rolespage_rolespageresponse",
-      "community": 113,
+      "community": 111,
       "norm_label": "rolespageresponse"
     },
     {
@@ -17028,7 +17055,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L55",
       "id": "types_users_roletype",
-      "community": 34,
+      "community": 104,
       "norm_label": "roletype"
     },
     {
@@ -17136,7 +17163,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L150",
       "id": "types_users_assignrolerequest",
-      "community": 34,
+      "community": 104,
       "norm_label": "assignrolerequest"
     },
     {
@@ -17244,7 +17271,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L202",
       "id": "types_users_invitationstatus",
-      "community": 49,
+      "community": 107,
       "norm_label": "invitationstatus"
     },
     {
@@ -17253,7 +17280,7 @@
       "source_file": "frontend/src/types/users.ts",
       "source_location": "L204",
       "id": "types_users_invitation",
-      "community": 49,
+      "community": 107,
       "norm_label": "invitation"
     },
     {
@@ -17806,10 +17833,19 @@
       "norm_label": "lm-overview.full.spec.ts"
     },
     {
+      "label": "kpiGrid",
+      "file_type": "code",
+      "source_file": "frontend/tests/lm-overview.full.spec.ts",
+      "source_location": "L16",
+      "id": "tests_lm_overview_full_spec_kpigrid",
+      "community": 135,
+      "norm_label": "kpigrid"
+    },
+    {
       "label": "totalCoursesCard",
       "file_type": "code",
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
-      "source_location": "L12",
+      "source_location": "L17",
       "id": "tests_lm_overview_full_spec_totalcoursescard",
       "community": 135,
       "norm_label": "totalcoursescard"
@@ -17818,7 +17854,7 @@
       "label": "completionCard",
       "file_type": "code",
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
-      "source_location": "L16",
+      "source_location": "L21",
       "id": "tests_lm_overview_full_spec_completioncard",
       "community": 135,
       "norm_label": "completioncard"
@@ -17827,7 +17863,7 @@
       "label": "certificatesCard",
       "file_type": "code",
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
-      "source_location": "L20",
+      "source_location": "L25",
       "id": "tests_lm_overview_full_spec_certificatescard",
       "community": 135,
       "norm_label": "certificatescard"
@@ -17836,7 +17872,7 @@
       "label": "card",
       "file_type": "code",
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
-      "source_location": "L27",
+      "source_location": "L32",
       "id": "tests_lm_overview_full_spec_card",
       "community": 135,
       "norm_label": "card"
@@ -17845,7 +17881,7 @@
       "label": "select",
       "file_type": "code",
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
-      "source_location": "L38",
+      "source_location": "L43",
       "id": "tests_lm_overview_full_spec_select",
       "community": 135,
       "norm_label": "select"
@@ -17854,7 +17890,7 @@
       "label": "categoryCells",
       "file_type": "code",
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
-      "source_location": "L88",
+      "source_location": "L102",
       "id": "tests_lm_overview_full_spec_categorycells",
       "community": 135,
       "norm_label": "categorycells"
@@ -17863,7 +17899,7 @@
       "label": "instructorCells",
       "file_type": "code",
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
-      "source_location": "L103",
+      "source_location": "L117",
       "id": "tests_lm_overview_full_spec_instructorcells",
       "community": 135,
       "norm_label": "instructorcells"
@@ -20402,7 +20438,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/rolesPermissionsPage/AssignUsersToRoleModal.tsx",
       "source_location": "L8",
-      "community": 24,
+      "community": 22,
       "norm_label": "fetchallusers()",
       "id": "rolespermissionspage_assignuserstorolemodal_fetchallusers"
     },
@@ -20690,7 +20726,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L13",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  exportusers,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  approveverification,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n  sendmessage,\r\n  getusermessageslist,\r\n  forcelogoutuser,\r\n}",
       "id": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers_sendmessage_getusermessageslist_forcelogoutuser"
     },
@@ -20708,7 +20744,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/roles.routes.js",
       "source_location": "L4",
-      "community": 19,
+      "community": 126,
       "norm_label": "{\r\n  listroles, getrole, createrole, updaterole, deleterole,\r\n  getrolepermissions, assignpermissionstorole,\r\n}",
       "id": "routes_roles_routes_listroles_getrole_createrole_updaterole_deleterole_getrolepermissions_assignpermissionstorole"
     },
@@ -20879,7 +20915,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L13",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  exportusers,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  approveverification,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n  sendmessage,\r\n  getusermessageslist,\r\n}",
       "id": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers_sendmessage_getusermessageslist"
     },
@@ -20897,7 +20933,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L13",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  exportusers,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  approveverification,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n}",
       "id": "routes_users_routes_getuserslist_exportusers_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers"
     },
@@ -20906,7 +20942,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/SendInvitationModal.tsx",
       "source_location": "L12",
-      "community": 55,
+      "community": 131,
       "norm_label": "role_options",
       "id": "users_sendinvitationmodal_role_options"
     },
@@ -20942,7 +20978,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L9",
-      "community": 49,
+      "community": 107,
       "norm_label": "initials()",
       "id": "users_invitationstab_initials"
     },
@@ -20951,7 +20987,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L13",
-      "community": 49,
+      "community": 107,
       "norm_label": "palettes",
       "id": "users_invitationstab_palettes"
     },
@@ -20960,7 +20996,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/InvitationsTab.tsx",
       "source_location": "L18",
-      "community": 49,
+      "community": 107,
       "norm_label": "palette()",
       "id": "users_invitationstab_palette"
     },
@@ -20969,7 +21005,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L13",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  approveverification,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n}",
       "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_approveverification_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers"
     },
@@ -20978,7 +21014,7 @@
       "file_type": "code",
       "source_file": "frontend/src/components/users/AssignRoleModal.tsx",
       "source_location": "L13",
-      "community": 34,
+      "community": 104,
       "norm_label": "roles",
       "id": "users_assignrolemodal_roles"
     },
@@ -20987,7 +21023,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L13",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n  bulkactionusers,\r\n}",
       "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers_bulkactionusers"
     },
@@ -21014,7 +21050,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L9",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n  importusers,\r\n}",
       "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics_importusers"
     },
@@ -21050,7 +21086,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L3",
-      "community": 111,
+      "community": 9,
       "norm_label": "{ adminuseractionratelimiter, adminusersanalyticsratelimiter }",
       "id": "routes_users_routes_adminuseractionratelimiter_adminusersanalyticsratelimiter"
     },
@@ -21059,7 +21095,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L4",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  reactivateuser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n}",
       "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_reactivateuser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics"
     },
@@ -21086,7 +21122,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L4",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  suspenduser,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n}",
       "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_suspenduser_resetuserpassword_assignuserrole_deleteuser_getusersanalytics"
     },
@@ -21122,7 +21158,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L4",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n  getusersanalytics,\r\n}",
       "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_resetuserpassword_assignuserrole_deleteuser_getusersanalytics"
     },
@@ -21131,7 +21167,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L3",
-      "community": 111,
+      "community": 9,
       "norm_label": "{ adminuseractionratelimiter }",
       "id": "routes_users_routes_adminuseractionratelimiter"
     },
@@ -21140,7 +21176,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L4",
-      "community": 111,
+      "community": 9,
       "norm_label": "{\r\n  getuserslist,\r\n  getuserdetails,\r\n  createuser,\r\n  updateuser,\r\n  updateuserstatus,\r\n  resetuserpassword,\r\n  assignuserrole,\r\n  deleteuser,\r\n}",
       "id": "routes_users_routes_getuserslist_getuserdetails_createuser_updateuser_updateuserstatus_resetuserpassword_assignuserrole_deleteuser"
     },
@@ -21194,7 +21230,7 @@
       "file_type": "code",
       "source_file": "backend/src/routes/users.routes.js",
       "source_location": "L3",
-      "community": 111,
+      "community": 9,
       "norm_label": "{ getuserslist, getuserdetails }",
       "id": "routes_users_routes_getuserslist_getuserdetails"
     },
@@ -21455,7 +21491,7 @@
       "file_type": "code",
       "source_file": "frontend/src/pages/ResetPasswordPage.tsx",
       "source_location": "L19",
-      "community": 0,
+      "community": 1,
       "norm_label": "iconalerttriangle()",
       "id": "pages_resetpasswordpage_iconalerttriangle"
     },
@@ -22857,6 +22893,37 @@
       "confidence_score": 1.0,
       "source": "backend_scripts_listroles_js",
       "target": "scripts_listroles_main"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/scripts/resetLoginLockout.js",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_scripts_resetloginlockout_js",
+      "target": "backend_src_config_prisma_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/scripts/resetLoginLockout.js",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_scripts_resetloginlockout_js",
+      "target": "scripts_resetloginlockout_prisma"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/scripts/resetLoginLockout.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_scripts_resetloginlockout_js",
+      "target": "scripts_resetloginlockout_main"
     },
     {
       "relation": "contains",
@@ -39379,9 +39446,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "frontend_src_api_adminauth_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_api_adminauth_ts"
     },
     {
       "relation": "imports",
@@ -39566,9 +39633,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "api_adminauth_getstoredtoken",
-      "confidence_score": 1.0
+      "target": "api_adminauth_getstoredtoken"
     },
     {
       "relation": "calls",
@@ -45738,9 +45805,9 @@
       "source_file": "frontend/src/components/learningManagement/ContentStats.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_contentstats_tsx",
-      "target": "frontend_src_services_lmapi_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_services_lmapi_ts"
     },
     {
       "relation": "imports",
@@ -45749,9 +45816,9 @@
       "source_file": "frontend/src/components/learningManagement/ContentStats.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_contentstats_tsx",
-      "target": "services_lmapi_getlmcontentstats",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmcontentstats"
     },
     {
       "relation": "imports_from",
@@ -45760,9 +45827,9 @@
       "source_file": "frontend/src/components/learningManagement/ContentStats.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_contentstats_tsx",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -45771,9 +45838,9 @@
       "source_file": "frontend/src/components/learningManagement/ContentStats.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_contentstats_tsx",
-      "target": "types_lm_lmcontentstats",
-      "confidence_score": 1.0
+      "target": "types_lm_lmcontentstats"
     },
     {
       "relation": "contains",
@@ -45781,9 +45848,9 @@
       "source_file": "frontend/src/components/learningManagement/ContentStats.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_contentstats_tsx",
-      "target": "learningmanagement_contentstats_statmeta",
-      "confidence_score": 1.0
+      "target": "learningmanagement_contentstats_statmeta"
     },
     {
       "relation": "contains",
@@ -45801,9 +45868,9 @@
       "source_file": "frontend/src/components/learningManagement/ContentStats.tsx",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_contentstats_tsx",
-      "target": "learningmanagement_contentstats_contentstatsskeleton",
-      "confidence_score": 1.0
+      "target": "learningmanagement_contentstats_contentstatsskeleton"
     },
     {
       "relation": "contains",
@@ -45843,9 +45910,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "frontend_src_services_lmapi_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_services_lmapi_ts"
     },
     {
       "relation": "imports",
@@ -45854,9 +45921,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "services_lmapi_getlmcourses",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmcourses"
     },
     {
       "relation": "imports",
@@ -45865,9 +45932,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "services_lmapi_getlmfilteroptions",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmfilteroptions"
     },
     {
       "relation": "imports_from",
@@ -45876,9 +45943,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -45887,9 +45954,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "types_lm_courserow",
-      "confidence_score": 1.0
+      "target": "types_lm_courserow"
     },
     {
       "relation": "imports",
@@ -45898,9 +45965,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "types_lm_lmfilteroptions",
-      "confidence_score": 1.0
+      "target": "types_lm_lmfilteroptions"
     },
     {
       "relation": "contains",
@@ -45908,9 +45975,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "learningmanagement_coursestable_limit_options",
-      "confidence_score": 1.0
+      "target": "learningmanagement_coursestable_limit_options"
     },
     {
       "relation": "contains",
@@ -45928,9 +45995,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "learningmanagement_coursestable_gradients",
-      "confidence_score": 1.0
+      "target": "learningmanagement_coursestable_gradients"
     },
     {
       "relation": "contains",
@@ -45948,9 +46015,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_coursestable_tsx",
-      "target": "learningmanagement_coursestable_pagenumbers",
-      "confidence_score": 1.0
+      "target": "learningmanagement_coursestable_pagenumbers"
     },
     {
       "relation": "contains",
@@ -46000,9 +46067,9 @@
       "source_file": "frontend/src/components/learningManagement/CoursesTable.tsx",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "learningmanagement_coursestable_coursestable",
-      "target": "learningmanagement_coursestable_pagenumbers",
-      "confidence_score": 1.0
+      "target": "learningmanagement_coursestable_pagenumbers"
     },
     {
       "relation": "imports_from",
@@ -46011,9 +46078,9 @@
       "source_file": "frontend/src/components/learningManagement/DistributionChart.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_distributionchart_tsx",
-      "target": "frontend_src_services_lmapi_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_services_lmapi_ts"
     },
     {
       "relation": "imports",
@@ -46022,9 +46089,9 @@
       "source_file": "frontend/src/components/learningManagement/DistributionChart.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_distributionchart_tsx",
-      "target": "services_lmapi_getlmdistribution",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmdistribution"
     },
     {
       "relation": "imports_from",
@@ -46033,9 +46100,9 @@
       "source_file": "frontend/src/components/learningManagement/DistributionChart.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_distributionchart_tsx",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -46044,9 +46111,9 @@
       "source_file": "frontend/src/components/learningManagement/DistributionChart.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_distributionchart_tsx",
-      "target": "types_lm_lmdistribution",
-      "confidence_score": 1.0
+      "target": "types_lm_lmdistribution"
     },
     {
       "relation": "contains",
@@ -46054,9 +46121,9 @@
       "source_file": "frontend/src/components/learningManagement/DistributionChart.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_distributionchart_tsx",
-      "target": "learningmanagement_distributionchart_colors",
-      "confidence_score": 1.0
+      "target": "learningmanagement_distributionchart_colors"
     },
     {
       "relation": "contains",
@@ -46064,9 +46131,9 @@
       "source_file": "frontend/src/components/learningManagement/DistributionChart.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_distributionchart_tsx",
-      "target": "learningmanagement_distributionchart_distributionskeleton",
-      "confidence_score": 1.0
+      "target": "learningmanagement_distributionchart_distributionskeleton"
     },
     {
       "relation": "contains",
@@ -46126,9 +46193,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "frontend_src_services_lmapi_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_services_lmapi_ts"
     },
     {
       "relation": "imports",
@@ -46137,9 +46204,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "services_lmapi_getlmstats",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmstats"
     },
     {
       "relation": "imports_from",
@@ -46148,9 +46215,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -46159,9 +46226,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "types_lm_lmstats",
-      "confidence_score": 1.0
+      "target": "types_lm_lmstats"
     },
     {
       "relation": "imports",
@@ -46170,9 +46237,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "types_lm_lmstatitem",
-      "confidence_score": 1.0
+      "target": "types_lm_lmstatitem"
     },
     {
       "relation": "contains",
@@ -46180,9 +46247,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "learningmanagement_kpicards_kpimeta",
-      "confidence_score": 1.0
+      "target": "learningmanagement_kpicards_kpimeta"
     },
     {
       "relation": "contains",
@@ -46190,9 +46257,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "learningmanagement_kpicards_kpi_meta",
-      "confidence_score": 1.0
+      "target": "learningmanagement_kpicards_kpi_meta"
     },
     {
       "relation": "contains",
@@ -46200,9 +46267,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "learningmanagement_kpicards_growthbadge",
-      "confidence_score": 1.0
+      "target": "learningmanagement_kpicards_growthbadge"
     },
     {
       "relation": "contains",
@@ -46210,9 +46277,9 @@
       "source_file": "frontend/src/components/learningManagement/KpiCards.tsx",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_kpicards_tsx",
-      "target": "learningmanagement_kpicards_kpiskeleton",
-      "confidence_score": 1.0
+      "target": "learningmanagement_kpicards_kpiskeleton"
     },
     {
       "relation": "contains",
@@ -46262,9 +46329,9 @@
       "source_file": "frontend/src/components/learningManagement/LiveSessions.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_livesessions_tsx",
-      "target": "frontend_src_services_lmapi_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_services_lmapi_ts"
     },
     {
       "relation": "imports",
@@ -46273,9 +46340,9 @@
       "source_file": "frontend/src/components/learningManagement/LiveSessions.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_livesessions_tsx",
-      "target": "services_lmapi_getlmlivesessions",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmlivesessions"
     },
     {
       "relation": "imports_from",
@@ -46284,9 +46351,9 @@
       "source_file": "frontend/src/components/learningManagement/LiveSessions.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_livesessions_tsx",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -46295,9 +46362,9 @@
       "source_file": "frontend/src/components/learningManagement/LiveSessions.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_livesessions_tsx",
-      "target": "types_lm_livesession",
-      "confidence_score": 1.0
+      "target": "types_lm_livesession"
     },
     {
       "relation": "contains",
@@ -46305,9 +46372,9 @@
       "source_file": "frontend/src/components/learningManagement/LiveSessions.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_livesessions_tsx",
-      "target": "learningmanagement_livesessions_formatstart",
-      "confidence_score": 1.0
+      "target": "learningmanagement_livesessions_formatstart"
     },
     {
       "relation": "contains",
@@ -46315,9 +46382,9 @@
       "source_file": "frontend/src/components/learningManagement/LiveSessions.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_livesessions_tsx",
-      "target": "learningmanagement_livesessions_livesessionsskeleton",
-      "confidence_score": 1.0
+      "target": "learningmanagement_livesessions_livesessionsskeleton"
     },
     {
       "relation": "contains",
@@ -46325,9 +46392,9 @@
       "source_file": "frontend/src/components/learningManagement/LiveSessions.tsx",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_livesessions_tsx",
-      "target": "learningmanagement_livesessions_livesessions",
-      "confidence_score": 1.0
+      "target": "learningmanagement_livesessions_livesessions"
     },
     {
       "relation": "imports_from",
@@ -46336,9 +46403,9 @@
       "source_file": "frontend/src/pages/LearningManagementPage.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_learningmanagementpage_tsx",
-      "target": "frontend_src_components_learningmanagement_livesessions_tsx",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_learningmanagement_livesessions_tsx"
     },
     {
       "relation": "contains",
@@ -46482,9 +46549,9 @@
       "source_file": "frontend/src/components/learningManagement/ProgressChart.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_progresschart_tsx",
-      "target": "frontend_src_services_lmapi_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_services_lmapi_ts"
     },
     {
       "relation": "imports",
@@ -46493,9 +46560,9 @@
       "source_file": "frontend/src/components/learningManagement/ProgressChart.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_progresschart_tsx",
-      "target": "services_lmapi_getlmprogress",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmprogress"
     },
     {
       "relation": "imports_from",
@@ -46504,9 +46571,9 @@
       "source_file": "frontend/src/components/learningManagement/ProgressChart.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_progresschart_tsx",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -46515,9 +46582,9 @@
       "source_file": "frontend/src/components/learningManagement/ProgressChart.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_progresschart_tsx",
-      "target": "types_lm_progresspoint",
-      "confidence_score": 1.0
+      "target": "types_lm_progresspoint"
     },
     {
       "relation": "imports",
@@ -46526,9 +46593,9 @@
       "source_file": "frontend/src/components/learningManagement/ProgressChart.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_progresschart_tsx",
-      "target": "types_lm_progressrange",
-      "confidence_score": 1.0
+      "target": "types_lm_progressrange"
     },
     {
       "relation": "contains",
@@ -46546,9 +46613,9 @@
       "source_file": "frontend/src/components/learningManagement/ProgressChart.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_progresschart_tsx",
-      "target": "learningmanagement_progresschart_range_options",
-      "confidence_score": 1.0
+      "target": "learningmanagement_progresschart_range_options"
     },
     {
       "relation": "contains",
@@ -46598,9 +46665,9 @@
       "source_file": "frontend/src/components/learningManagement/RecentActivities.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_recentactivities_tsx",
-      "target": "frontend_src_services_lmapi_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_services_lmapi_ts"
     },
     {
       "relation": "imports",
@@ -46609,9 +46676,9 @@
       "source_file": "frontend/src/components/learningManagement/RecentActivities.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_recentactivities_tsx",
-      "target": "services_lmapi_getlmactivities",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmactivities"
     },
     {
       "relation": "imports_from",
@@ -46620,9 +46687,9 @@
       "source_file": "frontend/src/components/learningManagement/RecentActivities.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_recentactivities_tsx",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -46631,9 +46698,9 @@
       "source_file": "frontend/src/components/learningManagement/RecentActivities.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_recentactivities_tsx",
-      "target": "types_lm_lmactivity",
-      "confidence_score": 1.0
+      "target": "types_lm_lmactivity"
     },
     {
       "relation": "imports",
@@ -46642,9 +46709,9 @@
       "source_file": "frontend/src/components/learningManagement/RecentActivities.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_recentactivities_tsx",
-      "target": "types_lm_lmactivitytype",
-      "confidence_score": 1.0
+      "target": "types_lm_lmactivitytype"
     },
     {
       "relation": "contains",
@@ -46652,9 +46719,9 @@
       "source_file": "frontend/src/components/learningManagement/RecentActivities.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_recentactivities_tsx",
-      "target": "learningmanagement_recentactivities_type_meta",
-      "confidence_score": 1.0
+      "target": "learningmanagement_recentactivities_type_meta"
     },
     {
       "relation": "contains",
@@ -46662,9 +46729,9 @@
       "source_file": "frontend/src/components/learningManagement/RecentActivities.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_recentactivities_tsx",
-      "target": "learningmanagement_recentactivities_timeago",
-      "confidence_score": 1.0
+      "target": "learningmanagement_recentactivities_timeago"
     },
     {
       "relation": "contains",
@@ -46672,9 +46739,9 @@
       "source_file": "frontend/src/components/learningManagement/RecentActivities.tsx",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_recentactivities_tsx",
-      "target": "learningmanagement_recentactivities_recentactivitiesskeleton",
-      "confidence_score": 1.0
+      "target": "learningmanagement_recentactivities_recentactivitiesskeleton"
     },
     {
       "relation": "contains",
@@ -46724,9 +46791,9 @@
       "source_file": "frontend/src/components/learningManagement/TopCourses.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_topcourses_tsx",
-      "target": "frontend_src_services_lmapi_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_services_lmapi_ts"
     },
     {
       "relation": "imports",
@@ -46735,9 +46802,9 @@
       "source_file": "frontend/src/components/learningManagement/TopCourses.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_topcourses_tsx",
-      "target": "services_lmapi_getlmtopcourses",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmtopcourses"
     },
     {
       "relation": "imports_from",
@@ -46746,9 +46813,9 @@
       "source_file": "frontend/src/components/learningManagement/TopCourses.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_topcourses_tsx",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -46757,9 +46824,9 @@
       "source_file": "frontend/src/components/learningManagement/TopCourses.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_topcourses_tsx",
-      "target": "types_lm_topcourse",
-      "confidence_score": 1.0
+      "target": "types_lm_topcourse"
     },
     {
       "relation": "contains",
@@ -46767,9 +46834,9 @@
       "source_file": "frontend/src/components/learningManagement/TopCourses.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_topcourses_tsx",
-      "target": "learningmanagement_topcourses_gradients",
-      "confidence_score": 1.0
+      "target": "learningmanagement_topcourses_gradients"
     },
     {
       "relation": "contains",
@@ -46777,9 +46844,9 @@
       "source_file": "frontend/src/components/learningManagement/TopCourses.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_components_learningmanagement_topcourses_tsx",
-      "target": "learningmanagement_topcourses_topcoursesskeleton",
-      "confidence_score": 1.0
+      "target": "learningmanagement_topcourses_topcoursesskeleton"
     },
     {
       "relation": "contains",
@@ -56523,9 +56590,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "frontend_src_types_lm_ts",
-      "confidence_score": 1.0
+      "target": "frontend_src_types_lm_ts"
     },
     {
       "relation": "imports",
@@ -56534,9 +56601,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_apiresult",
-      "confidence_score": 1.0
+      "target": "types_lm_apiresult"
     },
     {
       "relation": "imports",
@@ -56545,9 +56612,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_lmstats",
-      "confidence_score": 1.0
+      "target": "types_lm_lmstats"
     },
     {
       "relation": "imports",
@@ -56556,9 +56623,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_lmdistribution",
-      "confidence_score": 1.0
+      "target": "types_lm_lmdistribution"
     },
     {
       "relation": "imports",
@@ -56567,9 +56634,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_progresspoint",
-      "confidence_score": 1.0
+      "target": "types_lm_progresspoint"
     },
     {
       "relation": "imports",
@@ -56578,9 +56645,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_progressrange",
-      "confidence_score": 1.0
+      "target": "types_lm_progressrange"
     },
     {
       "relation": "imports",
@@ -56589,9 +56656,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_topcourse",
-      "confidence_score": 1.0
+      "target": "types_lm_topcourse"
     },
     {
       "relation": "imports",
@@ -56600,9 +56667,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_lmcontentstats",
-      "confidence_score": 1.0
+      "target": "types_lm_lmcontentstats"
     },
     {
       "relation": "imports",
@@ -56611,9 +56678,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_courserow",
-      "confidence_score": 1.0
+      "target": "types_lm_courserow"
     },
     {
       "relation": "imports",
@@ -56622,9 +56689,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_lmcoursesresponse",
-      "confidence_score": 1.0
+      "target": "types_lm_lmcoursesresponse"
     },
     {
       "relation": "imports",
@@ -56633,9 +56700,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_lmactivity",
-      "confidence_score": 1.0
+      "target": "types_lm_lmactivity"
     },
     {
       "relation": "imports",
@@ -56644,9 +56711,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_livesession",
-      "confidence_score": 1.0
+      "target": "types_lm_livesession"
     },
     {
       "relation": "imports",
@@ -56655,9 +56722,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_livesessionstatus",
-      "confidence_score": 1.0
+      "target": "types_lm_livesessionstatus"
     },
     {
       "relation": "imports",
@@ -56666,9 +56733,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "types_lm_lmfilteroptions",
-      "confidence_score": 1.0
+      "target": "types_lm_lmfilteroptions"
     },
     {
       "relation": "contains",
@@ -56676,9 +56743,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_lmapierror",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmapierror"
     },
     {
       "relation": "contains",
@@ -56686,9 +56753,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "contains",
@@ -56696,9 +56763,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "contains",
@@ -56706,9 +56773,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_stats",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_stats"
     },
     {
       "relation": "contains",
@@ -56716,9 +56783,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_distribution",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_distribution"
     },
     {
       "relation": "contains",
@@ -56726,9 +56793,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_progress",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_progress"
     },
     {
       "relation": "contains",
@@ -56736,9 +56803,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_top_courses",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_top_courses"
     },
     {
       "relation": "contains",
@@ -56746,9 +56813,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_content_stats",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_content_stats"
     },
     {
       "relation": "contains",
@@ -56756,9 +56823,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L126",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_instructors",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_instructors"
     },
     {
       "relation": "contains",
@@ -56766,9 +56833,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L136",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_categories",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_categories"
     },
     {
       "relation": "contains",
@@ -56776,9 +56843,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L138",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_buildmockcourses",
-      "confidence_score": 1.0
+      "target": "services_lmapi_buildmockcourses"
     },
     {
       "relation": "contains",
@@ -56786,9 +56853,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L168",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_courses",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_courses"
     },
     {
       "relation": "contains",
@@ -56796,9 +56863,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L170",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_buildmockactivities",
-      "confidence_score": 1.0
+      "target": "services_lmapi_buildmockactivities"
     },
     {
       "relation": "contains",
@@ -56806,9 +56873,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L183",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_activities",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_activities"
     },
     {
       "relation": "contains",
@@ -56816,9 +56883,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L185",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_buildmocklivesessions",
-      "confidence_score": 1.0
+      "target": "services_lmapi_buildmocklivesessions"
     },
     {
       "relation": "contains",
@@ -56826,9 +56893,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L197",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_live_sessions",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_live_sessions"
     },
     {
       "relation": "contains",
@@ -56836,9 +56903,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L199",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_mock_filter_options",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mock_filter_options"
     },
     {
       "relation": "contains",
@@ -56846,9 +56913,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L206",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmstats",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmstats"
     },
     {
       "relation": "contains",
@@ -56856,9 +56923,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L211",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmdistribution",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmdistribution"
     },
     {
       "relation": "contains",
@@ -56866,9 +56933,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L216",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmprogress",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmprogress"
     },
     {
       "relation": "contains",
@@ -56876,9 +56943,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L221",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmtopcourses",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmtopcourses"
     },
     {
       "relation": "contains",
@@ -56886,9 +56953,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L226",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmcontentstats",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmcontentstats"
     },
     {
       "relation": "contains",
@@ -56896,9 +56963,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L231",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmcourses",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmcourses"
     },
     {
       "relation": "contains",
@@ -56906,9 +56973,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L261",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmactivities",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmactivities"
     },
     {
       "relation": "contains",
@@ -56916,9 +56983,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L266",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmlivesessions",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmlivesessions"
     },
     {
       "relation": "contains",
@@ -56926,9 +56993,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L271",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_services_lmapi_ts",
-      "target": "services_lmapi_getlmfilteroptions",
-      "confidence_score": 1.0
+      "target": "services_lmapi_getlmfilteroptions"
     },
     {
       "relation": "method",
@@ -56936,9 +57003,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_lmapierror",
-      "target": "services_lmapi_lmapierror_constructor",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmapierror_constructor"
     },
     {
       "relation": "calls",
@@ -56947,9 +57014,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L208",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmstats",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -56958,9 +57025,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L213",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmdistribution",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -56969,9 +57036,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L218",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmprogress",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -56980,9 +57047,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L223",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmtopcourses",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -56991,9 +57058,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L228",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmcontentstats",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -57002,9 +57069,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L258",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmcourses",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -57013,9 +57080,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L263",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmactivities",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -57024,9 +57091,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L268",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmlivesessions",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -57035,9 +57102,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L273",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmfilteroptions",
-      "target": "services_lmapi_lmfetch",
-      "confidence_score": 1.0
+      "target": "services_lmapi_lmfetch"
     },
     {
       "relation": "calls",
@@ -57046,9 +57113,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L207",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmstats",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "calls",
@@ -57057,9 +57124,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L212",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmdistribution",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "calls",
@@ -57068,9 +57135,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L217",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmprogress",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "calls",
@@ -57079,9 +57146,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L222",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmtopcourses",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "calls",
@@ -57090,9 +57157,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L227",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmcontentstats",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "calls",
@@ -57101,9 +57168,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L247",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmcourses",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "calls",
@@ -57112,9 +57179,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L262",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmactivities",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "calls",
@@ -57123,9 +57190,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L267",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmlivesessions",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "calls",
@@ -57134,9 +57201,9 @@
       "source_file": "frontend/src/services/lmApi.ts",
       "source_location": "L272",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_lmapi_getlmfilteroptions",
-      "target": "services_lmapi_mockresolve",
-      "confidence_score": 1.0
+      "target": "services_lmapi_mockresolve"
     },
     {
       "relation": "contains",
@@ -57844,9 +57911,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_apiresult",
-      "confidence_score": 1.0
+      "target": "types_lm_apiresult"
     },
     {
       "relation": "contains",
@@ -57854,9 +57921,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmstatitem",
-      "confidence_score": 1.0
+      "target": "types_lm_lmstatitem"
     },
     {
       "relation": "contains",
@@ -57864,9 +57931,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmstats",
-      "confidence_score": 1.0
+      "target": "types_lm_lmstats"
     },
     {
       "relation": "contains",
@@ -57874,9 +57941,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmdistributionitem",
-      "confidence_score": 1.0
+      "target": "types_lm_lmdistributionitem"
     },
     {
       "relation": "contains",
@@ -57884,9 +57951,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmdistribution",
-      "confidence_score": 1.0
+      "target": "types_lm_lmdistribution"
     },
     {
       "relation": "contains",
@@ -57894,9 +57961,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_progressrange",
-      "confidence_score": 1.0
+      "target": "types_lm_progressrange"
     },
     {
       "relation": "contains",
@@ -57904,9 +57971,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_progresspoint",
-      "confidence_score": 1.0
+      "target": "types_lm_progresspoint"
     },
     {
       "relation": "contains",
@@ -57914,9 +57981,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_topcourse",
-      "confidence_score": 1.0
+      "target": "types_lm_topcourse"
     },
     {
       "relation": "contains",
@@ -57924,9 +57991,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmcontentstats",
-      "confidence_score": 1.0
+      "target": "types_lm_lmcontentstats"
     },
     {
       "relation": "contains",
@@ -57934,9 +58001,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_courselevel",
-      "confidence_score": 1.0
+      "target": "types_lm_courselevel"
     },
     {
       "relation": "contains",
@@ -57944,9 +58011,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_coursestatus",
-      "confidence_score": 1.0
+      "target": "types_lm_coursestatus"
     },
     {
       "relation": "contains",
@@ -57954,9 +58021,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_courserow",
-      "confidence_score": 1.0
+      "target": "types_lm_courserow"
     },
     {
       "relation": "contains",
@@ -57964,9 +58031,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L78",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_pagination",
-      "confidence_score": 1.0
+      "target": "types_lm_pagination"
     },
     {
       "relation": "contains",
@@ -57974,9 +58041,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmcoursesresponse",
-      "confidence_score": 1.0
+      "target": "types_lm_lmcoursesresponse"
     },
     {
       "relation": "contains",
@@ -57984,9 +58051,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L90",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmactivitytype",
-      "confidence_score": 1.0
+      "target": "types_lm_lmactivitytype"
     },
     {
       "relation": "contains",
@@ -57994,9 +58061,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L97",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmactivity",
-      "confidence_score": 1.0
+      "target": "types_lm_lmactivity"
     },
     {
       "relation": "contains",
@@ -58004,9 +58071,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L105",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_livesessionstatus",
-      "confidence_score": 1.0
+      "target": "types_lm_livesessionstatus"
     },
     {
       "relation": "contains",
@@ -58014,9 +58081,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_livesession",
-      "confidence_score": 1.0
+      "target": "types_lm_livesession"
     },
     {
       "relation": "contains",
@@ -58024,9 +58091,9 @@
       "source_file": "frontend/src/types/lm.ts",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_types_lm_ts",
-      "target": "types_lm_lmfilteroptions",
-      "confidence_score": 1.0
+      "target": "types_lm_lmfilteroptions"
     },
     {
       "relation": "contains",
@@ -59417,11 +59484,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "frontend_tests_lm_overview_full_spec_ts",
+      "target": "tests_lm_overview_full_spec_kpigrid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tests/lm-overview.full.spec.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_lm_overview_full_spec_ts",
-      "target": "tests_lm_overview_full_spec_totalcoursescard",
-      "confidence_score": 1.0
+      "target": "tests_lm_overview_full_spec_totalcoursescard"
     },
     {
       "relation": "contains",
@@ -59429,9 +59506,9 @@
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_lm_overview_full_spec_ts",
-      "target": "tests_lm_overview_full_spec_completioncard",
-      "confidence_score": 1.0
+      "target": "tests_lm_overview_full_spec_completioncard"
     },
     {
       "relation": "contains",
@@ -59439,9 +59516,9 @@
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_lm_overview_full_spec_ts",
-      "target": "tests_lm_overview_full_spec_certificatescard",
-      "confidence_score": 1.0
+      "target": "tests_lm_overview_full_spec_certificatescard"
     },
     {
       "relation": "contains",
@@ -59449,9 +59526,9 @@
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
       "source_location": "L123",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_lm_overview_full_spec_ts",
-      "target": "tests_lm_overview_full_spec_card",
-      "confidence_score": 1.0
+      "target": "tests_lm_overview_full_spec_card"
     },
     {
       "relation": "contains",
@@ -59459,9 +59536,9 @@
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_lm_overview_full_spec_ts",
-      "target": "tests_lm_overview_full_spec_select",
-      "confidence_score": 1.0
+      "target": "tests_lm_overview_full_spec_select"
     },
     {
       "relation": "contains",
@@ -59469,9 +59546,9 @@
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
       "source_location": "L88",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_lm_overview_full_spec_ts",
-      "target": "tests_lm_overview_full_spec_categorycells",
-      "confidence_score": 1.0
+      "target": "tests_lm_overview_full_spec_categorycells"
     },
     {
       "relation": "contains",
@@ -59479,9 +59556,9 @@
       "source_file": "frontend/tests/lm-overview.full.spec.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_tests_lm_overview_full_spec_ts",
-      "target": "tests_lm_overview_full_spec_instructorcells",
-      "confidence_score": 1.0
+      "target": "tests_lm_overview_full_spec_instructorcells"
     },
     {
       "relation": "contains",
@@ -62219,5 +62296,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "daf86a9f5078b710d205eac82efce40174a1f0a9"
+  "built_at_commit": "d08762fee754b0c7fb632968974d4618a3919375"
 }

@@ -151,7 +151,7 @@ export default function CoursesTable() {
                     <span className="tw:whitespace-nowrap tw:text-[13px] tw:text-slate-700">{r.instructor}</span>
                   </div>
                 </td>
-                <td className="tw:px-3 tw:py-3 tw:whitespace-nowrap tw:text-[13px] tw:text-slate-700">{r.category}</td>
+                <td className="tw:px-3 tw:py-3 tw:text-[13px] tw:text-slate-700">{r.category}</td>
                 <td className="tw:px-3 tw:py-3">
                   <span className="tw:rounded-full tw:bg-slate-100 tw:px-2.5 tw:py-1 tw:text-[11px] tw:font-medium tw:text-slate-600">
                     {r.level}
