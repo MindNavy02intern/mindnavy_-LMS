@@ -71,7 +71,7 @@ export default function RecentActivities() {
         <div className="tw:mt-3 tw:text-center tw:text-[13px] tw:text-red-500">Failed to load recent activities</div>
       ) : (
         <div className="tw:mt-3 tw:flex tw:flex-col tw:gap-3.5">
-          {activities.map(({ id, type, title, by, createdAt }) => {
+          {activities.map(({ id, type, title, actorName, createdAt }) => {
             const { Icon, iconBg, iconColor } = TYPE_META[type];
             return (
               <div key={id} className="tw:flex tw:items-start tw:gap-3">
@@ -81,7 +81,7 @@ export default function RecentActivities() {
                 <div className="tw:min-w-0">
                   <div className="tw:text-[13px] tw:font-medium tw:text-slate-900">{title}</div>
                   <div className="tw:text-[11px] tw:text-slate-500">
-                    {by && <>by {by} · </>}{timeAgo(createdAt)}
+                    {actorName && <>by {actorName} · </>}{timeAgo(createdAt)}
                   </div>
                 </div>
               </div>

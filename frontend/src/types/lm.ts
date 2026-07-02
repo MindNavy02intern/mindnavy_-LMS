@@ -48,7 +48,8 @@ export interface TopCourse {
   title:          string;
   instructor:     string;
   completionRate: number;
-  enrolled:       number;
+  enrolledCount:  number;   // contract field name (was `enrolled`)
+  thumbnail:      string | null;
 }
 
 export interface LmContentStats {
@@ -61,7 +62,7 @@ export interface LmContentStats {
 }
 
 export type CourseLevel  = 'Beginner' | 'Intermediate' | 'Advanced';
-export type CourseStatus = 'Published' | 'Draft';
+export type CourseStatus = 'Published' | 'Draft' | 'Pending' | 'Archived';
 
 export interface CourseRow {
   id:           string;
@@ -70,9 +71,10 @@ export interface CourseRow {
   instructorId: string;
   category:     string;
   level:        CourseLevel;
-  enrolled:     number;
+  enrolledCount: number;    // backend field name (was `enrolled`)
   progress:     number;
   status:       CourseStatus;
+  thumbnail:    string | null;
 }
 
 export interface Pagination {
@@ -83,7 +85,7 @@ export interface Pagination {
 }
 
 export interface LmCoursesResponse {
-  data:       CourseRow[];
+  courses:    CourseRow[];  // backend key is `courses`, not `data`
   pagination: Pagination;
 }
 
@@ -98,20 +100,20 @@ export interface LmActivity {
   id:        string;
   type:      LmActivityType;
   title:     string;
-  by:        string | null;
-  createdAt: string; // ISO timestamp — converted to relative time on the frontend
+  actorName: string;        // contract field name (was `by`)
+  createdAt: string;        // ISO timestamp — converted to relative time on the frontend
 }
 
 export type LiveSessionStatus = 'upcoming' | 'live' | 'ended';
 
+// Contract: { id, title, startTime, enrolledCount, relatedCourse }
+// `status` is only a query-param filter (upcoming|live|ended), not a response field.
 export interface LiveSession {
-  id:              string;
-  title:           string;
-  instructor:      string;
-  startTime:       string; // ISO timestamp
-  durationMinutes: number;
-  status:          LiveSessionStatus;
-  attendees:       number;
+  id:            string;
+  title:         string;
+  startTime:     string;        // ISO timestamp
+  enrolledCount: number;        // was `attendees`
+  relatedCourse: string | null; // course title or null
 }
 
 export interface LmFilterOptions {

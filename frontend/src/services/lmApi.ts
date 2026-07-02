@@ -23,7 +23,7 @@ import type {
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
-const USE_MOCK = true;
+const USE_MOCK = false; // set back to true to use mock data instead of the real backend
 
 export class LmApiError extends Error {
   status: number;
@@ -105,13 +105,13 @@ const MOCK_PROGRESS: Record<ProgressRange, ProgressPoint[]> = {
 };
 
 const MOCK_TOP_COURSES: TopCourse[] = [
-  { id: 'c1', title: 'Complete React Developer',   instructor: 'John Smith',    completionRate: 92, enrolled: 1245 },
-  { id: 'c2', title: 'Data Science Fundamentals',  instructor: 'Sarah Johnson', completionRate: 89, enrolled: 1856 },
-  { id: 'c3', title: 'UI/UX Design Masterclass',   instructor: 'Michael Brown', completionRate: 87, enrolled: 1023 },
-  { id: 'c4', title: 'Python for Data Analysis',   instructor: 'Emily Davis',   completionRate: 85, enrolled: 1456 },
-  { id: 'c5', title: 'Digital Marketing Strategy', instructor: 'David Wilson',  completionRate: 83, enrolled: 977 },
-  { id: 'c6', title: 'Advanced Node.js',           instructor: 'James Taylor',  completionRate: 79, enrolled: 845 },
-  { id: 'c7', title: 'Leadership and Management',  instructor: 'Lisa Anderson', completionRate: 74, enrolled: 712 },
+  { id: 'c1', title: 'Complete React Developer',   instructor: 'John Smith',    completionRate: 92, enrolledCount: 1245, thumbnail: null },
+  { id: 'c2', title: 'Data Science Fundamentals',  instructor: 'Sarah Johnson', completionRate: 89, enrolledCount: 1856, thumbnail: null },
+  { id: 'c3', title: 'UI/UX Design Masterclass',   instructor: 'Michael Brown', completionRate: 87, enrolledCount: 1023, thumbnail: null },
+  { id: 'c4', title: 'Python for Data Analysis',   instructor: 'Emily Davis',   completionRate: 85, enrolledCount: 1456, thumbnail: null },
+  { id: 'c5', title: 'Digital Marketing Strategy', instructor: 'David Wilson',  completionRate: 83, enrolledCount: 977,  thumbnail: null },
+  { id: 'c6', title: 'Advanced Node.js',           instructor: 'James Taylor',  completionRate: 79, enrolledCount: 845,  thumbnail: null },
+  { id: 'c7', title: 'Leadership and Management',  instructor: 'Lisa Anderson', completionRate: 74, enrolledCount: 712,  thumbnail: null },
 ];
 
 const MOCK_CONTENT_STATS: LmContentStats = {
@@ -158,7 +158,8 @@ function buildMockCourses(): CourseRow[] {
       instructorId: instructor.id,
       category:     MOCK_CATEGORIES[i % MOCK_CATEGORIES.length],
       level:        levels[i % levels.length],
-      enrolled:     600 + ((i * 137) % 1200),
+      enrolledCount: 600 + ((i * 137) % 1200),
+      thumbnail:    null,
       progress:     30 + ((i * 11) % 65),
       status:       statuses[i % statuses.length],
     };
@@ -172,11 +173,11 @@ function buildMockActivities(): LmActivity[] {
   const day = 24 * hour;
   const now = Date.now();
   return [
-    { id: 'a1', type: 'course_created',      title: "New course 'Advanced Python' created",    by: 'Sarah Johnson',  createdAt: new Date(now - 2 * hour).toISOString() },
-    { id: 'a2', type: 'session_completed',   title: "Live session 'UI/UX Workshop' completed", by: 'Michael Brown',  createdAt: new Date(now - 4 * hour).toISOString() },
-    { id: 'a3', type: 'content_uploaded',    title: "New content uploaded to 'Data Science'",  by: 'Emily Davis',    createdAt: new Date(now - 1 * day).toISOString() },
-    { id: 'a4', type: 'assessment_created',  title: "Assessment 'JavaScript Quiz' created",     by: 'David Wilson',   createdAt: new Date(now - 2 * day).toISOString() },
-    { id: 'a5', type: 'certificate_issued',  title: 'Certificate issued to 12 students',        by: null,             createdAt: new Date(now - 2 * day - 3 * hour).toISOString() },
+    { id: 'a1', type: 'course_created',      title: "New course 'Advanced Python' created",    actorName: 'Sarah Johnson',  createdAt: new Date(now - 2 * hour).toISOString() },
+    { id: 'a2', type: 'session_completed',   title: "Live session 'UI/UX Workshop' completed", actorName: 'Michael Brown',  createdAt: new Date(now - 4 * hour).toISOString() },
+    { id: 'a3', type: 'content_uploaded',    title: "New content uploaded to 'Data Science'",  actorName: 'Emily Davis',    createdAt: new Date(now - 1 * day).toISOString() },
+    { id: 'a4', type: 'assessment_created',  title: "Assessment 'JavaScript Quiz' created",     actorName: 'David Wilson',   createdAt: new Date(now - 2 * day).toISOString() },
+    { id: 'a5', type: 'certificate_issued',  title: 'Certificate issued to 12 students',        actorName: 'System',         createdAt: new Date(now - 2 * day - 3 * hour).toISOString() },
   ];
 }
 
@@ -187,10 +188,10 @@ function buildMockLiveSessions(): LiveSession[] {
   const day = 24 * hour;
   const now = Date.now();
   return [
-    { id: 'ls1', title: 'UI/UX Workshop Q&A',        instructor: 'Michael Brown',  startTime: new Date(now + 4 * hour).toISOString(),     durationMinutes: 60, status: 'upcoming', attendees: 34 },
-    { id: 'ls2', title: 'React Patterns Deep Dive',  instructor: 'John Smith',     startTime: new Date(now + 1 * day).toISOString(),       durationMinutes: 90, status: 'upcoming', attendees: 58 },
-    { id: 'ls3', title: 'Data Science Office Hours', instructor: 'Sarah Johnson',  startTime: new Date(now + 2 * day + 3 * hour).toISOString(), durationMinutes: 45, status: 'upcoming', attendees: 21 },
-    { id: 'ls4', title: 'Marketing Strategy Recap',  instructor: 'David Wilson',   startTime: new Date(now - 1 * day).toISOString(),       durationMinutes: 60, status: 'ended',    attendees: 47 },
+    { id: 'ls1', title: 'UI/UX Workshop Q&A',        startTime: new Date(now + 4 * hour).toISOString(),            enrolledCount: 34, relatedCourse: 'UI/UX Design Masterclass' },
+    { id: 'ls2', title: 'React Patterns Deep Dive',  startTime: new Date(now + 1 * day).toISOString(),             enrolledCount: 58, relatedCourse: 'Complete React Developer' },
+    { id: 'ls3', title: 'Data Science Office Hours', startTime: new Date(now + 2 * day + 3 * hour).toISOString(),  enrolledCount: 21, relatedCourse: 'Data Science Fundamentals' },
+    { id: 'ls4', title: 'Marketing Strategy Recap',  startTime: new Date(now - 1 * day).toISOString(),             enrolledCount: 47, relatedCourse: null },
   ];
 }
 
@@ -245,7 +246,7 @@ export async function getLmCourses(params: {
     const start = (page - 1) * limit;
     const data = filtered.slice(start, start + limit);
     return mockResolve({
-      data,
+      courses: data, // backend key is `courses`
       pagination: { total, page, limit, pages: Math.max(1, Math.ceil(total / limit)) },
     });
   }
@@ -264,7 +265,13 @@ export async function getLmActivities(limit = 5): Promise<LmActivity[]> {
 }
 
 export async function getLmLiveSessions(status: LiveSessionStatus = 'upcoming'): Promise<LiveSession[]> {
-  if (USE_MOCK) return mockResolve(MOCK_LIVE_SESSIONS.filter((s) => s.status === status));
+  if (USE_MOCK) {
+    const now = Date.now();
+    const filtered = status === 'upcoming' ? MOCK_LIVE_SESSIONS.filter((s) => new Date(s.startTime).getTime() > now)
+                   : status === 'ended'    ? MOCK_LIVE_SESSIONS.filter((s) => new Date(s.startTime).getTime() < now)
+                   : MOCK_LIVE_SESSIONS; // 'live' — return all for mock
+    return mockResolve(filtered);
+  }
   return lmFetch<LiveSession[]>(`/lm/live-sessions?status=${status}`);
 }
 

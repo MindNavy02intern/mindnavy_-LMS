@@ -13,6 +13,7 @@ import LmGuide from '../components/learningManagement/LmGuide';
 import ContentStats from '../components/learningManagement/ContentStats';
 import LiveSessions from '../components/learningManagement/LiveSessions';
 import RecentActivities from '../components/learningManagement/RecentActivities';
+import CoursesTab from '../components/learningManagement/CoursesTab';
 
 export default function LearningManagementPage() {
   const [tab, setTab] = useState<LmTab>(LM_TABS[0]);
@@ -24,7 +25,9 @@ export default function LearningManagementPage() {
         <KpiCards />
         <LmTabs active={tab} onChange={setTab} />
 
-        {tab === 'Overview' ? (
+        {tab === 'Courses' ? (
+          <CoursesTab />
+        ) : tab === 'Overview' ? (
           <div className="tw:flex tw:gap-5">
             <div className="tw:flex tw:min-w-0 tw:flex-1 tw:flex-col tw:gap-5">
               <div className="tw:grid tw:grid-cols-3 tw:gap-5">
@@ -44,7 +47,7 @@ export default function LearningManagementPage() {
           </div>
         ) : (
           <div className="tw:flex tw:items-center tw:justify-center tw:rounded-xl tw:border tw:border-dashed tw:border-slate-300 tw:bg-white tw:py-24 tw:text-[14px] tw:text-slate-400">
-            {tab} content coming soon
+            {tab} — coming soon
           </div>
         )}
       </div>

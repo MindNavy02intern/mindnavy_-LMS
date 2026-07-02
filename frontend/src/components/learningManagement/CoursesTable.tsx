@@ -8,6 +8,8 @@ const LIMIT_OPTIONS = [10, 25, 50];
 const STATUS_BADGE: Record<CourseRow['status'], string> = {
   Published: 'tw:bg-green-50 tw:text-green-700',
   Draft:     'tw:bg-amber-50 tw:text-amber-700',
+  Pending:   'tw:bg-blue-50 tw:text-blue-700',
+  Archived:  'tw:bg-slate-100 tw:text-slate-500',
 };
 
 const GRADIENTS = [
@@ -55,7 +57,7 @@ export default function CoursesTable() {
     getLmCourses({ page, limit, category: category || undefined, instructor: instructor || undefined })
       .then((res) => {
         if (cancelled) return;
-        setRows(res.data);
+        setRows(res.courses);
         setTotal(res.pagination.total);
         setPages(res.pagination.pages);
       })
@@ -157,13 +159,13 @@ export default function CoursesTable() {
                     {r.level}
                   </span>
                 </td>
-                <td className="tw:px-3 tw:py-3 tw:whitespace-nowrap tw:text-[13px] tw:text-slate-700">{r.enrolled.toLocaleString()}</td>
+                <td className="tw:px-3 tw:py-3 tw:whitespace-nowrap tw:text-[13px] tw:text-slate-700">{(r.enrolledCount ?? 0).toLocaleString()}</td>
                 <td className="tw:px-3 tw:py-3">
                   <div className="tw:flex tw:items-center tw:gap-2">
                     <div className="tw:h-1.5 tw:w-20 tw:overflow-hidden tw:rounded-full tw:bg-slate-100">
-                      <div className="tw:h-full tw:rounded-full tw:bg-green-500" style={{ width: `${r.progress}%` }} />
+                      <div className="tw:h-full tw:rounded-full tw:bg-green-500" style={{ width: `${r.progress ?? 0}%` }} />
                     </div>
-                    <span className="tw:text-[12px] tw:text-slate-500">{r.progress}%</span>
+                    <span className="tw:text-[12px] tw:text-slate-500">{r.progress ?? 0}%</span>
                   </div>
                 </td>
                 <td className="tw:px-3 tw:py-3">

@@ -71,7 +71,7 @@ export default function TopCourses() {
                 <div className="tw:mt-1 tw:h-1.5 tw:w-full tw:overflow-hidden tw:rounded-full tw:bg-slate-100">
                   <div className="tw:h-full tw:rounded-full tw:bg-green-500" style={{ width: `${c.completionRate}%` }} />
                 </div>
-                <div className="tw:mt-1 tw:text-[10px] tw:text-slate-400">{c.enrolled.toLocaleString()} Enrolled</div>
+                <div className="tw:mt-1 tw:text-[10px] tw:text-slate-400">{c.enrolledCount.toLocaleString()} Enrolled</div>
               </div>
             </div>
           ))}
