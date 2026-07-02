@@ -17,6 +17,7 @@ const groupsRoutes       = require("./src/routes/groups.routes");
 const invitationsRoutes  = require("./src/routes/invitations.routes");
 const messagesRoutes     = require("./src/routes/messages.routes");
 const lmRoutes           = require("./src/routes/lm.routes");
+const coursesRoutes      = require("./src/routes/courses.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -44,6 +45,9 @@ app.use("/api/admin/dashboard", dashboardRoutes);
 
 // Learning Management (Overview tab) routes
 app.use("/api/admin/lm", lmRoutes);
+
+// Courses tab routes
+app.use("/api/admin/courses", coursesRoutes);
 
 // User management routes
 app.use("/api/admin/users", usersRoutes);

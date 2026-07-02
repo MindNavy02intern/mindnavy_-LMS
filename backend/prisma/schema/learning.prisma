@@ -8,11 +8,16 @@
 model Course {
   id           String       @id @default(uuid())
   title        String
+  subtitle     String?
+  description  String?
   category     String
+  language     String?
   level        CourseLevel  @default(BEGINNER)
   status       CourseStatus @default(DRAFT)
   thumbnail    String?
+  tags         String[]     @default([])
   instructorId String?
+  createdBy    String?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 

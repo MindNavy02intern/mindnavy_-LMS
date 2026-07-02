@@ -35,6 +35,20 @@ const adminUsersAnalyticsRateLimiter = rateLimit({
   },
 });
 
+// Courses tab reads — higher ceiling than the analytics limiter because the
+// table re-fetches on every tab / filter / search / page change. 120/min keeps
+// interactive use smooth while still capping abuse.
+const coursesReadRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 120,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many requests. Please slow down and retry.",
+  },
+});
+
 // Import limiter — 5 imports per admin/IP per 10 minutes to prevent abuse
 const adminUsersImportRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -52,4 +66,5 @@ module.exports = {
   adminUserActionRateLimiter,
   adminUsersAnalyticsRateLimiter,
   adminUsersImportRateLimiter,
+  coursesReadRateLimiter,
 };
