@@ -22,6 +22,8 @@ async function safe(fn, fallback) {
   try {
     return await fn();
   } catch (err) {
+    // Observability only — message only (no full error / stack / meta / secrets).
+    console.error("[lm.service] query failed:", err.message);
     return fallback;
   }
 }

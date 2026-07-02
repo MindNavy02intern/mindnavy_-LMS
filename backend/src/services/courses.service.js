@@ -15,7 +15,13 @@ const STATUS_LABEL = { DRAFT: "Draft", PENDING: "Pending", PUBLISHED: "Published
 const DEFAULT_CATEGORY = "Uncategorized";
 
 async function safe(fn, fallback) {
-  try { return await fn(); } catch (err) { return fallback; }
+  try {
+    return await fn();
+  } catch (err) {
+    // Observability only — message only (no full error / stack / meta / secrets).
+    console.error("[courses.service] query failed:", err.message);
+    return fallback;
+  }
 }
 
 function iso(d) { return d instanceof Date ? d.toISOString() : (d ? String(d) : null); }
