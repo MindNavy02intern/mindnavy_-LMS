@@ -273,6 +273,7 @@ async function getCourses({ page, limit, category, instructor }) {
       orderBy: { createdAt: "desc" },
       select: {
         id: true, title: true, category: true, level: true, status: true, thumbnail: true,
+        instructorId: true,
         instructor: { select: { fullName: true } },
       },
     }), []),
@@ -296,6 +297,7 @@ async function getCourses({ page, limit, category, instructor }) {
       id:            c.id,
       title:         c.title,
       instructor:    c.instructor?.fullName ?? "—",
+      instructorId:  c.instructorId ?? null,
       category:      c.category,
       level:         LEVEL_LABEL[c.level]   ?? c.level,
       enrolledCount: a.count,
@@ -307,7 +309,7 @@ async function getCourses({ page, limit, category, instructor }) {
 
   return {
     courses,
-    pagination: { page, limit, total, totalPages: Math.ceil(total / limit) || 1 },
+    pagination: { total, page, limit, pages: Math.ceil(total / limit) || 1 },
   };
 }
 
@@ -371,8 +373,14 @@ async function getLiveSessions(status) {
       orderBy: { startTime: "asc" },
       take: 50,
       select: {
-        id: true, title: true, startTime: true,
-        course: { select: { title: true, _count: { select: { enrollments: true } } } },
+        id: true, title: true, startTime: true, status: true,
+        course: {
+          select: {
+            title: true,
+            instructor: { select: { fullName: true } },
+            _count: { select: { enrollments: true } },
+          },
+        },
       },
     }),
     [],
@@ -381,7 +389,9 @@ async function getLiveSessions(status) {
   return sessions.map((s) => ({
     id:            s.id,
     title:         s.title,
+    instructor:    s.course?.instructor?.fullName ?? null,
     startTime:     iso(s.startTime),
+    status:        String(s.status).toLowerCase(),
     enrolledCount: s.course?._count.enrollments ?? 0,
     relatedCourse: s.course?.title ?? null,
   }));
