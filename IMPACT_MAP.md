@@ -1,0 +1,347 @@
+# IMPACT_MAP.md — MindNavy LMS · Data Reflection Map
+
+**Audience:** Claude Code (primary) and developers (Bilal = frontend, Hassan = backend).
+**Purpose:** Single source of truth for the question *"when X changes, what else must update?"*
+**Authority:** CLAUDE.md → "Project Blueprint & Data Reflection Protocol" makes this file MANDATORY reading before every task. If a task and this map conflict, flag it — do not silently pick one.
+**Companion:** `docs/blueprint/` (INDEX.md + 13 page files) maps every page, tab, table, filter, dropdown, and button to the mutation IDs and rows in this file. Blueprint = WHERE things live; this map = WHAT updates WHEN.
+
+---
+
+## 1. AGENT PROTOCOL — follow on EVERY task
+
+**BEFORE writing code:**
+1. List the entities the task touches (see §5 matrices).
+2. For every mutation involved: copy its invalidation list from §5. Implementing a mutation without its full invalidation list = incomplete task.
+3. For every NEW surface the task adds (widget, KPI card, table, dropdown, badge, counter, chart, tab): register it in §4 and wire it to an existing query key. A surface must never keep a private copy of shared data.
+4. For every NEW mutation the task adds: add a row to the correct entity matrix in §5, in the same change.
+
+**AFTER writing code:**
+5. Update this file if you added or renamed any surface, mutation, query key, or endpoint.
+6. If the mutation changes any dashboard number, add/extend a Playwright reflection test (template in §7).
+
+**HARD RULES (non-negotiable):**
+- **R1 — No client-side arithmetic on displayed stats.** Never `+1`/`-1` a displayed number after a mutation. Invalidate the query and let the surface refetch. (Optimistic updates are allowed for *lists*, never for *aggregates*.)
+- **R2 — Dropdowns are surfaces.** Every dropdown/select reads the SAME query as its source entity list (role dropdown ⇒ `['roles']`, department dropdown ⇒ `['org','departments']`). Hardcoded option arrays are forbidden — this is the existing CLAUDE.md rule "never hardcode values that should come from APIs" applied to selects.
+- **R3 — Aggregates are computed, never stored.** Backend computes every displayed count/sum live from source tables (`COUNT`, `SUM`). No stored counters, no separate aggregates tables at this stage (see §8).
+- **R4 — One source of truth per datum.** If two surfaces show "the same number", they MUST consume the same query key and the same endpoint field. Two endpoints returning "total users" independently is a bug.
+- **R5 — This map is code.** Out-of-date map = failing review. Updating it is part of the task, not documentation debt.
+
+---
+
+## 2. DEFAULT INVALIDATION POLICY
+
+Every state-changing mutation ALWAYS invalidates the following, **in addition to** its entity row in §5:
+
+| Always invalidate | Surface it feeds |
+|---|---|
+| `['activity']` | Learning Activity Feed (Dashboard §8) |
+| `['notifications']` | Notifications Center (Dashboard §13) |
+| `['dashboard','stats']` | Quick Statistics — all 9 KPI cards (Dashboard §4) |
+
+**Why a blanket policy:** per the product spec, nearly every admin action appends an activity entry and may raise a notification; the 9 KPIs are cheap live COUNTs, so refetching them on any mutation is safe and kills the entire class of "the number didn't update" bugs. Opting out requires a written comment at the mutation site explaining why.
+
+**Audit log** is written by the backend automatically on every mutation (§8). The frontend never creates audit entries and never needs to invalidate them unless the Audit page is open — that page uses `['audit']` with refetch-on-focus.
+
+---
+
+## 3. QUERY KEY REGISTRY (canonical)
+
+All keys are created via `src/lib/queryKeys.ts` (factory). Never write key arrays inline in components or hooks.
+
+**Dashboard**
+`['dashboard','stats']` · `['dashboard','revenue']` · `['dashboard','user-analytics']` · `['dashboard','course-analytics']` · `['dashboard','instructor-performance']` · `['dashboard','student-engagement']` · `['dashboard','live-overview']` · `['reports','snapshot']` · `['calendar']` · `['tasks']` · `['transactions','recent']` · `['activity']` · `['notifications']` · `['approvals']` *(list + count from one endpoint)*
+
+**Users domain**
+`['users', filters?]` · `['users', id]` · `['users','suspended']` · `['users','pending-verification']` · `['users','archived']` · `['users','invitations']` · `['users','guests']` · `['users','tags']` · `['admins']`
+
+**Access domain**
+`['roles']` · `['roles', id]` · `['roles','company']` · `['role-templates']` · `['role-assignments', userId?]` · `['permission-matrix', roleId?]` · `['policies']` · `['audit', filters?]`
+
+**Organization domain**
+`['org','departments']` · `['org','branches']` · `['org','teams']` · `['org','chart']` · `['groups']` · `['competencies']`
+
+**Learning domain**
+`['courses', filters?]` · `['courses', id]` · `['categories']` · `['learning-paths']` · `['quizzes', courseId?]` · `['assignments', courseId?]` · `['certificates', filters?]` · `['content-library']` · `['live-sessions', filters?]`
+
+**Instructors domain**
+`['instructors', filters?]` · `['instructors', id]` · `['instructor-applications']` · `['instructors', id, 'earnings']` · `['instructors', id, 'reviews']` · `['instructors', id, 'documents']`
+
+**Students domain**
+`['students', filters?]` · `['students', id]` · `['enrollments', studentId | courseId]` · `['students', id, 'progress']` · `['students', id, 'certificates']` · `['attendance', sessionId?]` · `['billing', studentId?]` · `['support-tickets']`
+
+**Competencies domain**
+`['competencies']` · `['competencies','categories']` · `['competencies','frameworks']` · `['competencies','levels']` · `['competencies','analytics']` · `['users', id, 'skills']`
+
+**Finance domain (module pages)**
+`['finance','dashboard']` · `['plans']` · `['subscriptions', filters?]` · `['invoices', filters?]` · `['payouts', filters?]` · `['coupons']` · `['tax','config']` · `['finance','settings']` · `['gateways']`
+
+**Notifications module domain**
+`['notifications','stats']` · `['notifications','rules']` · `['notification-templates']` · `['campaigns', filters?]` · `['notifications','settings']`
+
+**Integrations / Settings / Security domains**
+`['integrations']` · `['integrations','stats']` · `['integrations','sync']` · `['api-keys']` · `['webhooks']` · `['settings', domain]` · `['system','backups']` · `['security','stats']` · `['security','sessions']` · `['security','threats']` · `['security','devices']` · `['security','ip']` · `['security','incidents']` · `['security','retention']` · `['reports','templates']` · `['report-schedules']` · `['imports', jobId]` · `['export-schedules']` · `['import-templates']`
+
+---
+
+## 4. SURFACE REGISTRY
+
+### 4a. Dashboard Overview widgets (from admin doc, Dashboard §3–§21)
+
+| Widget | Query key | Endpoint (contract) | Derived from (source tables) |
+|---|---|---|---|
+| Welcome Section (name, role, last login, system status) | `['dashboard','stats']`* | `GET /api/dashboard/stats` | session, users, system |
+| **Quick Statistics — 9 KPI cards:** Total Users · Active Students · Active Instructors · Published Courses · Pending Approvals · Total Revenue · Active Subscriptions · Certificates Issued · Live Sessions Running | `['dashboard','stats']` | `GET /api/dashboard/stats` | users, enrollments, instructors, courses, approvals, transactions, subscriptions, certificates, live_sessions |
+| Revenue Overview (daily/monthly/annual, subscriptions, refunds, payouts, growth + 4 charts) | `['dashboard','revenue']` | `GET /api/dashboard/revenue` | transactions, subscriptions, payouts |
+| User Analytics (new registrations, active, retention, roles distribution, verification status, suspended, geo) | `['dashboard','user-analytics']` | `GET /api/dashboard/user-analytics` | users, sessions, roles |
+| Course Analytics (total/active/draft/pending, completion rates, popular, quiz performance, path progress) | `['dashboard','course-analytics']` | `GET /api/dashboard/course-analytics` | courses, enrollments, quiz_results, learning_paths |
+| Learning Activity Feed | `['activity']` | `GET /api/activity` | activity_log |
+| Pending Approvals widget (courses, instructors, verifications, refunds, certifications, moderation) | `['approvals']` | `GET /api/approvals` | approval queue views |
+| Live Sessions Overview (active, upcoming, attendance, recording status) | `['dashboard','live-overview']` | `GET /api/dashboard/live-overview` | live_sessions, attendance |
+| Instructor Performance (ratings, engagement, revenue, completion, reviews) | `['dashboard','instructor-performance']` | `GET /api/dashboard/instructor-performance` | instructors, reviews, transactions, enrollments |
+| Student Engagement (progress, DAU, quiz participation, completion, drop-off, at-risk) | `['dashboard','student-engagement']` | `GET /api/dashboard/student-engagement` | enrollments, activity_log, quiz_results |
+| Notifications Center | `['notifications']` | `GET /api/notifications` | notifications |
+| Tasks & Reminders | `['tasks']` | `GET /api/tasks` | tasks |
+| Recent Transactions | `['transactions','recent']` | `GET /api/transactions?limit=…` | transactions |
+| Calendar & Events | `['calendar']` | `GET /api/calendar` | live_sessions, events, deadlines |
+| Reports Snapshot | `['reports','snapshot']` | `GET /api/reports/snapshot` | aggregate views |
+| System Health / Security Alerts | `['system','health']` / `['security','alerts']` | `GET /api/system/health` / `GET /api/security/alerts` | infra, security_events |
+
+\* Welcome section piggybacks on stats payload — do not create a separate endpoint for it.
+
+### 4b. Dropdowns & selects (R2 — each one is a surface of its source entity)
+
+| Dropdown / select | Appears in | Reads query key |
+|---|---|---|
+| Role | Add User form · Users table filter · Assign Role dialogs · Role Assignments tab | `['roles']` |
+| Department / Branch / Team | Add User form · Users filters · Org chart moves · Group config | `['org','departments']` / `['org','branches']` / `['org','teams']` |
+| Group | Add User form · Bulk actions · Student cohorts | `['groups']` |
+| Manager | Add User form · Org hierarchy | `['users', {role:'manager'}]` |
+| Category | Course create Step 1 · Courses filter | `['categories']` |
+| Instructor | Course assignment · Live session scheduling · Filters | `['instructors']` |
+| Course | Enroll Student flow · Quiz builder · Learning Path builder · Certificate rules | `['courses']` |
+| Competency / Skill | Add User form · Instructor profile | `['competencies']` |
+| Tag / Label | User tags · Filters | `['users','tags']` |
+
+**Consequence:** creating/renaming/deleting any of these entities automatically fixes every dropdown, because the dropdown shares the entity's query key. If a dropdown ever looks stale after a mutation, the mutation is missing an invalidation — fix it in §5, not in the dropdown.
+
+---
+
+## 5. ENTITY IMPACT MATRICES
+
+Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 are always implied) → surfaces that visibly change.
+`(pending backend)` = endpoint agreed in contract with Hassan but not implemented; mock lives in `lmApi.ts`.
+
+### 5.1 USER (User Management doc §1–§17)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `user.create` (Add User §6) | `['users']` `['dashboard','user-analytics']` + `['org',…]` if dept/branch/team set + `['groups']` if group set + `['users','pending-verification']` if created unverified + `['users','invitations']` if invite sent | Users table row · **Total Users KPI** · User Analytics (New Registrations, Roles Distribution, Verification Status) · Manager dropdown (if manager-capable role) · dept/team member counts · Pending Verification tab · Activity "New User Registration" |
+| `user.import` (bulk §7) | same as `user.create` + `['reports','snapshot']` | Same as create ×N · Import Report screen |
+| `user.invite` / `invite.resend` / `invite.cancel` (§9) | `['users','invitations']` | Invitations tab · invitation badge |
+| `user.verify.approve` / `.reject` (§11, §25) | `['users']` `['users','pending-verification']` `['approvals']` `['dashboard','user-analytics']` | Pending Verification tab · **Pending Approvals KPI + widget** · Verification Status chart |
+| `user.suspend` / `user.reactivate` (§10) | `['users']` `['users','suspended']` `['users', id]` `['dashboard','user-analytics']` | Users table status badge · Suspended Users tab · User Analytics (Suspended count) · **Active Students / Active Instructors KPI** if the user is one |
+| `user.archive` / `user.restore` (§12) | `['users']` `['users','archived']` `['users', id]` | Users table · Archived tab · **Total Users KPI** (if archived excluded from count — confirm with Hassan, then document here) |
+| `user.delete` | `['users']` + everything the user touched: `['enrollments',…]` `['role-assignments']` `['org',…]` `['groups']` | Users table · Total Users KPI · rosters · assignment lists |
+| `user.update` (profile, dept, manager) (§5) | `['users']` `['users', id]` + `['org',…]` if org fields changed | Profile page · table row · org chart |
+| `user.merge` (§16) | `['users']` `['users', idA]` `['users', idB]` `['enrollments',…]` `['certificates']` `['billing']` | Both profiles → one · merged learning history |
+| `user.tag.add/remove` (§17) | `['users','tags']` `['users', id]` | Tag filters · profile labels |
+| `user.assignRole` → see **5.5 ROLE** | | |
+
+### 5.2 STUDENT / ENROLLMENT (Students doc §1–§15)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `enrollment.create` (Enroll Student §3) | `['enrollments',studentId]` `['enrollments',courseId]` `['students', id]` `['courses', courseId]` `['dashboard','course-analytics']` `['dashboard','student-engagement']` | Student profile Courses tab · course enrolled-count · **Active Students KPI** · Course Analytics (popular courses) · Engagement widget |
+| `enrollment.cancel` / `student.dropout` | same as create + drop-off metrics | Same surfaces, opposite direction · Drop-Off Rates |
+| `progress.update` (lesson complete §4) | `['students', id, 'progress']` `['dashboard','student-engagement']` | Progress bars · Engagement (Learning Progress, Learning Time) |
+| `course.complete` (per student) | `['students', id, 'progress']` `['enrollments',…]` `['dashboard','course-analytics']` `['dashboard','student-engagement']` + triggers `certificate.issue` if rule matches (→ 5.8) | Completion Rates · status "Completed" · possibly Certificates chain |
+| `quiz.submit` / `assignment.submit` (§6) | `['quizzes',courseId]` `['assignments',courseId]` `['students', id]` `['dashboard','course-analytics']` `['dashboard','student-engagement']` | Assessment Center · Quiz Performance · Quiz Participation · Activity "Student Completed Quiz / Assignment Submitted" |
+| `attendance.record` (§8) | `['attendance',sessionId]` `['students', id]` `['dashboard','live-overview']` | Attendance metrics · session attendance · Live Overview |
+| `student.suspend` (§15) | as `user.suspend` + `['students']` | + Students table |
+
+### 5.3 INSTRUCTOR (Instructors doc §1–§16)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `instructorApplication.submit` (§3) | `['instructor-applications']` `['approvals']` `['tasks']` | Applications list · **Pending Approvals KPI + widget** · Tasks "Approve Instructors" |
+| `instructorApplication.approve` (§4) | `['instructor-applications']` `['instructors']` `['approvals']` `['users']` `['dashboard','user-analytics']` | **Active Instructors KPI** · Instructors table · Approvals drop · Instructor dropdown gains option (R2) |
+| `instructorApplication.reject` (§4) | `['instructor-applications']` `['approvals']` | Applications · Approvals |
+| `instructor.suspend` (§14) | `['instructors']` `['instructors', id]` `['courses']` (their courses may unpublish — confirm rule with Hassan) `['dashboard','instructor-performance']` | Instructors table · **Active Instructors KPI** · possibly Published Courses KPI |
+| `review.moderate` (§10) | `['instructors', id, 'reviews']` `['dashboard','instructor-performance']` | Reviews list · Ratings |
+| `payout.execute` (§9) → see 5.7 FINANCE | | |
+
+### 5.4 COURSE / LEARNING (LMS doc §1–§18)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `course.createDraft` (§3) | `['courses']` `['dashboard','course-analytics']` | Courses table · Draft Courses count |
+| `course.submitForApproval` (§3 Step 6) | `['courses']` `['courses', id]` `['approvals']` `['tasks']` `['dashboard','course-analytics']` | Pending Approval Courses · **Pending Approvals KPI + widget** · Tasks "Review Pending Courses" |
+| `course.approve` + publish (§4–5) | `['courses']` `['courses', id]` `['approvals']` `['categories']` `['dashboard','course-analytics']` + `['learning-paths']` if course belongs to a path | **Published Courses KPI** · Approvals drop · Course dropdown gains option (R2) · category counts · Activity "New Course Published" |
+| `course.reject` / `requestChanges` (§5) | `['courses', id]` `['approvals']` `['notifications']` | Review status · instructor notified |
+| `course.archive` | `['courses']` `['dashboard','course-analytics']` + `['learning-paths']` if in path | Published Courses KPI down · Course dropdown loses option |
+| `category.create/rename/delete` (§6) | `['categories']` `['courses']` | Category dropdown everywhere (R2) · course filters |
+| `learningPath.update` (§7) | `['learning-paths']` `['dashboard','course-analytics']` | Path progress metrics |
+| `liveSession.schedule` (§12) | `['live-sessions']` `['calendar']` `['dashboard','live-overview']` | Calendar & Events · Upcoming Sessions · Live Session Reminders notification |
+| `liveSession.start` / `.end` (§12–15) | `['live-sessions']` `['dashboard','live-overview']` `['attendance',sessionId]` | **Live Sessions Running KPI** · Live Overview · Activity "Live Session Started" |
+| `content.upload` (§11, §16) | `['content-library']` `['courses', id]` | Library · course builder · Activity "Instructor Uploaded Content" |
+
+### 5.5 ROLE / PERMISSION (Roles doc §1–§42)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `role.create` (§3) | `['roles']` | Roles table · **every Role dropdown** (R2) |
+| `role.edit` permissions (§5, §13) | `['roles']` `['roles', id]` `['permission-matrix']` `['role-assignments']` | Matrix · Role details · ⚠️ effective permissions of every user holding the role — backend must bump permission version so active sessions re-check (contract item, Hassan) |
+| `role.duplicate` (§6) | `['roles']` | Roles table + dropdowns |
+| `role.delete` (§7) | `['roles']` `['role-assignments']` `['users']` | Dropdowns lose option · affected users fall back per deletion logic (doc §7 — reassignment required before delete) |
+| `role.assignToUser` (§25) / `template.apply` (§23) | `['role-assignments', userId]` `['users', id]` `['users']` `['dashboard','user-analytics']` | User Role Assignments tab · profile · Roles Distribution chart |
+| `policy.create/update` (§16–20) | `['policies']` | Policies list · access decisions |
+
+### 5.6 ORGANIZATION / GROUPS (User Mgmt doc §18, §20)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `department/branch/team.create/rename/delete` | `['org', kind]` `['org','chart']` `['users']` | Org chart · **all org dropdowns** (R2) · Add User form options · user profiles referencing it |
+| `orgChart.moveUser` (drag & drop §18) | `['org','chart']` `['users', id]` `['org','teams']` | Chart · profile · rosters |
+| `group.create/update/delete` (§20) | `['groups']` `['users']` if membership changed | Group dropdowns · member lists · cohorts |
+
+### 5.7 FINANCE (Dashboard §5, §15 · Instructors §9 · Students §13)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `transaction.purchase` (course/subscription) | `['transactions','recent']` `['dashboard','revenue']` `['billing',studentId]` + `['enrollments',…]` via chained enrollment (5.2) | **Total Revenue KPI** · **Active Subscriptions KPI** · Revenue charts · Recent Transactions · Payment Alerts notification |
+| `refund.request` | `['approvals']` `['tasks']` | **Pending Approvals KPI** · Tasks "Review Refund Requests" |
+| `refund.approve` | `['approvals']` `['transactions','recent']` `['dashboard','revenue']` `['billing',studentId]` + possibly `['enrollments',…]` revoke | Refund Statistics · Revenue down · enrollment status |
+| `payout.execute` (instructor) | `['instructors', id, 'earnings']` `['dashboard','revenue']` `['transactions','recent']` | Instructor Payouts metric · earnings tab |
+| `subscription.cancel` | `['dashboard','revenue']` `['billing',studentId]` | **Active Subscriptions KPI** · Subscription Growth chart |
+
+### 5.8 CERTIFICATE (LMS doc §9 · Students doc §7)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `certificate.issue` (auto via trigger rules or manual) | `['certificates']` `['students', id, 'certificates']` `['dashboard','course-analytics']` | **Certificates Issued KPI** · student profile · Activity "Certificate Issued" |
+| `certificate.revoke` | same | Same, reversed |
+
+### 5.9 APPROVALS (meta-entity — Dashboard §9)
+
+Any mutation that CREATES a pending item (`course.submitForApproval`, `instructorApplication.submit`, `user.verify` request, `refund.request`, certification requests, content moderation flags) MUST invalidate `['approvals']` + `['tasks']`. Any DECISION on a pending item MUST invalidate `['approvals']` + `['tasks']` + **the underlying entity's row** from its own matrix. The Pending Approvals KPI, the widget, and Tasks & Reminders all read from the same `['approvals']` / `['tasks']` sources — never maintain separate counts.
+
+### 5.10 CROSS-CUTTING SINKS (write-only from mutations)
+
+Activity Feed, Notifications, Tasks, Audit Log, Calendar are **sinks**: mutations write to them (mostly backend-side), surfaces read them. Frontend responsibility = invalidate their keys (§2 covers activity/notifications automatically; add `['tasks']`/`['calendar']` when the matrix says so). Frontend NEVER fabricates sink entries locally.
+
+### 5.11 COMPETENCY / SKILL (blueprint 07)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `skill.create` / `skill.update` / `skill.delete` | `['competencies']` | Skills library table · **Skills dropdown in Add User form** (R2) · course/path skill chips |
+| `skillCategory.create/update/archive` | `['competencies','categories']` `['competencies']` | Category filter · hierarchy tree |
+| `framework.create/update/delete` | `['competencies','frameworks']` | Frameworks list |
+| `skillLevel.configure` | `['competencies','levels']` | Level ladders on all skill profiles |
+| skill assessment completion (student side, backend chain) | `['users', id, 'skills']` `['competencies','analytics']` | User skill profile · competency analytics |
+| `competencyMap.link/unlink` | `['competencies']` + target entity key (`['courses', id]` / `['learning-paths']` / `['quizzes',…]`) | Mapping views · skill chips on courses/paths |
+| `competencyCert.assign/verify/revoke` | `['users', id, 'skills']` `['competencies']` | Certification tracking · profiles |
+
+### 5.12 NOTIFICATION CAMPAIGNS (blueprint 10)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `emailCampaign.create` / `pushCampaign.send` / `smsCampaign.send` / `announcement.send` | `['campaigns']` `['notifications','stats']` (recipients' `['notifications']` update server-side) | Campaign lists · notification dashboard widgets · targeted users' feeds |
+| `campaign.schedule/pause/cancel/duplicate` | `['campaigns']` `['calendar']` | Scheduled tab · delivery calendar |
+| `template.create/update/duplicate` | `['notification-templates']` | Templates tab · **template pickers** (R2) |
+| `notificationRule.create/update/delete/toggle` | `['notifications','rules']` | Automation tab · active-rules widget |
+| `notification.markRead/.archive/.pin` | `['notifications']` only (skip §2 stats default — pure feed state) | Feed everywhere: dashboard widget + in-app tab |
+| `emergencyAlert.send` | `['campaigns']` `['security','alerts']` | Emergency tab · Security Alerts widget (Dashboard §15) |
+| `delivery.retry` | `['notifications','stats']` | Delivery logs · failed count |
+
+### 5.13 FINANCE CONFIG (blueprint 09 — runtime money flows stay in §5.7)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `plan.create/update` | `['plans']` `['subscriptions']` | Plans table · **plan dropdowns** (R2) · checkout options |
+| `invoice.generate` / `invoice.void` | `['invoices']` `['billing', studentId]` | Invoices table · student Billing tab |
+| `invoice.update/send` | `['invoices']` | Invoice row/status · customer notified |
+| `coupon.create/update/disable` | `['coupons']` | Coupons table · checkout coupon validation |
+| `tax.configure` | `['tax','config']` `['invoices']` | Tax settings · future invoice/checkout totals |
+| `billingSettings.update` | `['finance','settings']` — ⚠️ if currency changed: broad refetch of ALL money displays | Every money surface in the app |
+| `gateway.connect/configure/testMode` | `['gateways']` `['integrations']` | Gateways tab · integrations dashboard · checkout methods |
+| `commission.update` | `['payouts']` `['instructors', id, 'earnings']` `['dashboard','revenue']` | Payout calculations · earnings tabs |
+| `payment.retry` | `['transactions','recent']` `['finance','dashboard']` | Payments table · finance KPIs |
+| `payment.approve` | as §5.7 `transaction.purchase` | — |
+| `refund.reject` | `['approvals']` | Refund queue (approve → §5.7) |
+| `payout.hold` | `['payouts']` `['instructors', id, 'earnings']` | Payout status |
+
+### 5.14 SUPPORT TICKETS (blueprint 06 §10)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `ticket.create` (student side) | `['support-tickets']` `['tasks']` | Support tab · Tasks widget |
+| `ticket.assign/respond/resolve/escalate` | `['support-tickets']` | Ticket status · student notified via §2 defaults |
+
+### 5.15 INTEGRATIONS (blueprint 11)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `integration.connect/disconnect` | `['integrations']` `['integrations','stats']` + downstream option lists (video providers → live-session form, gateways → checkout) | Integration cards · dashboard widgets · **provider dropdowns** (R2) |
+| `integration.configure/testMode` | `['integrations']` | Config panels |
+| `apiKey.generate/revoke` | `['api-keys']` | API management tab |
+| `webhook.create/update/delete/toggle` | `['webhooks']` | Webhooks tab |
+| `sync.run` (on completion) | `['integrations','sync']` + synced entity keys (HR sync → `['users']`) | Sync center · synced tables |
+
+### 5.16 SYSTEM SETTINGS (blueprint 12)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `settings.<domain>.update` | `['settings', domain]` + downstream keys per blueprint 12 table | The settings form + every consumer of that domain |
+| `featureToggle.set` | `['settings','features']` + all gated module keys | Sidebar items appear/disappear · routes gate · widgets hide — **most reflective mutation in the app** |
+| `maintenance.enable/disable` | `['settings','maintenance']` | Global banner/lock · users notified |
+| `backup.run/restore` | `['system','backups']` | Backup tab (restore = destructive confirm flow) |
+| `retention.update` | `['security','retention']` | Retention rules · archived-user policy checks (blueprint 02 §12) |
+| `settings.restoreVersion` | `['settings', affectedDomain]` + its downstream | Config logs → restored state everywhere |
+
+### 5.17 SECURITY ACTIONS (blueprint 13)
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `securityAlert.resolve` | `['security','alerts']` `['security','threats']` `['security','stats']` | Security Alerts widget (Dashboard §15) + module tabs |
+| `incident.create/update/close` | `['security','incidents']` `['tasks']` | Incidents tab · Tasks widget |
+| `device.block/approve` | `['security','devices']` `['security','sessions']` | Devices tab · affected user sessions |
+| `ip.block/unblock` | `['security','ip']` | IP tab · policy enforcement (03 §19) |
+
+---
+
+## 6. FRONTEND ENFORCEMENT (how the map becomes code)
+
+- `src/lib/queryKeys.ts` — key factory; the ONLY place key arrays exist.
+- `src/lib/invalidation.ts` — `INVALIDATION_MAP: Record<MutationName, () => QueryKey[]>` that mirrors §5 1:1, plus `invalidateFor(queryClient, mutationName, ctx)` which applies the row + §2 defaults.
+- Every `useMutation.onSuccess` calls `invalidateFor(...)`. Ad-hoc `queryClient.invalidateQueries` calls outside `invalidation.ts` are forbidden (lint/review check).
+- Adding a mutation = one row here (§5) + one entry in `INVALIDATION_MAP`. They must match; drift between file and map is a review blocker.
+
+## 7. PLAYWRIGHT REFLECTION TESTS (extends stats-consistency suite)
+
+Template — one per mutation that touches a dashboard number:
+1. Read KPI/widget value on Dashboard Overview.
+2. Perform mutation through the UI (e.g., Add User happy path).
+3. Navigate back to Dashboard (no manual reload).
+4. Assert value reflects the mutation (old ± delta) **without hard refresh**.
+5. Use `waitForResponse` on the invalidated endpoints before asserting (established pattern from bulk-action fixes).
+
+Minimum coverage set: `user.create` → Total Users · `course.approve` → Published Courses + Pending Approvals · `instructorApplication.approve` → Active Instructors · `enrollment.create` → Active Students · `certificate.issue` → Certificates Issued · `liveSession.start/end` → Live Sessions Running · `refund.request` → Pending Approvals.
+
+## 8. BACKEND CONTRACT PRINCIPLES (Hassan)
+
+- **B1:** Every §4a endpoint computes aggregates live from source tables (Prisma `count`/`aggregate`). No stored counters (R3).
+- **B2:** One field, one owner: each displayed number is produced by exactly ONE endpoint field (R4). Dashboard stats endpoint is the owner of all 9 KPIs.
+- **B3:** Every mutation endpoint writes `activity_log` + `audit_log` in the same transaction (single AuditAction enum source — see past enum bug).
+- **B4:** Pending items live in queryable states, not copies: "pending approvals count" = COUNT over the union of pending states, same source as the approvals list.
+- **B5:** Permission changes bump a permissions version so active sessions re-evaluate (5.5 `role.edit`).
+- **B6:** Mock parity: `lmApi.ts` mock responses must match contract shapes field-by-field, so swapping mock→real changes zero frontend code.
+
+## 9. MAINTENANCE PROTOCOL
+
+- New widget/page/dropdown → add to §4 with key + endpoint.
+- New mutation → add row in §5 + entry in `INVALIDATION_MAP` (same PR).
+- New KPI → add to §4a, confirm endpoint field owner with Hassan, add reflection test (§7).
+- Renamed/removed anything → update here first, then code.
+- Monthly (or when things feel off): run the full Playwright reflection suite (`npx playwright test --workers=1`) and diff §5 against `INVALIDATION_MAP` keys.
+
+*Last updated: 2026-07-03 — generated from the FULL Admin System documentation, all 13 modules: Login, Dashboard Overview, User Management, Roles & Permissions, Learning Management, Instructors, Students, Competencies, Reports & Analytics, Finance, Notifications, Integrations, System Settings, Audit & Security. Companion blueprint: `docs/blueprint/`.*

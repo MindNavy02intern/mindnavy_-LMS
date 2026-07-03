@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTabParam } from '../hooks/useTabParam';
 import AdminLayout from '../layouts/AdminLayout';
 import { useToast, ToastContainer } from '../components/users/Toast';
 import type { ToastType } from '../components/users/Toast';
@@ -26,10 +27,10 @@ import { getAccessPolicyStats } from '../api/accessPoliciesPage';
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 
 const TABS = [
-  { key: 'lms',         label: 'LMS Roles'            },
+  { key: 'roles',       label: 'LMS Roles'            },
   { key: 'company',     label: 'Company Roles'         },
   { key: 'matrix',      label: 'Permission Matrix'     },
-  { key: 'access',      label: 'Access Policies'       },
+  { key: 'policies',    label: 'Access Policies'       },
   { key: 'templates',   label: 'Role Templates'        },
   { key: 'assignments', label: 'User Role Assignments' },
   { key: 'delegated',   label: 'Delegated Admins'      },
@@ -218,7 +219,7 @@ export default function RolesPermissionsStandalonePage() {
   }, [fetchStats, fetchList, fetchAccessPolicyCount]);
 
   // ── UI state ───────────────────────────────────────────────────────────────
-  const [activeTab,       setActiveTab]       = useState('lms');
+  const [activeTab,       setActiveTab]       = useTabParam('roles');
   const [fullMatrixView,  setFullMatrixView]  = useState(false);
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -420,7 +421,7 @@ export default function RolesPermissionsStandalonePage() {
         <div style={{ marginTop: 20 }}>
 
           {/* ── LMS Roles tab ──────────────────────────────────────────────── */}
-          {activeTab === 'lms' && (
+          {activeTab === 'roles' && (
             <>
               {/* Two-column section */}
               <div style={{ display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 20, alignItems: 'start' }}>
@@ -613,7 +614,7 @@ export default function RolesPermissionsStandalonePage() {
 
               {/* ── Bottom 4 info cards ─────────────────────────────────────── */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginTop: 20 }}>
-                <AccessPoliciesPreviewCard onViewAll={() => setActiveTab('access')} />
+                <AccessPoliciesPreviewCard onViewAll={() => setActiveTab('policies')} />
                 <RoleTemplatesPreviewCard
                   onViewAll={() => setActiveTab('templates')}
                   showToast={showToast as (type: ToastType, message: string) => void}
@@ -634,7 +635,7 @@ export default function RolesPermissionsStandalonePage() {
           )}
 
           {/* ── Access Policies tab ─────────────────────────────────────────── */}
-          {activeTab === 'access' && (
+          {activeTab === 'policies' && (
             <AccessPoliciesTab showToast={showToast as (type: ToastType, message: string) => void} />
           )}
 
@@ -649,7 +650,7 @@ export default function RolesPermissionsStandalonePage() {
           )}
 
           {/* ── All other tabs ──────────────────────────────────────────────── */}
-          {activeTab !== 'lms' && activeTab !== 'matrix' && activeTab !== 'access' && activeTab !== 'templates' && activeTab !== 'assignments' && (
+          {activeTab !== 'roles' && activeTab !== 'matrix' && activeTab !== 'policies' && activeTab !== 'templates' && activeTab !== 'assignments' && (
             <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
               <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? activeTab} />
             </div>

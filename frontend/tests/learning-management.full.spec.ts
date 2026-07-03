@@ -34,10 +34,12 @@ test('Tabs switch active state and content area updates', async ({ page }) => {
   await expect(page.getByText('Courses content coming soon')).not.toBeVisible()
 
   await coursesTab.click()
+  await expect(page).toHaveURL(/[?&]tab=courses/)
   await expect(page.getByText('Courses content coming soon')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Recent Courses' })).not.toBeVisible()
 
   await overviewTab.click()
+  await expect(page).toHaveURL(/[?&]tab=overview/)
   await expect(page.getByRole('heading', { name: 'Recent Courses' })).toBeVisible()
   await expect(page.getByText('Courses content coming soon')).not.toBeVisible()
 })

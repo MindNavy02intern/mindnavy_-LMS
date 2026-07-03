@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Eye, Pencil, Archive, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getLmFilterOptions } from '../../services/lmApi';
 import { listCourses, archiveCourse } from '../../services/coursesApi';
+import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import { CourseApiError } from '../../types/courses';
 import type {
   CourseListRow,
@@ -146,6 +147,7 @@ export default function CoursesTab() {
     try {
       await archiveCourse(row.id);
       showToast('success', `"${row.title}" archived.`);
+      invalidateFor(appQueryClient, 'course.archive');
       fetchList();
     } catch (err) {
       if (err instanceof CourseApiError && err.status === 401) { navigate('/login'); return; }
@@ -160,7 +162,9 @@ export default function CoursesTab() {
   // ── Form callbacks ───────────────────────────────────────────────────────
 
   function handleSaved() {
+    const mutationName = view.kind === 'create' ? 'course.createDraft' : 'course.update';
     showToast('success', view.kind === 'create' ? 'Draft saved!' : 'Course updated.');
+    invalidateFor(appQueryClient, mutationName);
     setView({ kind: 'list' });
     fetchList();
   }

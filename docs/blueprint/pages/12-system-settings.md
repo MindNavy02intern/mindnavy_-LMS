@@ -1,0 +1,27 @@
+# 12 · System Settings — `/settings`
+Doc: System Settings §1–§20 · Entity: SETTINGS (IMPACT §5.16 extension) · Status: `[partial]` — `SystemSettingsPage.tsx` exists at `/settings`; full doc §2 tab breakdown not yet implemented.
+
+**Module nature:** every tab = one settings form = one `settings.<domain>.update` mutation → invalidates `['settings', domain]` + the listed downstream keys. Settings are the ultimate "انعكاس" trap: a currency or feature-toggle change reflects EVERYWHERE. The Downstream column below is the needle-list — do not skip it.
+
+| # | Tab | Fields (doc) | Mutation ID | Downstream reflections (beyond `['settings',domain]`) |
+|---|---|---|---|---|
+| 1 | General (`?tab=general`) | Platform name, description, timezone, default language, date format, currency, contact info, default user roles→`['roles']` | `settings.general.update` | Currency/format → ALL money & date displays (broad refetch flag) · default roles → Add User form |
+| 2 | Branding (`?tab=branding`) | Logo, favicon, colors, typography, login screen, email branding, themes, white label | `settings.branding.update` | App shell theme, login page, email templates (file 10) |
+| 3 | Localization (`?tab=localization`) | Languages, RTL/LTR, regional formats, translations, currency localization, timezone mapping, country restrictions | `settings.localization.update` | Language switcher options, RTL layout flag, all formatted values |
+| 4 | User Registration (`?tab=registration`) | Open/invite-only, email/phone verification, approval workflow, CAPTCHA, domain restrictions, default groups→`['groups']` | `settings.registration.update` | Signup flow, Pending Verification volume (file 02), Add User validation engine |
+| 5 | Learning (`?tab=learning`) | Course visibility, enrollment rules, progress tracking, completion criteria, path rules, certificate rules, quiz settings, assignment rules, SCORM compatibility | `settings.learning.update` | Course wizard defaults (file 04), certificate trigger rules (§5.8), enrollment flows (file 06) |
+| 6 | Security (`?tab=security`) | Password policies, MFA, session timeout, IP restrictions, device management, login attempt limits, alerts, encryption | `settings.security.update` | Login flow, sensitive-permission dialogs (file 03 §14), `['security','alerts']` |
+| 7 | Authentication (`?tab=auth`) | Email login, social, SSO, LDAP, SAML, OAuth, enterprise IdPs | `settings.auth.update` | Login page methods; provider connections live in file 11 (`?tab=auth`) — single source: integrations |
+| 8 | Notification Settings (`?tab=notifications`) | Channels on/off, triggers, reminder rules, digests, emergency alerts | `settings.notifications.update` | File 10 behavior + `['notifications','settings']` |
+| 9 | Email Configuration (`?tab=email`) | SMTP, sender identity, domain verification, bounce handling, DKIM/SPF, queue, delivery monitoring | `settings.email.update` | Email delivery health (file 10 logs) |
+| 10 | Storage (`?tab=storage`) | Local/S3/GCS/Azure/CDN, usage limits, backup locations | `settings.storage.update` | Upload pipeline (file 04 step 3), content library |
+| 11 | Media & Upload (`?tab=media`) | Max file size, allowed types, video encoding, image compression, SCORM rules, security scans, CDN optimization | `settings.media.update` | Upload validation everywhere (course wizard, library, documents tabs) |
+| 12 | Automation (`?tab=automation`) | User/course/notification/compliance automation, enrollment rules, reminder scheduling, auto certification | `settings.automation.update` | Backend jobs; surfaces refetch on focus |
+| 13 | Maintenance Mode (`?tab=maintenance`) | Enable, scheduled downtime, message, admin override, upgrade mode, emergency shutdown | `maintenance.enable` / `maintenance.disable` | Whole-app banner/lock; notify users → `['notifications']` |
+| 14 | Backup & Restore (`?tab=backup`) | Full/incremental/DB/file backups, schedules, disaster recovery | `backup.run` / `backup.restore` | `['system','backups']`; restore = destructive confirm flow |
+| 15 | Feature Toggles (`?tab=features`) | Live sessions, certificates, marketplace, AI, SCORM, gamification, social learning; beta/experimental | `featureToggle.set` | → §5.16 toggle row: sidebar items appear/disappear, module routes gate, related widgets hide. THE most reflective mutation in the app |
+| 16 | Domain & URL (`?tab=domain`) | Custom domain, SSL, subdomains, redirects, URL structure, SEO | `settings.domain.update` | Links/emails base URL |
+| 17 | Mobile App (`?tab=mobile`) | Push, offline learning, app branding, mobile auth, deep linking, analytics, device restrictions | `settings.mobile.update` | Mobile clients |
+| 18 | API & Developer (`?tab=api`) | API access, webhooks, sandbox, docs, OAuth config, rate limiting, dev logs | `settings.api.update` | File 11 API tab (single source: `['api-keys']` for keys; this tab = policy) |
+| 19 | AI & Smart Features (`?tab=ai`) `[phase-later]` | AI recommendations, smart paths, AI analytics/notifications/assessments, behavioral predictions, privacy rules | `settings.ai.update` | AI widgets (file 01 §19) |
+| 20 | Configuration Logs (`?tab=logs`) | Setting changes, admin actions, security updates, feature activations, API changes, backup events, warnings | read-only (`['audit',{scope:'settings'}]`) | Actions: search/export (read) · Restore configuration→`settings.restoreVersion` (→ re-invalidate affected domain) |

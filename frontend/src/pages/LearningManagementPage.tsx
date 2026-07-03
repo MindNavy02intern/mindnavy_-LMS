@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import '../styles/learningManagement.css';
 import AdminLayout from '../layouts/AdminLayout';
 import LmPageHeader from '../components/learningManagement/LmPageHeader';
@@ -14,9 +13,28 @@ import ContentStats from '../components/learningManagement/ContentStats';
 import LiveSessions from '../components/learningManagement/LiveSessions';
 import RecentActivities from '../components/learningManagement/RecentActivities';
 import CoursesTab from '../components/learningManagement/CoursesTab';
+import { useTabParam } from '../hooks/useTabParam';
+
+const LM_TAB_KEYS: Record<LmTab, string> = {
+  'Overview':       'overview',
+  'Courses':        'courses',
+  'Learning Paths': 'paths',
+  'Content':        'content',
+  'Assessments':    'assessments',
+  'Enrollments':    'enrollments',
+  'Live Sessions':  'live',
+  'Certificates':   'certificates',
+  'Analytics':      'analytics',
+};
+
+const KEY_TO_LM_TAB: Record<string, LmTab> = Object.fromEntries(
+  (Object.entries(LM_TAB_KEYS) as [LmTab, string][]).map(([k, v]) => [v, k])
+);
 
 export default function LearningManagementPage() {
-  const [tab, setTab] = useState<LmTab>(LM_TABS[0]);
+  const [tabKey, setTabKey] = useTabParam('overview');
+  const tab: LmTab = KEY_TO_LM_TAB[tabKey] ?? LM_TABS[0];
+  const setTab = (t: LmTab) => setTabKey(LM_TAB_KEYS[t]);
 
   return (
     <AdminLayout pageTitle="Learning Management">

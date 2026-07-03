@@ -13,7 +13,7 @@ export default defineConfig({
     },
     {
       name: 'authenticated',
-      testMatch: /(dashboard|roles|users|organization|groups|invitations|access-policies|stats-consistency|role-templates|user-role-assignments|learning-management|lm-overview|courses-tab)(\.full)?\.spec\.ts/,
+      testMatch: /(dashboard|dashboard-kpis|roles|users|organization|groups|invitations|access-policies|stats-consistency|role-templates|user-role-assignments|learning-management|lm-overview|courses-tab|roles-permissions-deep-link|lm-deep-link|courses-invalidation)(\.full)?\.spec\.ts/,
       use: { storageState: 'tests/setup/.auth.json' },
       dependencies: ['setup'],
     },

@@ -9,6 +9,7 @@ import { test, expect } from '@playwright/test'
 async function gotoCoursesTab(page: Parameters<typeof test>[1] extends (args: { page: infer P }) => unknown ? P : never) {
   await page.goto('/learning-management')
   await page.getByRole('button', { name: 'Courses', exact: true }).click()
+  await expect(page).toHaveURL(/[?&]tab=courses/)
   await expect(page.getByRole('heading', { name: 'Courses' })).toBeVisible({ timeout: 10000 })
 }
 
