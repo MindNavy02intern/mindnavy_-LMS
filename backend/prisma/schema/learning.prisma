@@ -24,6 +24,7 @@ model Course {
   instructor   AppUser?           @relation("CourseInstructor", fields: [instructorId], references: [id], onDelete: SetNull)
   enrollments  CourseEnrollment[]
   contents     CourseContent[]
+  sections     CourseSection[]
   liveSessions LiveSession[]
   certificates Certificate[]
 
@@ -103,6 +104,49 @@ model Certificate {
   @@index([userId])
   @@index([issuedAt])
   @@map("certificates")
+}
+
+// Course Builder (Step 2) — a course is organised into ordered Sections, each
+// holding ordered Lessons. uuid ids + @@map snake_case tables to match the rest
+// of the schema. Deleting a Section cascades to its Lessons at the DB level (the
+// relation below), so the API never has to clean up children by hand.
+model CourseSection {
+  id        String   @id @default(uuid())
+  courseId  String
+  title     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+
+  @@index([courseId])
+  @@index([order])
+  @@map("course_sections")
+}
+
+model Lesson {
+  id          String     @id @default(uuid())
+  sectionId   String
+  title       String
+  type        LessonType @default(TEXT)
+  content     String? // TEXT: the body text · VIDEO_URL: the video URL
+  durationMin Int? // optional, mainly for video
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  section CourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@index([sectionId])
+  @@index([order])
+  @@map("lessons")
+}
+
+enum LessonType {
+  TEXT
+  VIDEO_URL
 }
 
 enum CourseLevel {

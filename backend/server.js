@@ -18,6 +18,8 @@ const invitationsRoutes  = require("./src/routes/invitations.routes");
 const messagesRoutes     = require("./src/routes/messages.routes");
 const lmRoutes           = require("./src/routes/lm.routes");
 const coursesRoutes      = require("./src/routes/courses.routes");
+const courseBuilderRoutes = require("./src/routes/courseBuilder.routes");
+const uploadsRoutes      = require("./src/routes/uploads.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -48,6 +50,14 @@ app.use("/api/admin/lm", lmRoutes);
 
 // Courses tab routes
 app.use("/api/admin/courses", coursesRoutes);
+
+// Course Builder (Step 2 — sections & lessons). Mounted at /api/admin because its
+// paths span /courses/:id/sections, /sections/:id and /lessons/:id. courses.routes
+// above only matches single-segment /:id, so these fall through to here.
+app.use("/api/admin", courseBuilderRoutes);
+
+// File uploads (sign → confirm → delete) for thumbnails (Phase 1).
+app.use("/api/admin/uploads", uploadsRoutes);
 
 // User management routes
 app.use("/api/admin/users", usersRoutes);
