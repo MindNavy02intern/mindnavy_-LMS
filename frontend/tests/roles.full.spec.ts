@@ -7,6 +7,7 @@ function uid() {
 async function gotoRoles(page: Page) {
   await page.goto('/roles-permissions')
   await page.getByRole('button', { name: 'LMS Roles', exact: true }).click()
+  await expect(page).toHaveURL(/[?&]tab=roles/)
 }
 
 // Scope to rows that have row-action buttons, excluding the Permission Matrix
@@ -171,6 +172,7 @@ test('Assign Permission to Role → verify checkbox checked', async ({ page }) =
 test('Permission Matrix → verify loads', async ({ page }) => {
   await page.goto('/roles-permissions')
   await page.getByRole('button', { name: 'Permission Matrix', exact: true }).click()
+  await expect(page).toHaveURL(/[?&]tab=matrix/)
   await expect(page.getByText(/roles · \d+ permissions · \d+ assignments/i)).toBeVisible({ timeout: 15000 })
 })
 
@@ -179,6 +181,7 @@ test('Toggle Permission Matrix cell → verify updates', async ({ page }) => {
   await createRole(page, name)
   await page.goto('/roles-permissions')
   await page.getByRole('button', { name: 'Permission Matrix', exact: true }).click()
+  await expect(page).toHaveURL(/[?&]tab=matrix/)
   await page.getByPlaceholder('Search roles or permissions...').fill(name)
   await page.waitForTimeout(600)
 

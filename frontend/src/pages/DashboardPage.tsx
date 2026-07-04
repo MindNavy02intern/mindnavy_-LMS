@@ -88,6 +88,26 @@ function KpiIcon({ type }: { type: string }) {
       <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
     </svg>
   );
+  if (type === 'instructors') return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+    </svg>
+  );
+  if (type === 'approvals') return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    </svg>
+  );
+  if (type === 'subscriptions') return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
+    </svg>
+  );
+  if (type === 'sessions') return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+    </svg>
+  );
   return null;
 }
 
@@ -985,14 +1005,19 @@ export default function DashboardPage() {
       {/* ── KPI row ── */}
       <div className="mn-lkpi-grid">
         {loading ? (
-          Array.from({ length: 5 }, (_, i) => <KpiSkeleton key={i} />)
+          Array.from({ length: 9 }, (_, i) => <KpiSkeleton key={i} />)
         ) : kpis ? (
           <>
-            <LKpiCard label="Total Users"     value={kpis.totalUsers.toLocaleString()}                                                        iconType="users"       iconBg="#f3e8ff" iconColor="#9333ea" />
-            <LKpiCard label="Active Learners" value={kpis.activeStudents.toLocaleString()}                                                     iconType="learners"    iconBg="#dcfce7" iconColor="#16a34a" />
-            <LKpiCard label="Courses"         value={kpis.publishedCourses > 0 ? kpis.publishedCourses.toLocaleString() : '—'}                 iconType="courses"     iconBg="#dbeafe" iconColor="#2563eb" />
-            <LKpiCard label="Completions"     value={kpis.certificatesIssued > 0 ? kpis.certificatesIssued.toLocaleString() : '—'}             iconType="completions" iconBg="#fed7aa" iconColor="#ea580c" />
-            <LKpiCard label="Revenue"         value={kpis.totalRevenue > 0 ? `$${kpis.totalRevenue.toLocaleString()}` : '—'}                   iconType="revenue"     iconBg="#d1fae5" iconColor="#059669" />
+            <LKpiCard label="Total Users"          value={kpis.totalUsers.toLocaleString()}                                                         iconType="users"          iconBg="#f3e8ff" iconColor="#9333ea" />
+            <LKpiCard label="Active Learners"      value={kpis.activeStudents.toLocaleString()}                                                      iconType="learners"       iconBg="#dcfce7" iconColor="#16a34a" />
+            <LKpiCard label="Courses"              value={kpis.publishedCourses > 0 ? kpis.publishedCourses.toLocaleString() : '—'}                  iconType="courses"        iconBg="#dbeafe" iconColor="#2563eb" />
+            <LKpiCard label="Completions"          value={kpis.certificatesIssued > 0 ? kpis.certificatesIssued.toLocaleString() : '—'}              iconType="completions"    iconBg="#fed7aa" iconColor="#ea580c" />
+            <LKpiCard label="Revenue"              value={kpis.totalRevenue > 0 ? `$${kpis.totalRevenue.toLocaleString()}` : '—'}                    iconType="revenue"        iconBg="#d1fae5" iconColor="#059669" />
+            <LKpiCard label="Active Instructors"   value={kpis.activeInstructors.toLocaleString()}                                                    iconType="instructors"    iconBg="#e0e7ff" iconColor="#4338ca" />
+            <LKpiCard label="Pending Approvals"    value={kpis.pendingApprovals.toLocaleString()}                                                     iconType="approvals"      iconBg="#fef9c3" iconColor="#ca8a04" />
+            {/* Active Subscriptions: Phase 2 stub — backend returns 0 until Subscription table is built (confirm with Hassan) */}
+            <LKpiCard label="Active Subscriptions" value={kpis.activeSubscriptions > 0 ? kpis.activeSubscriptions.toLocaleString() : '—'}            iconType="subscriptions"  iconBg="#ccfbf1" iconColor="#0f766e" />
+            <LKpiCard label="Live Sessions"        value={kpis.liveSessionsRunning.toLocaleString()}                                                  iconType="sessions"       iconBg="#fce7f3" iconColor="#be185d" />
           </>
         ) : null}
       </div>

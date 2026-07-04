@@ -126,6 +126,7 @@ async function getDashboardCore(admin) {
     activeStudents,
     activeInstructors,
     pendingApprovals,
+    publishedCourses,
     recentActivitiesRaw,
     liveSessionsRunning,
     notificationsRaw,
@@ -134,6 +135,7 @@ async function getDashboardCore(admin) {
     prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }).catch(() => 0),
     prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }).catch(() => 0),
     prisma.appUser.count({ where: PENDING_APPROVAL_WHERE }).catch(() => 0),
+    prisma.course.count({ where: { status: "PUBLISHED" } }).catch(() => 0),
     prisma.auditLog.findMany({
       take: 10,
       orderBy: { createdAt: "desc" },
@@ -170,7 +172,7 @@ async function getDashboardCore(admin) {
       totalUsers,
       activeStudents,
       activeInstructors,
-      publishedCourses:    0,  // Phase 2 — Course table not yet built
+      publishedCourses,
       pendingApprovals,
       totalRevenue:        0,  // Phase 2 — Finance table not yet built
       activeSubscriptions: 0,  // Phase 2 — Subscription table not yet built

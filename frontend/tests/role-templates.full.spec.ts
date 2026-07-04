@@ -7,6 +7,7 @@ function uid() {
 async function gotoRoleTemplates(page: Page) {
   await page.goto('/roles-permissions')
   await page.getByRole('button', { name: 'Role Templates', exact: true }).click()
+  await expect(page).toHaveURL(/[?&]tab=templates/)
 }
 
 // Modals in this codebase render as a `position: fixed; inset: 0` overlay root.

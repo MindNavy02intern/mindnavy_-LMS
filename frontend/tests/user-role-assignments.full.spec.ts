@@ -13,6 +13,7 @@ function futureDateStr(daysFromNow: number) {
 async function gotoAssignments(page: Page) {
   await page.goto('/roles-permissions')
   await page.getByRole('button', { name: 'User Role Assignments', exact: true }).click()
+  await expect(page).toHaveURL(/[?&]tab=assignments/)
 }
 
 // Modals in this codebase render as a `position: fixed; inset: 0` overlay root.

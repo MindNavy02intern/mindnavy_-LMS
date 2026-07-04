@@ -67,11 +67,13 @@ export default function LiveSessions() {
               </div>
               <div className="tw:min-w-0 tw:flex-1">
                 <div className="tw:truncate tw:text-[13px] tw:font-medium tw:text-slate-900">{s.title}</div>
-                <div className="tw:truncate tw:text-[11px] tw:text-slate-500">By {s.instructor} · {formatStart(s.startTime)}</div>
+                <div className="tw:truncate tw:text-[11px] tw:text-slate-500">
+                  {s.relatedCourse ? `${s.relatedCourse} · ` : ''}{formatStart(s.startTime)}
+                </div>
               </div>
               <div className="tw:flex tw:shrink-0 tw:items-center tw:gap-1 tw:text-[11px] tw:text-slate-400">
                 <Users className="tw:h-3.5 tw:w-3.5" strokeWidth={2} />
-                {s.attendees}
+                {s.enrolledCount}
               </div>
             </div>
           ))}

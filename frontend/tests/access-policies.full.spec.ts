@@ -7,6 +7,7 @@ function uid() {
 async function gotoAccessPolicies(page: Page) {
   await page.goto('/roles-permissions')
   await page.getByRole('button', { name: 'Access Policies', exact: true }).click()
+  await expect(page).toHaveURL(/[?&]tab=policies/)
 }
 
 // Modals in this codebase render as a `position: fixed; inset: 0` overlay root.

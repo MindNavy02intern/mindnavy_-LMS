@@ -23,10 +23,14 @@ const adminUserActionRateLimiter = rateLimit({
   },
 });
 
-// Analytics limiter — prevents heavy repeated aggregation queries
+// Analytics limiter — prevents heavy repeated aggregation queries.
+// In development the LM Overview page fires 9+ requests on mount (each widget
+// has its own useEffect) and React StrictMode doubles that to ~18 per load,
+// so 30/min is exhausted in 2 reloads. Dev limit is raised to avoid 429 noise
+// without touching production security.
 const adminUsersAnalyticsRateLimiter = rateLimit({
   windowMs: 60 * 1000,
-  limit: 30,
+  limit: process.env.NODE_ENV !== "production" ? 300 : 30,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
