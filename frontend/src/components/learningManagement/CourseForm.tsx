@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Plus, ChevronLeft } from 'lucide-react';
 import { getLmFilterOptions } from '../../services/lmApi';
@@ -6,6 +6,7 @@ import { getCourse, createCourse, updateCourse } from '../../services/coursesApi
 import { CourseApiError } from '../../types/courses';
 import type { CourseDetail, CourseLevel, CreateCoursePayload } from '../../types/courses';
 import type { LmFilterOptions } from '../../types/lm';
+import ThumbnailUpload from './ThumbnailUpload';
 
 const LEVELS: CourseLevel[] = ['Beginner', 'Intermediate', 'Advanced'];
 const LANGUAGES = ['English', 'Arabic', 'French', 'Spanish', 'German', 'Chinese', 'Japanese'];
@@ -46,9 +47,6 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel }: Props)
   const [loadError,  setLoadError]  = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
   const [globalError, setGlobalError]  = useState<string | null>(null);
-  const [imgBroken,  setImgBroken]  = useState(false);
-
-  const prevThumbnail = useRef('');
 
   // Load filter-options
   useEffect(() => {
@@ -86,13 +84,6 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel }: Props)
     return () => { cancelled = true; };
   }, [mode, courseId, navigate]);
 
-  // Reset broken-img flag when thumbnail URL changes
-  useEffect(() => {
-    if (values.thumbnail !== prevThumbnail.current) {
-      prevThumbnail.current = values.thumbnail;
-      setImgBroken(false);
-    }
-  }, [values.thumbnail]);
 
   function set(field: keyof FormValues, value: FormValues[keyof FormValues]) {
     setValues((v) => ({ ...v, [field]: value }));
@@ -369,30 +360,16 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel }: Props)
             <p className="tw:mt-1 tw:text-[11px] tw:text-slate-400">Press Enter or comma to add a tag.</p>
           </div>
 
-          {/* Thumbnail */}
+          {/* Thumbnail — Phase 1 file upload (image only; video is Phase 2) */}
           <div className="tw:col-span-2">
             <label className="tw:mb-1.5 tw:block tw:text-[12px] tw:font-semibold tw:text-slate-700">
-              Thumbnail URL
-              <span className="tw:ml-1 tw:text-[11px] tw:font-normal tw:text-slate-400">(file upload is out of scope — paste a URL)</span>
+              Thumbnail
             </label>
-            <input
-              type="url"
-              value={values.thumbnail}
-              onChange={(e) => set('thumbnail', e.target.value)}
-              placeholder="https://example.com/image.jpg"
-              className="tw:w-full tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400 focus:tw:ring-2 focus:tw:ring-blue-100"
+            <ThumbnailUpload
+              courseId={courseId}
+              initialUrl={values.thumbnail ?? undefined}
+              onChange={(url) => set('thumbnail', url)}
             />
-            {values.thumbnail && !imgBroken && (
-              <img
-                src={values.thumbnail}
-                alt="Thumbnail preview"
-                onError={() => setImgBroken(true)}
-                className="tw:mt-2 tw:h-24 tw:w-40 tw:rounded-lg tw:border tw:border-slate-200 tw:object-cover"
-              />
-            )}
-            {values.thumbnail && imgBroken && (
-              <p className="tw:mt-1 tw:text-[11px] tw:text-amber-600">Could not load preview for this URL.</p>
-            )}
           </div>
         </div>
       </div>

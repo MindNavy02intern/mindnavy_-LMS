@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>mindnavy LMS — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 2884 nodes, 4463 edges, 163 communities. Commit: 6cd0373</p>
+<p class="subtitle">Generated from graphify knowledge graph: 3013 nodes, 4584 edges, 173 communities. Commit: e9c07a9</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -76,7 +76,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#community-21">Community 21</a>
     <a href="#community-57">Community 57</a>
     <a href="#community-32">Community 32</a>
-    <a href="#community-66">Community 66</a>
+    <a href="#community-132">Community 132</a>
     <a href="#community-64">Community 64</a>
     <a href="#other">Other</a>
 </div>
@@ -94,42 +94,42 @@ flowchart LR
     class ANALYSIS_CLUSTERING_C79796DA module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>51 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>675 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>694 nodes</small>")
     class SERVE_API_35EC8E86 module;
     SECURITY_GLOBAL_5B9C6A04("Security &amp; Global Graph<br/><small>4 nodes</small>")
     class SECURITY_GLOBAL_5B9C6A04 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>444 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>579 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
     COMMUNITY_5_2966028D("Community 5<br/><small>67 nodes</small>")
     class COMMUNITY_5_2966028D module;
     COMMUNITY_33_03CF07C5("Community 33<br/><small>66 nodes</small>")
     class COMMUNITY_33_03CF07C5 module;
-    COMMUNITY_6_7D637A07("Community 6<br/><small>62 nodes</small>")
+    COMMUNITY_6_7D637A07("Community 6<br/><small>64 nodes</small>")
     class COMMUNITY_6_7D637A07 module;
-    COMMUNITY_21_47BA4108("Community 21<br/><small>58 nodes</small>")
+    COMMUNITY_21_47BA4108("Community 21<br/><small>55 nodes</small>")
     class COMMUNITY_21_47BA4108 module;
     COMMUNITY_57_508B74B3("Community 57<br/><small>55 nodes</small>")
     class COMMUNITY_57_508B74B3 module;
-    COMMUNITY_32_4867BAA9("Community 32<br/><small>49 nodes</small>")
+    COMMUNITY_32_4867BAA9("Community 32<br/><small>53 nodes</small>")
     class COMMUNITY_32_4867BAA9 module;
-    COMMUNITY_66_22012778("Community 66<br/><small>45 nodes</small>")
-    class COMMUNITY_66_22012778 module;
+    COMMUNITY_132_2A4F420C("Community 132<br/><small>45 nodes</small>")
+    class COMMUNITY_132_2A4F420C module;
     COMMUNITY_64_0821645F("Community 64<br/><small>42 nodes</small>")
     class COMMUNITY_64_0821645F module;
-    OTHER_D0941E68("Other<br/><small>1044 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>1016 nodes</small>")
     class OTHER_D0941E68 module;
-    SERVE_API_35EC8E86 -->|imports x219| OTHER_D0941E68
-    OTHER_D0941E68 -->|imports x58| SERVE_API_35EC8E86
-    COMMUNITY_6_7D637A07 -->|imports x26| COMMUNITY_21_47BA4108
+    SERVE_API_35EC8E86 -->|imports x227| OTHER_D0941E68
+    OTHER_D0941E68 -->|imports x57| SERVE_API_35EC8E86
     TESTS_FIXTURES_B84B1DCC -->|imports x24| OTHER_D0941E68
+    COMMUNITY_6_7D637A07 -->|imports x23| COMMUNITY_21_47BA4108
+    SERVE_API_35EC8E86 -->|imports x19| COMMUNITY_32_4867BAA9
     OTHER_D0941E68 -->|imports x18| TESTS_FIXTURES_B84B1DCC
-    SERVE_API_35EC8E86 -->|imports x15| COMMUNITY_32_4867BAA9
     OTHER_D0941E68 -->|imports x11| COMMUNITY_32_4867BAA9
     COMMUNITY_32_4867BAA9 -->|contains x11| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x10| TESTS_FIXTURES_B84B1DCC
-    COMMUNITY_32_4867BAA9 -->|contains x10| SERVE_API_35EC8E86
     SERVE_API_35EC8E86 -->|imports x8| COMMUNITY_5_2966028D
     CLI_SKILLS_9964CBB8 -->|imports x7| OTHER_D0941E68
+    COMMUNITY_32_4867BAA9 -->|contains x6| SERVE_API_35EC8E86
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -146,7 +146,7 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>192</td><td><code>55, 4, 3, 129, 7, 8, 10, 83, 12, 14, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>30</td><td><code>52</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>51</td><td><code>116, 141, 147, 18</code></td></tr><tr><td>Serving API</td><td>675</td><td><code>9, 101, 24, 2, 27, 60, 111, 48, 1, 113, 42, 26, 36, 54, 72, 25, 131, 46, 125, 139, 22, 145, 51, 53, 143, 148, 13</code></td></tr><tr><td>Security &amp; Global Graph</td><td>4</td><td><code>156</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>444</td><td><code>126, 92, 41, 63, 30, 109, 112, 65, 67, 103, 117, 149, 74, 76, 77, 135, 78, 79, 82, 100, 144, 68, 69, 70, 80, 91, 94, 95, 96, 97, 98, 99, 81, 114, 130, 161</code></td></tr><tr><td>Community 5</td><td>67</td><td><code>5</code></td></tr><tr><td>Community 33</td><td>66</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>62</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>58</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>49</td><td><code>32</code></td></tr><tr><td>Community 66</td><td>45</td><td><code>66</code></td></tr><tr><td>Community 64</td><td>42</td><td><code>64</code></td></tr><tr><td>Other</td><td>1044</td><td><code>19, 105, 34, 20, 62, 58, 50, 37, 39, 127, 49, 59, 132, 106, 150, 75, 28, 137, 102, 107, 115, 120, 31, 73, 133, 134, 44, 93, 136, 71, 0, 140, 38, 40, 29, 45, 61, 146, 43, 56, 118, 35, 104, 119, 47, 110, 121, 151, 108, 122, 123, 124, 160, 152, 11, 128, 138, 153, 142, 154, 155, 23, 157, 162, 15, 158, 159, 16, 17, 85, 86, 87, 88, 89, 90</code></td></tr>
+      <tr><td>Graph Build</td><td>192</td><td><code>55, 4, 3, 129, 7, 8, 10, 83, 12, 14, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>30</td><td><code>52</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>51</td><td><code>116, 141, 147, 18</code></td></tr><tr><td>Serving API</td><td>694</td><td><code>9, 101, 27, 24, 2, 111, 48, 1, 113, 42, 60, 26, 131, 36, 54, 71, 72, 22, 25, 125, 139, 145, 51, 53, 143, 148, 13</code></td></tr><tr><td>Security &amp; Global Graph</td><td>4</td><td><code>156</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>579</td><td><code>126, 92, 41, 63, 30, 109, 112, 65, 67, 144, 103, 135, 117, 149, 74, 76, 77, 100, 110, 137, 151, 152, 162, 163, 164, 165, 166, 167, 168, 169, 68, 69, 70, 78, 79, 80, 82, 170, 91, 94, 95, 96, 97, 98, 99, 81, 114, 130, 161</code></td></tr><tr><td>Community 5</td><td>67</td><td><code>5</code></td></tr><tr><td>Community 33</td><td>66</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>53</td><td><code>32</code></td></tr><tr><td>Community 132</td><td>45</td><td><code>132</code></td></tr><tr><td>Community 64</td><td>42</td><td><code>64</code></td></tr><tr><td>Other</td><td>1016</td><td><code>19, 105, 34, 62, 150, 58, 20, 37, 50, 39, 46, 49, 102, 106, 59, 66, 75, 107, 28, 115, 120, 31, 127, 133, 134, 44, 93, 136, 0, 140, 38, 40, 29, 45, 61, 146, 43, 56, 104, 118, 119, 35, 47, 73, 121, 108, 122, 123, 124, 160, 171, 172, 11, 128, 138, 153, 142, 154, 155, 23, 157, 15, 158, 159, 16, 17, 85, 86, 87, 88, 89, 90</code></td></tr>
     </table>
   </div>
   <div class="card">
@@ -158,7 +158,7 @@ flowchart LR
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>2884 nodes · 4463 edges · 163 communities (155 shown, 8 thin omitted)</li>
+      <li>3013 nodes · 4584 edges · 173 communities (166 shown, 7 thin omitted)</li>
       <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `getStoredToken()` - 46 edges</li>
@@ -1198,14 +1198,13 @@ flowchart LR
 
 <!-- ====== 5. Serving API ====== -->
 <h2 id="serve-api">5. Serving API</h2>
-<p>Serving API groups implementation around frontend, backend, components, api, mostly in backend/contact md files/ACCESS_POLICIES_API.md, backend/ACCESS_POLICIES_API.md, src/api/organization.ts. This section covers 675 nodes and 1063 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around frontend, components, backend, api, mostly in backend/contact md files/ACCESS_POLICIES_API.md, backend/ACCESS_POLICIES_API.md, src/api/organization.ts. This section covers 694 nodes and 1072 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (675 nodes, 1063 edges)
+    %% Section: Serving API (694 nodes, 1072 edges)
     subgraph serve_api_src_controllers_users_controller_js_8d60ab07["src/controllers/users.controller.js"]
-        backend_src_controllers_users_controller_js_108e1036("users.controller.js")
         controllers_users_controller_createuser_1d4bed69("createUser()<br/><small>src/controllers/users.controller.js</small>")
         controllers_users_controller_updateuser_09b2ac67("updateUser()<br/><small>src/controllers/users.controller.js</small>")
         controllers_users_controller_suspenduser_34b180c2("suspendUser()<br/><small>src/controllers/users.controller.js</small>")
@@ -1225,9 +1224,12 @@ flowchart LR
         api_organization_orgfetch_7fc4eb51("orgFetch()<br/><small>src/api/organization.ts</small>")
         frontend_src_api_organization_ts_fd854e3d("organization.ts")
     end
+    subgraph serve_api_src_api_users_ts_089bead8["src/api/users.ts"]
+        frontend_src_api_users_ts_f0590af5("users.ts")
+        api_users_actionfetch_26dbe2ec("actionFetch()<br/><small>src/api/users.ts</small>")
+    end
     frontend_src_authcontext_tsx_62479c75("AuthContext.tsx")
     api_adminauth_getstoredtoken_6da5b8df("getStoredToken()<br/><small>src/api/adminAuth.ts</small>")
-    frontend_src_api_users_ts_f0590af5("users.ts")
     controllers_users_controller_createuser_1d4bed69 -->|calls| validators_users_validator_validatecreateuserinp_e973ca38
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateuuidparam_36622e78
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateupdateuserinp_415e7af4
@@ -1239,18 +1241,12 @@ flowchart LR
     controllers_users_controller_resetuserpassword_a43fc993 -->|calls| validators_users_validator_validateresetuserpass_7d038d6c
     controllers_users_controller_assignuserrole_a0e0aadb -->|calls| validators_users_validator_validateuuidparam_36622e78
     api_adminauth_getstoredtoken_6da5b8df -->|calls| api_organization_orgfetch_7fc4eb51
-    backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validateuuidparam_36622e78
-    backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validatecreateuserinp_e973ca38
-    backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validateupdateuserinp_415e7af4
-    backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validateupdateusersta_76927f0e
-    backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validatesuspenduserin_d9703da8
-    backend_src_controllers_users_controller_js_108e1036 -->|imports| validators_users_validator_validateresetuserpass_7d038d6c
+    api_adminauth_getstoredtoken_6da5b8df -->|calls| api_users_actionfetch_26dbe2ec
     frontend_src_authcontext_tsx_62479c75 -->|imports| api_adminauth_getstoredtoken_6da5b8df
     api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_organization_ts_fd854e3d
     api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_users_ts_f0590af5
     frontend_src_api_organization_ts_fd854e3d -->|imports| frontend_src_api_users_ts_f0590af5
-    %% Omitted for readability: 657 nodes, 0 edges
-    class backend_src_controllers_users_controller_js_108e1036 module;
+    %% Omitted for readability: 676 nodes, 0 edges
     class controllers_users_controller_createuser_1d4bed69 function;
     class controllers_users_controller_updateuser_09b2ac67 function;
     class controllers_users_controller_suspenduser_34b180c2 function;
@@ -1265,9 +1261,10 @@ flowchart LR
     class validators_users_validator_validateresetuserpass_7d038d6c function;
     class api_organization_orgfetch_7fc4eb51 function;
     class frontend_src_api_organization_ts_fd854e3d module;
+    class frontend_src_api_users_ts_f0590af5 module;
+    class api_users_actionfetch_26dbe2ec function;
     class frontend_src_authcontext_tsx_62479c75 ui;
     class api_adminauth_getstoredtoken_6da5b8df ui;
-    class frontend_src_api_users_ts_f0590af5 module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1561,14 +1558,14 @@ flowchart LR
 <tr><td><code>src/api/organization.ts</code></td><td>29 nodes</td></tr>
 <tr><td><code>backend/contact md files/COURSES_API.md</code></td><td>28 nodes</td></tr>
 <tr><td><code>src/controllers/users.controller.js</code></td><td>27 nodes</td></tr>
-<tr><td><code>src/api/users.ts</code></td><td>22 nodes</td></tr>
+<tr><td><code>src/api/users.ts</code></td><td>25 nodes</td></tr>
 <tr><td><code>src/routes/users.routes.js</code></td><td>20 nodes</td></tr>
 <tr><td><code>blueprint/pages/03-roles-permissions.md</code></td><td>18 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x589, imports x250, imports x112, calls x106. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x601, imports x246, imports x110, calls x109. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1664,12 +1661,12 @@ flowchart LR
 
 <!-- ====== 7. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">7. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around frontend, error, test, tests, mostly in src/services/lmApi.ts, frontend/tests/users.full.spec.ts, frontend/tests/role-templates.full.spec.ts. This section covers 444 nodes and 530 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around frontend, error, test, contextmd, mostly in src/services/lmApi.ts, frontend/tests/users.full.spec.ts, frontend/tests/role-templates.full.spec.ts. This section covers 579 nodes and 659 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (444 nodes, 530 edges)
+    %% Section: Tests &amp; Fixtures (579 nodes, 659 edges)
     subgraph tests_fixtures_src_controllers_roleTemplates_con_5b73d8ed["src/controllers/roleTemplates.controller.js"]
         backend_src_controllers_roletemplates_controller_1e11e77f("roleTemplates.controller.js")
         controllers_roletemplates_controller_badrequest_5c41d20d("badRequest()<br/><small>src/controllers/roleTemplates.controller.js</small>")
@@ -1718,7 +1715,7 @@ flowchart LR
     frontend_src_components_learningmanagement_cours_b22ae313 -->|imports| frontend_src_services_coursesapi_ts_5bc30299
     frontend_src_components_learningmanagement_cours_b22ae313 -->|imports| frontend_src_components_learningmanagement_cours_609193c9
     frontend_src_components_learningmanagement_cours_609193c9 -->|imports| frontend_src_services_coursesapi_ts_5bc30299
-    %% Omitted for readability: 426 nodes, 0 edges
+    %% Omitted for readability: 561 nodes, 0 edges
     class backend_src_controllers_roletemplates_controller_1e11e77f module;
     class controllers_roletemplates_controller_badrequest_5c41d20d function;
     class controllers_roletemplates_controller_listroletem_97e7c9cd function;
@@ -2017,7 +2014,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x401, calls x78, imports x37, imports x12. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x525, calls x78, imports x41, imports x13. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -2793,66 +2790,50 @@ flowchart LR
 
 <!-- ====== 10. Community 6 ====== -->
 <h2 id="community-6">10. Community 6</h2>
-<p>Community 6 groups implementation around dashboardpagetsx, frontend, pages, color, mostly in src/pages/DashboardPage.tsx. This section covers 62 nodes and 61 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Community 6 groups implementation around dashboardpagetsx, frontend, pages, color, mostly in src/pages/DashboardPage.tsx. This section covers 64 nodes and 64 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 6 (62 nodes, 61 edges)
-    frontend_src_pages_dashboardpage_tsx_51d6f551("DashboardPage.tsx")
-    pages_dashboardpage_kpiicon_0039e013("KpiIcon()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_qaicon_78b2bedc("QaIcon()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_lkpicardprops_1498f90b("LKpiCardProps<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_lkpicard_bfe87c75("LKpiCard()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_kpiskeleton_05c5ef43("KpiSkeleton()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_statrow_94d9574d("StatRow()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_analyticsspin_3862c11c("AnalyticsSpin()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_emptymsg_f0d7a328("EmptyMsg()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_learningactivitychart_d421b9b1("LearningActivityChart()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_role_colors_7907b3c0("ROLE_COLORS<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_role_labels_c731e85b("ROLE_LABELS<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_usersroledonut_0ae39046("UsersRoleDonut()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_completiondonut_71726dc0("CompletionDonut()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_avatar_colors_813b8d72("AVATAR_COLORS<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_activityavatar_2f8413b9("ActivityAvatar()<br/><small>src/pages/DashboardPage.tsx</small>")
+    %% Section: Community 6 (64 nodes, 64 edges)
+    pages_dashboardpage_formatrelative_827ad6a9("formatRelative()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_reportssnapshotcard_10addcea("ReportsSnapshotCard()<br/><small>src/pages/DashboardPage.tsx</small>")
     pages_dashboardpage_activity_icon_bg_ffdd719e("ACTIVITY_ICON_BG<br/><small>src/pages/DashboardPage.tsx</small>")
     pages_dashboardpage_activity_icon_color_f82704bb("ACTIVITY_ICON_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_kpiicon_0039e013
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_qaicon_78b2bedc
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_lkpicardprops_1498f90b
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_lkpicard_bfe87c75
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_kpiskeleton_05c5ef43
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_statrow_94d9574d
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_analyticsspin_3862c11c
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_emptymsg_f0d7a328
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_learningactivitychart_d421b9b1
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_role_colors_7907b3c0
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_role_labels_c731e85b
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_usersroledonut_0ae39046
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_completiondonut_71726dc0
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_avatar_colors_813b8d72
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_activityavatar_2f8413b9
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_activity_icon_bg_ffdd719e
-    frontend_src_pages_dashboardpage_tsx_51d6f551 -->|contains| pages_dashboardpage_activity_icon_color_f82704bb
-    %% Omitted for readability: 44 nodes, 0 edges
-    class frontend_src_pages_dashboardpage_tsx_51d6f551 ui;
-    class pages_dashboardpage_kpiicon_0039e013 ui;
-    class pages_dashboardpage_qaicon_78b2bedc ui;
-    class pages_dashboardpage_lkpicardprops_1498f90b ui;
-    class pages_dashboardpage_lkpicard_bfe87c75 ui;
-    class pages_dashboardpage_kpiskeleton_05c5ef43 ui;
-    class pages_dashboardpage_statrow_94d9574d ui;
-    class pages_dashboardpage_analyticsspin_3862c11c ui;
-    class pages_dashboardpage_emptymsg_f0d7a328 ui;
-    class pages_dashboardpage_learningactivitychart_d421b9b1 ui;
-    class pages_dashboardpage_role_colors_7907b3c0 ui;
-    class pages_dashboardpage_role_labels_c731e85b ui;
-    class pages_dashboardpage_usersroledonut_0ae39046 ui;
-    class pages_dashboardpage_completiondonut_71726dc0 ui;
-    class pages_dashboardpage_avatar_colors_813b8d72 ui;
-    class pages_dashboardpage_activityavatar_2f8413b9 ui;
+    pages_dashboardpage_avatar_colors_813b8d72("AVATAR_COLORS<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_activityavatar_2f8413b9("ActivityAvatar()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_aiinsightscard_831710e6("AiInsightsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_analyticsspin_3862c11c("AnalyticsSpin()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_calendar_color_bc079537("CALENDAR_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_completed_ba99baa0("CHART_COMPLETED<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_enrolled_cef3d34c("CHART_ENROLLED<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_labels_4ddc9d30("CHART_LABELS<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_completion_courses_bc708f2b("COMPLETION_COURSES<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_cs_btn_7a6fed5e("CS_BTN<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_calendareventscard_4a2e434b("CalendarEventsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_completiondonut_71726dc0("CompletionDonut()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_courseanalyticscard_121d7fa8("CourseAnalyticsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_dept_data_2c272e52("DEPT_DATA<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_formatrelative_827ad6a9 -->|calls| pages_dashboardpage_reportssnapshotcard_10addcea
+    %% Omitted for readability: 46 nodes, 0 edges
+    class pages_dashboardpage_formatrelative_827ad6a9 ui;
+    class pages_dashboardpage_reportssnapshotcard_10addcea ui;
     class pages_dashboardpage_activity_icon_bg_ffdd719e ui;
     class pages_dashboardpage_activity_icon_color_f82704bb ui;
+    class pages_dashboardpage_avatar_colors_813b8d72 ui;
+    class pages_dashboardpage_activityavatar_2f8413b9 ui;
+    class pages_dashboardpage_aiinsightscard_831710e6 ui;
+    class pages_dashboardpage_analyticsspin_3862c11c ui;
+    class pages_dashboardpage_calendar_color_bc079537 ui;
+    class pages_dashboardpage_chart_completed_ba99baa0 ui;
+    class pages_dashboardpage_chart_enrolled_cef3d34c ui;
+    class pages_dashboardpage_chart_labels_4ddc9d30 ui;
+    class pages_dashboardpage_completion_courses_bc708f2b ui;
+    class pages_dashboardpage_cs_btn_7a6fed5e ui;
+    class pages_dashboardpage_calendareventscard_4a2e434b ui;
+    class pages_dashboardpage_completiondonut_71726dc0 ui;
+    class pages_dashboardpage_courseanalyticscard_121d7fa8 ui;
+    class pages_dashboardpage_dept_data_2c272e52 ui;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2884,6 +2865,14 @@ flowchart LR
 </tr>
 <tr>
   <td>2</td>
+  <td><code>formatRelative()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ReportsSnapshotCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td>formatRelative() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
   <td><code>KpiIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2891,7 +2880,7 @@ flowchart LR
   <td>KpiIcon() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>3</td>
+  <td>4</td>
   <td><code>QaIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2899,7 +2888,7 @@ flowchart LR
   <td>QaIcon() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>4</td>
+  <td>5</td>
   <td><code>LKpiCardProps</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2907,7 +2896,7 @@ flowchart LR
   <td>LKpiCardProps node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>5</td>
+  <td>6</td>
   <td><code>LKpiCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2915,7 +2904,7 @@ flowchart LR
   <td>LKpiCard() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>6</td>
+  <td>7</td>
   <td><code>KpiSkeleton()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2923,7 +2912,7 @@ flowchart LR
   <td>KpiSkeleton() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>7</td>
+  <td>8</td>
   <td><code>StatRow()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2931,7 +2920,7 @@ flowchart LR
   <td>StatRow() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>8</td>
+  <td>9</td>
   <td><code>AnalyticsSpin()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2939,7 +2928,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>9</td>
+  <td>10</td>
   <td><code>EmptyMsg()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2947,7 +2936,7 @@ flowchart LR
   <td>EmptyMsg() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>10</td>
+  <td>11</td>
   <td><code>LearningActivityChart()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2955,7 +2944,7 @@ flowchart LR
   <td>LearningActivityChart() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>11</td>
+  <td>12</td>
   <td><code>ROLE_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2963,7 +2952,7 @@ flowchart LR
   <td>ROLE_COLORS node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>13</td>
   <td><code>ROLE_LABELS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2971,7 +2960,7 @@ flowchart LR
   <td>ROLE_LABELS node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>14</td>
   <td><code>UsersRoleDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2979,7 +2968,7 @@ flowchart LR
   <td>UsersRoleDonut() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>14</td>
+  <td>15</td>
   <td><code>CompletionDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2987,7 +2976,7 @@ flowchart LR
   <td>CompletionDonut() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>15</td>
+  <td>16</td>
   <td><code>AVATAR_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -2995,7 +2984,7 @@ flowchart LR
   <td>AVATAR_COLORS node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>17</td>
   <td><code>ActivityAvatar()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3003,7 +2992,7 @@ flowchart LR
   <td>ActivityAvatar() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>18</td>
   <td><code>ACTIVITY_ICON_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3011,7 +3000,7 @@ flowchart LR
   <td>ACTIVITY_ICON_BG node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>19</td>
   <td><code>ACTIVITY_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3019,7 +3008,7 @@ flowchart LR
   <td>ACTIVITY_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>20</td>
   <td><code>NOTIF_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3027,7 +3016,7 @@ flowchart LR
   <td>NOTIF_BG node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>21</td>
   <td><code>NOTIF_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3035,7 +3024,7 @@ flowchart LR
   <td>NOTIF_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>22</td>
   <td><code>NotifIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3043,7 +3032,7 @@ flowchart LR
   <td>NotifIcon() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>23</td>
   <td><code>RevenueCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3051,7 +3040,7 @@ flowchart LR
   <td>RevenueCard() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>24</td>
   <td><code>UserAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3059,7 +3048,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>25</td>
   <td><code>CourseAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3067,7 +3056,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>26</td>
   <td><code>InstructorPerformanceCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3075,7 +3064,7 @@ flowchart LR
   <td>InstructorPerformanceCard() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>27</td>
   <td><code>StudentEngagementCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3083,7 +3072,7 @@ flowchart LR
   <td>StudentEngagementCard() node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>28</td>
   <td><code>PRIORITY_STYLE</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3091,7 +3080,7 @@ flowchart LR
   <td>PRIORITY_STYLE node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>28</td>
+  <td>29</td>
   <td><code>TX_STATUS_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -3099,20 +3088,12 @@ flowchart LR
   <td>TX_STATUS_COLOR node in src/pages/DashboardPage.tsx.</td>
 </tr>
 <tr>
-  <td>29</td>
+  <td>30</td>
   <td><code>TX_TYPE_LABEL</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>TX_TYPE_LABEL node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>CALENDAR_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>CALENDAR_COLOR node in src/pages/DashboardPage.tsx.</td>
 </tr>
 </table>
 
@@ -3121,24 +3102,24 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/pages/DashboardPage.tsx</code></td><td>62 nodes</td></tr>
+      <tr><td><code>src/pages/DashboardPage.tsx</code></td><td>64 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x61. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x63, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 11. Community 21 ====== -->
 <h2 id="community-21">11. Community 21</h2>
-<p>Community 21 groups implementation around dashboardts, frontend, types, welcomeinfo, mostly in src/types/dashboard.ts. This section covers 58 nodes and 57 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Community 21 groups implementation around dashboardts, frontend, types, welcomeinfo, mostly in src/types/dashboard.ts. This section covers 55 nodes and 54 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 21 (58 nodes, 57 edges)
+    %% Section: Community 21 (55 nodes, 54 edges)
     frontend_src_types_dashboard_ts_7d69f6d8("dashboard.ts")
     types_dashboard_welcomeinfo_d873e2bb("WelcomeInfo<br/><small>src/types/dashboard.ts</small>")
     types_dashboard_dashboardkpis_c3ef8308("DashboardKpis<br/><small>src/types/dashboard.ts</small>")
@@ -3153,10 +3134,10 @@ flowchart LR
     types_dashboard_quickactionitem_d8f92ce6("QuickActionItem<br/><small>src/types/dashboard.ts</small>")
     types_dashboard_systemstatus_74a3a266("SystemStatus<br/><small>src/types/dashboard.ts</small>")
     types_dashboard_systemhealth_c453d7c0("SystemHealth<br/><small>src/types/dashboard.ts</small>")
-    types_dashboard_dashboardcoreresponse_ddb2497e("DashboardCoreResponse<br/><small>src/types/dashboard.ts</small>")
     types_dashboard_analyticsfilters_29a575e2("AnalyticsFilters<br/><small>src/types/dashboard.ts</small>")
     types_dashboard_learningactivityitem_a5b6d7a8("LearningActivityItem<br/><small>src/types/dashboard.ts</small>")
     types_dashboard_userrole_b33c8f35("UserRole<br/><small>src/types/dashboard.ts</small>")
+    types_dashboard_usersbyroleitem_010fbf46("UsersByRoleItem<br/><small>src/types/dashboard.ts</small>")
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_welcomeinfo_d873e2bb
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_dashboardkpis_c3ef8308
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_activitytype_73057e7e
@@ -3170,11 +3151,11 @@ flowchart LR
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_quickactionitem_d8f92ce6
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_systemstatus_74a3a266
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_systemhealth_c453d7c0
-    frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_dashboardcoreresponse_ddb2497e
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_analyticsfilters_29a575e2
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_learningactivityitem_a5b6d7a8
     frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_userrole_b33c8f35
-    %% Omitted for readability: 40 nodes, 0 edges
+    frontend_src_types_dashboard_ts_7d69f6d8 -->|contains| types_dashboard_usersbyroleitem_010fbf46
+    %% Omitted for readability: 37 nodes, 0 edges
     class frontend_src_types_dashboard_ts_7d69f6d8 module;
     class types_dashboard_welcomeinfo_d873e2bb klass;
     class types_dashboard_dashboardkpis_c3ef8308 klass;
@@ -3189,10 +3170,10 @@ flowchart LR
     class types_dashboard_quickactionitem_d8f92ce6 klass;
     class types_dashboard_systemstatus_74a3a266 klass;
     class types_dashboard_systemhealth_c453d7c0 klass;
-    class types_dashboard_dashboardcoreresponse_ddb2497e klass;
     class types_dashboard_analyticsfilters_29a575e2 klass;
     class types_dashboard_learningactivityitem_a5b6d7a8 klass;
     class types_dashboard_userrole_b33c8f35 klass;
+    class types_dashboard_usersbyroleitem_010fbf46 klass;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -3328,14 +3309,6 @@ flowchart LR
 </tr>
 <tr>
   <td>15</td>
-  <td><code>DashboardCoreResponse</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>DashboardCoreResponse node in src/types/dashboard.ts.</td>
-</tr>
-<tr>
-  <td>16</td>
   <td><code>AnalyticsFilters</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3343,7 +3316,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>16</td>
   <td><code>LearningActivityItem</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3351,7 +3324,7 @@ flowchart LR
   <td>LearningActivityItem node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>17</td>
   <td><code>UserRole</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3359,7 +3332,7 @@ flowchart LR
   <td>UserRole node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>18</td>
   <td><code>UsersByRoleItem</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3367,7 +3340,7 @@ flowchart LR
   <td>UsersByRoleItem node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>19</td>
   <td><code>RevenueOverview</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3375,7 +3348,7 @@ flowchart LR
   <td>RevenueOverview node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>20</td>
   <td><code>UserAnalytics</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3383,7 +3356,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>21</td>
   <td><code>CourseAnalytics</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3391,7 +3364,7 @@ flowchart LR
   <td>Orchestrates analysis and returns structured documentation data.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>22</td>
   <td><code>CourseCompletionCategory</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3399,7 +3372,7 @@ flowchart LR
   <td>CourseCompletionCategory node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>23</td>
   <td><code>CourseCompletion</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3407,7 +3380,7 @@ flowchart LR
   <td>CourseCompletion node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>24</td>
   <td><code>InstructorPerformance</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3415,7 +3388,7 @@ flowchart LR
   <td>InstructorPerformance node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>25</td>
   <td><code>StudentEngagement</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3423,7 +3396,7 @@ flowchart LR
   <td>StudentEngagement node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>26</td>
   <td><code>PerformanceOverview</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3431,7 +3404,7 @@ flowchart LR
   <td>PerformanceOverview node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>28</td>
+  <td>27</td>
   <td><code>TopDepartmentItem</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3439,7 +3412,7 @@ flowchart LR
   <td>TopDepartmentItem node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>29</td>
+  <td>28</td>
   <td><code>DashboardDeptItem</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -3447,12 +3420,20 @@ flowchart LR
   <td>DashboardDeptItem node in src/types/dashboard.ts.</td>
 </tr>
 <tr>
-  <td>30</td>
+  <td>29</td>
   <td><code>DashboardDailyTrend</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>DashboardDailyTrend node in src/types/dashboard.ts.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>DashboardActivityData</code><br><small style="color:var(--muted)">src/types/dashboard.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DashboardActivityData node in src/types/dashboard.ts.</td>
 </tr>
 </table>
 
@@ -3461,12 +3442,12 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/types/dashboard.ts</code></td><td>58 nodes</td></tr>
+      <tr><td><code>src/types/dashboard.ts</code></td><td>55 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x57. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x54. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -3838,12 +3819,12 @@ flowchart LR
 
 <!-- ====== 13. Community 32 ====== -->
 <h2 id="community-32">13. Community 32</h2>
-<p>Community 32 groups implementation around frontend, components, users, charts, mostly in src/types/users.ts, users/charts/UsersByDepartmentChart.tsx, users/charts/UsersByRoleChart.tsx. This section covers 49 nodes and 59 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Community 32 groups implementation around frontend, components, users, charts, mostly in src/types/users.ts, users/charts/UsersByDepartmentChart.tsx, users/charts/UsersByRoleChart.tsx. This section covers 53 nodes and 63 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 32 (49 nodes, 59 edges)
+    %% Section: Community 32 (53 nodes, 63 edges)
     subgraph community_32_src_types_users_ts_971a3f6a["src/types/users.ts"]
         frontend_src_types_users_ts_8f94ab14("users.ts")
         types_users_analyticsresponse_ca5ed142("AnalyticsResponse<br/><small>src/types/users.ts</small>")
@@ -3852,8 +3833,8 @@ flowchart LR
         types_users_departmentanalyticsitem_0a5dec62("DepartmentAnalyticsItem<br/><small>src/types/users.ts</small>")
         types_users_roleanalyticsitem_68dbef1f("RoleAnalyticsItem<br/><small>src/types/users.ts</small>")
         types_users_verificationstatusitem_c9f35ea3("VerificationStatusItem<br/><small>src/types/users.ts</small>")
+        types_users_actionresponse_704bebaa("ActionResponse<br/><small>src/types/users.ts</small>")
         types_users_activityitem_2ad33c58("ActivityItem<br/><small>src/types/users.ts</small>")
-        types_users_bulkactionerror_165cdbc3("BulkActionError<br/><small>src/types/users.ts</small>")
     end
     subgraph community_32_components_users_UserAnalytics_tsx_32aa25c5["components/users/UserAnalytics.tsx"]
         frontend_src_components_users_useranalytics_tsx_3e6b949c("UserAnalytics.tsx")
@@ -3884,7 +3865,7 @@ flowchart LR
     frontend_src_components_users_charts_usersbyrole_91ed3063 -->|imports| types_users_roleanalyticsitem_68dbef1f
     frontend_src_components_users_charts_verificatio_fff827f0 -->|imports| frontend_src_types_users_ts_8f94ab14
     frontend_src_components_users_charts_verificatio_fff827f0 -->|imports| types_users_verificationstatusitem_c9f35ea3
-    %% Omitted for readability: 31 nodes, 0 edges
+    %% Omitted for readability: 35 nodes, 0 edges
     class frontend_src_types_users_ts_8f94ab14 module;
     class types_users_analyticsresponse_ca5ed142 klass;
     class types_users_newusersthismonth_06c7b862 klass;
@@ -3892,8 +3873,8 @@ flowchart LR
     class types_users_departmentanalyticsitem_0a5dec62 klass;
     class types_users_roleanalyticsitem_68dbef1f klass;
     class types_users_verificationstatusitem_c9f35ea3 klass;
+    class types_users_actionresponse_704bebaa klass;
     class types_users_activityitem_2ad33c58 klass;
-    class types_users_bulkactionerror_165cdbc3 klass;
     class frontend_src_components_users_useranalytics_tsx_3e6b949c ui;
     class users_useranalytics_chartcard_72ab0f67 ui;
     class users_useranalytics_useranalytics_2b2b073d ui;
@@ -4171,7 +4152,7 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/types/users.ts</code></td><td>19 nodes</td></tr>
+      <tr><td><code>src/types/users.ts</code></td><td>23 nodes</td></tr>
 <tr><td><code>users/charts/UsersByDepartmentChart.tsx</code></td><td>6 nodes</td></tr>
 <tr><td><code>users/charts/UsersByRoleChart.tsx</code></td><td>6 nodes</td></tr>
 <tr><td><code>users/charts/VerificationStatusChart.tsx</code></td><td>6 nodes</td></tr>
@@ -4183,81 +4164,84 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x41, imports x11, imports x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x45, imports x11, imports x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 14. Community 66 ====== -->
-<h2 id="community-66">14. Community 66</h2>
-<p>Community 66 groups implementation around backend, lmservicejs, services, lmcontrollerjs, mostly in src/services/lm.service.js, src/controllers/lm.controller.js, src/validators/lm.validator.js. This section covers 45 nodes and 86 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 14. Community 132 ====== -->
+<h2 id="community-132">14. Community 132</h2>
+<p>Community 132 groups implementation around backend, coursesservicejs, services, coursescontrollerjs, mostly in src/services/courses.service.js, src/controllers/courses.controller.js, src/validators/courses.validator.js. This section covers 45 nodes and 88 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 66 (45 nodes, 86 edges)
-    subgraph community_66_src_controllers_lm_controller_js_6a0517ba["src/controllers/lm.controller.js"]
-        controllers_lm_controller_servererror_ce32ba63("serverError()<br/><small>src/controllers/lm.controller.js</small>")
-        backend_src_controllers_lm_controller_js_abe330f2("lm.controller.js")
-        controllers_lm_controller_badrequest_e6aa24d9("badRequest()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_getprogress_ec2f254b("getProgress()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_getcourses_f3d76e77("getCourses()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_getlivesessions_12bc1948("getLiveSessions()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_getstats_60b7697b("getStats()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_getdistribution_e2838424("getDistribution()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_gettopcourses_5cf31602("getTopCourses()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_getcontentstats_a13809a5("getContentStats()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_getactivities_62d186fd("getActivities()<br/><small>src/controllers/lm.controller.js</small>")
-        controllers_lm_controller_getfilteroptions_98d83161("getFilterOptions()<br/><small>src/controllers/lm.controller.js</small>")
+    %% Section: Community 132 (45 nodes, 88 edges)
+    subgraph community_132_src_controllers_courses_controller_477a70b9["src/controllers/courses.controller.js"]
+        controllers_courses_controller_badrequest_a11fbc41("badRequest()<br/><small>src/controllers/courses.controller.js</small>")
+        backend_src_controllers_courses_controller_js_61838b92("courses.controller.js")
+        controllers_courses_controller_servererror_9cc2b318("serverError()<br/><small>src/controllers/courses.controller.js</small>")
+        controllers_courses_controller_notfound_802a8ef2("notFound()<br/><small>src/controllers/courses.controller.js</small>")
+        controllers_courses_controller_handledomainerror_e2ce9f20("handleDomainError()<br/><small>src/controllers/courses.controller.js</small>")
+        controllers_courses_controller_listcourses_f091442f("listCourses()<br/><small>src/controllers/courses.controller.js</small>")
+        controllers_courses_controller_getcourse_4ac1a339("getCourse()<br/><small>src/controllers/courses.controller.js</small>")
+        controllers_courses_controller_createcourse_314df5ae("createCourse()<br/><small>src/controllers/courses.controller.js</small>")
+        controllers_courses_controller_updatecourse_4a8c21e2("updateCourse()<br/><small>src/controllers/courses.controller.js</small>")
+        controllers_courses_controller_archivecourse_a3813d91("archiveCourse()<br/><small>src/controllers/courses.controller.js</small>")
     end
-    subgraph community_66_src_services_lm_service_js_b6cc6bc3["src/services/lm.service.js"]
-        services_lm_service_safe_ea019fad("safe()<br/><small>src/services/lm.service.js</small>")
-        services_lm_service_ymd_eed5fa3d("ymd()<br/><small>src/services/lm.service.js</small>")
-        services_lm_service_growthpct_58acb8b9("growthPct()<br/><small>src/services/lm.service.js</small>")
+    subgraph community_132_src_services_courses_service_js_2be80e11["src/services/courses.service.js"]
+        services_courses_service_courseauditlog_fba3c8fb("courseAuditLog()<br/><small>src/services/courses.service.js</small>")
+        services_courses_service_safe_3d0efb4b("safe()<br/><small>src/services/courses.service.js</small>")
+        services_courses_service_listcourses_2404ab61("listCourses()<br/><small>src/services/courses.service.js</small>")
+        services_courses_service_getcourse_21e99d72("getCourse()<br/><small>src/services/courses.service.js</small>")
+        services_courses_service_updatecourse_eb6c5bea("updateCourse()<br/><small>src/services/courses.service.js</small>")
+        services_courses_service_iso_1dc9f9d9("iso()<br/><small>src/services/courses.service.js</small>")
+        services_courses_service_maprow_dbb625cc("mapRow()<br/><small>src/services/courses.service.js</small>")
+        services_courses_service_mapfull_cd476444("mapFull()<br/><small>src/services/courses.service.js</small>")
     end
-    subgraph community_66_src_validators_lm_validator_js_7711d30d["src/validators/lm.validator.js"]
-        validators_lm_validator_validaterange_27a4e8ec("validateRange()<br/><small>src/validators/lm.validator.js</small>")
-        validators_lm_validator_validatelimit_47af4fbc("validateLimit()<br/><small>src/validators/lm.validator.js</small>")
-        validators_lm_validator_validatecoursesquery_5b5dd8a2("validateCoursesQuery()<br/><small>src/validators/lm.validator.js</small>")
-    end
-    controllers_lm_controller_badrequest_e6aa24d9 -->|calls| controllers_lm_controller_getprogress_ec2f254b
-    controllers_lm_controller_badrequest_e6aa24d9 -->|calls| controllers_lm_controller_getcourses_f3d76e77
-    controllers_lm_controller_badrequest_e6aa24d9 -->|calls| controllers_lm_controller_getlivesessions_12bc1948
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_getstats_60b7697b
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_getdistribution_e2838424
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_getprogress_ec2f254b
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_gettopcourses_5cf31602
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_getcontentstats_a13809a5
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_getcourses_f3d76e77
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_getactivities_62d186fd
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_getlivesessions_12bc1948
-    controllers_lm_controller_servererror_ce32ba63 -->|calls| controllers_lm_controller_getfilteroptions_98d83161
-    controllers_lm_controller_getprogress_ec2f254b -->|calls| validators_lm_validator_validaterange_27a4e8ec
-    controllers_lm_controller_gettopcourses_5cf31602 -->|calls| validators_lm_validator_validatelimit_47af4fbc
-    controllers_lm_controller_getcourses_f3d76e77 -->|calls| validators_lm_validator_validatecoursesquery_5b5dd8a2
-    controllers_lm_controller_getactivities_62d186fd -->|calls| validators_lm_validator_validatelimit_47af4fbc
-    backend_src_controllers_lm_controller_js_abe330f2 -->|imports| validators_lm_validator_validaterange_27a4e8ec
-    backend_src_controllers_lm_controller_js_abe330f2 -->|imports| validators_lm_validator_validatelimit_47af4fbc
-    backend_src_controllers_lm_controller_js_abe330f2 -->|imports| validators_lm_validator_validatecoursesquery_5b5dd8a2
-    %% Omitted for readability: 27 nodes, 0 edges
-    class controllers_lm_controller_servererror_ce32ba63 function;
-    class backend_src_controllers_lm_controller_js_abe330f2 module;
-    class controllers_lm_controller_badrequest_e6aa24d9 function;
-    class controllers_lm_controller_getprogress_ec2f254b function;
-    class controllers_lm_controller_getcourses_f3d76e77 function;
-    class controllers_lm_controller_getlivesessions_12bc1948 function;
-    class controllers_lm_controller_getstats_60b7697b function;
-    class controllers_lm_controller_getdistribution_e2838424 function;
-    class controllers_lm_controller_gettopcourses_5cf31602 function;
-    class controllers_lm_controller_getcontentstats_a13809a5 function;
-    class controllers_lm_controller_getactivities_62d186fd function;
-    class controllers_lm_controller_getfilteroptions_98d83161 function;
-    class services_lm_service_safe_ea019fad function;
-    class services_lm_service_ymd_eed5fa3d function;
-    class services_lm_service_growthpct_58acb8b9 function;
-    class validators_lm_validator_validaterange_27a4e8ec function;
-    class validators_lm_validator_validatelimit_47af4fbc function;
-    class validators_lm_validator_validatecoursesquery_5b5dd8a2 function;
+    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_handledomainerror_e2ce9f20
+    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_servererror_9cc2b318
+    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_listcourses_f091442f
+    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_getcourse_4ac1a339
+    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_createcourse_314df5ae
+    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
+    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_archivecourse_a3813d91
+    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_handledomainerror_e2ce9f20
+    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_servererror_9cc2b318
+    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_getcourse_4ac1a339
+    controllers_courses_controller_handledomainerror_e2ce9f20 -->|calls| controllers_courses_controller_createcourse_314df5ae
+    controllers_courses_controller_handledomainerror_e2ce9f20 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
+    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_listcourses_f091442f
+    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_getcourse_4ac1a339
+    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_createcourse_314df5ae
+    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
+    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_archivecourse_a3813d91
+    services_courses_service_safe_3d0efb4b -->|calls| services_courses_service_listcourses_2404ab61
+    services_courses_service_safe_3d0efb4b -->|calls| services_courses_service_getcourse_21e99d72
+    services_courses_service_safe_3d0efb4b -->|calls| services_courses_service_updatecourse_eb6c5bea
+    services_courses_service_iso_1dc9f9d9 -->|calls| services_courses_service_maprow_dbb625cc
+    services_courses_service_iso_1dc9f9d9 -->|calls| services_courses_service_mapfull_cd476444
+    services_courses_service_courseauditlog_fba3c8fb -->|calls| services_courses_service_updatecourse_eb6c5bea
+    services_courses_service_maprow_dbb625cc -->|calls| services_courses_service_mapfull_cd476444
+    %% Omitted for readability: 27 nodes, 2 edges
+    class controllers_courses_controller_badrequest_a11fbc41 function;
+    class backend_src_controllers_courses_controller_js_61838b92 module;
+    class controllers_courses_controller_servererror_9cc2b318 function;
+    class controllers_courses_controller_notfound_802a8ef2 function;
+    class controllers_courses_controller_handledomainerror_e2ce9f20 function;
+    class controllers_courses_controller_listcourses_f091442f function;
+    class controllers_courses_controller_getcourse_4ac1a339 function;
+    class controllers_courses_controller_createcourse_314df5ae function;
+    class controllers_courses_controller_updatecourse_4a8c21e2 function;
+    class controllers_courses_controller_archivecourse_a3813d91 function;
+    class services_courses_service_courseauditlog_fba3c8fb function;
+    class services_courses_service_safe_3d0efb4b function;
+    class services_courses_service_listcourses_2404ab61 function;
+    class services_courses_service_getcourse_21e99d72 function;
+    class services_courses_service_updatecourse_eb6c5bea function;
+    class services_courses_service_iso_1dc9f9d9 function;
+    class services_courses_service_maprow_dbb625cc function;
+    class services_courses_service_mapfull_cd476444 function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -4281,253 +4265,253 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>lm.controller.js</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>courses.controller.js</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>lm.service.js</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>lm.validator.js</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small><br><code>validateCoursesQuery()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small><br>+3 more</td>
-  <td>lm.controller.js node in src/controllers/lm.controller.js.</td>
+  <td><code>courses.service.js</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>courses.validator.js</code><br><small style="color:var(--muted)">src/validators/courses.validator.js</small><br><code>validateCreate()</code><br><small style="color:var(--muted)">src/validators/courses.validator.js</small><br>+3 more</td>
+  <td>courses.controller.js node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>svc node in src/controllers/lm.controller.js.</td>
+  <td>svc node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>3</td>
   <td><code>{
-  validateRange,
-  validateLimit,
-  validateSessionStatus,
-  validateCoursesQuery,
-}</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  validateId,
+  validateListQuery,
+  validateCreate,
+  validateUpdate,
+}</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>{
-  validateRange,
-  validateLimit,
-  validateSessionStatus,
-  validateCoursesQuery,
-} node in src/controllers/lm.controller.js.</td>
+  validateId,
+  validateListQuery,
+  validateCreate,
+  validateUpdate,
+} node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>getCourses()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>getLiveSessions()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>getProgress()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td>badRequest() node in src/controllers/lm.controller.js.</td>
+  <td><code>archiveCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>createCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>getCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br>+4 more</td>
+  <td>badRequest() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>getActivities()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>getContentStats()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>getCourses()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br>+6 more</td>
-  <td>serverError() node in src/controllers/lm.controller.js.</td>
+  <td><code>getCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td>notFound() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>getStats()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getStats() node in src/controllers/lm.controller.js.</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>createCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td>handleDomainError() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>getDistribution()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getDistribution() node in src/controllers/lm.controller.js.</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>archiveCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>createCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>getCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br>+2 more</td>
+  <td>serverError() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>getProgress()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>listCourses()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td><code>validateRange()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
-  <td>getProgress() node in src/controllers/lm.controller.js.</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>listCourses() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>getTopCourses()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>getCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td><code>validateLimit()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
-  <td>getTopCourses() node in src/controllers/lm.controller.js.</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>getCourse() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>getContentStats()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>createCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td>No direct outbound edge</td>
-  <td>getContentStats() node in src/controllers/lm.controller.js.</td>
+  <td>createCourse() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>getCourses()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>updateCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td><code>validateCoursesQuery()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
-  <td>getCourses() node in src/controllers/lm.controller.js.</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>updateCourse() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>getActivities()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>archiveCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td><code>validateLimit()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
-  <td>getActivities() node in src/controllers/lm.controller.js.</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>archiveCourse() node in src/controllers/courses.controller.js.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>getLiveSessions()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
-  <td><code>validateSessionStatus()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
-  <td>getLiveSessions() node in src/controllers/lm.controller.js.</td>
+  <td><code>courses.service.js</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>courses.controller.js</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>courses.service.js node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>getFilterOptions()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>getFilterOptions() node in src/controllers/lm.controller.js.</td>
+  <td>prisma node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>lm.service.js</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>lm.controller.js</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>LEVEL_ENUM</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>lm.service.js node in src/services/lm.service.js.</td>
+  <td>LEVEL_ENUM node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>STATUS_ENUM</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>prisma node in src/services/lm.service.js.</td>
+  <td>STATUS_ENUM node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>LEVEL_LABEL</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>LEVEL_LABEL</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>LEVEL_LABEL node in src/services/lm.service.js.</td>
+  <td>LEVEL_LABEL node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>STATUS_LABEL</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>STATUS_LABEL</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>STATUS_LABEL node in src/services/lm.service.js.</td>
+  <td>STATUS_LABEL node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>SERIES_BY_STATUS</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>safe()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SERIES_BY_STATUS node in src/services/lm.service.js.</td>
+  <td><code>getCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>listCourses()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>safe() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>safe()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>getActivities()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>getContentStats()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br>+6 more</td>
-  <td>safe() node in src/services/lm.service.js.</td>
+  <td><code>mapFull()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>mapRow()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>iso() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>paginate()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>iso() node in src/services/lm.service.js.</td>
+  <td><code>listCourses()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>paginate() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>ymd()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>buildPagination()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>buildDayBuckets()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>buildMonthBuckets()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>getProgress()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>ymd() node in src/services/lm.service.js.</td>
+  <td><code>listCourses()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>buildPagination() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>monthBounds()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>assertInstructorExists()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><span class="tag tag-async">Async</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>avgCompletionRate()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>monthBounds() node in src/services/lm.service.js.</td>
+  <td><code>createCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>assertInstructorExists() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>growthPct()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>courseAuditLog()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>avgCompletionRate()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>growthPct() node in src/services/lm.service.js.</td>
+  <td><code>archiveCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>createCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>courseAuditLog() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>growthPct()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>monthBounds()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>safe()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><code>getStats()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>countWithGrowth() node in src/services/lm.service.js.</td>
+  <td><code>ROW_SELECT</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ROW_SELECT node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>avgCompletionRate()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>growthPct()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>monthBounds()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><code>getStats()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>avgCompletionRate() node in src/services/lm.service.js.</td>
+  <td><code>FULL_SELECT</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>FULL_SELECT node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>getStats()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>mapRow()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>avgCompletionRate()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getStats() node in src/services/lm.service.js.</td>
+  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>mapFull()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>mapRow() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>getDistribution()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>mapFull()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>safe()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getDistribution() node in src/services/lm.service.js.</td>
+  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>mapRow()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>createCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>getCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>mapFull() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>buildDayBuckets()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>listCourses()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>ymd()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><code>getProgress()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>buildDayBuckets() node in src/services/lm.service.js.</td>
+  <td><code>buildPagination()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>paginate()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>safe()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>listCourses() node in src/services/courses.service.js.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>buildMonthBuckets()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>getCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>ymd()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td><code>getProgress()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
-  <td>buildMonthBuckets() node in src/services/lm.service.js.</td>
+  <td><code>mapFull()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>safe()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>getCourse() node in src/services/courses.service.js.</td>
 </tr>
 </table>
 
@@ -4536,14 +4520,14 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/services/lm.service.js</code></td><td>23 nodes</td></tr>
-<tr><td><code>src/controllers/lm.controller.js</code></td><td>14 nodes</td></tr>
-<tr><td><code>src/validators/lm.validator.js</code></td><td>8 nodes</td></tr>
+      <tr><td><code>src/services/courses.service.js</code></td><td>21 nodes</td></tr>
+<tr><td><code>src/controllers/courses.controller.js</code></td><td>12 nodes</td></tr>
+<tr><td><code>src/validators/courses.validator.js</code></td><td>12 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x42, calls x38, imports x4, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x42, calls x40, imports x4, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4921,22 +4905,23 @@ flowchart LR
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around frontend, components, backend, pages, mostly in components/users/UserDetailsDrawer.tsx, src/layouts/AdminLayout.tsx, src/services/organization.service.js. This section covers 1044 nodes and 1355 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around frontend, backend, components, pages, mostly in components/users/UserDetailsDrawer.tsx, src/layouts/AdminLayout.tsx, src/services/organization.service.js. This section covers 1016 nodes and 1327 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (1044 nodes, 1355 edges)
-    subgraph other_src_controllers_courses_controller_js_882a0e77["src/controllers/courses.controller.js"]
-        controllers_courses_controller_badrequest_a11fbc41("badRequest()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_handledomainerror_e2ce9f20("handleDomainError()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_servererror_9cc2b318("serverError()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_listcourses_f091442f("listCourses()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_getcourse_4ac1a339("getCourse()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_createcourse_314df5ae("createCourse()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_updatecourse_4a8c21e2("updateCourse()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_archivecourse_a3813d91("archiveCourse()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_notfound_802a8ef2("notFound()<br/><small>src/controllers/courses.controller.js</small>")
+    %% Section: Other (1016 nodes, 1327 edges)
+    subgraph other_src_controllers_groups_controller_js_8d0aa103["src/controllers/groups.controller.js"]
+        controllers_groups_controller_badrequest_92f3437e("badRequest()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_creategroup_1191832b("createGroup()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_addmembers_c5240ede("addMembers()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_notfound_5e39b2cf("notFound()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_getgroup_4d50e532("getGroup()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_updategroup_7bd69dff("updateGroup()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_deletegroup_9aa7f6d7("deleteGroup()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_getgroupmembers_c272a3f1("getGroupMembers()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_removemember_dc246481("removeMember()<br/><small>src/controllers/groups.controller.js</small>")
+        controllers_groups_controller_servererror_c433c987("serverError()<br/><small>src/controllers/groups.controller.js</small>")
     end
     subgraph other_src_controllers_roles_controller_js_45e9f077["src/controllers/roles.controller.js"]
         controllers_roles_controller_servererror_017a0b75("serverError()<br/><small>src/controllers/roles.controller.js</small>")
@@ -4948,46 +4933,44 @@ flowchart LR
         scripts_audittestdata_line_230be37d("line()<br/><small>backend/scripts/auditTestData.js</small>")
         scripts_audittestdata_main_03932f2e("main()<br/><small>backend/scripts/auditTestData.js</small>")
     end
-    frontend_src_components_users_addusermodal_tsx_8c841bc6("AddUserModal.tsx")
     src_authcontext_useauth_410e9db1("useAuth()<br/><small>frontend/src/AuthContext.tsx</small>")
-    controllers_groups_controller_badrequest_92f3437e("badRequest()<br/><small>src/controllers/groups.controller.js</small>")
+    controllers_lm_controller_servererror_ce32ba63("serverError()<br/><small>src/controllers/lm.controller.js</small>")
     scripts_audittestdata_line_230be37d -->|calls| scripts_audittestdata_main_03932f2e
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_handledomainerror_e2ce9f20
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_servererror_9cc2b318
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_listcourses_f091442f
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_getcourse_4ac1a339
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_createcourse_314df5ae
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_archivecourse_a3813d91
-    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_handledomainerror_e2ce9f20
-    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_servererror_9cc2b318
-    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_getcourse_4ac1a339
-    controllers_courses_controller_handledomainerror_e2ce9f20 -->|calls| controllers_courses_controller_createcourse_314df5ae
-    controllers_courses_controller_handledomainerror_e2ce9f20 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_listcourses_f091442f
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_getcourse_4ac1a339
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_createcourse_314df5ae
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_archivecourse_a3813d91
-    %% Omitted for readability: 1026 nodes, 0 edges
-    class controllers_courses_controller_badrequest_a11fbc41 function;
-    class controllers_courses_controller_handledomainerror_e2ce9f20 function;
-    class controllers_courses_controller_servererror_9cc2b318 function;
-    class controllers_courses_controller_listcourses_f091442f function;
-    class controllers_courses_controller_getcourse_4ac1a339 function;
-    class controllers_courses_controller_createcourse_314df5ae function;
-    class controllers_courses_controller_updatecourse_4a8c21e2 function;
-    class controllers_courses_controller_archivecourse_a3813d91 function;
-    class controllers_courses_controller_notfound_802a8ef2 function;
+    controllers_groups_controller_badrequest_92f3437e -->|calls| controllers_groups_controller_creategroup_1191832b
+    controllers_groups_controller_badrequest_92f3437e -->|calls| controllers_groups_controller_addmembers_c5240ede
+    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_getgroup_4d50e532
+    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_creategroup_1191832b
+    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_updategroup_7bd69dff
+    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_deletegroup_9aa7f6d7
+    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_getgroupmembers_c272a3f1
+    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_addmembers_c5240ede
+    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_removemember_dc246481
+    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_getgroup_4d50e532
+    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_creategroup_1191832b
+    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_updategroup_7bd69dff
+    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_deletegroup_9aa7f6d7
+    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_getgroupmembers_c272a3f1
+    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_addmembers_c5240ede
+    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_removemember_dc246481
+    %% Omitted for readability: 998 nodes, 0 edges
+    class controllers_groups_controller_badrequest_92f3437e function;
+    class controllers_groups_controller_creategroup_1191832b function;
+    class controllers_groups_controller_addmembers_c5240ede function;
+    class controllers_groups_controller_notfound_5e39b2cf function;
+    class controllers_groups_controller_getgroup_4d50e532 function;
+    class controllers_groups_controller_updategroup_7bd69dff function;
+    class controllers_groups_controller_deletegroup_9aa7f6d7 function;
+    class controllers_groups_controller_getgroupmembers_c272a3f1 function;
+    class controllers_groups_controller_removemember_dc246481 function;
+    class controllers_groups_controller_servererror_c433c987 function;
     class controllers_roles_controller_servererror_017a0b75 function;
     class backend_src_controllers_roles_controller_js_e02de260 module;
     class controllers_roles_controller_badrequest_8f588ee8 function;
     class controllers_roles_controller_notfound_e408a089 function;
     class scripts_audittestdata_line_230be37d test;
     class scripts_audittestdata_main_03932f2e test;
-    class frontend_src_components_users_addusermodal_tsx_8c841bc6 ui;
     class src_authcontext_useauth_410e9db1 ui;
-    class controllers_groups_controller_badrequest_92f3437e function;
+    class controllers_lm_controller_servererror_ce32ba63 function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -5284,13 +5267,13 @@ flowchart LR
 <tr><td><code>src/services/roles.service.js</code></td><td>25 nodes</td></tr>
 <tr><td><code>backend/server.js</code></td><td>23 nodes</td></tr>
 <tr><td><code>src/controllers/roles.controller.js</code></td><td>23 nodes</td></tr>
-<tr><td><code>src/services/courses.service.js</code></td><td>21 nodes</td></tr>
+<tr><td><code>src/services/lm.service.js</code></td><td>23 nodes</td></tr>
 <tr><td><code>components/users/UserTable.tsx</code></td><td>20 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x885, calls x222, imports x141, imports x105. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x869, calls x219, imports x135, imports x102. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -5301,17 +5284,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>2884</td></tr>
-      <tr><td>Edges</td><td>4463</td></tr>
+      <tr><td>Nodes</td><td>3013</td></tr>
+      <tr><td>Edges</td><td>4584</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>163</td></tr>
+      <tr><td>Communities</td><td>173</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>4461</td></tr>
+      <tr><td>EXTRACTED</td><td>4582</td></tr>
       <tr><td>INFERRED</td><td>2</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -5320,7 +5303,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>mindnavy LMS — Architecture Documentation</p>
-  <p>Generated: 2026-07-03 16:41 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-07-05 19:05 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->
