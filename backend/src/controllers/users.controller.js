@@ -82,9 +82,6 @@ async function createUser(req, res) {
 }
 
 async function updateUser(req, res) {
-  console.log("UPDATE USER ID:", req.params.id);
-  console.log("UPDATE USER BODY:", req.body);
-
   const idError = validateUuidParam(req.params.id);
   if (idError) {
     return res.status(400).json({ success: false, message: idError });
@@ -400,15 +397,11 @@ async function forceLogoutUser(req, res) {
     const result = await usersService.forceLogoutUser(req.params.id, req.body, req.admin);
     return res.status(200).json(result);
   } catch (error) {
-    console.error("=== FORCE LOGOUT ERROR ===");
-    console.error("Message:", error.message);
-    console.error("Code:", error.code);
-    console.error("Meta:", error.meta);
-    console.error("Stack:", error.stack);
     if (error.statusCode === 404) {
       return res.status(404).json({ success: false, message: error.message });
     }
-    return res.status(500).json({ error: error.message, code: error.code });
+    console.error("[users] forceLogoutUser error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Internal server error." });
   }
 }
 

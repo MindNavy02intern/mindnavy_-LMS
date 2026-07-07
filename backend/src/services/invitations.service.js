@@ -146,10 +146,8 @@ async function sendInvitation(body, admin = {}) {
     },
   });
 
-  console.log(
-    `[invitations] SENT → ${email} | role: ${role} | expires: ${expiresAt.toISOString()}` +
-    (personalMessage ? ` | message: "${personalMessage}"` : "")
-  );
+  // Event log only — never log the personal message content (PII).
+  console.log(`[invitations] SENT → ${email} | role: ${role} | expires: ${expiresAt.toISOString()}`);
 
   return {
     success:    true,

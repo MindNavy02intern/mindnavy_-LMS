@@ -485,7 +485,6 @@ async function createUser(body, admin = {}) {
 }
 
 async function updateUser(id, body, admin = {}) {
-  console.log("SERVICE RECEIVED:", body);
   const existing = await assertUserExists(id);
 
   const updateData = {};
