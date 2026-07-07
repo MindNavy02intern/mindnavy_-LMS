@@ -6,9 +6,9 @@ function validatePasswordStrength(password) {
     return errors;
   }
 
-  password = password.trim();
-
-  if (password.length < 8) {
+  // Validate the exact string that will be hashed — no trimming, so the
+  // password checked here is byte-for-byte the one bcrypt stores.
+  if (password.length < 12) {
     errors.push("Password must be at least 12 characters.");
   }
 

@@ -4,9 +4,6 @@ const { validateSendAdminMessageInput } = require("../validators/messages.valida
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 async function sendMessage(req, res) {
-  console.log("REQUEST BODY:", req.body);
-  console.log("ADMIN:", req.admin?.id);
-
   const errors = validateSendAdminMessageInput(req.body || {});
   if (errors.length > 0) {
     return res.status(400).json({ success: false, message: errors[0] });
@@ -16,15 +13,11 @@ async function sendMessage(req, res) {
     const result = await messagesService.sendAdminMessage(req.body, req.admin);
     return res.status(201).json(result);
   } catch (error) {
-    console.error("=== MESSAGES 500 ERROR ===");
-    console.error("Message:", error.message);
-    console.error("Code:", error.code);
-    console.error("Meta:", error.meta);
-    console.error("Stack:", error.stack);
     if (error.statusCode === 404) {
       return res.status(404).json({ success: false, message: error.message });
     }
-    return res.status(500).json({ error: error.message, code: error.code });
+    console.error("[messages] sendMessage error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Internal server error." });
   }
 }
 
