@@ -90,6 +90,9 @@ model LoginAttempt {
 model AuditLog {
   id        String      @id @default(uuid())
   adminId   String?
+  // AppUser the action was performed ON (nullable — auth/system events have none).
+  // Indexed so per-user activity reads don't need a JSON-path scan over `details`.
+  targetUserId String?
   action    AuditAction
   details   Json?
   ipAddress String?
@@ -98,6 +101,7 @@ model AuditLog {
   admin     AdminUser?  @relation(fields: [adminId], references: [id])
 
   @@index([adminId])
+  @@index([targetUserId])
   @@index([action])
   @@index([createdAt])
   @@map("audit_logs")
@@ -158,4 +162,34 @@ enum AuditAction {
   COURSE_CREATED
   COURSE_UPDATED
   COURSE_ARCHIVED
+  USER_PERMANENTLY_DELETED
+  USER_VERIFICATION_REJECTED
+  COURSE_SECTION_CREATED
+  COURSE_SECTION_UPDATED
+  COURSE_SECTION_DELETED
+  LESSON_CREATED
+  LESSON_UPDATED
+  LESSON_DELETED
+  COURSE_REORDERED
+  BRANCH_CREATED
+  BRANCH_UPDATED
+  BRANCH_DELETED
+  DEPARTMENT_CREATED
+  DEPARTMENT_UPDATED
+  DEPARTMENT_DELETED
+  TEAM_CREATED
+  TEAM_UPDATED
+  TEAM_DELETED
+  ORG_NODE_MOVED
+  HIERARCHY_SETTINGS_UPDATED
+  HIERARCHY_SETTINGS_RESET
+  GROUP_CREATED
+  GROUP_UPDATED
+  GROUP_DELETED
+  GROUP_MEMBERS_ADDED
+  GROUP_MEMBER_REMOVED
+  INVITATION_SENT
+  INVITATION_RESENT
+  INVITATION_CANCELLED
+  INVITATION_EXPIRATION_UPDATED
 }
