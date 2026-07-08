@@ -8,12 +8,12 @@ model AdminUser {
   lastLoginAt    DateTime?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  sentMessages   AdminMessage[]  @relation("AdminSentMessages")
   sessions       AdminSession[]
   auditLogs      AuditLog[]
   loginAttempts  LoginAttempt[]
   otpCodes       OtpCode[]
   trustedDevices TrustedDevice[]
-  sentMessages   AdminMessage[]  @relation("AdminSentMessages")
 
   @@map("admin_users")
 }
@@ -88,17 +88,15 @@ model LoginAttempt {
 }
 
 model AuditLog {
-  id        String      @id @default(uuid())
-  adminId   String?
-  // AppUser the action was performed ON (nullable — auth/system events have none).
-  // Indexed so per-user activity reads don't need a JSON-path scan over `details`.
+  id           String      @id @default(uuid())
+  adminId      String?
+  action       AuditAction
+  details      Json?
+  ipAddress    String?
+  userAgent    String?
+  createdAt    DateTime    @default(now())
   targetUserId String?
-  action    AuditAction
-  details   Json?
-  ipAddress String?
-  userAgent String?
-  createdAt DateTime    @default(now())
-  admin     AdminUser?  @relation(fields: [adminId], references: [id])
+  admin        AdminUser?  @relation(fields: [adminId], references: [id])
 
   @@index([adminId])
   @@index([targetUserId])

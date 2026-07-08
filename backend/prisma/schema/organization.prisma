@@ -1,7 +1,7 @@
 model Branch {
-  id           String   @id @default(cuid())
+  id           String       @id @default(cuid())
   name         String
-  locationType String // HEAD_OFFICE | REGIONAL | LOCAL
+  locationType String
   address      String
   city         String
   country      String
@@ -10,13 +10,12 @@ model Branch {
   phone        String?
   email        String?
   managerId    String?
-  status       String   @default("ACTIVE")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  manager     AppUser?     @relation("BranchManager", fields: [managerId], references: [id])
-  departments Department[]
-  users       AppUser[]    @relation("AppUserBranch")
+  status       String       @default("ACTIVE")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  users        AppUser[]    @relation("AppUserBranch")
+  manager      AppUser?     @relation("BranchManager", fields: [managerId], references: [id])
+  departments  Department[]
 
   @@index([managerId])
   @@index([status])
@@ -24,22 +23,21 @@ model Branch {
 }
 
 model Department {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   code        String?
   description String?
   branchId    String
   managerId   String?
-  budget      Float    @default(0)
-  status      String   @default("ACTIVE")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  branch  Branch    @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  manager AppUser?  @relation("DeptManager", fields: [managerId], references: [id])
-  teams   Team[]
-  groups  Group[]
-  users   AppUser[] @relation("AppUserDepartment")
+  budget      Float     @default(0)
+  status      String    @default("ACTIVE")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  users       AppUser[] @relation("AppUserDepartment")
+  branch      Branch    @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  manager     AppUser?  @relation("DeptManager", fields: [managerId], references: [id])
+  groups      Group[]
+  teams       Team[]
 
   @@unique([name, branchId])
   @@index([branchId])
@@ -49,18 +47,17 @@ model Department {
 }
 
 model Team {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   name         String
   departmentId String
   leaderId     String?
   description  String?
-  status       String   @default("ACTIVE")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
-  leader     AppUser?   @relation("TeamLeader", fields: [leaderId], references: [id])
-  members    AppUser[]  @relation("AppUserTeam")
+  status       String     @default("ACTIVE")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  members      AppUser[]  @relation("AppUserTeam")
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  leader       AppUser?   @relation("TeamLeader", fields: [leaderId], references: [id])
 
   @@unique([name, departmentId])
   @@index([departmentId])

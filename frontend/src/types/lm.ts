@@ -3,9 +3,10 @@
 // when lmApi.ts flips from mock data to the real endpoints.
 
 export interface ApiResult<T> {
-  success: boolean;
-  data:    T;
-  error?:  string;
+  success:  boolean;
+  data:     T;
+  message?: string;
+  error?:   string;
 }
 
 export interface LmStatItem {
@@ -23,9 +24,9 @@ export interface LmStats {
 }
 
 export interface LmDistributionItem {
-  category: string;
-  count:    number;
-  percent:  number;
+  category:   string;
+  count:      number;
+  percentage: number;
 }
 
 export interface LmDistribution {

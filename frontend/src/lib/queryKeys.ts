@@ -66,9 +66,10 @@ export const queryKeys = {
 
   // ── Learning ───────────────────────────────────────────────────────────────
   courses: {
-    list:   (filters?: Record<string, unknown>): QueryKey =>
-              filters ? ['courses', filters] : ['courses'],
-    detail: (id: string): QueryKey => ['courses', id],
+    list:     (filters?: Record<string, unknown>): QueryKey =>
+                filters ? ['courses', filters] : ['courses'],
+    detail:   (id: string): QueryKey => ['courses', id],
+    sections: (courseId: string): QueryKey => ['courses', courseId, 'sections'],
   },
   categories:     (): QueryKey => ['categories'],
   learningPaths:  (): QueryKey => ['learning-paths'],

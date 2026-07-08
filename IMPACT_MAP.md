@@ -184,6 +184,13 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 | `liveSession.schedule` (§12) | `['live-sessions']` `['calendar']` `['dashboard','live-overview']` | Calendar & Events · Upcoming Sessions · Live Session Reminders notification |
 | `liveSession.start` / `.end` (§12–15) | `['live-sessions']` `['dashboard','live-overview']` `['attendance',sessionId]` | **Live Sessions Running KPI** · Live Overview · Activity "Live Session Started" |
 | `content.upload` (§11, §16) | `['content-library']` `['courses', id]` | Library · course builder · Activity "Instructor Uploaded Content" |
+| `section.create` | `['courses', courseId, 'sections']` `['content-library']` | Section list in Course Builder · content item count |
+| `section.update` | `['courses', courseId, 'sections']` | Section title in builder |
+| `section.delete` | `['courses', courseId, 'sections']` `['content-library']` | Section + cascaded lessons removed from builder · content count |
+| `lesson.create` | `['courses', courseId, 'sections']` `['content-library']` | Lesson list in section · content item count |
+| `lesson.update` | `['courses', courseId, 'sections']` | Lesson row in builder |
+| `lesson.delete` | `['courses', courseId, 'sections']` `['content-library']` | Lesson removed from section · content count |
+| `sections.reorder` | `['courses', courseId, 'sections']` | Section + lesson order in builder — ONE bulk PATCH per reorder |
 
 ### 5.5 ROLE / PERMISSION (Roles doc §1–§42)
 

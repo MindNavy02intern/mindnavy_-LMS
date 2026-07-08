@@ -45,7 +45,7 @@ async function lmFetch<T>(path: string): Promise<T> {
   const json = await res.json().catch(() => ({ success: false, error: `HTTP ${res.status}` }));
   const body = json as ApiResult<T>;
   if (!res.ok || !body.success) {
-    throw new LmApiError(res.status, body.error ?? `HTTP ${res.status}`);
+    throw new LmApiError(res.status, body.message ?? body.error ?? `HTTP ${res.status}`);
   }
   return body.data;
 }
@@ -68,12 +68,12 @@ const MOCK_STATS: LmStats = {
 const MOCK_DISTRIBUTION: LmDistribution = {
   total: 256,
   items: [
-    { category: 'Technology',           count: 98, percent: 38.3 },
-    { category: 'Business',             count: 56, percent: 21.9 },
-    { category: 'Design',               count: 42, percent: 16.4 },
-    { category: 'Marketing',            count: 32, percent: 12.5 },
-    { category: 'Personal Development', count: 18, percent: 7.0 },
-    { category: 'Other',                count: 10, percent: 3.9 },
+    { category: 'Technology',           count: 98, percentage: 38.3 },
+    { category: 'Business',             count: 56, percentage: 21.9 },
+    { category: 'Design',               count: 42, percentage: 16.4 },
+    { category: 'Marketing',            count: 32, percentage: 12.5 },
+    { category: 'Personal Development', count: 18, percentage: 7.0 },
+    { category: 'Other',                count: 10, percentage: 3.9 },
   ],
 };
 

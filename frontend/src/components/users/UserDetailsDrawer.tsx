@@ -266,7 +266,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
 
   const handleResetPw = async () => {
     setPwError(null);
-    if (newPassword.length < 8) {
+    if (newPassword.length < 12) {
       setPwError('Password must be at least 12 characters.');
       return;
     }

@@ -75,6 +75,10 @@ export type MutationName =
   | 'learningPath.update'
   | 'liveSession.schedule' | 'liveSession.start' | 'liveSession.end'
   | 'content.upload'
+  // §5.4 Course Builder (sections & lessons)
+  | 'section.create' | 'section.update' | 'section.delete'
+  | 'lesson.create'  | 'lesson.update'  | 'lesson.delete'
+  | 'sections.reorder'
   // §5.5 ROLE / PERMISSION
   | 'role.create' | 'role.edit' | 'role.duplicate' | 'role.delete'
   | 'role.assignToUser' | 'template.apply'
@@ -402,6 +406,33 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   'content.upload': (ctx) => [
     queryKeys.contentLibrary(),
     ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+
+  // Course Builder — sections & lessons (§5.4 addendum)
+  'section.create': (ctx) => [
+    ...(ctx?.courseId ? [queryKeys.courses.sections(ctx.courseId)] : []),
+    queryKeys.contentLibrary(),
+  ],
+  'section.update': (ctx) => [
+    ...(ctx?.courseId ? [queryKeys.courses.sections(ctx.courseId)] : []),
+  ],
+  'section.delete': (ctx) => [
+    ...(ctx?.courseId ? [queryKeys.courses.sections(ctx.courseId)] : []),
+    queryKeys.contentLibrary(),
+  ],
+  'lesson.create': (ctx) => [
+    ...(ctx?.courseId ? [queryKeys.courses.sections(ctx.courseId)] : []),
+    queryKeys.contentLibrary(),
+  ],
+  'lesson.update': (ctx) => [
+    ...(ctx?.courseId ? [queryKeys.courses.sections(ctx.courseId)] : []),
+  ],
+  'lesson.delete': (ctx) => [
+    ...(ctx?.courseId ? [queryKeys.courses.sections(ctx.courseId)] : []),
+    queryKeys.contentLibrary(),
+  ],
+  'sections.reorder': (ctx) => [
+    ...(ctx?.courseId ? [queryKeys.courses.sections(ctx.courseId)] : []),
   ],
 
   // ── §5.5 ROLE / PERMISSION ────────────────────────────────────────────────

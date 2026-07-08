@@ -10,9 +10,8 @@ model AdminMessage {
   readAt         DateTime?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
-
-  senderAdmin  AdminUser @relation("AdminSentMessages", fields: [senderAdminId], references: [id])
-  receiverUser AppUser   @relation("UserReceivedMessages", fields: [receiverUserId], references: [id])
+  receiverUser   AppUser       @relation("UserReceivedMessages", fields: [receiverUserId], references: [id])
+  senderAdmin    AdminUser     @relation("AdminSentMessages", fields: [senderAdminId], references: [id])
 
   @@index([senderAdminId])
   @@index([receiverUserId])

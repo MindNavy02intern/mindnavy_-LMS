@@ -1,10 +1,3 @@
-// Role Templates — predefined permission "bundles" for the Roles & Permissions page.
-// A template is a named set of permissions an admin can apply to a Role in one click.
-//
-// `permissions` is a JSON array of Permission IDs (strings), e.g. ["uuid-a", "uuid-b"].
-// We deliberately validate those IDs against the Permission table on create/apply
-// (JSON has no FK), so a template can never reference a permission that doesn't exist.
-
 model RoleTemplate {
   id          String   @id @default(uuid())
   name        String   @unique

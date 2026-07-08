@@ -7,6 +7,7 @@ import { CourseApiError } from '../../types/courses';
 import type { CourseDetail, CourseLevel, CreateCoursePayload } from '../../types/courses';
 import type { LmFilterOptions } from '../../types/lm';
 import ThumbnailUpload from './ThumbnailUpload';
+import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 
 const LEVELS: CourseLevel[] = ['Beginner', 'Intermediate', 'Advanced'];
 const LANGUAGES = ['English', 'Arabic', 'French', 'Spanish', 'German', 'Chinese', 'Japanese'];
@@ -29,13 +30,14 @@ const EMPTY: FormValues = {
 };
 
 interface Props {
-  mode:     'create' | 'edit';
-  courseId?: string;
-  onSaved:  (course: CourseDetail) => void;
-  onCancel: () => void;
+  mode:            'create' | 'edit';
+  courseId?:       string;
+  onSaved:         (course: CourseDetail) => void;
+  onCancel:        () => void;
+  onGoToBuilder?:  (courseId: string) => void;
 }
 
-export default function CourseForm({ mode, courseId, onSaved, onCancel }: Props) {
+export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBuilder }: Props) {
   const navigate = useNavigate();
 
   const [filterOptions, setFilterOptions] = useState<LmFilterOptions | null>(null);
@@ -155,6 +157,50 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel }: Props)
         } else {
           setGlobalError(err.message);
         }
+      } else {
+        setGlobalError('An unexpected error occurred.');
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  // ── Go to builder (save-then-navigate in create; navigate-only in edit) ──
+
+  async function handleGoToBuilderClick() {
+    if (!onGoToBuilder) return;
+    if (mode === 'edit') {
+      onGoToBuilder(courseId!);
+      return;
+    }
+    // Create mode: save draft first, then open builder
+    setFieldErrors({});
+    setGlobalError(null);
+    const errs: Partial<Record<keyof FormValues, string>> = {};
+    if (!values.title.trim())   errs.title        = 'Title is required.';
+    if (!values.instructorId)   errs.instructorId = 'Instructor is required.';
+    if (Object.keys(errs).length) { setFieldErrors(errs); return; }
+
+    (() => setSubmitting(true))();
+    try {
+      const payload: CreateCoursePayload = {
+        title:        values.title.trim(),
+        instructorId: values.instructorId,
+        ...(values.subtitle    && { subtitle:    values.subtitle }),
+        ...(values.description && { description: values.description }),
+        ...(values.category    && { category:    values.category }),
+        ...(values.tags.length && { tags:        values.tags }),
+        ...(values.language    && { language:    values.language }),
+        ...(values.level       && { level:       values.level as CourseLevel }),
+        ...(values.thumbnail   && { thumbnail:   values.thumbnail }),
+      };
+      const saved = await createCourse(payload);
+      invalidateFor(appQueryClient, 'course.createDraft');
+      onGoToBuilder(saved.id);
+    } catch (err) {
+      if (err instanceof CourseApiError) {
+        if (err.status === 401) { navigate('/login'); return; }
+        setGlobalError(err.message);
       } else {
         setGlobalError('An unexpected error occurred.');
       }
@@ -381,14 +427,25 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel }: Props)
           Cancel
         </button>
         <div className="tw:flex tw:items-center tw:gap-3">
-          <button
-            type="button"
-            disabled
-            title="Steps 2–6 coming later"
-            className="tw:rounded-lg tw:border tw:border-dashed tw:border-slate-300 tw:px-4 tw:py-2 tw:text-[13px] tw:font-medium tw:text-slate-300 tw:cursor-not-allowed"
-          >
-            Next: Course Builder →
-          </button>
+          {onGoToBuilder ? (
+            <button
+              type="button"
+              onClick={handleGoToBuilderClick}
+              disabled={mode === 'create' ? (!isValid || submitting) : submitting}
+              className="tw:rounded-lg tw:border tw:border-blue-300 tw:bg-blue-50 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-blue-700 tw:hover:bg-blue-100 tw:disabled:cursor-not-allowed tw:disabled:opacity-40"
+            >
+              {submitting ? 'Saving…' : 'Next: Course Builder →'}
+            </button>
+          ) : (
+            <button
+              type="button"
+              disabled
+              title="Steps 2–6 coming later"
+              className="tw:rounded-lg tw:border tw:border-dashed tw:border-slate-300 tw:px-4 tw:py-2 tw:text-[13px] tw:font-medium tw:text-slate-300 tw:cursor-not-allowed"
+            >
+              Next: Course Builder →
+            </button>
+          )}
           <button
             type="button"
             onClick={handleSubmit}

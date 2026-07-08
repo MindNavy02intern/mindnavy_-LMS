@@ -13,6 +13,7 @@ import type {
 } from '../../types/courses';
 import type { LmFilterOptions } from '../../types/lm';
 import CourseForm from './CourseForm';
+import CourseBuilder from './CourseBuilder';
 
 // ── Status tabs ───────────────────────────────────────────────────────────────
 
@@ -48,7 +49,8 @@ interface Toast { type: 'success' | 'error'; message: string }
 type View =
   | { kind: 'list' }
   | { kind: 'create' }
-  | { kind: 'edit'; courseId: string };
+  | { kind: 'edit';    courseId: string }
+  | { kind: 'builder'; courseId: string };
 
 // ── Main component ────────────────────────────────────────────────────────────
 
@@ -169,6 +171,27 @@ export default function CoursesTab() {
     fetchList();
   }
 
+  function handleGoToBuilder(courseId: string) {
+    // CourseForm already invalidated 'course.createDraft' before calling this.
+    // Just pre-warm the list (for when user navigates back) and switch views.
+    fetchList();
+    setView({ kind: 'builder', courseId });
+  }
+
+  // ── Render builder ───────────────────────────────────────────────────────
+
+  if (view.kind === 'builder') {
+    return (
+      <>
+        <CourseBuilder
+          courseId={view.courseId}
+          onBack={() => { fetchList(); setView({ kind: 'list' }); }}
+        />
+        {toast && <ToastBanner {...toast} />}
+      </>
+    );
+  }
+
   // ── Render form ──────────────────────────────────────────────────────────
 
   if (view.kind === 'create' || view.kind === 'edit') {
@@ -179,6 +202,7 @@ export default function CoursesTab() {
           courseId={view.kind === 'edit' ? view.courseId : undefined}
           onSaved={handleSaved}
           onCancel={() => setView({ kind: 'list' })}
+          onGoToBuilder={handleGoToBuilder}
         />
         {toast && <ToastBanner {...toast} />}
       </>
@@ -210,7 +234,7 @@ export default function CoursesTab() {
       {/* Status tabs */}
       <div className="tw:flex tw:gap-1 tw:border-b tw:border-slate-200">
         {STATUS_TABS.map((tab) => {
-          const count = statusCounts ? statusCounts[tab] : null;
+          const count = statusCounts ? statusCounts[tab.toLowerCase() as keyof CourseStatusCounts] : null;
           const isActive = statusFilter === tab;
           return (
             <button

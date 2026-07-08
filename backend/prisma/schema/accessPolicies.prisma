@@ -1,7 +1,3 @@
-// Access Policies — allow/deny rules for the Roles & Permissions page.
-// A policy says: for a given resource + action, ALLOW or DENY access,
-// optionally scoped to a single Role. Reuses the existing RoleStatus enum.
-
 model AccessPolicy {
   id          String         @id @default(uuid())
   name        String         @unique
@@ -14,9 +10,7 @@ model AccessPolicy {
   roleId      String?
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
-
-  // Deleting a role unscopes its policies instead of deleting them.
-  role Role? @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  role        Role?          @relation(fields: [roleId], references: [id])
 
   @@index([status])
   @@index([resource])

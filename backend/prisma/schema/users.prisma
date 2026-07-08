@@ -1,49 +1,43 @@
 model AppUser {
-  id                String                   @id @default(uuid())
-  email             String                   @unique
-  passwordHash      String?
-  fullName          String
-  avatar            String?
-  role              AppUserRole
-  status            AppUserStatus            @default(PENDING)
-  verificationState AppUserVerificationState @default(PENDING)
-  lastActivityAt    DateTime?
-  riskScore         Int?
-  suspendedAt       DateTime?                @map("suspended_at")
-  createdAt         DateTime                 @default(now())
-  updatedAt         DateTime                 @updatedAt
-  accessLevel       String?
-  branch            String?
-  department        String?
-  emailVerified     Boolean                  @default(false)
-  groupId           String?
-  managerId         String?
-  phone             String?
-  phoneVerified     Boolean                  @default(false)
-  skills            String[]
-
-  // Organization FK columns — separate from legacy `branch` / `department` string labels
-  branchId     String?
-  departmentId String?
-  teamId       String?
-
-  orgBranch     Branch?     @relation("AppUserBranch", fields: [branchId], references: [id])
-  orgDepartment Department? @relation("AppUserDepartment", fields: [departmentId], references: [id])
-  orgTeam       Team?       @relation("AppUserTeam", fields: [teamId], references: [id])
-
-  managedBranches    Branch[]         @relation("BranchManager")
-  managedDepartments Department[]     @relation("DeptManager")
-  managedTeams       Team[]           @relation("TeamLeader")
-  groups             GroupMember[]    @relation("GroupMembers")
-  leadingGroups      Group[]          @relation("GroupLeader")
-  receivedMessages   AdminMessage[]   @relation("UserReceivedMessages")
+  id                 String                   @id @default(uuid())
+  email              String                   @unique
+  passwordHash       String?
+  fullName           String
+  avatar             String?
+  role               AppUserRole
+  status             AppUserStatus            @default(PENDING)
+  verificationState  AppUserVerificationState @default(PENDING)
+  lastActivityAt     DateTime?
+  riskScore          Int?
+  suspendedAt        DateTime?                @map("suspended_at")
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+  accessLevel        String?
+  branch             String?
+  department         String?
+  emailVerified      Boolean                  @default(false)
+  groupId            String?
+  managerId          String?
+  phone              String?
+  phoneVerified      Boolean                  @default(false)
+  skills             String[]
+  branchId           String?
+  departmentId       String?
+  teamId             String?
+  receivedMessages   AdminMessage[]           @relation("UserReceivedMessages")
   sessions           AppUserSession[]
-  roleAssignments    UserRoleAssignment[]
-
-  // Learning Management relations (virtual — no extra columns on app_users)
-  coursesInstructed  Course[]             @relation("CourseInstructor")
-  courseEnrollments  CourseEnrollment[]
+  orgBranch          Branch?                  @relation("AppUserBranch", fields: [branchId], references: [id])
+  orgDepartment      Department?              @relation("AppUserDepartment", fields: [departmentId], references: [id])
+  orgTeam            Team?                    @relation("AppUserTeam", fields: [teamId], references: [id])
+  managedBranches    Branch[]                 @relation("BranchManager")
   certificates       Certificate[]
+  courseEnrollments  CourseEnrollment[]
+  coursesInstructed  Course[]                 @relation("CourseInstructor")
+  managedDepartments Department[]             @relation("DeptManager")
+  groups             GroupMember[]            @relation("GroupMembers")
+  leadingGroups      Group[]                  @relation("GroupLeader")
+  managedTeams       Team[]                   @relation("TeamLeader")
+  roleAssignments    UserRoleAssignment[]
 
   @@index([branchId])
   @@index([departmentId])
@@ -73,6 +67,25 @@ model AppUserSession {
   @@map("app_user_sessions")
 }
 
+model Invitation {
+  id              String   @id @default(cuid())
+  email           String
+  role            String
+  department      String?
+  status          String   @default("PENDING")
+  expiresAt       DateTime
+  invitedBy       String
+  personalMessage String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([invitedBy])
+  @@map("invitations")
+}
+
 enum AppUserRole {
   LEARNER
   INSTRUCTOR
@@ -93,23 +106,4 @@ enum AppUserVerificationState {
   PENDING
   REJECTED
   EXPIRED
-}
-
-model Invitation {
-  id              String   @id @default(cuid())
-  email           String
-  role            String
-  department      String?
-  status          String   @default("PENDING")
-  expiresAt       DateTime
-  invitedBy       String
-  personalMessage String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  @@index([email])
-  @@index([status])
-  @@index([expiresAt])
-  @@index([invitedBy])
-  @@map("invitations")
 }

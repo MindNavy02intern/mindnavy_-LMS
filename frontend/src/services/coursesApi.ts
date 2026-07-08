@@ -136,11 +136,11 @@ function buildMockCourses(): MockRow[] {
 const MOCK_COURSES: MockRow[] = buildMockCourses();
 
 const MOCK_STATUS_COUNTS: CourseStatusCounts = {
-  All:       25, // excludes Archived (12 + 8 + 5)
-  Published: 12,
-  Draft:     8,
-  Pending:   5,
-  Archived:  4,
+  all:       25, // excludes Archived (12 + 8 + 5)
+  published: 12,
+  draft:     8,
+  pending:   5,
+  archived:  4,
 };
 
 function filterMock(params: CoursesListParams): CoursesListResponse {
@@ -237,8 +237,8 @@ export async function createCourse(payload: CreateCoursePayload): Promise<Course
       thumbnail:     payload.thumbnail ?? null,
     };
     MOCK_COURSES.push(newRow);
-    MOCK_STATUS_COUNTS.Draft += 1;
-    MOCK_STATUS_COUNTS.All   += 1;
+    MOCK_STATUS_COUNTS.draft += 1;
+    MOCK_STATUS_COUNTS.all   += 1;
     return mockDelay<CourseDetail>({
       ...MOCK_DETAIL,
       ...payload,
@@ -304,9 +304,10 @@ export async function archiveCourse(id: string): Promise<void> {
     MOCK_COURSES[idx] = { ...MOCK_COURSES[idx], status: 'Archived' };
     // adjust counts
     if (prev !== 'Archived') {
-      if (prev in MOCK_STATUS_COUNTS) (MOCK_STATUS_COUNTS as unknown as Record<string, number>)[prev] -= 1;
-      MOCK_STATUS_COUNTS.All = Math.max(0, MOCK_STATUS_COUNTS.All - 1);
-      MOCK_STATUS_COUNTS.Archived += 1;
+      const key = prev.toLowerCase();
+      if (key in MOCK_STATUS_COUNTS) (MOCK_STATUS_COUNTS as unknown as Record<string, number>)[key] -= 1;
+      MOCK_STATUS_COUNTS.all = Math.max(0, MOCK_STATUS_COUNTS.all - 1);
+      MOCK_STATUS_COUNTS.archived += 1;
     }
     return mockDelay<void>(undefined);
   }

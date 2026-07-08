@@ -56,7 +56,7 @@ export default function ResetPasswordForm({ initialEmail = '', onSuccess }: Prop
   const validate = (): string | null => {
     if (!email.trim()) return 'Email address is required.';
     if (!code.trim() || code.trim().length < 4) return 'Please enter the reset code from your email.';
-    if (password.length < 8) return 'Password must be at least 12 characters.';
+    if (password.length < 12) return 'Password must be at least 12 characters.';
     if (strength.score < 2) return 'Password is too weak. Add uppercase letters, numbers, or special characters.';
     if (!confirm) return 'Please confirm your new password.';
     if (!passwordsMatch) return 'Passwords do not match.';

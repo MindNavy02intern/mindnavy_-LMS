@@ -1,13 +1,12 @@
 model Role {
-  id          String     @id @default(uuid())
-  name        String     @unique
-  description String?
-  status      RoleStatus @default(ACTIVE)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
-  rolePermissions RolePermission[]
+  id              String               @id @default(uuid())
+  name            String               @unique
+  description     String?
+  status          RoleStatus           @default(ACTIVE)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
   accessPolicies  AccessPolicy[]
+  rolePermissions RolePermission[]
   userAssignments UserRoleAssignment[]
 
   @@index([status])
@@ -15,13 +14,12 @@ model Role {
 }
 
 model Permission {
-  id          String             @id @default(uuid())
-  name        String             @unique
-  description String?
-  category    PermissionCategory
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
-
+  id              String             @id @default(uuid())
+  name            String             @unique
+  description     String?
+  category        PermissionCategory
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
   rolePermissions RolePermission[]
 
   @@index([category])
@@ -31,10 +29,9 @@ model Permission {
 model RolePermission {
   roleId       String
   permissionId String
-  assignedAt   DateTime @default(now())
-
-  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  assignedAt   DateTime   @default(now())
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@id([roleId, permissionId])
   @@map("role_permissions")

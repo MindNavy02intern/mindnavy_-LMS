@@ -1,16 +1,15 @@
 model Group {
-  id           String   @id @default(cuid())
-  name         String   @unique
+  id           String        @id @default(cuid())
+  name         String        @unique
   description  String?
   departmentId String?
   leaderId     String?
-  status       String   @default("ACTIVE")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  department Department?   @relation(fields: [departmentId], references: [id])
-  leader     AppUser?      @relation("GroupLeader", fields: [leaderId], references: [id])
-  members    GroupMember[]
+  status       String        @default("ACTIVE")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  members      GroupMember[]
+  department   Department?   @relation(fields: [departmentId], references: [id])
+  leader       AppUser?      @relation("GroupLeader", fields: [leaderId], references: [id])
 
   @@index([departmentId])
   @@index([leaderId])
@@ -24,9 +23,8 @@ model GroupMember {
   userId   String
   role     String?
   joinedAt DateTime @default(now())
-
-  group Group   @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  user  AppUser @relation("GroupMembers", fields: [userId], references: [id], onDelete: Cascade)
+  group    Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user     AppUser  @relation("GroupMembers", fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([groupId, userId])
   @@index([groupId])

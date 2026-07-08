@@ -13,11 +13,11 @@ export type CourseStatus = 'Published' | 'Draft' | 'Pending' | 'Archived';
 export type CourseStatusFilter = 'All' | CourseStatus;
 
 export interface CourseStatusCounts {
-  All:       number;
-  Draft:     number;
-  Pending:   number;
-  Published: number;
-  Archived:  number;
+  all:       number;
+  draft:     number;
+  pending:   number;
+  published: number;
+  archived:  number;
 }
 
 // GET /courses list row (table display)

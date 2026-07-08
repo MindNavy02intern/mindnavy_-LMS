@@ -152,7 +152,7 @@ export default function ImportUsersModal({ onClose, onSuccess, showToast }: Prop
           <div>
             <div style={{ fontWeight: 700, fontSize: 16, color: '#111827' }}>Import Users</div>
             <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 2 }}>
-              Required columns: <strong>fullName, email, password, role</strong> — role must be LEARNER, INSTRUCTOR, MANAGER, or ADMIN_ASSISTANT
+              Required columns: <strong>fullName, email, password, role</strong> — password min 12 chars · role must be LEARNER, INSTRUCTOR, MANAGER, or ADMIN_ASSISTANT
             </div>
           </div>
           <button onClick={onClose} style={{

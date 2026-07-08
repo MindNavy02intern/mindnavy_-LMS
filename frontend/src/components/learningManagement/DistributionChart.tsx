@@ -74,7 +74,7 @@ export default function DistributionChart() {
               <span className="tw:h-2 tw:w-2 tw:shrink-0 tw:rounded-full" style={{ background: COLORS[i % COLORS.length] }} />
               <span className="tw:flex-1 tw:truncate tw:text-slate-600">{d.category}</span>
               <span className="tw:font-medium tw:text-slate-900">{d.count}</span>
-              <span className="tw:w-11 tw:shrink-0 tw:text-right tw:text-slate-400">({d.percent}%)</span>
+              <span className="tw:w-11 tw:shrink-0 tw:text-right tw:text-slate-400">({d.percentage}%)</span>
             </div>
           ))}
         </div>

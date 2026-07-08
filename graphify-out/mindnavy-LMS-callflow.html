@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>mindnavy LMS — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 3013 nodes, 4584 edges, 173 communities. Commit: e9c07a9</p>
+<p class="subtitle">Generated from graphify knowledge graph: 3237 nodes, 4948 edges, 180 communities. Commit: b61eba1</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -71,13 +71,13 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#security-global">Security &amp; Global Graph</a>
     <a href="#tests-fixtures">Tests &amp; Fixtures</a>
     <a href="#community-5">Community 5</a>
-    <a href="#community-33">Community 33</a>
     <a href="#community-6">Community 6</a>
+    <a href="#community-33">Community 33</a>
     <a href="#community-21">Community 21</a>
     <a href="#community-57">Community 57</a>
     <a href="#community-32">Community 32</a>
-    <a href="#community-132">Community 132</a>
-    <a href="#community-64">Community 64</a>
+    <a href="#community-23">Community 23</a>
+    <a href="#community-104">Community 104</a>
     <a href="#other">Other</a>
 </div>
 
@@ -88,48 +88,48 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>192 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>221 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
     ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>30 nodes</small>")
     class ANALYSIS_CLUSTERING_C79796DA module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>51 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>694 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>753 nodes</small>")
     class SERVE_API_35EC8E86 module;
     SECURITY_GLOBAL_5B9C6A04("Security &amp; Global Graph<br/><small>4 nodes</small>")
     class SECURITY_GLOBAL_5B9C6A04 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>579 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>591 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
-    COMMUNITY_5_2966028D("Community 5<br/><small>67 nodes</small>")
+    COMMUNITY_5_2966028D("Community 5<br/><small>68 nodes</small>")
     class COMMUNITY_5_2966028D module;
+    COMMUNITY_6_7D637A07("Community 6<br/><small>67 nodes</small>")
+    class COMMUNITY_6_7D637A07 module;
     COMMUNITY_33_03CF07C5("Community 33<br/><small>66 nodes</small>")
     class COMMUNITY_33_03CF07C5 module;
-    COMMUNITY_6_7D637A07("Community 6<br/><small>64 nodes</small>")
-    class COMMUNITY_6_7D637A07 module;
     COMMUNITY_21_47BA4108("Community 21<br/><small>55 nodes</small>")
     class COMMUNITY_21_47BA4108 module;
     COMMUNITY_57_508B74B3("Community 57<br/><small>55 nodes</small>")
     class COMMUNITY_57_508B74B3 module;
     COMMUNITY_32_4867BAA9("Community 32<br/><small>53 nodes</small>")
     class COMMUNITY_32_4867BAA9 module;
-    COMMUNITY_132_2A4F420C("Community 132<br/><small>45 nodes</small>")
-    class COMMUNITY_132_2A4F420C module;
-    COMMUNITY_64_0821645F("Community 64<br/><small>42 nodes</small>")
-    class COMMUNITY_64_0821645F module;
-    OTHER_D0941E68("Other<br/><small>1016 nodes</small>")
+    COMMUNITY_23_58D9DE5D("Community 23<br/><small>50 nodes</small>")
+    class COMMUNITY_23_58D9DE5D module;
+    COMMUNITY_104_F8BD47A1("Community 104<br/><small>45 nodes</small>")
+    class COMMUNITY_104_F8BD47A1 module;
+    OTHER_D0941E68("Other<br/><small>1128 nodes</small>")
     class OTHER_D0941E68 module;
-    SERVE_API_35EC8E86 -->|imports x227| OTHER_D0941E68
-    OTHER_D0941E68 -->|imports x57| SERVE_API_35EC8E86
-    TESTS_FIXTURES_B84B1DCC -->|imports x24| OTHER_D0941E68
+    SERVE_API_35EC8E86 -->|imports x244| OTHER_D0941E68
+    OTHER_D0941E68 -->|imports x50| SERVE_API_35EC8E86
     COMMUNITY_6_7D637A07 -->|imports x23| COMMUNITY_21_47BA4108
-    SERVE_API_35EC8E86 -->|imports x19| COMMUNITY_32_4867BAA9
+    TESTS_FIXTURES_B84B1DCC -->|imports x21| OTHER_D0941E68
     OTHER_D0941E68 -->|imports x18| TESTS_FIXTURES_B84B1DCC
-    OTHER_D0941E68 -->|imports x11| COMMUNITY_32_4867BAA9
-    COMMUNITY_32_4867BAA9 -->|contains x11| OTHER_D0941E68
+    SERVE_API_35EC8E86 -->|imports x18| COMMUNITY_32_4867BAA9
+    OTHER_D0941E68 -->|imports x12| COMMUNITY_32_4867BAA9
+    COMMUNITY_32_4867BAA9 -->|contains x12| OTHER_D0941E68
+    CLI_SKILLS_9964CBB8 -->|imports x10| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x10| TESTS_FIXTURES_B84B1DCC
-    SERVE_API_35EC8E86 -->|imports x8| COMMUNITY_5_2966028D
-    CLI_SKILLS_9964CBB8 -->|imports x7| OTHER_D0941E68
-    COMMUNITY_32_4867BAA9 -->|contains x6| SERVE_API_35EC8E86
+    SERVE_API_35EC8E86 -->|imports x9| COMMUNITY_5_2966028D
+    COMMUNITY_5_2966028D -->|imports x5| SERVE_API_35EC8E86
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -146,7 +146,7 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>192</td><td><code>55, 4, 3, 129, 7, 8, 10, 83, 12, 14, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>30</td><td><code>52</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>51</td><td><code>116, 141, 147, 18</code></td></tr><tr><td>Serving API</td><td>694</td><td><code>9, 101, 27, 24, 2, 111, 48, 1, 113, 42, 60, 26, 131, 36, 54, 71, 72, 22, 25, 125, 139, 145, 51, 53, 143, 148, 13</code></td></tr><tr><td>Security &amp; Global Graph</td><td>4</td><td><code>156</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>579</td><td><code>126, 92, 41, 63, 30, 109, 112, 65, 67, 144, 103, 135, 117, 149, 74, 76, 77, 100, 110, 137, 151, 152, 162, 163, 164, 165, 166, 167, 168, 169, 68, 69, 70, 78, 79, 80, 82, 170, 91, 94, 95, 96, 97, 98, 99, 81, 114, 130, 161</code></td></tr><tr><td>Community 5</td><td>67</td><td><code>5</code></td></tr><tr><td>Community 33</td><td>66</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>53</td><td><code>32</code></td></tr><tr><td>Community 132</td><td>45</td><td><code>132</code></td></tr><tr><td>Community 64</td><td>42</td><td><code>64</code></td></tr><tr><td>Other</td><td>1016</td><td><code>19, 105, 34, 62, 150, 58, 20, 37, 50, 39, 46, 49, 102, 106, 59, 66, 75, 107, 28, 115, 120, 31, 127, 133, 134, 44, 93, 136, 0, 140, 38, 40, 29, 45, 61, 146, 43, 56, 104, 118, 119, 35, 47, 73, 121, 108, 122, 123, 124, 160, 171, 172, 11, 128, 138, 153, 142, 154, 155, 23, 157, 15, 158, 159, 16, 17, 85, 86, 87, 88, 89, 90</code></td></tr>
+      <tr><td>Graph Build</td><td>221</td><td><code>55, 3, 4, 107, 129, 7, 8, 10, 83, 12, 14, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>30</td><td><code>52</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>51</td><td><code>116, 141, 147, 18</code></td></tr><tr><td>Serving API</td><td>753</td><td><code>9, 27, 36, 72, 24, 146, 2, 111, 48, 113, 22, 42, 60, 108, 26, 131, 54, 71, 101, 1, 25, 125, 145, 124, 51, 53, 148, 13</code></td></tr><tr><td>Security &amp; Global Graph</td><td>4</td><td><code>156</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>591</td><td><code>126, 92, 41, 63, 30, 109, 112, 65, 67, 144, 103, 135, 172, 117, 149, 74, 76, 77, 100, 110, 137, 151, 152, 162, 163, 164, 165, 166, 167, 168, 169, 68, 69, 70, 78, 79, 80, 82, 170, 91, 94, 95, 96, 97, 98, 99, 81, 114, 130, 161</code></td></tr><tr><td>Community 5</td><td>68</td><td><code>5</code></td></tr><tr><td>Community 6</td><td>67</td><td><code>6</code></td></tr><tr><td>Community 33</td><td>66</td><td><code>33</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>53</td><td><code>32</code></td></tr><tr><td>Community 23</td><td>50</td><td><code>23</code></td></tr><tr><td>Community 104</td><td>45</td><td><code>104</code></td></tr><tr><td>Other</td><td>1128</td><td><code>132, 66, 64, 19, 34, 105, 50, 62, 39, 37, 0, 58, 106, 46, 49, 150, 59, 28, 20, 115, 120, 31, 40, 45, 127, 102, 133, 134, 171, 44, 93, 136, 140, 38, 75, 29, 61, 143, 43, 56, 118, 119, 35, 47, 73, 121, 122, 123, 160, 173, 139, 174, 175, 11, 128, 138, 153, 176, 177, 178, 142, 154, 179, 155, 157, 15, 158, 159, 16, 17, 85, 86, 87, 88, 89, 90</code></td></tr>
     </table>
   </div>
   <div class="card">
@@ -158,10 +158,10 @@ flowchart LR
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>3013 nodes · 4584 edges · 173 communities (166 shown, 7 thin omitted)</li>
+      <li>3237 nodes · 4948 edges · 180 communities (174 shown, 6 thin omitted)</li>
       <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)</li>
       <li>Token cost: 0 input · 0 output</li>
-      <li>1. `getStoredToken()` - 46 edges</li>
+      <li>1. `getStoredToken()` - 48 edges</li>
       <li>2. `serverError()` - 26 edges</li>
       <li>3. `orgFetch()` - 26 edges</li>
     </ul>
@@ -170,12 +170,12 @@ flowchart LR
 <hr>
 <!-- ====== 2. Graph Build ====== -->
 <h2 id="build-graph">2. Graph Build</h2>
-<p>Graph Build groups implementation around backend, frontend, packagejson, overview, mostly in backend/contact md files/LM_OVERVIEW_CONTRACT.md, frontend/package.json, backend/package.json. This section covers 192 nodes and 183 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around frontend, contractmd, backend, packagejson, mostly in backend/contact md files/LM_OVERVIEW_CONTRACT.md, backend/package.json, frontend/package.json. This section covers 221 nodes and 211 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (192 nodes, 183 edges)
+    %% Section: Graph Build (221 nodes, 211 edges)
     subgraph build_graph_backend_package_json_fef74fa2["backend/package.json"]
         backend_package_json_c3759217("package.json")
         backend_package_name_693d9dbf("name<br/><small>backend/package.json</small>")
@@ -189,8 +189,8 @@ flowchart LR
         backend_package_type_5b68cbab("type<br/><small>backend/package.json</small>")
         backend_package_dependencies_4ff26931("dependencies<br/><small>backend/package.json</small>")
         backend_package_devdependencies_da9c727c("devDependencies<br/><small>backend/package.json</small>")
-        backend_package_scripts_start_8887ff42("start<br/><small>backend/package.json</small>")
     end
+    mindnavy_lms_frontend_contract_3_endpoint_catalo_9b87a8ee("3. Endpoint catalog (current, verified)<br/><small>FRONTEND_CONTRACT.md</small>")
     mindnavy_lms_lm_overview_contract_learning_manag_03173332("Learning Management — Overview Tab — AP...<br/><small>LM_OVERVIEW_CONTRACT.md</small>")
     contact_md_files_lm_overview_contract_learning_m_60b45597("Learning Management — Overview Tab — AP...<br/><small>backend/contact md files/LM_OVERVIEW_CONTRACT.md</small>")
     frontend_package_devdependencies_ea29f362("devDependencies<br/><small>frontend/package.json</small>")
@@ -207,8 +207,7 @@ flowchart LR
     backend_package_json_c3759217 -->|contains| backend_package_type_5b68cbab
     backend_package_json_c3759217 -->|contains| backend_package_dependencies_4ff26931
     backend_package_json_c3759217 -->|contains| backend_package_devdependencies_da9c727c
-    backend_package_scripts_95503ce5 -->|contains| backend_package_scripts_start_8887ff42
-    %% Omitted for readability: 174 nodes, 0 edges
+    %% Omitted for readability: 203 nodes, 0 edges
     class backend_package_json_c3759217 function;
     class backend_package_name_693d9dbf function;
     class backend_package_version_92d585db function;
@@ -221,7 +220,7 @@ flowchart LR
     class backend_package_type_5b68cbab function;
     class backend_package_dependencies_4ff26931 function;
     class backend_package_devdependencies_da9c727c function;
-    class backend_package_scripts_start_8887ff42 function;
+    class mindnavy_lms_frontend_contract_3_endpoint_catalo_9b87a8ee concept;
     class mindnavy_lms_lm_overview_contract_learning_manag_03173332 concept;
     class contact_md_files_lm_overview_contract_learning_m_60b45597 concept;
     class frontend_package_devdependencies_ea29f362 function;
@@ -496,18 +495,18 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>backend/contact md files/LM_OVERVIEW_CONTRACT.md</code></td><td>37 nodes</td></tr>
+<tr><td><code>backend/package.json</code></td><td>35 nodes</td></tr>
 <tr><td><code>frontend/package.json</code></td><td>35 nodes</td></tr>
-<tr><td><code>backend/package.json</code></td><td>34 nodes</td></tr>
+<tr><td><code>FRONTEND_CONTRACT.md</code></td><td>28 nodes</td></tr>
 <tr><td><code>LM_OVERVIEW_CONTRACT.md</code></td><td>26 nodes</td></tr>
 <tr><td><code>frontend/tsconfig.app.json</code></td><td>19 nodes</td></tr>
 <tr><td><code>frontend/tsconfig.node.json</code></td><td>18 nodes</td></tr>
 <tr><td><code>backend/tsconfig.json</code></td><td>9 nodes</td></tr>
-<tr><td><code>.claude/settings.local.json</code></td><td>3 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x183. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x211. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1198,12 +1197,12 @@ flowchart LR
 
 <!-- ====== 5. Serving API ====== -->
 <h2 id="serve-api">5. Serving API</h2>
-<p>Serving API groups implementation around frontend, components, backend, api, mostly in backend/contact md files/ACCESS_POLICIES_API.md, backend/ACCESS_POLICIES_API.md, src/api/organization.ts. This section covers 694 nodes and 1072 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around frontend, components, backend, api, mostly in backend/contact md files/ACCESS_POLICIES_API.md, backend/ACCESS_POLICIES_API.md, src/api/organization.ts. This section covers 753 nodes and 1142 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (694 nodes, 1072 edges)
+    %% Section: Serving API (753 nodes, 1142 edges)
     subgraph serve_api_src_controllers_users_controller_js_8d60ab07["src/controllers/users.controller.js"]
         controllers_users_controller_createuser_1d4bed69("createUser()<br/><small>src/controllers/users.controller.js</small>")
         controllers_users_controller_updateuser_09b2ac67("updateUser()<br/><small>src/controllers/users.controller.js</small>")
@@ -1220,16 +1219,16 @@ flowchart LR
         validators_users_validator_validateupdateusersta_76927f0e("validateUpdateUserStatusInput()<br/><small>src/validators/users.validator.js</small>")
         validators_users_validator_validateresetuserpass_7d038d6c("validateResetUserPasswordInput()<br/><small>src/validators/users.validator.js</small>")
     end
+    subgraph serve_api_src_api_adminAuth_ts_29dd8eba["src/api/adminAuth.ts"]
+        api_adminauth_getstoredtoken_6da5b8df("getStoredToken()<br/><small>src/api/adminAuth.ts</small>")
+        frontend_src_api_adminauth_ts_e390aa5a("adminAuth.ts")
+    end
     subgraph serve_api_src_api_organization_ts_869a35c2["src/api/organization.ts"]
         api_organization_orgfetch_7fc4eb51("orgFetch()<br/><small>src/api/organization.ts</small>")
         frontend_src_api_organization_ts_fd854e3d("organization.ts")
     end
-    subgraph serve_api_src_api_users_ts_089bead8["src/api/users.ts"]
-        frontend_src_api_users_ts_f0590af5("users.ts")
-        api_users_actionfetch_26dbe2ec("actionFetch()<br/><small>src/api/users.ts</small>")
-    end
     frontend_src_authcontext_tsx_62479c75("AuthContext.tsx")
-    api_adminauth_getstoredtoken_6da5b8df("getStoredToken()<br/><small>src/api/adminAuth.ts</small>")
+    frontend_src_api_users_ts_f0590af5("users.ts")
     controllers_users_controller_createuser_1d4bed69 -->|calls| validators_users_validator_validatecreateuserinp_e973ca38
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateuuidparam_36622e78
     controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateupdateuserinp_415e7af4
@@ -1241,12 +1240,14 @@ flowchart LR
     controllers_users_controller_resetuserpassword_a43fc993 -->|calls| validators_users_validator_validateresetuserpass_7d038d6c
     controllers_users_controller_assignuserrole_a0e0aadb -->|calls| validators_users_validator_validateuuidparam_36622e78
     api_adminauth_getstoredtoken_6da5b8df -->|calls| api_organization_orgfetch_7fc4eb51
-    api_adminauth_getstoredtoken_6da5b8df -->|calls| api_users_actionfetch_26dbe2ec
+    frontend_src_authcontext_tsx_62479c75 -->|imports| frontend_src_api_adminauth_ts_e390aa5a
     frontend_src_authcontext_tsx_62479c75 -->|imports| api_adminauth_getstoredtoken_6da5b8df
+    frontend_src_api_adminauth_ts_e390aa5a -->|imports| frontend_src_api_organization_ts_fd854e3d
+    frontend_src_api_adminauth_ts_e390aa5a -->|imports| frontend_src_api_users_ts_f0590af5
     api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_organization_ts_fd854e3d
     api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_users_ts_f0590af5
     frontend_src_api_organization_ts_fd854e3d -->|imports| frontend_src_api_users_ts_f0590af5
-    %% Omitted for readability: 676 nodes, 0 edges
+    %% Omitted for readability: 735 nodes, 0 edges
     class controllers_users_controller_createuser_1d4bed69 function;
     class controllers_users_controller_updateuser_09b2ac67 function;
     class controllers_users_controller_suspenduser_34b180c2 function;
@@ -1259,12 +1260,12 @@ flowchart LR
     class validators_users_validator_validatesuspenduserin_d9703da8 function;
     class validators_users_validator_validateupdateusersta_76927f0e function;
     class validators_users_validator_validateresetuserpass_7d038d6c function;
+    class api_adminauth_getstoredtoken_6da5b8df ui;
+    class frontend_src_api_adminauth_ts_e390aa5a module;
     class api_organization_orgfetch_7fc4eb51 function;
     class frontend_src_api_organization_ts_fd854e3d module;
-    class frontend_src_api_users_ts_f0590af5 module;
-    class api_users_actionfetch_26dbe2ec function;
     class frontend_src_authcontext_tsx_62479c75 ui;
-    class api_adminauth_getstoredtoken_6da5b8df ui;
+    class frontend_src_api_users_ts_f0590af5 module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1557,15 +1558,15 @@ flowchart LR
 <tr><td><code>backend/contact md files/ACCESS_POLICIES_API.md</code></td><td>30 nodes</td></tr>
 <tr><td><code>src/api/organization.ts</code></td><td>29 nodes</td></tr>
 <tr><td><code>backend/contact md files/COURSES_API.md</code></td><td>28 nodes</td></tr>
+<tr><td><code>COURSE_BUILDER_AND_UPLOADS_CONTRACT.md</code></td><td>27 nodes</td></tr>
 <tr><td><code>src/controllers/users.controller.js</code></td><td>27 nodes</td></tr>
-<tr><td><code>src/api/users.ts</code></td><td>25 nodes</td></tr>
+<tr><td><code>src/api/users.ts</code></td><td>24 nodes</td></tr>
 <tr><td><code>src/routes/users.routes.js</code></td><td>20 nodes</td></tr>
-<tr><td><code>blueprint/pages/03-roles-permissions.md</code></td><td>18 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x601, imports x246, imports x110, calls x109. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x655, imports x252, calls x116, imports x112. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1661,12 +1662,12 @@ flowchart LR
 
 <!-- ====== 7. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">7. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around frontend, error, test, contextmd, mostly in src/services/lmApi.ts, frontend/tests/users.full.spec.ts, frontend/tests/role-templates.full.spec.ts. This section covers 579 nodes and 659 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around frontend, error, test, contextmd, mostly in src/services/lmApi.ts, frontend/tests/users.full.spec.ts, frontend/tests/role-templates.full.spec.ts. This section covers 591 nodes and 670 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (579 nodes, 659 edges)
+    %% Section: Tests &amp; Fixtures (591 nodes, 670 edges)
     subgraph tests_fixtures_src_controllers_roleTemplates_con_5b73d8ed["src/controllers/roleTemplates.controller.js"]
         backend_src_controllers_roletemplates_controller_1e11e77f("roleTemplates.controller.js")
         controllers_roletemplates_controller_badrequest_5c41d20d("badRequest()<br/><small>src/controllers/roleTemplates.controller.js</small>")
@@ -1715,7 +1716,7 @@ flowchart LR
     frontend_src_components_learningmanagement_cours_b22ae313 -->|imports| frontend_src_services_coursesapi_ts_5bc30299
     frontend_src_components_learningmanagement_cours_b22ae313 -->|imports| frontend_src_components_learningmanagement_cours_609193c9
     frontend_src_components_learningmanagement_cours_609193c9 -->|imports| frontend_src_services_coursesapi_ts_5bc30299
-    %% Omitted for readability: 561 nodes, 0 edges
+    %% Omitted for readability: 573 nodes, 0 edges
     class backend_src_controllers_roletemplates_controller_1e11e77f module;
     class controllers_roletemplates_controller_badrequest_5c41d20d function;
     class controllers_roletemplates_controller_listroletem_97e7c9cd function;
@@ -2014,19 +2015,19 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x525, calls x78, imports x41, imports x13. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x536, calls x78, imports x41, imports x13. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 8. Community 5 ====== -->
 <h2 id="community-5">8. Community 5</h2>
-<p>Community 5 groups implementation around backend, adminservicejs, services, admincontrollerjs, mostly in src/services/admin.service.js, src/controllers/admin.controller.js, src/routes/admin.routes.js. This section covers 67 nodes and 128 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Community 5 groups implementation around backend, adminservicejs, services, admincontrollerjs, mostly in src/services/admin.service.js, src/controllers/admin.controller.js, src/routes/admin.routes.js. This section covers 68 nodes and 129 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 5 (67 nodes, 128 edges)
+    %% Section: Community 5 (68 nodes, 129 edges)
     subgraph community_5_src_controllers_admin_controller_js_7f948352["src/controllers/admin.controller.js"]
         backend_src_controllers_admin_controller_js_b63946ac("admin.controller.js")
         controllers_admin_controller_adminforgotpassword_a4ea2a59("adminForgotPasswordController()<br/><small>src/controllers/admin.controller.js</small>")
@@ -2072,7 +2073,7 @@ flowchart LR
     backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_verifyadminotp_fd2e04c0
     backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_getadmintrusteddevices_2d1a3649
     backend_src_controllers_admin_controller_js_b63946ac -->|imports| middlewares_auth_middleware_invalidatecachedsess_e12311be
-    %% Omitted for readability: 49 nodes, 0 edges
+    %% Omitted for readability: 50 nodes, 0 edges
     class backend_src_controllers_admin_controller_js_b63946ac module;
     class controllers_admin_controller_adminforgotpassword_a4ea2a59 function;
     class controllers_admin_controller_adminlogincontrolle_6b0723b0 function;
@@ -2318,11 +2319,11 @@ flowchart LR
 </tr>
 <tr>
   <td>20</td>
-  <td><code>{ adminLoginRateLimiter, adminUserActionRateLimiter }</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
+  <td><code>{ adminLoginRateLimiter, otpRequestRateLimiter }</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>{ adminLoginRateLimiter, adminUserActionRateLimiter } node in src/routes/admin.routes.js.</td>
+  <td>{ adminLoginRateLimiter, otpRequestRateLimiter } node in src/routes/admin.routes.js.</td>
 </tr>
 <tr>
   <td>21</td>
@@ -2413,7 +2414,7 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>src/services/admin.service.js</code></td><td>17 nodes</td></tr>
 <tr><td><code>src/controllers/admin.controller.js</code></td><td>15 nodes</td></tr>
-<tr><td><code>src/routes/admin.routes.js</code></td><td>8 nodes</td></tr>
+<tr><td><code>src/routes/admin.routes.js</code></td><td>9 nodes</td></tr>
 <tr><td><code>src/utils/otp.js</code></td><td>7 nodes</td></tr>
 <tr><td><code>src/validators/adminAuth.validator.js</code></td><td>6 nodes</td></tr>
 <tr><td><code>src/scripts/createFirstAdmin.js</code></td><td>5 nodes</td></tr>
@@ -2423,13 +2424,339 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x57, calls x34, imports x30, imports x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x58, calls x34, imports x30, imports x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 9. Community 33 ====== -->
-<h2 id="community-33">9. Community 33</h2>
+<!-- ====== 9. Community 6 ====== -->
+<h2 id="community-6">9. Community 6</h2>
+<p>Community 6 groups implementation around dashboardpagetsx, frontend, pages, color, mostly in src/pages/DashboardPage.tsx. This section covers 67 nodes and 69 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 6 (67 nodes, 69 edges)
+    pages_dashboardpage_formatdate_d27d21fe("formatDate()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_formatrelative_827ad6a9("formatRelative()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_getgreeting_ce22f992("getGreeting()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_dashboardpage_e65e5da8("DashboardPage()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_reportssnapshotcard_10addcea("ReportsSnapshotCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_activity_icon_bg_ffdd719e("ACTIVITY_ICON_BG<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_activity_icon_color_f82704bb("ACTIVITY_ICON_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_avatar_colors_813b8d72("AVATAR_COLORS<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_activityavatar_2f8413b9("ActivityAvatar()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_aiinsightscard_831710e6("AiInsightsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_analyticsspin_3862c11c("AnalyticsSpin()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_calendar_color_bc079537("CALENDAR_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_completed_ba99baa0("CHART_COMPLETED<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_enrolled_cef3d34c("CHART_ENROLLED<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_labels_4ddc9d30("CHART_LABELS<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_completion_courses_bc708f2b("COMPLETION_COURSES<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_cs_btn_7a6fed5e("CS_BTN<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_calendareventscard_4a2e434b("CalendarEventsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_getgreeting_ce22f992 -->|calls| pages_dashboardpage_dashboardpage_e65e5da8
+    pages_dashboardpage_formatrelative_827ad6a9 -->|calls| pages_dashboardpage_reportssnapshotcard_10addcea
+    pages_dashboardpage_formatdate_d27d21fe -->|calls| pages_dashboardpage_dashboardpage_e65e5da8
+    %% Omitted for readability: 49 nodes, 0 edges
+    class pages_dashboardpage_formatdate_d27d21fe ui;
+    class pages_dashboardpage_formatrelative_827ad6a9 ui;
+    class pages_dashboardpage_getgreeting_ce22f992 ui;
+    class pages_dashboardpage_dashboardpage_e65e5da8 ui;
+    class pages_dashboardpage_reportssnapshotcard_10addcea ui;
+    class pages_dashboardpage_activity_icon_bg_ffdd719e ui;
+    class pages_dashboardpage_activity_icon_color_f82704bb ui;
+    class pages_dashboardpage_avatar_colors_813b8d72 ui;
+    class pages_dashboardpage_activityavatar_2f8413b9 ui;
+    class pages_dashboardpage_aiinsightscard_831710e6 ui;
+    class pages_dashboardpage_analyticsspin_3862c11c ui;
+    class pages_dashboardpage_calendar_color_bc079537 ui;
+    class pages_dashboardpage_chart_completed_ba99baa0 ui;
+    class pages_dashboardpage_chart_enrolled_cef3d34c ui;
+    class pages_dashboardpage_chart_labels_4ddc9d30 ui;
+    class pages_dashboardpage_completion_courses_bc708f2b ui;
+    class pages_dashboardpage_cs_btn_7a6fed5e ui;
+    class pages_dashboardpage_calendareventscard_4a2e434b ui;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>DashboardPage.tsx</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>getGreeting()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>DashboardPage()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td>getGreeting() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>formatRelative()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ReportsSnapshotCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td>formatRelative() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>formatDate()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>DashboardPage()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td>formatDate() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>KpiIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>KpiIcon() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>QaIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>QaIcon() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>LKpiCardProps</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LKpiCardProps node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>LKpiCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LKpiCard() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>KpiSkeleton()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>KpiSkeleton() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>StatRow()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>StatRow() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>AnalyticsSpin()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>EmptyMsg()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>EmptyMsg() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>LearningActivityChart()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LearningActivityChart() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>ROLE_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ROLE_COLORS node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>ROLE_LABELS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ROLE_LABELS node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>UsersRoleDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>UsersRoleDonut() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>CompletionDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CompletionDonut() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>AVATAR_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AVATAR_COLORS node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>ActivityAvatar()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ActivityAvatar() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>ACTIVITY_ICON_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ACTIVITY_ICON_BG node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>ACTIVITY_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ACTIVITY_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>NOTIF_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NOTIF_BG node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>NOTIF_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NOTIF_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>NotifIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NotifIcon() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>RevenueCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>RevenueCard() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>UserAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>CourseAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>InstructorPerformanceCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>InstructorPerformanceCard() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>StudentEngagementCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>StudentEngagementCard() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>PRIORITY_STYLE</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>PRIORITY_STYLE node in src/pages/DashboardPage.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/pages/DashboardPage.tsx</code></td><td>67 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x66, calls x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 10. Community 33 ====== -->
+<h2 id="community-33">10. Community 33</h2>
 <p>Community 33 groups implementation around backend, services, usersservicejs, dashboardservicejs, mostly in src/services/users.service.js, src/services/dashboard.service.js, src/validators/usersImport.validator.js. This section covers 66 nodes and 132 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2784,330 +3111,6 @@ flowchart LR
   <div class="card">
     <h4>Design Notes</h4>
     <p>This section comes from graphify community clustering. Relationship summary: calls x64, contains x63, imports x3, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 10. Community 6 ====== -->
-<h2 id="community-6">10. Community 6</h2>
-<p>Community 6 groups implementation around dashboardpagetsx, frontend, pages, color, mostly in src/pages/DashboardPage.tsx. This section covers 64 nodes and 64 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 6 (64 nodes, 64 edges)
-    pages_dashboardpage_formatrelative_827ad6a9("formatRelative()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_reportssnapshotcard_10addcea("ReportsSnapshotCard()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_activity_icon_bg_ffdd719e("ACTIVITY_ICON_BG<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_activity_icon_color_f82704bb("ACTIVITY_ICON_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_avatar_colors_813b8d72("AVATAR_COLORS<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_activityavatar_2f8413b9("ActivityAvatar()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_aiinsightscard_831710e6("AiInsightsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_analyticsspin_3862c11c("AnalyticsSpin()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_calendar_color_bc079537("CALENDAR_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_chart_completed_ba99baa0("CHART_COMPLETED<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_chart_enrolled_cef3d34c("CHART_ENROLLED<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_chart_labels_4ddc9d30("CHART_LABELS<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_completion_courses_bc708f2b("COMPLETION_COURSES<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_cs_btn_7a6fed5e("CS_BTN<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_calendareventscard_4a2e434b("CalendarEventsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_completiondonut_71726dc0("CompletionDonut()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_courseanalyticscard_121d7fa8("CourseAnalyticsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_dept_data_2c272e52("DEPT_DATA<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_formatrelative_827ad6a9 -->|calls| pages_dashboardpage_reportssnapshotcard_10addcea
-    %% Omitted for readability: 46 nodes, 0 edges
-    class pages_dashboardpage_formatrelative_827ad6a9 ui;
-    class pages_dashboardpage_reportssnapshotcard_10addcea ui;
-    class pages_dashboardpage_activity_icon_bg_ffdd719e ui;
-    class pages_dashboardpage_activity_icon_color_f82704bb ui;
-    class pages_dashboardpage_avatar_colors_813b8d72 ui;
-    class pages_dashboardpage_activityavatar_2f8413b9 ui;
-    class pages_dashboardpage_aiinsightscard_831710e6 ui;
-    class pages_dashboardpage_analyticsspin_3862c11c ui;
-    class pages_dashboardpage_calendar_color_bc079537 ui;
-    class pages_dashboardpage_chart_completed_ba99baa0 ui;
-    class pages_dashboardpage_chart_enrolled_cef3d34c ui;
-    class pages_dashboardpage_chart_labels_4ddc9d30 ui;
-    class pages_dashboardpage_completion_courses_bc708f2b ui;
-    class pages_dashboardpage_cs_btn_7a6fed5e ui;
-    class pages_dashboardpage_calendareventscard_4a2e434b ui;
-    class pages_dashboardpage_completiondonut_71726dc0 ui;
-    class pages_dashboardpage_courseanalyticscard_121d7fa8 ui;
-    class pages_dashboardpage_dept_data_2c272e52 ui;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>DashboardPage.tsx</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Module file in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>formatRelative()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ReportsSnapshotCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td>formatRelative() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>KpiIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>KpiIcon() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>QaIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>QaIcon() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>LKpiCardProps</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>LKpiCardProps node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>LKpiCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>LKpiCard() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>KpiSkeleton()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>KpiSkeleton() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>StatRow()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>StatRow() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>AnalyticsSpin()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>EmptyMsg()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>EmptyMsg() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>LearningActivityChart()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>LearningActivityChart() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>ROLE_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROLE_COLORS node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>ROLE_LABELS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROLE_LABELS node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>UsersRoleDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>UsersRoleDonut() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>CompletionDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>CompletionDonut() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>AVATAR_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>AVATAR_COLORS node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>ActivityAvatar()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ActivityAvatar() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>ACTIVITY_ICON_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ACTIVITY_ICON_BG node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>ACTIVITY_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ACTIVITY_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>NOTIF_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>NOTIF_BG node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>NOTIF_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>NOTIF_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>NotifIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>NotifIcon() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>RevenueCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>RevenueCard() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>UserAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>CourseAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>InstructorPerformanceCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>InstructorPerformanceCard() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>StudentEngagementCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>StudentEngagementCard() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>PRIORITY_STYLE</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>PRIORITY_STYLE node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>TX_STATUS_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>TX_STATUS_COLOR node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>TX_TYPE_LABEL</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>TX_TYPE_LABEL node in src/pages/DashboardPage.tsx.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/pages/DashboardPage.tsx</code></td><td>64 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x63, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4169,79 +4172,796 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 14. Community 132 ====== -->
-<h2 id="community-132">14. Community 132</h2>
-<p>Community 132 groups implementation around backend, coursesservicejs, services, coursescontrollerjs, mostly in src/services/courses.service.js, src/controllers/courses.controller.js, src/validators/courses.validator.js. This section covers 45 nodes and 88 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 14. Community 23 ====== -->
+<h2 id="community-23">14. Community 23</h2>
+<p>Community 23 groups implementation around backend, coursebuilderservicejs, services, coursebuildercontrollerjs, mostly in src/services/courseBuilder.service.js, src/controllers/courseBuilder.controller.js, src/validators/courseBuilder.validator.js. This section covers 50 nodes and 99 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Community 132 (45 nodes, 88 edges)
-    subgraph community_132_src_controllers_courses_controller_477a70b9["src/controllers/courses.controller.js"]
-        controllers_courses_controller_badrequest_a11fbc41("badRequest()<br/><small>src/controllers/courses.controller.js</small>")
-        backend_src_controllers_courses_controller_js_61838b92("courses.controller.js")
-        controllers_courses_controller_servererror_9cc2b318("serverError()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_notfound_802a8ef2("notFound()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_handledomainerror_e2ce9f20("handleDomainError()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_listcourses_f091442f("listCourses()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_getcourse_4ac1a339("getCourse()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_createcourse_314df5ae("createCourse()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_updatecourse_4a8c21e2("updateCourse()<br/><small>src/controllers/courses.controller.js</small>")
-        controllers_courses_controller_archivecourse_a3813d91("archiveCourse()<br/><small>src/controllers/courses.controller.js</small>")
+    %% Section: Community 23 (50 nodes, 99 edges)
+    subgraph community_23_src_services_courseBuilder_service_e15bba78["src/services/courseBuilder.service.js"]
+        services_coursebuilder_service_builderauditlog_51b52260("builderAuditLog()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_domainerror_2996a82f("domainError()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_assertcourseexist_8f31bde4("assertCourseExists()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_getsectionorthrow_913f9e79("getSectionOrThrow()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_safe_d943036e("safe()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_listsections_7fb577a3("listSections()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_iso_5948355b("iso()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_maplesson_0ca33035("mapLesson()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_mapsection_31a8f472("mapSection()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_getlessonorthrow_4285dda7("getLessonOrThrow()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_updatelesson_9a99e5cc("updateLesson()<br/><small>src/services/courseBuilder.service.js</small>")
+        services_coursebuilder_service_reorder_8fcc7099("reorder()<br/><small>src/services/courseBuilder.service.js</small>")
     end
-    subgraph community_132_src_services_courses_service_js_2be80e11["src/services/courses.service.js"]
-        services_courses_service_courseauditlog_fba3c8fb("courseAuditLog()<br/><small>src/services/courses.service.js</small>")
-        services_courses_service_safe_3d0efb4b("safe()<br/><small>src/services/courses.service.js</small>")
-        services_courses_service_listcourses_2404ab61("listCourses()<br/><small>src/services/courses.service.js</small>")
-        services_courses_service_getcourse_21e99d72("getCourse()<br/><small>src/services/courses.service.js</small>")
-        services_courses_service_updatecourse_eb6c5bea("updateCourse()<br/><small>src/services/courses.service.js</small>")
-        services_courses_service_iso_1dc9f9d9("iso()<br/><small>src/services/courses.service.js</small>")
-        services_courses_service_maprow_dbb625cc("mapRow()<br/><small>src/services/courses.service.js</small>")
-        services_courses_service_mapfull_cd476444("mapFull()<br/><small>src/services/courses.service.js</small>")
+    subgraph community_23_src_controllers_courseBuilder_contr_b8b4c53c["src/controllers/courseBuilder.controller.js"]
+        backend_src_controllers_coursebuilder_controller_ae65b0f9("courseBuilder.controller.js")
+        controllers_coursebuilder_controller_badrequest_a0a61a74("badRequest()<br/><small>src/controllers/courseBuilder.controller.js</small>")
+        controllers_coursebuilder_controller_handledomai_7d859a63("handleDomainError()<br/><small>src/controllers/courseBuilder.controller.js</small>")
+        controllers_coursebuilder_controller_servererror_7615bc81("serverError()<br/><small>src/controllers/courseBuilder.controller.js</small>")
+        controllers_coursebuilder_controller_notfound_56a40e33("notFound()<br/><small>src/controllers/courseBuilder.controller.js</small>")
     end
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_handledomainerror_e2ce9f20
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_servererror_9cc2b318
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_listcourses_f091442f
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_getcourse_4ac1a339
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_createcourse_314df5ae
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
-    controllers_courses_controller_badrequest_a11fbc41 -->|calls| controllers_courses_controller_archivecourse_a3813d91
-    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_handledomainerror_e2ce9f20
-    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_servererror_9cc2b318
-    controllers_courses_controller_notfound_802a8ef2 -->|calls| controllers_courses_controller_getcourse_4ac1a339
-    controllers_courses_controller_handledomainerror_e2ce9f20 -->|calls| controllers_courses_controller_createcourse_314df5ae
-    controllers_courses_controller_handledomainerror_e2ce9f20 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_listcourses_f091442f
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_getcourse_4ac1a339
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_createcourse_314df5ae
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_updatecourse_4a8c21e2
-    controllers_courses_controller_servererror_9cc2b318 -->|calls| controllers_courses_controller_archivecourse_a3813d91
-    services_courses_service_safe_3d0efb4b -->|calls| services_courses_service_listcourses_2404ab61
-    services_courses_service_safe_3d0efb4b -->|calls| services_courses_service_getcourse_21e99d72
-    services_courses_service_safe_3d0efb4b -->|calls| services_courses_service_updatecourse_eb6c5bea
-    services_courses_service_iso_1dc9f9d9 -->|calls| services_courses_service_maprow_dbb625cc
-    services_courses_service_iso_1dc9f9d9 -->|calls| services_courses_service_mapfull_cd476444
-    services_courses_service_courseauditlog_fba3c8fb -->|calls| services_courses_service_updatecourse_eb6c5bea
-    services_courses_service_maprow_dbb625cc -->|calls| services_courses_service_mapfull_cd476444
-    %% Omitted for readability: 27 nodes, 2 edges
-    class controllers_courses_controller_badrequest_a11fbc41 function;
-    class backend_src_controllers_courses_controller_js_61838b92 module;
-    class controllers_courses_controller_servererror_9cc2b318 function;
-    class controllers_courses_controller_notfound_802a8ef2 function;
-    class controllers_courses_controller_handledomainerror_e2ce9f20 function;
-    class controllers_courses_controller_listcourses_f091442f function;
-    class controllers_courses_controller_getcourse_4ac1a339 function;
-    class controllers_courses_controller_createcourse_314df5ae function;
-    class controllers_courses_controller_updatecourse_4a8c21e2 function;
-    class controllers_courses_controller_archivecourse_a3813d91 function;
-    class services_courses_service_courseauditlog_fba3c8fb function;
-    class services_courses_service_safe_3d0efb4b function;
-    class services_courses_service_listcourses_2404ab61 function;
-    class services_courses_service_getcourse_21e99d72 function;
-    class services_courses_service_updatecourse_eb6c5bea function;
-    class services_courses_service_iso_1dc9f9d9 function;
-    class services_courses_service_maprow_dbb625cc function;
-    class services_courses_service_mapfull_cd476444 function;
+    validators_coursebuilder_validator_optint_07445ada("optInt()<br/><small>src/validators/courseBuilder.validator.js</small>")
+    controllers_coursebuilder_controller_badrequest_a0a61a74 -->|calls| controllers_coursebuilder_controller_handledomai_7d859a63
+    controllers_coursebuilder_controller_badrequest_a0a61a74 -->|calls| controllers_coursebuilder_controller_servererror_7615bc81
+    controllers_coursebuilder_controller_notfound_56a40e33 -->|calls| controllers_coursebuilder_controller_handledomai_7d859a63
+    controllers_coursebuilder_controller_notfound_56a40e33 -->|calls| controllers_coursebuilder_controller_servererror_7615bc81
+    services_coursebuilder_service_safe_d943036e -->|calls| services_coursebuilder_service_listsections_7fb577a3
+    services_coursebuilder_service_iso_5948355b -->|calls| services_coursebuilder_service_maplesson_0ca33035
+    services_coursebuilder_service_iso_5948355b -->|calls| services_coursebuilder_service_mapsection_31a8f472
+    services_coursebuilder_service_domainerror_2996a82f -->|calls| services_coursebuilder_service_assertcourseexist_8f31bde4
+    services_coursebuilder_service_domainerror_2996a82f -->|calls| services_coursebuilder_service_getsectionorthrow_913f9e79
+    services_coursebuilder_service_domainerror_2996a82f -->|calls| services_coursebuilder_service_getlessonorthrow_4285dda7
+    services_coursebuilder_service_domainerror_2996a82f -->|calls| services_coursebuilder_service_updatelesson_9a99e5cc
+    services_coursebuilder_service_domainerror_2996a82f -->|calls| services_coursebuilder_service_reorder_8fcc7099
+    services_coursebuilder_service_maplesson_0ca33035 -->|calls| services_coursebuilder_service_updatelesson_9a99e5cc
+    services_coursebuilder_service_builderauditlog_51b52260 -->|calls| services_coursebuilder_service_updatelesson_9a99e5cc
+    services_coursebuilder_service_builderauditlog_51b52260 -->|calls| services_coursebuilder_service_reorder_8fcc7099
+    services_coursebuilder_service_assertcourseexist_8f31bde4 -->|calls| services_coursebuilder_service_listsections_7fb577a3
+    services_coursebuilder_service_assertcourseexist_8f31bde4 -->|calls| services_coursebuilder_service_reorder_8fcc7099
+    services_coursebuilder_service_getlessonorthrow_4285dda7 -->|calls| services_coursebuilder_service_updatelesson_9a99e5cc
+    services_coursebuilder_service_listsections_7fb577a3 -->|calls| services_coursebuilder_service_reorder_8fcc7099
+    %% Omitted for readability: 32 nodes, 0 edges
+    class services_coursebuilder_service_builderauditlog_51b52260 function;
+    class services_coursebuilder_service_domainerror_2996a82f function;
+    class services_coursebuilder_service_assertcourseexist_8f31bde4 async;
+    class services_coursebuilder_service_getsectionorthrow_913f9e79 function;
+    class services_coursebuilder_service_safe_d943036e function;
+    class services_coursebuilder_service_listsections_7fb577a3 function;
+    class services_coursebuilder_service_iso_5948355b function;
+    class services_coursebuilder_service_maplesson_0ca33035 function;
+    class services_coursebuilder_service_mapsection_31a8f472 function;
+    class services_coursebuilder_service_getlessonorthrow_4285dda7 function;
+    class services_coursebuilder_service_updatelesson_9a99e5cc function;
+    class services_coursebuilder_service_reorder_8fcc7099 function;
+    class backend_src_controllers_coursebuilder_controller_ae65b0f9 module;
+    class controllers_coursebuilder_controller_badrequest_a0a61a74 function;
+    class controllers_coursebuilder_controller_handledomai_7d859a63 function;
+    class controllers_coursebuilder_controller_servererror_7615bc81 function;
+    class controllers_coursebuilder_controller_notfound_56a40e33 function;
+    class validators_coursebuilder_validator_optint_07445ada function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>courseBuilder.controller.js</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>courseBuilder.service.js</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>courseBuilder.validator.js</code><br><small style="color:var(--muted)">src/validators/courseBuilder.validator.js</small><br><code>validateId()</code><br><small style="color:var(--muted)">src/validators/courseBuilder.validator.js</small><br>+5 more</td>
+  <td>courseBuilder.controller.js node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>svc node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>{
+  validateId,
+  validateSectionCreate,
+  validateSectionUpdate,
+  validateLessonCreate,
+  validateLessonUpdate,
+  validateReorder,
+}</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{
+  validateId,
+  validateSectionCreate,
+  validateSectionUpdate,
+  validateLessonCreate,
+  validateLessonUpdate,
+  validateReorder,
+} node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td>badRequest() node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td>notFound() node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>handleDomainError() node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>serverError() node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>run()</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>run() node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>listSections</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>listSections node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>createSection</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>createSection node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>updateSection</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>updateSection node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>deleteSection</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>deleteSection node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>createLesson</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>createLesson node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>updateLesson</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>updateLesson node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>deleteLesson</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>deleteLesson node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>reorder</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>reorder node in src/controllers/courseBuilder.controller.js.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>courseBuilder.service.js</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>courseBuilder.controller.js</code><br><small style="color:var(--muted)">src/controllers/courseBuilder.controller.js</small></td>
+  <td><code>courseBuilder.validator.js</code><br><small style="color:var(--muted)">src/validators/courseBuilder.validator.js</small><br><code>isValidUrl()</code><br><small style="color:var(--muted)">src/validators/courseBuilder.validator.js</small></td>
+  <td>courseBuilder.service.js node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>{ isValidUrl }</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ isValidUrl } node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>safe()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>listSections()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td>safe() node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>mapLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>mapSection()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td>iso() node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>domainError()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>assertCourseExists()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>getLessonOrThrow()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>getSectionOrThrow()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br>+2 more</td>
+  <td>domainError() node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>LESSON_SELECT</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LESSON_SELECT node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>SECTION_SELECT</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SECTION_SELECT node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>mapLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><code>createLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>updateLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td>mapLesson() node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>mapSection()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><code>createSection()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>updateSection()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td>mapSection() node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>builderAuditLog()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>createLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>createSection()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>deleteLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br>+4 more</td>
+  <td>builderAuditLog() node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>assertCourseExists()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-async">Async</span></td>
+  <td><code>domainError()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><code>createSection()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>listSections()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>reorder()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td>assertCourseExists() node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>getSectionOrThrow()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>domainError()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><code>createLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>deleteSection()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>updateSection()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td>getSectionOrThrow() node in src/services/courseBuilder.service.js.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>getLessonOrThrow()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>domainError()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td><code>deleteLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small><br><code>updateLesson()</code><br><small style="color:var(--muted)">src/services/courseBuilder.service.js</small></td>
+  <td>getLessonOrThrow() node in src/services/courseBuilder.service.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/services/courseBuilder.service.js</code></td><td>22 nodes</td></tr>
+<tr><td><code>src/controllers/courseBuilder.controller.js</code></td><td>16 nodes</td></tr>
+<tr><td><code>src/validators/courseBuilder.validator.js</code></td><td>12 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x47, calls x42, imports x7, imports x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 15. Community 104 ====== -->
+<h2 id="community-104">15. Community 104</h2>
+<p>Community 104 groups implementation around backend, services, uploadsservicejs, uploadscontrollerjs, mostly in src/services/uploads.service.js, src/controllers/uploads.controller.js, src/validators/uploads.validator.js. This section covers 45 nodes and 75 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 104 (45 nodes, 75 edges)
+    subgraph community_104_src_services_uploads_service_js_d9acaffb["src/services/uploads.service.js"]
+        services_uploads_service_domainerror_d73b1388("domainError()<br/><small>src/services/uploads.service.js</small>")
+        services_uploads_service_requireconfigured_130de8fe("requireConfigured()<br/><small>src/services/uploads.service.js</small>")
+        services_uploads_service_assertcourseexists_6ad0ed1d("assertCourseExists()<br/><small>src/services/uploads.service.js</small>")
+        services_uploads_service_signupload_29d1b2bf("signUpload()<br/><small>src/services/uploads.service.js</small>")
+        services_uploads_service_confirmupload_8d2fee8f("confirmUpload()<br/><small>src/services/uploads.service.js</small>")
+        services_uploads_service_deleteupload_916ff1b3("deleteUpload()<br/><small>src/services/uploads.service.js</small>")
+        services_uploads_service_safefilename_8b23d61e("safeFileName()<br/><small>src/services/uploads.service.js</small>")
+    end
+    subgraph community_104_services_storage_supabaseProvider_06951dda["services/storage/supabaseProvider.js"]
+        storage_supabaseprovider_getclient_9764dd78("getClient()<br/><small>services/storage/supabaseProvider.js</small>")
+        storage_supabaseprovider_isconfigured_00717f3f("isConfigured()<br/><small>services/storage/supabaseProvider.js</small>")
+        storage_supabaseprovider_createsignedupload_3e118560("createSignedUpload()<br/><small>services/storage/supabaseProvider.js</small>")
+        storage_supabaseprovider_objectexists_a5bd2695("objectExists()<br/><small>services/storage/supabaseProvider.js</small>")
+        storage_supabaseprovider_getpublicurl_4bb58018("getPublicUrl()<br/><small>services/storage/supabaseProvider.js</small>")
+    end
+    subgraph community_104_src_controllers_uploads_controller_71096102["src/controllers/uploads.controller.js"]
+        backend_src_controllers_uploads_controller_js_1bc53582("uploads.controller.js")
+        controllers_uploads_controller_badrequest_3c020ecf("badRequest()<br/><small>src/controllers/uploads.controller.js</small>")
+        controllers_uploads_controller_handledomainerror_9cd5b08a("handleDomainError()<br/><small>src/controllers/uploads.controller.js</small>")
+        controllers_uploads_controller_notfound_3b1e739d("notFound()<br/><small>src/controllers/uploads.controller.js</small>")
+    end
+    storage_index_getprovider_7501aa46("getProvider()<br/><small>services/storage/index.js</small>")
+    validators_uploads_validator_isnonemptystring_4bde4306("isNonEmptyString()<br/><small>src/validators/uploads.validator.js</small>")
+    controllers_uploads_controller_badrequest_3c020ecf -->|calls| controllers_uploads_controller_handledomainerror_9cd5b08a
+    controllers_uploads_controller_notfound_3b1e739d -->|calls| controllers_uploads_controller_handledomainerror_9cd5b08a
+    services_uploads_service_domainerror_d73b1388 -->|calls| services_uploads_service_requireconfigured_130de8fe
+    services_uploads_service_domainerror_d73b1388 -->|calls| services_uploads_service_assertcourseexists_6ad0ed1d
+    services_uploads_service_domainerror_d73b1388 -->|calls| services_uploads_service_signupload_29d1b2bf
+    services_uploads_service_domainerror_d73b1388 -->|calls| services_uploads_service_confirmupload_8d2fee8f
+    services_uploads_service_domainerror_d73b1388 -->|calls| services_uploads_service_deleteupload_916ff1b3
+    services_uploads_service_requireconfigured_130de8fe -->|calls| services_uploads_service_signupload_29d1b2bf
+    services_uploads_service_requireconfigured_130de8fe -->|calls| services_uploads_service_confirmupload_8d2fee8f
+    services_uploads_service_requireconfigured_130de8fe -->|calls| services_uploads_service_deleteupload_916ff1b3
+    services_uploads_service_requireconfigured_130de8fe -->|calls| storage_index_getprovider_7501aa46
+    services_uploads_service_assertcourseexists_6ad0ed1d -->|calls| services_uploads_service_signupload_29d1b2bf
+    services_uploads_service_assertcourseexists_6ad0ed1d -->|calls| services_uploads_service_confirmupload_8d2fee8f
+    services_uploads_service_assertcourseexists_6ad0ed1d -->|calls| services_uploads_service_deleteupload_916ff1b3
+    services_uploads_service_safefilename_8b23d61e -->|calls| services_uploads_service_signupload_29d1b2bf
+    storage_supabaseprovider_getclient_9764dd78 -->|calls| storage_supabaseprovider_isconfigured_00717f3f
+    storage_supabaseprovider_getclient_9764dd78 -->|calls| storage_supabaseprovider_createsignedupload_3e118560
+    storage_supabaseprovider_getclient_9764dd78 -->|calls| storage_supabaseprovider_objectexists_a5bd2695
+    storage_supabaseprovider_getclient_9764dd78 -->|calls| storage_supabaseprovider_getpublicurl_4bb58018
+    %% Omitted for readability: 27 nodes, 0 edges
+    class services_uploads_service_domainerror_d73b1388 function;
+    class services_uploads_service_requireconfigured_130de8fe function;
+    class services_uploads_service_assertcourseexists_6ad0ed1d async;
+    class services_uploads_service_signupload_29d1b2bf function;
+    class services_uploads_service_confirmupload_8d2fee8f function;
+    class services_uploads_service_deleteupload_916ff1b3 function;
+    class services_uploads_service_safefilename_8b23d61e function;
+    class storage_supabaseprovider_getclient_9764dd78 entry;
+    class storage_supabaseprovider_isconfigured_00717f3f function;
+    class storage_supabaseprovider_createsignedupload_3e118560 function;
+    class storage_supabaseprovider_objectexists_a5bd2695 function;
+    class storage_supabaseprovider_getpublicurl_4bb58018 function;
+    class backend_src_controllers_uploads_controller_js_1bc53582 module;
+    class controllers_uploads_controller_badrequest_3c020ecf function;
+    class controllers_uploads_controller_handledomainerror_9cd5b08a function;
+    class controllers_uploads_controller_notfound_3b1e739d function;
+    class storage_index_getprovider_7501aa46 function;
+    class validators_uploads_validator_isnonemptystring_4bde4306 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>uploads.controller.js</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>uploads.service.js</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>uploads.validator.js</code><br><small style="color:var(--muted)">src/validators/uploads.validator.js</small><br><code>validateConfirm()</code><br><small style="color:var(--muted)">src/validators/uploads.validator.js</small><br>+2 more</td>
+  <td>uploads.controller.js node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>svc node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>{
+  validateSign,
+  validateConfirm,
+  validateDelete,
+}</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{
+  validateSign,
+  validateConfirm,
+  validateDelete,
+} node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td>badRequest() node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td>notFound() node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>handleDomainError() node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>serverError() node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>run()</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>run() node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>sign</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>sign node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>confirm</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>confirm node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>remove</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>remove node in src/controllers/uploads.controller.js.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>uploads.service.js</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>uploads.controller.js</code><br><small style="color:var(--muted)">src/controllers/uploads.controller.js</small></td>
+  <td><code>getProvider()</code><br><small style="color:var(--muted)">services/storage/index.js</small><br><code>index.js</code><br><small style="color:var(--muted)">services/storage/index.js</small></td>
+  <td>uploads.service.js node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>crypto</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>crypto node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>{ getProvider }</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ getProvider } node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>BUCKET</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>BUCKET node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>MAX_BYTES</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>MAX_BYTES node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>domainError()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>assertCourseExists()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>confirmUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>deleteUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br>+2 more</td>
+  <td>domainError() node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>requireConfigured()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>domainError()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><code>confirmUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>deleteUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>getProvider()</code><br><small style="color:var(--muted)">services/storage/index.js</small><br>+1 more</td>
+  <td>Reads, resolves, or persists project configuration.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>assertCourseExists()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-async">Async</span></td>
+  <td><code>domainError()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><code>confirmUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>deleteUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>signUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td>assertCourseExists() node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>safeFileName()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>signUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td>safeFileName() node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>signUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>assertCourseExists()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>domainError()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>requireConfigured()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>signUpload() node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>confirmUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>assertCourseExists()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>domainError()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>requireConfigured()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>confirmUpload() node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>deleteUpload()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>assertCourseExists()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>domainError()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>requireConfigured()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>deleteUpload() node in src/services/uploads.service.js.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>index.js</code><br><small style="color:var(--muted)">services/storage/index.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>uploads.service.js</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td><code>supabaseProvider.js</code><br><small style="color:var(--muted)">services/storage/supabaseProvider.js</small></td>
+  <td>index.js node in services/storage/index.js.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>supabaseProvider</code><br><small style="color:var(--muted)">services/storage/index.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>supabaseProvider node in services/storage/index.js.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>PROVIDERS</code><br><small style="color:var(--muted)">services/storage/index.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>PROVIDERS node in services/storage/index.js.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>getProvider()</code><br><small style="color:var(--muted)">services/storage/index.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>requireConfigured()</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small><br><code>uploads.service.js</code><br><small style="color:var(--muted)">src/services/uploads.service.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>getProvider() node in services/storage/index.js.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>supabaseProvider.js</code><br><small style="color:var(--muted)">services/storage/supabaseProvider.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>index.js</code><br><small style="color:var(--muted)">services/storage/index.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>supabaseProvider.js node in services/storage/supabaseProvider.js.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>getClient()</code><br><small style="color:var(--muted)">services/storage/supabaseProvider.js</small></td>
+  <td><span class="tag tag-cmd">Entry</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>createSignedUpload()</code><br><small style="color:var(--muted)">services/storage/supabaseProvider.js</small><br><code>getPublicUrl()</code><br><small style="color:var(--muted)">services/storage/supabaseProvider.js</small><br><code>isConfigured()</code><br><small style="color:var(--muted)">services/storage/supabaseProvider.js</small><br>+2 more</td>
+  <td>getClient() node in services/storage/supabaseProvider.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/services/uploads.service.js</code></td><td>13 nodes</td></tr>
+<tr><td><code>src/controllers/uploads.controller.js</code></td><td>11 nodes</td></tr>
+<tr><td><code>src/validators/uploads.validator.js</code></td><td>9 nodes</td></tr>
+<tr><td><code>services/storage/supabaseProvider.js</code></td><td>8 nodes</td></tr>
+<tr><td><code>services/storage/index.js</code></td><td>4 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x40, calls x27, imports x4, imports x4. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 16. Other ====== -->
+<h2 id="other">16. Other</h2>
+<p>Other groups implementation around frontend, backend, components, pages, mostly in components/users/UserDetailsDrawer.tsx, src/layouts/AdminLayout.tsx, src/services/organization.service.js. This section covers 1128 nodes and 1557 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Other (1128 nodes, 1557 edges)
+    subgraph other_src_controllers_accessPolicies_controller_9fb054bb["src/controllers/accessPolicies.controller.js"]
+        controllers_accesspolicies_controller_badrequest_a8be4144("badRequest()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+        controllers_accesspolicies_controller_listaccess_da2be073("listAccessPolicies()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+        controllers_accesspolicies_controller_getaccessp_1c51e92e("getAccessPolicy()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+        controllers_accesspolicies_controller_createacce_1138d482("createAccessPolicy()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+        controllers_accesspolicies_controller_updateacce_6222732d("updateAccessPolicy()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+        controllers_accesspolicies_controller_deleteacce_1bb22a72("deleteAccessPolicy()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+        controllers_accesspolicies_controller_notfound_fa3a7326("notFound()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+        controllers_accesspolicies_controller_servererro_a802c419("serverError()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+        controllers_accesspolicies_controller_getaccessp_4eeabc27("getAccessPolicyStats()<br/><small>src/controllers/accessPolicies.controller.js</small>")
+    end
+    subgraph other_backend_scripts_auditTestData_js_98f10250["backend/scripts/auditTestData.js"]
+        scripts_audittestdata_line_230be37d("line()<br/><small>backend/scripts/auditTestData.js</small>")
+        scripts_audittestdata_main_03932f2e("main()<br/><small>backend/scripts/auditTestData.js</small>")
+    end
+    subgraph other_src_controllers_roles_controller_js_45e9f077["src/controllers/roles.controller.js"]
+        controllers_roles_controller_servererror_017a0b75("serverError()<br/><small>src/controllers/roles.controller.js</small>")
+        backend_src_controllers_roles_controller_js_e02de260("roles.controller.js")
+    end
+    backend_server_js_8b5ab4c1("server.js")
+    src_authcontext_useauth_410e9db1("useAuth()<br/><small>frontend/src/AuthContext.tsx</small>")
+    controllers_lm_controller_servererror_ce32ba63("serverError()<br/><small>src/controllers/lm.controller.js</small>")
+    services_organization_service_invalidateorgchart_b94554ba("invalidateOrgChartCache()<br/><small>src/services/organization.service.js</small>")
+    validators_accesspolicies_validator_validatelist_a270741d("validateListQuery()<br/><small>src/validators/accessPolicies.validator.js</small>")
+    scripts_audittestdata_line_230be37d -->|calls| scripts_audittestdata_main_03932f2e
+    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_listaccess_da2be073
+    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_getaccessp_1c51e92e
+    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_createacce_1138d482
+    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_updateacce_6222732d
+    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_deleteacce_1bb22a72
+    controllers_accesspolicies_controller_notfound_fa3a7326 -->|calls| controllers_accesspolicies_controller_getaccessp_1c51e92e
+    controllers_accesspolicies_controller_notfound_fa3a7326 -->|calls| controllers_accesspolicies_controller_createacce_1138d482
+    controllers_accesspolicies_controller_notfound_fa3a7326 -->|calls| controllers_accesspolicies_controller_updateacce_6222732d
+    controllers_accesspolicies_controller_notfound_fa3a7326 -->|calls| controllers_accesspolicies_controller_deleteacce_1bb22a72
+    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_listaccess_da2be073
+    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_getaccessp_4eeabc27
+    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_getaccessp_1c51e92e
+    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_createacce_1138d482
+    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_updateacce_6222732d
+    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_deleteacce_1bb22a72
+    controllers_accesspolicies_controller_listaccess_da2be073 -->|calls| validators_accesspolicies_validator_validatelist_a270741d
+    %% Omitted for readability: 1110 nodes, 0 edges
+    class controllers_accesspolicies_controller_badrequest_a8be4144 function;
+    class controllers_accesspolicies_controller_listaccess_da2be073 function;
+    class controllers_accesspolicies_controller_getaccessp_1c51e92e function;
+    class controllers_accesspolicies_controller_createacce_1138d482 function;
+    class controllers_accesspolicies_controller_updateacce_6222732d function;
+    class controllers_accesspolicies_controller_deleteacce_1bb22a72 function;
+    class controllers_accesspolicies_controller_notfound_fa3a7326 function;
+    class controllers_accesspolicies_controller_servererro_a802c419 function;
+    class controllers_accesspolicies_controller_getaccessp_4eeabc27 function;
+    class scripts_audittestdata_line_230be37d test;
+    class scripts_audittestdata_main_03932f2e test;
+    class controllers_roles_controller_servererror_017a0b75 function;
+    class backend_src_controllers_roles_controller_js_e02de260 module;
+    class backend_server_js_8b5ab4c1 module;
+    class src_authcontext_useauth_410e9db1 ui;
+    class controllers_lm_controller_servererror_ce32ba63 function;
+    class services_organization_service_invalidateorgchart_b94554ba function;
+    class validators_accesspolicies_validator_validatelist_a270741d function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -4520,760 +5240,19 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/services/courses.service.js</code></td><td>21 nodes</td></tr>
-<tr><td><code>src/controllers/courses.controller.js</code></td><td>12 nodes</td></tr>
-<tr><td><code>src/validators/courses.validator.js</code></td><td>12 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x42, calls x40, imports x4, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 15. Community 64 ====== -->
-<h2 id="community-64">15. Community 64</h2>
-<p>Community 64 groups implementation around backend, accesspoliciesservicejs, accesspoliciescontrollerjs, services, mostly in src/services/accessPolicies.service.js, src/controllers/accessPolicies.controller.js, src/validators/accessPolicies.validator.js. This section covers 42 nodes and 76 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 64 (42 nodes, 76 edges)
-    subgraph community_64_src_controllers_accessPolicies_cont_4dc5b4c9["src/controllers/accessPolicies.controller.js"]
-        backend_src_controllers_accesspolicies_controlle_14038ecd("accessPolicies.controller.js")
-        controllers_accesspolicies_controller_servererro_a802c419("serverError()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-        controllers_accesspolicies_controller_badrequest_a8be4144("badRequest()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-        controllers_accesspolicies_controller_notfound_fa3a7326("notFound()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-        controllers_accesspolicies_controller_listaccess_da2be073("listAccessPolicies()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-        controllers_accesspolicies_controller_getaccessp_1c51e92e("getAccessPolicy()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-        controllers_accesspolicies_controller_createacce_1138d482("createAccessPolicy()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-        controllers_accesspolicies_controller_updateacce_6222732d("updateAccessPolicy()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-        controllers_accesspolicies_controller_deleteacce_1bb22a72("deleteAccessPolicy()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-        controllers_accesspolicies_controller_getaccessp_4eeabc27("getAccessPolicyStats()<br/><small>src/controllers/accessPolicies.controller.js</small>")
-    end
-    subgraph community_64_src_services_accessPolicies_service_98f68759["src/services/accessPolicies.service.js"]
-        services_accesspolicies_service_createpolicyaudi_348b7f6d("createPolicyAuditLog()<br/><small>src/services/accessPolicies.service.js</small>")
-        services_accesspolicies_service_assertroleexists_396a0a88("assertRoleExists()<br/><small>src/services/accessPolicies.service.js</small>")
-        services_accesspolicies_service_paginate_da27cdb5("paginate()<br/><small>src/services/accessPolicies.service.js</small>")
-        services_accesspolicies_service_listaccesspolici_f8ae2474("listAccessPolicies()<br/><small>src/services/accessPolicies.service.js</small>")
-        services_accesspolicies_service_buildpagination_e81ca930("buildPagination()<br/><small>src/services/accessPolicies.service.js</small>")
-    end
-    subgraph community_64_src_validators_accessPolicies_valid_5c3a15ca["src/validators/accessPolicies.validator.js"]
-        validators_accesspolicies_validator_validatelist_a270741d("validateListQuery()<br/><small>src/validators/accessPolicies.validator.js</small>")
-        validators_accesspolicies_validator_validatecrea_e7e74d8e("validateCreate()<br/><small>src/validators/accessPolicies.validator.js</small>")
-        validators_accesspolicies_validator_validateupda_e4bbe1a8("validateUpdate()<br/><small>src/validators/accessPolicies.validator.js</small>")
-    end
-    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_listaccess_da2be073
-    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_getaccessp_1c51e92e
-    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_createacce_1138d482
-    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_updateacce_6222732d
-    controllers_accesspolicies_controller_badrequest_a8be4144 -->|calls| controllers_accesspolicies_controller_deleteacce_1bb22a72
-    controllers_accesspolicies_controller_notfound_fa3a7326 -->|calls| controllers_accesspolicies_controller_getaccessp_1c51e92e
-    controllers_accesspolicies_controller_notfound_fa3a7326 -->|calls| controllers_accesspolicies_controller_createacce_1138d482
-    controllers_accesspolicies_controller_notfound_fa3a7326 -->|calls| controllers_accesspolicies_controller_updateacce_6222732d
-    controllers_accesspolicies_controller_notfound_fa3a7326 -->|calls| controllers_accesspolicies_controller_deleteacce_1bb22a72
-    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_listaccess_da2be073
-    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_getaccessp_4eeabc27
-    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_getaccessp_1c51e92e
-    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_createacce_1138d482
-    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_updateacce_6222732d
-    controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_deleteacce_1bb22a72
-    controllers_accesspolicies_controller_listaccess_da2be073 -->|calls| validators_accesspolicies_validator_validatelist_a270741d
-    controllers_accesspolicies_controller_createacce_1138d482 -->|calls| validators_accesspolicies_validator_validatecrea_e7e74d8e
-    controllers_accesspolicies_controller_updateacce_6222732d -->|calls| validators_accesspolicies_validator_validateupda_e4bbe1a8
-    services_accesspolicies_service_paginate_da27cdb5 -->|calls| services_accesspolicies_service_listaccesspolici_f8ae2474
-    services_accesspolicies_service_buildpagination_e81ca930 -->|calls| services_accesspolicies_service_listaccesspolici_f8ae2474
-    backend_src_controllers_accesspolicies_controlle_14038ecd -->|imports| validators_accesspolicies_validator_validatelist_a270741d
-    backend_src_controllers_accesspolicies_controlle_14038ecd -->|imports| validators_accesspolicies_validator_validatecrea_e7e74d8e
-    backend_src_controllers_accesspolicies_controlle_14038ecd -->|imports| validators_accesspolicies_validator_validateupda_e4bbe1a8
-    %% Omitted for readability: 24 nodes, 0 edges
-    class backend_src_controllers_accesspolicies_controlle_14038ecd module;
-    class controllers_accesspolicies_controller_servererro_a802c419 function;
-    class controllers_accesspolicies_controller_badrequest_a8be4144 function;
-    class controllers_accesspolicies_controller_notfound_fa3a7326 function;
-    class controllers_accesspolicies_controller_listaccess_da2be073 function;
-    class controllers_accesspolicies_controller_getaccessp_1c51e92e function;
-    class controllers_accesspolicies_controller_createacce_1138d482 function;
-    class controllers_accesspolicies_controller_updateacce_6222732d function;
-    class controllers_accesspolicies_controller_deleteacce_1bb22a72 function;
-    class controllers_accesspolicies_controller_getaccessp_4eeabc27 function;
-    class services_accesspolicies_service_createpolicyaudi_348b7f6d function;
-    class services_accesspolicies_service_assertroleexists_396a0a88 async;
-    class services_accesspolicies_service_paginate_da27cdb5 function;
-    class services_accesspolicies_service_listaccesspolici_f8ae2474 function;
-    class services_accesspolicies_service_buildpagination_e81ca930 function;
-    class validators_accesspolicies_validator_validatelist_a270741d function;
-    class validators_accesspolicies_validator_validatecrea_e7e74d8e function;
-    class validators_accesspolicies_validator_validateupda_e4bbe1a8 function;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>accessPolicies.controller.js</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small><br><code>accessPolicies.service.js</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small><br><code>accessPolicies.validator.js</code><br><small style="color:var(--muted)">src/validators/accessPolicies.validator.js</small><br>+4 more</td>
-  <td>accessPolicies.controller.js node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>svc node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>{
-  validateId,
-  validateListQuery,
-  validateCreate,
-  validateUpdate,
-}</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{
-  validateId,
-  validateListQuery,
-  validateCreate,
-  validateUpdate,
-} node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>createAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>deleteAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>getAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br>+2 more</td>
-  <td>badRequest() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>createAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>deleteAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>getAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br>+1 more</td>
-  <td>notFound() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>createAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>deleteAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>getAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br>+3 more</td>
-  <td>serverError() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>listAccessPolicies()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small><br><code>validateListQuery()</code><br><small style="color:var(--muted)">src/validators/accessPolicies.validator.js</small></td>
-  <td>listAccessPolicies() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>getAccessPolicyStats()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td>getAccessPolicyStats() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>getAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td>getAccessPolicy() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>createAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small><br><code>validateCreate()</code><br><small style="color:var(--muted)">src/validators/accessPolicies.validator.js</small></td>
-  <td>createAccessPolicy() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>updateAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small><br><code>validateUpdate()</code><br><small style="color:var(--muted)">src/validators/accessPolicies.validator.js</small></td>
-  <td>updateAccessPolicy() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>deleteAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td>deleteAccessPolicy() node in src/controllers/accessPolicies.controller.js.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>accessPolicies.routes.js</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td><code>accessPolicies.controller.js</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>createAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br><code>deleteAccessPolicy()</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small><br>+4 more</td>
-  <td>No direct outbound edge</td>
-  <td>accessPolicies.routes.js node in src/routes/accessPolicies.routes.js.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>express</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>express node in src/routes/accessPolicies.routes.js.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>{ requireAdminAuth }</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ requireAdminAuth } node in src/routes/accessPolicies.routes.js.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>{ adminUserActionRateLimiter }</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ adminUserActionRateLimiter } node in src/routes/accessPolicies.routes.js.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>{
-  listAccessPolicies, getAccessPolicyStats, getAccessPolicy,
-  createAccessPolicy, updateAccessPolicy, deleteAccessPolicy,
-}</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{
-  listAccessPolicies, getAccessPolicyStats, getAccessPolicy,
-  createAccessPolicy, updateAccessPolicy, deleteAccessPolicy,
-} node in src/routes/accessPolicies.routes.js.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>router</code><br><small style="color:var(--muted)">src/routes/accessPolicies.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>router node in src/routes/accessPolicies.routes.js.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>accessPolicies.service.js</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>accessPolicies.controller.js</code><br><small style="color:var(--muted)">src/controllers/accessPolicies.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>accessPolicies.service.js node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>prisma node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>paginate()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>listAccessPolicies()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td>paginate() node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>buildPagination()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>listAccessPolicies()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td>buildPagination() node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>createPolicyAuditLog()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>createAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small><br><code>deleteAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small><br><code>updateAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td>createPolicyAuditLog() node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>POLICY_SELECT</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>POLICY_SELECT node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>assertRoleExists()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-async">Async</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>createAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small><br><code>updateAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td>assertRoleExists() node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>listAccessPolicies()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>buildPagination()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small><br><code>paginate()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>listAccessPolicies() node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>getAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>getAccessPolicy() node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>createAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertRoleExists()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small><br><code>createPolicyAuditLog()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>createAccessPolicy() node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>updateAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>assertRoleExists()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small><br><code>createPolicyAuditLog()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>updateAccessPolicy() node in src/services/accessPolicies.service.js.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>deleteAccessPolicy()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>createPolicyAuditLog()</code><br><small style="color:var(--muted)">src/services/accessPolicies.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>deleteAccessPolicy() node in src/services/accessPolicies.service.js.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/services/accessPolicies.service.js</code></td><td>13 nodes</td></tr>
-<tr><td><code>src/controllers/accessPolicies.controller.js</code></td><td>12 nodes</td></tr>
-<tr><td><code>src/validators/accessPolicies.validator.js</code></td><td>11 nodes</td></tr>
-<tr><td><code>src/routes/accessPolicies.routes.js</code></td><td>6 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x38, calls x25, imports x10, imports x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 16. Other ====== -->
-<h2 id="other">16. Other</h2>
-<p>Other groups implementation around frontend, backend, components, pages, mostly in components/users/UserDetailsDrawer.tsx, src/layouts/AdminLayout.tsx, src/services/organization.service.js. This section covers 1016 nodes and 1327 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Other (1016 nodes, 1327 edges)
-    subgraph other_src_controllers_groups_controller_js_8d0aa103["src/controllers/groups.controller.js"]
-        controllers_groups_controller_badrequest_92f3437e("badRequest()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_creategroup_1191832b("createGroup()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_addmembers_c5240ede("addMembers()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_notfound_5e39b2cf("notFound()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_getgroup_4d50e532("getGroup()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_updategroup_7bd69dff("updateGroup()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_deletegroup_9aa7f6d7("deleteGroup()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_getgroupmembers_c272a3f1("getGroupMembers()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_removemember_dc246481("removeMember()<br/><small>src/controllers/groups.controller.js</small>")
-        controllers_groups_controller_servererror_c433c987("serverError()<br/><small>src/controllers/groups.controller.js</small>")
-    end
-    subgraph other_src_controllers_roles_controller_js_45e9f077["src/controllers/roles.controller.js"]
-        controllers_roles_controller_servererror_017a0b75("serverError()<br/><small>src/controllers/roles.controller.js</small>")
-        backend_src_controllers_roles_controller_js_e02de260("roles.controller.js")
-        controllers_roles_controller_badrequest_8f588ee8("badRequest()<br/><small>src/controllers/roles.controller.js</small>")
-        controllers_roles_controller_notfound_e408a089("notFound()<br/><small>src/controllers/roles.controller.js</small>")
-    end
-    subgraph other_backend_scripts_auditTestData_js_98f10250["backend/scripts/auditTestData.js"]
-        scripts_audittestdata_line_230be37d("line()<br/><small>backend/scripts/auditTestData.js</small>")
-        scripts_audittestdata_main_03932f2e("main()<br/><small>backend/scripts/auditTestData.js</small>")
-    end
-    src_authcontext_useauth_410e9db1("useAuth()<br/><small>frontend/src/AuthContext.tsx</small>")
-    controllers_lm_controller_servererror_ce32ba63("serverError()<br/><small>src/controllers/lm.controller.js</small>")
-    scripts_audittestdata_line_230be37d -->|calls| scripts_audittestdata_main_03932f2e
-    controllers_groups_controller_badrequest_92f3437e -->|calls| controllers_groups_controller_creategroup_1191832b
-    controllers_groups_controller_badrequest_92f3437e -->|calls| controllers_groups_controller_addmembers_c5240ede
-    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_getgroup_4d50e532
-    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_creategroup_1191832b
-    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_updategroup_7bd69dff
-    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_deletegroup_9aa7f6d7
-    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_getgroupmembers_c272a3f1
-    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_addmembers_c5240ede
-    controllers_groups_controller_notfound_5e39b2cf -->|calls| controllers_groups_controller_removemember_dc246481
-    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_getgroup_4d50e532
-    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_creategroup_1191832b
-    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_updategroup_7bd69dff
-    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_deletegroup_9aa7f6d7
-    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_getgroupmembers_c272a3f1
-    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_addmembers_c5240ede
-    controllers_groups_controller_servererror_c433c987 -->|calls| controllers_groups_controller_removemember_dc246481
-    %% Omitted for readability: 998 nodes, 0 edges
-    class controllers_groups_controller_badrequest_92f3437e function;
-    class controllers_groups_controller_creategroup_1191832b function;
-    class controllers_groups_controller_addmembers_c5240ede function;
-    class controllers_groups_controller_notfound_5e39b2cf function;
-    class controllers_groups_controller_getgroup_4d50e532 function;
-    class controllers_groups_controller_updategroup_7bd69dff function;
-    class controllers_groups_controller_deletegroup_9aa7f6d7 function;
-    class controllers_groups_controller_getgroupmembers_c272a3f1 function;
-    class controllers_groups_controller_removemember_dc246481 function;
-    class controllers_groups_controller_servererror_c433c987 function;
-    class controllers_roles_controller_servererror_017a0b75 function;
-    class backend_src_controllers_roles_controller_js_e02de260 module;
-    class controllers_roles_controller_badrequest_8f588ee8 function;
-    class controllers_roles_controller_notfound_e408a089 function;
-    class scripts_audittestdata_line_230be37d test;
-    class scripts_audittestdata_main_03932f2e test;
-    class src_authcontext_useauth_410e9db1 ui;
-    class controllers_lm_controller_servererror_ce32ba63 function;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>roles.controller.js</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>roles.service.js</code><br><small style="color:var(--muted)">src/services/roles.service.js</small><br><code>roles.validator.js</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small><br>+7 more</td>
-  <td>roles.controller.js node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>svc node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>{
-  validateId,
-  validateListRolesQuery,
-  validateCreateRole,
-  validateUpdateRole,
-  validateAssignPermissions,
-  validatePermissionMatrixQuery,
-  validateMatrixToggle,
-}</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{
-  validateId,
-  validateListRolesQuery,
-  validateCreateRole,
-  validateUpdateRole,
-  validateAssignPermissions,
-  validatePermissionMatrixQuery,
-  validateMatrixToggle,
-} node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>assignPermissionsToRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>createPermission()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>createRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br>+6 more</td>
-  <td>badRequest() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>assignPermissionsToRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>deletePermission()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>deleteRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br>+6 more</td>
-  <td>notFound() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>assignPermissionsToRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>createPermission()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>createRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br>+13 more</td>
-  <td>serverError() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>listRoles()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>validateListRolesQuery()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
-  <td>listRoles() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>getRolesStats()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td>getRolesStats() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>getRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td>getRole() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>createRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>validateCreateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
-  <td>createRole() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>updateRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>validateUpdateRole()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
-  <td>updateRole() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>deleteRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td>deleteRole() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>duplicateRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td>duplicateRole() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>getRolePermissions()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td>getRolePermissions() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>assignPermissionsToRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small><br><code>validateAssignPermissions()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
-  <td>assignPermissionsToRole() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>getPermissionMatrix()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>validatePermissionMatrixQuery()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
-  <td>getPermissionMatrix() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>togglePermissionMatrixCell()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><code>validateMatrixToggle()</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
-  <td>togglePermissionMatrixCell() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>listPermissions()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>listPermissions() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>getPermission()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getPermission() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>createPermission()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>createPermission() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>updatePermission()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>updatePermission() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>deletePermission()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>deletePermission() node in src/controllers/roles.controller.js.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>roles.routes.js</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td><code>assignPermissionsToRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>createRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br><code>deleteRole()</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small><br>+8 more</td>
-  <td>No direct outbound edge</td>
-  <td>roles.routes.js node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>express</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>express node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>{ requireAdminAuth }</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ requireAdminAuth } node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>{ adminUserActionRateLimiter }</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ adminUserActionRateLimiter } node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>{
-  listRoles, getRolesStats, getRole, createRole, updateRole, deleteRole, duplicateRole,
-  getRolePermissions, assignPermissionsToRole,
-}</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{
-  listRoles, getRolesStats, getRole, createRole, updateRole, deleteRole, duplicateRole,
-  getRolePermissions, assignPermissionsToRole,
-} node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>router</code><br><small style="color:var(--muted)">src/routes/roles.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>router node in src/routes/roles.routes.js.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>roles.validator.js</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>roles.controller.js</code><br><small style="color:var(--muted)">src/controllers/roles.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>roles.validator.js node in src/validators/roles.validator.js.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>VALID_ROLE_STATUSES</code><br><small style="color:var(--muted)">src/validators/roles.validator.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>VALID_ROLE_STATUSES node in src/validators/roles.validator.js.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>components/users/UserDetailsDrawer.tsx</code></td><td>33 nodes</td></tr>
+      <tr><td><code>src/services/organization.service.js</code></td><td>33 nodes</td></tr>
+<tr><td><code>components/users/UserDetailsDrawer.tsx</code></td><td>33 nodes</td></tr>
 <tr><td><code>src/layouts/AdminLayout.tsx</code></td><td>33 nodes</td></tr>
-<tr><td><code>src/services/organization.service.js</code></td><td>31 nodes</td></tr>
+<tr><td><code>backend/server.js</code></td><td>25 nodes</td></tr>
 <tr><td><code>src/services/roles.service.js</code></td><td>25 nodes</td></tr>
-<tr><td><code>backend/server.js</code></td><td>23 nodes</td></tr>
 <tr><td><code>src/controllers/roles.controller.js</code></td><td>23 nodes</td></tr>
 <tr><td><code>src/services/lm.service.js</code></td><td>23 nodes</td></tr>
-<tr><td><code>components/users/UserTable.tsx</code></td><td>20 nodes</td></tr>
+<tr><td><code>src/services/courses.service.js</code></td><td>21 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x869, calls x219, imports x135, imports x102. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x971, calls x303, imports x163, imports x118. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -5284,17 +5263,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>3013</td></tr>
-      <tr><td>Edges</td><td>4584</td></tr>
+      <tr><td>Nodes</td><td>3237</td></tr>
+      <tr><td>Edges</td><td>4948</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>173</td></tr>
+      <tr><td>Communities</td><td>180</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>4582</td></tr>
+      <tr><td>EXTRACTED</td><td>4946</td></tr>
       <tr><td>INFERRED</td><td>2</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -5303,7 +5282,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>mindnavy LMS — Architecture Documentation</p>
-  <p>Generated: 2026-07-05 19:05 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-07-08 20:51 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

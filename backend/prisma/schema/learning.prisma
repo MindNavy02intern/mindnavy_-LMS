@@ -1,32 +1,24 @@
-// Learning Management module — course catalog, enrollments, content items,
-// live sessions and certificates. Powers the LM Overview tab (/api/admin/lm/*).
-//
-// IDs use uuid to match the recent modules (users, roles, access policies).
-// Status/level/type are enums (clean + indexable); the service maps them to the
-// title-case display strings the API contract returns ("Beginner", "Published").
-
 model Course {
-  id           String       @id @default(uuid())
+  id           String             @id @default(uuid())
   title        String
-  subtitle     String?
-  description  String?
   category     String
-  language     String?
-  level        CourseLevel  @default(BEGINNER)
-  status       CourseStatus @default(DRAFT)
+  level        CourseLevel        @default(BEGINNER)
+  status       CourseStatus       @default(DRAFT)
   thumbnail    String?
-  tags         String[]     @default([])
   instructorId String?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
   createdBy    String?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-
-  instructor   AppUser?           @relation("CourseInstructor", fields: [instructorId], references: [id], onDelete: SetNull)
-  enrollments  CourseEnrollment[]
-  contents     CourseContent[]
-  sections     CourseSection[]
-  liveSessions LiveSession[]
+  description  String?
+  language     String?
+  subtitle     String?
+  tags         String[]           @default([])
   certificates Certificate[]
+  contents     CourseContent[]
+  enrollments  CourseEnrollment[]
+  sections     CourseSection[]
+  instructor   AppUser?           @relation("CourseInstructor", fields: [instructorId], references: [id])
+  liveSessions LiveSession[]
 
   @@index([status])
   @@index([category])
@@ -40,14 +32,13 @@ model CourseEnrollment {
   id          String           @id @default(uuid())
   courseId    String
   userId      String
-  progress    Int              @default(0) // 0-100
+  progress    Int              @default(0)
   status      EnrollmentStatus @default(NOT_STARTED)
   completedAt DateTime?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
-
-  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  user   AppUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course      Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user        AppUser          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([courseId, userId])
   @@index([courseId])
@@ -64,8 +55,7 @@ model CourseContent {
   title     String
   type      ContentType
   createdAt DateTime    @default(now())
-
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course    Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId])
   @@index([type])
@@ -81,8 +71,7 @@ model LiveSession {
   status    LiveSessionStatus @default(UPCOMING)
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
-
-  course Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  course    Course?           @relation(fields: [courseId], references: [id])
 
   @@index([status])
   @@index([startTime])
@@ -95,9 +84,8 @@ model Certificate {
   courseId String
   userId   String
   issuedAt DateTime @default(now())
-
-  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  user   AppUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user     AppUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([courseId, userId])
   @@index([courseId])
@@ -106,10 +94,6 @@ model Certificate {
   @@map("certificates")
 }
 
-// Course Builder (Step 2) — a course is organised into ordered Sections, each
-// holding ordered Lessons. uuid ids + @@map snake_case tables to match the rest
-// of the schema. Deleting a Section cascades to its Lessons at the DB level (the
-// relation below), so the API never has to clean up children by hand.
 model CourseSection {
   id        String   @id @default(uuid())
   courseId  String
@@ -117,9 +101,8 @@ model CourseSection {
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  lessons Lesson[]
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons   Lesson[]
 
   @@index([courseId])
   @@index([order])
@@ -127,17 +110,16 @@ model CourseSection {
 }
 
 model Lesson {
-  id          String     @id @default(uuid())
+  id          String        @id @default(uuid())
   sectionId   String
   title       String
-  type        LessonType @default(TEXT)
-  content     String? // TEXT: the body text · VIDEO_URL: the video URL
-  durationMin Int? // optional, mainly for video
-  order       Int        @default(0)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
-  section CourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  type        LessonType    @default(TEXT)
+  content     String?
+  durationMin Int?
+  order       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  section     CourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
 
   @@index([sectionId])
   @@index([order])
