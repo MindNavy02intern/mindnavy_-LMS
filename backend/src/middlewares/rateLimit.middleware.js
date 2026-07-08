@@ -53,6 +53,19 @@ const coursesReadRateLimiter = rateLimit({
   },
 });
 
+// OTP request limiter — codes live 5 minutes, so a real admin needs at most a
+// couple per window; 10/15 min blocks OTP-spam without hurting legitimate use.
+const otpRequestRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many OTP requests. Please try again later.",
+  },
+});
+
 // Import limiter — 5 imports per admin/IP per 10 minutes to prevent abuse
 const adminUsersImportRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -71,4 +84,5 @@ module.exports = {
   adminUsersAnalyticsRateLimiter,
   adminUsersImportRateLimiter,
   coursesReadRateLimiter,
+  otpRequestRateLimiter,
 };

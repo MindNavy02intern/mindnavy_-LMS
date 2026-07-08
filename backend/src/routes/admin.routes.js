@@ -14,7 +14,7 @@ const {
 } = require("../controllers/admin.controller");
 
 const { requireAdminAuth } = require("../middlewares/auth.middleware");
-const { adminLoginRateLimiter, adminUserActionRateLimiter } = require("../middlewares/rateLimit.middleware");
+const { adminLoginRateLimiter, otpRequestRateLimiter } = require("../middlewares/rateLimit.middleware");
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ router.post("/login", adminLoginRateLimiter, adminLoginController);
 router.get("/me", requireAdminAuth, adminMeController);
 router.post("/logout", requireAdminAuth, adminLogoutController);
 
-router.post("/otp/send", requireAdminAuth, adminSendOtpController);
+router.post("/otp/send", requireAdminAuth, otpRequestRateLimiter, adminSendOtpController);
 router.post("/otp/verify", requireAdminAuth, adminVerifyOtpController);
 
 router.get(

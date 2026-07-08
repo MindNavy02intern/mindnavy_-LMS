@@ -105,12 +105,15 @@ function makeError(message, statusCode) {
   return err;
 }
 
-// Fire-and-forget audit log — errors must never crash the main request
+// Fire-and-forget audit log — errors must never crash the main request.
+// Dual-write: `details.userId` stays for existing readers, and is promoted to
+// the indexed `targetUserId` column for fast per-user activity queries.
 async function createUserAuditLog(adminId, action, details) {
   try {
     await prisma.auditLog.create({
       data: {
         adminId: adminId ?? null,
+        targetUserId: typeof details?.userId === "string" ? details.userId : null,
         action,
         details: details ?? null,
       },
@@ -606,7 +609,8 @@ async function updateUserStatus(id, body, admin = {}) {
 
   const user = await prisma.appUser.update({
     where: { id },
-    data: { status: newStatus },
+    // Invariant: suspendedAt is set exactly while status is SUSPENDED.
+    data: { status: newStatus, suspendedAt: newStatus === "SUSPENDED" ? new Date() : null },
     select: USER_SELECT,
   });
 
@@ -629,12 +633,23 @@ async function resetUserPassword(id, body, admin = {}) {
 
   const passwordHash = await bcrypt.hash(body.newPassword, 12);
 
-  await prisma.appUser.update({
-    where: { id },
-    data: { passwordHash },
+  // Password change and session revocation succeed or fail together — a reset
+  // triggered by a compromise must never leave the attacker's session alive.
+  const revokedSessionsCount = await prisma.$transaction(async (tx) => {
+    await tx.appUser.update({
+      where: { id },
+      data: { passwordHash },
+    });
+
+    const result = await tx.appUserSession.updateMany({
+      where: { userId: id, revokedAt: null },
+      data:  { revokedAt: new Date() },
+    });
+
+    return result.count;
   });
 
-  await createUserAuditLog(admin.id, "USER_PASSWORD_RESET", { userId: id });
+  await createUserAuditLog(admin.id, "USER_PASSWORD_RESET", { userId: id, revokedSessionsCount });
 
   return {
     success: true,
@@ -673,7 +688,7 @@ async function reactivateUser(id, admin = {}) {
 
   const user = await prisma.appUser.update({
     where: { id },
-    data: { status: "ACTIVE" },
+    data: { status: "ACTIVE", suspendedAt: null },
     select: USER_SELECT,
   });
 
@@ -1117,7 +1132,10 @@ async function bulkActionUsers(body, admin) {
   if (action === "suspend" || action === "reactivate" || action === "archive" || action === "delete") {
     const newStatus   = action === "reactivate" ? "ACTIVE" : action === "suspend" ? "SUSPENDED" : "ARCHIVED";
     const auditAction = action === "reactivate" ? "USER_REACTIVATED" : action === "suspend" ? "USER_SUSPENDED" : "USER_DELETED";
-    const statusData  = action === "suspend" ? { status: newStatus, suspendedAt: new Date() } : { status: newStatus };
+    const statusData =
+      action === "suspend"    ? { status: newStatus, suspendedAt: new Date() }
+      : action === "reactivate" ? { status: newStatus, suspendedAt: null }
+      : { status: newStatus };
     const result      = await prisma.appUser.updateMany({ where: { id: { in: userIds } }, data: statusData });
     createUserAuditLog(admin.id, auditAction, { userIds, count: result.count, reason: params.reason || "Bulk action" });
     return {
@@ -1271,6 +1289,7 @@ async function forceLogoutUser(userId, body, admin = {}) {
     await tx.auditLog.create({
       data: {
         adminId: admin.id ?? null,
+        targetUserId: user.id,
         action:  "USER_FORCE_LOGOUT",
         details: {
           userId:               user.id,

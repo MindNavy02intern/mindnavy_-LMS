@@ -378,7 +378,15 @@ async function verifyAdminOtp({ adminId, code, ipAddress, userAgent }) {
     };
   }
 
-  if (otpRecord.attempts >= otpRecord.maxAttempts) {
+  // Atomically claim an attempt slot — the guarded updateMany means parallel
+  // requests can never push a code past maxAttempts (check + increment in one
+  // statement instead of read-then-write).
+  const claimed = await prisma.otpCode.updateMany({
+    where: { id: otpRecord.id, attempts: { lt: otpRecord.maxAttempts } },
+    data: { attempts: { increment: 1 } },
+  });
+
+  if (claimed.count === 0) {
     await prisma.otpCode.update({
       where: {
         id: otpRecord.id,
@@ -397,15 +405,6 @@ async function verifyAdminOtp({ adminId, code, ipAddress, userAgent }) {
   const isOtpValid = await compareOtpCode(code, otpRecord.codeHash);
 
   if (!isOtpValid) {
-    await prisma.otpCode.update({
-      where: {
-        id: otpRecord.id,
-      },
-      data: {
-        attempts: otpRecord.attempts + 1,
-      },
-    });
-
     await createAuditLog({
       adminId: admin.id,
       action: "FAILED_LOGIN",
@@ -636,7 +635,14 @@ async function resetAdminPassword({
     };
   }
 
-  if (otpRecord.attempts >= otpRecord.maxAttempts) {
+  // Same atomic attempt-claim as verifyAdminOtp — parallel reset requests
+  // cannot exceed maxAttempts.
+  const claimed = await prisma.otpCode.updateMany({
+    where: { id: otpRecord.id, attempts: { lt: otpRecord.maxAttempts } },
+    data: { attempts: { increment: 1 } },
+  });
+
+  if (claimed.count === 0) {
     await prisma.otpCode.update({
       where: { id: otpRecord.id },
       data: { usedAt: new Date() },
@@ -651,13 +657,6 @@ async function resetAdminPassword({
   const isCodeValid = await compareOtpCode(code, otpRecord.codeHash);
 
   if (!isCodeValid) {
-    await prisma.otpCode.update({
-      where: { id: otpRecord.id },
-      data: {
-        attempts: otpRecord.attempts + 1,
-      },
-    });
-
     await createAuditLog({
       adminId: admin.id,
       action: "FAILED_LOGIN",
