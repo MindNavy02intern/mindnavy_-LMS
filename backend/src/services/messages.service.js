@@ -23,6 +23,8 @@ async function createUserAuditLog(adminId, action, details) {
     await prisma.auditLog.create({
       data: {
         adminId: adminId ?? null,
+        // Dual-write: details.userId stays for readers, indexed column for queries.
+        targetUserId: typeof details?.userId === "string" ? details.userId : null,
         action,
         details: details ?? null,
       },

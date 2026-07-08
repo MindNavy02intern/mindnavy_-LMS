@@ -75,6 +75,14 @@ async function confirmUpload({ courseId, path, kind, lessonId }) {
   if (kind === "video") {
     throw domainError("VIDEO_UPLOAD_NOT_ENABLED");
   }
+  // Same trust boundary as deleteUpload: the client-supplied path must be a
+  // clean relative key scoped to THIS course's prefix.
+  if (path.includes("..") || path.includes("\\") || path.startsWith("/")) {
+    throw domainError("BAD_PATH");
+  }
+  if (!path.startsWith(`${courseId}/`) || path.length <= courseId.length + 1) {
+    throw domainError("BAD_PATH");
+  }
   const provider = requireConfigured();
   await assertCourseExists(courseId);
 

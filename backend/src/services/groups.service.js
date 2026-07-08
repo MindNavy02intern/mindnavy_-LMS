@@ -1,4 +1,5 @@
 const prisma = require("../config/prisma");
+const { createAuditLog } = require("../utils/auditLog");
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -84,7 +85,7 @@ async function getGroup(id) {
   };
 }
 
-async function createGroup({ name, description, departmentId, leaderId, status }) {
+async function createGroup({ name, description, departmentId, leaderId, status }, admin = {}) {
   if (departmentId) {
     const dept = await prisma.department.findUnique({ where: { id: departmentId } });
     if (!dept) throw Object.assign(new Error("Department not found."), { code: "NOT_FOUND" });
@@ -106,10 +107,11 @@ async function createGroup({ name, description, departmentId, leaderId, status }
     include: GROUP_INCLUDE,
   });
 
+  await createAuditLog(admin?.id, "GROUP_CREATED", { groupId: g.id, name: g.name });
   return mapGroup(g);
 }
 
-async function updateGroup(id, { name, description, departmentId, leaderId, status }) {
+async function updateGroup(id, { name, description, departmentId, leaderId, status }, admin = {}) {
   const existing = await prisma.group.findUnique({ where: { id } });
   if (!existing) throw Object.assign(new Error("Group not found."), { code: "NOT_FOUND" });
 
@@ -136,13 +138,15 @@ async function updateGroup(id, { name, description, departmentId, leaderId, stat
     include: GROUP_INCLUDE,
   });
 
+  await createAuditLog(admin?.id, "GROUP_UPDATED", { groupId: id, fields: Object.keys(data) });
   return mapGroup(g);
 }
 
-async function deleteGroup(id) {
+async function deleteGroup(id, admin = {}) {
   const g = await prisma.group.findUnique({ where: { id } });
   if (!g) throw Object.assign(new Error("Group not found."), { code: "NOT_FOUND" });
   await prisma.group.delete({ where: { id } });
+  await createAuditLog(admin?.id, "GROUP_DELETED", { groupId: id, name: g.name });
 }
 
 // ── Members ────────────────────────────────────────────────────────────────────
@@ -165,7 +169,7 @@ async function getGroupMembers(groupId) {
   }));
 }
 
-async function addMembers(groupId, userIds, role = "MEMBER") {
+async function addMembers(groupId, userIds, role = "MEMBER", admin = {}) {
   const g = await prisma.group.findUnique({ where: { id: groupId } });
   if (!g) throw Object.assign(new Error("Group not found."), { code: "NOT_FOUND" });
 
@@ -174,15 +178,16 @@ async function addMembers(groupId, userIds, role = "MEMBER") {
     throw Object.assign(new Error("One or more users not found."), { code: "NOT_FOUND" });
   }
 
-  await prisma.groupMember.createMany({
+  const result = await prisma.groupMember.createMany({
     data: userIds.map((userId) => ({ groupId, userId, role })),
     skipDuplicates: true,
   });
 
+  await createAuditLog(admin?.id, "GROUP_MEMBERS_ADDED", { groupId, count: result.count });
   return getGroupMembers(groupId);
 }
 
-async function removeMember(groupId, userId) {
+async function removeMember(groupId, userId, admin = {}) {
   const g = await prisma.group.findUnique({ where: { id: groupId } });
   if (!g) throw Object.assign(new Error("Group not found."), { code: "NOT_FOUND" });
 
@@ -190,6 +195,7 @@ async function removeMember(groupId, userId) {
   if (result.count === 0) {
     throw Object.assign(new Error("Member not found in group."), { code: "NOT_FOUND" });
   }
+  await createAuditLog(admin?.id, "GROUP_MEMBER_REMOVED", { groupId, userId }, userId);
 }
 
 module.exports = { listGroups, getGroup, createGroup, updateGroup, deleteGroup, getGroupMembers, addMembers, removeMember };

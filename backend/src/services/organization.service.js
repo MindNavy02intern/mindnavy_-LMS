@@ -1,9 +1,17 @@
 const prisma = require("../config/prisma");
+const { createAuditLog } = require("../utils/auditLog");
 
 // ── Org chart cache (30-second TTL) ───────────────────────────────────────────
 let orgChartCache    = null;
 let orgChartCachedAt = 0;
 const ORG_CHART_TTL_MS = 30 * 1000;
+
+// Every org mutation clears the cache so a refetch right after a change never
+// sees a stale chart (the TTL only covers reads between unrelated changes).
+function invalidateOrgChartCache() {
+  orgChartCache    = null;
+  orgChartCachedAt = 0;
+}
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -86,7 +94,7 @@ async function getBranch(id) {
   };
 }
 
-async function createBranch(data) {
+async function createBranch(data, admin = {}) {
   const branch = await prisma.branch.create({
     data: {
       name:         data.name.trim(),
@@ -102,10 +110,12 @@ async function createBranch(data) {
       status:       data.status    ? data.status.toUpperCase() : "ACTIVE",
     },
   });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "BRANCH_CREATED", { branchId: branch.id, name: branch.name });
   return branch;
 }
 
-async function updateBranch(id, data) {
+async function updateBranch(id, data, admin = {}) {
   const update = {};
   if (data.name        !== undefined) update.name        = data.name.trim();
   if (data.locationType !== undefined) update.locationType = data.locationType.toUpperCase();
@@ -119,17 +129,26 @@ async function updateBranch(id, data) {
   if ("managerId" in data) update.managerId = data.managerId || null;
   if (data.status !== undefined) update.status = data.status.toUpperCase();
 
-  return prisma.branch.update({ where: { id }, data: update });
+  const branch = await prisma.branch.update({ where: { id }, data: update });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "BRANCH_UPDATED", { branchId: id, fields: Object.keys(update) });
+  return branch;
 }
 
-async function deleteBranch(id) {
-  await prisma.branch.delete({ where: { id } });
+async function deleteBranch(id, admin = {}) {
+  const branch = await prisma.branch.delete({ where: { id } });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "BRANCH_DELETED", { branchId: id, name: branch.name });
 }
 
-async function assignDepartmentsToBranch(branchId, departmentIds) {
+async function assignDepartmentsToBranch(branchId, departmentIds, admin = {}) {
   const result = await prisma.department.updateMany({
     where: { id: { in: departmentIds } },
     data:  { branchId },
+  });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "BRANCH_UPDATED", {
+    branchId, action: "assign_departments", count: result.count,
   });
   return { assignedCount: result.count };
 }
@@ -200,13 +219,13 @@ async function getDepartment(id) {
   };
 }
 
-async function createDepartment(data) {
+async function createDepartment(data, admin = {}) {
   const exists = await prisma.department.findFirst({
     where: { name: { equals: data.name.trim(), mode: "insensitive" }, branchId: data.branchId },
   });
   if (exists) throw Object.assign(new Error("A department with this name already exists in the selected branch."), { status: 409 });
 
-  return prisma.department.create({
+  const dept = await prisma.department.create({
     data: {
       name:        data.name.trim(),
       code:        data.code        ? data.code.trim()        : null,
@@ -217,9 +236,14 @@ async function createDepartment(data) {
       status:      data.status      ? data.status.toUpperCase() : "ACTIVE",
     },
   });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "DEPARTMENT_CREATED", {
+    departmentId: dept.id, name: dept.name, branchId: dept.branchId,
+  });
+  return dept;
 }
 
-async function updateDepartment(id, data) {
+async function updateDepartment(id, data, admin = {}) {
   if (data.name !== undefined) {
     const conflict = await prisma.department.findFirst({
       where: {
@@ -240,10 +264,13 @@ async function updateDepartment(id, data) {
   if (data.budget  !== undefined) update.budget  = data.budget;
   if (data.status  !== undefined) update.status  = data.status.toUpperCase();
 
-  return prisma.department.update({ where: { id }, data: update });
+  const dept = await prisma.department.update({ where: { id }, data: update });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "DEPARTMENT_UPDATED", { departmentId: id, fields: Object.keys(update) });
+  return dept;
 }
 
-async function deleteDepartment(id) {
+async function deleteDepartment(id, admin = {}) {
   const dept = await prisma.department.findUnique({ where: { id }, select: { name: true } });
 
   const count = await prisma.appUser.count({
@@ -262,9 +289,11 @@ async function deleteDepartment(id) {
     );
   }
   await prisma.department.delete({ where: { id } });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "DEPARTMENT_DELETED", { departmentId: id, name: dept?.name ?? null });
 }
 
-async function assignUsersToDepartment(deptId, userIds) {
+async function assignUsersToDepartment(deptId, userIds, admin = {}) {
   await prisma.department.findFirstOrThrow({ where: { id: deptId } });
 
   const result = await prisma.appUser.updateMany({
@@ -272,6 +301,11 @@ async function assignUsersToDepartment(deptId, userIds) {
     data:  { departmentId: deptId },
   });
 
+  invalidateOrgChartCache();
+
+  await createAuditLog(admin?.id, "DEPARTMENT_UPDATED", {
+    departmentId: deptId, action: "assign_users", count: result.count,
+  });
   return { assignedCount: result.count, failedCount: userIds.length - result.count };
 }
 
@@ -354,13 +388,13 @@ async function getTeam(id) {
   };
 }
 
-async function createTeam(data) {
+async function createTeam(data, admin = {}) {
   const exists = await prisma.team.findFirst({
     where: { name: { equals: data.name.trim(), mode: "insensitive" }, departmentId: data.departmentId },
   });
   if (exists) throw Object.assign(new Error("A team with this name already exists in the selected department."), { status: 409 });
 
-  return prisma.team.create({
+  const team = await prisma.team.create({
     data: {
       name:         data.name.trim(),
       departmentId: data.departmentId,
@@ -369,9 +403,14 @@ async function createTeam(data) {
       status:       data.status      ? data.status.toUpperCase() : "ACTIVE",
     },
   });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "TEAM_CREATED", {
+    teamId: team.id, name: team.name, departmentId: team.departmentId,
+  });
+  return team;
 }
 
-async function updateTeam(id, data) {
+async function updateTeam(id, data, admin = {}) {
   if (data.name !== undefined) {
     const deptId = data.departmentId ?? (await prisma.team.findUnique({ where: { id }, select: { departmentId: true } }))?.departmentId;
     const conflict = await prisma.team.findFirst({
@@ -387,14 +426,19 @@ async function updateTeam(id, data) {
   if (data.description  !== undefined) update.description  = data.description ? data.description.trim() : null;
   if (data.status       !== undefined) update.status       = data.status.toUpperCase();
 
-  return prisma.team.update({ where: { id }, data: update });
+  const team = await prisma.team.update({ where: { id }, data: update });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "TEAM_UPDATED", { teamId: id, fields: Object.keys(update) });
+  return team;
 }
 
-async function deleteTeam(id) {
-  await prisma.team.delete({ where: { id } });
+async function deleteTeam(id, admin = {}) {
+  const team = await prisma.team.delete({ where: { id } });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "TEAM_DELETED", { teamId: id, name: team.name });
 }
 
-async function assignTeamMembers(teamId, userIds) {
+async function assignTeamMembers(teamId, userIds, admin = {}) {
   await prisma.team.findFirstOrThrow({ where: { id: teamId } });
 
   const result = await prisma.appUser.updateMany({
@@ -402,6 +446,11 @@ async function assignTeamMembers(teamId, userIds) {
     data:  { teamId },
   });
 
+  invalidateOrgChartCache();
+
+  await createAuditLog(admin?.id, "TEAM_UPDATED", {
+    teamId, action: "assign_members", count: result.count,
+  });
   return { assignedCount: result.count };
 }
 
@@ -491,7 +540,7 @@ async function getOrgChart() {
   return orgChartCache;
 }
 
-async function moveOrgNode(nodeId, newParentId, action) {
+async function moveOrgNode(nodeId, newParentId, action, admin = {}) {
   const act = action.toUpperCase();
 
   if (act === "MOVE_DEPARTMENT") {
@@ -499,6 +548,8 @@ async function moveOrgNode(nodeId, newParentId, action) {
     const branch = await prisma.branch.findUnique({ where: { id: newParentId } });
     if (!branch) throw Object.assign(new Error("Target branch not found."), { status: 404 });
     const dept = await prisma.department.update({ where: { id: nodeId }, data: { branchId: newParentId } });
+    invalidateOrgChartCache();
+    await createAuditLog(admin?.id, "ORG_NODE_MOVED", { nodeId, newParentId, action: act });
     return dept;
   }
 
@@ -507,6 +558,8 @@ async function moveOrgNode(nodeId, newParentId, action) {
     const dept = await prisma.department.findUnique({ where: { id: newParentId } });
     if (!dept) throw Object.assign(new Error("Target department not found."), { status: 404 });
     const team = await prisma.team.update({ where: { id: nodeId }, data: { departmentId: newParentId } });
+    invalidateOrgChartCache();
+    await createAuditLog(admin?.id, "ORG_NODE_MOVED", { nodeId, newParentId, action: act });
     return team;
   }
 
@@ -516,11 +569,15 @@ async function moveOrgNode(nodeId, newParentId, action) {
     const team = await prisma.team.findUnique({ where: { id: newParentId } });
     if (team) {
       const user = await prisma.appUser.update({ where: { id: nodeId }, data: { teamId: newParentId } });
+      invalidateOrgChartCache();
+      await createAuditLog(admin?.id, "ORG_NODE_MOVED", { nodeId, newParentId, action: act }, nodeId);
       return user;
     }
     const dept = await prisma.department.findUnique({ where: { id: newParentId } });
     if (dept) {
       const user = await prisma.appUser.update({ where: { id: nodeId }, data: { departmentId: newParentId } });
+      invalidateOrgChartCache();
+      await createAuditLog(admin?.id, "ORG_NODE_MOVED", { nodeId, newParentId, action: act }, nodeId);
       return user;
     }
     throw Object.assign(new Error("Target (team or department) not found."), { status: 404 });
@@ -553,7 +610,7 @@ async function getHierarchySettings() {
   return settings;
 }
 
-async function updateHierarchySettings(data) {
+async function updateHierarchySettings(data, admin = {}) {
   let settings = await prisma.hierarchySettings.findFirst({ orderBy: { createdAt: "asc" } });
   if (!settings) {
     settings = await prisma.hierarchySettings.create({ data: HIERARCHY_DEFAULTS });
@@ -568,15 +625,20 @@ async function updateHierarchySettings(data) {
 
   if ("customRules" in data) update.customRules = data.customRules ?? null;
 
-  return prisma.hierarchySettings.update({ where: { id: settings.id }, data: update });
+  const result = await prisma.hierarchySettings.update({ where: { id: settings.id }, data: update });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "HIERARCHY_SETTINGS_UPDATED", { fields: Object.keys(update) });
+  return result;
 }
 
-async function resetHierarchySettings() {
+async function resetHierarchySettings(admin = {}) {
   let settings = await prisma.hierarchySettings.findFirst({ orderBy: { createdAt: "asc" } });
-  if (!settings) {
-    return prisma.hierarchySettings.create({ data: HIERARCHY_DEFAULTS });
-  }
-  return prisma.hierarchySettings.update({ where: { id: settings.id }, data: HIERARCHY_DEFAULTS });
+  const result = settings
+    ? await prisma.hierarchySettings.update({ where: { id: settings.id }, data: HIERARCHY_DEFAULTS })
+    : await prisma.hierarchySettings.create({ data: HIERARCHY_DEFAULTS });
+  invalidateOrgChartCache();
+  await createAuditLog(admin?.id, "HIERARCHY_SETTINGS_RESET", null);
+  return result;
 }
 
 module.exports = {

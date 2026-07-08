@@ -61,7 +61,7 @@ async function createBranch(req, res) {
   try {
     const errors = validateCreateBranch(req.body);
     if (errors.length) return badRequest(res, errors);
-    const branch = await svc.createBranch(req.body);
+    const branch = await svc.createBranch(req.body, req.admin);
     return res.status(201).json({ success: true, message: "Branch created successfully.", data: branch });
   } catch (err) { return serverError(res, err); }
 }
@@ -72,7 +72,7 @@ async function updateBranch(req, res) {
     if (idErr) return badRequest(res, [idErr]);
     const errors = validateUpdateBranch(req.body);
     if (errors.length) return badRequest(res, errors);
-    const branch = await svc.updateBranch(req.params.branchId, req.body);
+    const branch = await svc.updateBranch(req.params.branchId, req.body, req.admin);
     return res.json({ success: true, message: "Branch updated successfully.", data: branch });
   } catch (err) {
     if (err.code === "P2025") return notFound(res, "Branch not found.");
@@ -84,7 +84,7 @@ async function deleteBranch(req, res) {
   try {
     const err = validateId(req.params.branchId, "branchId");
     if (err) return badRequest(res, [err]);
-    await svc.deleteBranch(req.params.branchId);
+    await svc.deleteBranch(req.params.branchId, req.admin);
     return res.json({ success: true, message: "Branch deleted successfully." });
   } catch (err) {
     if (err.code === "P2025") return notFound(res, "Branch not found.");
@@ -98,7 +98,7 @@ async function assignDepartmentsToBranch(req, res) {
     if (idErr) return badRequest(res, [idErr]);
     const errors = validateDeptIds(req.body);
     if (errors.length) return badRequest(res, errors);
-    const result = await svc.assignDepartmentsToBranch(req.params.branchId, req.body.departmentIds);
+    const result = await svc.assignDepartmentsToBranch(req.params.branchId, req.body.departmentIds, req.admin);
     return res.json({ success: true, message: `${result.assignedCount} department(s) assigned.`, ...result });
   } catch (err) { return serverError(res, err); }
 }
@@ -127,7 +127,7 @@ async function createDepartment(req, res) {
   try {
     const errors = validateCreateDepartment(req.body);
     if (errors.length) return badRequest(res, errors);
-    const dept = await svc.createDepartment(req.body);
+    const dept = await svc.createDepartment(req.body, req.admin);
     return res.status(201).json({ success: true, message: "Department created successfully.", data: dept });
   } catch (err) {
     if (err.status === 409) return conflict(res, err.message);
@@ -141,7 +141,7 @@ async function updateDepartment(req, res) {
     if (idErr) return badRequest(res, [idErr]);
     const errors = validateUpdateDepartment(req.body);
     if (errors.length) return badRequest(res, errors);
-    const dept = await svc.updateDepartment(req.params.departmentId, req.body);
+    const dept = await svc.updateDepartment(req.params.departmentId, req.body, req.admin);
     return res.json({ success: true, message: "Department updated successfully.", data: dept });
   } catch (err) {
     if (err.status === 409)  return conflict(res, err.message);
@@ -154,7 +154,7 @@ async function deleteDepartment(req, res) {
   try {
     const err = validateId(req.params.departmentId, "departmentId");
     if (err) return badRequest(res, [err]);
-    await svc.deleteDepartment(req.params.departmentId);
+    await svc.deleteDepartment(req.params.departmentId, req.admin);
     return res.json({ success: true, message: "Department deleted successfully." });
   } catch (err) {
     if (err.status === 409)  return conflict(res, err.message);
@@ -169,7 +169,7 @@ async function assignUsersToDepartment(req, res) {
     if (idErr) return badRequest(res, [idErr]);
     const errors = validateUserIds(req.body);
     if (errors.length) return badRequest(res, errors);
-    const result = await svc.assignUsersToDepartment(req.params.departmentId, req.body.userIds);
+    const result = await svc.assignUsersToDepartment(req.params.departmentId, req.body.userIds, req.admin);
     return res.json({ success: true, message: `${result.assignedCount} user(s) assigned.`, ...result });
   } catch (err) { return serverError(res, err); }
 }
@@ -207,7 +207,7 @@ async function createTeam(req, res) {
   try {
     const errors = validateCreateTeam(req.body);
     if (errors.length) return badRequest(res, errors);
-    const team = await svc.createTeam(req.body);
+    const team = await svc.createTeam(req.body, req.admin);
     return res.status(201).json({ success: true, message: "Team created successfully.", data: team });
   } catch (err) {
     if (err.status === 409) return conflict(res, err.message);
@@ -221,7 +221,7 @@ async function updateTeam(req, res) {
     if (idErr) return badRequest(res, [idErr]);
     const errors = validateUpdateTeam(req.body);
     if (errors.length) return badRequest(res, errors);
-    const team = await svc.updateTeam(req.params.teamId, req.body);
+    const team = await svc.updateTeam(req.params.teamId, req.body, req.admin);
     return res.json({ success: true, message: "Team updated successfully.", data: team });
   } catch (err) {
     if (err.status === 409)  return conflict(res, err.message);
@@ -234,7 +234,7 @@ async function deleteTeam(req, res) {
   try {
     const err = validateId(req.params.teamId, "teamId");
     if (err) return badRequest(res, [err]);
-    await svc.deleteTeam(req.params.teamId);
+    await svc.deleteTeam(req.params.teamId, req.admin);
     return res.json({ success: true, message: "Team deleted successfully." });
   } catch (err) {
     if (err.code === "P2025") return notFound(res, "Team not found.");
@@ -248,7 +248,7 @@ async function assignTeamMembers(req, res) {
     if (idErr) return badRequest(res, [idErr]);
     const errors = validateUserIds(req.body);
     if (errors.length) return badRequest(res, errors);
-    const result = await svc.assignTeamMembers(req.params.teamId, req.body.userIds);
+    const result = await svc.assignTeamMembers(req.params.teamId, req.body.userIds, req.admin);
     return res.json({ success: true, message: `${result.assignedCount} member(s) assigned.`, ...result });
   } catch (err) { return serverError(res, err); }
 }
@@ -277,7 +277,7 @@ async function moveOrgNode(req, res) {
     const errors = validateOrgMove(req.body);
     if (errors.length) return badRequest(res, errors);
     const { nodeId, newParentId, action } = req.body;
-    const data = await svc.moveOrgNode(nodeId, newParentId, action);
+    const data = await svc.moveOrgNode(nodeId, newParentId, action, req.admin);
     return res.json({ success: true, message: "Node moved successfully.", data });
   } catch (err) {
     if (err.status === 404) return notFound(res, err.message);
@@ -299,14 +299,14 @@ async function updateHierarchySettings(req, res) {
   try {
     const errors = validateHierarchySettings(req.body);
     if (errors.length) return badRequest(res, errors);
-    const settings = await svc.updateHierarchySettings(req.body);
+    const settings = await svc.updateHierarchySettings(req.body, req.admin);
     return res.json({ success: true, message: "Hierarchy settings updated.", data: settings });
   } catch (err) { return serverError(res, err); }
 }
 
 async function resetHierarchySettings(req, res) {
   try {
-    const settings = await svc.resetHierarchySettings();
+    const settings = await svc.resetHierarchySettings(req.admin);
     return res.json({ success: true, message: "Hierarchy settings reset to defaults.", data: settings });
   } catch (err) { return serverError(res, err); }
 }

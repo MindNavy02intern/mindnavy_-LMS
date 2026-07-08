@@ -1,4 +1,5 @@
 const prisma = require("../config/prisma");
+const { createAuditLog } = require("../utils/auditLog");
 
 const VALID_STATUSES = new Set(["PENDING", "ACCEPTED", "EXPIRED", "REVOKED"]);
 const VALID_ROLES    = new Set(["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"]);
@@ -149,6 +150,10 @@ async function sendInvitation(body, admin = {}) {
   // Event log only — never log the personal message content (PII).
   console.log(`[invitations] SENT → ${email} | role: ${role} | expires: ${expiresAt.toISOString()}`);
 
+  await createAuditLog(admin?.id, "INVITATION_SENT", {
+    invitationId: invitation.id, email, role, expiresAt: expiresAt.toISOString(),
+  });
+
   return {
     success:    true,
     message:    `Invitation sent to ${email}`,
@@ -172,6 +177,10 @@ async function resendInvitation(id, admin = {}) {
 
   console.log(`[invitations] RESENT → ${inv.email} | new expiry: ${expiresAt.toISOString()}`);
 
+  await createAuditLog(admin?.id, "INVITATION_RESENT", {
+    invitationId: id, email: inv.email, expiresAt: expiresAt.toISOString(),
+  });
+
   return {
     success:    true,
     message:    `Invitation resent to ${inv.email}`,
@@ -189,6 +198,8 @@ async function cancelInvitation(id, admin = {}) {
     where: { id },
     data:  { status: "REVOKED" },
   });
+
+  await createAuditLog(admin?.id, "INVITATION_CANCELLED", { invitationId: id, email: inv.email });
 
   return {
     success:    true,
@@ -212,6 +223,10 @@ async function updateExpiration(id, body, admin = {}) {
   const updated = await prisma.invitation.update({
     where: { id },
     data:  { status: "PENDING", expiresAt },
+  });
+
+  await createAuditLog(admin?.id, "INVITATION_EXPIRATION_UPDATED", {
+    invitationId: id, email: inv.email, expiresAt: expiresAt.toISOString(),
   });
 
   return {

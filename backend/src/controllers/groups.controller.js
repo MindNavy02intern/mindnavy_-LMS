@@ -1,5 +1,15 @@
 const svc = require("../services/groups.service");
 
+// Allowed stored statuses (list filter additionally accepts "ALL", handled in the service).
+const VALID_GROUP_STATUSES = new Set(["ACTIVE", "INACTIVE"]);
+
+// Returns the normalized status, or `false` when the value is invalid.
+function normalizeGroupStatus(status) {
+  if (status === undefined || status === null) return status;
+  const upper = String(status).trim().toUpperCase();
+  return VALID_GROUP_STATUSES.has(upper) ? upper : false;
+}
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 function badRequest(res, msg) {
@@ -41,10 +51,13 @@ async function getGroup(req, res) {
 
 async function createGroup(req, res) {
   try {
-    const { name, description, departmentId, leaderId, status } = req.body;
+    const { name, description, departmentId, leaderId } = req.body;
     if (!name?.trim())   return badRequest(res, "Group name is required.");
 
-    const group = await svc.createGroup({ name, description, departmentId, leaderId, status });
+    const status = normalizeGroupStatus(req.body.status);
+    if (status === false) return badRequest(res, "status must be ACTIVE or INACTIVE.");
+
+    const group = await svc.createGroup({ name, description, departmentId, leaderId, status }, req.admin);
     return res.status(201).json({ success: true, message: "Group created successfully.", data: group });
   } catch (err) {
     if (err.code === "NOT_FOUND") return notFound(res, err.message);
@@ -54,8 +67,12 @@ async function createGroup(req, res) {
 
 async function updateGroup(req, res) {
   try {
-    const { name, description, departmentId, leaderId, status } = req.body;
-    const group = await svc.updateGroup(req.params.id, { name, description, departmentId, leaderId, status });
+    const { name, description, departmentId, leaderId } = req.body;
+
+    const status = normalizeGroupStatus(req.body.status);
+    if (status === false) return badRequest(res, "status must be ACTIVE or INACTIVE.");
+
+    const group = await svc.updateGroup(req.params.id, { name, description, departmentId, leaderId, status }, req.admin);
     return res.json({ success: true, message: "Group updated successfully.", data: group });
   } catch (err) {
     if (err.code === "NOT_FOUND") return notFound(res, err.message);
@@ -65,7 +82,7 @@ async function updateGroup(req, res) {
 
 async function deleteGroup(req, res) {
   try {
-    await svc.deleteGroup(req.params.id);
+    await svc.deleteGroup(req.params.id, req.admin);
     return res.json({ success: true, message: "Group deleted successfully." });
   } catch (err) {
     if (err.code === "NOT_FOUND") return notFound(res, err.message);
@@ -91,7 +108,7 @@ async function addMembers(req, res) {
     if (!Array.isArray(userIds) || userIds.length === 0) {
       return badRequest(res, "userIds must be a non-empty array.");
     }
-    const members = await svc.addMembers(req.params.id, userIds, role);
+    const members = await svc.addMembers(req.params.id, userIds, role, req.admin);
     return res.status(201).json({ success: true, message: "Members added successfully.", data: members });
   } catch (err) {
     if (err.code === "NOT_FOUND") return notFound(res, err.message);
@@ -101,7 +118,7 @@ async function addMembers(req, res) {
 
 async function removeMember(req, res) {
   try {
-    await svc.removeMember(req.params.id, req.params.userId);
+    await svc.removeMember(req.params.id, req.params.userId, req.admin);
     return res.json({ success: true, message: "Member removed successfully." });
   } catch (err) {
     if (err.code === "NOT_FOUND") return notFound(res, err.message);
