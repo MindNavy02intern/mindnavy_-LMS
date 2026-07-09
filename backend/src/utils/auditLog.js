@@ -1,23 +1,17 @@
-const prisma = require("../config/prisma");
+// TEMPORARY STUB — replace with Hassan's real backend/src/utils/auditLog.js
+// This exists only so the server can start locally. Do not build on this logic.
+// Functions stubbed: createAuditLog
+// Used by: organization.service.js, groups.service.js, invitations.service.js
 
-// Shared best-effort audit writer — an audit failure must never break the
-// mutation it describes (same contract as the per-service helpers in
-// users/roles/courses). `targetUserId` is the AppUser the action was
-// performed ON, when there is one; it feeds the indexed per-user activity
-// query, while `details` keeps the human-readable context.
-async function createAuditLog(adminId, action, details = null, targetUserId = null) {
-  try {
-    await prisma.auditLog.create({
-      data: {
-        adminId: adminId ?? null,
-        targetUserId: targetUserId ?? null,
-        action,
-        details,
-      },
-    });
-  } catch (err) {
-    console.error(`Audit log error (${action}):`, err.message);
-  }
+/**
+ * @param {string|null} adminId
+ * @param {string} action
+ * @param {object|null} [meta]
+ * @param {string} [entityId]
+ * @returns {Promise<void>}
+ */
+async function createAuditLog(adminId, action, meta, entityId) {
+  console.log('[STUB auditLog]', { adminId, action, meta, entityId });
 }
 
 module.exports = { createAuditLog };

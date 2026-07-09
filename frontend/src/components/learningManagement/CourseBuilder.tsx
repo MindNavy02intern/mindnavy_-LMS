@@ -59,12 +59,12 @@ interface LessonFormState {
   title:       string;
   type:        LessonType;
   content:     string;
-  durationStr: string; // raw input — parsed before API call
+  durationStr: string;
 }
 
 interface LessonFormErrors {
-  title?:   string;
-  content?: string;
+  title?:    string;
+  content?:  string;
   duration?: string;
 }
 
@@ -121,15 +121,15 @@ function TypeBadge({ type }: { type: LessonType }) {
 // ── Lesson form modal ──────────────────────────────────────────────────────────
 
 interface LessonFormModalProps {
-  modal:     LessonModal;
-  courseId:  string;
-  onClose:   () => void;
-  onSaved:   (mutationName: 'lesson.create' | 'lesson.update', courseId: string) => void;
+  modal:    LessonModal;
+  courseId: string;
+  onClose:  () => void;
+  onSaved:  (mutationName: 'lesson.create' | 'lesson.update', courseId: string) => void;
 }
 
 function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalProps) {
-  const isEdit = modal.mode === 'edit';
-  const original: Lesson | null = isEdit ? (modal as { mode: 'edit'; lesson: Lesson; sectionId: string }).lesson : null;
+  const isEdit   = modal.mode === 'edit';
+  const original = isEdit ? (modal as { mode: 'edit'; lesson: Lesson; sectionId: string }).lesson : null;
 
   const [form, setForm] = useState<LessonFormState>(() =>
     isEdit && original
@@ -141,9 +141,9 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
         }
       : EMPTY_LESSON_FORM,
   );
-  const [errors,  setErrors]  = useState<LessonFormErrors>({});
-  const [saving,  setSaving]  = useState(false);
-  const [apiErr,  setApiErr]  = useState<string | null>(null);
+  const [errors, setErrors] = useState<LessonFormErrors>({});
+  const [saving, setSaving] = useState(false);
+  const [apiErr, setApiErr] = useState<string | null>(null);
 
   function setField<K extends keyof LessonFormState>(key: K, val: LessonFormState[K]) {
     setForm(f => ({ ...f, [key]: val }));
@@ -153,20 +153,19 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
 
   function validate(): boolean {
     const errs: LessonFormErrors = {};
-    if (!form.title.trim())         errs.title   = 'Title is required.';
-    else if (form.title.length > 200) errs.title = 'Title must be ≤ 200 characters.';
+    if (!form.title.trim())          errs.title   = 'Title is required.';
+    else if (form.title.length > 200) errs.title  = 'Title must be ≤ 200 characters.';
 
     if (form.type === 'VIDEO_URL') {
-      if (!form.content.trim())          errs.content = 'Video URL is required.';
+      if (!form.content.trim())           errs.content = 'Video URL is required.';
       else if (!isValidUrl(form.content)) errs.content = 'Must be a valid http/https URL.';
       else if (form.content.length > 2000) errs.content = 'URL must be ≤ 2000 characters.';
     } else {
-      if (form.content.length > 20000)   errs.content = 'Content must be ≤ 20000 characters.';
+      if (form.content.length > 20000)    errs.content = 'Content must be ≤ 20000 characters.';
     }
 
     if (form.durationStr.trim()) {
-      const n = parseDuration(form.durationStr);
-      if (n === null) errs.duration = 'Must be a whole number 0–100000.';
+      if (parseDuration(form.durationStr) === null) errs.duration = 'Must be a whole number 0–100000.';
     }
 
     setErrors(errs);
@@ -182,13 +181,12 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
 
     try {
       if (isEdit && original) {
-        // Build only changed fields; skip call if nothing changed (backend 400s on empty patch)
         const patch: UpdateLessonPayload = {};
-        if (form.title.trim() !== original.title)      patch.title = form.title.trim();
-        if (form.type          !== original.type)       patch.type  = form.type;
+        if (form.title.trim() !== original.title) patch.title = form.title.trim();
+        if (form.type          !== original.type)  patch.type  = form.type;
         const newContent = form.type === 'TEXT' ? (form.content.trim() || null) : form.content.trim();
-        if (newContent !== original.content)            patch.content = newContent;
-        if (durationMin !== original.durationMin)       patch.durationMin = durationMin;
+        if (newContent !== original.content)       patch.content = newContent;
+        if (durationMin !== original.durationMin)  patch.durationMin = durationMin;
 
         if (Object.keys(patch).length > 0) {
           await updateLesson(original.id, patch);
@@ -281,13 +279,15 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
                       : ' tw:border-slate-200 tw:text-slate-500 tw:hover:border-slate-300 tw:hover:text-slate-700')
                   }
                 >
-                  {t === 'TEXT' ? <><BookOpen className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> Text</> : <><Video className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> Video URL</>}
+                  {t === 'TEXT'
+                    ? <><BookOpen className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> Text</>
+                    : <><Video className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> Video URL</>}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Content — conditional */}
+          {/* Content — conditional on type */}
           {form.type === 'TEXT' ? (
             <div>
               <label className="tw:mb-1 tw:block tw:text-[12px] tw:font-semibold tw:text-slate-700">Content</label>
@@ -377,18 +377,18 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
 export default function CourseBuilder({ courseId, onBack }: Props) {
   const navigate = useNavigate();
 
-  const [sections,    setSections]    = useState<CourseSection[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [fetchError,  setFetchError]  = useState<string | null>(null);
-  const [busy,        setBusy]        = useState(false);
-  const [toast,       setToast]       = useState<ToastState | null>(null);
+  const [sections,   setSections]   = useState<CourseSection[]>([]);
+  const [loading,    setLoading]    = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [busy,       setBusy]       = useState(false);
+  const [toast,      setToast]      = useState<ToastState | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Section — add inline
-  const [addingSection,    setAddingSection]    = useState(false);
-  const [newSectionTitle,  setNewSectionTitle]  = useState('');
-  const [addSectionErr,    setAddSectionErr]    = useState<string | null>(null);
-  const [addSectionBusy,   setAddSectionBusy]   = useState(false);
+  const [addingSection,   setAddingSection]   = useState(false);
+  const [newSectionTitle, setNewSectionTitle] = useState('');
+  const [addSectionErr,   setAddSectionErr]   = useState<string | null>(null);
+  const [addSectionBusy,  setAddSectionBusy]  = useState(false);
 
   // Section — edit inline
   const [editSectionId,    setEditSectionId]    = useState<string | null>(null);
@@ -396,7 +396,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
   const [editSectionErr,   setEditSectionErr]   = useState<string | null>(null);
 
   // Lesson modal
-  const [lessonModal,    setLessonModal]    = useState<LessonModal | null>(null);
+  const [lessonModal, setLessonModal] = useState<LessonModal | null>(null);
 
   function showToast(type: ToastState['type'], message: string) {
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -430,7 +430,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
 
   async function handleAddSection() {
     const title = newSectionTitle.trim();
-    if (!title) { setAddSectionErr('Title is required.'); return; }
+    if (!title)          { setAddSectionErr('Title is required.');              return; }
     if (title.length > 200) { setAddSectionErr('Title must be ≤ 200 characters.'); return; }
     setAddSectionBusy(true);
     setAddSectionErr(null);
@@ -459,9 +459,9 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
 
   async function commitEditSection(section: CourseSection) {
     const title = editSectionTitle.trim();
-    if (!title) { setEditSectionErr('Title is required.'); return; }
+    if (!title)             { setEditSectionErr('Title is required.');              return; }
     if (title.length > 200) { setEditSectionErr('Title must be ≤ 200 characters.'); return; }
-    if (title === section.title) { setEditSectionId(null); return; } // nothing changed — skip call
+    if (title === section.title) { setEditSectionId(null); return; }
     setBusy(true);
     try {
       await updateSection(section.id, { title });
@@ -476,19 +476,16 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
     }
   }
 
-  function cancelEditSection() {
-    setEditSectionId(null);
-    setEditSectionErr(null);
-  }
+  function cancelEditSection() { setEditSectionId(null); setEditSectionErr(null); }
 
   // ── Section — delete ────────────────────────────────────────────────────────
 
   async function handleDeleteSection(section: CourseSection) {
-    const lessonCount = section.lessons.length;
-    const confirmMsg = lessonCount > 0
-      ? `Delete "${section.title}" and its ${lessonCount} lesson${lessonCount !== 1 ? 's' : ''}? This cannot be undone.`
+    const n = section.lessons.length;
+    const msg = n > 0
+      ? `Delete "${section.title}" and its ${n} lesson${n !== 1 ? 's' : ''}? This cannot be undone.`
       : `Delete "${section.title}"? This cannot be undone.`;
-    if (!window.confirm(confirmMsg)) return;
+    if (!window.confirm(msg)) return;
     setBusy(true);
     try {
       await deleteSection(section.id);
@@ -503,12 +500,11 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
     }
   }
 
-  // ── Lesson — save (create or edit) ──────────────────────────────────────────
+  // ── Lesson — saved (create or update) ──────────────────────────────────────
 
   async function handleLessonSaved(mutationName: 'lesson.create' | 'lesson.update', cId: string) {
     invalidateFor(appQueryClient, mutationName, { courseId: cId });
-    const label = mutationName === 'lesson.create' ? 'Lesson added.' : 'Lesson updated.';
-    showToast('success', label);
+    showToast('success', mutationName === 'lesson.create' ? 'Lesson added.' : 'Lesson updated.');
     setLessonModal(null);
     await loadSections();
   }
@@ -559,7 +555,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
     if (target < 0 || target >= sections.length) return;
     const next = [...sections];
     [next[idx], next[target]] = [next[target], next[idx]];
-    setSections(next); // optimistic
+    setSections(next);
     sendReorder(next);
   }
 
@@ -572,7 +568,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
       [ls[lessonIdx], ls[target]] = [ls[target], ls[lessonIdx]];
       return { ...s, lessons: ls };
     });
-    setSections(next); // optimistic
+    setSections(next);
     sendReorder(next);
   }
 
@@ -601,9 +597,10 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
         </span>
       </div>
 
-      {/* States */}
+      {/* Loading */}
       {loading && <BuilderSkeleton />}
 
+      {/* Error */}
       {!loading && fetchError && (
         <div className="tw:rounded-xl tw:border tw:border-red-100 tw:bg-red-50 tw:p-5 tw:text-center">
           <p className="tw:text-[13px] tw:text-red-500">{fetchError}</p>
@@ -638,7 +635,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
 
                 {/* Section header */}
                 <div className="tw:flex tw:items-center tw:gap-2 tw:border-b tw:border-slate-100 tw:bg-slate-50 tw:px-4 tw:py-3">
-                  <span className="tw:flex-shrink-0 tw:w-5 tw:h-5 tw:rounded-full tw:bg-slate-200 tw:text-[10px] tw:font-bold tw:text-slate-600 tw:flex tw:items-center tw:justify-center">
+                  <span className="tw:flex-shrink-0 tw:flex tw:h-5 tw:w-5 tw:items-center tw:justify-center tw:rounded-full tw:bg-slate-200 tw:text-[10px] tw:font-bold tw:text-slate-600">
                     {sIdx + 1}
                   </span>
 
@@ -666,7 +663,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
                         value={editSectionTitle}
                         onChange={e => { setEditSectionTitle(e.target.value); setEditSectionErr(null); }}
                         onKeyDown={e => {
-                          if (e.key === 'Enter') commitEditSection(section);
+                          if (e.key === 'Enter')  commitEditSection(section);
                           if (e.key === 'Escape') cancelEditSection();
                         }}
                         maxLength={200}
@@ -695,7 +692,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
                     <span className="tw:text-[11px] tw:text-red-500">{editSectionErr}</span>
                   )}
 
-                  {/* Actions */}
+                  {/* Section actions */}
                   {!isEditingThis && (
                     <div className="tw:flex tw:items-center tw:gap-1 tw:flex-shrink-0">
                       <button type="button" onClick={() => startEditSection(section)} disabled={busy}
@@ -721,7 +718,6 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
                     <div key={lesson.id}
                       className="tw:flex tw:items-center tw:gap-2 tw:rounded-lg tw:px-2 tw:py-2 tw:hover:bg-slate-50">
 
-                      {/* Lesson up/down */}
                       <div className="tw:flex tw:gap-0.5 tw:flex-shrink-0">
                         <button type="button" disabled={lIdx === 0 || busy}
                           onClick={() => moveLesson(section.id, lIdx, 'up')}
@@ -739,13 +735,16 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
 
                       <TypeBadge type={lesson.type} />
 
-                      <span className="tw:flex-1 tw:text-[13px] tw:text-slate-800 tw:truncate">{lesson.title}</span>
+                      <span className="tw:flex-1 tw:text-[13px] tw:text-slate-800 tw:truncate">
+                        {lesson.title}
+                      </span>
 
                       {lesson.durationMin != null && (
-                        <span className="tw:text-[11px] tw:text-slate-400 tw:flex-shrink-0">{lesson.durationMin} min</span>
+                        <span className="tw:text-[11px] tw:text-slate-400 tw:flex-shrink-0">
+                          {lesson.durationMin} min
+                        </span>
                       )}
 
-                      {/* Lesson actions */}
                       <div className="tw:flex tw:items-center tw:gap-0.5 tw:flex-shrink-0">
                         <button type="button" disabled={busy}
                           onClick={() => setLessonModal({ mode: 'edit', lesson, sectionId: section.id })}
@@ -777,7 +776,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
         </div>
       )}
 
-      {/* Add section inline form */}
+      {/* Add Section inline form / button */}
       {addingSection ? (
         <div className="tw:rounded-xl tw:border tw:border-blue-200 tw:bg-blue-50 tw:p-4">
           <p className="tw:mb-2 tw:text-[12px] tw:font-semibold tw:text-blue-700">New Section</p>
@@ -787,7 +786,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
               value={newSectionTitle}
               onChange={e => { setNewSectionTitle(e.target.value); setAddSectionErr(null); }}
               onKeyDown={e => {
-                if (e.key === 'Enter') handleAddSection();
+                if (e.key === 'Enter')  handleAddSection();
                 if (e.key === 'Escape') { setAddingSection(false); setNewSectionTitle(''); setAddSectionErr(null); }
               }}
               placeholder="Section title…"
@@ -800,7 +799,8 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
               className="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-50">
               {addSectionBusy ? 'Adding…' : 'Add'}
             </button>
-            <button type="button" onClick={() => { setAddingSection(false); setNewSectionTitle(''); setAddSectionErr(null); }}
+            <button type="button"
+              onClick={() => { setAddingSection(false); setNewSectionTitle(''); setAddSectionErr(null); }}
               className="tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-500 tw:hover:bg-slate-50">
               Cancel
             </button>
@@ -810,7 +810,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
       ) : (
         !loading && !fetchError && (
           <button type="button" onClick={() => setAddingSection(true)} disabled={busy}
-            className="tw:flex tw:items-center tw:justify-center tw:gap-1.5 tw:rounded-xl tw:border tw:border-dashed tw:border-slate-300 tw:py-3 tw:text-[13px] tw:font-medium tw:text-slate-500 tw:hover:border-blue-300 tw:hover:text-blue-600 tw:hover:bg-blue-50 tw:disabled:opacity-40 tw:transition-colors">
+            className="tw:flex tw:items-center tw:justify-center tw:gap-1.5 tw:rounded-xl tw:border tw:border-dashed tw:border-slate-300 tw:py-3 tw:text-[13px] tw:font-medium tw:text-slate-500 tw:hover:border-blue-300 tw:hover:bg-blue-50 tw:hover:text-blue-600 tw:disabled:opacity-40 tw:transition-colors">
             <Plus className="tw:h-4 tw:w-4" strokeWidth={2.5} /> Add Section
           </button>
         )

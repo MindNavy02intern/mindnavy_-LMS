@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>mindnavy LMS — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 3237 nodes, 4948 edges, 180 communities. Commit: b61eba1</p>
+<p class="subtitle">Generated from graphify knowledge graph: 3317 nodes, 5028 edges, 196 communities. Commit: 3ff1c3d</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -70,9 +70,9 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#serve-api">Serving API</a>
     <a href="#security-global">Security &amp; Global Graph</a>
     <a href="#tests-fixtures">Tests &amp; Fixtures</a>
-    <a href="#community-5">Community 5</a>
-    <a href="#community-6">Community 6</a>
     <a href="#community-33">Community 33</a>
+    <a href="#community-6">Community 6</a>
+    <a href="#community-5">Community 5</a>
     <a href="#community-21">Community 21</a>
     <a href="#community-57">Community 57</a>
     <a href="#community-32">Community 32</a>
@@ -94,18 +94,18 @@ flowchart LR
     class ANALYSIS_CLUSTERING_C79796DA module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>51 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>753 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>682 nodes</small>")
     class SERVE_API_35EC8E86 module;
     SECURITY_GLOBAL_5B9C6A04("Security &amp; Global Graph<br/><small>4 nodes</small>")
     class SECURITY_GLOBAL_5B9C6A04 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>591 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>656 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
-    COMMUNITY_5_2966028D("Community 5<br/><small>68 nodes</small>")
-    class COMMUNITY_5_2966028D module;
-    COMMUNITY_6_7D637A07("Community 6<br/><small>67 nodes</small>")
-    class COMMUNITY_6_7D637A07 module;
     COMMUNITY_33_03CF07C5("Community 33<br/><small>66 nodes</small>")
     class COMMUNITY_33_03CF07C5 module;
+    COMMUNITY_6_7D637A07("Community 6<br/><small>64 nodes</small>")
+    class COMMUNITY_6_7D637A07 module;
+    COMMUNITY_5_2966028D("Community 5<br/><small>56 nodes</small>")
+    class COMMUNITY_5_2966028D module;
     COMMUNITY_21_47BA4108("Community 21<br/><small>55 nodes</small>")
     class COMMUNITY_21_47BA4108 module;
     COMMUNITY_57_508B74B3("Community 57<br/><small>55 nodes</small>")
@@ -116,20 +116,20 @@ flowchart LR
     class COMMUNITY_23_58D9DE5D module;
     COMMUNITY_104_F8BD47A1("Community 104<br/><small>45 nodes</small>")
     class COMMUNITY_104_F8BD47A1 module;
-    OTHER_D0941E68("Other<br/><small>1128 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>1229 nodes</small>")
     class OTHER_D0941E68 module;
-    SERVE_API_35EC8E86 -->|imports x244| OTHER_D0941E68
+    SERVE_API_35EC8E86 -->|imports x254| OTHER_D0941E68
     OTHER_D0941E68 -->|imports x50| SERVE_API_35EC8E86
+    TESTS_FIXTURES_B84B1DCC -->|imports x27| OTHER_D0941E68
     COMMUNITY_6_7D637A07 -->|imports x23| COMMUNITY_21_47BA4108
-    TESTS_FIXTURES_B84B1DCC -->|imports x21| OTHER_D0941E68
-    OTHER_D0941E68 -->|imports x18| TESTS_FIXTURES_B84B1DCC
+    OTHER_D0941E68 -->|imports x19| TESTS_FIXTURES_B84B1DCC
     SERVE_API_35EC8E86 -->|imports x18| COMMUNITY_32_4867BAA9
+    CLI_SKILLS_9964CBB8 -->|imports x12| OTHER_D0941E68
     OTHER_D0941E68 -->|imports x12| COMMUNITY_32_4867BAA9
     COMMUNITY_32_4867BAA9 -->|contains x12| OTHER_D0941E68
-    CLI_SKILLS_9964CBB8 -->|imports x10| OTHER_D0941E68
     SERVE_API_35EC8E86 -->|imports x10| TESTS_FIXTURES_B84B1DCC
     SERVE_API_35EC8E86 -->|imports x9| COMMUNITY_5_2966028D
-    COMMUNITY_5_2966028D -->|imports x5| SERVE_API_35EC8E86
+    OTHER_D0941E68 -->|imports x5| COMMUNITY_33_03CF07C5
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -146,7 +146,7 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>221</td><td><code>55, 3, 4, 107, 129, 7, 8, 10, 83, 12, 14, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>30</td><td><code>52</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>51</td><td><code>116, 141, 147, 18</code></td></tr><tr><td>Serving API</td><td>753</td><td><code>9, 27, 36, 72, 24, 146, 2, 111, 48, 113, 22, 42, 60, 108, 26, 131, 54, 71, 101, 1, 25, 125, 145, 124, 51, 53, 148, 13</code></td></tr><tr><td>Security &amp; Global Graph</td><td>4</td><td><code>156</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>591</td><td><code>126, 92, 41, 63, 30, 109, 112, 65, 67, 144, 103, 135, 172, 117, 149, 74, 76, 77, 100, 110, 137, 151, 152, 162, 163, 164, 165, 166, 167, 168, 169, 68, 69, 70, 78, 79, 80, 82, 170, 91, 94, 95, 96, 97, 98, 99, 81, 114, 130, 161</code></td></tr><tr><td>Community 5</td><td>68</td><td><code>5</code></td></tr><tr><td>Community 6</td><td>67</td><td><code>6</code></td></tr><tr><td>Community 33</td><td>66</td><td><code>33</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>53</td><td><code>32</code></td></tr><tr><td>Community 23</td><td>50</td><td><code>23</code></td></tr><tr><td>Community 104</td><td>45</td><td><code>104</code></td></tr><tr><td>Other</td><td>1128</td><td><code>132, 66, 64, 19, 34, 105, 50, 62, 39, 37, 0, 58, 106, 46, 49, 150, 59, 28, 20, 115, 120, 31, 40, 45, 127, 102, 133, 134, 171, 44, 93, 136, 140, 38, 75, 29, 61, 143, 43, 56, 118, 119, 35, 47, 73, 121, 122, 123, 160, 173, 139, 174, 175, 11, 128, 138, 153, 176, 177, 178, 142, 154, 179, 155, 157, 15, 158, 159, 16, 17, 85, 86, 87, 88, 89, 90</code></td></tr>
+      <tr><td>Graph Build</td><td>221</td><td><code>55, 3, 4, 107, 129, 7, 8, 10, 83, 12, 14, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>30</td><td><code>52</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>51</td><td><code>116, 141, 147, 18</code></td></tr><tr><td>Serving API</td><td>682</td><td><code>27, 36, 72, 24, 2, 111, 48, 1, 113, 42, 60, 108, 26, 131, 146, 54, 71, 101, 25, 22, 125, 145, 124, 51, 53, 148, 193, 13</code></td></tr><tr><td>Security &amp; Global Graph</td><td>4</td><td><code>156</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>656</td><td><code>126, 92, 41, 63, 30, 109, 112, 65, 67, 144, 103, 135, 172, 117, 149, 184, 185, 186, 187, 188, 189, 74, 76, 77, 100, 110, 137, 151, 152, 162, 163, 164, 165, 166, 167, 168, 169, 68, 69, 70, 78, 79, 80, 82, 170, 91, 94, 95, 96, 97, 98, 99, 81, 114, 130, 161, 194</code></td></tr><tr><td>Community 33</td><td>66</td><td><code>33</code></td></tr><tr><td>Community 6</td><td>64</td><td><code>6</code></td></tr><tr><td>Community 5</td><td>56</td><td><code>5</code></td></tr><tr><td>Community 21</td><td>55</td><td><code>21</code></td></tr><tr><td>Community 57</td><td>55</td><td><code>57</code></td></tr><tr><td>Community 32</td><td>53</td><td><code>32</code></td></tr><tr><td>Community 23</td><td>50</td><td><code>23</code></td></tr><tr><td>Community 104</td><td>45</td><td><code>104</code></td></tr><tr><td>Other</td><td>1229</td><td><code>66, 64, 19, 34, 105, 50, 58, 62, 37, 9, 119, 106, 150, 46, 49, 132, 59, 28, 178, 20, 180, 115, 120, 31, 39, 127, 102, 133, 134, 171, 44, 93, 136, 40, 0, 140, 181, 38, 75, 182, 29, 45, 61, 143, 43, 56, 118, 183, 35, 47, 73, 121, 190, 122, 123, 160, 173, 191, 192, 139, 174, 175, 11, 128, 138, 153, 176, 177, 142, 154, 179, 155, 195, 157, 15, 158, 159, 16, 17, 85, 86, 87, 88, 89, 90</code></td></tr>
     </table>
   </div>
   <div class="card">
@@ -158,7 +158,7 @@ flowchart LR
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>3237 nodes · 4948 edges · 180 communities (174 shown, 6 thin omitted)</li>
+      <li>3317 nodes · 5028 edges · 196 communities (188 shown, 8 thin omitted)</li>
       <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `getStoredToken()` - 48 edges</li>
@@ -1197,75 +1197,75 @@ flowchart LR
 
 <!-- ====== 5. Serving API ====== -->
 <h2 id="serve-api">5. Serving API</h2>
-<p>Serving API groups implementation around frontend, components, backend, api, mostly in backend/contact md files/ACCESS_POLICIES_API.md, backend/ACCESS_POLICIES_API.md, src/api/organization.ts. This section covers 753 nodes and 1142 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around frontend, components, api, backend, mostly in backend/contact md files/ACCESS_POLICIES_API.md, backend/ACCESS_POLICIES_API.md, src/api/organization.ts. This section covers 682 nodes and 1014 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (753 nodes, 1142 edges)
-    subgraph serve_api_src_controllers_users_controller_js_8d60ab07["src/controllers/users.controller.js"]
-        controllers_users_controller_createuser_1d4bed69("createUser()<br/><small>src/controllers/users.controller.js</small>")
-        controllers_users_controller_updateuser_09b2ac67("updateUser()<br/><small>src/controllers/users.controller.js</small>")
-        controllers_users_controller_suspenduser_34b180c2("suspendUser()<br/><small>src/controllers/users.controller.js</small>")
-        controllers_users_controller_updateuserstatus_9890eb5e("updateUserStatus()<br/><small>src/controllers/users.controller.js</small>")
-        controllers_users_controller_resetuserpassword_a43fc993("resetUserPassword()<br/><small>src/controllers/users.controller.js</small>")
-        controllers_users_controller_assignuserrole_a0e0aadb("assignUserRole()<br/><small>src/controllers/users.controller.js</small>")
+    %% Section: Serving API (682 nodes, 1014 edges)
+    subgraph serve_api_src_api_accessPoliciesPage_ts_d21ac1f4["src/api/accessPoliciesPage.ts"]
+        api_accesspoliciespage_accesspolicyerror_a30e825b("AccessPolicyError<br/><small>src/api/accessPoliciesPage.ts</small>")
+        api_accesspoliciespage_accesspolicyerror_constru_656498ff("constructor()<br/><small>src/api/accessPoliciesPage.ts</small>")
+        api_accesspoliciespage_apifetch_c4253034("apiFetch()<br/><small>src/api/accessPoliciesPage.ts</small>")
+        api_accesspoliciespage_listaccesspolicies_95c7ebb7("listAccessPolicies()<br/><small>src/api/accessPoliciesPage.ts</small>")
     end
-    subgraph serve_api_src_validators_users_validator_js_47261e5c["src/validators/users.validator.js"]
-        validators_users_validator_validatecreateuserinp_e973ca38("validateCreateUserInput()<br/><small>src/validators/users.validator.js</small>")
-        validators_users_validator_validateuuidparam_36622e78("validateUuidParam()<br/><small>src/validators/users.validator.js</small>")
-        validators_users_validator_validateupdateuserinp_415e7af4("validateUpdateUserInput()<br/><small>src/validators/users.validator.js</small>")
-        validators_users_validator_validatesuspenduserin_d9703da8("validateSuspendUserInput()<br/><small>src/validators/users.validator.js</small>")
-        validators_users_validator_validateupdateusersta_76927f0e("validateUpdateUserStatusInput()<br/><small>src/validators/users.validator.js</small>")
-        validators_users_validator_validateresetuserpass_7d038d6c("validateResetUserPasswordInput()<br/><small>src/validators/users.validator.js</small>")
+    subgraph serve_api_src_api_dashboard_ts_bd054f04["src/api/dashboard.ts"]
+        api_dashboard_getdashboardcore_18b02150("getDashboardCore()<br/><small>src/api/dashboard.ts</small>")
+        api_dashboard_getdashboardanalytics_6da10719("getDashboardAnalytics()<br/><small>src/api/dashboard.ts</small>")
+        api_dashboard_getadminwidgets_6a1264df("getAdminWidgets()<br/><small>src/api/dashboard.ts</small>")
     end
-    subgraph serve_api_src_api_adminAuth_ts_29dd8eba["src/api/adminAuth.ts"]
-        api_adminauth_getstoredtoken_6da5b8df("getStoredToken()<br/><small>src/api/adminAuth.ts</small>")
-        frontend_src_api_adminauth_ts_e390aa5a("adminAuth.ts")
+    subgraph serve_api_src_middlewares_auth_middleware_js_d3310b34["src/middlewares/auth.middleware.js"]
+        middlewares_auth_middleware_getcachedsession_097d8955("getCachedSession()<br/><small>src/middlewares/auth.middleware.js</small>")
+        middlewares_auth_middleware_requireadminauth_78c06910("requireAdminAuth()<br/><small>src/middlewares/auth.middleware.js</small>")
+        middlewares_auth_middleware_setcachedsession_c091796c("setCachedSession()<br/><small>src/middlewares/auth.middleware.js</small>")
     end
     subgraph serve_api_src_api_organization_ts_869a35c2["src/api/organization.ts"]
         api_organization_orgfetch_7fc4eb51("orgFetch()<br/><small>src/api/organization.ts</small>")
         frontend_src_api_organization_ts_fd854e3d("organization.ts")
     end
+    subgraph serve_api_src_api_users_ts_089bead8["src/api/users.ts"]
+        frontend_src_api_users_ts_f0590af5("users.ts")
+        api_users_actionfetch_26dbe2ec("actionFetch()<br/><small>src/api/users.ts</small>")
+    end
     frontend_src_authcontext_tsx_62479c75("AuthContext.tsx")
-    frontend_src_api_users_ts_f0590af5("users.ts")
-    controllers_users_controller_createuser_1d4bed69 -->|calls| validators_users_validator_validatecreateuserinp_e973ca38
-    controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateuuidparam_36622e78
-    controllers_users_controller_updateuser_09b2ac67 -->|calls| validators_users_validator_validateupdateuserinp_415e7af4
-    controllers_users_controller_suspenduser_34b180c2 -->|calls| validators_users_validator_validateuuidparam_36622e78
-    controllers_users_controller_suspenduser_34b180c2 -->|calls| validators_users_validator_validatesuspenduserin_d9703da8
-    controllers_users_controller_updateuserstatus_9890eb5e -->|calls| validators_users_validator_validateuuidparam_36622e78
-    controllers_users_controller_updateuserstatus_9890eb5e -->|calls| validators_users_validator_validateupdateusersta_76927f0e
-    controllers_users_controller_resetuserpassword_a43fc993 -->|calls| validators_users_validator_validateuuidparam_36622e78
-    controllers_users_controller_resetuserpassword_a43fc993 -->|calls| validators_users_validator_validateresetuserpass_7d038d6c
-    controllers_users_controller_assignuserrole_a0e0aadb -->|calls| validators_users_validator_validateuuidparam_36622e78
+    api_adminauth_getstoredtoken_6da5b8df("getStoredToken()<br/><small>src/api/adminAuth.ts</small>")
+    api_groups_groupsfetch_4531fd4f("groupsFetch()<br/><small>src/api/groups.ts</small>")
+    api_rolespage_apifetch_bd74282d("apiFetch()<br/><small>src/api/rolesPage.ts</small>")
+    middlewares_auth_middleware_getcachedsession_097d8955 -->|calls| middlewares_auth_middleware_requireadminauth_78c06910
+    middlewares_auth_middleware_setcachedsession_c091796c -->|calls| middlewares_auth_middleware_requireadminauth_78c06910
+    api_accesspoliciespage_accesspolicyerror_a30e825b -->|method| api_accesspoliciespage_accesspolicyerror_constru_656498ff
+    api_accesspoliciespage_apifetch_c4253034 -->|calls| api_accesspoliciespage_listaccesspolicies_95c7ebb7
+    api_accesspoliciespage_apifetch_c4253034 -->|calls| api_adminauth_getstoredtoken_6da5b8df
+    api_adminauth_getstoredtoken_6da5b8df -->|calls| api_dashboard_getdashboardcore_18b02150
+    api_adminauth_getstoredtoken_6da5b8df -->|calls| api_dashboard_getdashboardanalytics_6da10719
+    api_adminauth_getstoredtoken_6da5b8df -->|calls| api_dashboard_getadminwidgets_6a1264df
+    api_adminauth_getstoredtoken_6da5b8df -->|calls| api_groups_groupsfetch_4531fd4f
     api_adminauth_getstoredtoken_6da5b8df -->|calls| api_organization_orgfetch_7fc4eb51
-    frontend_src_authcontext_tsx_62479c75 -->|imports| frontend_src_api_adminauth_ts_e390aa5a
+    api_adminauth_getstoredtoken_6da5b8df -->|calls| api_rolespage_apifetch_bd74282d
+    api_adminauth_getstoredtoken_6da5b8df -->|calls| api_users_actionfetch_26dbe2ec
     frontend_src_authcontext_tsx_62479c75 -->|imports| api_adminauth_getstoredtoken_6da5b8df
-    frontend_src_api_adminauth_ts_e390aa5a -->|imports| frontend_src_api_organization_ts_fd854e3d
-    frontend_src_api_adminauth_ts_e390aa5a -->|imports| frontend_src_api_users_ts_f0590af5
     api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_organization_ts_fd854e3d
     api_adminauth_getstoredtoken_6da5b8df -->|imports| frontend_src_api_users_ts_f0590af5
     frontend_src_api_organization_ts_fd854e3d -->|imports| frontend_src_api_users_ts_f0590af5
-    %% Omitted for readability: 735 nodes, 0 edges
-    class controllers_users_controller_createuser_1d4bed69 function;
-    class controllers_users_controller_updateuser_09b2ac67 function;
-    class controllers_users_controller_suspenduser_34b180c2 function;
-    class controllers_users_controller_updateuserstatus_9890eb5e function;
-    class controllers_users_controller_resetuserpassword_a43fc993 function;
-    class controllers_users_controller_assignuserrole_a0e0aadb function;
-    class validators_users_validator_validatecreateuserinp_e973ca38 function;
-    class validators_users_validator_validateuuidparam_36622e78 function;
-    class validators_users_validator_validateupdateuserinp_415e7af4 function;
-    class validators_users_validator_validatesuspenduserin_d9703da8 function;
-    class validators_users_validator_validateupdateusersta_76927f0e function;
-    class validators_users_validator_validateresetuserpass_7d038d6c function;
-    class api_adminauth_getstoredtoken_6da5b8df ui;
-    class frontend_src_api_adminauth_ts_e390aa5a module;
+    %% Omitted for readability: 664 nodes, 0 edges
+    class api_accesspoliciespage_accesspolicyerror_a30e825b klass;
+    class api_accesspoliciespage_accesspolicyerror_constru_656498ff function;
+    class api_accesspoliciespage_apifetch_c4253034 api;
+    class api_accesspoliciespage_listaccesspolicies_95c7ebb7 function;
+    class api_dashboard_getdashboardcore_18b02150 function;
+    class api_dashboard_getdashboardanalytics_6da10719 function;
+    class api_dashboard_getadminwidgets_6a1264df function;
+    class middlewares_auth_middleware_getcachedsession_097d8955 function;
+    class middlewares_auth_middleware_requireadminauth_78c06910 function;
+    class middlewares_auth_middleware_setcachedsession_c091796c function;
     class api_organization_orgfetch_7fc4eb51 function;
     class frontend_src_api_organization_ts_fd854e3d module;
-    class frontend_src_authcontext_tsx_62479c75 ui;
     class frontend_src_api_users_ts_f0590af5 module;
+    class api_users_actionfetch_26dbe2ec function;
+    class frontend_src_authcontext_tsx_62479c75 ui;
+    class api_adminauth_getstoredtoken_6da5b8df ui;
+    class api_groups_groupsfetch_4531fd4f function;
+    class api_rolespage_apifetch_bd74282d api;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1289,263 +1289,243 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>users.controller.js</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>users.ts</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>users.validator.js</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br><code>validateAssignUserRoleInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br>+8 more</td>
-  <td>users.controller.js node in src/controllers/users.controller.js.</td>
+  <td><code>adminAuth.ts</code><br><small style="color:var(--muted)">src/api/adminAuth.ts</small><br><code>getStoredToken()</code><br><small style="color:var(--muted)">src/api/adminAuth.ts</small><br><code>groups.ts</code><br><small style="color:var(--muted)">src/api/groups.ts</small><br>+1 more</td>
+  <td><code>AddMembersModal.tsx</code><br><small style="color:var(--muted)">components/groups/AddMembersModal.tsx</small><br><code>AssignRoleModal.tsx</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small><br><code>AssignRoleRequest</code><br><small style="color:var(--muted)">src/types/users.ts</small><br>+13 more</td>
+  <td>Module file in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>usersService</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-async">Async</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>usersService node in src/controllers/users.controller.js.</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>getStoredToken()</code><br><small style="color:var(--muted)">src/api/adminAuth.ts</small></td>
+  <td><code>approveVerification()</code><br><small style="color:var(--muted)">src/api/users.ts</small><br><code>assignRole()</code><br><small style="color:var(--muted)">src/api/users.ts</small><br><code>cancelInvitation()</code><br><small style="color:var(--muted)">src/api/users.ts</small><br>+9 more</td>
+  <td>actionFetch() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>{
-  validateUuidParam,
-  validateCreateUserInput,
-  validateUpdateUserInput,
-  validateUpdateUserStatusInput,
-  validateSuspendUserInput,
-  validateAssignUserRoleInput,
-  validateResetUserPasswordInput,
-  validateSendMessageInput,
-  validateForceLogoutInput,
-}</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>createUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td>No direct outbound edge</td>
-  <td>{
-  validateUuidParam,
-  validateCreateUserInput,
-  validateUpdateUserInput,
-  validateUpdateUserStatusInput,
-  validateSuspendUserInput,
-  validateAssignUserRoleInput,
-  validateResetUserPasswordInput,
-  validateSendMessageInput,
-  validateForceLogoutInput,
-} node in src/controllers/users.controller.js.</td>
+  <td>createUser() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>getUsersAnalytics()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>updateUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>updateUser() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>getUsersList()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>suspendUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td>getUsersList() node in src/controllers/users.controller.js.</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><code>SuspendUserDialog.tsx</code><br><small style="color:var(--muted)">components/users/SuspendUserDialog.tsx</small></td>
+  <td>suspendUser() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>exportUsers()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>reactivateUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td>Exports documentation data to a target format.</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>reactivateUser() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>getUserDetails()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>approveVerification()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td>getUserDetails() node in src/controllers/users.controller.js.</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>approveVerification() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>createUser()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>deleteUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateCreateUserInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>createUser() node in src/controllers/users.controller.js.</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><code>DeleteUserDialog.tsx</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small><br><code>InvitationsTab.tsx</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td>deleteUser() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>updateUser()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>resetPassword()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateUpdateUserInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>updateUser() node in src/controllers/users.controller.js.</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>resetPassword() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>suspendUser()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
+  <td><code>assignRole()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateSuspendUserInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>suspendUser() node in src/controllers/users.controller.js.</td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><code>AssignRoleModal.tsx</code><br><small style="color:var(--muted)">components/users/AssignRoleModal.tsx</small></td>
+  <td>assignRole() node in src/api/users.ts.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>updateUserStatus()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateUpdateUserStatusInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>updateUserStatus() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>resetUserPassword()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateResetUserPasswordInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>resetUserPassword() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>assignUserRole()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateAssignUserRoleInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>assignUserRole() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>reactivateUser()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>reactivateUser() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>approveVerification()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>approveVerification() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>rejectVerification()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>rejectVerification() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>permanentDeleteUser()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>permanentDeleteUser() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>deleteUser()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>deleteUser() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>importUsers()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td>importUsers() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>bulkActionUsers()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td>bulkActionUsers() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>sendMessage()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateSendMessageInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>sendMessage() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>getUserMessagesList()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>getUserMessagesList() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>forceLogoutUser()</code><br><small style="color:var(--muted)">src/controllers/users.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small><br><code>validateForceLogoutInput()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small><br><code>validateUuidParam()</code><br><small style="color:var(--muted)">src/validators/users.validator.js</small></td>
-  <td>forceLogoutUser() node in src/controllers/users.controller.js.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>upload.middleware.js</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td>upload.middleware.js node in src/middlewares/upload.middleware.js.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>multer</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>multer node in src/middlewares/upload.middleware.js.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>ALLOWED_MIME_TYPES</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
+  <td><code>InvitationParams</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ALLOWED_MIME_TYPES node in src/middlewares/upload.middleware.js.</td>
+  <td>InvitationParams node in src/api/users.ts.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>getInvitations()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>getStoredToken()</code><br><small style="color:var(--muted)">src/api/adminAuth.ts</small></td>
+  <td><code>InvitationsTab.tsx</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td>getInvitations() node in src/api/users.ts.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>sendInvitation()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><code>SendInvitationModal.tsx</code><br><small style="color:var(--muted)">components/users/SendInvitationModal.tsx</small></td>
+  <td>sendInvitation() node in src/api/users.ts.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>resendInvitation()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><code>InvitationsTab.tsx</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td>resendInvitation() node in src/api/users.ts.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>cancelInvitation()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><code>InvitationsTab.tsx</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td>cancelInvitation() node in src/api/users.ts.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>updateInvitationExpiry()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>actionFetch()</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td><code>InvitationsTab.tsx</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td>updateInvitationExpiry() node in src/api/users.ts.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>DeleteUserDialog.tsx</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>ApiError</code><br><small style="color:var(--muted)">src/api/users.ts</small><br><code>deleteUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small><br><code>users.ts</code><br><small style="color:var(--muted)">src/api/users.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>Module file in components/users/DeleteUserDialog.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>Props</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Props node in components/users/DeleteUserDialog.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>INPUT</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INPUT node in components/users/DeleteUserDialog.tsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>DeleteUserDialog()</code><br><small style="color:var(--muted)">components/users/DeleteUserDialog.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DeleteUserDialog() node in components/users/DeleteUserDialog.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>InvitationsTab.tsx</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>cancelInvitation()</code><br><small style="color:var(--muted)">src/api/users.ts</small><br><code>deleteUser()</code><br><small style="color:var(--muted)">src/api/users.ts</small><br><code>getInvitations()</code><br><small style="color:var(--muted)">src/api/users.ts</small><br>+4 more</td>
+  <td><code>Invitation</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>InvitationStatus</code><br><small style="color:var(--muted)">src/types/users.ts</small><br><code>SendInvitationModal.tsx</code><br><small style="color:var(--muted)">components/users/SendInvitationModal.tsx</small></td>
+  <td>Module file in components/users/InvitationsTab.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>formatDate()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>formatDate() node in components/users/InvitationsTab.tsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>formatRelative()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>formatRelative() node in components/users/InvitationsTab.tsx.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>minDateStr()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>STATUS_STYLE</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>STATUS_STYLE node in components/users/InvitationsTab.tsx.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>ROLE_DISPLAY</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ROLE_DISPLAY node in components/users/InvitationsTab.tsx.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>storage</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
+  <td><code>SkeletonRow()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td>sk() node in components/users/InvitationsTab.tsx.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>csvFileFilter()</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>SkeletonRow()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>sk()</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
   <td>No direct outbound edge</td>
-  <td>csvFileFilter() node in src/middlewares/upload.middleware.js.</td>
+  <td>SkeletonRow() node in components/users/InvitationsTab.tsx.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>_upload</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>TH</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>_upload node in src/middlewares/upload.middleware.js.</td>
+  <td>TH node in components/users/InvitationsTab.tsx.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>uploadUsersCsv()</code><br><small style="color:var(--muted)">src/middlewares/upload.middleware.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>TD</code><br><small style="color:var(--muted)">components/users/InvitationsTab.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>users.routes.js</code><br><small style="color:var(--muted)">src/routes/users.routes.js</small></td>
-  <td>uploadUsersCsv() node in src/middlewares/upload.middleware.js.</td>
+  <td>No direct outbound edge</td>
+  <td>TD node in components/users/InvitationsTab.tsx.</td>
 </tr>
 </table>
 
@@ -1559,14 +1539,14 @@ flowchart LR
 <tr><td><code>src/api/organization.ts</code></td><td>29 nodes</td></tr>
 <tr><td><code>backend/contact md files/COURSES_API.md</code></td><td>28 nodes</td></tr>
 <tr><td><code>COURSE_BUILDER_AND_UPLOADS_CONTRACT.md</code></td><td>27 nodes</td></tr>
-<tr><td><code>src/controllers/users.controller.js</code></td><td>27 nodes</td></tr>
 <tr><td><code>src/api/users.ts</code></td><td>24 nodes</td></tr>
-<tr><td><code>src/routes/users.routes.js</code></td><td>20 nodes</td></tr>
+<tr><td><code>blueprint/pages/03-roles-permissions.md</code></td><td>18 nodes</td></tr>
+<tr><td><code>src/api/accessPoliciesPage.ts</code></td><td>17 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x655, imports x252, calls x116, imports x112. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x588, imports x217, imports x108, calls x94. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1662,12 +1642,12 @@ flowchart LR
 
 <!-- ====== 7. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">7. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around frontend, error, test, contextmd, mostly in src/services/lmApi.ts, frontend/tests/users.full.spec.ts, frontend/tests/role-templates.full.spec.ts. This section covers 591 nodes and 670 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around frontend, error, test, contextmd, mostly in src/services/lmApi.ts, frontend/tests/users.full.spec.ts, frontend/tests/role-templates.full.spec.ts. This section covers 656 nodes and 729 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (591 nodes, 670 edges)
+    %% Section: Tests &amp; Fixtures (656 nodes, 729 edges)
     subgraph tests_fixtures_src_controllers_roleTemplates_con_5b73d8ed["src/controllers/roleTemplates.controller.js"]
         backend_src_controllers_roletemplates_controller_1e11e77f("roleTemplates.controller.js")
         controllers_roletemplates_controller_badrequest_5c41d20d("badRequest()<br/><small>src/controllers/roleTemplates.controller.js</small>")
@@ -1716,7 +1696,7 @@ flowchart LR
     frontend_src_components_learningmanagement_cours_b22ae313 -->|imports| frontend_src_services_coursesapi_ts_5bc30299
     frontend_src_components_learningmanagement_cours_b22ae313 -->|imports| frontend_src_components_learningmanagement_cours_609193c9
     frontend_src_components_learningmanagement_cours_609193c9 -->|imports| frontend_src_services_coursesapi_ts_5bc30299
-    %% Omitted for readability: 573 nodes, 0 edges
+    %% Omitted for readability: 638 nodes, 0 edges
     class backend_src_controllers_roletemplates_controller_1e11e77f module;
     class controllers_roletemplates_controller_badrequest_5c41d20d function;
     class controllers_roletemplates_controller_listroletem_97e7c9cd function;
@@ -2015,748 +1995,13 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x536, calls x78, imports x41, imports x13. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x594, calls x79, imports x41, imports x13. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 8. Community 5 ====== -->
-<h2 id="community-5">8. Community 5</h2>
-<p>Community 5 groups implementation around backend, adminservicejs, services, admincontrollerjs, mostly in src/services/admin.service.js, src/controllers/admin.controller.js, src/routes/admin.routes.js. This section covers 68 nodes and 129 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 5 (68 nodes, 129 edges)
-    subgraph community_5_src_controllers_admin_controller_js_7f948352["src/controllers/admin.controller.js"]
-        backend_src_controllers_admin_controller_js_b63946ac("admin.controller.js")
-        controllers_admin_controller_adminforgotpassword_a4ea2a59("adminForgotPasswordController()<br/><small>src/controllers/admin.controller.js</small>")
-        controllers_admin_controller_adminlogincontrolle_6b0723b0("adminLoginController()<br/><small>src/controllers/admin.controller.js</small>")
-        controllers_admin_controller_adminlogoutcontroll_4537960c("adminLogoutController()<br/><small>src/controllers/admin.controller.js</small>")
-        controllers_admin_controller_adminsendotpcontrol_ecb9a420("adminSendOtpController()<br/><small>src/controllers/admin.controller.js</small>")
-        controllers_admin_controller_adminverifyotpcontr_e7f63202("adminVerifyOtpController()<br/><small>src/controllers/admin.controller.js</small>")
-        controllers_admin_controller_admingettrusteddevi_f947e88b("adminGetTrustedDevicesController()<br/><small>src/controllers/admin.controller.js</small>")
-        controllers_admin_controller_adminrevoketrustedd_a538f683("adminRevokeTrustedDeviceController()<br/><small>src/controllers/admin.controller.js</small>")
-    end
-    subgraph community_5_src_services_admin_service_js_d02d771d["src/services/admin.service.js"]
-        services_admin_service_createauditlog_45451904("createAuditLog()<br/><small>src/services/admin.service.js</small>")
-        backend_src_services_admin_service_js_f1a7d2ad("admin.service.js")
-        services_admin_service_loginadmin_35916378("loginAdmin()<br/><small>src/services/admin.service.js</small>")
-        services_admin_service_logoutadmin_dda61286("logoutAdmin()<br/><small>src/services/admin.service.js</small>")
-        services_admin_service_sendadminotp_3504d1ec("sendAdminOtp()<br/><small>src/services/admin.service.js</small>")
-        services_admin_service_verifyadminotp_fd2e04c0("verifyAdminOtp()<br/><small>src/services/admin.service.js</small>")
-        services_admin_service_getadmintrusteddevices_2d1a3649("getAdminTrustedDevices()<br/><small>src/services/admin.service.js</small>")
-    end
-    subgraph community_5_src_validators_adminAuth_validator_j_9e479ef0["src/validators/adminAuth.validator.js"]
-        validators_adminauth_validator_validateadminlogi_be61160e("validateAdminLoginInput()<br/><small>src/validators/adminAuth.validator.js</small>")
-        validators_adminauth_validator_validateadminotpi_1aa0183c("validateAdminOtpInput()<br/><small>src/validators/adminAuth.validator.js</small>")
-    end
-    middlewares_auth_middleware_invalidatecachedsess_e12311be("invalidateCachedSession()<br/><small>src/middlewares/auth.middleware.js</small>")
-    controllers_admin_controller_adminlogincontrolle_6b0723b0 -->|calls| validators_adminauth_validator_validateadminlogi_be61160e
-    controllers_admin_controller_adminlogincontrolle_6b0723b0 -->|calls| services_admin_service_loginadmin_35916378
-    controllers_admin_controller_adminlogoutcontroll_4537960c -->|calls| middlewares_auth_middleware_invalidatecachedsess_e12311be
-    controllers_admin_controller_adminlogoutcontroll_4537960c -->|calls| services_admin_service_logoutadmin_dda61286
-    controllers_admin_controller_adminsendotpcontrol_ecb9a420 -->|calls| services_admin_service_sendadminotp_3504d1ec
-    controllers_admin_controller_adminverifyotpcontr_e7f63202 -->|calls| validators_adminauth_validator_validateadminotpi_1aa0183c
-    controllers_admin_controller_adminverifyotpcontr_e7f63202 -->|calls| services_admin_service_verifyadminotp_fd2e04c0
-    controllers_admin_controller_admingettrusteddevi_f947e88b -->|calls| services_admin_service_getadmintrusteddevices_2d1a3649
-    services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_loginadmin_35916378
-    services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_logoutadmin_dda61286
-    services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_sendadminotp_3504d1ec
-    services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_verifyadminotp_fd2e04c0
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| validators_adminauth_validator_validateadminlogi_be61160e
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| validators_adminauth_validator_validateadminotpi_1aa0183c
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| backend_src_services_admin_service_js_f1a7d2ad
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_loginadmin_35916378
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_logoutadmin_dda61286
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_sendadminotp_3504d1ec
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_verifyadminotp_fd2e04c0
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_getadmintrusteddevices_2d1a3649
-    backend_src_controllers_admin_controller_js_b63946ac -->|imports| middlewares_auth_middleware_invalidatecachedsess_e12311be
-    %% Omitted for readability: 50 nodes, 0 edges
-    class backend_src_controllers_admin_controller_js_b63946ac module;
-    class controllers_admin_controller_adminforgotpassword_a4ea2a59 function;
-    class controllers_admin_controller_adminlogincontrolle_6b0723b0 function;
-    class controllers_admin_controller_adminlogoutcontroll_4537960c function;
-    class controllers_admin_controller_adminsendotpcontrol_ecb9a420 function;
-    class controllers_admin_controller_adminverifyotpcontr_e7f63202 function;
-    class controllers_admin_controller_admingettrusteddevi_f947e88b function;
-    class controllers_admin_controller_adminrevoketrustedd_a538f683 function;
-    class services_admin_service_createauditlog_45451904 function;
-    class backend_src_services_admin_service_js_f1a7d2ad module;
-    class services_admin_service_loginadmin_35916378 function;
-    class services_admin_service_logoutadmin_dda61286 function;
-    class services_admin_service_sendadminotp_3504d1ec function;
-    class services_admin_service_verifyadminotp_fd2e04c0 function;
-    class services_admin_service_getadmintrusteddevices_2d1a3649 function;
-    class validators_adminauth_validator_validateadminlogi_be61160e function;
-    class validators_adminauth_validator_validateadminotpi_1aa0183c function;
-    class middlewares_auth_middleware_invalidatecachedsess_e12311be function;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>admin.controller.js</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>admin.service.js</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>adminAuth.validator.js</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small><br>+13 more</td>
-  <td>admin.controller.js node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>{
-  validateAdminLoginInput,
-  validateAdminOtpInput,
-  validateForgotPasswordInput,
-  validateResetPasswordInput,
-
-}</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{
-  validateAdminLoginInput,
-  validateAdminOtpInput,
-  validateForgotPasswordInput,
-  validateResetPasswordInput,
-
-} node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>{
-  loginAdmin,
-  logoutAdmin,
-  sendAdminOtp,
-  verifyAdminOtp,
-  getAdminTrustedDevices,
-  revokeAdminTrustedDevice,
-  forgotAdminPassword,
-  resetAdminPassword,
-}</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{
-  loginAdmin,
-  logoutAdmin,
-  sendAdminOtp,
-  verifyAdminOtp,
-  getAdminTrustedDevices,
-  revokeAdminTrustedDevice,
-  forgotAdminPassword,
-  resetAdminPassword,
-} node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>{ invalidateCachedSession }</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Caches analysis results or computes cache keys.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>adminLoginController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>loginAdmin()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>validateAdminLoginInput()</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small></td>
-  <td>adminLoginController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>adminLogoutController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>invalidateCachedSession()</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small><br><code>logoutAdmin()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
-  <td>adminLogoutController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>adminMeController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
-  <td>adminMeController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>adminSendOtpController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>sendAdminOtp()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
-  <td>adminSendOtpController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>adminVerifyOtpController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>validateAdminOtpInput()</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small><br><code>verifyAdminOtp()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
-  <td>adminVerifyOtpController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>adminGetTrustedDevicesController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>getAdminTrustedDevices()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
-  <td>adminGetTrustedDevicesController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>adminRevokeTrustedDeviceController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>revokeAdminTrustedDevice()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
-  <td>adminRevokeTrustedDeviceController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>adminForgotPasswordController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>forgotAdminPassword()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>validateForgotPasswordInput()</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small></td>
-  <td>adminForgotPasswordController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>adminResetPasswordController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>resetAdminPassword()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>validateResetPasswordInput()</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small></td>
-  <td>adminResetPasswordController() node in src/controllers/admin.controller.js.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>invalidateCachedSession()</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>admin.controller.js</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br><code>adminLogoutController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>Caches analysis results or computes cache keys.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>clearAllCachedSessions()</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>admin.service.js</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>resetAdminPassword()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
-  <td>Caches analysis results or computes cache keys.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td><code>admin.controller.js</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br><code>adminForgotPasswordController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br><code>adminGetTrustedDevicesController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br>+7 more</td>
-  <td>No direct outbound edge</td>
-  <td>admin.routes.js node in src/routes/admin.routes.js.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>express</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>express node in src/routes/admin.routes.js.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>{
-  adminLoginController,
-  adminMeController,
-  adminLogoutController,
-  adminSendOtpController,
-  adminVerifyOtpController,
-  adminGetTrustedDevicesController,
-  adminRevokeTrustedDeviceController,
-  adminForgotPasswordController,
-  adminResetPasswordController,
-
-}</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{
-  adminLoginController,
-  adminMeController,
-  adminLogoutController,
-  adminSendOtpController,
-  adminVerifyOtpController,
-  adminGetTrustedDevicesController,
-  adminRevokeTrustedDeviceController,
-  adminForgotPasswordController,
-  adminResetPasswordController,
-
-} node in src/routes/admin.routes.js.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>{ requireAdminAuth }</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ requireAdminAuth } node in src/routes/admin.routes.js.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>{ adminLoginRateLimiter, otpRequestRateLimiter }</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ adminLoginRateLimiter, otpRequestRateLimiter } node in src/routes/admin.routes.js.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>router</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
-  <td><span class="tag tag-endpoint">API</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>router node in src/routes/admin.routes.js.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>createFirstAdmin.js</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>passwordPolicy.js</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small><br><code>validatePasswordStrength()</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small></td>
-  <td>createFirstAdmin.js node in src/scripts/createFirstAdmin.js.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>bcrypt</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>bcrypt node in src/scripts/createFirstAdmin.js.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>prisma node in src/scripts/createFirstAdmin.js.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>{ validatePasswordStrength }</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ validatePasswordStrength } node in src/scripts/createFirstAdmin.js.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>createFirstAdmin()</code><br><small style="color:var(--muted)">src/scripts/createFirstAdmin.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>validatePasswordStrength()</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small></td>
-  <td>createFirstAdmin() node in src/scripts/createFirstAdmin.js.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>resetFirstAdminPassword.js</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>passwordPolicy.js</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small><br><code>validatePasswordStrength()</code><br><small style="color:var(--muted)">src/utils/passwordPolicy.js</small></td>
-  <td>resetFirstAdminPassword.js node in src/scripts/resetFirstAdminPassword.js.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>bcrypt</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>bcrypt node in src/scripts/resetFirstAdminPassword.js.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>prisma node in src/scripts/resetFirstAdminPassword.js.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>{ validatePasswordStrength }</code><br><small style="color:var(--muted)">src/scripts/resetFirstAdminPassword.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>{ validatePasswordStrength } node in src/scripts/resetFirstAdminPassword.js.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/services/admin.service.js</code></td><td>17 nodes</td></tr>
-<tr><td><code>src/controllers/admin.controller.js</code></td><td>15 nodes</td></tr>
-<tr><td><code>src/routes/admin.routes.js</code></td><td>9 nodes</td></tr>
-<tr><td><code>src/utils/otp.js</code></td><td>7 nodes</td></tr>
-<tr><td><code>src/validators/adminAuth.validator.js</code></td><td>6 nodes</td></tr>
-<tr><td><code>src/scripts/createFirstAdmin.js</code></td><td>5 nodes</td></tr>
-<tr><td><code>src/scripts/resetFirstAdminPassword.js</code></td><td>5 nodes</td></tr>
-<tr><td><code>src/middlewares/auth.middleware.js</code></td><td>2 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x58, calls x34, imports x30, imports x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 9. Community 6 ====== -->
-<h2 id="community-6">9. Community 6</h2>
-<p>Community 6 groups implementation around dashboardpagetsx, frontend, pages, color, mostly in src/pages/DashboardPage.tsx. This section covers 67 nodes and 69 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Community 6 (67 nodes, 69 edges)
-    pages_dashboardpage_formatdate_d27d21fe("formatDate()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_formatrelative_827ad6a9("formatRelative()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_getgreeting_ce22f992("getGreeting()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_dashboardpage_e65e5da8("DashboardPage()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_reportssnapshotcard_10addcea("ReportsSnapshotCard()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_activity_icon_bg_ffdd719e("ACTIVITY_ICON_BG<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_activity_icon_color_f82704bb("ACTIVITY_ICON_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_avatar_colors_813b8d72("AVATAR_COLORS<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_activityavatar_2f8413b9("ActivityAvatar()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_aiinsightscard_831710e6("AiInsightsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_analyticsspin_3862c11c("AnalyticsSpin()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_calendar_color_bc079537("CALENDAR_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_chart_completed_ba99baa0("CHART_COMPLETED<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_chart_enrolled_cef3d34c("CHART_ENROLLED<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_chart_labels_4ddc9d30("CHART_LABELS<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_completion_courses_bc708f2b("COMPLETION_COURSES<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_cs_btn_7a6fed5e("CS_BTN<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_calendareventscard_4a2e434b("CalendarEventsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
-    pages_dashboardpage_getgreeting_ce22f992 -->|calls| pages_dashboardpage_dashboardpage_e65e5da8
-    pages_dashboardpage_formatrelative_827ad6a9 -->|calls| pages_dashboardpage_reportssnapshotcard_10addcea
-    pages_dashboardpage_formatdate_d27d21fe -->|calls| pages_dashboardpage_dashboardpage_e65e5da8
-    %% Omitted for readability: 49 nodes, 0 edges
-    class pages_dashboardpage_formatdate_d27d21fe ui;
-    class pages_dashboardpage_formatrelative_827ad6a9 ui;
-    class pages_dashboardpage_getgreeting_ce22f992 ui;
-    class pages_dashboardpage_dashboardpage_e65e5da8 ui;
-    class pages_dashboardpage_reportssnapshotcard_10addcea ui;
-    class pages_dashboardpage_activity_icon_bg_ffdd719e ui;
-    class pages_dashboardpage_activity_icon_color_f82704bb ui;
-    class pages_dashboardpage_avatar_colors_813b8d72 ui;
-    class pages_dashboardpage_activityavatar_2f8413b9 ui;
-    class pages_dashboardpage_aiinsightscard_831710e6 ui;
-    class pages_dashboardpage_analyticsspin_3862c11c ui;
-    class pages_dashboardpage_calendar_color_bc079537 ui;
-    class pages_dashboardpage_chart_completed_ba99baa0 ui;
-    class pages_dashboardpage_chart_enrolled_cef3d34c ui;
-    class pages_dashboardpage_chart_labels_4ddc9d30 ui;
-    class pages_dashboardpage_completion_courses_bc708f2b ui;
-    class pages_dashboardpage_cs_btn_7a6fed5e ui;
-    class pages_dashboardpage_calendareventscard_4a2e434b ui;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>DashboardPage.tsx</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Module file in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>getGreeting()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>DashboardPage()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td>getGreeting() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>formatRelative()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ReportsSnapshotCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td>formatRelative() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>formatDate()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>DashboardPage()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td>formatDate() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>KpiIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>KpiIcon() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>QaIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>QaIcon() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>LKpiCardProps</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>LKpiCardProps node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>LKpiCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>LKpiCard() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>KpiSkeleton()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>KpiSkeleton() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>StatRow()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>StatRow() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>AnalyticsSpin()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>EmptyMsg()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>EmptyMsg() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>LearningActivityChart()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>LearningActivityChart() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>ROLE_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROLE_COLORS node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>ROLE_LABELS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROLE_LABELS node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>UsersRoleDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>UsersRoleDonut() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>CompletionDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>CompletionDonut() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>AVATAR_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>AVATAR_COLORS node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>ActivityAvatar()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ActivityAvatar() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>ACTIVITY_ICON_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ACTIVITY_ICON_BG node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>ACTIVITY_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ACTIVITY_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>NOTIF_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>NOTIF_BG node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>NOTIF_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>NOTIF_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>NotifIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>NotifIcon() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>RevenueCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>RevenueCard() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>UserAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>CourseAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Orchestrates analysis and returns structured documentation data.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>InstructorPerformanceCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>InstructorPerformanceCard() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>StudentEngagementCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>StudentEngagementCard() node in src/pages/DashboardPage.tsx.</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>PRIORITY_STYLE</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>PRIORITY_STYLE node in src/pages/DashboardPage.tsx.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/pages/DashboardPage.tsx</code></td><td>67 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x66, calls x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 10. Community 33 ====== -->
-<h2 id="community-33">10. Community 33</h2>
+<!-- ====== 8. Community 33 ====== -->
+<h2 id="community-33">8. Community 33</h2>
 <p>Community 33 groups implementation around backend, services, usersservicejs, dashboardservicejs, mostly in src/services/users.service.js, src/services/dashboard.service.js, src/validators/usersImport.validator.js. This section covers 66 nodes and 132 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -3111,6 +2356,742 @@ flowchart LR
   <div class="card">
     <h4>Design Notes</h4>
     <p>This section comes from graphify community clustering. Relationship summary: calls x64, contains x63, imports x3, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 9. Community 6 ====== -->
+<h2 id="community-6">9. Community 6</h2>
+<p>Community 6 groups implementation around dashboardpagetsx, frontend, pages, color, mostly in src/pages/DashboardPage.tsx. This section covers 64 nodes and 64 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 6 (64 nodes, 64 edges)
+    pages_dashboardpage_formatrelative_827ad6a9("formatRelative()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_reportssnapshotcard_10addcea("ReportsSnapshotCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_activity_icon_bg_ffdd719e("ACTIVITY_ICON_BG<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_activity_icon_color_f82704bb("ACTIVITY_ICON_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_avatar_colors_813b8d72("AVATAR_COLORS<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_activityavatar_2f8413b9("ActivityAvatar()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_aiinsightscard_831710e6("AiInsightsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_analyticsspin_3862c11c("AnalyticsSpin()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_calendar_color_bc079537("CALENDAR_COLOR<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_completed_ba99baa0("CHART_COMPLETED<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_enrolled_cef3d34c("CHART_ENROLLED<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_chart_labels_4ddc9d30("CHART_LABELS<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_completion_courses_bc708f2b("COMPLETION_COURSES<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_cs_btn_7a6fed5e("CS_BTN<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_calendareventscard_4a2e434b("CalendarEventsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_completiondonut_71726dc0("CompletionDonut()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_courseanalyticscard_121d7fa8("CourseAnalyticsCard()<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_dept_data_2c272e52("DEPT_DATA<br/><small>src/pages/DashboardPage.tsx</small>")
+    pages_dashboardpage_formatrelative_827ad6a9 -->|calls| pages_dashboardpage_reportssnapshotcard_10addcea
+    %% Omitted for readability: 46 nodes, 0 edges
+    class pages_dashboardpage_formatrelative_827ad6a9 ui;
+    class pages_dashboardpage_reportssnapshotcard_10addcea ui;
+    class pages_dashboardpage_activity_icon_bg_ffdd719e ui;
+    class pages_dashboardpage_activity_icon_color_f82704bb ui;
+    class pages_dashboardpage_avatar_colors_813b8d72 ui;
+    class pages_dashboardpage_activityavatar_2f8413b9 ui;
+    class pages_dashboardpage_aiinsightscard_831710e6 ui;
+    class pages_dashboardpage_analyticsspin_3862c11c ui;
+    class pages_dashboardpage_calendar_color_bc079537 ui;
+    class pages_dashboardpage_chart_completed_ba99baa0 ui;
+    class pages_dashboardpage_chart_enrolled_cef3d34c ui;
+    class pages_dashboardpage_chart_labels_4ddc9d30 ui;
+    class pages_dashboardpage_completion_courses_bc708f2b ui;
+    class pages_dashboardpage_cs_btn_7a6fed5e ui;
+    class pages_dashboardpage_calendareventscard_4a2e434b ui;
+    class pages_dashboardpage_completiondonut_71726dc0 ui;
+    class pages_dashboardpage_courseanalyticscard_121d7fa8 ui;
+    class pages_dashboardpage_dept_data_2c272e52 ui;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>DashboardPage.tsx</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>formatRelative()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ReportsSnapshotCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td>formatRelative() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>KpiIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>KpiIcon() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>QaIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>QaIcon() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>LKpiCardProps</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LKpiCardProps node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>LKpiCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LKpiCard() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>KpiSkeleton()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>KpiSkeleton() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>StatRow()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>StatRow() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>AnalyticsSpin()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>EmptyMsg()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>EmptyMsg() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>LearningActivityChart()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>LearningActivityChart() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>ROLE_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ROLE_COLORS node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>ROLE_LABELS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ROLE_LABELS node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>UsersRoleDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>UsersRoleDonut() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>CompletionDonut()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>CompletionDonut() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>AVATAR_COLORS</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AVATAR_COLORS node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>ActivityAvatar()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ActivityAvatar() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>ACTIVITY_ICON_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ACTIVITY_ICON_BG node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>ACTIVITY_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ACTIVITY_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>NOTIF_BG</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NOTIF_BG node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>NOTIF_ICON_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NOTIF_ICON_COLOR node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>NotifIcon()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NotifIcon() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>RevenueCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>RevenueCard() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>UserAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>CourseAnalyticsCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Orchestrates analysis and returns structured documentation data.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>InstructorPerformanceCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>InstructorPerformanceCard() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>StudentEngagementCard()</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>StudentEngagementCard() node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>PRIORITY_STYLE</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>PRIORITY_STYLE node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>TX_STATUS_COLOR</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TX_STATUS_COLOR node in src/pages/DashboardPage.tsx.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>TX_TYPE_LABEL</code><br><small style="color:var(--muted)">src/pages/DashboardPage.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TX_TYPE_LABEL node in src/pages/DashboardPage.tsx.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/pages/DashboardPage.tsx</code></td><td>64 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x63, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 10. Community 5 ====== -->
+<h2 id="community-5">10. Community 5</h2>
+<p>Community 5 groups implementation around backend, adminservicejs, services, admincontrollerjs, mostly in src/services/admin.service.js, src/controllers/admin.controller.js, src/routes/admin.routes.js. This section covers 56 nodes and 111 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Community 5 (56 nodes, 111 edges)
+    subgraph community_5_src_controllers_admin_controller_js_7f948352["src/controllers/admin.controller.js"]
+        backend_src_controllers_admin_controller_js_b63946ac("admin.controller.js")
+        controllers_admin_controller_adminforgotpassword_a4ea2a59("adminForgotPasswordController()<br/><small>src/controllers/admin.controller.js</small>")
+        controllers_admin_controller_adminlogincontrolle_6b0723b0("adminLoginController()<br/><small>src/controllers/admin.controller.js</small>")
+        controllers_admin_controller_adminlogoutcontroll_4537960c("adminLogoutController()<br/><small>src/controllers/admin.controller.js</small>")
+        controllers_admin_controller_adminsendotpcontrol_ecb9a420("adminSendOtpController()<br/><small>src/controllers/admin.controller.js</small>")
+        controllers_admin_controller_adminverifyotpcontr_e7f63202("adminVerifyOtpController()<br/><small>src/controllers/admin.controller.js</small>")
+        controllers_admin_controller_admingettrusteddevi_f947e88b("adminGetTrustedDevicesController()<br/><small>src/controllers/admin.controller.js</small>")
+        controllers_admin_controller_adminrevoketrustedd_a538f683("adminRevokeTrustedDeviceController()<br/><small>src/controllers/admin.controller.js</small>")
+    end
+    subgraph community_5_src_services_admin_service_js_d02d771d["src/services/admin.service.js"]
+        services_admin_service_createauditlog_45451904("createAuditLog()<br/><small>src/services/admin.service.js</small>")
+        backend_src_services_admin_service_js_f1a7d2ad("admin.service.js")
+        services_admin_service_loginadmin_35916378("loginAdmin()<br/><small>src/services/admin.service.js</small>")
+        services_admin_service_logoutadmin_dda61286("logoutAdmin()<br/><small>src/services/admin.service.js</small>")
+        services_admin_service_sendadminotp_3504d1ec("sendAdminOtp()<br/><small>src/services/admin.service.js</small>")
+        services_admin_service_verifyadminotp_fd2e04c0("verifyAdminOtp()<br/><small>src/services/admin.service.js</small>")
+        services_admin_service_getadmintrusteddevices_2d1a3649("getAdminTrustedDevices()<br/><small>src/services/admin.service.js</small>")
+    end
+    subgraph community_5_src_validators_adminAuth_validator_j_9e479ef0["src/validators/adminAuth.validator.js"]
+        validators_adminauth_validator_validateadminlogi_be61160e("validateAdminLoginInput()<br/><small>src/validators/adminAuth.validator.js</small>")
+        validators_adminauth_validator_validateadminotpi_1aa0183c("validateAdminOtpInput()<br/><small>src/validators/adminAuth.validator.js</small>")
+    end
+    middlewares_auth_middleware_invalidatecachedsess_e12311be("invalidateCachedSession()<br/><small>src/middlewares/auth.middleware.js</small>")
+    controllers_admin_controller_adminlogincontrolle_6b0723b0 -->|calls| validators_adminauth_validator_validateadminlogi_be61160e
+    controllers_admin_controller_adminlogincontrolle_6b0723b0 -->|calls| services_admin_service_loginadmin_35916378
+    controllers_admin_controller_adminlogoutcontroll_4537960c -->|calls| middlewares_auth_middleware_invalidatecachedsess_e12311be
+    controllers_admin_controller_adminlogoutcontroll_4537960c -->|calls| services_admin_service_logoutadmin_dda61286
+    controllers_admin_controller_adminsendotpcontrol_ecb9a420 -->|calls| services_admin_service_sendadminotp_3504d1ec
+    controllers_admin_controller_adminverifyotpcontr_e7f63202 -->|calls| validators_adminauth_validator_validateadminotpi_1aa0183c
+    controllers_admin_controller_adminverifyotpcontr_e7f63202 -->|calls| services_admin_service_verifyadminotp_fd2e04c0
+    controllers_admin_controller_admingettrusteddevi_f947e88b -->|calls| services_admin_service_getadmintrusteddevices_2d1a3649
+    services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_loginadmin_35916378
+    services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_logoutadmin_dda61286
+    services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_sendadminotp_3504d1ec
+    services_admin_service_createauditlog_45451904 -->|calls| services_admin_service_verifyadminotp_fd2e04c0
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| validators_adminauth_validator_validateadminlogi_be61160e
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| validators_adminauth_validator_validateadminotpi_1aa0183c
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| backend_src_services_admin_service_js_f1a7d2ad
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_loginadmin_35916378
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_logoutadmin_dda61286
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_sendadminotp_3504d1ec
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_verifyadminotp_fd2e04c0
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| services_admin_service_getadmintrusteddevices_2d1a3649
+    backend_src_controllers_admin_controller_js_b63946ac -->|imports| middlewares_auth_middleware_invalidatecachedsess_e12311be
+    %% Omitted for readability: 38 nodes, 0 edges
+    class backend_src_controllers_admin_controller_js_b63946ac module;
+    class controllers_admin_controller_adminforgotpassword_a4ea2a59 function;
+    class controllers_admin_controller_adminlogincontrolle_6b0723b0 function;
+    class controllers_admin_controller_adminlogoutcontroll_4537960c function;
+    class controllers_admin_controller_adminsendotpcontrol_ecb9a420 function;
+    class controllers_admin_controller_adminverifyotpcontr_e7f63202 function;
+    class controllers_admin_controller_admingettrusteddevi_f947e88b function;
+    class controllers_admin_controller_adminrevoketrustedd_a538f683 function;
+    class services_admin_service_createauditlog_45451904 function;
+    class backend_src_services_admin_service_js_f1a7d2ad module;
+    class services_admin_service_loginadmin_35916378 function;
+    class services_admin_service_logoutadmin_dda61286 function;
+    class services_admin_service_sendadminotp_3504d1ec function;
+    class services_admin_service_verifyadminotp_fd2e04c0 function;
+    class services_admin_service_getadmintrusteddevices_2d1a3649 function;
+    class validators_adminauth_validator_validateadminlogi_be61160e function;
+    class validators_adminauth_validator_validateadminotpi_1aa0183c function;
+    class middlewares_auth_middleware_invalidatecachedsess_e12311be function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>admin.controller.js</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>admin.service.js</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>adminAuth.validator.js</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small><br>+13 more</td>
+  <td>admin.controller.js node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>{
+  validateAdminLoginInput,
+  validateAdminOtpInput,
+  validateForgotPasswordInput,
+  validateResetPasswordInput,
+
+}</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{
+  validateAdminLoginInput,
+  validateAdminOtpInput,
+  validateForgotPasswordInput,
+  validateResetPasswordInput,
+
+} node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>{
+  loginAdmin,
+  logoutAdmin,
+  sendAdminOtp,
+  verifyAdminOtp,
+  getAdminTrustedDevices,
+  revokeAdminTrustedDevice,
+  forgotAdminPassword,
+  resetAdminPassword,
+}</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{
+  loginAdmin,
+  logoutAdmin,
+  sendAdminOtp,
+  verifyAdminOtp,
+  getAdminTrustedDevices,
+  revokeAdminTrustedDevice,
+  forgotAdminPassword,
+  resetAdminPassword,
+} node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>{ invalidateCachedSession }</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Caches analysis results or computes cache keys.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>adminLoginController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>loginAdmin()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>validateAdminLoginInput()</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small></td>
+  <td>adminLoginController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>adminLogoutController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>invalidateCachedSession()</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small><br><code>logoutAdmin()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td>adminLogoutController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>adminMeController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
+  <td>adminMeController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>adminSendOtpController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>sendAdminOtp()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td>adminSendOtpController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>adminVerifyOtpController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>validateAdminOtpInput()</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small><br><code>verifyAdminOtp()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td>adminVerifyOtpController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>adminGetTrustedDevicesController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>getAdminTrustedDevices()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td>adminGetTrustedDevicesController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>adminRevokeTrustedDeviceController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>revokeAdminTrustedDevice()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td>adminRevokeTrustedDeviceController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>adminForgotPasswordController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>forgotAdminPassword()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>validateForgotPasswordInput()</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small></td>
+  <td>adminForgotPasswordController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>adminResetPasswordController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small><br><code>resetAdminPassword()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>validateResetPasswordInput()</code><br><small style="color:var(--muted)">src/validators/adminAuth.validator.js</small></td>
+  <td>adminResetPasswordController() node in src/controllers/admin.controller.js.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>invalidateCachedSession()</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>admin.controller.js</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br><code>adminLogoutController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>Caches analysis results or computes cache keys.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>clearAllCachedSessions()</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>admin.service.js</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>resetAdminPassword()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td>Caches analysis results or computes cache keys.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>admin.routes.js</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
+  <td><span class="tag tag-endpoint">API</span></td>
+  <td><code>admin.controller.js</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br><code>adminForgotPasswordController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br><code>adminGetTrustedDevicesController()</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br>+7 more</td>
+  <td>No direct outbound edge</td>
+  <td>admin.routes.js node in src/routes/admin.routes.js.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>express</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>express node in src/routes/admin.routes.js.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>{
+  adminLoginController,
+  adminMeController,
+  adminLogoutController,
+  adminSendOtpController,
+  adminVerifyOtpController,
+  adminGetTrustedDevicesController,
+  adminRevokeTrustedDeviceController,
+  adminForgotPasswordController,
+  adminResetPasswordController,
+
+}</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{
+  adminLoginController,
+  adminMeController,
+  adminLogoutController,
+  adminSendOtpController,
+  adminVerifyOtpController,
+  adminGetTrustedDevicesController,
+  adminRevokeTrustedDeviceController,
+  adminForgotPasswordController,
+  adminResetPasswordController,
+
+} node in src/routes/admin.routes.js.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>{ requireAdminAuth }</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ requireAdminAuth } node in src/routes/admin.routes.js.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>{ adminLoginRateLimiter, otpRequestRateLimiter }</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ adminLoginRateLimiter, otpRequestRateLimiter } node in src/routes/admin.routes.js.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>router</code><br><small style="color:var(--muted)">src/routes/admin.routes.js</small></td>
+  <td><span class="tag tag-endpoint">API</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>router node in src/routes/admin.routes.js.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>admin.service.js</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>admin.controller.js</code><br><small style="color:var(--muted)">src/controllers/admin.controller.js</small><br><code>clearAllCachedSessions()</code><br><small style="color:var(--muted)">src/middlewares/auth.middleware.js</small></td>
+  <td><code>compareOtpCode()</code><br><small style="color:var(--muted)">src/utils/otp.js</small><br><code>generateOtpCode()</code><br><small style="color:var(--muted)">src/utils/otp.js</small><br><code>getOtpExpiryDate()</code><br><small style="color:var(--muted)">src/utils/otp.js</small><br>+2 more</td>
+  <td>admin.service.js node in src/services/admin.service.js.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>bcrypt</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>bcrypt node in src/services/admin.service.js.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>prisma node in src/services/admin.service.js.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>{ generateSessionToken, getSessionExpiryDate }</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>{ generateSessionToken, getSessionExpiryDate } node in src/services/admin.service.js.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>{ clearAllCachedSessions }</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Caches analysis results or computes cache keys.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>{
+  generateOtpCode,
+  hashOtpCode,
+  compareOtpCode,
+  getOtpExpiryDate,
+}</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Caches analysis results or computes cache keys.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>recordLoginAttempt()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>loginAdmin()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td>recordLoginAttempt() node in src/services/admin.service.js.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>createAuditLog()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>forgotAdminPassword()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>loginAdmin()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br><code>logoutAdmin()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small><br>+4 more</td>
+  <td>createAuditLog() node in src/services/admin.service.js.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>isLoginTemporarilyBlocked()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>loginAdmin()</code><br><small style="color:var(--muted)">src/services/admin.service.js</small></td>
+  <td>isLoginTemporarilyBlocked() node in src/services/admin.service.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/services/admin.service.js</code></td><td>17 nodes</td></tr>
+<tr><td><code>src/controllers/admin.controller.js</code></td><td>15 nodes</td></tr>
+<tr><td><code>src/routes/admin.routes.js</code></td><td>9 nodes</td></tr>
+<tr><td><code>src/utils/otp.js</code></td><td>7 nodes</td></tr>
+<tr><td><code>src/validators/adminAuth.validator.js</code></td><td>6 nodes</td></tr>
+<tr><td><code>src/middlewares/auth.middleware.js</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x49, calls x31, imports x27, imports x4. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4896,12 +4877,12 @@ flowchart LR
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around frontend, backend, components, pages, mostly in components/users/UserDetailsDrawer.tsx, src/layouts/AdminLayout.tsx, src/services/organization.service.js. This section covers 1128 nodes and 1557 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around frontend, backend, components, pages, mostly in components/users/UserDetailsDrawer.tsx, src/services/organization.service.js, src/layouts/AdminLayout.tsx. This section covers 1229 nodes and 1714 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (1128 nodes, 1557 edges)
+    %% Section: Other (1229 nodes, 1714 edges)
     subgraph other_src_controllers_accessPolicies_controller_9fb054bb["src/controllers/accessPolicies.controller.js"]
         controllers_accesspolicies_controller_badrequest_a8be4144("badRequest()<br/><small>src/controllers/accessPolicies.controller.js</small>")
         controllers_accesspolicies_controller_listaccess_da2be073("listAccessPolicies()<br/><small>src/controllers/accessPolicies.controller.js</small>")
@@ -4923,7 +4904,7 @@ flowchart LR
     end
     backend_server_js_8b5ab4c1("server.js")
     src_authcontext_useauth_410e9db1("useAuth()<br/><small>frontend/src/AuthContext.tsx</small>")
-    controllers_lm_controller_servererror_ce32ba63("serverError()<br/><small>src/controllers/lm.controller.js</small>")
+    backend_src_controllers_users_controller_js_108e1036("users.controller.js")
     services_organization_service_invalidateorgchart_b94554ba("invalidateOrgChartCache()<br/><small>src/services/organization.service.js</small>")
     validators_accesspolicies_validator_validatelist_a270741d("validateListQuery()<br/><small>src/validators/accessPolicies.validator.js</small>")
     scripts_audittestdata_line_230be37d -->|calls| scripts_audittestdata_main_03932f2e
@@ -4943,7 +4924,7 @@ flowchart LR
     controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_updateacce_6222732d
     controllers_accesspolicies_controller_servererro_a802c419 -->|calls| controllers_accesspolicies_controller_deleteacce_1bb22a72
     controllers_accesspolicies_controller_listaccess_da2be073 -->|calls| validators_accesspolicies_validator_validatelist_a270741d
-    %% Omitted for readability: 1110 nodes, 0 edges
+    %% Omitted for readability: 1211 nodes, 0 edges
     class controllers_accesspolicies_controller_badrequest_a8be4144 function;
     class controllers_accesspolicies_controller_listaccess_da2be073 function;
     class controllers_accesspolicies_controller_getaccessp_1c51e92e function;
@@ -4959,7 +4940,7 @@ flowchart LR
     class backend_src_controllers_roles_controller_js_e02de260 module;
     class backend_server_js_8b5ab4c1 module;
     class src_authcontext_useauth_410e9db1 ui;
-    class controllers_lm_controller_servererror_ce32ba63 function;
+    class backend_src_controllers_users_controller_js_108e1036 module;
     class services_organization_service_invalidateorgchart_b94554ba function;
     class validators_accesspolicies_validator_validatelist_a270741d function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
@@ -4985,253 +4966,253 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>courses.controller.js</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>lm.controller.js</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>courses.service.js</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>courses.validator.js</code><br><small style="color:var(--muted)">src/validators/courses.validator.js</small><br><code>validateCreate()</code><br><small style="color:var(--muted)">src/validators/courses.validator.js</small><br>+3 more</td>
-  <td>courses.controller.js node in src/controllers/courses.controller.js.</td>
+  <td><code>lm.routes.js</code><br><small style="color:var(--muted)">src/routes/lm.routes.js</small><br><code>lm.service.js</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>lm.validator.js</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small><br>+4 more</td>
+  <td>lm.controller.js node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>svc</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>svc node in src/controllers/courses.controller.js.</td>
+  <td>svc node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>3</td>
   <td><code>{
-  validateId,
-  validateListQuery,
-  validateCreate,
-  validateUpdate,
-}</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  validateRange,
+  validateLimit,
+  validateSessionStatus,
+  validateCoursesQuery,
+}</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>{
-  validateId,
-  validateListQuery,
-  validateCreate,
-  validateUpdate,
-} node in src/controllers/courses.controller.js.</td>
+  validateRange,
+  validateLimit,
+  validateSessionStatus,
+  validateCoursesQuery,
+} node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>archiveCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>createCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>getCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br>+4 more</td>
-  <td>badRequest() node in src/controllers/courses.controller.js.</td>
+  <td><code>getCourses()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>getLiveSessions()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>getProgress()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td>badRequest() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>getCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td>notFound() node in src/controllers/courses.controller.js.</td>
+  <td><code>getActivities()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>getContentStats()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>getCourses()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br>+6 more</td>
+  <td>serverError() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>getStats()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td><code>createCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td>handleDomainError() node in src/controllers/courses.controller.js.</td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>getStats() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>getDistribution()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td><code>archiveCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>createCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>getCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br>+2 more</td>
-  <td>serverError() node in src/controllers/courses.controller.js.</td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>getDistribution() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>listCourses()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>getProgress()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>listCourses() node in src/controllers/courses.controller.js.</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>validateRange()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
+  <td>getProgress() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>getCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>getTopCourses()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>notFound()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getCourse() node in src/controllers/courses.controller.js.</td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>validateLimit()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
+  <td>getTopCourses() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>createCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>getContentStats()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td>No direct outbound edge</td>
-  <td>createCourse() node in src/controllers/courses.controller.js.</td>
+  <td>getContentStats() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>updateCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>getCourses()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>handleDomainError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>updateCourse() node in src/controllers/courses.controller.js.</td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>validateCoursesQuery()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
+  <td>getCourses() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>archiveCourse()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
+  <td><code>getActivities()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>archiveCourse() node in src/controllers/courses.controller.js.</td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>validateLimit()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
+  <td>getActivities() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>courses.service.js</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>courses.controller.js</code><br><small style="color:var(--muted)">src/controllers/courses.controller.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>courses.service.js node in src/services/courses.service.js.</td>
+  <td><code>getLiveSessions()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>badRequest()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small><br><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
+  <td><code>validateSessionStatus()</code><br><small style="color:var(--muted)">src/validators/lm.validator.js</small></td>
+  <td>getLiveSessions() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>getFilterOptions()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>serverError()</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td>No direct outbound edge</td>
-  <td>prisma node in src/services/courses.service.js.</td>
+  <td>getFilterOptions() node in src/controllers/lm.controller.js.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>LEVEL_ENUM</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>lm.service.js</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>lm.controller.js</code><br><small style="color:var(--muted)">src/controllers/lm.controller.js</small></td>
   <td>No direct outbound edge</td>
-  <td>LEVEL_ENUM node in src/services/courses.service.js.</td>
+  <td>lm.service.js node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>STATUS_ENUM</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>prisma</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>STATUS_ENUM node in src/services/courses.service.js.</td>
+  <td>prisma node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>LEVEL_LABEL</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>LEVEL_LABEL</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>LEVEL_LABEL node in src/services/courses.service.js.</td>
+  <td>LEVEL_LABEL node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>STATUS_LABEL</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>STATUS_LABEL</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>STATUS_LABEL node in src/services/courses.service.js.</td>
+  <td>STATUS_LABEL node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>safe()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SERIES_BY_STATUS</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>getCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>listCourses()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>safe() node in src/services/courses.service.js.</td>
+  <td>No direct outbound edge</td>
+  <td>SERIES_BY_STATUS node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>safe()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>mapFull()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>mapRow()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>iso() node in src/services/courses.service.js.</td>
+  <td><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>getActivities()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>getContentStats()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br>+6 more</td>
+  <td>safe() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>paginate()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>listCourses()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>paginate() node in src/services/courses.service.js.</td>
+  <td>No direct outbound edge</td>
+  <td>iso() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>buildPagination()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>ymd()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>listCourses()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>buildPagination() node in src/services/courses.service.js.</td>
+  <td><code>buildDayBuckets()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>buildMonthBuckets()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>getProgress()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>ymd() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>assertInstructorExists()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><span class="tag tag-async">Async</span></td>
+  <td><code>monthBounds()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>createCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>assertInstructorExists() node in src/services/courses.service.js.</td>
+  <td><code>avgCompletionRate()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>monthBounds() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>courseAuditLog()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>growthPct()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>archiveCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>createCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>courseAuditLog() node in src/services/courses.service.js.</td>
+  <td><code>avgCompletionRate()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>growthPct() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>ROW_SELECT</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ROW_SELECT node in src/services/courses.service.js.</td>
+  <td><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>growthPct()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>monthBounds()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>safe()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>getStats()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>countWithGrowth() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>FULL_SELECT</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>FULL_SELECT node in src/services/courses.service.js.</td>
+  <td><code>avgCompletionRate()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>growthPct()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>monthBounds()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>getStats()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>avgCompletionRate() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>mapRow()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>getStats()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><code>mapFull()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>mapRow() node in src/services/courses.service.js.</td>
+  <td><code>avgCompletionRate()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small><br><code>countWithGrowth()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>getStats() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>mapFull()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>getDistribution()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>iso()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>mapRow()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td><code>createCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>getCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>updateCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>mapFull() node in src/services/courses.service.js.</td>
+  <td><code>safe()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>getDistribution() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>listCourses()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>buildDayBuckets()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>buildPagination()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>paginate()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>safe()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>listCourses() node in src/services/courses.service.js.</td>
+  <td><code>ymd()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>getProgress()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>buildDayBuckets() node in src/services/lm.service.js.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>getCourse()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
+  <td><code>buildMonthBuckets()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>mapFull()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small><br><code>safe()</code><br><small style="color:var(--muted)">src/services/courses.service.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>getCourse() node in src/services/courses.service.js.</td>
+  <td><code>ymd()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td><code>getProgress()</code><br><small style="color:var(--muted)">src/services/lm.service.js</small></td>
+  <td>buildMonthBuckets() node in src/services/lm.service.js.</td>
 </tr>
 </table>
 
@@ -5243,16 +5224,16 @@ flowchart LR
       <tr><td><code>src/services/organization.service.js</code></td><td>33 nodes</td></tr>
 <tr><td><code>components/users/UserDetailsDrawer.tsx</code></td><td>33 nodes</td></tr>
 <tr><td><code>src/layouts/AdminLayout.tsx</code></td><td>33 nodes</td></tr>
+<tr><td><code>src/controllers/users.controller.js</code></td><td>27 nodes</td></tr>
 <tr><td><code>backend/server.js</code></td><td>25 nodes</td></tr>
 <tr><td><code>src/services/roles.service.js</code></td><td>25 nodes</td></tr>
 <tr><td><code>src/controllers/roles.controller.js</code></td><td>23 nodes</td></tr>
 <tr><td><code>src/services/lm.service.js</code></td><td>23 nodes</td></tr>
-<tr><td><code>src/services/courses.service.js</code></td><td>21 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x971, calls x303, imports x163, imports x118. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x1060, calls x332, imports x198, imports x122. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -5263,17 +5244,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>3237</td></tr>
-      <tr><td>Edges</td><td>4948</td></tr>
+      <tr><td>Nodes</td><td>3317</td></tr>
+      <tr><td>Edges</td><td>5028</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>180</td></tr>
+      <tr><td>Communities</td><td>196</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>4946</td></tr>
+      <tr><td>EXTRACTED</td><td>5026</td></tr>
       <tr><td>INFERRED</td><td>2</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -5282,7 +5263,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>mindnavy LMS — Architecture Documentation</p>
-  <p>Generated: 2026-07-08 20:51 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-07-09 04:10 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->
