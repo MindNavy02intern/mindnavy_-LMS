@@ -1,8 +1,8 @@
 // Validation for the Uploads API (/api/admin/uploads).
-// Phase 1 supports thumbnails only; "video" is accepted by the validator but the
-// service rejects it with a clear "coming soon" message (real video lands on
-// Cloudflare Stream in Phase 2). Keeping the shape here means the frontend flow
-// and contract don't change when video is switched on.
+// Supports "thumbnail" (image → Course.thumbnail) and "video" (→ Lesson.content).
+// Video confirm requires a lessonId; the service re-verifies the stored object and
+// binds it to that lesson. This validator only checks request shape — ownership and
+// storage existence are enforced in the service.
 
 const KINDS = ["thumbnail", "video"];
 
@@ -65,6 +65,7 @@ function validateConfirm(body = {}) {
     ? null
     : (isNonEmptyString(body.lessonId) ? body.lessonId.trim() : "");
   if (lessonId === "") errors.push("lessonId must be a non-empty string when provided.");
+  else if (kind === "video" && !lessonId) errors.push("lessonId is required for video uploads.");
 
   return { isValid: errors.length === 0, errors, data: { courseId, path, kind, lessonId } };
 }
@@ -74,7 +75,17 @@ function validateDelete(query = {}) {
   const path = isNonEmptyString(query.path) ? query.path.trim() : "";
   if (!path) errors.push("path query param is required.");
   else if (path.length > MAX.path) errors.push(`path must be at most ${MAX.path} characters.`);
-  return { isValid: errors.length === 0, errors, data: { path } };
+
+  // kind is optional here (default "thumbnail") so existing thumbnail-only callers
+  // keep working; pass ?kind=video to delete from the video bucket.
+  let kind = "thumbnail";
+  if (isNonEmptyString(query.kind)) {
+    const k = query.kind.trim().toLowerCase();
+    if (!KINDS.includes(k)) errors.push('kind must be "thumbnail" or "video".');
+    else kind = k;
+  }
+
+  return { isValid: errors.length === 0, errors, data: { path, kind } };
 }
 
 module.exports = {

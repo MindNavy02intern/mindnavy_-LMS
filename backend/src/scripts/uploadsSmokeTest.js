@@ -2,10 +2,11 @@
  * Smoke test for the Uploads endpoints (/api/admin/uploads).
  *
  * Two layers:
- *   A) Always-on: auth guard + input validation + Phase-1 "video coming soon" +
- *      path-scoping on delete. These pass whether or not Supabase is configured.
+ *   A) Always-on: auth guard + input validation (incl. video mime + required
+ *      lessonId) + path-scoping on delete. Pass whether or not Supabase is set up.
  *   B) Live flow (only if storage is configured): sign → PUT a tiny image to the
  *      signed URL → confirm (verifies object + sets Course.thumbnail) → delete.
+ *      (Live video flow isn't covered here — it needs a real section + lesson.)
  *
  * Prerequisites:
  *   1. Backend server running (default http://localhost:5001).
@@ -81,8 +82,11 @@ async function main() {
   const badMime = await req("POST", "/uploads/sign", { fileName: "a.pdf", fileType: "application/pdf", kind: "thumbnail", courseId });
   ok("sign disallowed mime -> 400", badMime.status === 400, `got ${badMime.status}`);
 
-  const videoKind = await req("POST", "/uploads/sign", { fileName: "v.mp4", fileType: "video/mp4", kind: "video", courseId });
-  ok("sign video kind -> 400 (Phase 1: coming soon)", videoKind.status === 400, `got ${videoKind.status}`);
+  const videoBadMime = await req("POST", "/uploads/sign", { fileName: "v.png", fileType: "image/png", kind: "video", courseId });
+  ok("sign video with non-video mime -> 400", videoBadMime.status === 400, `got ${videoBadMime.status}`);
+
+  const videoNoLesson = await req("POST", "/uploads/confirm", { courseId, path: `${courseId}/x.mp4`, kind: "video" });
+  ok("confirm video without lessonId -> 400", videoNoLesson.status === 400, `got ${videoNoLesson.status}`);
 
   const badPath = await req("DELETE", `/uploads?path=${encodeURIComponent("../secret")}`);
   ok("delete traversal path -> 400", badPath.status === 400, `got ${badPath.status}`);
@@ -92,7 +96,7 @@ async function main() {
   const sign = await req("POST", "/uploads/sign", { fileName: "thumb.png", fileType: "image/png", kind: "thumbnail", courseId });
 
   if (sign.status === 503) {
-    console.log("  … storage not configured — skipping live upload flow (this is fine for Phase 1).");
+    console.log("  … storage not configured — skipping live upload flow (this is fine).");
   } else {
     ok("sign -> 200", sign.status === 200, `got ${sign.status}`);
     const { uploadUrl, path } = sign.json?.data ?? {};
