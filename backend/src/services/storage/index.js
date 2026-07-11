@@ -1,7 +1,7 @@
 // Storage adapter selector.
 //
 // Every provider (Supabase now, Cloudflare Stream/R2 later) implements the SAME
-// interface: { name, isConfigured, createSignedUpload, objectExists,
+// interface: { name, isConfigured, createSignedUpload, statObject, objectExists,
 // getPublicUrl, removeObject }. The uploads service talks ONLY to this module, so
 // swapping providers later is a one-line change here (plus a new provider file) —
 // no endpoint, contract, or frontend change.

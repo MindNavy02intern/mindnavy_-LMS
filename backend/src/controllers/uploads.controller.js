@@ -19,12 +19,22 @@ function handleDomainError(res, err) {
   switch (err.code) {
     case "COURSE_NOT_FOUND":
       return notFound(res, "Course not found.");
+    case "LESSON_NOT_FOUND":
+      return notFound(res, "Lesson not found.");
     case "OBJECT_NOT_FOUND":
       return badRequest(res, "The file was not found in storage — the upload did not complete.");
     case "BAD_PATH":
       return badRequest(res, "Invalid file path.");
-    case "VIDEO_UPLOAD_NOT_ENABLED":
-      return badRequest(res, "Video upload is coming soon — use a video URL for now.");
+    case "LESSON_ID_REQUIRED":
+      return badRequest(res, "lessonId is required for video uploads.");
+    case "LESSON_COURSE_MISMATCH":
+      return badRequest(res, "That lesson does not belong to this course.");
+    case "LESSON_NOT_VIDEO":
+      return badRequest(res, "The target lesson is not a video lesson.");
+    case "FILE_TOO_LARGE":
+      return badRequest(res, "The uploaded file exceeds the maximum allowed size.");
+    case "BAD_FILE_TYPE":
+      return badRequest(res, "The uploaded file type is not allowed.");
     case "STORAGE_NOT_CONFIGURED":
       return res.status(503).json({ success: false, message: "File storage is not configured yet." });
     case "STORAGE_SIGN_FAILED":
