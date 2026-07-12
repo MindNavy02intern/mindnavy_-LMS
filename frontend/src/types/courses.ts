@@ -25,7 +25,7 @@ export interface CourseListRow {
   id:           string;
   title:        string;
   instructor:   string;
-  instructorId: string;
+  instructorId: string | null; // null when the instructor account was deleted
   category:     string; // plain string — no Category table
   level:        CourseLevel;
   enrolledCount: number;

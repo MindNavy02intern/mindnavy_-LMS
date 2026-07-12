@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Plus, ChevronLeft } from 'lucide-react';
-import { getLmFilterOptions } from '../../services/lmApi';
+import { getLmFilterOptions, LmApiError } from '../../services/lmApi';
 import { getCourse, createCourse, updateCourse } from '../../services/coursesApi';
 import { CourseApiError } from '../../types/courses';
 import type { CourseDetail, CourseLevel, CreateCoursePayload } from '../../types/courses';
@@ -41,6 +41,7 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
   const navigate = useNavigate();
 
   const [filterOptions, setFilterOptions] = useState<LmFilterOptions | null>(null);
+  const [filterError,  setFilterError]  = useState<string | null>(null);
   const [values,     setValues]     = useState<FormValues>(EMPTY);
   const [original,   setOriginal]   = useState<FormValues>(EMPTY);
   const [tagInput,   setTagInput]   = useState('');
@@ -50,10 +51,20 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
   const [globalError, setGlobalError]  = useState<string | null>(null);
 
-  // Load filter-options
+  // Load filter-options — handle 401 (redirect) and other errors (warn inline).
   useEffect(() => {
-    getLmFilterOptions().then(setFilterOptions).catch(() => null);
-  }, []);
+    getLmFilterOptions()
+      .then((opts) => {
+        setFilterOptions(opts);
+        if (opts.instructors.length === 0) {
+          setFilterError('No instructors found. Ask an admin to add instructors before saving a course.');
+        }
+      })
+      .catch((err) => {
+        if (err instanceof LmApiError && err.status === 401) { navigate('/login'); return; }
+        setFilterError('Could not load form options. Please refresh the page and try again.');
+      });
+  }, [navigate]);
 
   // Prefill form in edit mode
   useEffect(() => {
@@ -72,7 +83,7 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
           language:     c.language     ?? '',
           level:        c.level,
           thumbnail:    c.thumbnail    ?? '',
-          instructorId: c.instructorId,
+          instructorId: c.instructorId ?? '', // null if instructor was deleted
         };
         setValues(v);
         setOriginal(v);
@@ -143,6 +154,8 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
           if (k === 'tags') {
             if (JSON.stringify(v) !== JSON.stringify(o)) patch[k] = v;
           } else if (v !== o) {
+            // Backend 400s on null for level and instructorId — omit instead of sending null.
+            if ((k === 'level' || k === 'instructorId') && v === '') return;
             patch[k] = v === '' ? null : v;
           }
         });
@@ -348,6 +361,9 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
             </select>
             {fieldErrors.instructorId && (
               <p className="tw:mt-1 tw:text-[11px] tw:text-red-500">{fieldErrors.instructorId}</p>
+            )}
+            {filterError && (
+              <p className="tw:mt-1 tw:text-[11px] tw:text-amber-600">⚠ {filterError}</p>
             )}
             {instructor && (
               <p className="tw:mt-1 tw:text-[11px] tw:text-slate-400">ID: {instructor.id}</p>

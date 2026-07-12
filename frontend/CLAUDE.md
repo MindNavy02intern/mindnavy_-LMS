@@ -101,6 +101,37 @@ contract shapes field-by-field, so swapping mock→real changes zero frontend
 code.
 Never assume — check.
 
+### 4.1 Parent-child / dependent-entity flows (MANDATORY CHECK)
+
+Before building ANY feature where one entity references, attaches to, or
+depends on another entity (a lesson attaching a video, a section belonging
+to a course, an assignment belonging to a role, etc.), explicitly determine
+and document:
+
+1. **Does the backend require the parent/referenced entity to already exist
+   in the database — with the correct field values already saved — before
+   the dependent action is allowed?** Check this in the actual
+   controller/service code or by testing directly (curl), not by assuming.
+2. If yes, the UI and the test MUST follow the real sequence:
+   - Step 1: create/save the parent entity (with the correct type/state)
+     as its own action, and wait for that save to actually complete.
+   - Step 2: only THEN allow/perform the dependent action (upload, attach,
+     link), scoped to the now-real ID.
+   - The UI must visibly gate the dependent action until step 1 succeeds
+     (disable the control + show a clear message like "Save X first"),
+     not just fail silently or throw a confusing backend error at the user.
+3. Never assume a single combined step works just because the form LOOKS
+   like one screen. A single screen/modal can still require two sequential
+   API calls underneath — verify this explicitly before writing the test.
+4. Playwright tests for such features must reproduce the REAL sequence:
+   perform step 1 as a genuine action and wait for its real response,
+   THEN perform step 2 — never fabricate or assume an ID that hasn't
+   actually been returned by a real API call.
+
+This class of bug (assuming one step when the backend needs two) has
+caused wasted cycles before — treat it as a first-class check, same
+priority as verifying the backend exists (§4).
+
 ## 5. When tests / things fail
 
 First determine: is it a TEST bug or a REAL APP bug?
@@ -149,6 +180,9 @@ intent. Look for:
 - Security: exposed secrets/keys/passwords, missing auth checks.
 - Missing tests: a feature added without a test guarding it (see section 3 —
   this should never happen, but double-check).
+- Parent-child sequencing: for any dependent-entity feature (§4.1), confirm
+  the UI actually gates the dependent action until the parent save
+  completes, and the test reproduces the real two-step sequence.
 - Data flow: state that should refresh but doesn't; stats reading a wrong
   source.
 - Edge cases: null/undefined, empty states, error handling.

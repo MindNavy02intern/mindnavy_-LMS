@@ -191,3 +191,82 @@ test('Archive confirm — dialog shown, confirming removes row from All list', a
     ).toBeVisible({ timeout: 5000 })
   }
 })
+
+// ── Part A regression tests ────────────────────────────────────────────────────
+
+// A1: statusCounts badges show real numbers (backend returns lowercase keys).
+test('Status tab badges show numeric counts from the backend', async ({ page }) => {
+  await gotoCoursesTab(page)
+  await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 10000 })
+
+  // The "All" tab must have a visible badge span containing a non-negative integer.
+  const allTabBadge = page.getByRole('button', { name: /All/ }).locator('span').first()
+  await expect(allTabBadge).toBeVisible({ timeout: 5000 })
+  const badgeText = await allTabBadge.innerText()
+  expect(
+    Number.isInteger(parseInt(badgeText.trim(), 10)),
+    'All-tab badge must contain a numeric count',
+  ).toBeTruthy()
+})
+
+// A2: LmGuide "Create New Course" button switches to Courses tab and opens create form.
+test('Guide "Create New Course" button opens the create form on the Courses tab', async ({ page }) => {
+  await page.goto('/learning-management')
+  // Wait for Overview to render (guide is only visible here).
+  // exact:true avoids strict-mode collision with the guide panel's h3 "Learning Management Guide".
+  await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
+
+  // The guide renders in the Overview sidebar — click the wired button.
+  const guideBtn = page.getByRole('button', { name: 'Create New Course', exact: true })
+  await expect(guideBtn).toBeVisible({ timeout: 10000 })
+  await guideBtn.click()
+
+  // Should switch to the Courses tab and immediately open the create form.
+  await expect(page).toHaveURL(/[?&]tab=courses/)
+  await expect(
+    page.getByRole('heading', { name: 'Create Course' }),
+    'Create Course heading must appear after clicking guide button',
+  ).toBeVisible({ timeout: 10000 })
+})
+
+// A3: Empty instructor list shows an inline warning (not silently disabled Save Draft).
+test('Empty instructor list shows inline warning near the dropdown', async ({ page }) => {
+  // Mock filter-options to return an empty instructor list.
+  await page.route('**/lm/filter-options', route =>
+    route.fulfill({ json: { success: true, data: { categories: ['Technology'], instructors: [] } } })
+  )
+
+  await page.goto('/learning-management')
+  await page.getByRole('button', { name: 'Courses', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Courses', exact: true })).toBeVisible({ timeout: 15000 })
+  await page.getByRole('button', { name: 'Create Course', exact: true }).last().click()
+  await expect(page.getByRole('heading', { name: 'Create Course' })).toBeVisible({ timeout: 5000 })
+
+  // Save Draft is disabled when no instructor is available.
+  await expect(page.getByRole('button', { name: 'Save Draft' })).toBeDisabled()
+
+  // Inline warning must be visible near the instructor dropdown.
+  await expect(
+    page.getByText(/No instructors found/i),
+    'Inline warning must appear when instructor list is empty',
+  ).toBeVisible({ timeout: 5000 })
+})
+
+// A3: Filter-options 401 redirects to login page.
+test('Filter-options 401 response redirects to login', async ({ page }) => {
+  await page.route('**/lm/filter-options', route =>
+    route.fulfill({ status: 401, json: { success: false, message: 'Unauthorized' } })
+  )
+
+  await page.goto('/learning-management')
+  await page.getByRole('button', { name: 'Courses', exact: true }).click()
+  // Wait for CoursesTab to render so the second "Create Course" button (inside
+  // CoursesTab) is present — without this, .last() may click the LmPageHeader
+  // button before CoursesTab mounts, which switches the tab but doesn't guarantee
+  // CourseForm mounts and calls getLmFilterOptions().
+  await expect(page.getByRole('heading', { name: 'Courses', exact: true })).toBeVisible({ timeout: 15000 })
+  await page.getByRole('button', { name: 'Create Course', exact: true }).last().click()
+
+  // Must redirect to login on 401 from filter-options.
+  await expect(page).toHaveURL(/\/login/, { timeout: 10000 })
+})

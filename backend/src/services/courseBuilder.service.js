@@ -69,7 +69,13 @@ async function builderAuditLog(adminId, action, details) {
 // ── Existence guards (clean 404 instead of a raw Prisma FK error) ─────────────────
 
 async function assertCourseExists(courseId) {
-  const c = await prisma.course.findUnique({ where: { id: courseId }, select: { id: true } });
+  let c;
+  try {
+    c = await prisma.course.findUnique({ where: { id: courseId }, select: { id: true } });
+  } catch (err) {
+    console.error("[courseBuilder.service] assertCourseExists THREW — code:", err.code, "msg:", err.message, "\nstack:", err.stack);
+    throw err;
+  }
   if (!c) throw domainError("COURSE_NOT_FOUND");
 }
 
@@ -91,7 +97,9 @@ async function getLessonOrThrow(id) {
 // ── Sections ─────────────────────────────────────────────────────────────────────
 
 async function listSections(courseId) {
+  console.log("[courseBuilder.service] listSections called — courseId:", courseId);
   await assertCourseExists(courseId);
+  console.log("[courseBuilder.service] course found — querying sections");
   const rows = await safe(
     () => prisma.courseSection.findMany({
       where: { courseId },
@@ -160,10 +168,11 @@ async function updateLesson(id, data, adminId) {
   const current = await getLessonOrThrow(id);
 
   // Cross-field guard the validator can't do alone: a lesson that ends up VIDEO_URL
-  // must have a valid URL in content (merging the current row with this patch).
+  // must have a valid URL in content — UNLESS content is null (pending upload state:
+  // type has been saved but the video hasn't been uploaded yet, which is valid).
   const effectiveType    = data.type    !== undefined ? data.type    : current.type;
   const effectiveContent = data.content !== undefined ? data.content : current.content;
-  if (effectiveType === "VIDEO_URL" && !isValidUrl(effectiveContent)) {
+  if (effectiveType === "VIDEO_URL" && effectiveContent != null && !isValidUrl(effectiveContent)) {
     throw domainError("BAD_VIDEO_URL");
   }
 

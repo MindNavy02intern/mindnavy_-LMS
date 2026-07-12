@@ -5,7 +5,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Plus, ChevronUp, ChevronDown, Pencil, Trash2, Check, X, BookOpen, Video } from 'lucide-react';
+import { ChevronLeft, Plus, ChevronUp, ChevronDown, Pencil, Trash2, Check, X, BookOpen, Video, Link } from 'lucide-react';
+import VideoUpload from './VideoUpload';
 import {
   getSections,
   createSection,
@@ -125,11 +126,15 @@ interface LessonFormModalProps {
   courseId: string;
   onClose:  () => void;
   onSaved:  (mutationName: 'lesson.create' | 'lesson.update', courseId: string) => void;
+  /** Called after a type-change-only save (TEXT→VIDEO_URL in upload-file mode).
+   *  The modal stays open so the user can immediately do the upload. */
+  onPartialSave?: () => void;
 }
 
-function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalProps) {
+function LessonFormModal({ modal, courseId, onClose, onSaved, onPartialSave }: LessonFormModalProps) {
   const isEdit   = modal.mode === 'edit';
   const original = isEdit ? (modal as { mode: 'edit'; lesson: Lesson; sectionId: string }).lesson : null;
+  const lessonId = original?.id; // defined only in edit mode
 
   const [form, setForm] = useState<LessonFormState>(() =>
     isEdit && original
@@ -145,6 +150,21 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
   const [saving, setSaving] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
 
+  // Video input mode: 'url' = paste a link, 'file' = upload a file.
+  const [videoInputMode,   setVideoInputMode]   = useState<'url' | 'file'>('url');
+  const [isVideoUploading, setIsVideoUploading] = useState(false);
+
+  // savedType: the lesson type currently persisted in the DB (may lag form.type
+  // while an unsaved type-change is in progress). Upload File is gated behind
+  // this to prevent a confirm call the backend would reject.
+  const [savedType, setSavedType] = useState<LessonType>(
+    isEdit && original ? original.type : 'TEXT',
+  );
+
+  // Upload File must be disabled until the type change is actually saved.
+  // Paste URL stays available — pasting a URL IS the save for that path.
+  const uploadNeedsSave = form.type === 'VIDEO_URL' && savedType !== 'VIDEO_URL';
+
   function setField<K extends keyof LessonFormState>(key: K, val: LessonFormState[K]) {
     setForm(f => ({ ...f, [key]: val }));
     setErrors(e => { const n = { ...e }; delete n[key as keyof LessonFormErrors]; return n; });
@@ -157,9 +177,16 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
     else if (form.title.length > 200) errs.title  = 'Title must be ≤ 200 characters.';
 
     if (form.type === 'VIDEO_URL') {
-      if (!form.content.trim())           errs.content = 'Video URL is required.';
-      else if (!isValidUrl(form.content)) errs.content = 'Must be a valid http/https URL.';
-      else if (form.content.length > 2000) errs.content = 'URL must be ≤ 2000 characters.';
+      // In edit + upload-file mode the URL will be set by the upload pipeline.
+      // Skipping the URL requirement here lets the user save the type change
+      // first (which unlocks the drop zone), then upload. Create mode always
+      // requires a URL because !lessonId blocks the upload anyway.
+      const skipUrlCheck = isEdit && videoInputMode === 'file';
+      if (!skipUrlCheck) {
+        if (!form.content.trim())           errs.content = 'Video URL is required.';
+        else if (!isValidUrl(form.content)) errs.content = 'Must be a valid http/https URL.';
+        else if (form.content.length > 2000) errs.content = 'URL must be ≤ 2000 characters.';
+      }
     } else {
       if (form.content.length > 20000)    errs.content = 'Content must be ≤ 20000 characters.';
     }
@@ -184,13 +211,31 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
         const patch: UpdateLessonPayload = {};
         if (form.title.trim() !== original.title) patch.title = form.title.trim();
         if (form.type          !== original.type)  patch.type  = form.type;
-        const newContent = form.type === 'TEXT' ? (form.content.trim() || null) : form.content.trim();
-        if (newContent !== original.content)       patch.content = newContent;
-        if (durationMin !== original.durationMin)  patch.durationMin = durationMin;
+
+        // Content handling for VIDEO_URL in upload mode: the URL will come from
+        // the upload pipeline. If switching from TEXT, null out the old text body
+        // explicitly so the backend doesn't inherit a non-URL string as content.
+        const newContent = (() => {
+          if (form.type !== 'VIDEO_URL') return form.content.trim() || null;
+          if (videoInputMode === 'file' && !isValidUrl(form.content)) return null;
+          return form.content.trim();
+        })();
+        if (newContent !== original.content) patch.content = newContent;
+        if (durationMin !== original.durationMin) patch.durationMin = durationMin;
 
         if (Object.keys(patch).length > 0) {
           await updateLesson(original.id, patch);
-          onSaved('lesson.update', courseId);
+
+          // If this save introduced the VIDEO_URL type while in upload-file mode,
+          // keep the modal open so the user can upload without re-opening it.
+          const firstTypeChangeToVideo =
+            patch.type === 'VIDEO_URL' && savedType !== 'VIDEO_URL' && videoInputMode === 'file';
+          if (firstTypeChangeToVideo) {
+            setSavedType('VIDEO_URL');
+            onPartialSave?.();
+          } else {
+            onSaved('lesson.update', courseId);
+          }
         } else {
           onClose();
         }
@@ -312,24 +357,66 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
             </div>
           ) : (
             <>
+              {/* Video input mode tabs — URL or File Upload */}
               <div>
-                <label className="tw:mb-1 tw:block tw:text-[12px] tw:font-semibold tw:text-slate-700">
-                  Video URL <span className="tw:text-red-500">*</span>
-                </label>
-                <input
-                  aria-label="Video URL"
-                  type="url"
-                  value={form.content}
-                  onChange={e => setField('content', e.target.value)}
-                  placeholder="https://www.youtube.com/watch?v=…"
-                  maxLength={2000}
-                  className={
-                    'tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100' +
-                    (errors.content ? ' tw:border-red-300 tw:bg-red-50 focus:tw:border-red-400' : ' tw:border-slate-200 focus:tw:border-blue-400')
-                  }
-                />
-                {errors.content && <p className="tw:mt-1 tw:text-[11px] tw:text-red-500">{errors.content}</p>}
-                <p className="tw:mt-1 tw:text-[11px] tw:text-slate-400">Paste any http/https URL — no file upload.</p>
+                <div className="tw:mb-2 tw:flex tw:gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setVideoInputMode('url')}
+                    className={
+                      'tw:flex tw:items-center tw:gap-1.5 tw:rounded-md tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors' +
+                      (videoInputMode === 'url'
+                        ? ' tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700'
+                        : ' tw:border-slate-200 tw:text-slate-500 tw:hover:border-slate-300')
+                    }
+                  >
+                    <Link className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> Paste URL
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setVideoInputMode('file')}
+                    className={
+                      'tw:flex tw:items-center tw:gap-1.5 tw:rounded-md tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors' +
+                      (videoInputMode === 'file'
+                        ? ' tw:border-violet-400 tw:bg-violet-50 tw:text-violet-700'
+                        : ' tw:border-slate-200 tw:text-slate-500 tw:hover:border-slate-300')
+                    }
+                  >
+                    <Video className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> Upload File
+                  </button>
+                </div>
+
+                {videoInputMode === 'url' ? (
+                  <>
+                    <label className="tw:mb-1 tw:block tw:text-[12px] tw:font-semibold tw:text-slate-700">
+                      Video URL <span className="tw:text-red-500">*</span>
+                    </label>
+                    <input
+                      aria-label="Video URL"
+                      type="url"
+                      value={form.content}
+                      onChange={e => setField('content', e.target.value)}
+                      placeholder="https://www.youtube.com/watch?v=…"
+                      maxLength={2000}
+                      className={
+                        'tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100' +
+                        (errors.content ? ' tw:border-red-300 tw:bg-red-50 focus:tw:border-red-400' : ' tw:border-slate-200 focus:tw:border-blue-400')
+                      }
+                    />
+                    {errors.content && <p className="tw:mt-1 tw:text-[11px] tw:text-red-500">{errors.content}</p>}
+                    <p className="tw:mt-1 tw:text-[11px] tw:text-slate-400">Paste any http/https URL — YouTube, Vimeo, etc.</p>
+                  </>
+                ) : (
+                  <VideoUpload
+                    courseId={courseId}
+                    lessonId={lessonId}
+                    disabled={uploadNeedsSave
+                      ? 'Save the lesson as Video URL type first, then you can upload a file.'
+                      : undefined}
+                    onChange={(url) => setField('content', url)}
+                    onUploadingChange={setIsVideoUploading}
+                  />
+                )}
               </div>
 
               <div>
@@ -362,8 +449,13 @@ function LessonFormModal({ modal, courseId, onClose, onSaved }: LessonFormModalP
             className="tw:rounded-lg tw:border tw:border-slate-200 tw:px-4 tw:py-2 tw:text-[13px] tw:font-medium tw:text-slate-600 tw:hover:bg-slate-50 tw:disabled:opacity-40">
             Cancel
           </button>
-          <button type="button" onClick={handleSave} disabled={saving}
-            className="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-50">
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={saving || isVideoUploading}
+            title={isVideoUploading ? 'Wait for the upload to complete' : undefined}
+            className="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-50"
+          >
             {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Add Lesson'}
           </button>
         </div>
@@ -506,6 +598,13 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
     invalidateFor(appQueryClient, mutationName, { courseId: cId });
     showToast('success', mutationName === 'lesson.create' ? 'Lesson added.' : 'Lesson updated.');
     setLessonModal(null);
+    await loadSections();
+  }
+
+  // Called after a type-change-only save (TEXT→VIDEO_URL in upload-file mode).
+  // The modal stays open; reload the section tree to reflect the new type.
+  async function handleLessonPartialSave() {
+    showToast('success', 'Lesson type saved — you can now upload a video file.');
     await loadSections();
   }
 
@@ -823,6 +922,7 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
           courseId={courseId}
           onClose={() => setLessonModal(null)}
           onSaved={handleLessonSaved}
+          onPartialSave={handleLessonPartialSave}
         />
       )}
 

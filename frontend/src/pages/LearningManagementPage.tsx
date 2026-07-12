@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import '../styles/learningManagement.css';
 import AdminLayout from '../layouts/AdminLayout';
 import LmPageHeader from '../components/learningManagement/LmPageHeader';
@@ -36,6 +37,20 @@ export default function LearningManagementPage() {
   const tab: LmTab = KEY_TO_LM_TAB[tabKey] ?? LM_TABS[0];
   const setTab = (t: LmTab) => setTabKey(LM_TAB_KEYS[t]);
 
+  // When the guide's "Create New Course" is clicked from the Overview tab,
+  // switch to Courses and signal CoursesTab to open the create form on mount.
+  const [openCreate, setOpenCreate] = useState(false);
+
+  // Clear the flag once CoursesTab has mounted and read it.
+  useEffect(() => {
+    if (tab === 'Courses' && openCreate) setOpenCreate(false);
+  }, [tab, openCreate]);
+
+  function handleGuideCreateCourse() {
+    setOpenCreate(true);
+    setTab('Courses');
+  }
+
   return (
     <AdminLayout pageTitle="Learning Management">
       <div className="lm-page-root tw:mx-auto tw:flex tw:max-w-[1440px] tw:flex-col tw:gap-5 tw:font-lm-sans">
@@ -44,7 +59,7 @@ export default function LearningManagementPage() {
         <LmTabs active={tab} onChange={setTab} />
 
         {tab === 'Courses' ? (
-          <CoursesTab />
+          <CoursesTab openCreateOnMount={openCreate} />
         ) : tab === 'Overview' ? (
           <div className="tw:flex tw:gap-5">
             <div className="tw:flex tw:min-w-0 tw:flex-1 tw:flex-col tw:gap-5">
@@ -57,7 +72,7 @@ export default function LearningManagementPage() {
             </div>
 
             <div className="tw:flex tw:w-[340px] tw:shrink-0 tw:flex-col tw:gap-5">
-              <LmGuide />
+              <LmGuide onCreateCourse={handleGuideCreateCourse} />
               <ContentStats />
               <LiveSessions />
               <RecentActivities />

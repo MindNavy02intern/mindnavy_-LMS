@@ -78,9 +78,9 @@ export async function confirmUpload(req: UploadConfirmRequest): Promise<UploadCo
   });
 }
 
-export async function deleteUpload(path: string): Promise<void> {
+export async function deleteUpload(path: string, kind: UploadKind = 'thumbnail'): Promise<void> {
   if (USE_MOCK) return mockDelay(undefined as void);
-  await uploadFetch<void>(`/uploads?path=${encodeURIComponent(path)}`, {
+  await uploadFetch<void>(`/uploads?path=${encodeURIComponent(path)}&kind=${kind}`, {
     method: 'DELETE',
   });
 }

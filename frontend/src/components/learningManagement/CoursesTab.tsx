@@ -54,10 +54,15 @@ type View =
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export default function CoursesTab() {
+interface CoursesTabProps {
+  /** When true, mount directly into the create form (used by LmGuide shortcut). */
+  openCreateOnMount?: boolean;
+}
+
+export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
   const navigate = useNavigate();
 
-  const [view, setView] = useState<View>({ kind: 'list' });
+  const [view, setView] = useState<View>(openCreateOnMount ? { kind: 'create' } : { kind: 'list' });
 
   // List state
   const [rows,         setRows]         = useState<CourseListRow[]>([]);
