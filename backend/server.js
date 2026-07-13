@@ -19,6 +19,8 @@ const messagesRoutes     = require("./src/routes/messages.routes");
 const lmRoutes           = require("./src/routes/lm.routes");
 const coursesRoutes      = require("./src/routes/courses.routes");
 const courseBuilderRoutes = require("./src/routes/courseBuilder.routes");
+const courseWorkflowRoutes = require("./src/routes/courseWorkflow.routes");
+const categoriesRoutes   = require("./src/routes/categories.routes");
 const uploadsRoutes      = require("./src/routes/uploads.routes");
 
 const app = express();
@@ -55,6 +57,13 @@ app.use("/api/admin/courses", coursesRoutes);
 // paths span /courses/:id/sections, /sections/:id and /lessons/:id. courses.routes
 // above only matches single-segment /:id, so these fall through to here.
 app.use("/api/admin", courseBuilderRoutes);
+
+// Course Wizard workflow (Steps 4–6 + approval): /courses/:id/settings, /preview,
+// /submit, /approve, /reject — two-segment paths, same fall-through as above.
+app.use("/api/admin", courseWorkflowRoutes);
+
+// Categories (Category Management Center — 2-level hierarchy).
+app.use("/api/admin/categories", categoriesRoutes);
 
 // File uploads (sign → confirm → delete) for thumbnails (Phase 1).
 app.use("/api/admin/uploads", uploadsRoutes);

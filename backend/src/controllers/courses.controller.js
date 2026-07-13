@@ -16,10 +16,11 @@ function notFound(res, msg = "Not found.") {
   return res.status(404).json({ success: false, message: msg });
 }
 
-// Domain errors thrown by the service (bad instructor reference).
+// Domain errors thrown by the service (bad instructor/category reference).
 function handleDomainError(res, err) {
   if (err.code === "INSTRUCTOR_NOT_FOUND") return notFound(res, "Instructor not found.");
   if (err.code === "NOT_AN_INSTRUCTOR")    return badRequest(res, "The selected user is not an instructor.");
+  if (err.code === "CATEGORY_NOT_FOUND")   return notFound(res, "Category not found.");
   return null;
 }
 

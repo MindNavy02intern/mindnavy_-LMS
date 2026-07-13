@@ -240,6 +240,7 @@ async function getDashboardAnalytics(filters = {}) {
     thisMonthCount,
     activeToday,
     activeLast7d,
+    courseStatusGroups,
     rawDailyTrend,
   ] = await Promise.all([
     prisma.appUser.groupBy({ by: ["role"],              _count: { _all: true }, where: { status: { not: "ARCHIVED" }, ...scope } }),
@@ -249,6 +250,7 @@ async function getDashboardAnalytics(filters = {}) {
     prisma.appUser.count({ where: registrationWhere }),
     prisma.appUser.count({ where: { lastActivityAt: { gte: startOfToday }, ...deptScope } }),
     prisma.appUser.count({ where: { lastActivityAt: { gte: last7d }, ...deptScope } }),
+    prisma.course.groupBy({ by: ["status"], _count: { _all: true } }).catch(() => []),
     prisma.$queryRaw`
       SELECT DATE("lastActivityAt") AS date, COUNT(*)::int AS count
       FROM "app_users"
@@ -262,6 +264,9 @@ async function getDashboardAnalytics(filters = {}) {
   const totalUsers     = statusGroups.filter((g) => g.status !== "ARCHIVED").reduce((s, g) => s + g._count._all, 0);
   const activeUsers    = statusGroups.find((g) => g.status === "ACTIVE")?._count._all    ?? 0;
   const suspendedUsers = statusGroups.find((g) => g.status === "SUSPENDED")?._count._all ?? 0;
+
+  const courseCountByStatus = { DRAFT: 0, PENDING: 0, PUBLISHED: 0, ARCHIVED: 0 };
+  for (const g of courseStatusGroups) courseCountByStatus[g.status] = g._count._all;
 
   const ROLE_MAP  = { LEARNER: "learners", INSTRUCTOR: "instructors", MANAGER: "managers", ADMIN_ASSISTANT: "adminAssistants" };
   const ALL_ROLES = ["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"];
@@ -331,10 +336,13 @@ async function getDashboardAnalytics(filters = {}) {
       verifiedUsers:    verifiedCount,
       suspendedUsers,
     },
+    // Course counts are live (R3/B1) so the submit/approve invalidations on
+    // ['dashboard','course-analytics'] actually move these KPIs. The remaining
+    // fields stay stubs until quiz/completion tracking exists.
     courseAnalytics: {
-      totalCourses:           0,
-      activeCourses:          0,
-      pendingApprovalCourses: 0,
+      totalCourses:           courseCountByStatus.DRAFT + courseCountByStatus.PENDING + courseCountByStatus.PUBLISHED,
+      activeCourses:          courseCountByStatus.PUBLISHED,
+      pendingApprovalCourses: courseCountByStatus.PENDING,
       averageCompletionRate:  0,
       mostPopularCourse:      null,
       averageQuizScore:       0,

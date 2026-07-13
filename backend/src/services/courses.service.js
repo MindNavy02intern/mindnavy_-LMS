@@ -61,10 +61,20 @@ const ROW_SELECT = {
   instructor: { select: { fullName: true } },
 };
 
+const VISIBILITY_ENUM  = { Public: "PUBLIC", Private: "PRIVATE", Unlisted: "UNLISTED" };
+const VISIBILITY_LABEL = { PUBLIC: "Public", PRIVATE: "Private", UNLISTED: "Unlisted" };
+
 const FULL_SELECT = {
   ...ROW_SELECT,
   subtitle: true, description: true, language: true, tags: true,
   createdBy: true, createdAt: true,
+  // Step 4 settings + approval state + category link — the course detail is the
+  // single read the wizard prefills every step from.
+  isFree: true, price: true, currency: true, enrollmentLimit: true,
+  visibility: true, certificateEnabled: true, dripContentEnabled: true,
+  accessRules: true, seoTitle: true, seoDescription: true,
+  rejectionReason: true, reviewedAt: true,
+  categoryId: true,
 };
 
 function mapRow(c, enrolledCount = 0) {
@@ -91,7 +101,43 @@ function mapFull(c, enrolledCount = 0) {
     tags:        c.tags        ?? [],
     createdBy:   c.createdBy   ?? null,
     createdAt:   iso(c.createdAt),
+    categoryId:  c.categoryId  ?? null,
+    settings: {
+      isFree:             c.isFree ?? true,
+      price:              c.price ?? null,
+      currency:           c.currency ?? null,
+      enrollmentLimit:    c.enrollmentLimit ?? null,
+      visibility:         VISIBILITY_LABEL[c.visibility] ?? "Public",
+      certificateEnabled: c.certificateEnabled ?? false,
+      dripContentEnabled: c.dripContentEnabled ?? false,
+      accessRules:        c.accessRules ?? null,
+      seoTitle:           c.seoTitle ?? null,
+      seoDescription:     c.seoDescription ?? null,
+    },
+    rejectionReason: c.rejectionReason ?? null,
+    reviewedAt:      iso(c.reviewedAt),
   };
+}
+
+// Resolve the category link for create/update. Explicit `categoryId: null` is an
+// unlink and always wins (the string stays as display text). A given categoryId
+// must exist — the legacy `category` string is synced from its name so both
+// representations stay consistent during the migration. A bare string is linked
+// to an existing Category by case-insensitive name when one matches.
+async function resolveCategoryLink(patch) {
+  if (patch.categoryId === null) return patch;
+  if (patch.categoryId !== undefined) {
+    const cat = await prisma.category.findUnique({ where: { id: patch.categoryId }, select: { id: true, name: true } });
+    if (!cat) throw Object.assign(new Error("CATEGORY_NOT_FOUND"), { code: "CATEGORY_NOT_FOUND" });
+    patch.category = cat.name;
+  } else if (typeof patch.category === "string" && patch.category !== DEFAULT_CATEGORY) {
+    const cat = await safe(
+      () => prisma.category.findFirst({ where: { name: { equals: patch.category, mode: "insensitive" } }, select: { id: true } }),
+      null,
+    );
+    if (cat) patch.categoryId = cat.id;
+  }
+  return patch;
 }
 
 // ── List + status counts + pagination + filters ─────────────────────────────────
@@ -156,12 +202,15 @@ async function getCourse(id) {
 async function createCourse(data, adminId) {
   await assertInstructorExists(data.instructorId);
 
+  const patch = await resolveCategoryLink({ categoryId: data.categoryId, category: data.category || DEFAULT_CATEGORY });
+
   const course = await prisma.course.create({
     data: {
       title:        data.title,
       subtitle:     data.subtitle,
       description:  data.description,
-      category:     data.category || DEFAULT_CATEGORY, // column is non-null
+      category:     patch.category,                     // column is non-null
+      categoryId:   patch.categoryId ?? null,
       language:     data.language,
       level:        LEVEL_ENUM[data.level] ?? "BEGINNER",
       status:       "DRAFT",                            // always Draft on create
@@ -180,10 +229,14 @@ async function createCourse(data, adminId) {
 async function updateCourse(id, data, adminId) {
   if (data.instructorId !== undefined) await assertInstructorExists(data.instructorId);
 
-  const patch = { ...data };
-  if (patch.category === null)      patch.category = DEFAULT_CATEGORY; // keep column non-null
-  if (patch.level    !== undefined) patch.level    = LEVEL_ENUM[patch.level];
-  if (patch.status   !== undefined) patch.status   = STATUS_ENUM[patch.status];
+  let patch = { ...data };
+  if (patch.category === null) patch.category = DEFAULT_CATEGORY; // keep column non-null
+  if (patch.level !== undefined) patch.level = LEVEL_ENUM[patch.level];
+  // `status` never reaches here — the validator rejects it (transitions go
+  // through submit/approve/reject/archive only).
+  if (patch.categoryId !== undefined || patch.category !== undefined) {
+    patch = await resolveCategoryLink(patch);
+  }
 
   const course = await prisma.course.update({ where: { id }, data: patch, select: FULL_SELECT });
   await courseAuditLog(adminId, "COURSE_UPDATED", { courseId: id, fields: Object.keys(data) });

@@ -13,19 +13,66 @@ model Course {
   language     String?
   subtitle     String?
   tags         String[]           @default([])
+
+  // Wizard Step 4 — settings. Owned exclusively by PATCH /courses/:id/settings;
+  // the generic course PATCH never reads or writes these. price is integer cents.
+  isFree             Boolean          @default(true)
+  price              Int?
+  currency           String?          @default("USD")
+  enrollmentLimit    Int?
+  visibility         CourseVisibility @default(PUBLIC)
+  certificateEnabled Boolean          @default(false)
+  dripContentEnabled Boolean          @default(false)
+  accessRules        Json?
+  seoTitle           String?
+  seoDescription     String?
+
+  // Approval workflow (submit → approve/reject). reviewedById = deciding admin;
+  // rejectionReason is cleared again on resubmit/approve.
+  rejectionReason String?
+  reviewedById    String?
+  reviewedAt      DateTime?
+
+  // Categories migration: optional FK alongside the legacy free-text `category`
+  // string. Both are written in parallel until the frontend fully migrates.
+  categoryId String?
+
   certificates Certificate[]
   contents     CourseContent[]
   enrollments  CourseEnrollment[]
   sections     CourseSection[]
   instructor   AppUser?           @relation("CourseInstructor", fields: [instructorId], references: [id])
+  categoryRef  Category?          @relation(fields: [categoryId], references: [id])
   liveSessions LiveSession[]
 
   @@index([status])
   @@index([category])
+  @@index([categoryId])
   @@index([level])
   @@index([instructorId])
   @@index([createdAt])
   @@map("courses")
+}
+
+// Category Management Center — 2-level hierarchy (root categories + subcategories).
+// Depth is enforced in the service (a parent must itself be a root). courseCount is
+// always derived at read time (IMPACT_MAP R3) — never stored. Root-name uniqueness
+// is also enforced app-side, since Postgres treats NULL parentId values as distinct
+// in the composite unique below.
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  parentId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: Restrict)
+  children Category[] @relation("CategoryTree")
+  courses  Course[]
+
+  @@unique([name, parentId])
+  @@index([parentId])
+  @@map("categories")
 }
 
 model CourseEnrollment {
@@ -142,6 +189,12 @@ enum CourseStatus {
   DRAFT
   PENDING
   ARCHIVED
+}
+
+enum CourseVisibility {
+  PUBLIC
+  PRIVATE
+  UNLISTED
 }
 
 enum EnrollmentStatus {

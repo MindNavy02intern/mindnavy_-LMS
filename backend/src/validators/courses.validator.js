@@ -6,8 +6,16 @@
 const LEVELS        = ["Beginner", "Intermediate", "Advanced"];
 const STATUSES      = ["Draft", "Pending", "Published", "Archived"];
 const LIST_STATUSES = ["All", ...STATUSES];
+const VISIBILITIES  = ["Public", "Private", "Unlisted"];
 
-const MAX = { title: 200, subtitle: 300, description: 5000, category: 100, language: 50, url: 2000, tag: 40, tags: 20 };
+const MAX = {
+  title: 200, subtitle: 300, description: 5000, category: 100, language: 50,
+  url: 2000, tag: 40, tags: 20,
+  seoTitle: 70, seoDescription: 200, reason: 1000,
+  price: 100_000_000,            // cents — $1M cap
+  enrollmentLimit: 1_000_000,
+  ruleIds: 50, ruleId: 64,       // accessRules id arrays
+};
 
 // Return the canonically-cased value matching case-insensitively, or null.
 function canon(list, value) {
@@ -94,6 +102,9 @@ function validateCreate(body = {}) {
 
   const tags = validateTags(body.tags, errors);
 
+  // Optional link to the Category table (existence checked in the service).
+  const categoryId = optStr(body, "categoryId", MAX.ruleId, errors);
+
   // `status` is intentionally NOT read — a course is always created as Draft.
 
   return {
@@ -109,6 +120,9 @@ function validateCreate(body = {}) {
       thumbnail:   thumbnail    ?? null,
       level,
       tags:        tags ?? [],
+      // Absent stays undefined (lets the service auto-link by category name);
+      // explicit null means "no link".
+      categoryId,
     },
   };
 }
@@ -142,15 +156,20 @@ function validateUpdate(body = {}) {
     else data.level = c;
   }
 
+  // `status` is intentionally NOT read — transitions happen only through the
+  // dedicated endpoints (submit / approve / reject / archive), never raw PATCH.
   if (body.status !== undefined) {
-    const c = canon(STATUSES, body.status);
-    if (!c) errors.push("status must be Draft, Pending, Published, or Archived.");
-    else data.status = c;
+    errors.push("status cannot be set here — use submit/approve/reject (or DELETE to archive).");
   }
 
   if (body.tags !== undefined) {
     const t = validateTags(body.tags, errors);
     if (t !== undefined) data.tags = t;
+  }
+
+  if (body.categoryId !== undefined) {
+    const v = optStr(body, "categoryId", MAX.ruleId, errors);
+    if (v !== undefined) data.categoryId = v; // null unlinks
   }
 
   if (errors.length === 0 && Object.keys(data).length === 0) {
@@ -160,4 +179,135 @@ function validateUpdate(body = {}) {
   return { isValid: errors.length === 0, errors, data };
 }
 
-module.exports = { validateId, validateListQuery, validateCreate, validateUpdate };
+// ── Wizard Step 4 settings (PATCH /courses/:id/settings) ────────────────────────
+// These fields are owned ONLY by the settings endpoint (never the generic PATCH).
+// Everything is allow-listed: unknown accessRules keys are a hard 400, numbers are
+// bounded integers, booleans must be real booleans.
+
+function optBool(body, key, errors) {
+  if (body[key] === undefined) return undefined;
+  if (typeof body[key] !== "boolean") { errors.push(`${key} must be a boolean.`); return undefined; }
+  return body[key];
+}
+
+// Optional positive bounded integer; null clears the value.
+function optInt(body, key, max, errors) {
+  if (body[key] === undefined) return undefined;
+  if (body[key] === null) return null;
+  if (!Number.isInteger(body[key]) || body[key] < 1 || body[key] > max) {
+    errors.push(`${key} must be an integer between 1 and ${max}.`);
+    return undefined;
+  }
+  return body[key];
+}
+
+function validateIdArray(value, key, errors) {
+  if (!Array.isArray(value)) { errors.push(`accessRules.${key} must be an array of id strings.`); return undefined; }
+  if (value.length > MAX.ruleIds) { errors.push(`accessRules.${key} must have at most ${MAX.ruleIds} items.`); return undefined; }
+  const out = [];
+  for (const v of value) {
+    if (typeof v !== "string" || !v.trim() || v.length > MAX.ruleId) {
+      errors.push(`accessRules.${key} must contain non-empty id strings (max ${MAX.ruleId} chars).`);
+      return undefined;
+    }
+    out.push(v.trim());
+  }
+  return out;
+}
+
+// v1 accessRules shape — every key optional, unknown keys rejected.
+function validateAccessRules(value, errors) {
+  if (value === undefined) return undefined;
+  if (value === null) return null;
+  if (typeof value !== "object" || Array.isArray(value)) {
+    errors.push("accessRules must be an object or null.");
+    return undefined;
+  }
+
+  const out = {};
+  for (const key of Object.keys(value)) {
+    if (key === "requiresEnrollment") {
+      if (typeof value[key] !== "boolean") { errors.push("accessRules.requiresEnrollment must be a boolean."); return undefined; }
+      out[key] = value[key];
+    } else if (key === "startDate" || key === "endDate") {
+      if (typeof value[key] !== "string" || Number.isNaN(Date.parse(value[key]))) {
+        errors.push(`accessRules.${key} must be an ISO 8601 date string.`);
+        return undefined;
+      }
+      out[key] = value[key];
+    } else if (key === "allowedGroupIds" || key === "prerequisiteCourseIds") {
+      const arr = validateIdArray(value[key], key, errors);
+      if (arr === undefined) return undefined;
+      out[key] = arr;
+    } else {
+      errors.push(`accessRules contains unknown key "${key}".`);
+      return undefined;
+    }
+  }
+  return out;
+}
+
+function validateSettings(body = {}) {
+  const errors = [];
+  const data = {};
+
+  const isFree = optBool(body, "isFree", errors);
+  if (isFree !== undefined) data.isFree = isFree;
+
+  const price = optInt(body, "price", MAX.price, errors);
+  if (price !== undefined) data.price = price;
+
+  if (body.currency !== undefined) {
+    if (body.currency === null) data.currency = null;
+    else if (typeof body.currency !== "string" || !/^[A-Za-z]{3}$/.test(body.currency.trim())) {
+      errors.push("currency must be a 3-letter ISO code (e.g. USD).");
+    } else data.currency = body.currency.trim().toUpperCase();
+  }
+
+  const enrollmentLimit = optInt(body, "enrollmentLimit", MAX.enrollmentLimit, errors);
+  if (enrollmentLimit !== undefined) data.enrollmentLimit = enrollmentLimit;
+
+  if (body.visibility !== undefined) {
+    const c = canon(VISIBILITIES, body.visibility);
+    if (!c) errors.push("visibility must be Public, Private, or Unlisted.");
+    else data.visibility = c;
+  }
+
+  for (const key of ["certificateEnabled", "dripContentEnabled"]) {
+    const v = optBool(body, key, errors);
+    if (v !== undefined) data[key] = v;
+  }
+
+  const accessRules = validateAccessRules(body.accessRules, errors);
+  if (accessRules !== undefined) data.accessRules = accessRules;
+
+  const seoTitle = optStr(body, "seoTitle", MAX.seoTitle, errors);
+  if (seoTitle !== undefined) data.seoTitle = seoTitle;
+  const seoDescription = optStr(body, "seoDescription", MAX.seoDescription, errors);
+  if (seoDescription !== undefined) data.seoDescription = seoDescription;
+
+  if (errors.length === 0 && Object.keys(data).length === 0) {
+    errors.push("No valid settings fields provided to update.");
+  }
+
+  return { isValid: errors.length === 0, errors, data };
+}
+
+// ── Reject reason (POST /courses/:id/reject) ────────────────────────────────────
+
+function validateRejectReason(body = {}) {
+  const errors = [];
+  const reason = typeof body.reason === "string" ? body.reason.trim() : "";
+  if (!reason) errors.push("reason is required.");
+  else if (reason.length > MAX.reason) errors.push(`reason must be at most ${MAX.reason} characters.`);
+  return { isValid: errors.length === 0, errors, data: { reason } };
+}
+
+module.exports = {
+  validateId,
+  validateListQuery,
+  validateCreate,
+  validateUpdate,
+  validateSettings,
+  validateRejectReason,
+};

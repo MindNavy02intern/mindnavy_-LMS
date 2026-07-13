@@ -402,7 +402,11 @@ async function getLiveSessions(status) {
 // ── 9. Filter options (feeds the courses table dropdowns) ────────────────────────
 
 async function getFilterOptions() {
-  const [categoryGroups, instructors] = await Promise.all([
+  // Categories: the Category table is the source of truth, with legacy free-text
+  // course values unioned in until every course is linked (migration guard —
+  // filters keep working for courses created before the Categories system).
+  const [categoryRows, categoryGroups, instructors] = await Promise.all([
+    safe(() => prisma.category.findMany({ select: { name: true } }), []),
     safe(() => prisma.course.groupBy({ by: ["category"] }), []),
     safe(() => prisma.appUser.findMany({
       where: { role: "INSTRUCTOR", status: { not: "ARCHIVED" } },
@@ -412,8 +416,13 @@ async function getFilterOptions() {
     }), []),
   ]);
 
+  const categories = [...new Set([
+    ...categoryRows.map((c) => c.name),
+    ...categoryGroups.map((g) => g.category),
+  ])].filter(Boolean).sort();
+
   return {
-    categories:  categoryGroups.map((g) => g.category).filter(Boolean).sort(),
+    categories,
     instructors: instructors.map((u) => ({ id: u.id, name: u.fullName })),
   };
 }
