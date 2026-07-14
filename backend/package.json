@@ -10,7 +10,8 @@
     "prisma:generate": "prisma generate",
     "prisma:validate": "prisma validate",
     "create:first-admin": "node src/scripts/createFirstAdmin.js",
-    "reset:first-admin-password": "node src/scripts/resetFirstAdminPassword.js"
+    "reset:first-admin-password": "node src/scripts/resetFirstAdminPassword.js",
+    "cleanup:test-data": "node src/scripts/cleanup-test-data.js"
   },
   "keywords": [],
   "author": "",

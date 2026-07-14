@@ -177,6 +177,10 @@ test('Create a draft course → Dashboard Courses KPI is refreshed', async ({ pa
   // because draft courses may not increment publishedCourses.
 
   await page.goto('/learning-management')
+
+  if (!savedToken) {
+    savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  }
   await page.getByRole('button', { name: 'Courses', exact: true }).click()
   await expect(page).toHaveURL(/[?&]tab=courses/)
   // exact: true — same race condition as gotoCoursesTab; see comment there.
@@ -209,6 +213,8 @@ test('Create a draft course → Dashboard Courses KPI is refreshed', async ({ pa
   await page.getByRole('button', { name: /save|draft/i }).first().click()
   const saveResp = await saveDraftPromise
   expect(saveResp.ok(), 'Create course API call must succeed').toBeTruthy()
+  // Capture for afterEach cleanup (same mechanism as the archive test above).
+  createdCourseId = ((await saveResp.json()) as { data?: { id?: string } }).data?.id ?? null
 
   // Navigate to Dashboard and verify a refetch is triggered
   const dashboardRefetchPromise = page.waitForResponse(

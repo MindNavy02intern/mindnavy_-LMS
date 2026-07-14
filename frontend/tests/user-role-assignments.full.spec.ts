@@ -10,6 +10,32 @@ function futureDateStr(daysFromNow: number) {
   return d.toISOString().slice(0, 10)
 }
 
+// ── Cleanup state (option c: self-cleaning tests) ─────────────────────────────
+const createdUserIds: string[] = []
+const createdRoleIds: string[] = []
+let savedToken: string | null = null
+
+async function stashToken(page: Page) {
+  if (!savedToken) {
+    savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  }
+}
+
+test.afterAll(async ({ request }) => {
+  if (!savedToken) return
+  const H = { Authorization: `Bearer ${savedToken}` }
+  for (const id of createdRoleIds) {
+    await request.delete(
+      `http://localhost:5001/api/admin/roles/${id}`,
+      { headers: H },
+    ).catch(() => null)
+  }
+  for (const id of createdUserIds) {
+    await request.delete(`http://localhost:5001/api/admin/users/${id}`, { headers: H }).catch(() => null)
+    await request.delete(`http://localhost:5001/api/admin/users/${id}/permanent`, { headers: H }).catch(() => null)
+  }
+})
+
 async function gotoAssignments(page: Page) {
   await page.goto('/roles-permissions')
   await page.getByRole('button', { name: 'User Role Assignments', exact: true }).click()
@@ -34,6 +60,7 @@ async function userRow(page: Page, email: string) {
 // ── Fixtures: a test user + a test role to assign it ───────────────────────────
 
 async function addUser(page: Page, opts: { name: string; email: string }) {
+  await stashToken(page)
   await page.goto('/users')
   await page.getByRole('button', { name: '+ Add User', exact: true }).click()
   await page.getByPlaceholder('John Doe').fill(opts.name)
@@ -45,10 +72,13 @@ async function addUser(page: Page, opts: { name: string; email: string }) {
   await page.getByRole('button', { name: '+ Add User', exact: true }).last().click()
   const resp = await respPromise
   expect(resp.ok()).toBeTruthy()
+  const userId = ((await resp.json()) as { user?: { id?: string } }).user?.id
+  if (userId) createdUserIds.push(userId)
   await expect(page.getByText('User created successfully')).toBeVisible({ timeout: 10000 })
 }
 
 async function createRole(page: Page, name: string) {
+  await stashToken(page)
   await page.goto('/roles-permissions')
   await page.getByRole('button', { name: 'LMS Roles', exact: true }).click()
   await page.getByRole('button', { name: 'Create Role', exact: true }).click()
@@ -57,6 +87,8 @@ async function createRole(page: Page, name: string) {
   await page.getByRole('button', { name: 'Create Role', exact: true }).last().click()
   const resp = await respPromise
   expect(resp.ok()).toBeTruthy()
+  const roleId = ((await resp.json()) as { data?: { id?: string } }).data?.id
+  if (roleId) createdRoleIds.push(roleId)
   await expect(page.getByText('Role created successfully')).toBeVisible({ timeout: 10000 })
 }
 

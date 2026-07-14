@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { X, Plus, ChevronLeft } from 'lucide-react';
 import { getLmFilterOptions, LmApiError } from '../../services/lmApi';
 import { getCourse, createCourse, updateCourse } from '../../services/coursesApi';
+import { listCategories } from '../../services/categoriesApi';
 import { CourseApiError } from '../../types/courses';
 import type { CourseDetail, CourseLevel, CreateCoursePayload } from '../../types/courses';
 import type { LmFilterOptions } from '../../types/lm';
+import type { CategoryNode } from '../../types/categories';
 import ThumbnailUpload from './ThumbnailUpload';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 
@@ -16,7 +18,7 @@ interface FormValues {
   title:        string;
   subtitle:     string;
   description:  string;
-  category:     string;
+  categoryId:   string;   // UUID ('' = unlinked); replaces old free-text category
   tags:         string[];
   language:     string;
   level:        CourseLevel | '';
@@ -25,7 +27,7 @@ interface FormValues {
 }
 
 const EMPTY: FormValues = {
-  title: '', subtitle: '', description: '', category: '',
+  title: '', subtitle: '', description: '', categoryId: '',
   tags: [], language: '', level: '', thumbnail: '', instructorId: '',
 };
 
@@ -42,16 +44,18 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
 
   const [filterOptions, setFilterOptions] = useState<LmFilterOptions | null>(null);
   const [filterError,  setFilterError]  = useState<string | null>(null);
+  const [categories,   setCategories]   = useState<CategoryNode[]>([]);
   const [values,     setValues]     = useState<FormValues>(EMPTY);
   const [original,   setOriginal]   = useState<FormValues>(EMPTY);
   const [tagInput,   setTagInput]   = useState('');
-  const [loading,    setLoading]    = useState(mode === 'edit');
-  const [submitting, setSubmitting] = useState(false);
-  const [loadError,  setLoadError]  = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
-  const [globalError, setGlobalError]  = useState<string | null>(null);
+  const [loading,          setLoading]          = useState(mode === 'edit');
+  const [submitting,       setSubmitting]       = useState(false);
+  const [loadError,        setLoadError]        = useState<string | null>(null);
+  const [fieldErrors,      setFieldErrors]      = useState<Partial<Record<keyof FormValues, string>>>({});
+  const [globalError,      setGlobalError]      = useState<string | null>(null);
+  const [rejectionReason,  setRejectionReason]  = useState<string | null>(null);
 
-  // Load filter-options — handle 401 (redirect) and other errors (warn inline).
+  // Load filter-options and category tree in parallel.
   useEffect(() => {
     getLmFilterOptions()
       .then((opts) => {
@@ -64,6 +68,9 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
         if (err instanceof LmApiError && err.status === 401) { navigate('/login'); return; }
         setFilterError('Could not load form options. Please refresh the page and try again.');
       });
+    listCategories()
+      .then(setCategories)
+      .catch(() => { /* non-fatal — category picker just stays empty */ });
   }, [navigate]);
 
   // Prefill form in edit mode
@@ -78,7 +85,7 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
           title:        c.title,
           subtitle:     c.subtitle     ?? '',
           description:  c.description  ?? '',
-          category:     c.category,
+          categoryId:   c.categoryId   ?? '',
           tags:         c.tags,
           language:     c.language     ?? '',
           level:        c.level,
@@ -87,6 +94,7 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
         };
         setValues(v);
         setOriginal(v);
+        setRejectionReason(c.rejectionReason ?? null);
       })
       .catch((err) => {
         if (cancelled) return;
@@ -138,7 +146,7 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
           instructorId: values.instructorId,
           ...(values.subtitle    && { subtitle:    values.subtitle }),
           ...(values.description && { description: values.description }),
-          ...(values.category    && { category:    values.category }),
+          ...(values.categoryId  && { categoryId:  values.categoryId }),
           ...(values.tags.length && { tags:        values.tags }),
           ...(values.language    && { language:    values.language }),
           ...(values.level       && { level:       values.level as CourseLevel }),
@@ -155,6 +163,7 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
             if (JSON.stringify(v) !== JSON.stringify(o)) patch[k] = v;
           } else if (v !== o) {
             // Backend 400s on null for level and instructorId — omit instead of sending null.
+            // categoryId: '' → null is intentional (explicit unlink).
             if ((k === 'level' || k === 'instructorId') && v === '') return;
             patch[k] = v === '' ? null : v;
           }
@@ -182,10 +191,50 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
 
   async function handleGoToBuilderClick() {
     if (!onGoToBuilder) return;
+
     if (mode === 'edit') {
-      onGoToBuilder(courseId!);
+      setFieldErrors({});
+      setGlobalError(null);
+      const errs: Partial<Record<keyof FormValues, string>> = {};
+      if (!values.title.trim())   errs.title        = 'Title is required.';
+      if (!values.instructorId)   errs.instructorId = 'Instructor is required.';
+      if (Object.keys(errs).length) { setFieldErrors(errs); return; }
+
+      const patch: Record<string, unknown> = {};
+      (Object.keys(values) as (keyof FormValues)[]).forEach((k) => {
+        const v = values[k];
+        const o = original[k];
+        if (k === 'tags') {
+          if (JSON.stringify(v) !== JSON.stringify(o)) patch[k] = v;
+        } else if (v !== o) {
+          if ((k === 'level' || k === 'instructorId') && v === '') return;
+          patch[k] = v === '' ? null : v;
+        }
+      });
+
+      if (Object.keys(patch).length === 0) {
+        onGoToBuilder(courseId!);
+        return;
+      }
+
+      setSubmitting(true);
+      try {
+        await updateCourse(courseId!, patch as Parameters<typeof updateCourse>[1]);
+        invalidateFor(appQueryClient, 'course.update');
+        onGoToBuilder(courseId!);
+      } catch (err) {
+        if (err instanceof CourseApiError) {
+          if (err.status === 401) { navigate('/login'); return; }
+          setGlobalError(err.message);
+        } else {
+          setGlobalError('An unexpected error occurred.');
+        }
+      } finally {
+        setSubmitting(false);
+      }
       return;
     }
+
     // Create mode: save draft first, then open builder
     setFieldErrors({});
     setGlobalError(null);
@@ -201,7 +250,7 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
         instructorId: values.instructorId,
         ...(values.subtitle    && { subtitle:    values.subtitle }),
         ...(values.description && { description: values.description }),
-        ...(values.category    && { category:    values.category }),
+        ...(values.categoryId  && { categoryId:  values.categoryId }),
         ...(values.tags.length && { tags:        values.tags }),
         ...(values.language    && { language:    values.language }),
         ...(values.level       && { level:       values.level as CourseLevel }),
@@ -279,6 +328,16 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
         )}
       </div>
 
+      {/* Rejection reason — shown when admin requested changes */}
+      {mode === 'edit' && rejectionReason && (
+        <div className="tw:rounded-xl tw:border tw:border-amber-200 tw:bg-amber-50 tw:p-4">
+          <p className="tw:m-0 tw:text-[12px] tw:font-semibold tw:uppercase tw:tracking-wide tw:text-amber-700">
+            Changes requested
+          </p>
+          <p className="tw:mt-1 tw:m-0 tw:text-[13px] tw:text-amber-800 tw:whitespace-pre-wrap">{rejectionReason}</p>
+        </div>
+      )}
+
       {globalError && (
         <div className="tw:rounded-lg tw:border tw:border-red-100 tw:bg-red-50 tw:px-4 tw:py-2.5 tw:text-[13px] tw:text-red-600">
           {globalError}
@@ -329,18 +388,22 @@ export default function CourseForm({ mode, courseId, onSaved, onCancel, onGoToBu
             />
           </div>
 
-          {/* Category */}
+          {/* Category — bound to categoryId UUID; tree flattened (root + indented subs) */}
           <div>
             <label className="tw:mb-1.5 tw:block tw:text-[12px] tw:font-semibold tw:text-slate-700">Category</label>
             <select
-              value={values.category}
-              onChange={(e) => set('category', e.target.value)}
+              aria-label="Category"
+              value={values.categoryId}
+              onChange={(e) => set('categoryId', e.target.value)}
               className="tw:w-full tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-700 tw:outline-none focus:tw:border-blue-400"
             >
-              <option value="">Select category…</option>
-              {filterOptions?.categories.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
+              <option value="">None — no category</option>
+              {categories.map((root) => [
+                <option key={root.id} value={root.id}>{root.name}</option>,
+                ...(root.children ?? []).map((child) => (
+                  <option key={child.id} value={child.id}>&nbsp;&nbsp;{child.name}</option>
+                )),
+              ])}
             </select>
           </div>
 

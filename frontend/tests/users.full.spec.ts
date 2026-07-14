@@ -9,12 +9,55 @@ function uid() {
   return `${Date.now()}${Math.floor(Math.random() * 1000)}`
 }
 
+// ── Cleanup state (option c: self-cleaning tests) ─────────────────────────────
+const createdUserIds: string[] = []
+const createdUserEmails: string[] = []  // for CSV-imported users (IDs resolved in afterAll)
+let savedToken: string | null = null
+
+async function stashToken(page: Page) {
+  if (!savedToken) {
+    savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  }
+}
+
+test.afterAll(async ({ request }) => {
+  if (!savedToken) return
+  const H = { Authorization: `Bearer ${savedToken}` }
+
+  // Resolve emails → IDs for CSV-imported users (importUsers returns no IDs).
+  for (const email of createdUserEmails) {
+    const resp = await request.get(
+      `http://localhost:5001/api/admin/users?search=${encodeURIComponent(email)}`,
+      { headers: H },
+    ).catch(() => null)
+    if (resp?.ok()) {
+      const body = await resp.json().catch(() => null) as { data?: { users?: { id: string }[] } } | null
+      const id = body?.data?.users?.[0]?.id
+      if (id) createdUserIds.push(id)
+    }
+  }
+
+  // Archive then permanently delete each user. Both calls are best-effort —
+  // if rate-limited, the backstop cleanup:test-data script handles the rest.
+  for (const id of createdUserIds) {
+    await request.delete(
+      `http://localhost:5001/api/admin/users/${id}`,
+      { headers: H },
+    ).catch(() => null)
+    await request.delete(
+      `http://localhost:5001/api/admin/users/${id}/permanent`,
+      { headers: H },
+    ).catch(() => null)
+  }
+})
+
 async function gotoUsersTab(page: Page, tabText: string) {
   await page.goto('/users')
   await page.getByRole('button', { name: tabText }).click()
 }
 
 async function addUser(page: Page, opts: { name: string; email: string }) {
+  await stashToken(page)
   await page.goto('/users')
   await page.getByRole('button', { name: '+ Add User', exact: true }).click()
   await page.getByPlaceholder('John Doe').fill(opts.name)
@@ -35,6 +78,8 @@ async function addUser(page: Page, opts: { name: string; email: string }) {
     )
   }
   expect(resp.ok()).toBeTruthy()
+  const userId = ((await resp.json()) as { user?: { id?: string } }).user?.id
+  if (userId) createdUserIds.push(userId)
   await expect(page.getByText('User created successfully')).toBeVisible({ timeout: 10000 })
 }
 
@@ -47,6 +92,7 @@ async function addUser(page: Page, opts: { name: string; email: string }) {
 // earlier tests (and earlier re-runs within the same window) have already
 // been consuming.
 async function importUsersCsv(page: Page, users: { name: string; email: string }[]) {
+  await stashToken(page)
   const csvPath = path.join(__dirname, `bulk-import-${uid()}.csv`)
   const rows = users.map(u => `${u.name},${u.email},TestPass@123,LEARNER`).join('\n')
   fs.writeFileSync(csvPath, `fullName,email,password,role\n${rows}\n`)
@@ -65,6 +111,8 @@ async function importUsersCsv(page: Page, users: { name: string; email: string }
   await expect(page.getByText(/Imported \d+ users? successfully/i)).toBeVisible({ timeout: 15000 })
   await page.getByRole('button', { name: 'Done' }).click()
 
+  // Track emails for afterAll cleanup (IDs resolved via search, since importUsers returns no IDs).
+  for (const u of users) createdUserEmails.push(u.email)
   fs.unlinkSync(csvPath)
 }
 
@@ -259,6 +307,7 @@ test('Force Logout User → verify sessions = 0', async ({ page }) => {
 })
 
 test('Import Users CSV → verify users added', async ({ page }) => {
+  await stashToken(page)
   const a = `import.${uid()}@mindnavy.com`
   const csvPath = path.join(__dirname, `import-${uid()}.csv`)
   fs.writeFileSync(csvPath, `fullName,email,password,role\nImport User ${uid()},${a},TestPass@123,LEARNER\n`)
@@ -267,9 +316,12 @@ test('Import Users CSV → verify users added', async ({ page }) => {
   await page.getByRole('button', { name: 'Import', exact: true }).click()
   await page.locator('input[type="file"]').setInputFiles(csvPath)
   await expect(page.getByText(/data row/i)).toBeVisible({ timeout: 10000 })
+  const respPromise = page.waitForResponse(resp => resp.url().includes('/import') && resp.request().method() === 'POST', { timeout: 20000 })
   await page.getByRole('button', { name: 'Import Users' }).click()
+  await respPromise
   await expect(page.getByText(/Imported \d+ users? successfully/i)).toBeVisible({ timeout: 15000 })
   await page.getByRole('button', { name: 'Done' }).click()
+  createdUserEmails.push(a)
   await page.goto('/users')
   await page.getByPlaceholder('Search users...').fill(a)
   await page.waitForTimeout(600)

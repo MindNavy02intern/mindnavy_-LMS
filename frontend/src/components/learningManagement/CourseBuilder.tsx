@@ -5,7 +5,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Plus, ChevronUp, ChevronDown, Pencil, Trash2, Check, X, BookOpen, Video, Link } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, ChevronUp, ChevronDown, Pencil, Trash2, Check, X, BookOpen, Video, Link } from 'lucide-react';
 import VideoUpload from './VideoUpload';
 import {
   getSections,
@@ -48,6 +48,7 @@ function parseDuration(val: string): number | null {
 interface Props {
   courseId: string;
   onBack:   () => void;
+  onNext?:  () => void;
 }
 
 interface ToastState { type: 'success' | 'error'; message: string }
@@ -466,7 +467,7 @@ function LessonFormModal({ modal, courseId, onClose, onSaved, onPartialSave }: L
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
-export default function CourseBuilder({ courseId, onBack }: Props) {
+export default function CourseBuilder({ courseId, onBack, onNext }: Props) {
   const navigate = useNavigate();
 
   const [sections,   setSections]   = useState<CourseSection[]>([]);
@@ -689,11 +690,24 @@ export default function CourseBuilder({ courseId, onBack }: Props) {
             <p className="tw:m-0 tw:text-[11px] tw:text-slate-400">Step 2 — Sections &amp; Lessons</p>
           </div>
         </div>
-        <span className="tw:rounded-full tw:bg-blue-50 tw:px-3 tw:py-1 tw:text-[11px] tw:font-semibold tw:text-blue-700">
-          {sections.length} section{sections.length !== 1 ? 's' : ''}
-          {' · '}
-          {sections.reduce((n, s) => n + s.lessons.length, 0)} lesson{sections.reduce((n, s) => n + s.lessons.length, 0) !== 1 ? 's' : ''}
-        </span>
+        <div className="tw:flex tw:items-center tw:gap-2">
+          <span className="tw:rounded-full tw:bg-blue-50 tw:px-3 tw:py-1 tw:text-[11px] tw:font-semibold tw:text-blue-700">
+            {sections.length} section{sections.length !== 1 ? 's' : ''}
+            {' · '}
+            {sections.reduce((n, s) => n + s.lessons.length, 0)} lesson{sections.reduce((n, s) => n + s.lessons.length, 0) !== 1 ? 's' : ''}
+          </span>
+          {onNext && (
+            <button
+              type="button"
+              onClick={onNext}
+              aria-label="Next: Settings"
+              className="tw:flex tw:items-center tw:gap-1 tw:rounded-lg tw:bg-blue-600 tw:px-3.5 tw:py-1.5 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700"
+            >
+              Next: Settings
+              <ChevronRight className="tw:h-4 tw:w-4" strokeWidth={2.5} />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Loading */}

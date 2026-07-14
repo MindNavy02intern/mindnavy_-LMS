@@ -67,7 +67,7 @@ export type MutationName =
   | 'instructorApplication.reject'
   | 'instructor.suspend' | 'review.moderate'
   // §5.4 COURSE / LEARNING
-  | 'course.createDraft' | 'course.update'
+  | 'course.createDraft' | 'course.update' | 'course.settings.update'
   | 'course.submitForApproval'
   | 'course.approve' | 'course.reject' | 'course.requestChanges'
   | 'course.archive'
@@ -344,6 +344,9 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.courses.list(),
     queryKeys.dashboard.courseAnalytics(),
   ],
+  'course.settings.update': (ctx) => [
+    ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
+  ],
   'course.submitForApproval': (ctx) => [
     queryKeys.courses.list(),
     queryKeys.approvals(),
@@ -360,11 +363,15 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
   ],
   'course.reject': (ctx) => [
+    queryKeys.courses.list(),
     queryKeys.approvals(),
+    queryKeys.notifications(),
     ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
   ],
   'course.requestChanges': (ctx) => [
+    queryKeys.courses.list(),
     queryKeys.approvals(),
+    queryKeys.notifications(),
     ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
   ],
   'course.archive': () => [

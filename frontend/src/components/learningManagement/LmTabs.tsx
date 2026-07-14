@@ -1,6 +1,6 @@
 export const LM_TABS = [
   'Overview', 'Courses', 'Learning Paths', 'Content', 'Assessments',
-  'Enrollments', 'Live Sessions', 'Certificates', 'Analytics',
+  'Enrollments', 'Live Sessions', 'Certificates', 'Analytics', 'Categories',
 ] as const;
 
 export type LmTab = typeof LM_TABS[number];

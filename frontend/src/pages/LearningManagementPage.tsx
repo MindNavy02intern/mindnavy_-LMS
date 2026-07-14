@@ -14,6 +14,7 @@ import ContentStats from '../components/learningManagement/ContentStats';
 import LiveSessions from '../components/learningManagement/LiveSessions';
 import RecentActivities from '../components/learningManagement/RecentActivities';
 import CoursesTab from '../components/learningManagement/CoursesTab';
+import CategoriesTab from '../components/learningManagement/CategoriesTab';
 import { useTabParam } from '../hooks/useTabParam';
 
 const LM_TAB_KEYS: Record<LmTab, string> = {
@@ -26,6 +27,7 @@ const LM_TAB_KEYS: Record<LmTab, string> = {
   'Live Sessions':  'live',
   'Certificates':   'certificates',
   'Analytics':      'analytics',
+  'Categories':     'categories',
 };
 
 const KEY_TO_LM_TAB: Record<string, LmTab> = Object.fromEntries(
@@ -60,6 +62,8 @@ export default function LearningManagementPage() {
 
         {tab === 'Courses' ? (
           <CoursesTab openCreateOnMount={openCreate} />
+        ) : tab === 'Categories' ? (
+          <CategoriesTab />
         ) : tab === 'Overview' ? (
           <div className="tw:flex tw:gap-5">
             <div className="tw:flex tw:min-w-0 tw:flex-1 tw:flex-col tw:gap-5">

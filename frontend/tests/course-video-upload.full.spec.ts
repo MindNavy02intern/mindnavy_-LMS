@@ -25,6 +25,20 @@ const MOCK_CONFIRM = {
   url: 'https://mock-storage.example.com/videos/course-test/video.mp4',
 }
 
+// ── Cleanup state (option c: self-cleaning tests) ─────────────────────────────
+const createdCourseIds: string[] = []
+let savedToken: string | null = null
+
+test.afterAll(async ({ request }) => {
+  if (!savedToken) return
+  for (const id of createdCourseIds) {
+    await request.delete(
+      `http://localhost:5001/api/admin/courses/${id}`,
+      { headers: { Authorization: `Bearer ${savedToken}` } },
+    ).catch(() => null)
+  }
+})
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 /** Navigate to the Courses tab and return true, or skip if no courses exist. */
@@ -48,6 +62,10 @@ async function gotoCoursesTab(page: Page): Promise<boolean> {
  */
 async function gotoCourseBuilderWithSection(page: Page, titlePrefix = 'VideoUpload Test'): Promise<boolean> {
   await gotoCoursesTab(page)
+
+  if (!savedToken) {
+    savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  }
 
   // Set up response watcher BEFORE clicking so we can't miss the response that
   // fires when CourseForm mounts and calls getLmFilterOptions().
@@ -74,12 +92,22 @@ async function gotoCourseBuilderWithSection(page: Page, titlePrefix = 'VideoUplo
   await titleInput.fill(`${titlePrefix} ${Date.now()}`)
   await instructorSelect.selectOption({ index: 1 })
 
+  // Set up course-ID watcher before click so we don't miss the POST.
+  const courseRespPromise = page.waitForResponse(
+    r => r.url().includes('/api/admin/courses') && r.request().method() === 'POST' && r.ok(),
+    { timeout: 15000 },
+  )
+
   // Save draft + go to builder
   const [sectionsResp] = await Promise.all([
     page.waitForResponse(r => r.url().includes('/sections') && r.ok(), { timeout: 15000 }),
     page.getByRole('button', { name: /Next: Course Builder/ }).click(),
   ])
   expect(sectionsResp.ok()).toBeTruthy()
+
+  const courseId = ((await (await courseRespPromise).json()) as { data?: { id?: string } }).data?.id
+  if (courseId) createdCourseIds.push(courseId)
+
   await expect(page.getByRole('heading', { name: 'Course Builder' })).toBeVisible({ timeout: 10000 })
 
   // Add section

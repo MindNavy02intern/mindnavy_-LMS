@@ -6,6 +6,20 @@ import { test, expect, type Page } from '@playwright/test'
 
 const BUILDER_TITLE = `Builder Test ${Date.now()}`
 
+// ── Cleanup state (option c: self-cleaning tests) ─────────────────────────────
+const createdCourseIds: string[] = []
+let savedToken: string | null = null
+
+test.afterAll(async ({ request }) => {
+  if (!savedToken) return
+  for (const id of createdCourseIds) {
+    await request.delete(
+      `http://localhost:5001/api/admin/courses/${id}`,
+      { headers: { Authorization: `Bearer ${savedToken}` } },
+    ).catch(() => null)
+  }
+})
+
 // ── Low-level helpers ──────────────────────────────────────────────────────────
 
 async function gotoCoursesTab(page: Page) {
@@ -29,11 +43,21 @@ async function gotoCoursesTab(page: Page) {
 async function createDraftAndOpenBuilder(page: Page) {
   await gotoCoursesTab(page)
 
+  if (!savedToken) {
+    savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  }
+
   await page.getByRole('button', { name: 'Create Course', exact: true }).last().click()
   await expect(page.getByRole('heading', { name: 'Create Course' })).toBeVisible({ timeout: 5000 })
 
   await page.getByPlaceholder('e.g. Advanced Python Programming').fill(BUILDER_TITLE)
   await page.locator('select:has(option:text-is("Select instructor…"))').selectOption({ index: 1 })
+
+  // Set up course-ID watcher before click so we don't miss the POST.
+  const courseRespPromise = page.waitForResponse(
+    r => r.url().includes('/api/admin/courses') && r.request().method() === 'POST' && r.ok(),
+    { timeout: 15000 },
+  )
 
   // "Next: Course Builder" saves the draft then navigates; we wait for the
   // subsequent GET /sections that CourseBuilder fires on mount.
@@ -45,6 +69,9 @@ async function createDraftAndOpenBuilder(page: Page) {
     page.getByRole('button', { name: /Next: Course Builder/ }).click(),
   ])
   expect(sectionsResp.ok(), 'GET /sections must respond OK after draft is created').toBeTruthy()
+
+  const courseId = ((await (await courseRespPromise).json()) as { data?: { id?: string } }).data?.id
+  if (courseId) createdCourseIds.push(courseId)
 
   await expect(
     page.getByRole('heading', { name: 'Course Builder' }),

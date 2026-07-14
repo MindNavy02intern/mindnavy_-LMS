@@ -4,6 +4,32 @@ function uid() {
   return `${Date.now()}${Math.floor(Math.random() * 1000)}`
 }
 
+// ── Cleanup state (option c: self-cleaning tests) ─────────────────────────────
+const createdGroupIds: string[] = []
+const createdUserIds: string[] = []
+let savedToken: string | null = null
+
+async function stashToken(page: Page) {
+  if (!savedToken) {
+    savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  }
+}
+
+test.afterAll(async ({ request }) => {
+  if (!savedToken) return
+  const H = { Authorization: `Bearer ${savedToken}` }
+  for (const id of createdGroupIds) {
+    await request.delete(
+      `http://localhost:5001/api/admin/groups/${id}`,
+      { headers: H },
+    ).catch(() => null)
+  }
+  for (const id of createdUserIds) {
+    await request.delete(`http://localhost:5001/api/admin/users/${id}`, { headers: H }).catch(() => null)
+    await request.delete(`http://localhost:5001/api/admin/users/${id}/permanent`, { headers: H }).catch(() => null)
+  }
+})
+
 async function gotoGroups(page: Page) {
   await page.goto('/users')
   await page.getByRole('button', { name: 'Groups' }).click()
@@ -18,6 +44,7 @@ function waitForApi(page: Page, urlSubstr: string, method: string) {
 }
 
 async function addPlainUser(page: Page, name: string, email: string) {
+  await stashToken(page)
   await page.goto('/users')
   await page.getByRole('button', { name: '+ Add User', exact: true }).click()
   await page.getByPlaceholder('John Doe').fill(name)
@@ -25,11 +52,17 @@ async function addPlainUser(page: Page, name: string, email: string) {
   await page.getByPlaceholder('Enter password').fill('TestPass@123')
   await page.getByPlaceholder('Confirm password').fill('TestPass@123')
   await page.locator('select:has(option:text-is("Select role…"))').selectOption('LEARNER')
+  const respPromise = waitForApi(page, '/users', 'POST')
   await page.getByRole('button', { name: '+ Add User', exact: true }).last().click()
+  const resp = await respPromise
+  expect(resp.ok()).toBeTruthy()
+  const userId = ((await resp.json()) as { user?: { id?: string } }).user?.id
+  if (userId) createdUserIds.push(userId)
   await expect(page.getByText('User created successfully')).toBeVisible({ timeout: 10000 })
 }
 
 async function createGroup(page: Page, name: string) {
+  await stashToken(page)
   await gotoGroups(page)
   await page.getByRole('button', { name: '+ Add Group', exact: true }).click()
   await page.getByPlaceholder('e.g. Development Team').fill(name)
@@ -37,6 +70,8 @@ async function createGroup(page: Page, name: string) {
   await page.getByRole('button', { name: 'Create Group', exact: true }).click()
   const resp = await respPromise
   expect(resp.ok()).toBeTruthy()
+  const groupId = ((await resp.json()) as { data?: { id?: string } }).data?.id
+  if (groupId) createdGroupIds.push(groupId)
   await expect(page.getByPlaceholder('e.g. Development Team')).not.toBeVisible({ timeout: 10000 })
 }
 

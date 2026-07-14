@@ -1,8 +1,29 @@
-import { test, expect } from '@playwright/test'
+import { type Page, test, expect } from '@playwright/test'
 
 // All assertions run against the real backend (USE_MOCK=false in coursesApi.ts).
 // Data-shape assertions are used instead of hardcoded counts so the suite is
 // re-runnable across any DB state.
+
+// ── Cleanup state (option c: self-cleaning tests) ─────────────────────────────
+let createdCourseId: string | null = null
+let savedToken: string | null = null
+
+test.afterAll(async ({ request }) => {
+  if (!savedToken) return
+  const H = { Authorization: `Bearer ${savedToken}` }
+  if (createdCourseId) {
+    await request.delete(
+      `http://localhost:5001/api/admin/courses/${createdCourseId}`,
+      { headers: H },
+    ).catch(() => null)
+  }
+})
+
+async function ensureToken(page: Page) {
+  if (!savedToken) {
+    savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  }
+}
 
 async function gotoCoursesTab(page: Parameters<typeof test>[1] extends (args: { page: infer P }) => unknown ? P : never) {
   await page.goto('/learning-management')
@@ -114,6 +135,10 @@ test('Create draft — form opens, validates required fields, submits and return
   await gotoCoursesTab(page)
   await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 10000 })
 
+  if (!savedToken) {
+    savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  }
+
   // Open create form — two "Create Course" buttons exist: one in LmPageHeader
   // above the tabs, one inside CoursesTab. Target the CoursesTab button (last).
   await page.getByRole('button', { name: 'Create Course', exact: true }).last().click()
@@ -123,8 +148,8 @@ test('Create draft — form opens, validates required fields, submits and return
   const saveBtn = page.getByRole('button', { name: 'Save Draft' })
   await expect(saveBtn).toBeDisabled()
 
-  // Fill title
-  await page.getByPlaceholder('e.g. Advanced Python Programming').fill('My New Test Course')
+  // Timestamped title — unique per run so afterAll cleanup targets exactly this course.
+  await page.getByPlaceholder('e.g. Advanced Python Programming').fill(`My New Test Course ${Date.now()}`)
 
   // Still disabled until instructor is picked
   await expect(saveBtn).toBeDisabled()
@@ -135,12 +160,22 @@ test('Create draft — form opens, validates required fields, submits and return
   // Now enabled
   await expect(saveBtn).toBeEnabled()
 
+  // Set up watcher before click so we don't miss the POST /courses response.
+  const courseRespPromise = page.waitForResponse(
+    r => r.url().includes('/api/admin/courses') && r.request().method() === 'POST' && r.ok(),
+    { timeout: 15000 },
+  )
+
   // Submit
   await saveBtn.click()
 
   // Returns to list and shows success toast
   await expect(page.getByText('Draft saved!')).toBeVisible({ timeout: 10000 })
   await expect(page.getByRole('heading', { name: 'Courses' })).toBeVisible()
+
+  // Capture course ID for afterAll cleanup.
+  const courseResp = await courseRespPromise
+  createdCourseId = ((await courseResp.json()) as { data?: { id?: string } }).data?.id ?? null
 })
 
 test('Edit prefill — form opens with the course\'s existing title', async ({ page }) => {
@@ -250,6 +285,81 @@ test('Empty instructor list shows inline warning near the dropdown', async ({ pa
     page.getByText(/No instructors found/i),
     'Inline warning must appear when instructor list is empty',
   ).toBeVisible({ timeout: 5000 })
+})
+
+// ── View (eye icon) modal tests ────────────────────────────────────────────────
+
+// V1: Modal opens, loads course data, X button closes.
+test('View modal: opens with correct course title from API, X button closes', async ({ page }) => {
+  await gotoCoursesTab(page)
+  await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 10000 })
+  await ensureToken(page)
+
+  // Intercept the preview response to capture course title before asserting.
+  const previewResp = page.waitForResponse(
+    r => r.url().includes('/preview') && r.ok(),
+    { timeout: 10000 },
+  )
+
+  const firstViewBtn = page.locator('table tbody tr').first().getByRole('button', { name: /^View /i })
+  await firstViewBtn.click()
+
+  const resp = await previewResp
+  const body = (await resp.json()) as { data?: { course?: { title?: string } } }
+  const courseTitle = body.data?.course?.title ?? ''
+  expect(courseTitle.length, 'preview API must return a course title').toBeGreaterThan(0)
+
+  // Dialog renders
+  await expect(page.getByRole('dialog')).toBeVisible({ timeout: 5000 })
+
+  // Course title visible inside dialog
+  await expect(page.getByRole('dialog').getByText(courseTitle)).toBeVisible({ timeout: 5000 })
+
+  // X button closes
+  await page.getByRole('button', { name: 'Close preview' }).click()
+  await expect(page.getByRole('dialog')).not.toBeVisible()
+})
+
+// V2: Escape key closes modal.
+test('View modal: Escape key closes', async ({ page }) => {
+  await gotoCoursesTab(page)
+  await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 10000 })
+
+  await page.locator('table tbody tr').first().getByRole('button', { name: /^View /i }).click()
+  await expect(page.getByRole('dialog')).toBeVisible({ timeout: 5000 })
+
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('dialog')).not.toBeVisible()
+})
+
+// V3: Backdrop click closes modal.
+test('View modal: backdrop click closes', async ({ page }) => {
+  await gotoCoursesTab(page)
+  await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 10000 })
+
+  await page.locator('table tbody tr').first().getByRole('button', { name: /^View /i }).click()
+  await expect(page.getByRole('dialog')).toBeVisible({ timeout: 5000 })
+
+  // Click the backdrop element (behind the panel)
+  await page.locator('[aria-label="modal backdrop"]').click()
+  await expect(page.getByRole('dialog')).not.toBeVisible()
+})
+
+// V4: 404 from preview endpoint shows error message + Retry button.
+test('View modal: 404 response shows error message and Retry', async ({ page }) => {
+  await page.route('**/courses/*/preview', route =>
+    route.fulfill({ status: 404, json: { success: false, message: 'Course not found.' } }),
+  )
+
+  await gotoCoursesTab(page)
+  await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 10000 })
+
+  await page.locator('table tbody tr').first().getByRole('button', { name: /^View /i }).click()
+  await expect(page.getByRole('dialog')).toBeVisible({ timeout: 5000 })
+
+  // wizardFetch maps 404 → 'Course not found.'
+  await expect(page.getByRole('dialog').getByText('Course not found.')).toBeVisible({ timeout: 5000 })
+  await expect(page.getByRole('dialog').getByRole('button', { name: 'Retry' })).toBeVisible()
 })
 
 // A3: Filter-options 401 redirects to login page.

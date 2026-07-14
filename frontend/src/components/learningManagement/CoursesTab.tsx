@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Eye, Pencil, Archive, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Eye, Pencil, Archive, Plus, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
 import { getLmFilterOptions } from '../../services/lmApi';
 import { listCourses, archiveCourse } from '../../services/coursesApi';
+import { approveCourse, rejectCourse } from '../../services/courseWizardApi';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import { CourseApiError } from '../../types/courses';
 import type {
@@ -14,6 +15,10 @@ import type {
 import type { LmFilterOptions } from '../../types/lm';
 import CourseForm from './CourseForm';
 import CourseBuilder from './CourseBuilder';
+import CourseSettings from './CourseSettings';
+import CoursePreview from './CoursePreview';
+import CourseSubmit from './CourseSubmit';
+import CourseQuickViewModal from './CourseQuickViewModal';
 
 // ── Status tabs ───────────────────────────────────────────────────────────────
 
@@ -49,8 +54,11 @@ interface Toast { type: 'success' | 'error'; message: string }
 type View =
   | { kind: 'list' }
   | { kind: 'create' }
-  | { kind: 'edit';    courseId: string }
-  | { kind: 'builder'; courseId: string };
+  | { kind: 'edit';     courseId: string }
+  | { kind: 'builder';  courseId: string }
+  | { kind: 'settings'; courseId: string }
+  | { kind: 'preview';  courseId: string }
+  | { kind: 'submit';   courseId: string };
 
 // ── Main component ────────────────────────────────────────────────────────────
 
@@ -63,6 +71,7 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
   const navigate = useNavigate();
 
   const [view, setView] = useState<View>(openCreateOnMount ? { kind: 'create' } : { kind: 'list' });
+  const [viewCourseId, setViewCourseId] = useState<string | null>(null);
 
   // List state
   const [rows,         setRows]         = useState<CourseListRow[]>([]);
@@ -89,6 +98,13 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
   // Archive state
   const [archivingId,  setArchivingId]  = useState<string | null>(null);
   const [archiveError, setArchiveError] = useState<string | null>(null);
+
+  // Approve / Reject state
+  const [approvingId,  setApprovingId]  = useState<string | null>(null);
+  const [rejectTarget, setRejectTarget] = useState<CourseListRow | null>(null);
+  const [rejectReason, setRejectReason] = useState('');
+  const [rejectError,  setRejectError]  = useState<string | null>(null);
+  const [rejecting,    setRejecting]    = useState(false);
 
   // Toast
   const [toast, setToast] = useState<Toast | null>(null);
@@ -166,6 +182,60 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
     }
   }
 
+  // ── Approve ──────────────────────────────────────────────────────────────
+
+  async function handleApprove(row: CourseListRow) {
+    if (!window.confirm(`Approve "${row.title}"? It will be published immediately.`)) return;
+    setApprovingId(row.id);
+    try {
+      await approveCourse(row.id);
+      showToast('success', `"${row.title}" approved and published.`);
+      fetchList();
+    } catch (err) {
+      if (err instanceof CourseApiError && err.status === 401) { navigate('/login'); return; }
+      if (err instanceof CourseApiError && err.status === 429) {
+        showToast('error', 'Too many requests — slow down and try again.');
+        return;
+      }
+      // Race condition (400) or unexpected error — refetch current state, show message verbatim
+      fetchList();
+      showToast('error', err instanceof Error ? err.message : 'Approval failed.');
+    } finally {
+      setApprovingId(null);
+    }
+  }
+
+  // ── Reject ────────────────────────────────────────────────────────────────
+
+  function openRejectModal(row: CourseListRow) {
+    setRejectTarget(row);
+    setRejectReason('');
+    setRejectError(null);
+  }
+
+  async function handleRejectSubmit() {
+    if (!rejectTarget) return;
+    const reason = rejectReason.trim();
+    if (!reason) { setRejectError('Reason is required.'); return; }
+    if (reason.length > 1000) { setRejectError('Reason must be ≤ 1000 characters.'); return; }
+    setRejecting(true);
+    setRejectError(null);
+    try {
+      await rejectCourse(rejectTarget.id, reason);
+      showToast('success', `"${rejectTarget.title}" returned to Draft with feedback.`);
+      setRejectTarget(null);
+      fetchList();
+    } catch (err) {
+      if (err instanceof CourseApiError && err.status === 401) { navigate('/login'); return; }
+      // Race condition 400 — close modal, refetch current state, show message verbatim
+      setRejectTarget(null);
+      fetchList();
+      showToast('error', err instanceof Error ? err.message : 'Rejection failed.');
+    } finally {
+      setRejecting(false);
+    }
+  }
+
   // ── Form callbacks ───────────────────────────────────────────────────────
 
   function handleSaved() {
@@ -183,7 +253,46 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
     setView({ kind: 'builder', courseId });
   }
 
-  // ── Render builder ───────────────────────────────────────────────────────
+  // ── Render wizard steps ──────────────────────────────────────────────────
+
+  if (view.kind === 'settings') {
+    return (
+      <>
+        <CourseSettings
+          courseId={view.courseId}
+          onBack={() => setView({ kind: 'builder', courseId: view.courseId })}
+          onNext={() => setView({ kind: 'preview', courseId: view.courseId })}
+        />
+        {toast && <ToastBanner {...toast} />}
+      </>
+    );
+  }
+
+  if (view.kind === 'preview') {
+    return (
+      <>
+        <CoursePreview
+          courseId={view.courseId}
+          onBack={() => setView({ kind: 'settings', courseId: view.courseId })}
+          onNext={() => setView({ kind: 'submit', courseId: view.courseId })}
+        />
+        {toast && <ToastBanner {...toast} />}
+      </>
+    );
+  }
+
+  if (view.kind === 'submit') {
+    return (
+      <>
+        <CourseSubmit
+          courseId={view.courseId}
+          onBack={() => setView({ kind: 'preview', courseId: view.courseId })}
+          onDone={() => { fetchList(); setView({ kind: 'list' }); }}
+        />
+        {toast && <ToastBanner {...toast} />}
+      </>
+    );
+  }
 
   if (view.kind === 'builder') {
     return (
@@ -191,6 +300,7 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
         <CourseBuilder
           courseId={view.courseId}
           onBack={() => { fetchList(); setView({ kind: 'list' }); }}
+          onNext={() => setView({ kind: 'settings', courseId: view.courseId })}
         />
         {toast && <ToastBanner {...toast} />}
       </>
@@ -401,9 +511,12 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
 
                     <td className="tw:px-3 tw:py-3">
                       <div className="tw:flex tw:items-center tw:gap-1 tw:text-slate-400">
-                        {/* View (stub) */}
-                        <button type="button" disabled title="View (coming soon)"
-                          className="tw:rounded tw:p-1 tw:opacity-40 tw:cursor-not-allowed">
+                        {/* View */}
+                        <button type="button"
+                          onClick={() => setViewCourseId(r.id)}
+                          aria-label={`View ${r.title}`}
+                          title="Quick view"
+                          className="tw:rounded tw:p-1 tw:hover:bg-slate-100 tw:hover:text-slate-700">
                           <Eye className="tw:h-4 tw:w-4" strokeWidth={2} />
                         </button>
                         {/* Edit */}
@@ -421,6 +534,28 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
                             aria-label={`Archive ${r.title}`}
                             className="tw:rounded tw:p-1 tw:hover:bg-red-50 tw:hover:text-red-500 tw:disabled:opacity-40">
                             <Archive className="tw:h-4 tw:w-4" strokeWidth={2} />
+                          </button>
+                        )}
+                        {/* Approve — Pending only */}
+                        {r.status === 'Pending' && (
+                          <button type="button"
+                            onClick={() => handleApprove(r)}
+                            disabled={approvingId === r.id}
+                            aria-label={`Approve ${r.title}`}
+                            title="Approve — publishes the course"
+                            className="tw:rounded tw:p-1 tw:hover:bg-green-50 tw:hover:text-green-600 tw:disabled:opacity-40">
+                            <CheckCircle className="tw:h-4 tw:w-4" strokeWidth={2} />
+                          </button>
+                        )}
+                        {/* Reject — Pending only */}
+                        {r.status === 'Pending' && (
+                          <button type="button"
+                            onClick={() => openRejectModal(r)}
+                            disabled={approvingId === r.id}
+                            aria-label={`Reject ${r.title}`}
+                            title="Request changes — returns course to Draft"
+                            className="tw:rounded tw:p-1 tw:hover:bg-red-50 tw:hover:text-red-500 tw:disabled:opacity-40">
+                            <XCircle className="tw:h-4 tw:w-4" strokeWidth={2} />
                           </button>
                         )}
                       </div>
@@ -470,6 +605,81 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
           </div>
         </div>
       </div>
+
+      {/* ── Course quick view modal ─────────────────────────────────── */}
+      {viewCourseId && (
+        <CourseQuickViewModal
+          courseId={viewCourseId}
+          onClose={() => setViewCourseId(null)}
+        />
+      )}
+
+      {/* ── Reject reason modal ──────────────────────────────────────── */}
+      {rejectTarget && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }}
+            onClick={!rejecting ? () => setRejectTarget(null) : undefined} />
+          <div className="tw:relative tw:w-full tw:max-w-md tw:rounded-xl tw:bg-white tw:shadow-2xl tw:flex tw:flex-col">
+            {/* Header */}
+            <div className="tw:flex tw:items-center tw:justify-between tw:border-b tw:border-slate-200 tw:px-5 tw:py-4">
+              <h3 className="tw:m-0 tw:text-[15px] tw:font-semibold tw:text-slate-900">
+                Request Changes
+              </h3>
+              <button type="button" onClick={() => setRejectTarget(null)} disabled={rejecting}
+                className="tw:rounded tw:p-1 tw:text-slate-400 tw:hover:bg-slate-100 tw:disabled:opacity-40">
+                <XCircle className="tw:h-4 tw:w-4" strokeWidth={2} />
+              </button>
+            </div>
+            {/* Body */}
+            <div className="tw:px-5 tw:py-4 tw:flex tw:flex-col tw:gap-3">
+              <p className="tw:m-0 tw:text-[13px] tw:text-slate-600">
+                Returning <strong className="tw:font-semibold">{rejectTarget.title}</strong> to Draft.
+                Provide feedback for the course author.
+              </p>
+              {rejectError && (
+                <div className="tw:rounded-lg tw:border tw:border-red-100 tw:bg-red-50 tw:px-3 tw:py-2 tw:text-[12px] tw:text-red-600">
+                  {rejectError}
+                </div>
+              )}
+              <div>
+                <div className="tw:flex tw:items-end tw:justify-between tw:mb-1">
+                  <label className="tw:text-[12px] tw:font-semibold tw:text-slate-700">
+                    Reason <span className="tw:text-red-500">*</span>
+                  </label>
+                  <span className={
+                    'tw:text-[11px] tw:font-mono' +
+                    (rejectReason.length > 1000 ? ' tw:text-red-500' : ' tw:text-slate-400')
+                  }>
+                    {rejectReason.length}/1000
+                  </span>
+                </div>
+                <textarea
+                  aria-label="Rejection reason"
+                  value={rejectReason}
+                  onChange={e => { setRejectReason(e.target.value); setRejectError(null); }}
+                  placeholder="Explain what needs to be improved…"
+                  rows={5}
+                  autoFocus
+                  className="tw:w-full tw:resize-y tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400 focus:tw:ring-2 focus:tw:ring-blue-100"
+                />
+              </div>
+            </div>
+            {/* Footer */}
+            <div className="tw:flex tw:justify-end tw:gap-2 tw:border-t tw:border-slate-100 tw:px-5 tw:py-3.5">
+              <button type="button" onClick={() => setRejectTarget(null)} disabled={rejecting}
+                className="tw:rounded-lg tw:border tw:border-slate-200 tw:px-4 tw:py-2 tw:text-[13px] tw:font-medium tw:text-slate-600 tw:hover:bg-slate-50 tw:disabled:opacity-40">
+                Cancel
+              </button>
+              <button type="button" onClick={handleRejectSubmit}
+                disabled={rejecting || !rejectReason.trim() || rejectReason.length > 1000}
+                aria-label="Submit rejection"
+                className="tw:rounded-lg tw:bg-red-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-red-700 tw:disabled:opacity-40">
+                {rejecting ? 'Sending…' : 'Request Changes'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && <ToastBanner {...toast} />}
     </div>
