@@ -21,6 +21,7 @@ const coursesRoutes      = require("./src/routes/courses.routes");
 const courseBuilderRoutes = require("./src/routes/courseBuilder.routes");
 const courseWorkflowRoutes = require("./src/routes/courseWorkflow.routes");
 const categoriesRoutes   = require("./src/routes/categories.routes");
+const learningPathsRoutes = require("./src/routes/learningPaths.routes");
 const uploadsRoutes      = require("./src/routes/uploads.routes");
 
 const app = express();
@@ -64,6 +65,9 @@ app.use("/api/admin", courseWorkflowRoutes);
 
 // Categories (Category Management Center — 2-level hierarchy).
 app.use("/api/admin/categories", categoriesRoutes);
+
+// Learning Paths (ordered bundles of courses + live sessions).
+app.use("/api/admin/learning-paths", learningPathsRoutes);
 
 // File uploads (sign → confirm → delete) for thumbnails (Phase 1).
 app.use("/api/admin/uploads", uploadsRoutes);

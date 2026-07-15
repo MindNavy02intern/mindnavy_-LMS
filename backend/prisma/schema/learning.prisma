@@ -173,6 +173,47 @@ model Lesson {
   @@map("lessons")
 }
 
+// Learning Paths — ordered bundles of existing content. v1 items are COURSE and
+// LIVE_SESSION only (Quiz/Assignment/Certificate-template models don't exist yet;
+// extend the enum when they ship). itemId is a polymorphic reference with NO db-level
+// FK — existence is verified in the service on insert, and reads flag dangling
+// references (`missing: true`) instead of failing. Completion rules v1 = the single
+// path-level `sequential` flag; per-item rules/prerequisites/deadlines are deferred
+// until learner progress tracking exists.
+model LearningPath {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  sequential  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  items LearningPathItem[]
+
+  @@index([createdAt])
+  @@map("learning_paths")
+}
+
+model LearningPathItem {
+  id        String               @id @default(uuid())
+  pathId    String
+  itemType  LearningPathItemType
+  itemId    String
+  order     Int                  @default(0)
+  createdAt DateTime             @default(now())
+
+  path LearningPath @relation(fields: [pathId], references: [id], onDelete: Cascade)
+
+  @@unique([pathId, itemType, itemId])
+  @@index([pathId, order])
+  @@map("learning_path_items")
+}
+
+enum LearningPathItemType {
+  COURSE
+  LIVE_SESSION
+}
+
 enum LessonType {
   TEXT
   VIDEO_URL

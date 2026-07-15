@@ -9,6 +9,7 @@ const {
   compareOtpCode,
   getOtpExpiryDate,
 } = require("../utils/otp");
+const { sendOtpEmail } = require("../utils/mailer");
 
 const INVALID_LOGIN_MESSAGE = "Invalid email or password.";
 const MAX_FAILED_LOGIN_ATTEMPTS = 5;
@@ -319,9 +320,21 @@ async function sendAdminOtp({ adminId, ipAddress, userAgent }) {
     userAgent,
   });
 
-  // Development only. Remove this when real email sending is added.
-  if (process.env.NODE_ENV !== "production") {
-    console.log("DEV OTP CODE:", otpCode);
+  const delivery = await sendOtpEmail(admin.email, otpCode, "ADMIN_LOGIN");
+
+  if (!delivery.sent) {
+    // SMTP not configured yet → dev fallback: code on the server console.
+    // In production (or on a real send failure) the user must be told —
+    // silently succeeding would strand them on the OTP screen.
+    if (delivery.reason === "NOT_CONFIGURED" && process.env.NODE_ENV !== "production") {
+      console.log("DEV OTP CODE:", otpCode);
+    } else {
+      return {
+        success: false,
+        code: "EMAIL_SEND_FAILED",
+        message: "Failed to send the OTP email. Please try again.",
+      };
+    }
   }
 
   return {
@@ -576,9 +589,17 @@ async function forgotAdminPassword({ email, ipAddress, userAgent }) {
     userAgent,
   });
 
-  // Development only. Remove when real email sending is added.
-  if (process.env.NODE_ENV !== "production") {
-    console.log("DEV PASSWORD RESET CODE:", resetCode);
+  // Anti-enumeration: the response is the SAME generic message whether the email
+  // exists, the send succeeds, or the send fails — a delivery error must not
+  // reveal that the account is real. Failures are only logged server-side.
+  const delivery = await sendOtpEmail(admin.email, resetCode, "PASSWORD_RESET");
+
+  if (!delivery.sent) {
+    if (delivery.reason === "NOT_CONFIGURED" && process.env.NODE_ENV !== "production") {
+      console.log("DEV PASSWORD RESET CODE:", resetCode);
+    } else {
+      console.error("[admin.service] password reset email failed to send (adminId:", admin.id + ")");
+    }
   }
 
   return {

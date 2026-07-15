@@ -103,7 +103,9 @@ async function adminSendOtpController(req, res) {
     });
 
     if (!result.success) {
-      return res.status(403).json(result);
+      // Delivery failure is an upstream (SMTP) problem, not an authorization one.
+      const status = result.code === "EMAIL_SEND_FAILED" ? 502 : 403;
+      return res.status(status).json({ success: false, message: result.message });
     }
 
     return res.status(200).json(result);
