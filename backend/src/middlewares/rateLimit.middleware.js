@@ -66,6 +66,21 @@ const otpRequestRateLimiter = rateLimit({
   },
 });
 
+// Public certificate verification — the ONLY unauthenticated API surface (QR
+// scans from phones, no login). Tight per-IP cap: legitimate use is a handful
+// of scans; the 32-hex-char code space makes brute force pointless anyway, this
+// just kills the noise.
+const publicVerifyRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many verification requests. Please try again later.",
+  },
+});
+
 // Import limiter — 5 imports per admin/IP per 10 minutes to prevent abuse
 const adminUsersImportRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -85,4 +100,5 @@ module.exports = {
   adminUsersImportRateLimiter,
   coursesReadRateLimiter,
   otpRequestRateLimiter,
+  publicVerifyRateLimiter,
 };

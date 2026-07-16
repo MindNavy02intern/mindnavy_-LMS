@@ -87,7 +87,8 @@ async function getStats() {
     countWithGrowth(prisma.course, { status: "PUBLISHED" }),
     countWithGrowth(prisma.courseEnrollment, {}),
     countWithGrowth(prisma.courseEnrollment, { status: "COMPLETED" }, "completedAt"),
-    countWithGrowth(prisma.certificate, {}, "issuedAt"),
+    // Revoked certificates don't count as issued (Certificates system, 2026-07).
+    countWithGrowth(prisma.certificate, { revokedAt: null }, "issuedAt"),
     avgCompletionRate(),
   ]);
 

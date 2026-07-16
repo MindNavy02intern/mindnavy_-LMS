@@ -127,19 +127,53 @@ model LiveSession {
   @@map("live_sessions")
 }
 
+// Certificates v1 — EXTENDED in place (this model predates the Certificates
+// system and already feeds the LM KPI + activity feed; a parallel IssuedCertificate
+// table would double-count — IMPACT_MAP B2). One cert per (course, user); reissue
+// UPDATES the row (new code + issuedAt, clears revokedAt) — never inserts. Revoke
+// is soft (revokedAt) so the public verify endpoint can answer "revoked" and the
+// audit trail survives. verificationCode is crypto-random (32 hex chars), nullable
+// only for legacy rows — backfilled by scripts/backfillCertificateCodes.js.
+// metadata holds an issue-time snapshot { studentName, courseTitle } so the
+// certificate keeps rendering truthfully even if the course is renamed later.
+// v1 triggers: MANUAL issue only (quiz/path/attendance runtimes don't exist yet);
+// service exposes one issueCertificate() for future triggers to call.
 model Certificate {
-  id       String   @id @default(uuid())
-  courseId String
-  userId   String
-  issuedAt DateTime @default(now())
-  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  user     AppUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id               String    @id @default(uuid())
+  courseId         String
+  userId           String
+  templateId       String?
+  verificationCode String?   @unique
+  issuedAt         DateTime  @default(now())
+  revokedAt        DateTime?
+  metadata         Json?
+  course           Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user             AppUser   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template         CertificateTemplate? @relation(fields: [templateId], references: [id])
 
   @@unique([courseId, userId])
   @@index([courseId])
   @@index([userId])
   @@index([issuedAt])
+  @@index([templateId])
   @@map("certificates")
+}
+
+// Layout is a small validated Json (colors, texts with fixed {{placeholders}},
+// optional logo URL, signature) — rebuilt field-by-field in the validator, never
+// arbitrary HTML. Deleting a template leaves issued certs intact (templateId
+// SetNull) — they fall back to the default layout + their metadata snapshot.
+model CertificateTemplate {
+  id        String   @id @default(uuid())
+  name      String
+  layout    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  certificates Certificate[]
+
+  @@index([createdAt])
+  @@map("certificate_templates")
 }
 
 model CourseSection {

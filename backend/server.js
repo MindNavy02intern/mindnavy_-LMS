@@ -23,6 +23,9 @@ const courseWorkflowRoutes = require("./src/routes/courseWorkflow.routes");
 const categoriesRoutes   = require("./src/routes/categories.routes");
 const learningPathsRoutes = require("./src/routes/learningPaths.routes");
 const quizzesRoutes      = require("./src/routes/quizzes.routes");
+const certificateTemplatesRoutes = require("./src/routes/certificateTemplates.routes");
+const certificatesRoutes = require("./src/routes/certificates.routes");
+const publicCertificatesRoutes = require("./src/routes/publicCertificates.routes");
 const uploadsRoutes      = require("./src/routes/uploads.routes");
 
 const app = express();
@@ -72,6 +75,14 @@ app.use("/api/admin/learning-paths", learningPathsRoutes);
 
 // Quizzes & Exams (assessment builder — quizzes + questions + reorder).
 app.use("/api/admin/quizzes", quizzesRoutes);
+
+// Certificates (templates + issued certificates + PDF download).
+app.use("/api/admin/certificate-templates", certificateTemplatesRoutes);
+app.use("/api/admin/certificates", certificatesRoutes);
+
+// Public QR verification — the ONLY unauthenticated API surface, by design
+// (phones scanning certificate QR codes). Own per-IP rate limiter inside.
+app.use("/api/public/certificates", publicCertificatesRoutes);
 
 // File uploads (sign → confirm → delete) for thumbnails (Phase 1).
 app.use("/api/admin/uploads", uploadsRoutes);
