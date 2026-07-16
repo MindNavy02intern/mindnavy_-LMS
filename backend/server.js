@@ -22,6 +22,7 @@ const courseBuilderRoutes = require("./src/routes/courseBuilder.routes");
 const courseWorkflowRoutes = require("./src/routes/courseWorkflow.routes");
 const categoriesRoutes   = require("./src/routes/categories.routes");
 const learningPathsRoutes = require("./src/routes/learningPaths.routes");
+const quizzesRoutes      = require("./src/routes/quizzes.routes");
 const uploadsRoutes      = require("./src/routes/uploads.routes");
 
 const app = express();
@@ -68,6 +69,9 @@ app.use("/api/admin/categories", categoriesRoutes);
 
 // Learning Paths (ordered bundles of courses + live sessions).
 app.use("/api/admin/learning-paths", learningPathsRoutes);
+
+// Quizzes & Exams (assessment builder — quizzes + questions + reorder).
+app.use("/api/admin/quizzes", quizzesRoutes);
 
 // File uploads (sign → confirm → delete) for thumbnails (Phase 1).
 app.use("/api/admin/uploads", uploadsRoutes);

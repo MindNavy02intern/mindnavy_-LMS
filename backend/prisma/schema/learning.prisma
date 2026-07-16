@@ -44,6 +44,7 @@ model Course {
   instructor   AppUser?           @relation("CourseInstructor", fields: [instructorId], references: [id])
   categoryRef  Category?          @relation(fields: [categoryId], references: [id])
   liveSessions LiveSession[]
+  quizzes      Quiz[]
 
   @@index([status])
   @@index([category])
@@ -212,6 +213,63 @@ model LearningPathItem {
 enum LearningPathItemType {
   COURSE
   LIVE_SESSION
+}
+
+// Quizzes & Exams — assessment BUILDER v1 (admin side only). A quiz optionally
+// attaches to a course (nullable FK like LiveSession — course delete sets it null);
+// lesson-level attachment is deferred: the frontend key ['quizzes', courseId?] is
+// course-scoped. QuestionType carries all 6 design-doc values so the enum never
+// needs another db push, but v1 endpoints accept only MULTIPLE_CHOICE, TRUE_FALSE,
+// MULTI_SELECT and ESSAY — MATCHING / FILL_IN_BLANK return 400 until v2.
+// Grading v1 is a documented decision, not code: ESSAY = manual, the rest auto.
+// Learner attempts/submissions (QuizAttempt) ship with the learner runtime.
+// NOTE: the LM Content stats `quizzes` count stays owned by CourseContent
+// type=QUIZ (lm.service) — this table does NOT feed that number (one field,
+// one owner — IMPACT_MAP B2).
+model Quiz {
+  id                 String   @id @default(uuid())
+  title              String
+  description        String?
+  courseId           String?
+  passingGrade       Int      @default(60)
+  attemptsAllowed    Int?
+  timeLimit          Int?
+  randomizeQuestions Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  course    Course?    @relation(fields: [courseId], references: [id])
+  questions Question[]
+
+  @@index([courseId])
+  @@index([createdAt])
+  @@map("quizzes")
+}
+
+model Question {
+  id        String       @id @default(uuid())
+  quizId    String
+  type      QuestionType
+  prompt    String
+  data      Json?
+  points    Int          @default(1)
+  order     Int          @default(0)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([quizId, order])
+  @@map("quiz_questions")
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+  MULTI_SELECT
+  ESSAY
+  FILL_IN_BLANK
+  MATCHING
 }
 
 enum LessonType {
