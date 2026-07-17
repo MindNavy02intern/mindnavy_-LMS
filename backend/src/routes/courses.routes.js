@@ -15,8 +15,9 @@ router.get("/",    requireAdminAuth, coursesReadRateLimiter, c.listCourses);
 router.get("/:id", requireAdminAuth, coursesReadRateLimiter, c.getCourse);
 
 // Writes — admin auth + stricter user-action limiter.
-router.post("/",      requireAdminAuth, adminUserActionRateLimiter, c.createCourse);
-router.patch("/:id",  requireAdminAuth, adminUserActionRateLimiter, c.updateCourse);
-router.delete("/:id", requireAdminAuth, adminUserActionRateLimiter, c.archiveCourse);
+router.post("/",           requireAdminAuth, adminUserActionRateLimiter, c.createCourse);
+router.patch("/:id",       requireAdminAuth, adminUserActionRateLimiter, c.updateCourse);
+router.delete("/:id",      requireAdminAuth, adminUserActionRateLimiter, c.archiveCourse);
+router.post("/:id/restore", requireAdminAuth, adminUserActionRateLimiter, c.restoreCourse);
 
 module.exports = router;

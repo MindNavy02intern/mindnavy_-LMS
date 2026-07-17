@@ -15,6 +15,7 @@ const RolesPermissionsStandalonePage = lazy(() => import('./pages/RolesPermissio
 const SystemSettingsPage             = lazy(() => import('./pages/SystemSettingsPage'));
 const ProfilePage                    = lazy(() => import('./pages/ProfilePage'));
 const LearningManagementPage         = lazy(() => import('./pages/LearningManagementPage'));
+const PublicVerifyPage               = lazy(() => import('./pages/PublicVerifyPage'));
 
 function PageLoader() {
   return (
@@ -52,6 +53,13 @@ export default function App() {
         {/* Public routes */}
         <Route path="/login"  element={<LoginPage />}  />
         <Route path="/signup" element={<SignupPage />} />
+
+        {/*
+         * Public certificate verification — QR codes on printed/downloaded
+         * certificate PDFs link here. Genuinely public: no ProtectedRoute,
+         * no AdminLayout/sidebar. Must work for a logged-out visitor.
+         */}
+        <Route path="/verify/:code" element={<PublicVerifyPage />} />
 
         {/* Password recovery routes — public, no auth required */}
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />

@@ -342,3 +342,17 @@ export async function archiveCourse(id: string): Promise<void> {
   }
   await coursesFetch<void>(`/courses/${encodeURIComponent(id)}`, 'DELETE');
 }
+
+export async function restoreCourse(id: string): Promise<{ id: string; status: string }> {
+  if (USE_MOCK) {
+    const idx = MOCK_COURSES.findIndex((c) => c.id === id);
+    if (idx === -1) throw new CourseApiError(404, 'Course not found.');
+    if (MOCK_COURSES[idx].status !== 'Archived') throw new CourseApiError(400, 'Only archived courses can be restored.');
+    MOCK_COURSES[idx] = { ...MOCK_COURSES[idx], status: 'Draft' };
+    MOCK_STATUS_COUNTS.archived = Math.max(0, MOCK_STATUS_COUNTS.archived - 1);
+    MOCK_STATUS_COUNTS.draft += 1;
+    MOCK_STATUS_COUNTS.all += 1;
+    return mockDelay({ id, status: 'Draft' });
+  }
+  return coursesFetch<{ id: string; status: string }>(`/courses/${encodeURIComponent(id)}/restore`, 'POST');
+}

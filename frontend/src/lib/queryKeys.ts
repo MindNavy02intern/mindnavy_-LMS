@@ -79,6 +79,7 @@ export const queryKeys = {
                     courseId ? ['assignments', courseId] : ['assignments'],
   certificates:   (filters?: Record<string, unknown>): QueryKey =>
                     filters ? ['certificates', filters] : ['certificates'],
+  certificateTemplates: (): QueryKey => ['certificate-templates'],
   contentLibrary: (): QueryKey => ['content-library'],
   liveSessions:   (filters?: Record<string, unknown>): QueryKey =>
                     filters ? ['live-sessions', filters] : ['live-sessions'],

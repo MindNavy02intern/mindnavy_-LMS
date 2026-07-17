@@ -6,16 +6,16 @@ import { type Page, test, expect } from '@playwright/test'
 
 // ── Cleanup state (option c: self-cleaning tests) ─────────────────────────────
 let createdCourseId: string | null = null
+let restoreTestCourseId: string | null = null
 let savedToken: string | null = null
+
+const API = 'http://localhost:5001/api/admin'
 
 test.afterAll(async ({ request }) => {
   if (!savedToken) return
   const H = { Authorization: `Bearer ${savedToken}` }
-  if (createdCourseId) {
-    await request.delete(
-      `http://localhost:5001/api/admin/courses/${createdCourseId}`,
-      { headers: H },
-    ).catch(() => null)
+  for (const id of [createdCourseId, restoreTestCourseId]) {
+    if (id) await request.delete(`${API}/courses/${id}`, { headers: H }).catch(() => null)
   }
 })
 
@@ -360,6 +360,69 @@ test('View modal: 404 response shows error message and Retry', async ({ page }) 
   // wizardFetch maps 404 → 'Course not found.'
   await expect(page.getByRole('dialog').getByText('Course not found.')).toBeVisible({ timeout: 5000 })
   await expect(page.getByRole('dialog').getByRole('button', { name: 'Retry' })).toBeVisible()
+})
+
+// R1: Restore — archive a course then restore it, confirm it moves Draft → Archived → Draft.
+test('Restore: archived course moves to Draft tab after restore', async ({ page, request }) => {
+  await ensureToken(page)
+  const H = { Authorization: `Bearer ${savedToken}` }
+
+  // Fetch an instructor via filter-options (already fetched by CoursesTab, so it's fast)
+  const optResp = await request.get(`${API}/lm/filter-options`, { headers: H })
+  const optBody = (await optResp.json()) as { data?: { instructors?: { id: string }[] } }
+  const instructorId = optBody.data?.instructors?.[0]?.id
+  if (!instructorId) {
+    test.skip(true, 'No instructor in DB — restore test requires at least one instructor')
+    return
+  }
+
+  // Create a fresh course (avoids touching existing data)
+  const ts = Date.now()
+  const createResp = await request.post(`${API}/courses`, {
+    headers: H,
+    data: { title: `RESTORE SMOKE ${ts}`, instructorId },
+  })
+  const createBody = (await createResp.json()) as { data?: { id?: string } }
+  const courseId = createBody.data?.id
+  expect(courseId, 'course must be created for restore test').toBeTruthy()
+  restoreTestCourseId = courseId ?? null
+
+  // Archive via API so the restore test starts from the Archived state
+  await request.delete(`${API}/courses/${courseId}`, { headers: H })
+
+  // Navigate to Archived tab
+  await gotoCoursesTab(page)
+  await page.getByRole('button', { name: /Archived/ }).click()
+  await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 10000 })
+
+  // Our test course must be visible
+  const courseRow = page.getByRole('row').filter({ hasText: `RESTORE SMOKE ${ts}` })
+  await expect(courseRow).toBeVisible({ timeout: 5000 })
+
+  // Accept the restore confirm dialog, watch the POST /restore response
+  page.on('dialog', (d) => d.accept())
+  const restoreRespPromise = page.waitForResponse(
+    (r) => r.url().includes(`/courses/${courseId}/restore`) && r.ok(),
+    { timeout: 10000 },
+  )
+
+  await courseRow.getByRole('button', { name: /Restore/i }).click()
+  await restoreRespPromise
+
+  // Success toast
+  await expect(page.getByText(/restored/i)).toBeVisible({ timeout: 10000 })
+
+  // Course gone from Archived tab
+  await expect(page.getByRole('row').filter({ hasText: `RESTORE SMOKE ${ts}` }))
+    .not.toBeVisible({ timeout: 5000 })
+
+  // Navigate to Draft tab — course must appear there
+  await page.getByRole('button', { name: /Draft/ }).click()
+  await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 10000 })
+  await expect(page.getByRole('row').filter({ hasText: `RESTORE SMOKE ${ts}` }))
+    .toBeVisible({ timeout: 5000 })
+
+  // afterAll will archive (delete) restoreTestCourseId to clean up
 })
 
 // A3: Filter-options 401 redirects to login page.

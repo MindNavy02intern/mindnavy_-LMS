@@ -256,4 +256,22 @@ async function archiveCourse(id, adminId) {
   return { id: course.id, status: STATUS_LABEL[course.status] ?? course.status };
 }
 
-module.exports = { listCourses, getCourse, createCourse, updateCourse, archiveCourse };
+async function restoreCourse(id, adminId) {
+  const current = await prisma.course.findUnique({ where: { id }, select: { id: true, status: true } });
+  if (!current) throw Object.assign(new Error("COURSE_NOT_FOUND"), { code: "COURSE_NOT_FOUND" });
+  if (current.status !== "ARCHIVED") {
+    throw Object.assign(new Error("ONLY_ARCHIVED_RESTORABLE"), {
+      code: "ONLY_ARCHIVED_RESTORABLE",
+      status: STATUS_LABEL[current.status] ?? current.status,
+    });
+  }
+  const course = await prisma.course.update({
+    where: { id },
+    data: { status: "DRAFT" },
+    select: { id: true, status: true },
+  });
+  await courseAuditLog(adminId, "COURSE_RESTORED", { courseId: id });
+  return { id: course.id, status: STATUS_LABEL[course.status] ?? course.status };
+}
+
+module.exports = { listCourses, getCourse, createCourse, updateCourse, archiveCourse, restoreCourse };

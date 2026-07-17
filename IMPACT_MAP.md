@@ -61,7 +61,7 @@ All keys are created via `src/lib/queryKeys.ts` (factory). Never write key array
 `['org','departments']` · `['org','branches']` · `['org','teams']` · `['org','chart']` · `['groups']` · `['competencies']`
 
 **Learning domain**
-`['courses', filters?]` · `['courses', id]` · `['categories']` · `['learning-paths']` · `['quizzes', courseId?]` · `['assignments', courseId?]` · `['certificates', filters?]` · `['content-library']` · `['live-sessions', filters?]`
+`['courses', filters?]` · `['courses', id]` · `['categories']` · `['learning-paths']` · `['quizzes', courseId?]` · `['assignments', courseId?]` · `['certificates', filters?]` · `['certificate-templates']` · `['content-library']` · `['live-sessions', filters?]`
 
 **Instructors domain**
 `['instructors', filters?]` · `['instructors', id]` · `['instructor-applications']` · `['instructors', id, 'earnings']` · `['instructors', id, 'reviews']` · `['instructors', id, 'documents']`
@@ -179,8 +179,11 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 | `course.approve` + publish (§4–5) | `['courses']` `['courses', id]` `['approvals']` `['categories']` `['dashboard','course-analytics']` + `['learning-paths']` if course belongs to a path | **Published Courses KPI** · Approvals drop · Course dropdown gains option (R2) · category counts · Activity "New Course Published" |
 | `course.reject` / `requestChanges` (§5) | `['courses', id]` `['approvals']` `['notifications']` | Review status · instructor notified |
 | `course.archive` | `['courses']` `['dashboard','course-analytics']` + `['learning-paths']` if in path | Published Courses KPI down · Course dropdown loses option |
+| `course.restore` | `['courses']` `['dashboard','course-analytics']` `['learning-paths']` | Archived course reappears in Draft tab · KPI updates · learning-path item badge changes from Archived → Draft |
 | `category.create/rename/delete` (§6) | `['categories']` `['courses']` | Category dropdown everywhere (R2) · course filters |
 | `learningPath.update` (§7) | `['learning-paths']` `['dashboard','course-analytics']` | Path progress metrics |
+| `quiz.create` / `quiz.update` / `quiz.delete` (§8) | `['quizzes']` + `['quizzes',courseId]` `['courses', courseId]` if the quiz is attached to a course | Assessments list · question builder header · course detail (if attached) |
+| `question.create` / `question.update` / `question.delete` / `question.reorder` (§8) | same as `quiz.update` (question writes change quiz-derived `questionCount`/`totalPoints`) | Question list in builder · quiz `questionCount`/`totalPoints` (next real GET — not computed client-side, R1/R4) |
 | `liveSession.schedule` (§12) | `['live-sessions']` `['calendar']` `['dashboard','live-overview']` | Calendar & Events · Upcoming Sessions · Live Session Reminders notification |
 | `liveSession.start` / `.end` (§12–15) | `['live-sessions']` `['dashboard','live-overview']` `['attendance',sessionId]` | **Live Sessions Running KPI** · Live Overview · Activity "Live Session Started" |
 | `content.upload` (§11, §16) | `['content-library']` `['courses', id]` | Library · course builder · Activity "Instructor Uploaded Content" |
@@ -225,8 +228,12 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `certificate.issue` (auto via trigger rules or manual) | `['certificates']` `['students', id, 'certificates']` `['dashboard','course-analytics']` | **Certificates Issued KPI** · student profile · Activity "Certificate Issued" |
+| `certificate.issue` (v1: manual only via "Issue Certificate" dialog; auto trigger rules are v2) | `['certificates']` `['students', id, 'certificates']` `['dashboard','course-analytics']` | **Certificates Issued KPI** (non-revoked count) · student profile · Activity "Certificate Issued" |
 | `certificate.revoke` | same | Same, reversed |
+| `certificate.reissue` (fresh code + issuedAt, clears revokedAt — can move a revoked cert back into the KPI count) | same as `certificate.issue`/`.revoke` | Same surfaces; old QR/PDF stop verifying immediately (§6 public verify) |
+| `certificateTemplate.create` (§9 builder) | `['certificate-templates']` | Templates list |
+| `certificateTemplate.update` | `['certificate-templates']` `['certificates']` (templateName is read live off the relation, not snapshotted — a rename changes what issued certs display) | Templates list · issued-certificates table's Template column |
+| `certificateTemplate.delete` | `['certificate-templates']` `['certificates']` (templateId is SetNull on any cert using it — falls back to default layout, cert row survives) | Templates list · issued-certificates table's Template column (→ "Default") |
 
 ### 5.9 APPROVALS (meta-entity — Dashboard §9)
 

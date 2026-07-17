@@ -70,9 +70,12 @@ export type MutationName =
   | 'course.createDraft' | 'course.update' | 'course.settings.update'
   | 'course.submitForApproval'
   | 'course.approve' | 'course.reject' | 'course.requestChanges'
-  | 'course.archive'
+  | 'course.archive' | 'course.restore'
   | 'category.create' | 'category.rename' | 'category.delete'
-  | 'learningPath.update'
+  | 'learningPath.create' | 'learningPath.update' | 'learningPath.delete'
+  | 'learningPath.item.add' | 'learningPath.item.remove' | 'learningPath.item.reorder'
+  | 'quiz.create' | 'quiz.update' | 'quiz.delete'
+  | 'question.create' | 'question.update' | 'question.delete' | 'question.reorder'
   | 'liveSession.schedule' | 'liveSession.start' | 'liveSession.end'
   | 'content.upload'
   // §5.4 Course Builder (sections & lessons)
@@ -95,7 +98,8 @@ export type MutationName =
   | 'payout.execute' | 'payout.hold'
   | 'subscription.cancel'
   // §5.8 CERTIFICATE
-  | 'certificate.issue' | 'certificate.revoke'
+  | 'certificate.issue' | 'certificate.revoke' | 'certificate.reissue'
+  | 'certificateTemplate.create' | 'certificateTemplate.update' | 'certificateTemplate.delete'
   // §5.11 COMPETENCY / SKILL
   | 'skill.create' | 'skill.update' | 'skill.delete'
   | 'skillCategory.create' | 'skillCategory.update' | 'skillCategory.archive'
@@ -379,6 +383,11 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.dashboard.courseAnalytics(),
     queryKeys.learningPaths(),
   ],
+  'course.restore': () => [
+    queryKeys.courses.list(),
+    queryKeys.dashboard.courseAnalytics(),
+    queryKeys.learningPaths(),
+  ],
   'category.create': () => [
     queryKeys.categories(),
     queryKeys.courses.list(),
@@ -391,9 +400,58 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.categories(),
     queryKeys.courses.list(),
   ],
+  'learningPath.create': () => [
+    queryKeys.learningPaths(),
+    queryKeys.dashboard.courseAnalytics(),
+  ],
   'learningPath.update': () => [
     queryKeys.learningPaths(),
     queryKeys.dashboard.courseAnalytics(),
+  ],
+  'learningPath.delete': () => [
+    queryKeys.learningPaths(),
+    queryKeys.dashboard.courseAnalytics(),
+  ],
+  'learningPath.item.add': () => [
+    queryKeys.learningPaths(),
+  ],
+  'learningPath.item.remove': () => [
+    queryKeys.learningPaths(),
+  ],
+  'learningPath.item.reorder': () => [
+    queryKeys.learningPaths(),
+  ],
+  // Quizzes & Exams — courseId is the QUIZ's courseId (undefined for
+  // unattached quizzes), so the course-scoped keys are only added when set.
+  'quiz.create': (ctx) => [
+    queryKeys.quizzes(),
+    ...(ctx?.courseId ? [queryKeys.quizzes(ctx.courseId), queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'quiz.update': (ctx) => [
+    queryKeys.quizzes(),
+    ...(ctx?.courseId ? [queryKeys.quizzes(ctx.courseId), queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'quiz.delete': (ctx) => [
+    queryKeys.quizzes(),
+    ...(ctx?.courseId ? [queryKeys.quizzes(ctx.courseId), queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  // Question writes change quiz-derived counts (questionCount/totalPoints) —
+  // same invalidation set as quiz.update.
+  'question.create': (ctx) => [
+    queryKeys.quizzes(),
+    ...(ctx?.courseId ? [queryKeys.quizzes(ctx.courseId), queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'question.update': (ctx) => [
+    queryKeys.quizzes(),
+    ...(ctx?.courseId ? [queryKeys.quizzes(ctx.courseId), queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'question.delete': (ctx) => [
+    queryKeys.quizzes(),
+    ...(ctx?.courseId ? [queryKeys.quizzes(ctx.courseId), queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'question.reorder': (ctx) => [
+    queryKeys.quizzes(),
+    ...(ctx?.courseId ? [queryKeys.quizzes(ctx.courseId), queryKeys.courses.detail(ctx.courseId)] : []),
   ],
   'liveSession.schedule': () => [
     queryKeys.liveSessions(),
@@ -572,6 +630,27 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.certificates(),
     queryKeys.dashboard.courseAnalytics(),
     ...(ctx?.studentId ? [queryKeys.students.certificates(ctx.studentId)] : []),
+  ],
+  // Reissue mints a fresh code/issuedAt and clears revokedAt (can move a
+  // revoked cert back to active) — same surfaces as issue/revoke.
+  'certificate.reissue': (ctx) => [
+    queryKeys.certificates(),
+    queryKeys.dashboard.courseAnalytics(),
+    ...(ctx?.studentId ? [queryKeys.students.certificates(ctx.studentId)] : []),
+  ],
+  // Template writes don't touch the dashboard KPI, but certificate rows read
+  // templateName live off the relation (not snapshotted like studentName/
+  // courseTitle) — a rename or delete changes what the certificates list shows.
+  'certificateTemplate.create': () => [
+    queryKeys.certificateTemplates(),
+  ],
+  'certificateTemplate.update': () => [
+    queryKeys.certificateTemplates(),
+    queryKeys.certificates(),
+  ],
+  'certificateTemplate.delete': () => [
+    queryKeys.certificateTemplates(),
+    queryKeys.certificates(),
   ],
 
   // ── §5.11 COMPETENCY / SKILL ──────────────────────────────────────────────
