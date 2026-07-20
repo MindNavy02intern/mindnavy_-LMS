@@ -138,20 +138,24 @@ Body: `ReorderPayload`
 
 ---
 
-## Part 2 — Uploads (Thumbnails now · Video via Cloudflare later)
+## Part 2 — Uploads (Thumbnails + Video · Supabase for dev/MVP, Cloudflare later)
 
 The backend **never receives the file bytes**. Flow: ask for a **signed URL** →
 **PUT the file straight to storage** → **confirm** so the backend verifies it and
-saves the URL.
+saves the URL. The frontend talks **only to our `/uploads` endpoints** and PUTs to
+the opaque `uploadUrl` — never to Supabase by name.
 
-### Phase 1 status (important)
-- ✅ **Thumbnails (images)** are fully enabled.
-- 🚧 **Video upload is intentionally deferred.** For now, video lessons use a
-  **URL** (the `VIDEO_URL` lesson type above — paste an external link). Asking to
-  sign a `video` upload returns **400 "Video upload is coming soon — use a video
-  URL for now."** Real video (large files + transcoding) lands on **Cloudflare
-  Stream** in Phase 2 — the sign→confirm flow and this contract **won't change**,
-  so build the UI against it now.
+### Status (important)
+- ✅ **Thumbnails (images)** — fully enabled (→ `Course.thumbnail`).
+- ✅ **Video** — fully enabled on **Supabase** as a temporary **dev/MVP** solution
+  (→ `Lesson.content`). Max **50 MB** for now (Supabase cap). Confirm **requires a
+  `lessonId`** and re-verifies the stored file server-side.
+- 📌 **URL paste still works** for video lessons (`VIDEO_URL` type — paste an
+  external link like YouTube/Vimeo). Upload is an *additional* option, not a
+  replacement.
+- 🔜 **Production video → Cloudflare Stream** (large files + transcoding), added
+  behind the **same** `/uploads` sign→confirm contract. This contract **won't
+  change** when that happens.
 
 ### Types (TypeScript)
 
@@ -160,8 +164,8 @@ export type UploadKind = 'thumbnail' | 'video';
 
 export interface UploadSignRequest {
   fileName: string;
-  fileType: string;   // mime, e.g. "image/png"
-  kind: UploadKind;   // use 'thumbnail' in Phase 1
+  fileType: string;   // mime, e.g. "image/png" or "video/mp4"
+  kind: UploadKind;   // 'thumbnail' or 'video'
   courseId: string;
 }
 export interface UploadSignResponse {
@@ -176,14 +180,16 @@ export interface UploadConfirmRequest {
   courseId: string;
   path: string;       // the `path` from sign
   kind: UploadKind;
-  lessonId?: string;  // reserved for Phase 2 video; ignored for thumbnails
+  lessonId?: string;  // REQUIRED when kind: 'video' (lesson to attach it to);
+                      // ignored for thumbnails
 }
 export interface UploadConfirmResponse { url: string; }  // final public URL
 ```
 
 ### Allowed types & sizes (also enforced server-side)
 - **thumbnail:** `image/jpeg`, `image/png`, `image/webp` · max **5 MB**
-- (video, Phase 2: `video/mp4`, `video/webm`, `video/quicktime` · max 2 GB)
+- **video:** `video/mp4`, `video/webm`, `video/quicktime` · max **50 MB**
+  (temporary Supabase cap; raised when video moves to Cloudflare Stream)
 
 ### Endpoints
 
@@ -192,7 +198,7 @@ export interface UploadConfirmResponse { url: string; }  // final public URL
 Body: `UploadSignRequest`
 
 - **200** → `data: UploadSignResponse`
-- **400** disallowed mime / missing fields / `kind: "video"` (Phase 1)
+- **400** disallowed mime for the `kind` / missing fields
 - **404** course not found
 - **503** file storage not configured yet (admin hasn't set up Supabase) — show a
   friendly "uploads not available yet" message
@@ -209,17 +215,24 @@ Body: `UploadSignRequest`
 Body: `UploadConfirmRequest`
 
 - Backend **verifies the object really exists** in storage, then saves the URL
-  (thumbnail → `Course.thumbnail`)
+  (thumbnail → `Course.thumbnail` · video → the target lesson's `Lesson.content`)
+- For **video**, backend also re-verifies the stored file's size/type and that the
+  lesson belongs to the course — send `lessonId`.
 - **200** → `data: { url }` (use it as the preview/src)
-- **400** object not found (the PUT never completed) → let the user retry
-- **404** course not found · **503** storage not configured
+- **400** object not found (the PUT never completed) → let the user retry ·
+  `lessonId` missing (video) · lesson doesn't belong to this course · lesson isn't
+  a video lesson · file too large / wrong type (server re-check)
+- **404** course not found · lesson not found · **503** storage not configured
 
 #### 4. Delete an orphaned/replaced file
-`DELETE /uploads?path=<path>`
+`DELETE /uploads?path=<path>&kind=thumbnail|video`
 
-- Use when the user picks a new thumbnail and you want to remove the old one
-- **200** → `data: { deleted: true, path }`
-- **400** malformed/out-of-scope path · **404** course prefix not a real course
+- Use when the user picks a new thumbnail/video and you want to remove the old one
+- `kind` is **optional** and defaults to `thumbnail` (backward-compatible); pass
+  `kind=video` to delete from the video bucket
+- **200** → `data: { deleted: true, path, kind }`
+- **400** malformed/out-of-scope path / bad `kind` · **404** course prefix not a
+  real course
 
 ### Thumbnail upload — recommended frontend sequence
 1. User picks a file → **validate type + size client-side first** (block early).
@@ -228,6 +241,21 @@ Body: `UploadConfirmRequest`
 4. On success → `POST /uploads/confirm` with `{ courseId, path, kind: 'thumbnail' }`.
 5. Use the returned `url` as the thumbnail preview; save it with the course.
 6. If replacing an existing thumbnail, `DELETE /uploads?path=<oldPath>` after.
+
+### Video upload — recommended frontend sequence
+Same flow as thumbnails, plus a `lessonId` on confirm (the lesson must already
+exist, so create/save the `VIDEO_URL` lesson first, then attach the file).
+1. User picks a file → **validate type + size client-side first** (`video/mp4`,
+   `video/webm`, `video/quicktime` · **max 50 MB**) — block early.
+2. `POST /uploads/sign` with `{ fileName, fileType, kind: 'video', courseId }` →
+   `{ uploadUrl, path, maxBytes }`.
+3. `PUT` the file to `uploadUrl` via **XHR** with a real progress bar (videos are
+   large — show % + MB/total); wire `xhr.abort()` to Cancel.
+4. On success → `POST /uploads/confirm` with
+   `{ courseId, path, kind: 'video', lessonId }` → returns the final `url`.
+5. That `url` is now the lesson's `content` — use it as the player src.
+6. Keep the **paste-a-URL** option available as a tab/toggle; both end as
+   `Lesson.content`. If replacing an uploaded video, `DELETE /uploads?path=<oldPath>&kind=video`.
 
 ---
 

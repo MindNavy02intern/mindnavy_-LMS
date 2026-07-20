@@ -175,12 +175,16 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
 | `course.createDraft` (§3) | `['courses']` `['dashboard','course-analytics']` | Courses table · Draft Courses count |
+| `course.settings.update` (§3 Step 4 — `PATCH /courses/:id/settings`) | `['courses', id]` | Wizard Step 4 form · course detail settings (pricing/visibility/SEO) |
 | `course.submitForApproval` (§3 Step 6) | `['courses']` `['courses', id]` `['approvals']` `['tasks']` `['dashboard','course-analytics']` | Pending Approval Courses · **Pending Approvals KPI + widget** · Tasks "Review Pending Courses" |
 | `course.approve` + publish (§4–5) | `['courses']` `['courses', id]` `['approvals']` `['categories']` `['dashboard','course-analytics']` + `['learning-paths']` if course belongs to a path | **Published Courses KPI** · Approvals drop · Course dropdown gains option (R2) · category counts · Activity "New Course Published" |
 | `course.reject` / `requestChanges` (§5) | `['courses', id]` `['approvals']` `['notifications']` | Review status · instructor notified |
 | `course.archive` | `['courses']` `['dashboard','course-analytics']` + `['learning-paths']` if in path | Published Courses KPI down · Course dropdown loses option |
 | `category.create/rename/delete` (§6) | `['categories']` `['courses']` | Category dropdown everywhere (R2) · course filters |
-| `learningPath.update` (§7) | `['learning-paths']` `['dashboard','course-analytics']` | Path progress metrics |
+| `learningPath.create` / `.update` / `.delete` (§7 — `/api/admin/learning-paths`, contract `LEARNING_PATHS_CONTRACT.md`) | `['learning-paths']` `['dashboard','course-analytics']` | Paths list · path detail · path progress metrics (dashboard side stays stub until v2 progress tracking) |
+| `learningPath.item.add` / `.remove` / `.reorder` (§7 — reorder is ONE bulk call, replace state from response like Course Builder) | `['learning-paths']` | Path detail item list · `itemCount` on the paths list |
+| `quiz.create` / `.update` / `.delete` (§8 — `/api/admin/quizzes`, contract `QUIZZES_CONTRACT.md`) | `['quizzes']` + `['quizzes', courseId]` `['courses', courseId]` when attached | Assessments tab quiz list · course detail (attached quizzes) |
+| `quiz.question.add` / `.update` / `.delete` / `.reorder` (§8 — reorder is ONE bulk call, replace state from response) | `['quizzes']` (`questionCount` / `totalPoints` / `autoGradable` on the list are server-derived) | Quiz builder question list · derived counts on the quiz list |
 | `liveSession.schedule` (§12) | `['live-sessions']` `['calendar']` `['dashboard','live-overview']` | Calendar & Events · Upcoming Sessions · Live Session Reminders notification |
 | `liveSession.start` / `.end` (§12–15) | `['live-sessions']` `['dashboard','live-overview']` `['attendance',sessionId]` | **Live Sessions Running KPI** · Live Overview · Activity "Live Session Started" |
 | `content.upload` (§11, §16) | `['content-library']` `['courses', id]` | Library · course builder · Activity "Instructor Uploaded Content" |
@@ -225,8 +229,9 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `certificate.issue` (auto via trigger rules or manual) | `['certificates']` `['students', id, 'certificates']` `['dashboard','course-analytics']` | **Certificates Issued KPI** · student profile · Activity "Certificate Issued" |
-| `certificate.revoke` | same | Same, reversed |
+| `certificate.issue` (§9 — `POST /api/admin/certificates`, contract `CERTIFICATES_CONTRACT.md`; v1 MANUAL only — auto-triggers wait for the learner runtime; requires `Course.certificateEnabled`) | `['certificates']` `['students', id, 'certificates']` `['dashboard','course-analytics']` | **Certificates Issued KPI** (counts non-revoked only) · student profile · Activity "Certificate Issued" |
+| `certificate.revoke` / `.reissue` (`POST /:id/revoke` · `/:id/reissue` — reissue mints a NEW verification code, old QR dies) | same | Same, reversed · verify page flips valid/revoked |
+| `certificateTemplate.create/update/delete` (`/api/admin/certificate-templates`; delete keeps issued certs — templateId SetNull) | `['certificate-templates']` (new key — add to queryKeys.ts) | Template list · template picker in issue dialog |
 
 ### 5.9 APPROVALS (meta-entity — Dashboard §9)
 
