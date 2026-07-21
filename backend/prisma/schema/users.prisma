@@ -33,6 +33,7 @@ model AppUser {
   certificates       Certificate[]
   courseEnrollments  CourseEnrollment[]
   coursesInstructed  Course[]                 @relation("CourseInstructor")
+  liveSessionsHosted LiveSession[]            @relation("LiveSessionInstructor")
   managedDepartments Department[]             @relation("DeptManager")
   groups             GroupMember[]            @relation("GroupMembers")
   leadingGroups      Group[]                  @relation("GroupLeader")

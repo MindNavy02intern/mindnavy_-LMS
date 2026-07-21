@@ -97,34 +97,80 @@ model CourseEnrollment {
   @@map("course_enrollments")
 }
 
+// Content Library v1 — EXTENDED in place: this model already owns the LM
+// content-stats tiles (groupBy type in lm.service), so a parallel ContentItem
+// table would fork those numbers (IMPACT_MAP B2, same reasoning as Certificate).
+// courseId is now OPTIONAL: null = library-wide item, set = course-scoped.
+// filePath is the storage object key (needed to delete the object — never derived
+// from fileUrl); both stay null on legacy seed rows, and reads/deletes tolerate
+// that (same pattern as Certificate.verificationCode). uploadedBy is the AdminUser
+// id, stored plain like AuditLog.adminId — no cross-schema FK.
 model CourseContent {
-  id        String      @id @default(uuid())
-  courseId  String
-  title     String
-  type      ContentType
-  createdAt DateTime    @default(now())
-  course    Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  id         String      @id @default(uuid())
+  courseId   String?
+  title      String
+  type       ContentType
+  fileUrl    String?
+  filePath   String?
+  sizeBytes  Int?
+  mimeType   String?
+  tags       String[]    @default([])
+  uploadedBy String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now()) @updatedAt
+  course     Course?     @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId])
   @@index([type])
   @@index([createdAt])
+  @@index([tags], type: Gin)
   @@map("course_contents")
 }
 
+// Live Sessions v1 — SCHEDULING only (no hosting features). EXTENDED in place:
+// this model predates the feature and already feeds GET /api/admin/lm/live-sessions
+// and Learning Path LIVE_SESSION items, so a parallel table would fork those
+// surfaces (IMPACT_MAP B2). Meetings are created through the ./meetings provider
+// adapter (Zoom Server-to-Server OAuth in v1): zoomMeetingId/joinUrl/startUrl are
+// SERVER-written only — never accepted from the client. startUrl is the HOST link
+// and must never be exposed to learners. `status` is stored but owned by the
+// schedule: liveSessions.service lazily syncs it from startTime+durationMin on
+// every read (no manual status writes), so the LM dashboard stays accurate free.
+// Defaults on durationMin/timezone/provider backfill pre-existing seed rows.
 model LiveSession {
-  id        String            @id @default(uuid())
-  title     String
-  courseId  String?
-  startTime DateTime
-  status    LiveSessionStatus @default(UPCOMING)
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-  course    Course?           @relation(fields: [courseId], references: [id])
+  id              String            @id @default(uuid())
+  title           String
+  description     String?
+  courseId        String?
+  instructorId    String?
+  startTime       DateTime
+  durationMin     Int               @default(60)
+  timezone        String            @default("UTC")
+  maxParticipants Int?
+  provider        MeetingProvider   @default(ZOOM)
+  zoomMeetingId   String?
+  joinUrl         String?
+  startUrl        String?
+  status          LiveSessionStatus @default(UPCOMING)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  course          Course?           @relation(fields: [courseId], references: [id])
+  instructor      AppUser?          @relation("LiveSessionInstructor", fields: [instructorId], references: [id])
 
   @@index([status])
   @@index([startTime])
   @@index([courseId])
+  @@index([instructorId])
   @@map("live_sessions")
+}
+
+// All providers the design doc names live in the enum (no future db push);
+// v1 endpoints accept ZOOM only — MEET/TEAMS/OTHER are rejected with 400 until v2.
+enum MeetingProvider {
+  ZOOM
+  MEET
+  TEAMS
+  OTHER
 }
 
 // Certificates v1 — EXTENDED in place (this model predates the Certificates
@@ -337,12 +383,17 @@ enum EnrollmentStatus {
   OVERDUE
 }
 
+// AUDIO/IMAGE added for the Content Library (uploadable in v1 alongside VIDEO,
+// DOCUMENT, PDF). QUIZ rows stay owned by the quiz flow and SCORM upload is v2 —
+// both are rejected by the content validator, not removed from the enum.
 enum ContentType {
   VIDEO
   DOCUMENT
   PDF
   QUIZ
   SCORM
+  AUDIO
+  IMAGE
 }
 
 enum LiveSessionStatus {

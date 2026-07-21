@@ -15,6 +15,9 @@ import LiveSessions from '../components/learningManagement/LiveSessions';
 import RecentActivities from '../components/learningManagement/RecentActivities';
 import CoursesTab from '../components/learningManagement/CoursesTab';
 import CategoriesTab from '../components/learningManagement/CategoriesTab';
+import LearningPathsTab from '../components/learningManagement/LearningPathsTab';
+import AssessmentsTab from '../components/learningManagement/AssessmentsTab';
+import CertificatesTab from '../components/learningManagement/CertificatesTab';
 import { useTabParam } from '../hooks/useTabParam';
 
 const LM_TAB_KEYS: Record<LmTab, string> = {
@@ -53,6 +56,20 @@ export default function LearningManagementPage() {
     setTab('Courses');
   }
 
+  // When the Certificates tab's "certificates disabled" error links to a
+  // course's Settings step, carry the courseId across the tab switch and
+  // signal CoursesTab to mount directly into Settings for it.
+  const [settingsCourseId, setSettingsCourseId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (tab === 'Courses' && settingsCourseId) setSettingsCourseId(null);
+  }, [tab, settingsCourseId]);
+
+  function handleGoToCourseSettings(courseId: string) {
+    setSettingsCourseId(courseId);
+    setTab('Courses');
+  }
+
   return (
     <AdminLayout pageTitle="Learning Management">
       <div className="lm-page-root tw:mx-auto tw:flex tw:max-w-[1440px] tw:flex-col tw:gap-5 tw:font-lm-sans">
@@ -61,7 +78,13 @@ export default function LearningManagementPage() {
         <LmTabs active={tab} onChange={setTab} />
 
         {tab === 'Courses' ? (
-          <CoursesTab openCreateOnMount={openCreate} />
+          <CoursesTab openCreateOnMount={openCreate} openSettingsForCourseId={settingsCourseId} />
+        ) : tab === 'Learning Paths' ? (
+          <LearningPathsTab />
+        ) : tab === 'Assessments' ? (
+          <AssessmentsTab />
+        ) : tab === 'Certificates' ? (
+          <CertificatesTab onGoToCourseSettings={handleGoToCourseSettings} />
         ) : tab === 'Categories' ? (
           <CategoriesTab />
         ) : tab === 'Overview' ? (

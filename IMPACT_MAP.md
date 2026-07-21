@@ -61,7 +61,7 @@ All keys are created via `src/lib/queryKeys.ts` (factory). Never write key array
 `['org','departments']` · `['org','branches']` · `['org','teams']` · `['org','chart']` · `['groups']` · `['competencies']`
 
 **Learning domain**
-`['courses', filters?]` · `['courses', id]` · `['categories']` · `['learning-paths']` · `['quizzes', courseId?]` · `['assignments', courseId?]` · `['certificates', filters?]` · `['content-library']` · `['live-sessions', filters?]`
+`['courses', filters?]` · `['courses', id]` · `['categories']` · `['learning-paths']` · `['quizzes', courseId?]` · `['assignments', courseId?]` · `['certificates', filters?]` · `['certificate-templates']` · `['content-library']` · `['live-sessions', filters?]`
 
 **Instructors domain**
 `['instructors', filters?]` · `['instructors', id]` · `['instructor-applications']` · `['instructors', id, 'earnings']` · `['instructors', id, 'reviews']` · `['instructors', id, 'documents']`
@@ -151,8 +151,9 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `enrollment.create` (Enroll Student §3) | `['enrollments',studentId]` `['enrollments',courseId]` `['students', id]` `['courses', courseId]` `['dashboard','course-analytics']` `['dashboard','student-engagement']` | Student profile Courses tab · course enrolled-count · **Active Students KPI** · Course Analytics (popular courses) · Engagement widget |
-| `enrollment.cancel` / `student.dropout` | same as create + drop-off metrics | Same surfaces, opposite direction · Drop-Off Rates |
+| `enrollment.create` (Enroll Student §3 — `POST /api/admin/enrollments`, contract `ENROLLMENTS_CONTRACT.md`; enforces `course.enrollmentLimit`, 400 "course is full") | `['enrollments']` `['enrollments',studentId]` `['enrollments',courseId]` `['students', id]` `['courses', courseId]` `['courses']` (enrolledCount) `['dashboard','course-analytics']` `['dashboard','student-engagement']` | Enrollments tab · student profile Courses tab · course enrolled-count · **Active Students KPI** · Course Analytics (popular courses) · Engagement widget · LM enrollment KPIs + trend chart |
+| `enrollment.cancel` / `student.dropout` (`DELETE /api/admin/enrollments/:id` — unenroll does NOT revoke an issued certificate) | same as create + drop-off metrics | Same surfaces, opposite direction · Drop-Off Rates |
+| `enrollment.statusUpdate` (`PATCH /api/admin/enrollments/:id` — status ONLY; progress is learner-derived and rejected with 400; COMPLETED stamps `completedAt`, leaving COMPLETED clears it) | same as `enrollment.create` | Enrollments tab status chips · LM completions KPI + status distribution chart |
 | `progress.update` (lesson complete §4) | `['students', id, 'progress']` `['dashboard','student-engagement']` | Progress bars · Engagement (Learning Progress, Learning Time) |
 | `course.complete` (per student) | `['students', id, 'progress']` `['enrollments',…]` `['dashboard','course-analytics']` `['dashboard','student-engagement']` + triggers `certificate.issue` if rule matches (→ 5.8) | Completion Rates · status "Completed" · possibly Certificates chain |
 | `quiz.submit` / `assignment.submit` (§6) | `['quizzes',courseId]` `['assignments',courseId]` `['students', id]` `['dashboard','course-analytics']` `['dashboard','student-engagement']` | Assessment Center · Quiz Performance · Quiz Participation · Activity "Student Completed Quiz / Assignment Submitted" |
@@ -180,14 +181,14 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 | `course.approve` + publish (§4–5) | `['courses']` `['courses', id]` `['approvals']` `['categories']` `['dashboard','course-analytics']` + `['learning-paths']` if course belongs to a path | **Published Courses KPI** · Approvals drop · Course dropdown gains option (R2) · category counts · Activity "New Course Published" |
 | `course.reject` / `requestChanges` (§5) | `['courses', id]` `['approvals']` `['notifications']` | Review status · instructor notified |
 | `course.archive` | `['courses']` `['dashboard','course-analytics']` + `['learning-paths']` if in path | Published Courses KPI down · Course dropdown loses option |
+| `course.restore` | `['courses']` `['dashboard','course-analytics']` `['learning-paths']` | Archived course reappears in Draft tab · KPI updates · learning-path item badge changes from Archived → Draft |
 | `category.create/rename/delete` (§6) | `['categories']` `['courses']` | Category dropdown everywhere (R2) · course filters |
 | `learningPath.create` / `.update` / `.delete` (§7 — `/api/admin/learning-paths`, contract `LEARNING_PATHS_CONTRACT.md`) | `['learning-paths']` `['dashboard','course-analytics']` | Paths list · path detail · path progress metrics (dashboard side stays stub until v2 progress tracking) |
 | `learningPath.item.add` / `.remove` / `.reorder` (§7 — reorder is ONE bulk call, replace state from response like Course Builder) | `['learning-paths']` | Path detail item list · `itemCount` on the paths list |
 | `quiz.create` / `.update` / `.delete` (§8 — `/api/admin/quizzes`, contract `QUIZZES_CONTRACT.md`) | `['quizzes']` + `['quizzes', courseId]` `['courses', courseId]` when attached | Assessments tab quiz list · course detail (attached quizzes) |
-| `quiz.question.add` / `.update` / `.delete` / `.reorder` (§8 — reorder is ONE bulk call, replace state from response) | `['quizzes']` (`questionCount` / `totalPoints` / `autoGradable` on the list are server-derived) | Quiz builder question list · derived counts on the quiz list |
-| `liveSession.schedule` (§12) | `['live-sessions']` `['calendar']` `['dashboard','live-overview']` | Calendar & Events · Upcoming Sessions · Live Session Reminders notification |
-| `liveSession.start` / `.end` (§12–15) | `['live-sessions']` `['dashboard','live-overview']` `['attendance',sessionId]` | **Live Sessions Running KPI** · Live Overview · Activity "Live Session Started" |
-| `content.upload` (§11, §16) | `['content-library']` `['courses', id]` | Library · course builder · Activity "Instructor Uploaded Content" |
+| `quiz.question.add` / `.update` / `.delete` / `.reorder` (§8 — reorder is ONE bulk call, replace state from response; question writes change server-derived `questionCount`/`totalPoints`/`autoGradable` — next real GET, never computed client-side, R1/R4) | `['quizzes']` | Quiz builder question list · derived counts on the quiz list |
+| `liveSession.create` / `.update` / `.delete` (§12 — `/api/admin/live-sessions`, contract `LIVE_SESSIONS_CONTRACT.md`; create/update talk to the REAL Zoom API; status is schedule-derived server-side, never written by the client) | `['live-sessions']` `['calendar']` `['dashboard','live-overview']` + `['learning-paths']` (session items show title/status; delete leaves `missing: true` items) | Live Sessions tab · LM Overview live-sessions widget · Calendar & Events · learning-path item badges |
+| `content.confirm` (upload) / `content.update` / `content.delete` (§11, §16 — `/api/admin/content`, contract `CONTENT_LIBRARY_CONTRACT.md`; sign → direct PUT → confirm, same flow as course uploads) | `['content-library']` + `['courses', id]` when the item is course-scoped | Library grid · LM Content stats tiles (same `course_contents` table — B2) · Activity "Instructor Uploaded Content" |
 | `section.create` | `['courses', courseId, 'sections']` `['content-library']` | Section list in Course Builder · content item count |
 | `section.update` | `['courses', courseId, 'sections']` | Section title in builder |
 | `section.delete` | `['courses', courseId, 'sections']` `['content-library']` | Section + cascaded lessons removed from builder · content count |
@@ -230,8 +231,10 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
 | `certificate.issue` (§9 — `POST /api/admin/certificates`, contract `CERTIFICATES_CONTRACT.md`; v1 MANUAL only — auto-triggers wait for the learner runtime; requires `Course.certificateEnabled`) | `['certificates']` `['students', id, 'certificates']` `['dashboard','course-analytics']` | **Certificates Issued KPI** (counts non-revoked only) · student profile · Activity "Certificate Issued" |
-| `certificate.revoke` / `.reissue` (`POST /:id/revoke` · `/:id/reissue` — reissue mints a NEW verification code, old QR dies) | same | Same, reversed · verify page flips valid/revoked |
-| `certificateTemplate.create/update/delete` (`/api/admin/certificate-templates`; delete keeps issued certs — templateId SetNull) | `['certificate-templates']` (new key — add to queryKeys.ts) | Template list · template picker in issue dialog |
+| `certificate.revoke` / `.reissue` (`POST /:id/revoke` · `/:id/reissue` — reissue mints a NEW verification code + issuedAt, clears revokedAt; old QR/PDF stop verifying immediately) | same | Same, reversed · verify page flips valid/revoked · reissue can move a revoked cert back into the KPI count |
+| `certificateTemplate.create` (`/api/admin/certificate-templates`) | `['certificate-templates']` | Templates list · template picker in issue dialog |
+| `certificateTemplate.update` | `['certificate-templates']` `['certificates']` (templateName is read live off the relation, not snapshotted — a rename changes what issued certs display) | Templates list · issued-certificates table's Template column |
+| `certificateTemplate.delete` | `['certificate-templates']` `['certificates']` (templateId is SetNull on any cert using it — falls back to default layout, cert row survives) | Templates list · issued-certificates table's Template column (→ "Default") |
 
 ### 5.9 APPROVALS (meta-entity — Dashboard §9)
 

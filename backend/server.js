@@ -27,6 +27,9 @@ const certificateTemplatesRoutes = require("./src/routes/certificateTemplates.ro
 const certificatesRoutes = require("./src/routes/certificates.routes");
 const publicCertificatesRoutes = require("./src/routes/publicCertificates.routes");
 const uploadsRoutes      = require("./src/routes/uploads.routes");
+const liveSessionsRoutes = require("./src/routes/liveSessions.routes");
+const enrollmentsRoutes  = require("./src/routes/enrollments.routes");
+const contentRoutes      = require("./src/routes/content.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -86,6 +89,15 @@ app.use("/api/public/certificates", publicCertificatesRoutes);
 
 // File uploads (sign → confirm → delete) for thumbnails (Phase 1).
 app.use("/api/admin/uploads", uploadsRoutes);
+
+// Live Sessions (scheduling CRUD — creates real Zoom meetings via the meetings adapter).
+app.use("/api/admin/live-sessions", liveSessionsRoutes);
+
+// Enrollments (admin enroll/unenroll/status — built on course_enrollments).
+app.use("/api/admin/enrollments", enrollmentsRoutes);
+
+// Content Library (searchable media repository — sign/confirm uploads + metadata).
+app.use("/api/admin/content", contentRoutes);
 
 // User management routes
 app.use("/api/admin/users", usersRoutes);

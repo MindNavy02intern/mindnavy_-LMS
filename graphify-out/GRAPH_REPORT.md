@@ -1,16 +1,16 @@
-# Graph Report - mindnavy LMS  (2026-07-14)
+# Graph Report - mindnavy LMS  (2026-07-17)
 
 ## Corpus Check
-- 307 files · ~332,556 words
+- 336 files · ~372,431 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3684 nodes · 5630 edges · 226 communities (217 shown, 9 thin omitted)
+- 4074 nodes · 6336 edges · 236 communities (228 shown, 8 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `db65d9e5`
+- Built from commit: `a7567c1e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -230,17 +230,27 @@
 - [[_COMMUNITY_Community 223|Community 223]]
 - [[_COMMUNITY_Community 224|Community 224]]
 - [[_COMMUNITY_Community 225|Community 225]]
+- [[_COMMUNITY_Community 226|Community 226]]
+- [[_COMMUNITY_Community 227|Community 227]]
+- [[_COMMUNITY_Community 228|Community 228]]
+- [[_COMMUNITY_Community 229|Community 229]]
+- [[_COMMUNITY_Community 230|Community 230]]
+- [[_COMMUNITY_Community 231|Community 231]]
+- [[_COMMUNITY_Community 232|Community 232]]
+- [[_COMMUNITY_Community 236|Community 236]]
+- [[_COMMUNITY_Community 237|Community 237]]
+- [[_COMMUNITY_Community 239|Community 239]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `getStoredToken()` - 54 edges
+1. `getStoredToken()` - 58 edges
 2. `serverError()` - 26 edges
-3. `orgFetch()` - 26 edges
-4. `ToastType` - 24 edges
-5. `requireAdminAuth()` - 22 edges
-6. `validateId()` - 21 edges
-7. `badRequest()` - 20 edges
-8. `useAuth()` - 19 edges
-9. `adminUserActionRateLimiter` - 18 edges
+3. `requireAdminAuth()` - 26 edges
+4. `orgFetch()` - 26 edges
+5. `ToastType` - 24 edges
+6. `adminUserActionRateLimiter` - 22 edges
+7. `validateId()` - 21 edges
+8. `badRequest()` - 20 edges
+9. `useAuth()` - 19 edges
 10. `createUserAuditLog()` - 18 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -252,10 +262,10 @@
   frontend/src/api/groups.ts → frontend/src/api/adminAuth.ts
 - `apiCall()` --calls--> `getStoredToken()`  [EXTRACTED]
   frontend/src/api/rolesPermissions.ts → frontend/src/api/adminAuth.ts
-- `apiFetch()` --calls--> `getStoredToken()`  [EXTRACTED]
-  frontend/src/api/roleTemplates.ts → frontend/src/api/adminAuth.ts
+- `suspendUser()` --calls--> `validateUuidParam()`  [EXTRACTED]
+  backend/src/controllers/users.controller.js → backend/src/validators/users.validator.js
 
-## Communities (226 total, 9 thin omitted)
+## Communities (236 total, 8 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.18
@@ -270,16 +280,16 @@ Cohesion: 0.09
 Nodes (22): apiCall(), authHeaders(), delay(), getTrustedDevices(), MOCK_DEVICES, mockDeviceStore, revokeDevice(), sendOtp() (+14 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.06
-Nodes (35): author, dependencies, bcryptjs, cors, csv-parse, dotenv, express, express-rate-limit (+27 more)
+Cohesion: 0.05
+Nodes (38): author, dependencies, bcryptjs, cors, csv-parse, dotenv, express, express-rate-limit (+30 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.06
 Nodes (34): dependencies, bootstrap, lucide-react, @playwright/test, react, react-dom, react-router-dom, recharts (+26 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.07
-Nodes (49): adminForgotPasswordController(), adminGetTrustedDevicesController(), adminLoginController(), adminLogoutController(), adminMeController(), adminResetPasswordController(), adminRevokeTrustedDeviceController(), adminSendOtpController() (+41 more)
+Cohesion: 0.06
+Nodes (61): adminForgotPasswordController(), adminGetTrustedDevicesController(), adminLoginController(), adminLogoutController(), adminMeController(), adminResetPasswordController(), adminRevokeTrustedDeviceController(), adminSendOtpController() (+53 more)
 
 ### Community 6 - "Community 6"
 Cohesion: 0.03
@@ -295,7 +305,7 @@ Nodes (17): compilerOptions, allowImportingTsExtensions, erasableSyntaxOnly, lib
 
 ### Community 9 - "Community 9"
 Cohesion: 0.11
-Nodes (27): approveVerification(), assignUserRole(), bulkActionUsers(), deleteUser(), EMPTY_LIST_RESPONSE, exportUsers(), forceLogoutUser(), getUserDetails() (+19 more)
+Nodes (27): approveVerification(), assignUserRole(), bulkActionUsers(), deleteUser(), EMPTY_LIST_RESPONSE, exportUsers(), getUserDetails(), getUserMessagesList() (+19 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.22
@@ -314,24 +324,24 @@ Cohesion: 0.12
 Nodes (38): assignPermissionsToRole(), badRequest(), createPermission(), createRole(), deletePermission(), deleteRole(), duplicateRole(), getPermission() (+30 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.07
-Nodes (18): INPUT_BASE, LIMIT_OPTIONS, pageRange(), TabKey, TABS, UserManagementPage(), UsersResponse, UserStatus (+10 more)
+Cohesion: 0.08
+Nodes (16): INPUT_BASE, LIMIT_OPTIONS, TabKey, TABS, UsersResponse, UserStatus, AVATAR_PALETTES, ColKey (+8 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.04
 Nodes (54): ActivityItem, ActivityType, AdminWidgetsFilters, AiInsightItem, AlertSeverity, AlertStatus, AnalyticsFilters, ApprovalPriority (+46 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.13
-Nodes (16): getStoredToken(), ADMIN_WIDGETS_MOCK, AdminWidgetsParams, ANALYTICS_MOCK, AnalyticsParams, CORE_MOCK, getAdminWidgets(), getDashboardAnalytics() (+8 more)
+Cohesion: 0.15
+Nodes (12): ADMIN_WIDGETS_MOCK, AdminWidgetsParams, ANALYTICS_MOCK, AnalyticsParams, CORE_MOCK, getAdminWidgets(), getDashboardAnalytics(), getDashboardCore() (+4 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.08
 Nodes (46): badRequest(), createLesson, createSection, deleteLesson, deleteSection, handleDomainError(), listSections, notFound() (+38 more)
 
 ### Community 24 - "Community 24"
-Cohesion: 0.09
-Nodes (28): GroupMembersResponse, GroupResponse, groupsAPI, groupsFetch(), GroupsListResponse, getUsers(), Props, FIELD (+20 more)
+Cohesion: 0.08
+Nodes (27): GroupMembersResponse, GroupResponse, groupsAPI, groupsFetch(), GroupsListResponse, Props, FIELD, INPUT (+19 more)
 
 ### Community 25 - "Community 25"
 Cohesion: 0.18
@@ -343,7 +353,7 @@ Nodes (26): assignDepartmentsToBranch(), assignTeamMembers(), assignUsersToDepar
 
 ### Community 27 - "Community 27"
 Cohesion: 0.08
-Nodes (30): actionFetch(), ApiError, assignRole(), cancelInvitation(), createUser(), deleteUser(), DETAILS_MOCK, InvitationParams (+22 more)
+Nodes (27): actionFetch(), ApiError, approveVerification(), assignRole(), cancelInvitation(), createUser(), deleteUser(), DETAILS_MOCK (+19 more)
 
 ### Community 28 - "Community 28"
 Cohesion: 0.09
@@ -363,7 +373,7 @@ Nodes (17): BTN_GHOST, BTN_PRIMARY, CATEGORY_COLOR, CATEGORY_LABEL, FIELD, INPUT
 
 ### Community 32 - "Community 32"
 Cohesion: 0.05
-Nodes (30): getAnalytics(), Props, Props, BAR_COLORS, Props, Props, ROLE_COLORS, ROLE_LABELS (+22 more)
+Nodes (33): getAnalytics(), Props, Props, BAR_COLORS, Props, Props, ROLE_COLORS, ROLE_LABELS (+25 more)
 
 ### Community 33 - "Community 33"
 Cohesion: 0.06
@@ -371,15 +381,18 @@ Nodes (63): ACTION_NOTIF_TYPE, ACTION_TITLE, ACTION_TYPE, buildUserScope(), endO
 
 ### Community 34 - "Community 34"
 Cohesion: 0.06
-Nodes (15): getUserDetails(), CourseStatus, Props, AVATAR_PALETTES, avatarPalette(), DRAWER_TABS, DrawerTab, formatDate() (+7 more)
+Nodes (16): CourseStatus, RiskScore, UserDetailsResponse, Props, AVATAR_PALETTES, avatarPalette(), DRAWER_TABS, DrawerTab (+8 more)
 
 ### Community 35 - "Community 35"
-Cohesion: 0.10
-Nodes (16): formatDate(), LEVEL_BADGE, Props, RISK_BADGE, RoleDetailsDrawer(), STATUS_BADGE, MatrixAssignment, MatrixRole (+8 more)
+Cohesion: 0.07
+Nodes (41): DetailViewProps, emptyOptions(), ListViewProps, QuestionEditor(), QuestionEditorProps, QuestionRowProps, QuizFormProps, QuizFormValues (+33 more)
 
 ### Community 36 - "Community 36"
 Cohesion: 0.06
-Nodes (41): getCachedSession(), prisma, requireAdminAuth(), SESSION_CACHE, setCachedSession(), adminLoginRateLimiter, adminUserActionRateLimiter, adminUsersImportRateLimiter (+33 more)
+Nodes (42): getCachedSession(), prisma, requireAdminAuth(), SESSION_CACHE, setCachedSession(), adminUserActionRateLimiter, coursesReadRateLimiter, {
+  adminUserActionRateLimiter,
+  coursesReadRateLimiter,
+} (+34 more)
 
 ### Community 37 - "Community 37"
 Cohesion: 0.11
@@ -394,8 +407,8 @@ Cohesion: 0.15
 Nodes (15): addMembers(), buildPagination(), { createAuditLog }, createGroup(), getGroup(), getGroupMembers(), GROUP_INCLUDE, listGroups() (+7 more)
 
 ### Community 40 - "Community 40"
-Cohesion: 0.17
-Nodes (11): CoursesTab(), CoursesTabProps, LEVEL_BADGE, pageRange(), STATUS_BADGE, STATUS_TABS, Toast, View (+3 more)
+Cohesion: 0.07
+Nodes (39): badRequest(), createTemplate, deleteTemplate, downloadPdf, getTemplate, handleDomainError(), issueCertificate, listCertificates (+31 more)
 
 ### Community 41 - "Community 41"
 Cohesion: 0.12
@@ -418,12 +431,12 @@ Cohesion: 0.21
 Nodes (7): AdminLayout(), LoginPage(), ProfilePage(), SignupPage(), TrustedDevicesPage(), VerifyDevicePage(), useAuth()
 
 ### Community 46 - "Community 46"
-Cohesion: 0.15
-Nodes (8): exportAllUsers(), ExportParams, UsersParams, FieldKey, FIELDS, FormatKey, FORMATS, Props
+Cohesion: 0.07
+Nodes (20): getStoredToken(), apiFetch(), exportAllUsers(), ExportParams, getInvitations(), getUserDetails(), getUsers(), UsersParams (+12 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.18
-Nodes (6): getAllPermissions(), createRoleTemplate(), INPUT, LABEL, Props, Permission
+Cohesion: 0.13
+Nodes (18): bulkAction(), CreateGroupModal(), EditGroupModal(), useOrgOptions(), useRoles(), selectStyle, pageRange(), UserManagementPage() (+10 more)
 
 ### Community 48 - "Community 48"
 Cohesion: 0.07
@@ -446,12 +459,12 @@ Cohesion: 0.07
 Nodes (29): 1. AGENT PROTOCOL — follow on EVERY task, 2. DEFAULT INVALIDATION POLICY, 3. QUERY KEY REGISTRY (canonical), 4. SURFACE REGISTRY, 4a. Dashboard Overview widgets (from admin doc, Dashboard §3–§21), 4b. Dropdowns & selects (R2 — each one is a surface of its source entity), 5.10 CROSS-CUTTING SINKS (write-only from mutations), 5.11 COMPETENCY / SKILL (blueprint 07) (+21 more)
 
 ### Community 53 - "Community 53"
-Cohesion: 0.07
-Nodes (28): apiCall(), RolesApiError, rolesPermissionsAPI, bulkAction(), sendInvitation(), CreateGroupModal(), EditGroupModal(), useOrgOptions() (+20 more)
+Cohesion: 0.12
+Nodes (12): apiCall(), RolesApiError, rolesPermissionsAPI, ENUM_ROLES, ROLE_ALIAS, RoleOption, AssignRoleRequest, RoleType (+4 more)
 
 ### Community 54 - "Community 54"
-Cohesion: 0.11
-Nodes (16): apiFetch(), applyRoleTemplate(), ApplyRoleTemplateResult, deleteRoleTemplate(), getRoleTemplateDetails(), getRoleTemplates(), Pagination, RoleTemplateDetails (+8 more)
+Cohesion: 0.09
+Nodes (19): getAllPermissions(), applyRoleTemplate(), ApplyRoleTemplateResult, createRoleTemplate(), deleteRoleTemplate(), getRoleTemplateDetails(), getRoleTemplates(), Pagination (+11 more)
 
 ### Community 55 - "Community 55"
 Cohesion: 0.05
@@ -478,11 +491,11 @@ Nodes (7): code:block1 (Error: expect(locator).toBeVisible() failed), code:yaml 
 
 ### Community 59 - "Community 59"
 Cohesion: 0.09
-Nodes (14): KpiDef, LEVEL_BADGE, LEVEL_OPTIONS, LevelMeta, RISK_BADGE, RolesPermissionsStandalonePage(), SCOPE_DISPLAY, STATUS_BADGE (+6 more)
+Nodes (16): apiFetch(), getRolesPageList(), KpiDef, LEVEL_BADGE, LEVEL_OPTIONS, LevelMeta, RISK_BADGE, RolesPermissionsStandalonePage() (+8 more)
 
 ### Community 60 - "Community 60"
-Cohesion: 0.09
-Nodes (20): apiFetch(), assignRolePermissions(), createRolePage(), deleteRolePage(), duplicateRolePage(), getRolePageDetails(), getRolePermissions(), getRolesPageList() (+12 more)
+Cohesion: 0.06
+Nodes (36): assignRolePermissions(), createRolePage(), deleteRolePage(), duplicateRolePage(), getRolePageDetails(), getRolePermissions(), getRolesPageStats(), RolesPageError (+28 more)
 
 ### Community 61 - "Community 61"
 Cohesion: 0.22
@@ -529,12 +542,12 @@ Cohesion: 0.08
 Nodes (14): getPermissionMatrix(), togglePermission(), LEGEND, Props, AccessState, CATEGORY_META, CATEGORY_ORDER, CatMeta (+6 more)
 
 ### Community 72 - "Community 72"
-Cohesion: 0.13
-Nodes (15): AccessPolicyError, AccessPolicyStats, apiFetch(), createAccessPolicy(), CreatePolicyPayload, deleteAccessPolicy(), getAccessPolicyStats(), listAccessPolicies() (+7 more)
+Cohesion: 0.08
+Nodes (27): AccessPolicy, AccessPolicyError, AccessPolicyStats, apiFetch(), createAccessPolicy(), CreatePolicyPayload, deleteAccessPolicy(), getAccessPolicyStats() (+19 more)
 
 ### Community 73 - "Community 73"
-Cohesion: 0.12
-Nodes (10): reactivateUser(), sk(), SkeletonRow(), TD, TH, PALETTES, sk(), SkeletonRow() (+2 more)
+Cohesion: 0.22
+Nodes (5): PALETTES, sk(), SkeletonRow(), TD, TH
 
 ### Community 74 - "Community 74"
 Cohesion: 0.22
@@ -613,8 +626,8 @@ Cohesion: 0.25
 Nodes (8): code:block1 (Error: expect(received).toBeTruthy()), code:yaml (- generic [ref=e2]:), code:ts (1   | import { test, expect, type Page } from '@playwright/t), Error details, Instructions, Page snapshot, Test info, Test source
 
 ### Community 101 - "Community 101"
-Cohesion: 0.06
-Nodes (32): apiFetch(), Assignment, AssignmentsPagination, AssignmentStats, AssignmentStatus, AssignmentType, createAssignment(), CreateAssignmentPayload (+24 more)
+Cohesion: 0.11
+Nodes (17): apiFetch(), AssignmentsPagination, AssignmentStats, AssignmentStatus, createAssignment(), CreateAssignmentPayload, deleteAssignment(), getAssignments() (+9 more)
 
 ### Community 102 - "Community 102"
 Cohesion: 0.14
@@ -637,8 +650,8 @@ Cohesion: 0.10
 Nodes (35): badRequest(), conflict(), createAssignment(), deleteAssignment(), getAssignmentStats(), listAssignments(), notFound(), serverError() (+27 more)
 
 ### Community 106 - "Community 106"
-Cohesion: 0.07
-Nodes (26): accessPoliciesRoutes, adminRoutes, app, assignmentExpiryTimer, categoriesRoutes, cors, corsOptions, courseBuilderRoutes (+18 more)
+Cohesion: 0.06
+Nodes (31): accessPoliciesRoutes, adminRoutes, app, assignmentExpiryTimer, categoriesRoutes, certificatesRoutes, certificateTemplatesRoutes, cors (+23 more)
 
 ### Community 107 - "Community 107"
 Cohesion: 0.07
@@ -677,12 +690,12 @@ Cohesion: 0.11
 Nodes (18): 02 · User Management — `/users`, Dialog/route: Add User (doc §6), Lifecycle / Delegation / Merge / Tags (doc §14–§17), Module hub — sub-pages (doc §2), Page: Administrators (`/admin/users/admins`) — doc §21 — `['admins']`, Page: All Users (`/admin/users?tab=all`), Page: Export Users (doc §8), Page: Groups (`/admin/users/groups`) — doc §20 — `['groups']` (+10 more)
 
 ### Community 116 - "Community 116"
-Cohesion: 0.08
-Nodes (11): adapter, prisma, { PrismaClient }, { PrismaPg }, prisma, prisma, prisma, prisma (+3 more)
+Cohesion: 0.05
+Nodes (19): adapter, prisma, { PrismaClient }, { PrismaPg }, prisma, PERMISSIONS, prisma, ROLE_TEMPLATES (+11 more)
 
 ### Community 117 - "Community 117"
-Cohesion: 0.20
-Nodes (8): BRANCH_NAME_PREFIXES, DEPARTMENT_PREFIXES, GROUP_NAME_PREFIXES, ROLE_NAME_PREFIXES, TEAM_NAME_PREFIXES, USER_EMAIL_PREFIXES, USER_NAME_PREFIXES, USER_WHERE
+Cohesion: 0.12
+Nodes (13): BRANCH_NAME_PREFIXES, DEPARTMENT_PREFIXES, GROUP_NAME_PREFIXES, prisma, ROLE_NAME_PREFIXES, TEAM_NAME_PREFIXES, TEST_COURSE_PREFIXES, TEST_EMAIL_PREFIXES (+5 more)
 
 ### Community 118 - "Community 118"
 Cohesion: 0.20
@@ -717,8 +730,8 @@ Cohesion: 0.11
 Nodes (17): 03 · Roles & Permissions — `/roles-permissions`, API & Integration Permissions (doc §29) — `['api-permissions']`, Create Role form (doc §3), Domain restrictions (doc §30–§32) — behavior rules, not pages, Emergency Access (doc §33) — `emergencyAccess.grant` (MFA + approval + time limit + audit) → §5.5 assign row. `[phase-later]` UI; backend contract first., Module sections (doc §1), `[phase-later]`: AI permission intelligence (§37) · Multi-tenant isolation (§38) · Compliance & governance (§39) · Feature-flag permissions (§40 — overlaps file 12 §15; single source = file 12)., Role Details page (doc §4) — `['roles', id]` (+9 more)
 
 ### Community 126 - "Community 126"
-Cohesion: 0.18
-Nodes (15): LessonRow(), Props, ViewMode, Props, STATUS_BADGE, invalidateFor(), approveCourse(), CoursePreviewData (+7 more)
+Cohesion: 0.15
+Nodes (17): LessonRow(), Props, ViewMode, Props, STATUS_BADGE, Props, invalidateFor(), approveCourse() (+9 more)
 
 ### Community 127 - "Community 127"
 Cohesion: 0.12
@@ -737,12 +750,12 @@ Cohesion: 0.40
 Nodes (4): coursesTab, navLink, overviewTab, table
 
 ### Community 131 - "Community 131"
-Cohesion: 0.12
-Nodes (20): assignDepartmentsToBranch(), assignTeamMembers(), assignUsersToDepartment(), { createAuditLog }, createBranch(), createDepartment(), createTeam(), deleteBranch() (+12 more)
+Cohesion: 0.10
+Nodes (26): assignDepartmentsToBranch(), assignTeamMembers(), assignUsersToDepartment(), buildPagination(), { createAuditLog }, createBranch(), createDepartment(), createTeam() (+18 more)
 
 ### Community 132 - "Community 132"
-Cohesion: 0.09
-Nodes (40): archiveCourse(), badRequest(), createCourse(), getCourse(), handleDomainError(), listCourses(), notFound(), serverError() (+32 more)
+Cohesion: 0.20
+Nodes (17): canon(), LEVELS, LIST_STATUSES, MAX, optBool(), optInt(), optStr(), STATUSES (+9 more)
 
 ### Community 133 - "Community 133"
 Cohesion: 0.12
@@ -765,16 +778,16 @@ Cohesion: 0.22
 Nodes (8): code:block1 (Error: expect(received).toBeTruthy()), code:yaml (- generic [ref=e2]:), code:ts (1   | import { test, expect, type Page } from '@playwright/t), Error details, Instructions, Page snapshot, Test info, Test source
 
 ### Community 138 - "Community 138"
-Cohesion: 0.33
-Nodes (4): PERMISSIONS, prisma, ROLE_TEMPLATES, ROLES
+Cohesion: 0.12
+Nodes (14): apiHeaders(), createdCourseIds, createdQuizIds, createFixtureCourse(), deleteResp, dialog, ensureToken(), getInstructorId() (+6 more)
 
 ### Community 139 - "Community 139"
 Cohesion: 0.25
 Nodes (3): createdCourseIds, H, patchResp
 
 ### Community 140 - "Community 140"
-Cohesion: 0.13
-Nodes (14): 04 · Learning Management — `/learning-management`, Approval & Admin Review (doc §4–§5), Course Creation Wizard (doc §3) — 6 steps, autosave draft = `course.createDraft`/`course.update`, Module sections (doc §1), `[phase-later]` (doc §17): auto-save versioning, AI content validation, accessibility checker, copyright detection, SEO, gamification, collaborative instructors, multi-language, recommendations., Tab: Assignments (`?tab=assignments`) — `['assignments', courseId?]` (doc §10), Tab: Categories (`?tab=categories`) — `['categories']` (doc §6), Tab: Certificates (`?tab=certificates`) — `['certificates']` (doc §9) (+6 more)
+Cohesion: 0.12
+Nodes (15): 04 · Learning Management — `/learning-management`, Approval & Admin Review (doc §4–§5), Course Creation Wizard (doc §3) — 6 steps, autosave draft = `course.createDraft`/`course.update`, Module sections (doc §1), `[phase-later]` (doc §17): auto-save versioning, AI content validation, accessibility checker, copyright detection, SEO, gamification, collaborative instructors, multi-language, recommendations., Tab: Assessments (`?tab=assessments`, blueprint calls it "Quizzes & Exams") — `['quizzes', courseId?]` (doc §8), Tab: Assignments (`?tab=assignments`) — `['assignments', courseId?]` (doc §10), Tab: Categories (`?tab=categories`) — `['categories']` (doc §6) (+7 more)
 
 ### Community 141 - "Community 141"
 Cohesion: 0.14
@@ -789,16 +802,16 @@ Cohesion: 0.23
 Nodes (17): approveCourse(), auditLog(), courseBuilderService, coursesService, domainError(), getCourseOrThrow(), getPreview(), iso() (+9 more)
 
 ### Community 144 - "Community 144"
-Cohesion: 0.10
-Nodes (18): allTab, allTabBadge, body, categoryCells, categorySelect, courseRespPromise, firstArchiveBtn, firstEditBtn (+10 more)
+Cohesion: 0.08
+Nodes (23): allTab, allTabBadge, body, categoryCells, categorySelect, courseRespPromise, courseRow, createBody (+15 more)
 
 ### Community 145 - "Community 145"
-Cohesion: 0.11
-Nodes (18): buildPatch(), clientValidate(), FormState, formToEffective(), parseIds(), PickerItem, Props, AccessRules (+10 more)
+Cohesion: 0.10
+Nodes (19): buildPatch(), clientValidate(), FormState, formToEffective(), parseIds(), PickerItem, Props, AccessRules (+11 more)
 
 ### Community 146 - "Community 146"
-Cohesion: 0.11
-Nodes (27): confirmUpload(), deleteUpload(), MOCK_CONFIRM, MOCK_SIGN, mockDelay(), signUpload(), uploadFetch(), ALLOWED_MIME (+19 more)
+Cohesion: 0.10
+Nodes (28): confirmUpload(), deleteUpload(), MOCK_CONFIRM, MOCK_SIGN, mockDelay(), signUpload(), uploadFetch(), ALLOWED_MIME (+20 more)
 
 ### Community 147 - "Community 147"
 Cohesion: 0.15
@@ -885,8 +898,8 @@ Cohesion: 0.25
 Nodes (7): code:block1 (Error: expect(locator).not.toBeVisible() failed), code:yaml (- row "FilterAllow 1783128466979809 USERS VIEW ✓ Allow 0 All), code:ts (72  |     const card = page.getByText(label, { exact: true }), Error details, Instructions, Test info, Test source
 
 ### Community 171 - "Community 171"
-Cohesion: 0.11
-Nodes (11): getInvitations(), Invitation, InvitationStatus, PALETTES, Props, ROLE_DISPLAY, sk(), SkeletonRow() (+3 more)
+Cohesion: 0.08
+Nodes (44): addItem, badRequest(), createPath, deletePath, getPath, handleDomainError(), listPaths, notFound() (+36 more)
 
 ### Community 172 - "Community 172"
 Cohesion: 0.17
@@ -905,10 +918,8 @@ Cohesion: 0.29
 Nodes (4): CourseDatum, COURSES, GRADIENTS, TopCourse
 
 ### Community 176 - "Community 176"
-Cohesion: 0.33
-Nodes (5): { adminUserActionRateLimiter }, express, {
-  getPermissionMatrix, togglePermissionMatrixCell,
-}, { requireAdminAuth }, router
+Cohesion: 0.18
+Nodes (8): Assignment, updateAssignment(), EditAssignmentModal(), INPUT, LABEL, Props, tomorrowISODate(), TYPE_OPTIONS
 
 ### Community 177 - "Community 177"
 Cohesion: 0.47
@@ -916,15 +927,15 @@ Nodes (5): BASE, main(), ok(), PNG_1x1, req()
 
 ### Community 178 - "Community 178"
 Cohesion: 0.15
-Nodes (23): archiveCourse(), assertInstructorExists(), buildPagination(), courseAuditLog(), createCourse(), FULL_SELECT, getCourse(), iso() (+15 more)
+Nodes (24): archiveCourse(), assertInstructorExists(), buildPagination(), courseAuditLog(), createCourse(), FULL_SELECT, getCourse(), iso() (+16 more)
 
 ### Community 179 - "Community 179"
 Cohesion: 0.60
 Nodes (4): BASE, main(), ok(), req()
 
 ### Community 180 - "Community 180"
-Cohesion: 0.10
-Nodes (26): EMPTY, FormValues, LANGUAGES, LEVELS, Props, Props, archiveCourse(), CATEGORIES (+18 more)
+Cohesion: 0.11
+Nodes (25): EMPTY, FormValues, LANGUAGES, LEVELS, Props, archiveCourse(), CATEGORIES, coursesFetch() (+17 more)
 
 ### Community 181 - "Community 181"
 Cohesion: 0.29
@@ -967,8 +978,8 @@ Cohesion: 0.22
 Nodes (5): ActivityItem, ITEMS, TYPE_META, LmActivity, LmActivityType
 
 ### Community 192 - "Community 192"
-Cohesion: 0.29
-Nodes (4): Props, ProtectedRoute(), Profile, UserRole
+Cohesion: 0.18
+Nodes (7): AssignmentType, AssignRoleModal(), INPUT, LABEL, Props, tomorrowISODate(), TYPE_OPTIONS
 
 ### Community 193 - "Community 193"
 Cohesion: 0.20
@@ -983,6 +994,127 @@ Cohesion: 0.67
 Nodes (3): DashboardPage(), formatDate(), getGreeting()
 
 ### Community 196 - "Community 196"
+Cohesion: 0.09
+Nodes (31): COURSE_STATUS_BADGE, DetailViewProps, ItemRowProps, ListViewProps, PathFormProps, PickerProps, SESSION_STATUS_BADGE, Toast (+23 more)
+
+### Community 197 - "Community 197"
+Cohesion: 0.20
+Nodes (6): Kpi, KPI_META, KpiMeta, KPIS, LmStatItem, LmStats
+
+### Community 198 - "Community 198"
+Cohesion: 0.21
+Nodes (15): autoExpire(), cancelInvitation(), countPendingInvitations(), { createAuditLog }, listInvitations(), makeError(), mapInvitation(), prisma (+7 more)
+
+### Community 199 - "Community 199"
+Cohesion: 0.24
+Nodes (8): DEFAULT_KEYS, dispatchBridgeEvents(), INVALIDATION_MAP, MinimalQueryClient, MutationCtx, MutationName, QueryKey, queryKeys
+
+### Community 200 - "Community 200"
+Cohesion: 0.15
+Nodes (8): approveResp, approveUiResp, createdCourseIds, draftRow, H, rejectResp, row, textarea
+
+### Community 201 - "Community 201"
+Cohesion: 0.25
+Nodes (7): code:block1 (Test timeout of 30000ms exceeded.), code:block2 (Error: locator.click: Test timeout of 30000ms exceeded.), code:ts (91  |), Error details, Instructions, Test info, Test source
+
+### Community 202 - "Community 202"
+Cohesion: 0.18
+Nodes (12): approveCourse, badRequest(), getPreview, handleDomainError(), notFound(), rejectCourse, serverError(), submitCourse (+4 more)
+
+### Community 203 - "Community 203"
+Cohesion: 0.33
+Nodes (5): { adminUserActionRateLimiter }, express, {
+  listPermissions, getPermission, createPermission, updatePermission, deletePermission,
+}, { requireAdminAuth }, router
+
+### Community 204 - "Community 204"
+Cohesion: 0.32
+Nodes (14): addMembers(), badRequest(), createGroup(), deleteGroup(), getGroup(), getGroupMembers(), listGroups(), normalizeGroupStatus() (+6 more)
+
+### Community 205 - "Community 205"
+Cohesion: 0.60
+Nodes (5): BASE, createSubmittableCourse(), main(), ok(), req()
+
+### Community 206 - "Community 206"
+Cohesion: 0.33
+Nodes (5): code:block1 (Error: locator.click: Target page, context or browser has be), code:block2 (Error: browserContext.close: Target page, context or browser), Error details, Instructions, Test info
+
+### Community 208 - "Community 208"
+Cohesion: 0.29
+Nodes (6): code:block1 (Error: No PATCH should be issued when nothing changed), code:ts (81  |), Error details, Instructions, Test info, Test source
+
+### Community 209 - "Community 209"
+Cohesion: 0.20
+Nodes (4): createdCourseIds, H, row, submitResp
+
+### Community 210 - "Community 210"
+Cohesion: 0.19
+Nodes (11): createUser(), bcrypt, createFirstAdmin(), prisma, { validatePasswordStrength }, bcrypt, prisma, resetFirstAdminPassword() (+3 more)
+
+### Community 211 - "Community 211"
+Cohesion: 0.18
+Nodes (10): CoursesTab(), CoursesTabProps, LEVEL_BADGE, pageRange(), STATUS_BADGE, STATUS_TABS, Toast, View (+2 more)
+
+### Community 212 - "Community 212"
+Cohesion: 0.20
+Nodes (5): createdCourseIds, errorResp, H, previewRow, videoEl
+
+### Community 213 - "Community 213"
+Cohesion: 0.18
+Nodes (6): createdCourseIds, createdGroupIds, groupCheckbox, H, prereqCheckbox, saveResp
+
+### Community 214 - "Community 214"
+Cohesion: 0.11
+Nodes (33): badRequest(), createQuestion, createQuiz, deleteQuestion, deleteQuiz, getQuiz, handleDomainError(), listQuizzes (+25 more)
+
+### Community 215 - "Community 215"
+Cohesion: 0.29
+Nodes (6): code:block1 (Error: Category select value should be a UUID), code:ts (179 |   const H = await getAuthHeaders(page)), Error details, Instructions, Test info, Test source
+
+### Community 216 - "Community 216"
+Cohesion: 0.29
+Nodes (6): code:block1 (Error: expect(locator).toBeVisible() failed), code:ts (22  |   expect(token, 'mn_admin_token must exist in localSto), Error details, Instructions, Test info, Test source
+
+### Community 217 - "Community 217"
+Cohesion: 0.29
+Nodes (6): code:block1 (Error: expect(locator).toBeVisible() failed), code:ts (153 |   const newName = `Cat Rename New ${Date.now()}`), Error details, Instructions, Test info, Test source
+
+### Community 218 - "Community 218"
+Cohesion: 0.29
+Nodes (6): code:block1 (Error: expect(locator).toBeVisible() failed), code:ts (72  | // ── Cleanup ────────────────────────────────────────), Error details, Instructions, Test info, Test source
+
+### Community 219 - "Community 219"
+Cohesion: 0.41
+Nodes (12): archiveCourse(), badRequest(), createCourse(), getCourse(), handleDomainError(), listCourses(), notFound(), restoreCourse() (+4 more)
+
+### Community 220 - "Community 220"
+Cohesion: 0.22
+Nodes (8): importUsers(), ImportResult, CSVPreview, formatBytes(), ImportUsersModal(), Props, REQUIRED_HEADERS, VALID_IMPORT_ROLES
+
+### Community 221 - "Community 221"
+Cohesion: 0.33
+Nodes (5): {
+  adminUserActionRateLimiter,
+  coursesReadRateLimiter,
+}, c, express, { requireAdminAuth }, router
+
+### Community 222 - "Community 222"
+Cohesion: 0.18
+Nodes (25): assertTemplateRefExists(), CERT_SELECT, certAuditLog(), createTemplate(), crypto, deleteTemplate(), domainError(), getCertificateForPdf() (+17 more)
+
+### Community 223 - "Community 223"
+Cohesion: 0.10
+Nodes (18): adminUsersAnalyticsRateLimiter, adminUsersImportRateLimiter, publicVerifyRateLimiter, rateLimit, { adminUsersAnalyticsRateLimiter }, c, express, { requireAdminAuth } (+10 more)
+
+### Community 224 - "Community 224"
+Cohesion: 0.23
+Nodes (21): assertCourseExists(), createQuestion(), createQuiz(), deleteQuestion(), deleteQuiz(), domainError(), getQuestionInQuizOrThrow(), getQuiz() (+13 more)
+
+### Community 225 - "Community 225"
+Cohesion: 0.10
+Nodes (18): addedItem, addItemResp, addResp, apiHeaders(), createdCourseIds, createdPathIds, createFixtureCourse(), deleteResp (+10 more)
+
+### Community 226 - "Community 226"
 Cohesion: 0.10
 Nodes (19): { adminUserActionRateLimiter }, { adminUserActionRateLimiter, adminUsersAnalyticsRateLimiter }, {
   adminUserActionRateLimiter,
@@ -1064,135 +1196,64 @@ Nodes (19): { adminUserActionRateLimiter }, { adminUserActionRateLimiter, adminU
   forceLogoutUser,
 } (+11 more)
 
-### Community 197 - "Community 197"
-Cohesion: 0.20
-Nodes (6): Kpi, KPI_META, KpiMeta, KPIS, LmStatItem, LmStats
-
-### Community 198 - "Community 198"
-Cohesion: 0.21
-Nodes (15): autoExpire(), cancelInvitation(), countPendingInvitations(), { createAuditLog }, listInvitations(), makeError(), mapInvitation(), prisma (+7 more)
-
-### Community 199 - "Community 199"
-Cohesion: 0.22
-Nodes (9): appQueryClient, DEFAULT_KEYS, dispatchBridgeEvents(), INVALIDATION_MAP, MinimalQueryClient, MutationCtx, MutationName, QueryKey (+1 more)
-
-### Community 200 - "Community 200"
-Cohesion: 0.15
-Nodes (8): approveResp, approveUiResp, createdCourseIds, draftRow, H, rejectResp, row, textarea
-
-### Community 201 - "Community 201"
-Cohesion: 0.25
-Nodes (7): code:block1 (Test timeout of 30000ms exceeded.), code:block2 (Error: locator.click: Test timeout of 30000ms exceeded.), code:ts (91  |), Error details, Instructions, Test info, Test source
-
-### Community 202 - "Community 202"
-Cohesion: 0.29
-Nodes (5): prisma, TEST_COURSE_PREFIXES, TEST_EMAIL_PREFIXES, TEST_GROUP_PREFIXES, TEST_ROLE_PREFIXES
-
-### Community 203 - "Community 203"
-Cohesion: 0.33
-Nodes (5): { adminUserActionRateLimiter }, express, {
-  listPermissions, getPermission, createPermission, updatePermission, deletePermission,
-}, { requireAdminAuth }, router
-
-### Community 204 - "Community 204"
-Cohesion: 0.32
-Nodes (14): addMembers(), badRequest(), createGroup(), deleteGroup(), getGroup(), getGroupMembers(), listGroups(), normalizeGroupStatus() (+6 more)
-
-### Community 205 - "Community 205"
+### Community 227 - "Community 227"
 Cohesion: 0.60
-Nodes (5): BASE, createSubmittableCourse(), main(), ok(), req()
+Nodes (4): BASE, main(), ok(), req()
 
-### Community 206 - "Community 206"
-Cohesion: 0.33
-Nodes (5): code:block1 (Error: locator.click: Target page, context or browser has be), code:block2 (Error: browserContext.close: Target page, context or browser), Error details, Instructions, Test info
+### Community 228 - "Community 228"
+Cohesion: 0.08
+Nodes (15): Invitation, InvitationStatus, PALETTES, Props, ROLE_DISPLAY, sk(), SkeletonRow(), STATUS_STYLE (+7 more)
 
-### Community 208 - "Community 208"
-Cohesion: 0.29
-Nodes (6): code:block1 (Error: No PATCH should be issued when nothing changed), code:ts (81  |), Error details, Instructions, Test info, Test source
-
-### Community 209 - "Community 209"
-Cohesion: 0.20
-Nodes (4): createdCourseIds, H, row, submitResp
-
-### Community 210 - "Community 210"
-Cohesion: 0.19
-Nodes (11): bcrypt, createFirstAdmin(), prisma, { validatePasswordStrength }, bcrypt, prisma, resetFirstAdminPassword(), { validatePasswordStrength } (+3 more)
-
-### Community 211 - "Community 211"
+### Community 229 - "Community 229"
 Cohesion: 0.18
-Nodes (6): updateAccessPolicy(), ACTION_OPTIONS, INPUT, LABEL, Props, RESOURCE_OPTIONS
+Nodes (10): forceLogoutUser(), resetUserPassword(), suspendUser(), VALID_ROLES, VALID_STATUSES, VALID_VERIFICATION_STATES, validateForceLogoutInput(), { validatePasswordStrength } (+2 more)
 
-### Community 212 - "Community 212"
-Cohesion: 0.20
-Nodes (5): createdCourseIds, errorResp, H, previewRow, videoEl
-
-### Community 213 - "Community 213"
-Cohesion: 0.18
-Nodes (6): createdCourseIds, createdGroupIds, groupCheckbox, H, prereqCheckbox, saveResp
-
-### Community 214 - "Community 214"
-Cohesion: 0.20
-Nodes (6): approveVerification(), PALETTES, sk(), SkeletonRow(), TD, TH
-
-### Community 215 - "Community 215"
+### Community 230 - "Community 230"
 Cohesion: 0.29
-Nodes (6): code:block1 (Error: Category select value should be a UUID), code:ts (179 |   const H = await getAuthHeaders(page)), Error details, Instructions, Test info, Test source
+Nodes (4): Props, ProtectedRoute(), Profile, UserRole
 
-### Community 216 - "Community 216"
-Cohesion: 0.29
-Nodes (6): code:block1 (Error: expect(locator).toBeVisible() failed), code:ts (22  |   expect(token, 'mn_admin_token must exist in localSto), Error details, Instructions, Test info, Test source
-
-### Community 217 - "Community 217"
-Cohesion: 0.29
-Nodes (6): code:block1 (Error: expect(locator).toBeVisible() failed), code:ts (153 |   const newName = `Cat Rename New ${Date.now()}`), Error details, Instructions, Test info, Test source
-
-### Community 218 - "Community 218"
-Cohesion: 0.29
-Nodes (6): code:block1 (Error: expect(locator).toBeVisible() failed), code:ts (72  | // ── Cleanup ────────────────────────────────────────), Error details, Instructions, Test info, Test source
-
-### Community 219 - "Community 219"
-Cohesion: 0.18
-Nodes (10): createUser(), sendMessage(), suspendUser(), VALID_ROLES, VALID_STATUSES, VALID_VERIFICATION_STATES, validateCreateUserInput(), { validatePasswordStrength } (+2 more)
-
-### Community 220 - "Community 220"
-Cohesion: 0.22
-Nodes (8): importUsers(), ImportResult, CSVPreview, formatBytes(), ImportUsersModal(), Props, REQUIRED_HEADERS, VALID_IMPORT_ROLES
-
-### Community 221 - "Community 221"
-Cohesion: 0.22
-Nodes (6): AccessPolicy, PolicyEffect, PolicyStatus, EFFECT_BADGE, Props, STATUS_BADGE
-
-### Community 222 - "Community 222"
+### Community 231 - "Community 231"
 Cohesion: 0.29
 Nodes (5): ALLOWED_MIME_TYPES, multer, storage, _upload, uploadUsersCsv()
 
-### Community 223 - "Community 223"
-Cohesion: 0.29
-Nodes (6): adminUsersAnalyticsRateLimiter, { adminUsersAnalyticsRateLimiter }, c, express, { requireAdminAuth }, router
+### Community 232 - "Community 232"
+Cohesion: 0.33
+Nodes (5): {
+  adminUserActionRateLimiter,
+  coursesReadRateLimiter,
+}, c, express, { requireAdminAuth }, router
 
-### Community 224 - "Community 224"
+### Community 236 - "Community 236"
+Cohesion: 0.33
+Nodes (5): { adminUserActionRateLimiter }, c, express, { requireAdminAuth }, router
+
+### Community 237 - "Community 237"
 Cohesion: 0.53
-Nodes (6): buildPagination(), getTeamMembers(), listBranches(), listDepartments(), listTeams(), paginate()
+Nodes (5): BASE, main(), ok(), req(), reqPublic()
+
+### Community 239 - "Community 239"
+Cohesion: 0.60
+Nodes (4): BASE, main(), ok(), req()
 
 ## Knowledge Gaps
-- **1692 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+1687 more)
+- **1850 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+1845 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getStoredToken()` connect `Community 22` to `Community 2`, `Community 146`, `Community 24`, `Community 25`, `Community 26`, `Community 27`, `Community 32`, `Community 34`, `Community 41`, `Community 171`, `Community 46`, `Community 180`, `Community 53`, `Community 54`, `Community 183`, `Community 60`, `Community 62`, `Community 191`, `Community 72`, `Community 73`, `Community 214`, `Community 220`, `Community 101`, `Community 119`, `Community 126`, `Community 127`?**
-  _High betweenness centrality (0.034) - this node is a cross-community bridge._
-- **Why does `requireAdminAuth()` connect `Community 36` to `Community 64`, `Community 196`, `Community 5`, `Community 105`, `Community 75`, `Community 203`, `Community 176`, `Community 19`, `Community 56`, `Community 57`, `Community 92`, `Community 61`, `Community 223`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `adminUserActionRateLimiter` connect `Community 36` to `Community 64`, `Community 196`, `Community 5`, `Community 105`, `Community 75`, `Community 203`, `Community 176`, `Community 19`, `Community 57`, `Community 92`, `Community 61`?**
+- **Why does `getStoredToken()` connect `Community 46` to `Community 2`, `Community 146`, `Community 22`, `Community 24`, `Community 25`, `Community 26`, `Community 27`, `Community 32`, `Community 34`, `Community 35`, `Community 41`, `Community 47`, `Community 180`, `Community 53`, `Community 54`, `Community 183`, `Community 59`, `Community 60`, `Community 62`, `Community 191`, `Community 196`, `Community 72`, `Community 220`, `Community 101`, `Community 119`, `Community 126`, `Community 127`?**
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `requireAdminAuth()` connect `Community 36` to `Community 64`, `Community 226`, `Community 5`, `Community 232`, `Community 105`, `Community 75`, `Community 203`, `Community 236`, `Community 61`, `Community 19`, `Community 56`, `Community 57`, `Community 92`, `Community 221`, `Community 223`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `adminUserActionRateLimiter` connect `Community 36` to `Community 64`, `Community 226`, `Community 5`, `Community 232`, `Community 105`, `Community 75`, `Community 203`, `Community 236`, `Community 19`, `Community 221`, `Community 57`, `Community 92`, `Community 61`, `Community 223`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _1692 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1850 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.10591133004926108 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.08858858858858859 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.05555555555555555 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05128205128205128 - nodes in this community are weakly interconnected._

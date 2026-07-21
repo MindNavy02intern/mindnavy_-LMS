@@ -6,6 +6,7 @@ const {
   validateUpdate,
 } = require("../validators/courses.validator");
 
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 function badRequest(res, msg) {
@@ -16,11 +17,13 @@ function notFound(res, msg = "Not found.") {
   return res.status(404).json({ success: false, message: msg });
 }
 
-// Domain errors thrown by the service (bad instructor/category reference).
+// Domain errors thrown by the service.
 function handleDomainError(res, err) {
-  if (err.code === "INSTRUCTOR_NOT_FOUND") return notFound(res, "Instructor not found.");
-  if (err.code === "NOT_AN_INSTRUCTOR")    return badRequest(res, "The selected user is not an instructor.");
-  if (err.code === "CATEGORY_NOT_FOUND")   return notFound(res, "Category not found.");
+  if (err.code === "INSTRUCTOR_NOT_FOUND")    return notFound(res, "Instructor not found.");
+  if (err.code === "NOT_AN_INSTRUCTOR")       return badRequest(res, "The selected user is not an instructor.");
+  if (err.code === "CATEGORY_NOT_FOUND")      return notFound(res, "Category not found.");
+  if (err.code === "COURSE_NOT_FOUND")        return notFound(res, "Course not found.");
+  if (err.code === "ONLY_ARCHIVED_RESTORABLE") return badRequest(res, "Only archived courses can be restored.");
   return null;
 }
 
@@ -84,10 +87,22 @@ async function archiveCourse(req, res) {
   } catch (err) { return serverError(res, err); }
 }
 
+async function restoreCourse(req, res) {
+  try {
+    const idErr = validateId(req.params.id, "courseId");
+    if (idErr) return badRequest(res, idErr);
+    const result = await svc.restoreCourse(req.params.id, req.admin?.id);
+    return res.json({ success: true, message: "Course restored to Draft.", data: result });
+  } catch (err) {
+    return handleDomainError(res, err) ?? serverError(res, err);
+  }
+}
+
 module.exports = {
   listCourses,
   getCourse,
   createCourse,
   updateCourse,
   archiveCourse,
+  restoreCourse,
 };

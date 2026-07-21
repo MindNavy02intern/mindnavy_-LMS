@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Eye, Pencil, Archive, Plus, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
+import { Search, Eye, Pencil, Archive, Plus, ChevronLeft, ChevronRight, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 import { getLmFilterOptions } from '../../services/lmApi';
-import { listCourses, archiveCourse } from '../../services/coursesApi';
+import { listCourses, archiveCourse, restoreCourse } from '../../services/coursesApi';
 import { approveCourse, rejectCourse } from '../../services/courseWizardApi';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import { CourseApiError } from '../../types/courses';
@@ -65,12 +65,18 @@ type View =
 interface CoursesTabProps {
   /** When true, mount directly into the create form (used by LmGuide shortcut). */
   openCreateOnMount?: boolean;
+  /** When set, mount directly into that course's Settings step (used by the
+   *  Certificates tab's "certificates disabled" error → fix-in-one-click link). */
+  openSettingsForCourseId?: string | null;
 }
 
-export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
+export default function CoursesTab({ openCreateOnMount, openSettingsForCourseId }: CoursesTabProps) {
   const navigate = useNavigate();
 
-  const [view, setView] = useState<View>(openCreateOnMount ? { kind: 'create' } : { kind: 'list' });
+  const [view, setView] = useState<View>(
+    openSettingsForCourseId ? { kind: 'settings', courseId: openSettingsForCourseId } :
+    openCreateOnMount ? { kind: 'create' } : { kind: 'list' }
+  );
   const [viewCourseId, setViewCourseId] = useState<string | null>(null);
 
   // List state
@@ -98,6 +104,9 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
   // Archive state
   const [archivingId,  setArchivingId]  = useState<string | null>(null);
   const [archiveError, setArchiveError] = useState<string | null>(null);
+
+  // Restore state
+  const [restoringId, setRestoringId] = useState<string | null>(null);
 
   // Approve / Reject state
   const [approvingId,  setApprovingId]  = useState<string | null>(null);
@@ -179,6 +188,24 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
       showToast('error', msg);
     } finally {
       setArchivingId(null);
+    }
+  }
+
+  // ── Restore ──────────────────────────────────────────────────────────────
+
+  async function handleRestore(row: CourseListRow) {
+    if (!window.confirm(`Restore "${row.title}" to Draft?`)) return;
+    setRestoringId(row.id);
+    try {
+      await restoreCourse(row.id);
+      showToast('success', `"${row.title}" restored to Draft.`);
+      invalidateFor(appQueryClient, 'course.restore');
+      fetchList();
+    } catch (err) {
+      if (err instanceof CourseApiError && err.status === 401) { navigate('/login'); return; }
+      showToast('error', err instanceof Error ? err.message : 'Failed to restore.');
+    } finally {
+      setRestoringId(null);
     }
   }
 
@@ -471,9 +498,10 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
 
               {!loading && rows.map((r) => {
                 const isArchiving = archivingId === r.id;
+                const isRestoring = restoringId === r.id;
                 return (
                   <tr key={r.id}
-                    className={'tw:border-b tw:border-slate-100 tw:transition-colors tw:hover:bg-slate-50' + (isArchiving ? ' tw:opacity-50' : '')}>
+                    className={'tw:border-b tw:border-slate-100 tw:transition-colors tw:hover:bg-slate-50' + (isArchiving || isRestoring ? ' tw:opacity-50' : '')}>
 
                     {/* Course thumbnail + title */}
                     <td className="tw:px-3 tw:py-3">
@@ -534,6 +562,17 @@ export default function CoursesTab({ openCreateOnMount }: CoursesTabProps) {
                             aria-label={`Archive ${r.title}`}
                             className="tw:rounded tw:p-1 tw:hover:bg-red-50 tw:hover:text-red-500 tw:disabled:opacity-40">
                             <Archive className="tw:h-4 tw:w-4" strokeWidth={2} />
+                          </button>
+                        )}
+                        {/* Restore — Archived only */}
+                        {r.status === 'Archived' && (
+                          <button type="button"
+                            onClick={() => handleRestore(r)}
+                            disabled={isRestoring}
+                            aria-label={`Restore ${r.title}`}
+                            title="Restore to Draft"
+                            className="tw:rounded tw:p-1 tw:hover:bg-emerald-50 tw:hover:text-emerald-600 tw:disabled:opacity-40">
+                            <RotateCcw className="tw:h-4 tw:w-4" strokeWidth={2} />
                           </button>
                         )}
                         {/* Approve — Pending only */}
