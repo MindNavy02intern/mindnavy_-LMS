@@ -66,6 +66,16 @@ const PLACEHOLDER_CHIPS: { token: string; label: string }[] = [
   { token: '{{date}}',        label: 'Date' },
 ];
 
+const KNOWN_PLACEHOLDER_TOKENS = new Set(PLACEHOLDER_CHIPS.map((c) => c.token));
+
+// Anything {{shaped}} in the body that isn't one of the 3 tokens the PDF
+// renderer substitutes — the backend strips these before printing, but the
+// editor should tell the admin now rather than let it silently vanish.
+function findUnrecognizedPlaceholders(body: string): string[] {
+  const matches = body.match(/\{\{[^{}]*\}\}/g) ?? [];
+  return [...new Set(matches.filter((m) => !KNOWN_PLACEHOLDER_TOKENS.has(m)))];
+}
+
 const DEFAULT_LAYOUT: CertificateLayout = {
   title: 'Certificate of Completion',
   body: 'This certifies that {{studentName}} has successfully completed {{courseTitle}} on {{date}}.',
@@ -168,6 +178,13 @@ function LayoutEditor({ value, onChange }: LayoutEditorProps) {
           aria-label="Certificate body"
           className="tw:w-full tw:resize-y tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400"
         />
+        {findUnrecognizedPlaceholders(value.body).map((token) => (
+          <p key={token} role="alert" className="tw:text-[12px] tw:font-medium tw:text-amber-700">
+            Unrecognized placeholder: <span className="tw:font-mono">{token}</span> — it will not
+            print on the certificate. Use a chip above instead:{' '}
+            {PLACEHOLDER_CHIPS.map((c) => c.token).join(', ')}.
+          </p>
+        ))}
       </div>
 
       <div className="tw:flex tw:gap-6">

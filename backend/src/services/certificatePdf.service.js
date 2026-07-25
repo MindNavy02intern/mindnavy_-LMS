@@ -12,12 +12,17 @@ const { DEFAULT_LAYOUT } = require("../validators/certificates.validator");
 
 const PLACEHOLDERS = ["studentName", "courseTitle", "date"];
 
+// Matches any {{token}}-shaped text left after known placeholders are
+// substituted — e.g. a mistyped {{bilal}}. Stripped so a template typo never
+// prints raw placeholder syntax on an issued certificate.
+const UNRECOGNIZED_PLACEHOLDER = /\{\{[^{}]*\}\}/g;
+
 function fillPlaceholders(text, values) {
   let out = text;
   for (const key of PLACEHOLDERS) {
     out = out.split(`{{${key}}}`).join(values[key] ?? "");
   }
-  return out;
+  return out.replace(UNRECOGNIZED_PLACEHOLDER, "");
 }
 
 function verifyUrlFor(code) {

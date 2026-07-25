@@ -57,7 +57,7 @@ export type MutationName =
   | 'user.delete' | 'user.update' | 'user.merge'
   | 'user.tag.add' | 'user.tag.remove'
   // §5.2 STUDENT / ENROLLMENT
-  | 'enrollment.create' | 'enrollment.cancel' | 'student.dropout'
+  | 'enrollment.create' | 'enrollment.statusUpdate' | 'enrollment.cancel' | 'student.dropout'
   | 'progress.update' | 'course.complete'
   | 'quiz.submit' | 'assignment.submit'
   | 'attendance.record' | 'student.suspend'
@@ -76,8 +76,8 @@ export type MutationName =
   | 'learningPath.item.add' | 'learningPath.item.remove' | 'learningPath.item.reorder'
   | 'quiz.create' | 'quiz.update' | 'quiz.delete'
   | 'question.create' | 'question.update' | 'question.delete' | 'question.reorder'
-  | 'liveSession.schedule' | 'liveSession.start' | 'liveSession.end'
-  | 'content.upload'
+  | 'liveSession.create' | 'liveSession.update' | 'liveSession.delete'
+  | 'content.confirm' | 'content.update' | 'content.delete'
   // §5.4 Course Builder (sections & lessons)
   | 'section.create' | 'section.update' | 'section.delete'
   | 'lesson.create'  | 'lesson.update'  | 'lesson.delete'
@@ -262,10 +262,26 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.dashboard.courseAnalytics(),
     queryKeys.dashboard.studentEngagement(),
   ],
+  'enrollment.statusUpdate': (ctx) => [
+    queryKeys.enrollments(ctx?.studentId),
+    queryKeys.enrollments(ctx?.courseId),
+    queryKeys.students.list(),
+    ...(ctx?.studentId ? [queryKeys.students.detail(ctx.studentId)] : []),
+    queryKeys.courses.list(),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+    queryKeys.dashboard.courseAnalytics(),
+    queryKeys.dashboard.studentEngagement(),
+  ],
+  // IMPACT_MAP §5.2 documents this row as "same as create + drop-off metrics" —
+  // it was previously missing students.detail/courses.list/courses.detail
+  // relative to enrollment.create (found and fixed during Enrollments review).
   'enrollment.cancel': (ctx) => [
     queryKeys.enrollments(ctx?.studentId),
     queryKeys.enrollments(ctx?.courseId),
     queryKeys.students.list(),
+    ...(ctx?.studentId ? [queryKeys.students.detail(ctx.studentId)] : []),
+    queryKeys.courses.list(),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
     queryKeys.dashboard.courseAnalytics(),
     queryKeys.dashboard.studentEngagement(),
   ],
@@ -453,22 +469,37 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.quizzes(),
     ...(ctx?.courseId ? [queryKeys.quizzes(ctx.courseId), queryKeys.courses.detail(ctx.courseId)] : []),
   ],
-  'liveSession.schedule': () => [
+  // Status is schedule-derived server-side (no manual start/end action in v1) —
+  // create/update/delete are the only live-session mutations. Full row per
+  // IMPACT_MAP §5.4: live-sessions + calendar + live-overview + learning-paths
+  // (deleted sessions leave missing:true items in any path that references them).
+  'liveSession.create': () => [
     queryKeys.liveSessions(),
     queryKeys.calendar(),
     queryKeys.dashboard.liveOverview(),
+    queryKeys.learningPaths(),
   ],
-  'liveSession.start': (ctx) => [
+  'liveSession.update': () => [
     queryKeys.liveSessions(),
+    queryKeys.calendar(),
     queryKeys.dashboard.liveOverview(),
-    queryKeys.attendance(ctx?.sessionId),
+    queryKeys.learningPaths(),
   ],
-  'liveSession.end': (ctx) => [
+  'liveSession.delete': () => [
     queryKeys.liveSessions(),
+    queryKeys.calendar(),
     queryKeys.dashboard.liveOverview(),
-    queryKeys.attendance(ctx?.sessionId),
+    queryKeys.learningPaths(),
   ],
-  'content.upload': (ctx) => [
+  'content.confirm': (ctx) => [
+    queryKeys.contentLibrary(),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'content.update': (ctx) => [
+    queryKeys.contentLibrary(),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'content.delete': (ctx) => [
     queryKeys.contentLibrary(),
     ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
   ],

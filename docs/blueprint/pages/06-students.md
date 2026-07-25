@@ -26,6 +26,7 @@ All Students · Profiles · Enrollment · Learning Progress · Course Activity �
 **Controls:** Edit profile→`student.update` · Change enrollment→`enrollment.change` (→ §5.2) · Reset progress→`progress.reset` (→ §5.2 progress row, confirm dialog) · Assign certificate→`certificate.issue` (→ §5.8) · View analytics (nav) · Suspend access→`student.suspend` (→ §5.2) · Export student data (read)
 
 ## Tab: Enrollment Management (`?tab=enrollment`) (doc §3)
+**GAP (reconciled 2026-07-21, do not duplicate):** this `/students` page has no Route/Page in code yet. The Enrollments UI that IS actually built lives inside Learning Management (`?tab=enrollments`, `EnrollmentsTab.tsx`, contract `ENROLLMENTS_CONTRACT.md`) — see `04-learning-management.md`'s "Tab: Enrollments" section. v1 there is manual enroll only (no self/bulk/department/cohort flows, no expiration/access-rules/schedule config — those remain `[planned]` per this doc's spec below).
 Types: manual, self, bulk, department, cohort.
 **Enroll flow:** select student→`['students']` → select course/path→`['courses']`/`['learning-paths']` → config (enrollment date, expiration, access rules, cohort→`['groups']`, schedule) → confirm → `enrollment.create` (→ §5.2; student notified; logs updated). Bulk/department/cohort = ×N same row.
 Cancel/withdraw → `enrollment.cancel` (→ §5.2).

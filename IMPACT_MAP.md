@@ -340,7 +340,7 @@ Template — one per mutation that touches a dashboard number:
 4. Assert value reflects the mutation (old ± delta) **without hard refresh**.
 5. Use `waitForResponse` on the invalidated endpoints before asserting (established pattern from bulk-action fixes).
 
-Minimum coverage set: `user.create` → Total Users · `course.approve` → Published Courses + Pending Approvals · `instructorApplication.approve` → Active Instructors · `enrollment.create` → Active Students · `certificate.issue` → Certificates Issued · `liveSession.start/end` → Live Sessions Running · `refund.request` → Pending Approvals.
+Minimum coverage set: `user.create` → Total Users · `course.approve` → Published Courses + Pending Approvals · `instructorApplication.approve` → Active Instructors · `enrollment.create` → Active Students · `certificate.issue` → Certificates Issued · `liveSession.create`/`.delete` → Live Sessions Running (v1 has no manual start/end mutation — status is schedule-derived and self-corrects on every read, so "Live Sessions Running" moves with real time, not just with a create/cancel event) · `refund.request` → Pending Approvals.
 
 ## 8. BACKEND CONTRACT PRINCIPLES (Hassan)
 

@@ -18,6 +18,9 @@ import CategoriesTab from '../components/learningManagement/CategoriesTab';
 import LearningPathsTab from '../components/learningManagement/LearningPathsTab';
 import AssessmentsTab from '../components/learningManagement/AssessmentsTab';
 import CertificatesTab from '../components/learningManagement/CertificatesTab';
+import LiveSessionsTab from '../components/learningManagement/LiveSessionsTab';
+import EnrollmentsTab from '../components/learningManagement/EnrollmentsTab';
+import ContentLibraryTab from '../components/learningManagement/ContentLibraryTab';
 import { useTabParam } from '../hooks/useTabParam';
 
 const LM_TAB_KEYS: Record<LmTab, string> = {
@@ -85,6 +88,12 @@ export default function LearningManagementPage() {
           <AssessmentsTab />
         ) : tab === 'Certificates' ? (
           <CertificatesTab onGoToCourseSettings={handleGoToCourseSettings} />
+        ) : tab === 'Live Sessions' ? (
+          <LiveSessionsTab />
+        ) : tab === 'Enrollments' ? (
+          <EnrollmentsTab />
+        ) : tab === 'Content' ? (
+          <ContentLibraryTab />
         ) : tab === 'Categories' ? (
           <CategoriesTab />
         ) : tab === 'Overview' ? (
