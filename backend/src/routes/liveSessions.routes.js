@@ -17,7 +17,8 @@ router.get("/:id", requireAdminAuth, coursesReadRateLimiter, c.getSession);
 
 // ── Writes (each create/update talks to the Zoom API) ──────────────────────────
 router.post("/",      requireAdminAuth, adminUserActionRateLimiter, c.createSession);
-router.patch("/:id",  requireAdminAuth, adminUserActionRateLimiter, c.updateSession);
-router.delete("/:id", requireAdminAuth, adminUserActionRateLimiter, c.deleteSession);
+router.patch("/:id",     requireAdminAuth, adminUserActionRateLimiter, c.updateSession);
+router.patch("/:id/end", requireAdminAuth, adminUserActionRateLimiter, c.endSession);
+router.delete("/:id",    requireAdminAuth, adminUserActionRateLimiter, c.deleteSession);
 
 module.exports = router;

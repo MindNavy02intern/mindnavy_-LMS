@@ -78,7 +78,7 @@ const MOCK_SESSIONS: LiveSession[] = [
     startTime: '2026-08-01T15:00:00.000Z', durationMin: 60, timezone: 'UTC',
     maxParticipants: 100, provider: 'ZOOM', zoomMeetingId: 'mock-1',
     joinUrl: 'https://zoom.us/j/mock1', startUrl: 'https://zoom.us/s/mock1',
-    status: 'UPCOMING', createdAt: '2026-07-01T00:00:00.000Z', updatedAt: '2026-07-01T00:00:00.000Z',
+    status: 'UPCOMING', endedAt: null, createdAt: '2026-07-01T00:00:00.000Z', updatedAt: '2026-07-01T00:00:00.000Z',
   },
 ];
 
@@ -114,7 +114,7 @@ export async function createLiveSession(payload: CreateLiveSessionPayload): Prom
       timezone: payload.timezone ?? 'UTC', maxParticipants: payload.maxParticipants ?? null,
       provider: 'ZOOM', zoomMeetingId: `mock-${Date.now()}`,
       joinUrl: 'https://zoom.us/j/mock', startUrl: 'https://zoom.us/s/mock',
-      status: 'UPCOMING', createdAt: now, updatedAt: now,
+      status: 'UPCOMING', endedAt: null, createdAt: now, updatedAt: now,
     });
   }
   return lsFetch<LiveSession>('/', 'POST', payload);
@@ -131,4 +131,15 @@ export async function updateLiveSession(id: string, patch: UpdateLiveSessionPayl
 export async function deleteLiveSession(id: string): Promise<{ id: string }> {
   if (USE_MOCK) return mockDelay({ id });
   return lsFetch<{ id: string }>(`/${id}`, 'DELETE');
+}
+
+// Manual admin override — ends a LIVE/UPCOMING session early. DB-only; does
+// not call Zoom to force-end the real meeting (see backend comment).
+export async function endLiveSession(id: string): Promise<LiveSession> {
+  if (USE_MOCK) {
+    const s = MOCK_SESSIONS.find((x) => x.id === id) ?? MOCK_SESSIONS[0];
+    const now = new Date().toISOString();
+    return mockDelay<LiveSession>({ ...s, status: 'ENDED', endedAt: now, updatedAt: now });
+  }
+  return lsFetch<LiveSession>(`/${id}/end`, 'PATCH');
 }

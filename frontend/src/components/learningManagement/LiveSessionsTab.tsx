@@ -15,10 +15,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Plus, ChevronLeft, Pencil, Trash2, Radio, ExternalLink, ShieldAlert, AlertCircle, Info,
+  Plus, ChevronLeft, Pencil, Trash2, Radio, ExternalLink, ShieldAlert, AlertCircle, Info, Square,
 } from 'lucide-react';
 import {
-  listLiveSessions, createLiveSession, updateLiveSession, deleteLiveSession,
+  listLiveSessions, createLiveSession, updateLiveSession, deleteLiveSession, endLiveSession,
   LiveSessionApiError,
 } from '../../services/liveSessionsApi';
 import { listCourses } from '../../services/coursesApi';
@@ -340,9 +340,10 @@ interface SessionRowProps {
   session:  LiveSession;
   onEdit:   () => void;
   onCancel: () => void;
+  onEnd:    () => void;
 }
 
-function SessionRow({ session, onEdit, onCancel }: SessionRowProps) {
+function SessionRow({ session, onEdit, onCancel, onEnd }: SessionRowProps) {
   const start = new Date(session.startTime).toLocaleString('en-US', {
     month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit',
   });
@@ -384,6 +385,13 @@ function SessionRow({ session, onEdit, onCancel }: SessionRowProps) {
               title="Host-only link — never share with learners"
               className="tw:flex tw:items-center tw:gap-1 tw:rounded tw:border tw:border-violet-200 tw:bg-violet-50 tw:px-2 tw:py-1 tw:text-[11px] tw:font-medium tw:text-violet-700 tw:hover:bg-violet-100">
               <ShieldAlert className="tw:h-3 tw:w-3" strokeWidth={2} /> Start (host)
+            </button>
+          )}
+          {session.status === 'LIVE' && (
+            <button type="button" onClick={onEnd} aria-label={`End ${session.title}`}
+              title="End this session now, ahead of its scheduled end time"
+              className="tw:flex tw:items-center tw:gap-1 tw:rounded tw:border tw:border-amber-200 tw:bg-amber-50 tw:px-2 tw:py-1 tw:text-[11px] tw:font-medium tw:text-amber-700 tw:hover:bg-amber-100">
+              <Square className="tw:h-3 tw:w-3" strokeWidth={2} /> End Session
             </button>
           )}
           <button type="button" onClick={onEdit} aria-label={`Edit ${session.title}`}
@@ -503,6 +511,18 @@ export default function LiveSessionsTab() {
     }
   }
 
+  async function handleEnd(session: LiveSession) {
+    try {
+      const updated = await endLiveSession(session.id);
+      invalidateFor(appQueryClient, 'liveSession.end');
+      setSessions((prev) => prev.map((s) => (s.id === session.id ? updated : s)));
+      showToast('success', 'Live session ended.');
+    } catch (err) {
+      if (err instanceof LiveSessionApiError && err.status === 401) { navigate('/login'); return; }
+      showToast('error', err instanceof Error ? err.message : 'End failed.');
+    }
+  }
+
   if (view.kind === 'create') {
     return (
       <>
@@ -602,6 +622,7 @@ export default function LiveSessionsTab() {
                 <SessionRow key={s.id} session={s}
                   onEdit={() => setView({ kind: 'edit', session: s })}
                   onCancel={() => handleCancel(s)}
+                  onEnd={() => handleEnd(s)}
                 />
               ))}
             </tbody>

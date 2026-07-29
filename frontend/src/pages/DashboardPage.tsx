@@ -205,6 +205,18 @@ function EmptyMsg({ msg }: { msg: string }) {
   return <p style={{ fontSize: '0.8rem', color: '#94a3b8', textAlign: 'center', padding: '10px 0', margin: 0 }}>{msg}</p>;
 }
 
+// Honest "not built yet" signal — distinct from EmptyMsg (which means "genuinely
+// nothing here right now"). Used for widgets with no backend system behind them
+// at all, so an admin never mistakes "no system exists" for "no data currently".
+function ComingSoonBanner({ text }: { text: string }) {
+  return (
+    <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 6 }}>
+      <div style={{ fontSize: '1.1rem' }}>🚀</div>
+      <div style={{ fontSize: '0.72rem', marginTop: 4 }}>{text}</div>
+    </div>
+  );
+}
+
 // ── Learning Activity Chart (wired to analytics API) ─────────────────────────
 
 function LearningActivityChart({ data }: { data: LearningActivityItem[] }) {
@@ -342,23 +354,28 @@ function UsersRoleDonut({ data }: { data: UsersByRoleItem[] }) {
 
 // ── Completion Donut (wired to analytics API) ─────────────────────────────────
 
-function CompletionDonut({ pct, categories }: { pct: number; categories: CourseCompletionCategory[] }) {
+function CompletionDonut({ pct, categories }: { pct: number | null; categories: CourseCompletionCategory[] }) {
   const [animated, setAnimated] = useState(false);
   useEffect(() => { const t = setTimeout(() => setAnimated(true), 300); return () => clearTimeout(t); }, []);
   const R = 36, circ = 2 * Math.PI * R;
-  const dash = animated ? (pct / 100) * circ : 0;
+  const hasData = pct != null;
+  const dash = animated && hasData ? (pct / 100) * circ : 0;
   const COLORS = ['#2563eb', '#16a34a', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4'];
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
       <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
         <svg width="96" height="96" viewBox="0 0 96 96">
           <circle cx="48" cy="48" r={R} fill="none" stroke="#f1f5f9" strokeWidth="12" />
-          <circle cx="48" cy="48" r={R} fill="none" stroke="#2563eb" strokeWidth="12" strokeLinecap="round"
-            strokeDasharray={`${dash} ${circ}`} transform="rotate(-90 48 48)"
-            style={{ transition: 'stroke-dasharray 1.4s cubic-bezier(0.22,1,0.36,1)' }} />
+          {hasData && (
+            <circle cx="48" cy="48" r={R} fill="none" stroke="#2563eb" strokeWidth="12" strokeLinecap="round"
+              strokeDasharray={`${dash} ${circ}`} transform="rotate(-90 48 48)"
+              style={{ transition: 'stroke-dasharray 1.4s cubic-bezier(0.22,1,0.36,1)' }} />
+          )}
         </svg>
         <div style={{ position: 'absolute', textAlign: 'center' }}>
-          <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', lineHeight: 1 }}>{pct}%</div>
+          <div style={{ fontSize: hasData ? '1.1rem' : '0.68rem', fontWeight: 800, color: hasData ? '#0f172a' : '#94a3b8', lineHeight: 1.2 }}>
+            {hasData ? `${pct}%` : 'Not available yet'}
+          </div>
           <div style={{ fontSize: '0.57rem', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Average</div>
         </div>
       </div>
@@ -440,10 +457,7 @@ function RevenueCard({ data, loading }: { data: RevenueOverview | undefined; loa
         <div className="mn-db-card-title">Revenue Overview</div>
       </div>
       {loading ? <AnalyticsSpin /> : isPhase2 ? (
-        <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 6 }}>
-          <div style={{ fontSize: '1.1rem' }}>🚀</div>
-          <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Finance module</div>
-        </div>
+        <ComingSoonBanner text="Coming in Finance module" />
       ) : (
         <>
           <StatRow label="Daily Revenue"      value={`$${data!.dailyRevenue.toLocaleString()}`} />
@@ -466,7 +480,7 @@ function UserAnalyticsCard({ data, loading }: { data: UserAnalytics | undefined;
         <>
           <StatRow label="New Registrations" value={data.newRegistrations.toLocaleString()} />
           <StatRow label="Active Users"      value={data.activeUsers.toLocaleString()} />
-          <StatRow label="Retention Rate"    value={`${data.retentionRate.toFixed(1)}%`} />
+          <StatRow label="Retention Rate"    value={data.retentionRate != null ? `${data.retentionRate.toFixed(1)}%` : 'Not available yet'} />
           <StatRow label="Verified Users"    value={data.verifiedUsers.toLocaleString()} />
           <StatRow label="Suspended Users"   value={data.suspendedUsers.toLocaleString()} />
         </>
@@ -481,17 +495,14 @@ function CourseAnalyticsCard({ data, loading }: { data: CourseAnalytics | undefi
     <div className="mn-db-card">
       <div className="mn-db-card-header"><div className="mn-db-card-title">Course Analytics</div></div>
       {loading ? <AnalyticsSpin /> : isPhase2 ? (
-        <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 6 }}>
-          <div style={{ fontSize: '1.1rem' }}>🚀</div>
-          <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Learning Management module</div>
-        </div>
+        <ComingSoonBanner text="Coming in Learning Management module" />
       ) : (
         <>
           <StatRow label="Total Courses"    value={data!.totalCourses.toLocaleString()} />
           <StatRow label="Active Courses"   value={data!.activeCourses.toLocaleString()} />
           <StatRow label="Pending Approval" value={data!.pendingApprovalCourses.toLocaleString()} />
-          <StatRow label="Avg Completion"   value={`${data!.averageCompletionRate.toFixed(1)}%`} />
-          <StatRow label="Avg Quiz Score"   value={`${data!.averageQuizScore.toFixed(1)}%`} />
+          <StatRow label="Avg Completion"   value={data!.averageCompletionRate != null ? `${data!.averageCompletionRate.toFixed(1)}%` : 'Not available yet'} />
+          <StatRow label="Avg Quiz Score"   value={data!.averageQuizScore != null ? `${data!.averageQuizScore.toFixed(1)}%` : 'Not available yet'} />
           {data!.mostPopularCourse && (
             <div style={{ marginTop: 6, padding: '5px 0', borderTop: '1px solid #f8fafc' }}>
               <div style={{ fontSize: '0.65rem', color: '#64748b', marginBottom: 2 }}>Most Popular</div>
@@ -512,10 +523,7 @@ function InstructorPerformanceCard({ data, loading }: { data: InstructorPerforma
     <div className="mn-db-card">
       <div className="mn-db-card-header"><div className="mn-db-card-title">Instructor Performance</div></div>
       {loading ? <AnalyticsSpin /> : isPhase2 ? (
-        <div style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '8px', textAlign: 'center', color: '#94a3b8', marginTop: 6 }}>
-          <div style={{ fontSize: '1.1rem' }}>🚀</div>
-          <div style={{ fontSize: '0.72rem', marginTop: 4 }}>Coming in Learning Management module</div>
-        </div>
+        <ComingSoonBanner text="Coming in Learning Management module" />
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 4 }}>
           {[
@@ -655,9 +663,9 @@ function LiveSessionsCard({ data, loading }: { data: LiveSessions | undefined; l
         <>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginBottom: 10 }}>
             {([
-              { label: 'Active',    value: data.activeCount,          color: '#16a34a', bg: '#dcfce7' },
-              { label: 'Upcoming',  value: data.upcomingCount,        color: '#2563eb', bg: '#dbeafe' },
-              { label: 'Issues',    value: data.technicalIssuesCount, color: '#dc2626', bg: '#fee2e2' },
+              { label: 'Active',    value: data.activeCount,                                    color: '#16a34a', bg: '#dcfce7' },
+              { label: 'Upcoming',  value: data.upcomingCount,                                   color: '#2563eb', bg: '#dbeafe' },
+              { label: 'Issues',    value: data.technicalIssuesCount ?? '—' as number | string,  color: '#dc2626', bg: '#fee2e2' },
             ] as const).map(s => (
               <div key={s.label} style={{ background: s.bg, borderRadius: 8, padding: '6px 4px', textAlign: 'center' }}>
                 <div style={{ fontSize: '1rem', fontWeight: 700, color: s.color, lineHeight: 1 }}>{s.value}</div>
@@ -672,10 +680,9 @@ function LiveSessionsCard({ data, loading }: { data: LiveSessions | undefined; l
                 <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title}</div>
                 <div style={{ fontSize: '0.6rem', color: '#64748b' }}>{s.instructorName} · {formatRelative(s.startsAt)}</div>
               </div>
-              {s.status === 'active' && (
+              {s.status === 'active' && s.attendanceCount != null && (
                 <span style={{ fontSize: '0.6rem', color: '#64748b', flexShrink: 0 }}>{s.attendanceCount} 👥</span>
               )}
-              <button style={CS_BTN} disabled title="Live sessions coming in Learning Mgmt">End</button>
             </div>
           ))}
         </>
@@ -694,7 +701,7 @@ function TasksRemindersCard({ data, loading }: { data: TaskItem[]; loading: bool
         <div className="mn-db-card-title">Tasks & Reminders</div>
         {data.length > 0 && <span className="mn-db-pill">{pending} pending</span>}
       </div>
-      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No tasks." /> : (
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <ComingSoonBanner text="Task management is coming soon" /> : (
         <div>
           {data.map(t => (
             <div key={t.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, padding: '5px 0', borderBottom: '1px solid #f8fafc', opacity: t.status === 'completed' ? 0.5 : 1 }}>
@@ -731,7 +738,7 @@ function RecentTransactionsCard({ data, loading }: { data: TransactionItem[]; lo
         <div className="mn-db-card-title">Recent Transactions</div>
         <button style={CS_BTN} disabled title="Coming Soon">View All</button>
       </div>
-      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No transactions." /> : (
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <ComingSoonBanner text="Coming in Finance module" /> : (
         <div>
           {data.map(t => (
             <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: '1px solid #f8fafc' }}>
@@ -803,7 +810,7 @@ function ReportsSnapshotCard({ data, loading }: { data: ReportsSnapshot | undefi
         </div>
         <button style={CS_BTN} disabled title="Export — Coming Soon">Export</button>
       </div>
-      {loading ? <AnalyticsSpin /> : !data || data.availableReports.length === 0 ? <EmptyMsg msg="No reports available." /> : (
+      {loading ? <AnalyticsSpin /> : !data || data.availableReports.length === 0 ? <ComingSoonBanner text="Reports module is coming soon" /> : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 8 }}>
           {data.availableReports.map(r => (
             <button key={r.key} disabled title="Coming Soon"
@@ -826,7 +833,7 @@ function AiInsightsCard({ data, loading }: { data: AiInsightItem[]; loading: boo
       <div className="mn-db-card-header">
         <div className="mn-db-card-title">AI Insights</div>
       </div>
-      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No insights available." /> : (
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <ComingSoonBanner text="AI Insights are coming soon" /> : (
         <div>
           {data.map(ins => {
             const sev = INSIGHT_STYLE[ins.severity] ?? { bg: '#f8fafc', color: '#64748b' };
@@ -1136,7 +1143,7 @@ export default function DashboardPage() {
             </div>
           ) : (
             <CompletionDonut
-              pct={completion?.averageCompletion ?? 0}
+              pct={completion?.averageCompletion ?? null}
               categories={completion?.categories ?? []}
             />
           )}

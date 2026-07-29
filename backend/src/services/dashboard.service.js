@@ -1,5 +1,13 @@
 const prisma = require("../config/prisma");
 const { Prisma } = require("@prisma/client");
+const { listSessions: listLiveSessions } = require("./liveSessions.service");
+
+// Maps the real, schedule-derived LiveSession.status (UPCOMING/LIVE/ENDED,
+// LIVE_SESSIONS_CONTRACT.md) onto this dashboard's own widget-status vocabulary
+// (active/upcoming/completed/cancelled — types/dashboard.ts LiveSessionStatus).
+// 'cancelled' has no source: a cancelled session is DELETEd, so it simply
+// never appears as a row here.
+const LIVE_SESSION_STATUS_MAP = { LIVE: "active", UPCOMING: "upcoming", ENDED: "completed" };
 
 // ── Shared filter helpers ─────────────────────────────────────────────────────
 
@@ -128,7 +136,7 @@ async function getDashboardCore(admin) {
     pendingApprovals,
     publishedCourses,
     recentActivitiesRaw,
-    liveSessionsRunning,
+    liveSessionRows,
     notificationsRaw,
   ] = await Promise.all([
     prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }).catch(() => 0),
@@ -146,10 +154,10 @@ async function getDashboardCore(admin) {
         admin: { select: { fullName: true } },
       },
     }).catch(() => []),
-    // Active app-user sessions (proxy for "users currently online")
-    prisma.appUserSession.count({
-      where: { revokedAt: null, expiresAt: { gt: new Date() } },
-    }).catch(() => 0),
+    // Real live sessions — same status-synced query GET /live-sessions uses
+    // (LIVE_SESSIONS_CONTRACT.md). Was previously counting app-user LOGIN
+    // sessions, unrelated to actual live classes (fixed 2026-07-27).
+    listLiveSessions({}).catch(() => []),
     // Last 5 audit log entries for the notifications preview panel
     prisma.auditLog.findMany({
       take: 5,
@@ -157,6 +165,8 @@ async function getDashboardCore(admin) {
       select: { id: true, action: true, createdAt: true },
     }).catch(() => []),
   ]);
+
+  const liveSessionsRunning = liveSessionRows.filter((s) => s.status === "LIVE").length;
 
   return {
     welcome: {
@@ -177,7 +187,16 @@ async function getDashboardCore(admin) {
       totalRevenue:        0,  // Phase 2 — Finance table not yet built
       activeSubscriptions: 0,  // Phase 2 — Subscription table not yet built
       certificatesIssued:  0,  // Phase 2 — Certificate table not yet built
-      liveSessionsRunning,     // active app-user sessions
+      // Real LiveSession count (status LIVE). NOTE: this is a SEPARATE query
+      // from getDashboardAdminWidgets' activeCount below — both filter the
+      // same table via the same status-derivation logic, but core and
+      // admin-widgets are independent HTTP endpoints with no shared
+      // request-scoped cache, so the two numbers could theoretically differ
+      // by whatever a session's status changes in the gap between the two
+      // requests (a few ms). Same category of looseness the whole dashboard
+      // already has across its 3 independent endpoints — not something this
+      // fix introduced, and not worth a shared-cache layer to close.
+      liveSessionsRunning,
     },
 
     recentActivities:      mapAuditToActivity(recentActivitiesRaw),
@@ -231,6 +250,17 @@ async function getDashboardAnalytics(filters = {}) {
   const deptCond   = scope.department
     ? Prisma.sql`AND "department" = ${scope.department}`
     : Prisma.empty;
+  // Same department filter, joined-table form — course_enrollments has no
+  // department column of its own (that lives on the enrolled user).
+  const enrollDeptCond = scope.department
+    ? Prisma.sql`AND u."department" = ${scope.department}`
+    : Prisma.empty;
+
+  // Retention cohort: users old enough (30+ days) to meaningfully measure
+  // retention on. eligibleForRetention/retained share this exact where-clause
+  // shape (dept-scoped) so the ratio can't drift between two differently-
+  // filtered queries.
+  const retentionEligibleWhere = { createdAt: { lte: last30d }, status: { not: "ARCHIVED" }, ...deptScope };
 
   const [
     roleGroups,
@@ -242,6 +272,11 @@ async function getDashboardAnalytics(filters = {}) {
     activeLast7d,
     courseStatusGroups,
     rawDailyTrend,
+    rawEnrolledTrend,
+    rawCompletedTrend,
+    retentionEligibleCount,
+    retentionRetainedCount,
+    enrollmentsWithCourse,
   ] = await Promise.all([
     prisma.appUser.groupBy({ by: ["role"],              _count: { _all: true }, where: { status: { not: "ARCHIVED" }, ...scope } }),
     prisma.appUser.groupBy({ by: ["department"],        _count: { _all: true }, where: { department: { not: null }, ...scope } }),
@@ -259,6 +294,38 @@ async function getDashboardAnalytics(filters = {}) {
       GROUP BY DATE("lastActivityAt")
       ORDER BY date ASC
     `,
+    // Learning Activity Overview — real enrolled-vs-completed trend from the
+    // EXISTING course_enrollments table (was a hardcoded [] "Phase 2" stub;
+    // Course + Enrollment are both real now, fixed 2026-07-27).
+    prisma.$queryRaw`
+      SELECT DATE(ce."createdAt") AS date, COUNT(*)::int AS count
+      FROM "course_enrollments" ce
+      JOIN "app_users" u ON u.id = ce."userId"
+      WHERE ce."createdAt" >= ${trendStart} AND ce."createdAt" <= ${trendEnd} ${enrollDeptCond}
+      GROUP BY DATE(ce."createdAt")
+      ORDER BY date ASC
+    `.catch(() => []),
+    prisma.$queryRaw`
+      SELECT DATE(ce."completedAt") AS date, COUNT(*)::int AS count
+      FROM "course_enrollments" ce
+      JOIN "app_users" u ON u.id = ce."userId"
+      WHERE ce."completedAt" IS NOT NULL
+        AND ce."completedAt" >= ${trendStart} AND ce."completedAt" <= ${trendEnd} ${enrollDeptCond}
+      GROUP BY DATE(ce."completedAt")
+      ORDER BY date ASC
+    `.catch(() => []),
+    // Retention rate = % of the 30+ day-old cohort still active in the last
+    // 30 days. Defined here explicitly since "retention" has no single
+    // industry-standard definition — this is the one this dashboard uses.
+    prisma.appUser.count({ where: retentionEligibleWhere }).catch(() => 0),
+    prisma.appUser.count({ where: { ...retentionEligibleWhere, lastActivityAt: { gte: last30d } } }).catch(() => 0),
+    // Drives Course Analytics' averageCompletionRate/mostPopularCourse AND
+    // Course Completion's averageCompletion/categories from ONE real query —
+    // same "one datum, one owner" principle as elsewhere on this dashboard,
+    // so the two widgets can never show two different numbers for the same thing.
+    prisma.courseEnrollment.findMany({
+      select: { status: true, courseId: true, course: { select: { title: true, category: true } } },
+    }).catch(() => []),
   ]);
 
   const totalUsers     = statusGroups.filter((g) => g.status !== "ARCHIVED").reduce((s, g) => s + g._count._all, 0);
@@ -307,14 +374,63 @@ async function getDashboardAnalytics(filters = {}) {
   const dailyTrend = Object.entries(activityMap).map(([date, count]) => ({ date, count }));
   const userActivity = { activeToday, activeThisWeek: activeLast7d, dailyTrend };
 
+  // Learning Activity Overview — same dense-day-fill approach as dailyTrend
+  // above, merging two real counts (enrolled / completed per day) from
+  // course_enrollments.createdAt / .completedAt.
+  const enrolledMap = {};
+  const completedMap = {};
+  for (const day of enumerateUtcDays(trendStart, trendEnd)) { enrolledMap[day] = 0; completedMap[day] = 0; }
+  for (const row of rawEnrolledTrend) {
+    const key = row.date instanceof Date ? row.date.toISOString().slice(0, 10) : String(row.date).slice(0, 10);
+    if (key in enrolledMap) enrolledMap[key] = Number(row.count);
+  }
+  for (const row of rawCompletedTrend) {
+    const key = row.date instanceof Date ? row.date.toISOString().slice(0, 10) : String(row.date).slice(0, 10);
+    if (key in completedMap) completedMap[key] = Number(row.count);
+  }
+  const learningActivity = Object.keys(enrolledMap).map((date) => ({
+    date, enrolled: enrolledMap[date], completed: completedMap[date],
+  }));
+
+  // Retention rate — null (not 0) when the cohort doesn't exist yet to measure.
+  const retentionRate = retentionEligibleCount > 0
+    ? Math.round((retentionRetainedCount / retentionEligibleCount) * 1000) / 10
+    : null;
+
+  // Course Analytics + Course Completion — both derived from the SAME
+  // enrollmentsWithCourse rows fetched above (single source, can't drift).
+  const totalEnrollments     = enrollmentsWithCourse.length;
+  const completedEnrollments = enrollmentsWithCourse.filter((e) => e.status === "COMPLETED").length;
+  const averageCompletionRate = totalEnrollments > 0
+    ? Math.round((completedEnrollments / totalEnrollments) * 1000) / 10
+    : null;
+
+  const courseEnrollCounts = {}; // courseId -> { count, title }
+  const categoryStats = {};      // category -> { total, completed }
+  for (const e of enrollmentsWithCourse) {
+    if (e.courseId) {
+      const c = courseEnrollCounts[e.courseId] ??= { count: 0, title: e.course?.title ?? null };
+      c.count += 1;
+    }
+    const cat = e.course?.category ?? "Uncategorized";
+    const s = categoryStats[cat] ??= { total: 0, completed: 0 };
+    s.total += 1;
+    if (e.status === "COMPLETED") s.completed += 1;
+  }
+  const mostPopularCourse = Object.values(courseEnrollCounts)
+    .sort((a, b) => b.count - a.count)[0]?.title ?? null;
+  const completionCategories = Object.entries(categoryStats)
+    .map(([name, s]) => ({ name, completionRate: Math.round((s.completed / s.total) * 100) }))
+    .sort((a, b) => b.completionRate - a.completionRate)
+    .slice(0, 6);
+
   return {
     filters: {
       dateFrom:     filters.dateFrom     || null,
       dateTo:       filters.dateTo       || null,
       departmentId: filters.departmentId || null,
     },
-    // learningActivity: [] — Requires Course + Enrollment schema (Phase 2 — Learning Mgmt module)
-    learningActivity: [],
+    learningActivity,
     usersByRole,
     usersByDepartment,
     userActivity,
@@ -332,22 +448,24 @@ async function getDashboardAnalytics(filters = {}) {
     userAnalytics: {
       newRegistrations: thisMonthCount,
       activeUsers,
-      retentionRate:    0,
+      retentionRate,
       verifiedUsers:    verifiedCount,
       suspendedUsers,
     },
-    // Course counts are live (R3/B1) so the submit/approve invalidations on
-    // ['dashboard','course-analytics'] actually move these KPIs. The remaining
-    // fields stay stubs until quiz/completion tracking exists.
+    // Course counts + completion + most-popular are all live now (Enrollment
+    // is real — fixed 2026-07-27). averageQuizScore stays null: no
+    // quiz-attempt/submission system exists anywhere in this schema, so
+    // there is genuinely nothing to compute it from (not a "coming soon"
+    // stub on THIS data — a wholly separate, unbuilt system).
     courseAnalytics: {
       totalCourses:           courseCountByStatus.DRAFT + courseCountByStatus.PENDING + courseCountByStatus.PUBLISHED,
       activeCourses:          courseCountByStatus.PUBLISHED,
       pendingApprovalCourses: courseCountByStatus.PENDING,
-      averageCompletionRate:  0,
-      mostPopularCourse:      null,
-      averageQuizScore:       0,
+      averageCompletionRate,
+      mostPopularCourse,
+      averageQuizScore:       null,
     },
-    courseCompletion: { averageCompletion: 0, categories: [] },
+    courseCompletion: { averageCompletion: averageCompletionRate, categories: completionCategories },
     instructorPerformance: {
       averageRating: 0, averageCompletionRate: 0, averageAttendanceRate: 0, averageReviewScore: 0,
     },
@@ -364,16 +482,79 @@ async function getDashboardAnalytics(filters = {}) {
 async function getDashboardAdminWidgets(query = {}) {
   const scope     = buildUserScope(query);
   const deptScope = scope.department ? { department: scope.department } : {};
+  // Single where-clause shared by BOTH the badge count and the item list below
+  // — the same object, not a re-typed copy, so the two can never drift apart
+  // again the way total/items did before this fix.
+  const pendingApprovalWhere = { ...PENDING_APPROVAL_WHERE, ...deptScope };
 
-  const [pendingApprovalCount, activeUserSessions] = await Promise.all([
-    prisma.appUser
-      .count({ where: { ...PENDING_APPROVAL_WHERE, ...deptScope } })
-      .catch(() => 0),
-    // Count active app-user sessions as a proxy for "users currently online"
-    prisma.appUserSession
-      .count({ where: { revokedAt: null, expiresAt: { gt: new Date() } } })
-      .catch(() => 0),
+  const [pendingApprovalCount, pendingApprovalRows, liveSessionRows] = await Promise.all([
+    prisma.appUser.count({ where: pendingApprovalWhere }).catch(() => 0),
+    prisma.appUser.findMany({
+      where: pendingApprovalWhere,
+      orderBy: { createdAt: "asc" }, // longest-waiting first
+      take: 10,
+      select: { id: true, fullName: true, createdAt: true },
+    }).catch(() => []),
+    // Real live sessions (LIVE_SESSIONS_CONTRACT.md) — was previously counting
+    // app-user LOGIN sessions, unrelated to actual live classes (fixed 2026-07-27).
+    listLiveSessions({}).catch(() => []),
   ]);
+
+  // Priority is a real, derived signal (how long the request has been
+  // waiting), not an invented field — there is no separate priority system.
+  function pendingApprovalPriority(createdAt) {
+    const days = (Date.now() - new Date(createdAt).getTime()) / 86_400_000;
+    if (days >= 14) return "urgent";
+    if (days >= 7)  return "high";
+    if (days >= 2)  return "medium";
+    return "low";
+  }
+
+  const pendingApprovalItems = pendingApprovalRows.map((u) => ({
+    id:          u.id,
+    type:        "user_verification",
+    title:       `${u.fullName} — account verification`,
+    submittedBy: u.fullName,
+    submittedAt: u.createdAt.toISOString(),
+    priority:    pendingApprovalPriority(u.createdAt),
+  }));
+
+  // activeCount/upcomingCount/items all derive from the SAME synced rows —
+  // no separate counts that could drift from what's actually listed.
+  const activeCount   = liveSessionRows.filter((s) => s.status === "LIVE").length;
+  const upcomingCount = liveSessionRows.filter((s) => s.status === "UPCOMING").length;
+  const liveSessionItems = liveSessionRows
+    .filter((s) => s.status === "LIVE" || s.status === "UPCOMING")
+    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+    .slice(0, 5)
+    .map((s) => ({
+      id:              s.id,
+      title:           s.title,
+      instructorName:  s.instructorName ?? "Unassigned",
+      status:          LIVE_SESSION_STATUS_MAP[s.status] ?? "upcoming",
+      startsAt:        s.startTime,
+      // No attendance-tracking system exists yet (classroom features are
+      // [phase-later] per the blueprint) — null, not a fake 0. The frontend
+      // must render this as "not tracked", never as "0 attendees".
+      attendanceCount: null,
+    }));
+
+  // Calendar & Events — real upcoming/live sessions at minimum (course
+  // deadlines and other event types have no backend source yet, so they
+  // simply don't appear — partial real data, never a fabricated entry).
+  // Reuses the SAME liveSessionRows as the widget above (no extra query,
+  // and the two can't show inconsistent session lists).
+  const calendarEvents = liveSessionRows
+    .filter((s) => s.status === "LIVE" || s.status === "UPCOMING")
+    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
+    .slice(0, 10)
+    .map((s) => ({
+      id:       s.id,
+      title:    s.title,
+      type:     "live_session",
+      startsAt: s.startTime,
+      endsAt:   new Date(new Date(s.startTime).getTime() + s.durationMin * 60_000).toISOString(),
+    }));
 
   return {
     filters: {
@@ -385,19 +566,21 @@ async function getDashboardAdminWidgets(query = {}) {
 
     pendingApprovals: {
       total: pendingApprovalCount,
-      items: [],
+      items: pendingApprovalItems,
     },
 
     liveSessions: {
-      activeCount:          activeUserSessions,  // active app-user sessions
-      upcomingCount:        0,  // Phase 2 — Live session scheduling
-      technicalIssuesCount: 0,  // Phase 2 — Live session monitoring
-      items:                [],
+      activeCount,
+      upcomingCount,
+      // No technical-issue monitoring system exists — null (not tracked),
+      // never a fake 0 that would imply "confirmed zero issues".
+      technicalIssuesCount: null,
+      items: liveSessionItems,
     },
 
     tasksAndReminders:  [],
     recentTransactions: [],
-    calendarEvents:     [],
+    calendarEvents,
 
     reportsSnapshot: {
       availableReports: [],

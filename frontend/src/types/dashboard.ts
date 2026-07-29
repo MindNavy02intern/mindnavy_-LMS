@@ -130,7 +130,9 @@ export interface RevenueOverview {
 export interface UserAnalytics {
   newRegistrations: number;
   activeUsers:      number;
-  retentionRate:    number;
+  // null = fewer than 30-day-old-cohort users exist to measure yet — not a
+  // real 0% retention. See dashboard.service.js for the exact definition.
+  retentionRate:    number | null;
   verifiedUsers:    number;
   suspendedUsers:   number;
 }
@@ -139,9 +141,12 @@ export interface CourseAnalytics {
   totalCourses:            number;
   activeCourses:           number;
   pendingApprovalCourses:  number;
-  averageCompletionRate:   number;
+  // null = no enrollments exist yet to measure completion from.
+  averageCompletionRate:   number | null;
   mostPopularCourse:       string | null;
-  averageQuizScore:        number;
+  // null = no quiz-attempt/submission system exists yet (not a stub that
+  // will fill in soon from THIS table — a different, unbuilt system entirely).
+  averageQuizScore:        number | null;
 }
 
 export interface CourseCompletionCategory {
@@ -150,7 +155,8 @@ export interface CourseCompletionCategory {
 }
 
 export interface CourseCompletion {
-  averageCompletion: number;
+  // null = no enrollments exist yet to measure completion from.
+  averageCompletion: number | null;
   categories:        CourseCompletionCategory[];
 }
 
@@ -256,13 +262,16 @@ export interface LiveSessionItem {
   instructorName:  string;
   status:          LiveSessionStatus;
   startsAt:        string;
-  attendanceCount: number;
+  // null = not tracked (no attendance system exists yet) — must render as
+  // "not tracked", never as a fake 0.
+  attendanceCount: number | null;
 }
 
 export interface LiveSessions {
   activeCount:          number;
   upcomingCount:        number;
-  technicalIssuesCount: number;
+  // null = not tracked (no monitoring system exists yet).
+  technicalIssuesCount: number | null;
   items:                LiveSessionItem[];
 }
 

@@ -76,7 +76,7 @@ export type MutationName =
   | 'learningPath.item.add' | 'learningPath.item.remove' | 'learningPath.item.reorder'
   | 'quiz.create' | 'quiz.update' | 'quiz.delete'
   | 'question.create' | 'question.update' | 'question.delete' | 'question.reorder'
-  | 'liveSession.create' | 'liveSession.update' | 'liveSession.delete'
+  | 'liveSession.create' | 'liveSession.update' | 'liveSession.delete' | 'liveSession.end'
   | 'content.confirm' | 'content.update' | 'content.delete'
   // §5.4 Course Builder (sections & lessons)
   | 'section.create' | 'section.update' | 'section.delete'
@@ -486,6 +486,14 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.learningPaths(),
   ],
   'liveSession.delete': () => [
+    queryKeys.liveSessions(),
+    queryKeys.calendar(),
+    queryKeys.dashboard.liveOverview(),
+    queryKeys.learningPaths(),
+  ],
+  // Manual admin "End Session" override (2026-07-29 — new v2 action, not part
+  // of the original v1 contract) — same full row as create/update/delete.
+  'liveSession.end': () => [
     queryKeys.liveSessions(),
     queryKeys.calendar(),
     queryKeys.dashboard.liveOverview(),

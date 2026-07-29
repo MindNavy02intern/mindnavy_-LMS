@@ -27,6 +27,9 @@ export interface LiveSession {
   joinUrl:         string | null;       // participant link
   startUrl:        string | null;       // HOST link — admin-only, never learner-facing
   status:          LiveSessionStatus;   // server-derived, read-only
+  // Set only via PATCH /:id/end (admin manual "End Session" override) — null
+  // for sessions that reached ENDED purely by their schedule passing.
+  endedAt:         string | null;
   createdAt:       string;
   updatedAt:       string;
 }

@@ -37,7 +37,7 @@ const SESSION_SELECT = {
   courseId: true, instructorId: true,
   startTime: true, durationMin: true, timezone: true, maxParticipants: true,
   provider: true, zoomMeetingId: true, joinUrl: true, startUrl: true,
-  status: true, createdAt: true, updatedAt: true,
+  status: true, endedAt: true, createdAt: true, updatedAt: true,
   course: { select: { title: true } },
   instructor: { select: { fullName: true } },
 };
@@ -62,12 +62,18 @@ function mapSession(s) {
     joinUrl:         s.joinUrl ?? null,
     startUrl:        s.startUrl ?? null,
     status:          s.status,
+    endedAt:         iso(s.endedAt),
     createdAt:       iso(s.createdAt),
     updatedAt:       iso(s.updatedAt),
   };
 }
 
-function deriveStatus(startTime, durationMin, now = Date.now()) {
+// endedAt (admin manual end, PATCH /:id/end) wins over the schedule
+// unconditionally — once set, a session is ENDED regardless of what
+// startTime+durationMin says. This is the ONLY manual override; there is
+// still no way to set UPCOMING/LIVE manually.
+function deriveStatus(startTime, durationMin, endedAt, now = Date.now()) {
+  if (endedAt) return "ENDED";
   const start = new Date(startTime).getTime();
   const end = start + durationMin * 60 * 1000;
   if (now >= end) return "ENDED";
@@ -187,7 +193,7 @@ async function createSession(data, adminId) {
         zoomMeetingId:   meeting.meetingId,
         joinUrl:         meeting.joinUrl,
         startUrl:        meeting.startUrl,
-        status:          deriveStatus(data.startTime, data.durationMin),
+        status:          deriveStatus(data.startTime, data.durationMin, null),
       },
       select: SESSION_SELECT,
     });
@@ -222,12 +228,15 @@ async function updateSession(id, data, adminId) {
     });
   }
 
-  // Keep the stored status truthful against the (possibly new) schedule.
+  // Keep the stored status truthful against the (possibly new) schedule —
+  // but if this session was already manually ended (endedAt set), editing
+  // its schedule must NOT revive it back to UPCOMING/LIVE. deriveStatus()
+  // checks current.endedAt first, same as every other status computation.
   const startTime = data.startTime ?? current.startTime;
   const durationMin = data.durationMin ?? current.durationMin;
   const session = await prisma.liveSession.update({
     where: { id },
-    data: { ...data, status: deriveStatus(startTime, durationMin) },
+    data: { ...data, status: deriveStatus(startTime, durationMin, current.endedAt) },
     select: SESSION_SELECT,
   });
 
@@ -253,10 +262,32 @@ async function deleteSession(id, adminId) {
   return { id };
 }
 
+// Manual admin override — end a LIVE (or UPCOMING) session early, ahead of
+// its scheduled startTime+durationMin window. DB-only: does NOT call Zoom to
+// force-end the real meeting (v1 scope, matches what was asked — the Zoom
+// call itself is going through the same meeting:update scope that's
+// currently broken on this account anyway; add it as a follow-up once that's
+// resolved, via meetings.updateMeeting-style best-effort call here).
+async function endSession(id, adminId) {
+  await syncStatuses(); // truthful current status before deciding "already ended"
+  const current = await getSessionOrThrow(id);
+  if (current.status === "ENDED") throw domainError("ALREADY_ENDED");
+
+  const session = await prisma.liveSession.update({
+    where: { id },
+    data: { endedAt: new Date(), status: "ENDED" },
+    select: SESSION_SELECT,
+  });
+
+  await auditLog(adminId, "LIVE_SESSION_MANUALLY_ENDED", { sessionId: id });
+  return mapSession(session);
+}
+
 module.exports = {
   listSessions,
   getSession,
   createSession,
   updateSession,
   deleteSession,
+  endSession,
 };

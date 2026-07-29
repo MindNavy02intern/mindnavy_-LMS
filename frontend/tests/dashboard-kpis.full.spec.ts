@@ -48,7 +48,7 @@ test('Dashboard KPI cards with live backend data show numeric values', async ({ 
     'Active Learners',     // prisma.appUser.count(role:LEARNER, status:ACTIVE)
     'Active Instructors',  // prisma.appUser.count(role:INSTRUCTOR, status:ACTIVE)
     'Pending Approvals',   // prisma.appUser.count(verificationState:PENDING)
-    'Live Sessions',       // prisma.appUserSession.count(active, not expired)
+    'Live Sessions',       // real LiveSession rows with status LIVE (fixed 2026-07-27 — was app-login sessions)
   ]
 
   for (const label of liveDataLabels) {

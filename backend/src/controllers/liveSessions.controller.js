@@ -21,6 +21,7 @@ function handleDomainError(res, err) {
     case "LIVE_SESSION_NOT_FOUND": return notFound(res, "Live session not found.");
     case "COURSE_NOT_FOUND":       return badRequest(res, "Referenced course does not exist.");
     case "INSTRUCTOR_NOT_FOUND":   return badRequest(res, "instructorId must be an existing, non-archived INSTRUCTOR user.");
+    case "ALREADY_ENDED":          return badRequest(res, "This session has already ended.");
     case "MEETINGS_NOT_CONFIGURED":
       return res.status(503).json({
         success: false,
@@ -92,10 +93,18 @@ const deleteSession = run(async (req, res) => {
   return res.json({ success: true, message: "Live session canceled.", data: result });
 });
 
+const endSession = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "sessionId");
+  if (idErr) return badRequest(res, idErr);
+  const session = await svc.endSession(req.params.id, req.admin?.id);
+  return res.json({ success: true, message: "Live session ended.", data: session });
+});
+
 module.exports = {
   listSessions,
   getSession,
   createSession,
   updateSession,
   deleteSession,
+  endSession,
 };
