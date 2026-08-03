@@ -39,6 +39,10 @@ model AppUser {
   leadingGroups      Group[]                  @relation("GroupLeader")
   managedTeams       Team[]                   @relation("TeamLeader")
   roleAssignments    UserRoleAssignment[]
+  // Optional instructor-specific fields (instructors.prisma). Null for every
+  // non-instructor AND for instructors created before the Instructors module —
+  // reads must left-join it, never filter on its existence.
+  instructorProfile  InstructorProfile?
 
   @@index([branchId])
   @@index([departmentId])

@@ -30,6 +30,9 @@ const uploadsRoutes      = require("./src/routes/uploads.routes");
 const liveSessionsRoutes = require("./src/routes/liveSessions.routes");
 const enrollmentsRoutes  = require("./src/routes/enrollments.routes");
 const contentRoutes      = require("./src/routes/content.routes");
+const instructorsRoutes  = require("./src/routes/instructors.routes");
+const instructorApplicationsRoutes = require("./src/routes/instructorApplications.routes");
+const publicInstructorApplicationsRoutes = require("./src/routes/publicInstructorApplications.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -83,9 +86,12 @@ app.use("/api/admin/quizzes", quizzesRoutes);
 app.use("/api/admin/certificate-templates", certificateTemplatesRoutes);
 app.use("/api/admin/certificates", certificatesRoutes);
 
-// Public QR verification — the ONLY unauthenticated API surface, by design
-// (phones scanning certificate QR codes). Own per-IP rate limiter inside.
+// Unauthenticated API surfaces — exactly two, both deliberate, each with its own
+// per-IP rate limiter and a minimal response that leaks nothing:
+//   • certificate verification (phones scanning QR codes) — read only
+//   • the public "Become Instructor" form — write only, no read counterpart
 app.use("/api/public/certificates", publicCertificatesRoutes);
+app.use("/api/public/instructor-applications", publicInstructorApplicationsRoutes);
 
 // File uploads (sign → confirm → delete) for thumbnails (Phase 1).
 app.use("/api/admin/uploads", uploadsRoutes);
@@ -98,6 +104,11 @@ app.use("/api/admin/enrollments", enrollmentsRoutes);
 
 // Content Library (searchable media repository — sign/confirm uploads + metadata).
 app.use("/api/admin/content", contentRoutes);
+
+// Instructors (AppUser role=INSTRUCTOR + profile side table) and the
+// "Become Instructor" review queue.
+app.use("/api/admin/instructors", instructorsRoutes);
+app.use("/api/admin/instructor-applications", instructorApplicationsRoutes);
 
 // User management routes
 app.use("/api/admin/users", usersRoutes);

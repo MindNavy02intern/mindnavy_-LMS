@@ -1,0 +1,100 @@
+// Instructors v1 — EXTENDS AppUser, never replaces it.
+//
+// An instructor already IS an `AppUser` with role = INSTRUCTOR, and four live
+// surfaces depend on that today:
+//   • Course.instructorId       → FK to app_users   (learning.prisma)
+//   • LiveSession.instructorId  → FK to app_users   (learning.prisma)
+//   • "Active Instructors" KPI  → counts app_users  (dashboard.service)
+//   • LM instructor dropdown    → reads app_users   (lm.service filter-options)
+// A parallel `instructors` table would fork all four (IMPACT_MAP B2 — same
+// reasoning as Certificate / CourseContent / LiveSession, which were all
+// EXTENDED in place rather than duplicated).
+//
+// So this file adds ONE optional side table holding only instructor-specific
+// fields. Identity, status and verificationState stay owned by AppUser and are
+// written exclusively through users.service — instructors.service delegates.
+//
+// The profile row is OPTIONAL on purpose: every INSTRUCTOR that existed before
+// this feature (and every one created through POST /api/admin/users) has no
+// profile, and MUST still appear in the Instructors table. Reads left-join it.
+model InstructorProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  specialization  String?
+  headline        String?
+  bio             String?
+  yearsExperience Int?
+  websiteUrl      String?
+  linkedinUrl     String?
+
+  // Revenue share in BASIS POINTS (1250 = 12.50%) — integer, same reasoning as
+  // Course.price being cents: no floating-point money. Stored now, consumed
+  // when the Finance module exists. Nothing reads it in v1.
+  revenueShareBps Int?
+
+  // Stamped by PATCH /instructors/:id/verify alongside the AppUser
+  // verificationState flip (which remains the single source of truth for
+  // "is this instructor verified" — this is provenance, not state).
+  verifiedAt   DateTime?
+  verifiedById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user AppUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([specialization])
+  @@map("instructor_profiles")
+}
+
+// Public "Become Instructor" queue (blueprint 05 §3). Submissions arrive on the
+// unauthenticated POST /api/public/instructor-applications; admins review them
+// under /api/admin/instructor-applications.
+//
+// `email` is deliberately NOT unique: a rejected applicant may reapply, and an
+// approved one keeps their historical row. "One OPEN application per email" is
+// enforced in the service (same app-side pattern as invitations.service).
+//
+// `createdUserId` is set when an application is approved and is UNIQUE, so a
+// concurrent double-approve loses at the database level (P2002 → 409) and can
+// never mint two accounts from one application.
+model InstructorApplication {
+  id              String   @id @default(uuid())
+  fullName        String
+  email           String
+  phone           String?
+  headline        String?
+  bio             String?
+  specialization  String?
+  skills          String[] @default([])
+  yearsExperience Int?
+
+  // v1 accepts LINKS ONLY (validated http/https). File upload would require an
+  // unauthenticated storage surface; the admin uploads flow stays admin-only.
+  cvUrl        String?
+  portfolioUrl String?
+
+  status          InstructorApplicationStatus @default(PENDING)
+  reviewNotes     String?
+  rejectionReason String?
+  changeRequest   String?
+  reviewedById    String?
+  reviewedAt      DateTime?
+  createdUserId   String?   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([email])
+  @@index([createdAt])
+  @@map("instructor_applications")
+}
+
+enum InstructorApplicationStatus {
+  PENDING
+  CHANGES_REQUESTED
+  APPROVED
+  REJECTED
+}

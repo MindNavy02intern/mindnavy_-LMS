@@ -30,6 +30,8 @@ const TEST_EMAIL_PREFIXES = [
   'groupmember.',
   'assignee.',
   'tempassignee.',
+  // Node smoke-test scripts (src/scripts/*SmokeTest.js) use this prefix.
+  'smoke.',
 ]
 
 // Course title prefixes used exclusively by test helpers.
@@ -102,12 +104,24 @@ async function main() {
       name: { startsWith: p },
     })),
   }
-  const testRoles = await prisma.lmsRole.findMany({
-    where: roleWhere,
-    select: { id: true, name: true, createdAt: true },
-    orderBy: { createdAt: 'asc' },
-  }).catch(() => [])  // model name may differ — non-fatal
+  // NOTE: `prisma.lmsRole` does not exist — the model is `Role` (roles.prisma).
+  // The old `.catch(() => [])` could not save this: reading `.findMany` off
+  // `undefined` throws synchronously, so the whole script crashed here and
+  // never reached the sections below. Guarded properly now. Deliberately NOT
+  // repointed at `prisma.role`: that would start deleting rows this script has
+  // never touched. Decide that separately — see the note printed below.
+  const roleDelegate = prisma.lmsRole ?? null
+  const testRoles = roleDelegate
+    ? await roleDelegate.findMany({
+        where: roleWhere,
+        select: { id: true, name: true, createdAt: true },
+        orderBy: { createdAt: 'asc' },
+      }).catch(() => [])
+    : []
   console.log(`\nRoles  matching test patterns: ${testRoles.length}`)
+  if (!roleDelegate) {
+    console.log('  (skipped: no `lmsRole` model — the real model is `Role`. Role cleanup has never run.)')
+  }
 
   // ── Groups ─────────────────────────────────────────────────────────────────
   const groupWhere = {
@@ -122,8 +136,25 @@ async function main() {
   }).catch(() => [])
   console.log(`Groups matching test patterns: ${testGroups.length}`)
 
+  // ── Instructor applications ────────────────────────────────────────────────
+  // These have NO foreign key to app_users (createdUserId is a plain column),
+  // so deleting the test users does NOT remove them — they would sit in the
+  // admin Applications queue forever. InstructorProfile needs no entry here:
+  // it cascades with its AppUser.
+  const applicationWhere = {
+    OR: TEST_EMAIL_PREFIXES.map(p => ({
+      email: { startsWith: p },
+    })),
+  }
+  const testApplications = await prisma.instructorApplication.findMany({
+    where: applicationWhere,
+    select: { id: true, email: true, status: true, createdAt: true },
+    orderBy: { createdAt: 'asc' },
+  }).catch(() => [])
+  console.log(`Instructor applications matching test patterns: ${testApplications.length}`)
+
   if (DRY_RUN) {
-    const total = testUsers.length + testCourses.length + testRoles.length + testGroups.length
+    const total = testUsers.length + testCourses.length + testRoles.length + testGroups.length + testApplications.length
     console.log(`\nTotal test-pattern records found: ${total}`)
     console.log('Run with --delete to remove them.')
     await prisma.$disconnect()
@@ -139,10 +170,11 @@ async function main() {
     console.log(`\nDeleted ${count} courses.`)
   }
 
-  // Roles.
-  if (testRoles.length > 0) {
+  // Roles. Unreachable while `lmsRole` doesn't exist (testRoles is []) — kept
+  // guarded so it can't crash the run the way the read above used to.
+  if (roleDelegate && testRoles.length > 0) {
     for (const r of testRoles) {
-      await prisma.lmsRole.delete({ where: { id: r.id } }).catch(e => {
+      await roleDelegate.delete({ where: { id: r.id } }).catch(e => {
         console.warn(`  Role ${r.id} delete skipped: ${e.message}`)
       })
     }
@@ -157,6 +189,14 @@ async function main() {
       })
     }
     console.log(`Deleted ${testGroups.length} groups (best-effort).`)
+  }
+
+  // Instructor applications (no FK to app_users — must be deleted explicitly).
+  if (testApplications.length > 0) {
+    const { count } = await prisma.instructorApplication.deleteMany({
+      where: { id: { in: testApplications.map(a => a.id) } },
+    })
+    console.log(`Deleted ${count} instructor applications.`)
   }
 
   // Users: soft-archive first (clears FK constraints), then hard-delete.
@@ -185,6 +225,11 @@ async function main() {
     }).catch(() => null)
     // Course instructorId → NULL (RESTRICT FK on Course).
     await prisma.course.updateMany({
+      where: { instructorId: { in: userIds } },
+      data: { instructorId: null },
+    }).catch(() => null)
+    // Same for live sessions hosted by these users.
+    await prisma.liveSession.updateMany({
       where: { instructorId: { in: userIds } },
       data: { instructorId: null },
     }).catch(() => null)

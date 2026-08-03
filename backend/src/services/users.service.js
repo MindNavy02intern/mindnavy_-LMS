@@ -1312,6 +1312,11 @@ async function forceLogoutUser(userId, body, admin = {}) {
 }
 
 module.exports = {
+  // Exported so other modules that surface the SAME AppUser rows (Instructors)
+  // render status/verification identically instead of re-declaring the maps
+  // and drifting from this one.
+  STATUS_MAP,
+  VERIFICATION_MAP,
   getUsersList,
   exportUsers,
   getUserDetails,

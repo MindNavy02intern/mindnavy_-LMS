@@ -225,4 +225,19 @@ enum AuditAction {
   CONTENT_CREATED
   CONTENT_UPDATED
   CONTENT_DELETED
+  // Was already written by liveSessions.service PATCH /:id/end but missing from
+  // this enum, so every manual-end audit write failed silently in its catch
+  // (same class as the LEARNING_PATH_* bug).
+  LIVE_SESSION_MANUALLY_ENDED
+  // Instructors module. Suspend / reactivate / verify are NOT here on purpose:
+  // they delegate to users.service, which already logs USER_SUSPENDED /
+  // USER_REACTIVATED / USER_VERIFICATION_APPROVED against the same row. One
+  // action, one audit entry — a second row would double the activity feed.
+  INSTRUCTOR_CREATED
+  INSTRUCTOR_PROFILE_UPDATED
+  INSTRUCTOR_DELETED
+  INSTRUCTOR_APPLICATION_SUBMITTED
+  INSTRUCTOR_APPLICATION_APPROVED
+  INSTRUCTOR_APPLICATION_REJECTED
+  INSTRUCTOR_APPLICATION_CHANGES_REQUESTED
 }

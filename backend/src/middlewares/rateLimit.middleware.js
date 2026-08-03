@@ -81,6 +81,22 @@ const publicVerifyRateLimiter = rateLimit({
   },
 });
 
+// Public "Become Instructor" submissions — the second unauthenticated surface
+// after certificate verification, and the only one that WRITES. A real person
+// applies once; 5 per hour per IP leaves room for a retry after a validation
+// error while making queue-flooding pointless. Paired with a honeypot field and
+// a links-only payload (no file upload) in the applications validator.
+const publicInstructorApplicationRateLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many applications submitted. Please try again later.",
+  },
+});
+
 // Import limiter — 5 imports per admin/IP per 10 minutes to prevent abuse
 const adminUsersImportRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -101,4 +117,5 @@ module.exports = {
   coursesReadRateLimiter,
   otpRequestRateLimiter,
   publicVerifyRateLimiter,
+  publicInstructorApplicationRateLimiter,
 };

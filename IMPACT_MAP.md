@@ -124,6 +124,23 @@ All keys are created via `src/lib/queryKeys.ts` (factory). Never write key array
 
 **Consequence:** creating/renaming/deleting any of these entities automatically fixes every dropdown, because the dropdown shares the entity's query key. If a dropdown ever looks stale after a mutation, the mutation is missing an invalidation — fix it in §5, not in the dropdown.
 
+> **Instructor dropdown — one owner:** it is served by `GET /api/admin/lm/filter-options` (`{ id, name }`, non-archived INSTRUCTORs), **not** by `GET /api/admin/instructors`. The instructors list is a paginated table with aggregates; using it to fill a `<select>` would page-truncate the options. Both read the same `app_users` rows, so they cannot disagree about who exists — invalidating `['instructors']` must therefore also refresh the LM filter-options consumer.
+
+### 4c. Instructors module surfaces (blueprint 05 — backend built 2026-08-03)
+
+| Surface | Query key | Endpoint | Derived from (source tables) |
+|---|---|---|---|
+| Instructors table (All / Active / Inactive / Suspended / Top Performers tabs) | `['instructors', filters]` | `GET /api/admin/instructors` | app_users, instructor_profiles, courses, course_enrollments |
+| Tab badge counts (incl. Pending) | same response — `tabCounts` | same call | app_users, instructor_applications |
+| 6 stats cards | `['instructors', 'stats']` † | `GET /api/admin/instructors/stats` | app_users, instructor_applications, courses |
+| Instructor profile page | `['instructors', id]` | `GET /api/admin/instructors/:id` | + live_sessions |
+| Applications queue (Pending tab) | `['instructor-applications']` | `GET /api/admin/instructor-applications` | instructor_applications |
+| Earnings / Reviews / Documents tabs | `['instructors', id, 'earnings' \| 'reviews' \| 'documents']` | *(no endpoint — no Finance/Review/Document model exists)* | — |
+
+† `queryKeys.instructors` has no `stats()` member yet — add it alongside the frontend work (task 106) rather than inventing an inline key array.
+
+**Rating and revenue have no source table.** `GET /instructors/stats` returns them as `{ value: null, available: false }` and every row's `rating` / `revenue` is `null`. Rule R4 still holds — the field has one owner, that owner just has nothing to read yet. Rendering `0` would invent data.
+
 ---
 
 ## 5. ENTITY IMPACT MATRICES
@@ -162,14 +179,25 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 
 ### 5.3 INSTRUCTOR (Instructors doc §1–§16)
 
+Backend v1 built 2026-08-03 — contract `INSTRUCTORS_CONTRACT.md`. An instructor
+IS an `AppUser` with `role = INSTRUCTOR` (+ an optional `InstructorProfile` side
+table), so every mutation below that touches status/verification also moves the
+Users surfaces — `['users']` is not optional on those rows.
+
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `instructorApplication.submit` (§3) | `['instructor-applications']` `['approvals']` `['tasks']` | Applications list · **Pending Approvals KPI + widget** · Tasks "Approve Instructors" |
+| `instructorApplication.submit` (§3 — public `POST /api/public/instructor-applications`) | `['instructor-applications']` `['approvals']` `['tasks']` | Applications list · Tasks "Approve Instructors" · **Pending Approvals KPI is NOT yet wired to this queue — open decision, see contract §Known gaps** |
 | `instructorApplication.approve` (§4) | `['instructor-applications']` `['instructors']` `['approvals']` `['users']` `['dashboard','user-analytics']` | **Active Instructors KPI** · Instructors table · Approvals drop · Instructor dropdown gains option (R2) |
 | `instructorApplication.reject` (§4) | `['instructor-applications']` `['approvals']` | Applications · Approvals |
-| `instructor.suspend` (§14) | `['instructors']` `['instructors', id]` `['courses']` (their courses may unpublish — confirm rule with Hassan) `['dashboard','instructor-performance']` | Instructors table · **Active Instructors KPI** · possibly Published Courses KPI |
-| `review.moderate` (§10) | `['instructors', id, 'reviews']` `['dashboard','instructor-performance']` | Reviews list · Ratings |
-| `payout.execute` (§9) → see 5.7 FINANCE | | |
+| `instructorApplication.requestChanges` (§4) | `['instructor-applications']` `['approvals']` | Application returns to the applicant; resubmission reopens the SAME row as PENDING |
+| `instructor.create` (§2 — `POST /api/admin/instructors`) | `['instructors']` `['users']` `['dashboard','user-analytics']` | Instructors table · Users table (same AppUser row) · Instructor dropdown gains option (R2) |
+| `instructor.update` (§5) | `['instructors']` `['instructors', id]` | Instructors table row · profile page |
+| `instructor.verify` (§5) | `['instructors']` `['instructors', id]` `['users']` | Verification badge here AND in the Users table (one AppUser field) |
+| `instructor.suspend` (§14 — delegates to users.service) | `['instructors']` `['instructors', id]` `['users']` `['courses']` (their courses do NOT unpublish in v1 — open decision) `['dashboard','instructor-performance']` | Instructors table · Users table status chip · **Active Instructors KPI** |
+| `instructor.reactivate` (§14) | `['instructors']` `['instructors', id]` `['users']` `['dashboard','user-analytics']` | Same surfaces, opposite direction |
+| `instructor.delete` (§2 — soft archive, 409 while they own courses/sessions) | `['instructors']` `['users']` `['courses']` `['dashboard','user-analytics']` | Row leaves the Instructors table · Users table shows ARCHIVED · Instructor dropdown loses option |
+| `review.moderate` (§10) | `['instructors', id, 'reviews']` `['dashboard','instructor-performance']` | Reviews list · Ratings — **no Review model exists yet; rating is null everywhere** |
+| `payout.execute` (§9) → see 5.7 FINANCE | | **no Payment model exists yet; revenue is null everywhere** |
 
 ### 5.4 COURSE / LEARNING (LMS doc §1–§18)
 
