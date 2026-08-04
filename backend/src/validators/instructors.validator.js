@@ -310,8 +310,11 @@ function validateListQuery(query = {}) {
     if (!SORTS.has(s)) errors.push(`sort must be one of: ${[...SORTS].join(", ")}.`);
     else data.sort = s;
   }
-  // The Top Performers tab IS a sort — keep the two in sync so ?tab=top alone works.
-  if (data.tab === "top" && query.sort === undefined) data.sort = "courses";
+  // The Top Performers tab IS a sort — keep the two in sync so ?tab=top alone
+  // works. Ranked by STUDENTS, which is the one canonical definition of "top"
+  // in this module: the same metric backs the `topInstructor` badge and the
+  // Top Instructors chart, so a badge can never contradict the list.
+  if (data.tab === "top" && query.sort === undefined) data.sort = "students";
 
   const search = readString(query.search, "search", MAX.search, errors);
   if (search) data.search = search;

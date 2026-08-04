@@ -126,9 +126,11 @@ async function submitCourse(id, adminId) {
   if (errors.length > 0) throw domainError("SUBMIT_CHECKS_FAILED", { errors });
 
   // Atomic transition: only fires if the course is still DRAFT right now.
+  // submittedAt is re-stamped on every submit (a resubmit after rejection
+  // restarts the wait), so "longest waiting first" queues stay honest.
   const { count } = await prisma.course.updateMany({
     where: { id, status: "DRAFT" },
-    data:  { status: "PENDING", rejectionReason: null },
+    data:  { status: "PENDING", rejectionReason: null, submittedAt: new Date() },
   });
   if (count === 0) throw domainError("STATE_CHANGED");
 

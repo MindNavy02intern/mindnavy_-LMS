@@ -85,6 +85,12 @@ const getStats = run(async (req, res) => {
   return res.json({ success: true, data: stats });
 });
 
+// Same ordering rule as /stats — "analytics" is not an instructor id.
+const getAnalytics = run(async (req, res) => {
+  const analytics = await svc.getAnalytics();
+  return res.json({ success: true, data: analytics });
+});
+
 const getInstructor = run(async (req, res) => {
   const idErr = validateId(req.params.id, "instructorId");
   if (idErr) return badRequest(res, idErr);
@@ -141,6 +147,7 @@ const deleteInstructor = run(async (req, res) => {
 module.exports = {
   listInstructors,
   getStats,
+  getAnalytics,
   getInstructor,
   createInstructor,
   updateInstructor,

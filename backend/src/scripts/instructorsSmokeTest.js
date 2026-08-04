@@ -85,6 +85,53 @@ async function main() {
   ok("avgRating null + available:false (never 0)",
     s.avgRating?.value === null && s.avgRating?.available === false, JSON.stringify(s.avgRating));
 
+  // ── 2b. Analytics (task 111) ──────────────────────────────────────────────────
+  console.log("\nGET /instructors/analytics");
+  const noAuthAnalytics = await req("GET", "/instructors/analytics", undefined, false);
+  ok("analytics without auth -> 401", noAuthAnalytics.status === 401, `got ${noAuthAnalytics.status}`);
+
+  const analytics = await req("GET", "/instructors/analytics");
+  const a = analytics.json?.data ?? {};
+  ok("analytics -> 200", analytics.status === 200, `got ${analytics.status}: ${analytics.json?.message}`);
+  ok("analytics is not a 404 from the /:id route", analytics.json?.message !== "Instructor not found.");
+
+  const dist = a.distributionBySpecialization?.items ?? [];
+  ok("distributionBySpecialization available", a.distributionBySpecialization?.available === true);
+  ok("distribution total equals the Total Instructors card (same population)",
+    dist.reduce((sum, i) => sum + i.count, 0) === s.totalInstructors?.value,
+    `${dist.reduce((sum, i) => sum + i.count, 0)} vs ${s.totalInstructors?.value}`);
+  ok("distribution percentages sum to 100.0",
+    dist.length === 0 || Math.abs(dist.reduce((sum, i) => sum + i.percentage, 0) - 100) < 0.05,
+    String(dist.reduce((sum, i) => sum + i.percentage, 0)));
+
+  const byStatus = a.coursesByStatus?.items ?? [];
+  ok("coursesByStatus available", a.coursesByStatus?.available === true);
+  ok("coursesByStatus excludes ARCHIVED (matches row coursesCount)",
+    byStatus.every((i) => i.status !== "ARCHIVED"), JSON.stringify(byStatus.map((i) => i.status)));
+  ok("coursesByStatus percentages sum to 100.0",
+    byStatus.length === 0 || Math.abs(byStatus.reduce((sum, i) => sum + i.percentage, 0) - 100) < 0.05);
+
+  const top = a.topInstructors?.items ?? [];
+  ok("topInstructors declares rankedBy", a.topInstructors?.rankedBy === "students");
+  ok("topInstructors is capped at the shared limit", top.length <= (a.topInstructors?.limit ?? 10));
+  ok("topInstructors ordered by students desc",
+    top.every((it, i, arr) => i === 0 || arr[i - 1].studentsCount >= it.studentsCount),
+    JSON.stringify(top.map((t) => t.studentsCount)));
+  ok("topInstructors rating/revenue null (never invented)",
+    top.every((it) => it.rating === null && it.revenue === null));
+
+  ok("earningsOverview unavailable with a reason (not a zeroed chart)",
+    a.earningsOverview?.available === false && typeof a.earningsOverview?.reason === "string"
+      && a.earningsOverview?.value === null,
+    JSON.stringify(a.earningsOverview));
+
+  // ?tab=top must agree with the chart — one definition of "top".
+  const topTab = await req("GET", "/instructors?tab=top&limit=10");
+  const topTabIds = (topTab.json?.data?.instructors ?? []).map((i) => i.id);
+  ok("?tab=top ranks by the SAME metric as topInstructors",
+    top.length === 0 || topTabIds[0] === top[0].id,
+    `tab=${topTabIds[0]} chart=${top[0]?.id}`);
+
   // ── 3. List + tabs + filters ──────────────────────────────────────────────────
   console.log("\nGET /instructors");
   const list0 = await req("GET", "/instructors");
@@ -152,9 +199,32 @@ async function main() {
   ok("duplicate email -> 409 (not 500)", dupe.status === 409, `got ${dupe.status}`);
 
   const detail = await req("GET", `/instructors/${inst.id}`);
-  ok("detail -> 200", detail.status === 200 && detail.json?.data?.id === inst.id, `got ${detail.status}`);
-  ok("detail carries courses array", Array.isArray(detail.json?.data?.courses));
-  ok("detail carries liveSessionsCount", typeof detail.json?.data?.liveSessionsCount === "number");
+  const d = detail.json?.data ?? {};
+  ok("detail -> 200", detail.status === 200 && d.id === inst.id, `got ${detail.status}`);
+  ok("detail carries courses array", Array.isArray(d.courses));
+  ok("detail carries liveSessionsCount", typeof d.liveSessionsCount === "number");
+
+  // ── Task 109 blocks: badges / approvals / activity / chart ───────────────────
+  ok("badges derived, not stored",
+    d.badges?.active === true && d.badges?.verified === true && typeof d.badges?.topInstructor === "boolean",
+    JSON.stringify(d.badges));
+  ok("pendingApprovals is an array", Array.isArray(d.pendingApprovals));
+  ok("recentActivities is an array", Array.isArray(d.recentActivities));
+  ok("recentActivities capped at 10", (d.recentActivities ?? []).length <= 10);
+  ok("recentActivities newest first",
+    (d.recentActivities ?? []).every((a, i, arr) => i === 0 || arr[i - 1].createdAt >= a.createdAt));
+  ok("performanceChart has a DENSE 12-month series",
+    d.performanceChart?.labels?.length === 12 && d.performanceChart?.enrollments?.length === 12,
+    `labels=${d.performanceChart?.labels?.length} data=${d.performanceChart?.enrollments?.length}`);
+  ok("chart months are YYYY-MM and end on the current month",
+    /^\d{4}-\d{2}$/.test(d.performanceChart?.labels?.[11] ?? ""),
+    d.performanceChart?.labels?.[11]);
+  ok("chart enrollments are all numbers (zero-filled, no gaps)",
+    (d.performanceChart?.enrollments ?? []).every((n) => typeof n === "number"));
+  ok("chart revenue null + revenueAvailable false (never a flat zero line)",
+    d.performanceChart?.revenue === null && d.performanceChart?.revenueAvailable === false);
+  ok("no /details endpoint was created (detail is the one owner)",
+    (await req("GET", `/instructors/${inst.id}/details`)).status === 404);
 
   const missing = await req("GET", "/instructors/00000000-0000-0000-0000-000000000000");
   ok("unknown id -> 404", missing.status === 404, `got ${missing.status}`);
@@ -230,6 +300,35 @@ async function main() {
     const legacyPatch = await req("PATCH", `/instructors/${legacyId}`, { specialization: "Backfilled" });
     ok("PATCH creates the missing profile (upsert, not 404)",
       legacyPatch.status === 200 && legacyPatch.json?.data?.specialization === "Backfilled", `got ${legacyPatch.status}`);
+  }
+
+  // ── 8b. Pending approvals + submittedAt (task 109) ────────────────────────────
+  console.log("\nPending approvals fed by a real submit");
+  const pendingCourse = await req("POST", "/courses", {
+    title: `INSTRUCTOR SMOKE PENDING ${stamp}`, instructorId: inst.id, category: "Smoke", level: "Beginner",
+  });
+  const pendingCourseId = pendingCourse.json?.data?.id;
+  if (pendingCourseId) {
+    // Make it pass the submit checks, then submit it for real.
+    await req("PATCH", `/courses/${pendingCourseId}`, {
+      description: "Submitted by the instructors smoke test.", thumbnail: "https://example.com/t.png",
+    });
+    const section = await req("POST", `/courses/${pendingCourseId}/sections`, { title: "Intro" });
+    await req("POST", `/sections/${section.json?.data?.id}/lessons`, { title: "Welcome", type: "TEXT", content: "Hi" });
+    const submitted = await req("POST", `/courses/${pendingCourseId}/submit`);
+    ok("course submitted -> Pending", submitted.status === 200, `got ${submitted.status}: ${submitted.json?.message}`);
+
+    const withPending = await req("GET", `/instructors/${inst.id}`);
+    const queued = (withPending.json?.data?.pendingApprovals ?? []).find((c) => c.id === pendingCourseId);
+    ok("submitted course appears in pendingApprovals", Boolean(queued));
+    ok("submittedAt is stamped (not null, not updatedAt)",
+      Boolean(queued?.submittedAt) && !Number.isNaN(Date.parse(queued?.submittedAt ?? "")), queued?.submittedAt);
+    ok("only PENDING courses are queued",
+      (withPending.json?.data?.pendingApprovals ?? []).every((c) => c.id !== undefined));
+
+    await req("DELETE", `/courses/${pendingCourseId}`);
+  } else {
+    ok("setup: pending course created", false, `got ${pendingCourse.status}`);
   }
 
   // ── 9. Delete guard ───────────────────────────────────────────────────────────

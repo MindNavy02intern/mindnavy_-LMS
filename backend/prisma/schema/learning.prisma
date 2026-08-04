@@ -29,7 +29,12 @@ model Course {
 
   // Approval workflow (submit → approve/reject). reviewedById = deciding admin;
   // rejectionReason is cleared again on resubmit/approve.
+  // submittedAt is stamped on every DRAFT→PENDING transition (including a
+  // resubmit after rejection) and is the ONLY truthful "waiting since" source —
+  // updatedAt is overwritten by any later edit. Null on courses submitted before
+  // this column existed; readers must tolerate that.
   rejectionReason String?
+  submittedAt     DateTime?
   reviewedById    String?
   reviewedAt      DateTime?
 

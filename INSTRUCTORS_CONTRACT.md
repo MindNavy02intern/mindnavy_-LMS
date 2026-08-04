@@ -214,9 +214,123 @@ component renders all of them.
   publish timestamp and count toward neither month — truthful rather than
   pretending `createdAt` is a publish date.
 
+### `GET /api/admin/instructors/analytics`
+
+Powers the four bottom chart sections. Same availability envelope as `/stats`,
+so one wrapper component can drive both.
+
+```jsonc
+{ "success": true, "data": {
+  "distributionBySpecialization": { "available": true, "items": [
+    { "name": "Machine Learning", "count": 12, "percentage": 28.6 },
+    { "name": "Unspecified",      "count":  9, "percentage": 21.4 }
+  ]},
+  "coursesByStatus": { "available": true, "items": [
+    { "status": "PUBLISHED", "count": 96, "percentage": 61.1 },
+    { "status": "DRAFT",     "count": 44, "percentage": 28.0 },
+    { "status": "PENDING",   "count": 17, "percentage": 10.9 }
+  ]},
+  "topInstructors": { "available": true, "rankedBy": "students", "limit": 10, "items": [
+    { "id": "…", "name": "…", "photo": null,
+      "studentsCount": 84, "publishedCoursesCount": 6,
+      "rating": null, "revenue": null }
+  ]},
+  "earningsOverview": { "value": null, "changePercent": null, "available": false,
+    "reason": "No Payment/Transaction model exists yet — ships with the Finance module." }
+}}
+```
+
+**Rules**
+
+- **Percentages are server-computed and sum to exactly 100.0** (largest-remainder
+  rounding to one decimal). Render them verbatim — recomputing from `count`
+  reintroduces the rounding drift this exists to remove (R1).
+- **The "Unspecified" bucket is real data, not a placeholder.** Instructors with
+  no profile row land there. `distributionBySpecialization` totals always equal
+  `stats.totalInstructors` — dropping the bucket would make the donut silently
+  under-count. Do not filter it out to make the chart look tidier.
+- **`coursesByStatus` excludes ARCHIVED**, matching `coursesCount` on every
+  instructor row. One meaning for "their courses" across the whole module.
+  Archived courses live in the Courses module's own tab.
+- **`topInstructors` ranks by distinct students** — the same metric behind the
+  `badges.topInstructor` flag and `?tab=top`, so "View All" lands on a list in
+  the same order as the chart it came from. Label the metric column from
+  `rankedBy`, never "Rating".
+- **`earningsOverview` has no `chartData`.** A zeroed bar chart would claim "no
+  sales"; this claims "not measurable yet". Render the `reason` in an empty
+  state.
+- Behind the analytics limiter (30/min prod, 300/min dev), same as `/stats`.
+
 ### `GET /api/admin/instructors/:id`
 `200` → `InstructorDetail`. `404` for an unknown id **and** for a non-instructor
 user id (a LEARNER id is indistinguishable from a missing one).
+
+**This is the single endpoint behind the instructor side panel.** There is no
+`/:id/details` — it was specified in task 109 and deliberately not built,
+because it would have produced a second owner for `coursesCount` /
+`studentsCount`. Everything the panel needs is here, in one round trip.
+
+`InstructorDetail` = every `InstructorRow` field, plus:
+
+```jsonc
+{
+  "liveSessionsCount": 3,
+
+  // Derived on read, never stored. The badges SYSTEM is blueprint 05 §15
+  // [phase-later]; these three need no table.
+  "badges": {
+    "active":        true,   // status === 'active'
+    "verified":      true,   // verificationState === 'verified'
+    "topInstructor": false   // in the global top 10 by distinct students
+  },
+
+  "courses": [ { "id", "title", "status", "category", "thumbnail",
+                 "enrolledCount", "createdAt" } ],   // newest 50
+
+  // Their courses awaiting review, longest-waiting first. READ ONLY here.
+  "pendingApprovals": [
+    { "id": "…", "title": "…", "category": "…",
+      "submittedAt": "2026-08-01T09:12:00.000Z",  // null on pre-existing rows
+      "createdAt":   "…" }
+  ],
+
+  // Newest 10, merged from four sources and sorted desc.
+  "recentActivities": [
+    { "id": "course_…",  "type": "course_created",     "title": "…", "createdAt": "…" },
+    { "id": "session_…", "type": "session_scheduled",  "title": "…", "createdAt": "…" },
+    { "id": "cert_…",    "type": "certificate_issued", "title": "…", "createdAt": "…" },
+    { "id": "audit_…",   "type": "admin_action",       "title": "…", "createdAt": "…" }
+  ],
+
+  "performanceChart": {
+    "labels":      ["2025-09", …, "2026-08"],  // ALWAYS 12, oldest → newest
+    "enrollments": [0, 4, 11, …],              // ALWAYS 12, zero-filled
+    "revenue":     null,
+    "revenueAvailable": false
+  }
+}
+```
+
+**Rules for the panel**
+
+- **Approve / Reject a pending course uses the Courses endpoints** —
+  `POST /api/admin/courses/:id/approve` and `/reject` (reject needs a reason).
+  Invalidate with the existing `course.approve` / `course.reject` mutation IDs.
+  Blueprint 05 §6: never fork instructor-scoped variants.
+- **`recentActivities` is "what happened to and around this instructor"** —
+  content they own appearing, plus admin actions on their account. Instructors
+  do not write audit entries (there is no instructor-facing app), so do not
+  label this "their activity".
+- **`performanceChart` is dense.** `labels` and `enrollments` are always 12
+  entries and always aligned; months with no enrollments are `0`, not gaps.
+  Plot the enrollments series only — when `revenueAvailable` is `false`, hide
+  the revenue series rather than drawing a flat zero line.
+- **`topInstructor` = top 10 by distinct students**, the same ranking that backs
+  `?tab=top` and the Top Instructors chart. One definition, one function — a
+  badge can never contradict the list it links to.
+- `submittedAt` is stamped on every DRAFT→PENDING transition, including a
+  resubmit after rejection. It is `null` for courses submitted before this
+  column existed — render "—", not an epoch date.
 
 ### `POST /api/admin/instructors`
 Creates the AppUser **and** its profile in one atomic write. `role` is forced to

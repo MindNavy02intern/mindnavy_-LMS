@@ -29,6 +29,11 @@ const { STATUS_MAP, VERIFICATION_MAP } = usersService;
 // Bounded candidate set for the in-memory "students" ranking (see listInstructors).
 const RANKING_CEILING = 1000;
 
+// Detail-view bounds: newest N per activity source before merging, and the
+// window of the performance chart.
+const ACTIVITY_LIMIT = 10;
+const CHART_MONTHS   = 12;
+
 async function safe(fn, fallback) {
   try {
     return await fn();
@@ -176,6 +181,29 @@ async function studentCountsFor(instructorIds) {
   return new Map(rows.map((r) => [r.id, Number(r.students) || 0]));
 }
 
+// The ONE definition of "top instructor" in this module: the globally highest
+// distinct-student counts. The `topInstructor` badge, the Top Instructors chart
+// and the ?tab=top ordering all rank on this same metric, so a badge can never
+// contradict the list it links to. Ranking happens in Postgres (not JS) and is
+// capped by LIMIT, so it stays cheap as the table grows.
+const TOP_INSTRUCTOR_LIMIT = 10;
+
+async function getTopInstructorIds(limit = TOP_INSTRUCTOR_LIMIT) {
+  const rows = await safe(
+    () => prisma.$queryRaw`
+      SELECT c."instructorId" AS id, COUNT(DISTINCT e."userId")::int AS students
+      FROM "courses" c
+      JOIN "course_enrollments" e ON e."courseId" = c."id"
+      JOIN "app_users" u ON u."id" = c."instructorId"
+      WHERE u."role" = 'INSTRUCTOR' AND u."status" <> 'ARCHIVED'
+      GROUP BY c."instructorId"
+      ORDER BY students DESC
+      LIMIT ${limit}`,
+    [],
+  );
+  return rows.map((r) => r.id);
+}
+
 // The ONE implementation of "how many instructor applications are waiting".
 // Both the Pending tab badge (list) and the Pending Approval card (stats) call
 // this, so the two numbers cannot drift (B4: pending items live in queryable
@@ -314,10 +342,16 @@ async function assertIsInstructor(id) {
   return user;
 }
 
+// Detail read. Every query below runs in ONE parallel batch — the side panel
+// opens on a single request, so nothing here may wait on anything else.
 async function getInstructor(id) {
   const user = await getInstructorRow(id);
 
-  const [courseRows, liveSessionsCount, students, counts] = await Promise.all([
+  const [
+    courseRows, liveSessionsCount, students, counts,
+    pendingCourses, recentSessions, recentCerts, auditRows,
+    enrollmentsByMonth, topIds,
+  ] = await Promise.all([
     safe(() => prisma.course.findMany({
       where: { instructorId: id },
       orderBy: { createdAt: "desc" },
@@ -330,11 +364,51 @@ async function getInstructor(id) {
     safe(() => prisma.liveSession.count({ where: { instructorId: id } }), 0),
     studentCountsFor([id]),
     courseCountsFor([id]),
+
+    // Own query rather than filtering the 50 rows above: a prolific instructor
+    // could have pending courses past that cap, and an approval queue that
+    // silently drops items is worse than one extra indexed count.
+    safe(() => prisma.course.findMany({
+      where: { instructorId: id, status: "PENDING" },
+      orderBy: [{ submittedAt: "asc" }, { createdAt: "asc" }], // longest waiting first
+      take: 20,
+      select: { id: true, title: true, category: true, submittedAt: true, createdAt: true },
+    }), []),
+    safe(() => prisma.liveSession.findMany({
+      where: { instructorId: id },
+      orderBy: { createdAt: "desc" },
+      take: ACTIVITY_LIMIT,
+      select: { id: true, title: true, createdAt: true },
+    }), []),
+    safe(() => prisma.certificate.findMany({
+      where: { course: { instructorId: id } },
+      orderBy: { issuedAt: "desc" },
+      take: ACTIVITY_LIMIT,
+      select: { id: true, issuedAt: true, course: { select: { title: true } } },
+    }), []),
+    safe(() => prisma.auditLog.findMany({
+      where: { targetUserId: id },
+      orderBy: { createdAt: "desc" },
+      take: ACTIVITY_LIMIT,
+      select: { id: true, action: true, createdAt: true },
+    }), []),
+
+    enrollmentsByMonthFor(id),
+    getTopInstructorIds(),
   ]);
 
   return {
     ...mapInstructor(user, { ...(counts.get(id) ?? {}), studentsCount: students.get(id) ?? 0 }),
     liveSessionsCount,
+
+    // Derived, never stored — the badges system itself is blueprint 05 §15
+    // [phase-later], but these three are all computable from data we hold.
+    badges: {
+      active:        user.status === "ACTIVE",
+      verified:      user.verificationState === "VERIFIED",
+      topInstructor: topIds.includes(id),
+    },
+
     courses: courseRows.map((c) => ({
       id:            c.id,
       title:         c.title,
@@ -344,6 +418,103 @@ async function getInstructor(id) {
       enrolledCount: c._count.enrollments,
       createdAt:     iso(c.createdAt),
     })),
+
+    // Read-only here. Deciding these uses the EXISTING course endpoints
+    // (POST /api/admin/courses/:id/approve | /reject) — blueprint 05 §6:
+    // same mutation IDs as the Courses module, never an instructor-scoped fork.
+    pendingApprovals: pendingCourses.map((c) => ({
+      id:          c.id,
+      title:       c.title,
+      category:    c.category ?? null,
+      // Null on courses submitted before the column existed (learning.prisma).
+      submittedAt: iso(c.submittedAt),
+      createdAt:   iso(c.createdAt),
+    })),
+
+    recentActivities: buildActivityFeed({ courseRows, recentSessions, recentCerts, auditRows }),
+    performanceChart: buildPerformanceChart(enrollmentsByMonth),
+  };
+}
+
+// ── Detail sub-builders ─────────────────────────────────────────────────────────
+
+// Instructors do not write audit entries — there is no instructor-facing app —
+// so this feed is "what happened to and around this instructor": content they
+// own appearing, and admin actions taken on their account. Item shape matches
+// lm.service.getActivities() so the frontend reuses one row component.
+const AUDIT_ACTIVITY_TITLE = {
+  USER_SUSPENDED:             "Account suspended by an admin",
+  USER_REACTIVATED:           "Account reactivated by an admin",
+  USER_VERIFICATION_APPROVED: "Verification approved",
+  USER_VERIFICATION_REJECTED: "Verification rejected",
+  USER_ROLE_ASSIGNED:         "Role changed by an admin",
+  USER_FORCE_LOGOUT:          "Sessions revoked by an admin",
+  INSTRUCTOR_CREATED:         "Instructor account created",
+  INSTRUCTOR_PROFILE_UPDATED: "Profile updated by an admin",
+};
+
+function buildActivityFeed({ courseRows, recentSessions, recentCerts, auditRows }) {
+  return [
+    // Reuses the already-fetched course page — no extra query for this slice.
+    ...courseRows.slice(0, ACTIVITY_LIMIT).map((c) => ({
+      id: `course_${c.id}`, type: "course_created",
+      title: `Course "${c.title}" was created`, createdAt: iso(c.createdAt),
+    })),
+    ...recentSessions.map((s) => ({
+      id: `session_${s.id}`, type: "session_scheduled",
+      title: `Live session "${s.title}" was scheduled`, createdAt: iso(s.createdAt),
+    })),
+    ...recentCerts.map((c) => ({
+      id: `cert_${c.id}`, type: "certificate_issued",
+      title: `Certificate issued for "${c.course?.title ?? "a course"}"`, createdAt: iso(c.issuedAt),
+    })),
+    ...auditRows.map((a) => ({
+      id: `audit_${a.id}`, type: "admin_action",
+      title: AUDIT_ACTIVITY_TITLE[a.action] ?? a.action.replace(/_/g, " ").toLowerCase(),
+      createdAt: iso(a.createdAt),
+    })),
+  ]
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+    .slice(0, ACTIVITY_LIMIT);
+}
+
+// Monthly enrollment counts. Raw SQL because Prisma groupBy cannot bucket by
+// month; the instructor id is a bound parameter, never interpolated.
+async function enrollmentsByMonthFor(instructorId) {
+  const since = new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - (CHART_MONTHS - 1), 1));
+  const rows = await safe(
+    () => prisma.$queryRaw`
+      SELECT to_char(date_trunc('month', e."createdAt"), 'YYYY-MM') AS month,
+             COUNT(*)::int AS enrollments
+      FROM "course_enrollments" e
+      JOIN "courses" c ON c."id" = e."courseId"
+      WHERE c."instructorId" = ${instructorId} AND e."createdAt" >= ${since}
+      GROUP BY 1
+      ORDER BY 1`,
+    [],
+  );
+  return new Map(rows.map((r) => [r.month, Number(r.enrollments) || 0]));
+}
+
+// Dense 12-month series: months with no enrollments come back MISSING from the
+// query, and a sparse array would silently misalign labels[] against data[].
+// Zero-filled here so the chart plots what actually happened.
+function buildPerformanceChart(byMonth) {
+  const now = new Date();
+  const labels = [];
+  const enrollments = [];
+  for (let i = CHART_MONTHS - 1; i >= 0; i--) {
+    const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i, 1));
+    const key = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+    labels.push(key);
+    enrollments.push(byMonth.get(key) ?? 0);
+  }
+  return {
+    labels,
+    enrollments,
+    // No Payment/Transaction model — see the ownership note at the top.
+    revenue: null,
+    revenueAvailable: false,
   };
 }
 
@@ -412,6 +583,114 @@ async function getStats() {
     coursesPublished:     metric(coursesPublished,  calcChange(coursesThisMonth, coursesLastMonth)),
     totalRevenue:         unavailable("No Payment/Transaction model exists yet — ships with the Finance module."),
     avgRating:            unavailable("No Review/Rating model exists yet — ships with instructor reviews."),
+  };
+}
+
+// ── Analytics (task 111) ────────────────────────────────────────────────────────
+
+// Largest-remainder rounding to one decimal, so a donut's slices add up to
+// exactly 100.0 instead of 99.8. The frontend renders these verbatim and never
+// recomputes them from counts (R1).
+function withPercentages(items) {
+  const total = items.reduce((sum, i) => sum + i.count, 0);
+  if (total === 0) return items.map((i) => ({ ...i, percentage: 0 }));
+
+  const tenths = items.map((i) => (i.count / total) * 1000);
+  const floors = tenths.map(Math.floor);
+  const missing = 1000 - floors.reduce((sum, v) => sum + v, 0);
+  const byRemainder = tenths
+    .map((v, idx) => ({ idx, remainder: v - Math.floor(v) }))
+    .sort((a, b) => b.remainder - a.remainder);
+
+  for (let k = 0; k < missing; k++) floors[byRemainder[k % byRemainder.length].idx] += 1;
+  return items.map((item, idx) => ({ ...item, percentage: floors[idx] / 10 }));
+}
+
+// Same population as stats.totalInstructors (role=INSTRUCTOR, not ARCHIVED), so
+// the donut total always equals the Total Instructors card. Instructors with no
+// profile row — the majority before this module existed — land in "Unspecified"
+// rather than being dropped, which would make the chart under-count silently.
+const UNSPECIFIED = "Unspecified";
+
+async function specializationDistribution() {
+  const rows = await safe(
+    () => prisma.$queryRaw`
+      SELECT COALESCE(NULLIF(TRIM(ip."specialization"), ''), ${UNSPECIFIED}) AS name,
+             COUNT(*)::int AS count
+      FROM "app_users" u
+      LEFT JOIN "instructor_profiles" ip ON ip."userId" = u."id"
+      WHERE u."role" = 'INSTRUCTOR' AND u."status" <> 'ARCHIVED'
+      GROUP BY 1
+      ORDER BY count DESC, name ASC`,
+    [],
+  );
+  return withPercentages(rows.map((r) => ({ name: r.name, count: Number(r.count) || 0 })));
+}
+
+async function getAnalytics() {
+  const [distribution, statusGroups, topIds] = await Promise.all([
+    specializationDistribution(),
+    // ARCHIVED excluded to match `coursesCount` on every instructor row — one
+    // meaning for "their courses" across the whole module.
+    safe(() => prisma.course.groupBy({
+      by: ["status"],
+      where: { instructorId: { not: null }, status: { not: "ARCHIVED" } },
+      _count: { _all: true },
+    }), []),
+    getTopInstructorIds(),
+  ]);
+
+  const [topUsers, topStudents, topCourses] = await Promise.all([
+    safe(() => prisma.appUser.findMany({
+      where: { id: { in: topIds } },
+      select: { id: true, fullName: true, avatar: true },
+    }), []),
+    studentCountsFor(topIds),
+    courseCountsFor(topIds),
+  ]);
+  const byId = new Map(topUsers.map((u) => [u.id, u]));
+
+  return {
+    distributionBySpecialization: { available: true, items: distribution },
+
+    coursesByStatus: {
+      available: true,
+      items: withPercentages(
+        statusGroups
+          .map((g) => ({ status: g.status, count: g._count._all }))
+          .sort((a, b) => b.count - a.count),
+      ),
+    },
+
+    // Ranked by distinct students — the same metric behind the `topInstructor`
+    // badge and ?tab=top. `rankedBy` ships in the payload so the UI labels the
+    // column honestly instead of implying a rating ranking.
+    topInstructors: {
+      available: true,
+      rankedBy: "students",
+      limit: TOP_INSTRUCTOR_LIMIT,
+      items: topIds
+        .map((id) => {
+          const user = byId.get(id);
+          if (!user) return null;
+          return {
+            id,
+            name:                  user.fullName,
+            photo:                 user.avatar ?? null,
+            studentsCount:         topStudents.get(id) ?? 0,
+            publishedCoursesCount: topCourses.get(id)?.publishedCoursesCount ?? 0,
+            rating:                null,
+            revenue:               null,
+          };
+        })
+        .filter(Boolean),
+    },
+
+    // Deliberately NOT zeroed chartData: an all-zero bar chart claims "no sales",
+    // which is a different statement from "this cannot be measured yet".
+    earningsOverview: unavailable(
+      "No Payment/Transaction model exists yet — ships with the Finance module.",
+    ),
   };
 }
 
@@ -540,8 +819,13 @@ module.exports = {
   listInstructors,
   getInstructor,
   getStats,
+  getAnalytics,
   getTabCounts,
   countPendingApplications,
+  // Shared with the analytics endpoint (task 111) so "top instructor" has one
+  // definition across the badge, the chart and the ?tab=top ordering.
+  getTopInstructorIds,
+  TOP_INSTRUCTOR_LIMIT,
   createInstructor,
   updateInstructor,
   verifyInstructor,

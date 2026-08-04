@@ -15,11 +15,13 @@ const c = require("../controllers/instructors.controller");
 const router = express.Router();
 
 // ── Reads ──────────────────────────────────────────────────────────────────────
-// /stats MUST stay above /:id, or "stats" is matched as an instructor id
-// (same ordering rule as the /export route in users.routes).
-router.get("/stats", requireAdminAuth, adminUsersAnalyticsRateLimiter, c.getStats);
-router.get("/",      requireAdminAuth, coursesReadRateLimiter, c.listInstructors);
-router.get("/:id",   requireAdminAuth, coursesReadRateLimiter, c.getInstructor);
+// /stats and /analytics MUST stay above /:id, or they are matched as instructor
+// ids (same ordering rule as the /export route in users.routes). Both are
+// aggregate reads, so both sit behind the analytics limiter.
+router.get("/stats",     requireAdminAuth, adminUsersAnalyticsRateLimiter, c.getStats);
+router.get("/analytics", requireAdminAuth, adminUsersAnalyticsRateLimiter, c.getAnalytics);
+router.get("/",          requireAdminAuth, coursesReadRateLimiter, c.listInstructors);
+router.get("/:id",       requireAdminAuth, coursesReadRateLimiter, c.getInstructor);
 
 // ── Writes ─────────────────────────────────────────────────────────────────────
 router.post("/", requireAdminAuth, adminUserActionRateLimiter, c.createInstructor);

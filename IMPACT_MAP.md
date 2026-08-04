@@ -133,11 +133,14 @@ All keys are created via `src/lib/queryKeys.ts` (factory). Never write key array
 | Instructors table (All / Active / Inactive / Suspended / Top Performers tabs) | `['instructors', filters]` | `GET /api/admin/instructors` | app_users, instructor_profiles, courses, course_enrollments |
 | Tab badge counts (incl. Pending) | same response — `tabCounts` | same call | app_users, instructor_applications |
 | 6 stats cards | `['instructors', 'stats']` † | `GET /api/admin/instructors/stats` | app_users, instructor_applications, courses |
-| Instructor profile page | `['instructors', id]` | `GET /api/admin/instructors/:id` | + live_sessions |
+| Instructor profile page **+ side panel** (badges · pending approvals · activity feed · 12-month enrollment chart) | `['instructors', id]` | `GET /api/admin/instructors/:id` | + live_sessions, certificates, audit_logs |
+| Bottom analytics: specialization donut · courses-by-status donut · Top Instructors ranking · earnings (unavailable) | `['instructors','analytics']` † | `GET /api/admin/instructors/analytics` | app_users, instructor_profiles, courses, course_enrollments |
 | Applications queue (Pending tab) | `['instructor-applications']` | `GET /api/admin/instructor-applications` | instructor_applications |
 | Earnings / Reviews / Documents tabs | `['instructors', id, 'earnings' \| 'reviews' \| 'documents']` | *(no endpoint — no Finance/Review/Document model exists)* | — |
 
-† `queryKeys.instructors` has no `stats()` member yet — add it alongside the frontend work (task 106) rather than inventing an inline key array.
+† `queryKeys.instructors` has no `stats()` or `analytics()` member yet — add both alongside the frontend work (tasks 106 / 112) rather than inventing inline key arrays.
+
+**"Top instructor" has exactly one definition:** the global top 10 by distinct enrolled students, computed by `getTopInstructorIds()` in `instructors.service`. The `badges.topInstructor` flag, the Top Instructors chart and the `?tab=top` ordering all read it, so a badge can never contradict the list it links to. Changing the metric means changing that one function.
 
 **Rating and revenue have no source table.** `GET /instructors/stats` returns them as `{ value: null, available: false }` and every row's `rating` / `revenue` is `null`. Rule R4 still holds — the field has one owner, that owner just has nothing to read yet. Rendering `0` would invent data.
 
@@ -205,9 +208,9 @@ Users surfaces — `['users']` is not optional on those rows.
 |---|---|---|
 | `course.createDraft` (§3) | `['courses']` `['dashboard','course-analytics']` | Courses table · Draft Courses count |
 | `course.settings.update` (§3 Step 4 — `PATCH /courses/:id/settings`) | `['courses', id]` | Wizard Step 4 form · course detail settings (pricing/visibility/SEO) |
-| `course.submitForApproval` (§3 Step 6) | `['courses']` `['courses', id]` `['approvals']` `['tasks']` `['dashboard','course-analytics']` | Pending Approval Courses · **Pending Approvals KPI + widget** · Tasks "Review Pending Courses" |
-| `course.approve` + publish (§4–5) | `['courses']` `['courses', id]` `['approvals']` `['categories']` `['dashboard','course-analytics']` + `['learning-paths']` if course belongs to a path | **Published Courses KPI** · Approvals drop · Course dropdown gains option (R2) · category counts · Activity "New Course Published" |
-| `course.reject` / `requestChanges` (§5) | `['courses', id]` `['approvals']` `['notifications']` | Review status · instructor notified |
+| `course.submitForApproval` (§3 Step 6 — stamps `Course.submittedAt`, the only truthful "waiting since" source; `updatedAt` is overwritten by later edits) | `['courses']` `['courses', id]` `['approvals']` `['tasks']` `['dashboard','course-analytics']` + `['instructors', instructorId]` (their `pendingApprovals` block) | Pending Approval Courses · **Pending Approvals KPI + widget** · Tasks "Review Pending Courses" · instructor side panel queue |
+| `course.approve` + publish (§4–5) | `['courses']` `['courses', id]` `['approvals']` `['categories']` `['dashboard','course-analytics']` `['instructors', instructorId]` `['instructors','stats']` + `['learning-paths']` if course belongs to a path | **Published Courses KPI** · Approvals drop · Course dropdown gains option (R2) · category counts · Activity "New Course Published" |
+| `course.reject` / `requestChanges` (§5) | `['courses', id]` `['approvals']` `['notifications']` + `['instructors', instructorId]` | Review status · instructor notified · drops out of their side-panel queue |
 | `course.archive` | `['courses']` `['dashboard','course-analytics']` + `['learning-paths']` if in path | Published Courses KPI down · Course dropdown loses option |
 | `course.restore` | `['courses']` `['dashboard','course-analytics']` `['learning-paths']` | Archived course reappears in Draft tab · KPI updates · learning-path item badge changes from Archived → Draft |
 | `category.create/rename/delete` (§6) | `['categories']` `['courses']` | Category dropdown everywhere (R2) · course filters |
