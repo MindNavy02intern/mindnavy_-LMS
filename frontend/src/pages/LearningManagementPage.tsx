@@ -59,6 +59,61 @@ export default function LearningManagementPage() {
     setTab('Courses');
   }
 
+  // When the Overview header's "More Actions > Pending Course Approvals" is
+  // clicked, switch to Courses and signal CoursesTab to mount pre-filtered
+  // to the Pending status tab.
+  const [openPendingApprovals, setOpenPendingApprovals] = useState(false);
+
+  useEffect(() => {
+    if (tab === 'Courses' && openPendingApprovals) setOpenPendingApprovals(false);
+  }, [tab, openPendingApprovals]);
+
+  function handleViewPendingApprovals() {
+    setOpenPendingApprovals(true);
+    setTab('Courses');
+  }
+
+  // When the guide's remaining 4 shortcuts are clicked from the Overview tab,
+  // switch to the matching tab and signal it to mount directly into its
+  // create form (same pattern as handleGuideCreateCourse above).
+  const [openCreatePath,       setOpenCreatePath]       = useState(false);
+  const [openCreateAssessment, setOpenCreateAssessment] = useState(false);
+  const [openScheduleSession,  setOpenScheduleSession]  = useState(false);
+  const [openUploadContent,    setOpenUploadContent]    = useState(false);
+
+  useEffect(() => {
+    if (tab === 'Learning Paths' && openCreatePath) setOpenCreatePath(false);
+  }, [tab, openCreatePath]);
+  useEffect(() => {
+    if (tab === 'Assessments' && openCreateAssessment) setOpenCreateAssessment(false);
+  }, [tab, openCreateAssessment]);
+  useEffect(() => {
+    if (tab === 'Live Sessions' && openScheduleSession) setOpenScheduleSession(false);
+  }, [tab, openScheduleSession]);
+  useEffect(() => {
+    if (tab === 'Content' && openUploadContent) setOpenUploadContent(false);
+  }, [tab, openUploadContent]);
+
+  function handleGuideCreateLearningPath() {
+    setOpenCreatePath(true);
+    setTab('Learning Paths');
+  }
+
+  function handleGuideCreateAssessment() {
+    setOpenCreateAssessment(true);
+    setTab('Assessments');
+  }
+
+  function handleGuideScheduleLiveSession() {
+    setOpenScheduleSession(true);
+    setTab('Live Sessions');
+  }
+
+  function handleGuideUploadContent() {
+    setOpenUploadContent(true);
+    setTab('Content');
+  }
+
   // When the Certificates tab's "certificates disabled" error links to a
   // course's Settings step, carry the courseId across the tab switch and
   // signal CoursesTab to mount directly into Settings for it.
@@ -76,24 +131,28 @@ export default function LearningManagementPage() {
   return (
     <AdminLayout pageTitle="Learning Management">
       <div className="lm-page-root tw:mx-auto tw:flex tw:max-w-[1440px] tw:flex-col tw:gap-5 tw:font-lm-sans">
-        <LmPageHeader />
+        <LmPageHeader onCreateCourse={handleGuideCreateCourse} onViewPendingApprovals={handleViewPendingApprovals} />
         <KpiCards />
         <LmTabs active={tab} onChange={setTab} />
 
         {tab === 'Courses' ? (
-          <CoursesTab openCreateOnMount={openCreate} openSettingsForCourseId={settingsCourseId} />
+          <CoursesTab
+            openCreateOnMount={openCreate}
+            openSettingsForCourseId={settingsCourseId}
+            initialStatusFilter={openPendingApprovals ? 'Pending' : undefined}
+          />
         ) : tab === 'Learning Paths' ? (
-          <LearningPathsTab />
+          <LearningPathsTab openCreateOnMount={openCreatePath} />
         ) : tab === 'Assessments' ? (
-          <AssessmentsTab />
+          <AssessmentsTab openCreateOnMount={openCreateAssessment} />
         ) : tab === 'Certificates' ? (
           <CertificatesTab onGoToCourseSettings={handleGoToCourseSettings} />
         ) : tab === 'Live Sessions' ? (
-          <LiveSessionsTab />
+          <LiveSessionsTab openCreateOnMount={openScheduleSession} />
         ) : tab === 'Enrollments' ? (
           <EnrollmentsTab />
         ) : tab === 'Content' ? (
-          <ContentLibraryTab />
+          <ContentLibraryTab openUploadOnMount={openUploadContent} />
         ) : tab === 'Categories' ? (
           <CategoriesTab />
         ) : tab === 'Overview' ? (
@@ -108,7 +167,13 @@ export default function LearningManagementPage() {
             </div>
 
             <div className="tw:flex tw:w-[340px] tw:shrink-0 tw:flex-col tw:gap-5">
-              <LmGuide onCreateCourse={handleGuideCreateCourse} />
+              <LmGuide
+                onCreateCourse={handleGuideCreateCourse}
+                onCreateLearningPath={handleGuideCreateLearningPath}
+                onUploadContent={handleGuideUploadContent}
+                onCreateAssessment={handleGuideCreateAssessment}
+                onScheduleLiveSession={handleGuideScheduleLiveSession}
+              />
               <ContentStats />
               <LiveSessions />
               <RecentActivities />

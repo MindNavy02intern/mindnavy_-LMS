@@ -68,9 +68,12 @@ interface CoursesTabProps {
   /** When set, mount directly into that course's Settings step (used by the
    *  Certificates tab's "certificates disabled" error → fix-in-one-click link). */
   openSettingsForCourseId?: string | null;
+  /** When set, mount with the status filter pre-applied (used by the Overview
+   *  header's "More Actions > Pending Course Approvals" shortcut). */
+  initialStatusFilter?: CourseStatusFilter;
 }
 
-export default function CoursesTab({ openCreateOnMount, openSettingsForCourseId }: CoursesTabProps) {
+export default function CoursesTab({ openCreateOnMount, openSettingsForCourseId, initialStatusFilter }: CoursesTabProps) {
   const navigate = useNavigate();
 
   const [view, setView] = useState<View>(
@@ -88,7 +91,7 @@ export default function CoursesTab({ openCreateOnMount, openSettingsForCourseId 
   const [listError,    setListError]    = useState<string | null>(null);
 
   // Filters
-  const [statusFilter, setStatusFilter] = useState<CourseStatusFilter>('All');
+  const [statusFilter, setStatusFilter] = useState<CourseStatusFilter>(initialStatusFilter ?? 'All');
   const [category,     setCategory]     = useState('');
   const [instructor,   setInstructor]   = useState('');
   const [searchInput,  setSearchInput]  = useState('');

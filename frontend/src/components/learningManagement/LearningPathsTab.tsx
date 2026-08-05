@@ -756,10 +756,15 @@ function ListView({ paths, loading, error, onRetry, onCreate, onEdit, onView, on
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export default function LearningPathsTab() {
+interface LearningPathsTabProps {
+  /** When true, mount directly into the create form (used by LmGuide's "Create Learning Path" shortcut). */
+  openCreateOnMount?: boolean;
+}
+
+export default function LearningPathsTab({ openCreateOnMount }: LearningPathsTabProps) {
   const navigate = useNavigate();
 
-  const [view,    setView]    = useState<View>({ kind: 'list' });
+  const [view,    setView]    = useState<View>(openCreateOnMount ? { kind: 'create' } : { kind: 'list' });
   const [paths,   setPaths]   = useState<LearningPath[]>([]);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);

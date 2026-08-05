@@ -93,6 +93,8 @@ export const queryKeys = {
     earnings:     (id: string): QueryKey => ['instructors', id, 'earnings'],
     reviews:      (id: string): QueryKey => ['instructors', id, 'reviews'],
     documents:    (id: string): QueryKey => ['instructors', id, 'documents'],
+    stats:        (): QueryKey => ['instructors', 'stats'],
+    analytics:    (): QueryKey => ['instructors', 'analytics'],
   },
 
   // ── Students ───────────────────────────────────────────────────────────────

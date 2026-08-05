@@ -65,7 +65,10 @@ export type MutationName =
   | 'instructorApplication.submit'
   | 'instructorApplication.approve'
   | 'instructorApplication.reject'
-  | 'instructor.suspend' | 'review.moderate'
+  | 'instructorApplication.requestChanges'
+  | 'instructor.create' | 'instructor.update' | 'instructor.verify'
+  | 'instructor.suspend' | 'instructor.reactivate' | 'instructor.delete'
+  | 'review.moderate'
   // §5.4 COURSE / LEARNING
   | 'course.createDraft' | 'course.update' | 'course.settings.update'
   | 'course.submitForApproval'
@@ -344,11 +347,45 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.instructors.applications(),
     queryKeys.approvals(),
   ],
+  'instructorApplication.requestChanges': () => [
+    queryKeys.instructors.applications(),
+    queryKeys.approvals(),
+  ],
+  'instructor.create': (ctx) => [
+    queryKeys.instructors.list(),
+    queryKeys.users.list(),
+    queryKeys.dashboard.userAnalytics(),
+    ...(ctx?.id ? [queryKeys.instructors.detail(ctx.id)] : []),
+  ],
+  'instructor.update': (ctx) => [
+    queryKeys.instructors.list(),
+    ...(ctx?.id ? [queryKeys.instructors.detail(ctx.id)] : []),
+  ],
+  'instructor.verify': (ctx) => [
+    queryKeys.instructors.list(),
+    queryKeys.users.list(),
+    ...(ctx?.id ? [queryKeys.instructors.detail(ctx.id)] : []),
+  ],
+  // Delegates to users.service (same AppUser row the Users table shows) —
+  // ['users'] is required here per INSTRUCTORS_CONTRACT.md, not optional.
   'instructor.suspend': (ctx) => [
     queryKeys.instructors.list(),
+    queryKeys.users.list(),
     queryKeys.courses.list(),
     queryKeys.dashboard.instructorPerformance(),
     ...(ctx?.id ? [queryKeys.instructors.detail(ctx.id)] : []),
+  ],
+  'instructor.reactivate': (ctx) => [
+    queryKeys.instructors.list(),
+    queryKeys.users.list(),
+    queryKeys.dashboard.userAnalytics(),
+    ...(ctx?.id ? [queryKeys.instructors.detail(ctx.id)] : []),
+  ],
+  'instructor.delete': () => [
+    queryKeys.instructors.list(),
+    queryKeys.users.list(),
+    queryKeys.courses.list(),
+    queryKeys.dashboard.userAnalytics(),
   ],
   'review.moderate': (ctx) => [
     queryKeys.dashboard.instructorPerformance(),

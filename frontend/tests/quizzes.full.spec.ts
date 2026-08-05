@@ -628,3 +628,25 @@ test('PATCH question with type but no data → 400 (verifies the pairing rule th
   const body = await res.json()
   expect(body.message).toMatch(/type and data must be provided together/i)
 })
+
+// ── Test: Overview guide widget entry point ────────────────────────────────────
+
+test('Overview guide "Create Assessment" switches to Assessments tab and opens the Create Quiz form', async ({ page }) => {
+  await page.goto('/learning-management')
+  await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
+
+  // Guide button's accessible name includes its description text ("Build
+  // quizzes, exams and assignments"), so match by name WITHOUT exact — this
+  // title is unique among Overview buttons. Note: the guide calls this item
+  // "Create Assessment" but the underlying feature is Quizzes — same naming
+  // gap already documented for the Assessments tab itself.
+  const guideBtn = page.getByRole('button', { name: 'Create Assessment' })
+  await expect(guideBtn).toBeVisible({ timeout: 10000 })
+  await guideBtn.click()
+
+  await expect(page).toHaveURL(/[?&]tab=assessments/)
+  await expect(
+    page.getByRole('heading', { name: 'Create Quiz' }),
+    'Create Quiz heading must appear after clicking the guide shortcut',
+  ).toBeVisible({ timeout: 10000 })
+})

@@ -277,3 +277,22 @@ test('Provider picker is never rendered — ZOOM-only v1, no Meet/Teams options 
   await expect(page.getByText('Google Meet')).toHaveCount(0)
   await expect(page.getByText('Microsoft Teams')).toHaveCount(0)
 })
+
+test('Overview guide "Schedule Live Session" switches to Live Sessions tab and opens the schedule form', async ({ page }) => {
+  await page.goto('/learning-management')
+  await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
+
+  // Guide button's accessible name includes its description text ("Plan and
+  // manage live classes"), so match by name WITHOUT exact — this title is
+  // unique among Overview buttons. Note: the guide calls this item "Schedule
+  // Live Session" but the in-tab form/heading is "Schedule Session".
+  const guideBtn = page.getByRole('button', { name: 'Schedule Live Session' })
+  await expect(guideBtn).toBeVisible({ timeout: 10000 })
+  await guideBtn.click()
+
+  await expect(page).toHaveURL(/[?&]tab=live/)
+  await expect(
+    page.getByRole('heading', { name: 'Schedule Session' }),
+    'Schedule Session heading must appear after clicking the guide shortcut',
+  ).toBeVisible({ timeout: 10000 })
+})

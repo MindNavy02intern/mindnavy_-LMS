@@ -1045,10 +1045,15 @@ function ListView({ quizzes, courseTitles, loading, error, onRetry, onCreate, on
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export default function AssessmentsTab() {
+interface AssessmentsTabProps {
+  /** When true, mount directly into the create form (used by LmGuide's "Create Assessment" shortcut). */
+  openCreateOnMount?: boolean;
+}
+
+export default function AssessmentsTab({ openCreateOnMount }: AssessmentsTabProps) {
   const navigate = useNavigate();
 
-  const [view,    setView]    = useState<View>({ kind: 'list' });
+  const [view,    setView]    = useState<View>(openCreateOnMount ? { kind: 'create' } : { kind: 'list' });
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [courseTitles, setCourseTitles] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);

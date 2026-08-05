@@ -16,6 +16,7 @@ const SystemSettingsPage             = lazy(() => import('./pages/SystemSettings
 const ProfilePage                    = lazy(() => import('./pages/ProfilePage'));
 const LearningManagementPage         = lazy(() => import('./pages/LearningManagementPage'));
 const PublicVerifyPage               = lazy(() => import('./pages/PublicVerifyPage'));
+const InstructorsPage                = lazy(() => import('./pages/Instructors/InstructorsPage'));
 
 function PageLoader() {
   return (
@@ -135,6 +136,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <LearningManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/instructors"
+          element={
+            <ProtectedRoute>
+              <InstructorsPage />
             </ProtectedRoute>
           }
         />

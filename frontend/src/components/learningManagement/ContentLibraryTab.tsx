@@ -524,7 +524,12 @@ function ItemCard({ item, onEdit, onDelete }: ItemCardProps) {
 
 const PAGE_SIZE = 20;
 
-export default function ContentLibraryTab() {
+interface ContentLibraryTabProps {
+  /** When true, mount directly into the upload dialog (used by LmGuide's "Upload Content" shortcut). */
+  openUploadOnMount?: boolean;
+}
+
+export default function ContentLibraryTab({ openUploadOnMount }: ContentLibraryTabProps) {
   const navigate = useNavigate();
 
   const [content, setContent]       = useState<ContentItem[]>([]);
@@ -538,7 +543,7 @@ export default function ContentLibraryTab() {
   const [page, setPage]             = useState(1);
 
   const [courses, setCourses]       = useState<CourseListRow[]>([]);
-  const [showUpload, setShowUpload] = useState(false);
+  const [showUpload, setShowUpload] = useState(!!openUploadOnMount);
   const [editing, setEditing]       = useState<ContentItem | null>(null);
   const [toast, setToast]           = useState<Toast | null>(null);
 

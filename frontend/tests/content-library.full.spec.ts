@@ -265,3 +265,21 @@ test('Edit metadata — PATCH sends only changed fields, file fields never inclu
   expect(Object.keys(capturedBody as object)).toEqual(['title'])
   expect((capturedBody as { title: string }).title).toBe(newTitle)
 })
+
+test('Overview guide "Upload Content" switches to Content tab and opens the upload dialog', async ({ page }) => {
+  await page.goto('/learning-management')
+  await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
+
+  // Guide button's accessible name includes its description text ("Add
+  // content and learning materials"), so match by name WITHOUT exact — this
+  // title is unique among Overview buttons.
+  const guideBtn = page.getByRole('button', { name: 'Upload Content' })
+  await expect(guideBtn).toBeVisible({ timeout: 10000 })
+  await guideBtn.click()
+
+  await expect(page).toHaveURL(/[?&]tab=content/)
+  await expect(
+    page.getByRole('heading', { name: 'Upload Content' }),
+    'Upload Content dialog heading must appear after clicking the guide shortcut',
+  ).toBeVisible({ timeout: 10000 })
+})

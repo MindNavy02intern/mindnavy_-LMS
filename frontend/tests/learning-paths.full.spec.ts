@@ -539,3 +539,21 @@ test('Archived course item shows Archived badge — distinct from missing', asyn
   await expect(page.getByText('Unavailable item')).not.toBeVisible()
   await expect(page.getByText('Unavailable')).not.toBeVisible()
 })
+
+test('Overview guide "Create Learning Path" switches to Learning Paths tab and opens the create form', async ({ page }) => {
+  await page.goto('/learning-management')
+  await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
+
+  // Guide button's accessible name includes its description text ("Design a
+  // structured learning journey"), so match by name WITHOUT exact — this
+  // title is unique among Overview buttons.
+  const guideBtn = page.getByRole('button', { name: 'Create Learning Path' })
+  await expect(guideBtn).toBeVisible({ timeout: 10000 })
+  await guideBtn.click()
+
+  await expect(page).toHaveURL(/[?&]tab=paths/)
+  await expect(
+    page.getByRole('heading', { name: 'Create Learning Path' }),
+    'Create Learning Path heading must appear after clicking the guide shortcut',
+  ).toBeVisible({ timeout: 10000 })
+})

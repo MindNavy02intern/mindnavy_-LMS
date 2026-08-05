@@ -5,8 +5,19 @@ Doc: Instructors §1–§16 · Entities: INSTRUCTOR (IMPACT §5.3), COURSE (§5.
 > Built: All Instructors tab (list/filters/tabs/stats), instructor CRUD + verify /
 > suspend / reactivate / archive, the Applications queue with approve / reject /
 > request-changes, and the public "Become Instructor" submit endpoint.
-> **Frontend is not built** — the `/instructors` sidebar link exists in
-> `AdminLayout.tsx` but has no route or page yet (task 104).
+> **Frontend v1 shipped 2026-08-05 (task 104)** — `/instructors` route + page:
+> All Instructors / Active / Inactive / Suspended / Top Performers tabs (real
+> `GET /instructors?tab=…`), Pending Approval tab (applications endpoint), the
+> instructor side panel (`GET /instructors/:id`), Add/Edit/Verify/Suspend/
+> Reactivate/Delete/Message actions, and the Applications approve/reject/
+> request-changes queue. Import/Export reuse the Users module's CSV endpoints
+> filtered to `role=INSTRUCTOR` per the contract (no separate exporter built).
+> **Invitations tab** reuses the `inactive` bucket client-filtered to
+> `status==='invited'` — the contract has no dedicated tab value for it.
+> **Payouts tab** renders an explicit "not available yet" empty state — no
+> Payment/Transaction model exists (see note below). Earnings/Reviews/
+> Certifications/Documents/Communication Center/Suspension&Compliance beyond
+> suspend/reactivate remain `[planned]` — same reason.
 >
 > An instructor IS an `AppUser` with `role = INSTRUCTOR` plus an optional
 > `InstructorProfile` side table — there is no separate instructors table, and
@@ -23,7 +34,7 @@ All Instructors · Applications · Approval · Profiles · Instructor Courses ·
 
 ---
 
-## Tab: All Instructors (`?tab=all`) — `['instructors', filters]` (doc §2) `[backend built]`
+## Tab: All Instructors (`?tab=all`) — `['instructors', filters]` (doc §2) `[built]`
 **Table columns:** Name · Profile image · Expertise · Courses count · Student count · Rating · Revenue · Verification status · Account status · Last activity
 | Action | Kind | Mutation ID | Impact |
 |---|---|---|---|
@@ -35,7 +46,7 @@ All Instructors · Applications · Approval · Profiles · Instructor Courses ·
 | Suspend account | dlg→mut | `instructor.suspend` | → IMPACT §5.3 (⚠️ course rule — contract question) |
 | Delete instructor | dlg→mut | `instructor.delete` | → §5.3 + courses/earnings cascade check |
 
-## Tab: Applications (`?tab=applications`) — `['instructor-applications']` (doc §3–§4) `[backend built]`
+## Tab: Applications (`?tab=applications`) — `['instructor-applications']` (doc §3–§4) `[built]`
 Public "Become Instructor" form feeds this queue. Submission data: name, email, phone, bio, skills, experience, certifications, CV, portfolio links, identity documents. Submit (public) → `instructorApplication.submit` (→ §5.3) → status Pending Review → admin notification.
 **Review areas:** bio, experience, skills, documents, certifications, portfolio, identity verification, compliance checks.
 | Decision | Mutation ID | Impact |

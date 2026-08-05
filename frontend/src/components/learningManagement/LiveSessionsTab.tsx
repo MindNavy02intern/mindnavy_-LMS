@@ -420,10 +420,15 @@ const STATUS_FILTERS: { key: StatusFilter; label: string }[] = [
 
 type View = { kind: 'list' } | { kind: 'create' } | { kind: 'edit'; session: LiveSession };
 
-export default function LiveSessionsTab() {
+interface LiveSessionsTabProps {
+  /** When true, mount directly into the schedule form (used by LmGuide's "Schedule Live Session" shortcut). */
+  openCreateOnMount?: boolean;
+}
+
+export default function LiveSessionsTab({ openCreateOnMount }: LiveSessionsTabProps) {
   const navigate = useNavigate();
 
-  const [view, setView]           = useState<View>({ kind: 'list' });
+  const [view, setView]           = useState<View>(openCreateOnMount ? { kind: 'create' } : { kind: 'list' });
   const [sessions, setSessions]   = useState<LiveSession[]>([]);
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState<string | null>(null);

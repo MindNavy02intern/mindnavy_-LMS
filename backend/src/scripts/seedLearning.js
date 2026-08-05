@@ -12,6 +12,7 @@
  */
 
 const path = require("path");
+const crypto = require("crypto");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 
 const prisma = require("../config/prisma");
@@ -20,17 +21,22 @@ async function main() {
   console.log("Seeding Learning Management sample data...\n");
 
   // ── Instructors ────────────────────────────────────────────────────────────
-  const instructors = [
-    { id: "seed-inst-1", email: "instructor1.seed@mindnavy.com", fullName: "Sarah Johnson" },
-    { id: "seed-inst-2", email: "instructor2.seed@mindnavy.com", fullName: "David Lee" },
+  // Upserted by email (the real unique key) — `id` is only used on first
+  // insert. Always read `.id` back off the upsert result rather than trusting
+  // a locally-generated candidate: on re-run the row already exists under
+  // whatever id it was first created with, and the courses below must point
+  // at that REAL id, not a fresh randomUUID() that was never written.
+  const instructorSeeds = [
+    { email: "instructor1.seed@mindnavy.com", fullName: "Sarah Johnson" },
+    { email: "instructor2.seed@mindnavy.com", fullName: "David Lee" },
   ];
-  for (const i of instructors) {
-    await prisma.appUser.upsert({
+  const [sarah, david] = await Promise.all(instructorSeeds.map((i) =>
+    prisma.appUser.upsert({
       where: { email: i.email },
       update: {},
-      create: { id: i.id, email: i.email, fullName: i.fullName, role: "INSTRUCTOR", status: "ACTIVE", verificationState: "VERIFIED" },
-    });
-  }
+      create: { id: crypto.randomUUID(), email: i.email, fullName: i.fullName, role: "INSTRUCTOR", status: "ACTIVE", verificationState: "VERIFIED" },
+    })
+  ));
 
   // ── Learners ───────────────────────────────────────────────────────────────
   const learners = [
@@ -49,12 +55,12 @@ async function main() {
 
   // ── Courses (varied status / level / category) ─────────────────────────────
   const courses = [
-    { id: "seed-course-1", title: "Complete React Developer", category: "Development", level: "ADVANCED",     status: "PUBLISHED", instructorId: "seed-inst-1", tags: ["react", "frontend"] },
-    { id: "seed-course-2", title: "Intro to Python",          category: "Development", level: "BEGINNER",     status: "PUBLISHED", instructorId: "seed-inst-2", tags: ["python"] },
-    { id: "seed-course-3", title: "UI/UX Fundamentals",       category: "Design",      level: "INTERMEDIATE", status: "DRAFT",     instructorId: "seed-inst-1", tags: ["design"] },
-    { id: "seed-course-4", title: "Marketing 101",            category: "Business",    level: "BEGINNER",     status: "PENDING",   instructorId: "seed-inst-2", tags: ["marketing"] },
-    { id: "seed-course-5", title: "Advanced Node.js",         category: "Development", level: "ADVANCED",     status: "DRAFT",     instructorId: "seed-inst-1", tags: ["node"] },
-    { id: "seed-course-6", title: "Legacy Course",            category: "Business",    level: "BEGINNER",     status: "ARCHIVED",  instructorId: "seed-inst-2", tags: [] },
+    { id: "seed-course-1", title: "Complete React Developer", category: "Development", level: "ADVANCED",     status: "PUBLISHED", instructorId: sarah.id, tags: ["react", "frontend"] },
+    { id: "seed-course-2", title: "Intro to Python",          category: "Development", level: "BEGINNER",     status: "PUBLISHED", instructorId: david.id, tags: ["python"] },
+    { id: "seed-course-3", title: "UI/UX Fundamentals",       category: "Design",      level: "INTERMEDIATE", status: "DRAFT",     instructorId: sarah.id, tags: ["design"] },
+    { id: "seed-course-4", title: "Marketing 101",            category: "Business",    level: "BEGINNER",     status: "PENDING",   instructorId: david.id, tags: ["marketing"] },
+    { id: "seed-course-5", title: "Advanced Node.js",         category: "Development", level: "ADVANCED",     status: "DRAFT",     instructorId: sarah.id, tags: ["node"] },
+    { id: "seed-course-6", title: "Legacy Course",            category: "Business",    level: "BEGINNER",     status: "ARCHIVED",  instructorId: david.id, tags: [] },
   ];
   for (const c of courses) {
     await prisma.course.upsert({ where: { id: c.id }, update: {}, create: { ...c, createdBy: null } });
@@ -134,8 +140,8 @@ async function main() {
   console.log(`  certificates:  ${certCount}`);
   console.log(`  live sessions: ${sessionCount}`);
   console.log("\nInstructor ids you can use when creating a course:");
-  console.log("  seed-inst-1  (Sarah Johnson)");
-  console.log("  seed-inst-2  (David Lee)");
+  console.log(`  ${sarah.id}  (Sarah Johnson)`);
+  console.log(`  ${david.id}  (David Lee)`);
 }
 
 main()

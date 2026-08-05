@@ -264,6 +264,50 @@ test('Guide "Create New Course" button opens the create form on the Courses tab'
   ).toBeVisible({ timeout: 10000 })
 })
 
+test('Overview header "Create Course" button opens the create form on the Courses tab', async ({ page }) => {
+  await page.goto('/learning-management')
+  await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
+
+  // Two "Create Course" buttons exist on Overview: the header one (.first()) and
+  // CoursesTab's own (not yet mounted here) — .first() disambiguates.
+  const headerBtn = page.getByRole('button', { name: 'Create Course', exact: true }).first()
+  await expect(headerBtn).toBeVisible({ timeout: 10000 })
+  await headerBtn.click()
+
+  await expect(page).toHaveURL(/[?&]tab=courses/)
+  await expect(
+    page.getByRole('heading', { name: 'Create Course' }),
+    'Create Course heading must appear after clicking the Overview header button',
+  ).toBeVisible({ timeout: 10000 })
+})
+
+test('Overview header "More Actions > Pending Course Approvals" filters Courses tab to Pending', async ({ page }) => {
+  await page.goto('/learning-management')
+  await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
+
+  await page.getByRole('button', { name: 'More Actions', exact: true }).click()
+  const menuItem = page.getByRole('button', { name: 'Pending Course Approvals', exact: true })
+  await expect(menuItem).toBeVisible({ timeout: 5000 })
+
+  // CoursesTab mounts with statusFilter pre-set to 'Pending', so its first
+  // list fetch (not a click-triggered re-fetch) must already carry status=Pending.
+  const listRequest = page.waitForResponse((res) =>
+    res.url().includes('/courses?') && res.url().includes('status=Pending')
+  )
+  await menuItem.click()
+
+  await expect(page).toHaveURL(/[?&]tab=courses/)
+  await expect(page.getByRole('heading', { name: 'Courses', exact: true })).toBeVisible({ timeout: 10000 })
+  await listRequest
+})
+
+test('Overview header "Import Content" button is disabled (no import feature built yet)', async ({ page }) => {
+  await page.goto('/learning-management')
+  await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
+
+  await expect(page.getByRole('button', { name: 'Import Content', exact: true })).toBeDisabled()
+})
+
 // A3: Empty instructor list shows an inline warning (not silently disabled Save Draft).
 test('Empty instructor list shows inline warning near the dropdown', async ({ page }) => {
   // Mock filter-options to return an empty instructor list.
