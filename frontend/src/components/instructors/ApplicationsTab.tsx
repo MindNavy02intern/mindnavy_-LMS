@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { CheckCircle, ChevronLeft, ChevronRight, MessageSquare, Search, XCircle } from 'lucide-react';
+import { CheckCircle, ChevronLeft, ChevronRight, Download, ExternalLink, Eye, MessageSquare, Search, X, XCircle } from 'lucide-react';
 import {
   approveInstructorApplication, listInstructorApplications,
   rejectInstructorApplication, requestChangesInstructorApplication,
@@ -32,6 +32,62 @@ type ReasonModal = { kind: 'reject' | 'request-changes'; app: InstructorApplicat
 const TH: React.CSSProperties = { padding: '10px 12px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.4, textAlign: 'left' };
 const TD: React.CSSProperties = { padding: '10px 12px', fontSize: 13, color: '#374151', borderTop: '1px solid #f1f5f9' };
 
+const STATUS_BADGE: Record<ApplicationStatus, { bg: string; color: string }> = {
+  PENDING:            { bg: '#fef9c3', color: '#a16207' },
+  CHANGES_REQUESTED:  { bg: '#ffedd5', color: '#c2410c' },
+  APPROVED:           { bg: '#dcfce7', color: '#16a34a' },
+  REJECTED:           { bg: '#fee2e2', color: '#dc2626' },
+};
+
+function StatusBadge({ status }: { status: ApplicationStatus }) {
+  const { bg, color } = STATUS_BADGE[status];
+  return (
+    <span style={{ padding: '3px 9px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: bg, color }}>
+      {status.replace('_', ' ')}
+    </span>
+  );
+}
+
+// Same convention as UserTable.tsx's formatLastActivity — createdAt is never
+// null here (unlike lastActivityAt), so no '—' branch is needed.
+function formatTimeAgo(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const m = Math.floor(diff / 60_000);
+  const h = Math.floor(m / 60);
+  const d = Math.floor(h / 24);
+  if (m < 1)  return 'Just now';
+  if (m < 60) return `${m}m ago`;
+  if (h < 24) return `${h}h ago`;
+  if (d < 30) return `${d}d ago`;
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function SkillsPills({ skills, max }: { skills: string[]; max?: number }) {
+  if (skills.length === 0) return <span style={{ color: '#94a3b8', fontSize: 12 }}>—</span>;
+  const shown = max ? skills.slice(0, max) : skills;
+  const extra = max && skills.length > max ? skills.length - max : 0;
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+      {shown.map(s => (
+        <span key={s} style={{ padding: '2px 7px', borderRadius: 999, fontSize: 10, fontWeight: 600, background: '#f1f5f9', color: '#475569', whiteSpace: 'nowrap' }}>
+          {s}
+        </span>
+      ))}
+      {extra > 0 && <span style={{ fontSize: 10, color: '#94a3b8', alignSelf: 'center' }}>+{extra} more</span>}
+    </div>
+  );
+}
+
+// 409 = the application was already approved/rejected by someone else since
+// the list was fetched — same underlying condition on all three actions
+// (contract's error table: "approve an already-decided application").
+function applicationActionErrorMessage(err: unknown, fallback: string): string {
+  if (err instanceof InstructorApiError) {
+    return err.status === 409 ? 'Already approved or rejected' : err.message;
+  }
+  return fallback;
+}
+
 export default function ApplicationsTab({ showToast, onCountsChanged, onInstructorCreated }: Props) {
   const [rows, setRows] = useState<InstructorApplication[]>([]);
   const [statusCounts, setStatusCounts] = useState<InstructorApplicationsStatusCounts | null>(null);
@@ -52,6 +108,7 @@ export default function ApplicationsTab({ showToast, onCountsChanged, onInstruct
   const [reasonText, setReasonText] = useState('');
   const [reasonErr, setReasonErr] = useState<string | null>(null);
   const [reasonBusy, setReasonBusy] = useState(false);
+  const [detailApp, setDetailApp] = useState<InstructorApplication | null>(null);
 
   // Guards against a stale response (e.g. slow request for a filter/page the
   // admin already navigated away from) overwriting a newer one.
@@ -94,11 +151,12 @@ export default function ApplicationsTab({ showToast, onCountsChanged, onInstruct
     try {
       await approveInstructorApplication(app.id);
       invalidateFor(appQueryClient, 'instructorApplication.approve');
-      showToast('success', `${app.fullName} approved — instructor account created.`);
+      showToast('success', 'Application approved — instructor account created.');
+      setDetailApp(null);
       fetchList();
       onInstructorCreated?.();
     } catch (err) {
-      showToast('error', err instanceof InstructorApiError ? err.message : 'Approval failed.');
+      showToast('error', applicationActionErrorMessage(err, 'Approval failed.'));
     } finally {
       setBusyId(null);
     }
@@ -126,9 +184,10 @@ export default function ApplicationsTab({ showToast, onCountsChanged, onInstruct
         showToast('success', `Changes requested from ${reasonModal.app.fullName}.`);
       }
       setReasonModal(null);
+      setDetailApp(null);
       fetchList();
     } catch (err) {
-      showToast('error', err instanceof InstructorApiError ? err.message : 'Action failed.');
+      showToast('error', applicationActionErrorMessage(err, 'Action failed.'));
     } finally {
       setReasonBusy(false);
     }
@@ -197,6 +256,7 @@ export default function ApplicationsTab({ showToast, onCountsChanged, onInstruct
               <tr style={{ background: '#f8fafc' }}>
                 <th style={TH}>Applicant</th>
                 <th style={TH}>Specialization</th>
+                <th style={TH}>Skills</th>
                 <th style={TH}>Experience</th>
                 <th style={TH}>Status</th>
                 <th style={TH}>Submitted</th>
@@ -206,44 +266,51 @@ export default function ApplicationsTab({ showToast, onCountsChanged, onInstruct
             <tbody>
               {loading && Array.from({ length: 4 }).map((_, i) => (
                 <tr key={i}>
-                  {Array.from({ length: 6 }).map((__, j) => (
+                  {Array.from({ length: 7 }).map((__, j) => (
                     <td key={j} style={TD}><div style={{ height: 12, background: '#f1f5f9', borderRadius: 4 }} /></td>
                   ))}
                 </tr>
               ))}
               {!loading && !listError && rows.length === 0 && (
-                <tr><td colSpan={6} style={{ ...TD, textAlign: 'center', color: '#94a3b8', padding: '32px 12px' }}>No applications found</td></tr>
+                <tr><td colSpan={7} style={{ ...TD, textAlign: 'center', color: '#94a3b8', padding: '32px 12px' }}>No applications found</td></tr>
               )}
               {!loading && rows.map(app => (
-                <tr key={app.id}>
+                <tr
+                  key={app.id}
+                  onClick={() => setDetailApp(app)}
+                  style={{ cursor: 'pointer' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#f8fafc'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = ''; }}
+                >
                   <td style={TD}>
                     <div style={{ fontWeight: 600, color: '#0f172a' }}>{app.fullName}</div>
                     <div style={{ fontSize: 11, color: '#94a3b8' }}>{app.email}</div>
+                    {app.headline && <div style={{ fontSize: 11, color: '#94a3b8', fontStyle: 'italic', marginTop: 1 }}>{app.headline}</div>}
                   </td>
                   <td style={TD}>{app.specialization ?? '—'}</td>
+                  <td style={{ ...TD, maxWidth: 200 }}><SkillsPills skills={app.skills} max={2} /></td>
                   <td style={TD}>{app.yearsExperience !== null ? `${app.yearsExperience} yrs` : '—'}</td>
+                  <td style={TD}><StatusBadge status={app.status} /></td>
+                  <td style={TD}>{formatTimeAgo(app.createdAt)}</td>
                   <td style={TD}>
-                    <span style={{ padding: '3px 9px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: '#fef9c3', color: '#a16207' }}>
-                      {app.status.replace('_', ' ')}
-                    </span>
-                  </td>
-                  <td style={TD}>{new Date(app.createdAt).toLocaleDateString()}</td>
-                  <td style={TD}>
-                    {app.status === 'PENDING' || app.status === 'CHANGES_REQUESTED' ? (
-                      <div style={{ display: 'flex', gap: 4 }}>
-                        <button type="button" title="Approve" disabled={busyId === app.id} onClick={() => handleApprove(app)} style={ICON_BTN}>
-                          <CheckCircle size={15} color="#16a34a" strokeWidth={2} />
-                        </button>
-                        <button type="button" title="Reject" disabled={busyId === app.id} onClick={() => openReasonModal('reject', app)} style={ICON_BTN}>
-                          <XCircle size={15} color="#dc2626" strokeWidth={2} />
-                        </button>
-                        <button type="button" title="Request changes" disabled={busyId === app.id} onClick={() => openReasonModal('request-changes', app)} style={ICON_BTN}>
-                          <MessageSquare size={15} color="#2563eb" strokeWidth={2} />
-                        </button>
-                      </div>
-                    ) : (
-                      <span style={{ fontSize: 12, color: '#94a3b8' }}>—</span>
-                    )}
+                    <div style={{ display: 'flex', gap: 4 }} onClick={e => e.stopPropagation()}>
+                      <button type="button" title="View details" onClick={() => setDetailApp(app)} style={ICON_BTN}>
+                        <Eye size={15} color="#64748b" strokeWidth={2} />
+                      </button>
+                      {(app.status === 'PENDING' || app.status === 'CHANGES_REQUESTED') && (
+                        <>
+                          <button type="button" title="Approve" disabled={busyId === app.id} onClick={() => handleApprove(app)} style={ICON_BTN}>
+                            <CheckCircle size={15} color="#16a34a" strokeWidth={2} />
+                          </button>
+                          <button type="button" title="Reject" disabled={busyId === app.id} onClick={() => openReasonModal('reject', app)} style={ICON_BTN}>
+                            <XCircle size={15} color="#dc2626" strokeWidth={2} />
+                          </button>
+                          <button type="button" title="Request changes" disabled={busyId === app.id} onClick={() => openReasonModal('request-changes', app)} style={ICON_BTN}>
+                            <MessageSquare size={15} color="#2563eb" strokeWidth={2} />
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -267,7 +334,11 @@ export default function ApplicationsTab({ showToast, onCountsChanged, onInstruct
       {reasonModal && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={!reasonBusy ? () => setReasonModal(null) : undefined} />
-          <div style={{ position: 'relative', width: '100%', maxWidth: 420, background: '#fff', borderRadius: 12, boxShadow: '0 20px 60px rgba(0,0,0,0.22)' }}>
+          <div
+            role="dialog"
+            aria-label={reasonModal.kind === 'reject' ? 'Reject Application' : 'Request Changes'}
+            style={{ position: 'relative', width: '100%', maxWidth: 420, background: '#fff', borderRadius: 12, boxShadow: '0 20px 60px rgba(0,0,0,0.22)' }}
+          >
             <div style={{ padding: '16px 20px', borderBottom: '1px solid #e5e7eb' }}>
               <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#111827' }}>
                 {reasonModal.kind === 'reject' ? 'Reject Application' : 'Request Changes'}
@@ -299,9 +370,131 @@ export default function ApplicationsTab({ showToast, onCountsChanged, onInstruct
           </div>
         </div>
       )}
+
+      {/* Application detail — every field from the row plus everything the
+          list has no room for (phone, bio, cvUrl, portfolioUrl, reviewNotes,
+          rejectionReason, changeRequest). No extra fetch: the full
+          InstructorApplication is already in `rows` from the list call. */}
+      {detailApp && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={() => setDetailApp(null)} />
+          <div
+            role="dialog"
+            aria-label={`${detailApp.fullName} application details`}
+            style={{ position: 'relative', width: '100%', maxWidth: 560, maxHeight: '85vh', overflowY: 'auto', background: '#fff', borderRadius: 12, boxShadow: '0 20px 60px rgba(0,0,0,0.22)' }}
+          >
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #e5e7eb' }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: '#111827' }}>{detailApp.fullName}</h3>
+                <div style={{ marginTop: 4, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontSize: 12, color: '#6b7280' }}>{detailApp.email}</span>
+                  <StatusBadge status={detailApp.status} />
+                </div>
+              </div>
+              <button type="button" onClick={() => setDetailApp(null)} style={{ ...ICON_BTN, border: 'none', flexShrink: 0 }}>
+                <X size={16} color="#6b7280" />
+              </button>
+            </div>
+
+            <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <DetailField label="Phone" value={detailApp.phone} />
+                <DetailField label="Years Experience" value={detailApp.yearsExperience !== null ? `${detailApp.yearsExperience} yrs` : null} />
+                <DetailField label="Specialization" value={detailApp.specialization} />
+                <DetailField label="Submitted" value={`${formatTimeAgo(detailApp.createdAt)} (${new Date(detailApp.createdAt).toLocaleDateString()})`} />
+              </div>
+
+              {detailApp.headline && <DetailField label="Headline" value={detailApp.headline} />}
+              {detailApp.bio && (
+                <div>
+                  <div style={FIELD_LABEL}>Bio</div>
+                  <div style={{ fontSize: 13, color: '#374151', whiteSpace: 'pre-wrap' }}>{detailApp.bio}</div>
+                </div>
+              )}
+
+              <div>
+                <div style={FIELD_LABEL}>Skills</div>
+                <SkillsPills skills={detailApp.skills} />
+              </div>
+
+              <div style={{ display: 'flex', gap: 16 }}>
+                {detailApp.cvUrl && (
+                  <a href={detailApp.cvUrl} target="_blank" rel="noopener noreferrer" style={LINK_STYLE}>
+                    <Download size={13} /> Download CV
+                  </a>
+                )}
+                {detailApp.portfolioUrl && (
+                  <a href={detailApp.portfolioUrl} target="_blank" rel="noopener noreferrer" style={LINK_STYLE}>
+                    <ExternalLink size={13} /> View Portfolio
+                  </a>
+                )}
+              </div>
+
+              {detailApp.reviewNotes && (
+                <div>
+                  <div style={FIELD_LABEL}>Review Notes</div>
+                  <div style={{ fontSize: 13, color: '#374151', whiteSpace: 'pre-wrap' }}>{detailApp.reviewNotes}</div>
+                </div>
+              )}
+              {detailApp.rejectionReason && (
+                <div>
+                  <div style={{ ...FIELD_LABEL, color: '#dc2626' }}>Rejection Reason</div>
+                  <div style={{ fontSize: 13, color: '#374151', whiteSpace: 'pre-wrap' }}>{detailApp.rejectionReason}</div>
+                </div>
+              )}
+              {detailApp.changeRequest && (
+                <div>
+                  <div style={{ ...FIELD_LABEL, color: '#c2410c' }}>Change Request</div>
+                  <div style={{ fontSize: 13, color: '#374151', whiteSpace: 'pre-wrap' }}>{detailApp.changeRequest}</div>
+                </div>
+              )}
+            </div>
+
+            {(detailApp.status === 'PENDING' || detailApp.status === 'CHANGES_REQUESTED') && (
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, padding: '14px 20px', borderTop: '1px solid #f1f5f9' }}>
+                <button
+                  type="button"
+                  disabled={busyId === detailApp.id}
+                  onClick={() => openReasonModal('request-changes', detailApp)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', background: '#fff', color: '#2563eb', border: '1px solid #bfdbfe', borderRadius: 7, cursor: 'pointer' }}
+                >
+                  <MessageSquare size={14} /> Request Changes
+                </button>
+                <button
+                  type="button"
+                  disabled={busyId === detailApp.id}
+                  onClick={() => openReasonModal('reject', detailApp)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', background: '#fff', color: '#dc2626', border: '1px solid #fecaca', borderRadius: 7, cursor: 'pointer' }}
+                >
+                  <XCircle size={14} /> Reject
+                </button>
+                <button
+                  type="button"
+                  disabled={busyId === detailApp.id}
+                  onClick={() => handleApprove(detailApp)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', background: busyId === detailApp.id ? '#9ca3af' : '#16a34a', color: '#fff', border: 'none', borderRadius: 7, cursor: 'pointer' }}
+                >
+                  <CheckCircle size={14} /> {busyId === detailApp.id ? 'Approving…' : 'Approve'}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
+function DetailField({ label, value }: { label: string; value: string | null }) {
+  return (
+    <div>
+      <div style={FIELD_LABEL}>{label}</div>
+      <div style={{ fontSize: 13, color: value ? '#374151' : '#94a3b8' }}>{value ?? '—'}</div>
+    </div>
+  );
+}
+
+const FIELD_LABEL: React.CSSProperties = { fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.4, marginBottom: 3 };
+const LINK_STYLE: React.CSSProperties = { display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, fontWeight: 600, color: '#2563eb', textDecoration: 'none' };
 const ICON_BTN: React.CSSProperties = { width: 26, height: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #e5e7eb', borderRadius: 6, background: '#fff', cursor: 'pointer' };
 const PAGE_BTN: React.CSSProperties = { width: 26, height: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #e2e8f0', borderRadius: 6, background: '#fff', cursor: 'pointer', color: '#64748b' };

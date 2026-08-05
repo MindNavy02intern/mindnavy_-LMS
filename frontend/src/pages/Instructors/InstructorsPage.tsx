@@ -4,6 +4,8 @@ import AdminLayout from '../../layouts/AdminLayout';
 import { useTabParam } from '../../hooks/useTabParam';
 import { useToast, ToastContainer } from '../../components/users/Toast';
 import InstructorsPageHeader from '../../components/instructors/InstructorsPageHeader';
+import InstructorsStatsCards from '../../components/instructors/InstructorsStatsCards';
+import InstructorsAnalyticsSection from '../../components/instructors/InstructorsAnalyticsSection';
 import InstructorsTable, { type InstructorsTableHandle, type ServerTab } from '../../components/instructors/InstructorsTable';
 import ApplicationsTab from '../../components/instructors/ApplicationsTab';
 import InstructorSidePanel, { type InstructorSidePanelHandle } from '../../components/instructors/InstructorSidePanel';
@@ -108,6 +110,8 @@ export default function InstructorsPage() {
           onViewApplications={() => setTab('pending')}
         />
 
+        <InstructorsStatsCards />
+
         {/* Tabs */}
         <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #e2e8f0', overflowX: 'auto' }}>
           {TABS.map(t => {
@@ -183,6 +187,8 @@ export default function InstructorsPage() {
             />
           )}
         </div>
+
+        <InstructorsAnalyticsSection />
       </div>
 
       {addOpen && (

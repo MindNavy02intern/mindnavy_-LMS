@@ -6,6 +6,7 @@
 
 import { getStoredToken } from '../api/adminAuth';
 import { appQueryClient, invalidateFor } from '../lib/invalidation';
+import type { MutationCtx } from '../lib/invalidation';
 import {
   CourseApiError,
   type ApproveCourseResponse,
@@ -182,7 +183,7 @@ export async function submitCourse(courseId: string): Promise<SubmitCourseRespon
 
 // ── Approval: approve ─────────────────────────────────────────────────────────
 
-export async function approveCourse(courseId: string): Promise<ApproveCourseResponse> {
+export async function approveCourse(courseId: string, extraCtx?: Partial<MutationCtx>): Promise<ApproveCourseResponse> {
   if (USE_MOCK) {
     return mockDelay<ApproveCourseResponse>({
       id:         courseId,
@@ -194,7 +195,7 @@ export async function approveCourse(courseId: string): Promise<ApproveCourseResp
     `/courses/${encodeURIComponent(courseId)}/approve`,
     'POST',
   );
-  invalidateFor(appQueryClient, 'course.approve', { id: courseId });
+  invalidateFor(appQueryClient, 'course.approve', { id: courseId, ...extraCtx });
   return result;
 }
 
@@ -203,6 +204,7 @@ export async function approveCourse(courseId: string): Promise<ApproveCourseResp
 export async function rejectCourse(
   courseId: string,
   reason: string,
+  extraCtx?: Partial<MutationCtx>,
 ): Promise<RejectCourseResponse> {
   if (USE_MOCK) {
     return mockDelay<RejectCourseResponse>({
@@ -217,6 +219,6 @@ export async function rejectCourse(
     'POST',
     { reason },
   );
-  invalidateFor(appQueryClient, 'course.reject', { id: courseId });
+  invalidateFor(appQueryClient, 'course.reject', { id: courseId, ...extraCtx });
   return result;
 }

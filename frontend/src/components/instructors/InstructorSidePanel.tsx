@@ -1,9 +1,12 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { CheckCircle, XCircle } from 'lucide-react';
 import {
   deleteInstructor, getInstructor, reactivateInstructor, verifyInstructor,
 } from '../../services/instructorsApi';
+import { approveCourse, rejectCourse } from '../../services/courseWizardApi';
+import { CourseApiError } from '../../types/courses';
 import { InstructorApiError } from '../../types/instructors';
-import type { InstructorDetail } from '../../types/instructors';
+import type { InstructorDetail, InstructorPendingApproval } from '../../types/instructors';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import SendMessageModal from '../users/SendMessageModal';
 import SuspendInstructorDialog from './SuspendInstructorDialog';
@@ -58,6 +61,12 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
   const [deleting,    setDeleting]    = useState(false);
   const [suspendOpen, setSuspendOpen] = useState(false);
   const [messageOpen, setMessageOpen] = useState(false);
+
+  const [courseBusyId, setCourseBusyId] = useState<string | null>(null);
+  const [rejectTarget, setRejectTarget] = useState<InstructorPendingApproval | null>(null);
+  const [rejectReason, setRejectReason] = useState('');
+  const [rejectErr,    setRejectErr]    = useState<string | null>(null);
+  const [rejectBusy,   setRejectBusy]   = useState(false);
 
   // Guards against out-of-order responses: the panel stays mounted across a
   // View→View switch (only `instructorId` changes), so a slow request for a
@@ -136,13 +145,55 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
     }
   }
 
+  async function handleApproveCourse(course: InstructorPendingApproval) {
+    if (!detail) return;
+    if (!window.confirm(`Approve "${course.title}"? It will be published immediately.`)) return;
+    setCourseBusyId(course.id);
+    try {
+      await approveCourse(course.id, { instructorId: detail.id });
+      showToast('success', `"${course.title}" approved and published.`);
+      fetchDetail();
+      onChanged();
+    } catch (err) {
+      showToast('error', err instanceof CourseApiError ? err.message : 'Approval failed.');
+    } finally {
+      setCourseBusyId(null);
+    }
+  }
+
+  function openRejectCourse(course: InstructorPendingApproval) {
+    setRejectTarget(course);
+    setRejectReason('');
+    setRejectErr(null);
+  }
+
+  async function submitRejectCourse() {
+    if (!detail || !rejectTarget) return;
+    const trimmed = rejectReason.trim();
+    if (trimmed.length < 3) { setRejectErr('Required — at least 3 characters.'); return; }
+    setRejectBusy(true);
+    try {
+      await rejectCourse(rejectTarget.id, trimmed, { instructorId: detail.id });
+      showToast('success', `"${rejectTarget.title}" returned to Draft with feedback.`);
+      setRejectTarget(null);
+      fetchDetail();
+      onChanged();
+    } catch (err) {
+      showToast('error', err instanceof CourseApiError ? err.message : 'Rejection failed.');
+    } finally {
+      setRejectBusy(false);
+    }
+  }
+
   const maxEnrollment = detail ? Math.max(1, ...detail.performanceChart.enrollments) : 1;
 
   return (
     <div style={{
       width: 380, flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12,
       display: 'flex', flexDirection: 'column', maxHeight: 'calc(100vh - 140px)', position: 'sticky', top: 16,
+      animation: 'mn-panel-in 0.18s ease',
     }}>
+      <style>{`@keyframes mn-panel-in { from { opacity:0; transform:translateX(24px); } to { opacity:1; transform:none; } }`}</style>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #f1f5f9' }}>
         <span style={{ fontSize: 15, fontWeight: 700, color: '#0f172a' }}>Instructor Details</span>
@@ -179,6 +230,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
                     {detail.badges.topInstructor && <span title="Top Instructor" style={{ fontSize: 11 }}>🏆</span>}
                   </div>
                   <div style={{ fontSize: 12, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail.email}</div>
+                  {detail.phone && <div style={{ fontSize: 12, color: '#94a3b8', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail.phone}</div>}
                 </div>
               </div>
 
@@ -186,8 +238,12 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
                 <span style={{ padding: '3px 9px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: STATUS_COLOR[detail.status]?.bg, color: STATUS_COLOR[detail.status]?.fg }}>
                   {detail.status}
                 </span>
+                {/* badges.verified drives styling (contract: use badges, don't
+                    re-derive from status); the label text uses the raw
+                    verificationState so rejected/expired read differently
+                    from a plain not-yet-reviewed pending. */}
                 <span style={{ padding: '3px 9px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: detail.badges.verified ? '#dbeafe' : '#f1f5f9', color: detail.badges.verified ? '#1d4ed8' : '#64748b' }}>
-                  {detail.badges.verified ? 'Verified' : 'Not verified'}
+                  {detail.badges.verified ? 'Verified' : detail.verificationState[0].toUpperCase() + detail.verificationState.slice(1)}
                 </span>
                 {!detail.hasProfile && (
                   <span style={{ padding: '3px 9px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: '#f1f5f9', color: '#64748b' }}>
@@ -206,6 +262,15 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
               {/* Actions */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 14 }}>
                 <button type="button" onClick={() => onEdit(detail)} style={ACTION_BTN}>Edit</button>
+                <button type="button" disabled title="Instructor profile page not built yet" style={{ ...ACTION_BTN, opacity: 0.45, cursor: 'not-allowed' }}>
+                  View Profile
+                </button>
+                <button type="button" disabled title="Instructor-filtered course view not built yet" style={{ ...ACTION_BTN, opacity: 0.45, cursor: 'not-allowed' }}>
+                  View Courses
+                </button>
+                <button type="button" disabled title="Available with Finance module" style={{ ...ACTION_BTN, opacity: 0.45, cursor: 'not-allowed' }}>
+                  View Earnings
+                </button>
                 <button
                   type="button"
                   onClick={handleVerify}
@@ -215,6 +280,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
                 >
                   {verifying ? 'Verifying…' : 'Verify'}
                 </button>
+                <button type="button" onClick={() => setMessageOpen(true)} style={ACTION_BTN}>Send Message</button>
                 {detail.status === 'suspended' ? (
                   <button type="button" onClick={handleReactivate} disabled={reactivating} style={{ ...ACTION_BTN, ...ACTION_BTN_GREEN, opacity: reactivating ? 0.5 : 1 }}>
                     {reactivating ? 'Reactivating…' : 'Reactivate'}
@@ -224,7 +290,6 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
                     Suspend
                   </button>
                 )}
-                <button type="button" onClick={() => setMessageOpen(true)} style={ACTION_BTN}>Message</button>
                 <button type="button" onClick={handleDelete} disabled={deleting} style={{ ...ACTION_BTN, ...ACTION_BTN_RED, opacity: deleting ? 0.5 : 1 }}>
                   {deleting ? 'Archiving…' : 'Delete'}
                 </button>
@@ -244,10 +309,12 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
             {/* Performance chart — enrollments only (revenue not available) */}
             <div style={SECTION}>
               <div style={SECTION_TITLE}>Enrollments — last 12 months</div>
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 56 }}>
+              <div role="group" aria-label="Enrollments last 12 months" style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 56 }}>
                 {detail.performanceChart.enrollments.map((v, i) => (
                   <div
                     key={i}
+                    role="img"
+                    aria-label={`${detail.performanceChart.labels[i]}: ${v}`}
                     title={`${detail.performanceChart.labels[i]}: ${v}`}
                     style={{ flex: 1, height: `${Math.max(3, (v / maxEnrollment) * 56)}px`, background: '#3b82f6', borderRadius: 2 }}
                   />
@@ -255,15 +322,35 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
               </div>
             </div>
 
-            {/* Pending approvals */}
+            {/* Pending approvals — approve/reject reuse courseWizardApi's
+                approveCourse/rejectCourse (same Courses module endpoints;
+                contract: never fork instructor-scoped variants). */}
             {detail.pendingApprovals.length > 0 && (
               <div style={SECTION}>
                 <div style={SECTION_TITLE}>Pending Course Approvals</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {detail.pendingApprovals.map(c => (
-                    <div key={c.id} style={{ fontSize: 12, color: '#374151' }}>
-                      <div style={{ fontWeight: 600 }}>{c.title}</div>
-                      <div style={{ color: '#94a3b8' }}>{c.category ?? 'Uncategorized'} · waiting since {formatDate(c.submittedAt)}</div>
+                    <div key={c.id} style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+                      <div style={{ fontSize: 12, color: '#374151', minWidth: 0 }}>
+                        <div style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.title}</div>
+                        <div style={{ color: '#94a3b8' }}>{c.category ?? 'Uncategorized'} · waiting since {formatDate(c.submittedAt)}</div>
+                      </div>
+                      <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
+                        <button
+                          type="button" title="Approve" disabled={courseBusyId === c.id}
+                          onClick={() => handleApproveCourse(c)}
+                          style={{ width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #e5e7eb', borderRadius: 6, background: '#fff', cursor: 'pointer' }}
+                        >
+                          <CheckCircle size={14} color="#16a34a" strokeWidth={2} />
+                        </button>
+                        <button
+                          type="button" title="Reject" disabled={courseBusyId === c.id}
+                          onClick={() => openRejectCourse(c)}
+                          style={{ width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #e5e7eb', borderRadius: 6, background: '#fff', cursor: 'pointer' }}
+                        >
+                          <XCircle size={14} color="#dc2626" strokeWidth={2} />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -309,6 +396,40 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
         )}
       </div>
 
+      {rejectTarget && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={!rejectBusy ? () => setRejectTarget(null) : undefined} />
+          <div role="dialog" aria-label="Reject Course" style={{ position: 'relative', width: '100%', maxWidth: 420, background: '#fff', borderRadius: 12, boxShadow: '0 20px 60px rgba(0,0,0,0.22)' }}>
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid #e5e7eb' }}>
+              <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#111827' }}>Reject Course</h3>
+              <p style={{ margin: '4px 0 0', fontSize: 12, color: '#6b7280' }}>
+                Rejecting <strong>{rejectTarget.title}</strong> — returns it to Draft with your feedback.
+              </p>
+            </div>
+            <div style={{ padding: '16px 20px' }}>
+              <textarea
+                aria-label="Rejection reason"
+                value={rejectReason}
+                onChange={e => { setRejectReason(e.target.value); setRejectErr(null); }}
+                placeholder="What needs to change…"
+                rows={4}
+                autoFocus
+                style={{ width: '100%', boxSizing: 'border-box', padding: '8px 10px', fontSize: 13, fontFamily: 'inherit', border: '1px solid #e5e7eb', borderRadius: 6, resize: 'vertical', outline: 'none' }}
+              />
+              {rejectErr && <div style={{ fontSize: 11, color: '#dc2626', marginTop: 4 }}>{rejectErr}</div>}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, padding: '14px 20px', borderTop: '1px solid #f1f5f9' }}>
+              <button type="button" onClick={() => setRejectTarget(null)} disabled={rejectBusy} style={{ padding: '8px 16px', fontSize: 13, fontFamily: 'inherit', background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 7, cursor: 'pointer', color: '#374151' }}>
+                Cancel
+              </button>
+              <button type="button" onClick={submitRejectCourse} disabled={rejectBusy} style={{ padding: '8px 16px', fontSize: 13, fontFamily: 'inherit', fontWeight: 600, background: rejectBusy ? '#9ca3af' : '#dc2626', border: 'none', borderRadius: 7, cursor: 'pointer', color: '#fff' }}>
+                {rejectBusy ? 'Submitting…' : 'Reject'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {suspendOpen && detail && (
         <SuspendInstructorDialog
           instructorId={detail.id}
@@ -336,8 +457,8 @@ export default InstructorSidePanel;
 
 function StatBox({ label, value }: { label: string; value: string | number }) {
   return (
-    <div style={{ padding: '8px 10px', background: '#f8fafc', borderRadius: 8, textAlign: 'center' }}>
-      <div style={{ fontSize: 15, fontWeight: 700, color: '#0f172a' }}>{value}</div>
+    <div role="group" aria-label={`${label} stat`} style={{ padding: '8px 10px', background: '#f8fafc', borderRadius: 8, textAlign: 'center' }}>
+      <div data-value style={{ fontSize: 15, fontWeight: 700, color: '#0f172a' }}>{value}</div>
       <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 2 }}>{label}</div>
     </div>
   );

@@ -33,14 +33,18 @@ export const appQueryClient: MinimalQueryClient = {
 // ── Mutation context ──────────────────────────────────────────────────────────
 
 export interface MutationCtx {
-  id?:        string;   // generic ID (role, course, policy…)
-  userId?:    string;
-  courseId?:  string;
-  studentId?: string;
-  sessionId?: string;
-  pathId?:    string;
-  domain?:    string;   // for settings.update
-  jobId?:     string;   // for imports
+  id?:           string;   // generic ID (role, course, policy…)
+  userId?:       string;
+  courseId?:     string;
+  studentId?:    string;
+  sessionId?:    string;
+  pathId?:       string;
+  domain?:       string;   // for settings.update
+  jobId?:        string;   // for imports
+  instructorId?: string;   // course.approve/.reject fired from the instructor
+                            // side panel — also refresh that instructor's own
+                            // GET /instructors/:id (coursesCount/publishedCoursesCount
+                            // changed) and the list row behind it.
 }
 
 // ── MutationName union ────────────────────────────────────────────────────────
@@ -422,12 +426,14 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.dashboard.courseAnalytics(),
     queryKeys.learningPaths(),
     ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
+    ...(ctx?.instructorId ? [queryKeys.instructors.detail(ctx.instructorId), queryKeys.instructors.list()] : []),
   ],
   'course.reject': (ctx) => [
     queryKeys.courses.list(),
     queryKeys.approvals(),
     queryKeys.notifications(),
     ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
+    ...(ctx?.instructorId ? [queryKeys.instructors.detail(ctx.instructorId), queryKeys.instructors.list()] : []),
   ],
   'course.requestChanges': (ctx) => [
     queryKeys.courses.list(),

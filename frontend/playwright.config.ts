@@ -13,7 +13,7 @@ export default defineConfig({
     },
     {
       name: 'authenticated',
-      testMatch: /(dashboard|dashboard-kpis|roles|users|organization|groups|invitations|access-policies|stats-consistency|role-templates|user-role-assignments|learning-management|lm-overview|courses-tab|roles-permissions-deep-link|lm-deep-link|courses-invalidation|course-upload|course-builder|course-video-upload|course-settings|course-preview|course-submit|course-approval|categories|course-basic-info|learning-paths|quizzes|certificates|certificate-placeholders|live-sessions|enrollments|content-library|instructors)(\.full)?\.spec\.ts/,
+      testMatch: /(dashboard|dashboard-kpis|roles|users|organization|groups|invitations|access-policies|stats-consistency|role-templates|user-role-assignments|learning-management|lm-overview|courses-tab|roles-permissions-deep-link|lm-deep-link|courses-invalidation|course-upload|course-builder|course-video-upload|course-settings|course-preview|course-submit|course-approval|categories|course-basic-info|learning-paths|quizzes|certificates|certificate-placeholders|live-sessions|enrollments|content-library|instructors|instructor-stats-cards|instructor-applications|instructor-panel-analytics)(\.full)?\.spec\.ts/,
       use: { storageState: 'tests/setup/.auth.json' },
       dependencies: ['setup'],
     },
