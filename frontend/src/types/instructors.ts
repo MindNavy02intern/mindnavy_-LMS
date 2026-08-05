@@ -6,9 +6,13 @@ import type { Pagination } from './lm';
 
 export class InstructorApiError extends Error {
   status: number;
-  constructor(status: number, message: string) {
+  // 409 delete-blocked responses carry { courses, liveSessions } per contract
+  // ("Show those counts in the confirm dialog") — everything else omits it.
+  data?: { courses?: number; liveSessions?: number };
+  constructor(status: number, message: string, data?: { courses?: number; liveSessions?: number }) {
     super(message);
     this.status = status;
+    this.data = data;
     this.name = 'InstructorApiError';
   }
 }
@@ -204,12 +208,15 @@ export interface CreateInstructorRequest {
 
 export interface UpdateInstructorRequest {
   fullName?:         string;
+  // Sent unconditionally (may be '') when editing — an omitted key means "no
+  // change" server-side, so clearing a previously-set value requires an
+  // explicit empty string / null, not omission.
   phone?:            string;
   skills?:           string[];
   specialization?:   string;
   headline?:         string;
   bio?:              string;
-  yearsExperience?:  number;
+  yearsExperience?:  number | null;
   websiteUrl?:       string;
   linkedinUrl?:      string;
   revenueShareBps?:  number;

@@ -11,6 +11,11 @@ import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 interface Props {
   showToast: (type: 'success' | 'error', message: string) => void;
   onCountsChanged?: (counts: InstructorApplicationsStatusCounts) => void;
+  /** Fired after an application is approved (a new instructor AppUser was
+   *  just created) — lets the page refresh the All/Active tab badge counts,
+   *  which this tab has no other way to reach since InstructorsTable (the
+   *  only thing that fetches them) isn't mounted while Pending is showing. */
+  onInstructorCreated?: () => void;
 }
 
 type StatusFilter = 'ALL' | ApplicationStatus;
@@ -27,7 +32,7 @@ type ReasonModal = { kind: 'reject' | 'request-changes'; app: InstructorApplicat
 const TH: React.CSSProperties = { padding: '10px 12px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.4, textAlign: 'left' };
 const TD: React.CSSProperties = { padding: '10px 12px', fontSize: 13, color: '#374151', borderTop: '1px solid #f1f5f9' };
 
-export default function ApplicationsTab({ showToast, onCountsChanged }: Props) {
+export default function ApplicationsTab({ showToast, onCountsChanged, onInstructorCreated }: Props) {
   const [rows, setRows] = useState<InstructorApplication[]>([]);
   const [statusCounts, setStatusCounts] = useState<InstructorApplicationsStatusCounts | null>(null);
   const [total, setTotal] = useState(0);
@@ -48,21 +53,30 @@ export default function ApplicationsTab({ showToast, onCountsChanged }: Props) {
   const [reasonErr, setReasonErr] = useState<string | null>(null);
   const [reasonBusy, setReasonBusy] = useState(false);
 
+  // Guards against a stale response (e.g. slow request for a filter/page the
+  // admin already navigated away from) overwriting a newer one.
+  const requestIdRef = useRef(0);
+
   const fetchList = useCallback(() => {
+    const myRequestId = ++requestIdRef.current;
     (() => { setLoading(true); setListError(null); })();
     listInstructorApplications({
       page, limit, search: search || undefined,
       ...(statusFilter !== 'ALL' ? { status: statusFilter.toLowerCase() as 'pending' | 'changes_requested' | 'approved' | 'rejected' } : {}),
     })
       .then(res => {
+        if (requestIdRef.current !== myRequestId) return;
         setRows(res.applications);
         setStatusCounts(res.statusCounts);
         onCountsChanged?.(res.statusCounts);
         setTotal(res.pagination.total);
         setPages(res.pagination.pages);
       })
-      .catch(err => setListError(err instanceof InstructorApiError ? err.message : 'Failed to load applications.'))
-      .finally(() => setLoading(false));
+      .catch(err => {
+        if (requestIdRef.current !== myRequestId) return;
+        setListError(err instanceof InstructorApiError ? err.message : 'Failed to load applications.');
+      })
+      .finally(() => { if (requestIdRef.current === myRequestId) setLoading(false); });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, statusFilter, search]);
 
@@ -82,6 +96,7 @@ export default function ApplicationsTab({ showToast, onCountsChanged }: Props) {
       invalidateFor(appQueryClient, 'instructorApplication.approve');
       showToast('success', `${app.fullName} approved — instructor account created.`);
       fetchList();
+      onInstructorCreated?.();
     } catch (err) {
       showToast('error', err instanceof InstructorApiError ? err.message : 'Approval failed.');
     } finally {
@@ -127,7 +142,13 @@ export default function ApplicationsTab({ showToast, onCountsChanged }: Props) {
       {/* Status tabs */}
       <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #e2e8f0' }}>
         {STATUS_TABS.map(t => {
-          const count = t.key === 'ALL' ? total : statusCounts?.[t.key];
+          // 'total' is the CURRENT filter's pagination.total (defaults to
+          // Pending-only on first load) — statusCounts is the true global,
+          // filter-independent breakdown, so 'All' must sum it, not reuse
+          // whatever the active filter happens to return.
+          const count = t.key === 'ALL'
+            ? (statusCounts ? Object.values(statusCounts).reduce((a, b) => a + b, 0) : total)
+            : statusCounts?.[t.key];
           const active = statusFilter === t.key;
           return (
             <button

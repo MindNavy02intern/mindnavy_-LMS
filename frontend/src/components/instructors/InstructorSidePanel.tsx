@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import {
   deleteInstructor, getInstructor, reactivateInstructor, verifyInstructor,
 } from '../../services/instructorsApi';
@@ -44,7 +44,11 @@ function formatDate(iso: string | null): string {
 const SECTION: React.CSSProperties = { padding: '16px 20px', borderBottom: '1px solid #f1f5f9' };
 const SECTION_TITLE: React.CSSProperties = { fontSize: 12, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.4, marginBottom: 10 };
 
-export default function InstructorSidePanel({ instructorId, onClose, onEdit, onChanged, onDeleted, showToast }: Props) {
+export interface InstructorSidePanelHandle { refetch: () => void }
+
+const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(function InstructorSidePanel(
+  { instructorId, onClose, onEdit, onChanged, onDeleted, showToast }, ref,
+) {
   const [detail,  setDetail]  = useState<InstructorDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);
@@ -55,22 +59,34 @@ export default function InstructorSidePanel({ instructorId, onClose, onEdit, onC
   const [suspendOpen, setSuspendOpen] = useState(false);
   const [messageOpen, setMessageOpen] = useState(false);
 
+  // Guards against out-of-order responses: the panel stays mounted across a
+  // View→View switch (only `instructorId` changes), so a slow request for a
+  // previously-viewed instructor could otherwise resolve after a newer one
+  // and silently overwrite the panel with the wrong instructor's data.
+  const requestIdRef = useRef(0);
+
   const fetchDetail = useCallback(() => {
+    const myRequestId = ++requestIdRef.current;
     (() => { setLoading(true); setError(null); })();
     getInstructor(instructorId)
-      .then(setDetail)
-      .catch(err => setError(err instanceof InstructorApiError ? err.message : 'Failed to load instructor.'))
-      .finally(() => setLoading(false));
+      .then(res => { if (requestIdRef.current === myRequestId) setDetail(res); })
+      .catch(err => {
+        if (requestIdRef.current !== myRequestId) return;
+        setError(err instanceof InstructorApiError ? err.message : 'Failed to load instructor.');
+      })
+      .finally(() => { if (requestIdRef.current === myRequestId) setLoading(false); });
   }, [instructorId]);
 
   useEffect(() => { fetchDetail(); }, [fetchDetail]);
+  useImperativeHandle(ref, () => ({ refetch: fetchDetail }), [fetchDetail]);
 
   async function handleVerify() {
     if (!detail) return;
+    const myRequestId = ++requestIdRef.current;
     setVerifying(true);
     try {
       const updated = await verifyInstructor(detail.id);
-      setDetail(updated);
+      if (requestIdRef.current === myRequestId) setDetail(updated);
       invalidateFor(appQueryClient, 'instructor.verify', { id: detail.id });
       showToast('success', `${detail.fullName} verified.`);
       onChanged();
@@ -84,10 +100,11 @@ export default function InstructorSidePanel({ instructorId, onClose, onEdit, onC
   async function handleReactivate() {
     if (!detail) return;
     if (!window.confirm(`Reactivate ${detail.fullName}? They will regain access immediately.`)) return;
+    const myRequestId = ++requestIdRef.current;
     setReactivating(true);
     try {
       const updated = await reactivateInstructor(detail.id);
-      setDetail(updated);
+      if (requestIdRef.current === myRequestId) setDetail(updated);
       invalidateFor(appQueryClient, 'instructor.reactivate', { id: detail.id });
       showToast('success', `${detail.fullName} reactivated.`);
       onChanged();
@@ -108,7 +125,12 @@ export default function InstructorSidePanel({ instructorId, onClose, onEdit, onC
       showToast('success', `${detail.fullName} archived.`);
       onDeleted();
     } catch (err) {
-      showToast('error', err instanceof InstructorApiError ? err.message : 'Delete failed.');
+      if (err instanceof InstructorApiError && err.status === 409 && err.data) {
+        const { courses = 0, liveSessions = 0 } = err.data;
+        showToast('error', `${err.message} (${courses} course${courses === 1 ? '' : 's'}, ${liveSessions} live session${liveSessions === 1 ? '' : 's'})`);
+      } else {
+        showToast('error', err instanceof InstructorApiError ? err.message : 'Delete failed.');
+      }
     } finally {
       setDeleting(false);
     }
@@ -308,7 +330,9 @@ export default function InstructorSidePanel({ instructorId, onClose, onEdit, onC
       )}
     </div>
   );
-}
+});
+
+export default InstructorSidePanel;
 
 function StatBox({ label, value }: { label: string; value: string | number }) {
   return (

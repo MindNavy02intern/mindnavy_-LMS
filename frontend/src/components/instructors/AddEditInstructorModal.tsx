@@ -93,16 +93,20 @@ export default function AddEditInstructorModal({ mode, instructor, onClose, onSu
         invalidateFor(appQueryClient, 'instructor.create');
         showToast('success', `${fullName.trim()} added as an instructor.`);
       } else if (instructor) {
+        // Sent unconditionally, unlike create — PATCH treats an OMITTED key
+        // as "leave unchanged", not "clear it". If an admin blanks out a
+        // previously-set field, the key must still be present (as '' / null)
+        // or the clear silently doesn't save.
         await updateInstructor(instructor.id, {
-          fullName: fullName.trim(),
-          ...(phone.trim() ? { phone: phone.trim() } : {}),
+          fullName:        fullName.trim(),
+          phone:           phone.trim(),
           skills,
-          ...(specialization.trim() ? { specialization: specialization.trim() } : {}),
-          ...(headline.trim() ? { headline: headline.trim() } : {}),
-          ...(bio.trim() ? { bio: bio.trim() } : {}),
-          ...(yearsExperience.trim() ? { yearsExperience: Number(yearsExperience) } : {}),
-          ...(websiteUrl.trim() ? { websiteUrl: websiteUrl.trim() } : {}),
-          ...(linkedinUrl.trim() ? { linkedinUrl: linkedinUrl.trim() } : {}),
+          specialization:  specialization.trim(),
+          headline:        headline.trim(),
+          bio:             bio.trim(),
+          yearsExperience: yearsExperience.trim() ? Number(yearsExperience) : null,
+          websiteUrl:      websiteUrl.trim(),
+          linkedinUrl:     linkedinUrl.trim(),
         });
         invalidateFor(appQueryClient, 'instructor.update', { id: instructor.id });
         showToast('success', 'Instructor updated.');

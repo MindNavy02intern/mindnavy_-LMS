@@ -176,6 +176,10 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.users.pendingVerification(),
     queryKeys.users.invitations(),
     queryKeys.reportsSnapshot(),
+    // A CSV import can include INSTRUCTOR-role rows (ImportUsersModal allows
+    // any of LEARNER/INSTRUCTOR/MANAGER/ADMIN_ASSISTANT) — this domain was
+    // never invalidated on import before the Instructors module existed.
+    queryKeys.instructors.list(),
     ...(ctx?.id ? [queryKeys.users.detail(ctx.id)] : []),
   ],
   'user.invite': () => [

@@ -25,6 +25,10 @@ interface Props {
   onTabCountsChanged: (counts: InstructorTabCounts) => void;
   onView:             (id: string) => void;
   onEdit:             (instructor: Instructor) => void;
+  /** Fired after any row-level mutation (suspend/reactivate/delete/message)
+   *  succeeds, with the affected instructor's id — lets the page refresh an
+   *  open side panel for that same instructor. */
+  onMutated?:         (id: string) => void;
   showToast:          (type: 'success' | 'error', message: string) => void;
 }
 
@@ -67,7 +71,7 @@ const TH: React.CSSProperties = { padding: '10px 12px', fontSize: 11, fontWeight
 const TD: React.CSSProperties = { padding: '10px 12px', fontSize: 13, color: '#374151', borderTop: '1px solid #f1f5f9', verticalAlign: 'middle' };
 
 const InstructorsTable = forwardRef<InstructorsTableHandle, Props>(function InstructorsTable(
-  { serverTab, filterInvitedOnly, onTabCountsChanged, onView, onEdit, showToast }, ref,
+  { serverTab, filterInvitedOnly, onTabCountsChanged, onView, onEdit, onMutated, showToast }, ref,
 ) {
   const [rows, setRows] = useState<Instructor[]>([]);
   const [total, setTotal] = useState(0);
@@ -102,21 +106,60 @@ const InstructorsTable = forwardRef<InstructorsTableHandle, Props>(function Inst
   const [messageTarget, setMessageTarget] = useState<Instructor | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
-  // Reset to page 1 when the active tab changes.
-  useEffect(() => { (() => { setPage(1); setSelected(new Set()); })(); }, [serverTab, filterInvitedOnly]);
+  // Reset to page 1 when the active tab changes. Also default `sort` to
+  // 'students' when entering Top Performers — GET /instructors only falls
+  // back to the students-ranked order when `sort` is OMITTED from the query;
+  // this component always sends an explicit value, so without this the tab
+  // would silently render "Most Recent" order instead of actual top performers
+  // (the admin could still change it via the Sort dropdown afterward).
+  useEffect(() => {
+    (() => {
+      setPage(1);
+      setSelected(new Set());
+      if (serverTab === 'top') setSort('students');
+    })();
+  }, [serverTab, filterInvitedOnly]);
+
+  // Guards against out-of-order responses (e.g. clicking through tabs faster
+  // than the network resolves) overwriting the table with stale data.
+  const requestIdRef = useRef(0);
 
   const fetchList = useCallback(() => {
+    const myRequestId = ++requestIdRef.current;
     (() => { setLoading(true); setListError(null); })();
-    listInstructors({
-      page: filterInvitedOnly ? 1 : page,
-      limit: filterInvitedOnly ? 100 : limit,
+
+    const baseParams = {
       tab: serverTab,
       sort,
       ...(search ? { search } : {}),
       ...(specialization ? { specialization } : {}),
       ...(categoryId ? { categoryId } : {}),
-    })
+    };
+
+    // Invitations has no dedicated backend tab — it's the 'inactive' bucket
+    // (PENDING | INVITED) client-filtered to status==='invited'. The backend
+    // caps `limit` at 100/request, so once the inactive bucket exceeds 100
+    // rows a single page can silently under-count/omit invited rows past
+    // that window. Fetch every page of the bucket (bounded by the real
+    // tabCounts.inactive total) and merge before filtering, instead of
+    // capping at one page.
+    const listPromise = filterInvitedOnly
+      ? listInstructors({ ...baseParams, page: 1, limit: 100 }).then(async (first) => {
+          if (first.pagination.pages <= 1) return first;
+          const rest = await Promise.all(
+            Array.from({ length: first.pagination.pages - 1 }, (_, i) =>
+              listInstructors({ ...baseParams, page: i + 2, limit: 100 })),
+          );
+          return {
+            ...first,
+            instructors: [first, ...rest].flatMap(r => r.instructors),
+          };
+        })
+      : listInstructors({ ...baseParams, page, limit });
+
+    listPromise
       .then(res => {
+        if (requestIdRef.current !== myRequestId) return; // stale response — a newer request already resolved
         setRows(res.instructors);
         onTabCountsChanged(res.tabCounts);
         setTotal(filterInvitedOnly ? res.instructors.filter(r => r.status === 'invited').length : res.pagination.total);
@@ -126,21 +169,25 @@ const InstructorsTable = forwardRef<InstructorsTableHandle, Props>(function Inst
           return Array.from(new Set([...prev, ...names])).sort();
         });
       })
-      .catch(err => setListError(err instanceof InstructorApiError ? err.message : 'Failed to load instructors.'))
-      .finally(() => setLoading(false));
+      .catch(err => {
+        if (requestIdRef.current !== myRequestId) return;
+        setListError(err instanceof InstructorApiError ? err.message : 'Failed to load instructors.');
+      })
+      .finally(() => {
+        if (requestIdRef.current === myRequestId) setLoading(false);
+      });
+
+    // Top-10 ids for the trophy badge — refetched alongside every list fetch
+    // (not just once on mount) so it can't go stale after a mutation. Same
+    // ranking that backs ?tab=top, per contract — one definition everywhere.
+    listInstructors({ tab: 'top', limit: 10 })
+      .then(res => setTopIds(new Set(res.instructors.map(i => i.id))))
+      .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, serverTab, filterInvitedOnly, sort, search, specialization, categoryId]);
 
   useEffect(() => { fetchList(); }, [fetchList]);
   useImperativeHandle(ref, () => ({ refetch: fetchList }), [fetchList]);
-
-  // Top-10 ids — fetched once, cross-referenced on every tab for the trophy badge.
-  // Same ranking that backs ?tab=top, per contract — one definition everywhere.
-  useEffect(() => {
-    listInstructors({ tab: 'top', limit: 10 })
-      .then(res => setTopIds(new Set(res.instructors.map(i => i.id))))
-      .catch(() => {});
-  }, []);
 
   useEffect(() => {
     listCategories().then(setCategories).catch(() => {});
@@ -200,6 +247,7 @@ const InstructorsTable = forwardRef<InstructorsTableHandle, Props>(function Inst
       invalidateFor(appQueryClient, 'instructor.reactivate', { id: row.id });
       showToast('success', `${row.fullName} reactivated.`);
       fetchList();
+      onMutated?.(row.id);
     } catch (err) {
       showToast('error', err instanceof InstructorApiError ? err.message : 'Reactivation failed.');
     } finally {
@@ -215,8 +263,14 @@ const InstructorsTable = forwardRef<InstructorsTableHandle, Props>(function Inst
       invalidateFor(appQueryClient, 'instructor.delete');
       showToast('success', `${row.fullName} archived.`);
       fetchList();
+      onMutated?.(row.id);
     } catch (err) {
-      showToast('error', err instanceof InstructorApiError ? err.message : 'Delete failed.');
+      if (err instanceof InstructorApiError && err.status === 409 && err.data) {
+        const { courses = 0, liveSessions = 0 } = err.data;
+        showToast('error', `${err.message} (${courses} course${courses === 1 ? '' : 's'}, ${liveSessions} live session${liveSessions === 1 ? '' : 's'})`);
+      } else {
+        showToast('error', err instanceof InstructorApiError ? err.message : 'Delete failed.');
+      }
     } finally {
       setBusyId(null);
     }
@@ -438,7 +492,7 @@ const InstructorsTable = forwardRef<InstructorsTableHandle, Props>(function Inst
           instructorId={suspendTarget.id}
           fullName={suspendTarget.fullName}
           onClose={() => setSuspendTarget(null)}
-          onSuccess={() => { setSuspendTarget(null); fetchList(); }}
+          onSuccess={() => { const id = suspendTarget.id; setSuspendTarget(null); fetchList(); onMutated?.(id); }}
           showToast={showToast}
         />
       )}

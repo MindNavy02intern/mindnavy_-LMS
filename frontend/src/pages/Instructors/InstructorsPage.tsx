@@ -6,10 +6,12 @@ import { useToast, ToastContainer } from '../../components/users/Toast';
 import InstructorsPageHeader from '../../components/instructors/InstructorsPageHeader';
 import InstructorsTable, { type InstructorsTableHandle, type ServerTab } from '../../components/instructors/InstructorsTable';
 import ApplicationsTab from '../../components/instructors/ApplicationsTab';
-import InstructorSidePanel from '../../components/instructors/InstructorSidePanel';
+import InstructorSidePanel, { type InstructorSidePanelHandle } from '../../components/instructors/InstructorSidePanel';
 import AddEditInstructorModal from '../../components/instructors/AddEditInstructorModal';
 import ImportUsersModal from '../../components/users/ImportUsersModal';
 import ExportUsersModal from '../../components/users/ExportUsersModal';
+import { listInstructors } from '../../services/instructorsApi';
+import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import type { Instructor, InstructorDetail, InstructorTabCounts } from '../../types/instructors';
 
 type PageTab = 'all' | 'pending' | 'active' | 'inactive' | 'suspended' | 'top' | 'invitations' | 'payouts';
@@ -53,6 +55,7 @@ export default function InstructorsPage() {
   const [exportOpen, setExportOpen] = useState(false);
 
   const tableRef = useRef<InstructorsTableHandle>(null);
+  const panelRef = useRef<InstructorSidePanelHandle>(null);
 
   function setTab(t: PageTab) { setTabKey(t); }
 
@@ -72,6 +75,19 @@ export default function InstructorsPage() {
   }
 
   function refetchTable() { tableRef.current?.refetch(); }
+  function refetchPanel() { panelRef.current?.refetch(); }
+  // For mutations that could affect whichever instructor the panel is
+  // currently showing (edit/import/create) — the panel doesn't know about
+  // mutations that happen outside it, so it has to be told explicitly.
+  function refetchTableAndPanel() { refetchTable(); refetchPanel(); }
+
+  // instructorApplication.approve creates a new instructor, which should bump
+  // the All/Active tab badges — but InstructorsTable (the only thing that
+  // normally fetches tabCounts) isn't mounted while the Pending tab is
+  // showing, so pull a fresh count directly.
+  function refreshTabCountsInBackground() {
+    listInstructors({ tab: 'all', limit: 1 }).then(res => setTabCounts(res.tabCounts)).catch(() => {});
+  }
 
   function badgeFor(key: PageTab): number | undefined {
     if (key === 'pending') return pendingAppCount ?? tabCounts?.pending;
@@ -126,7 +142,12 @@ export default function InstructorsPage() {
             {tab === 'pending' ? (
               <ApplicationsTab
                 showToast={showToast}
-                onCountsChanged={counts => setPendingAppCount(counts.PENDING)}
+                // tabCounts.pending counts PENDING + CHANGES_REQUESTED
+                // (contract: "cannot drift" from this same list) — summing
+                // only PENDING here would under-count once this tab has been
+                // visited, silently dropping applicants awaiting resubmission.
+                onCountsChanged={counts => setPendingAppCount(counts.PENDING + counts.CHANGES_REQUESTED)}
+                onInstructorCreated={refreshTabCountsInBackground}
               />
             ) : tab === 'payouts' ? (
               <div style={{ border: '1px dashed #cbd5e1', borderRadius: 12, background: '#f8fafc', padding: '48px 24px', textAlign: 'center' }}>
@@ -144,6 +165,7 @@ export default function InstructorsPage() {
                 onTabCountsChanged={setTabCounts}
                 onView={openPanel}
                 onEdit={setEditTarget}
+                onMutated={id => { if (id === panelInstructorId) refetchPanel(); }}
                 showToast={showToast}
               />
             )}
@@ -151,6 +173,7 @@ export default function InstructorsPage() {
 
           {panelInstructorId && (
             <InstructorSidePanel
+              ref={panelRef}
               instructorId={panelInstructorId}
               onClose={closePanel}
               onEdit={setEditTarget}
@@ -176,7 +199,16 @@ export default function InstructorsPage() {
           mode="edit"
           instructor={editTarget}
           onClose={() => setEditTarget(null)}
-          onSuccess={() => { setEditTarget(null); refetchTable(); }}
+          onSuccess={() => {
+            // The instructor being edited may be the same one the side panel
+            // is currently showing (its own Edit button routes here too) —
+            // refetch both, not just the table, or the panel keeps rendering
+            // pre-edit values until manually closed and reopened.
+            const editedId = editTarget?.id;
+            setEditTarget(null);
+            refetchTable();
+            if (editedId && editedId === panelInstructorId) refetchPanel();
+          }}
           showToast={showToast}
         />
       )}
@@ -184,7 +216,14 @@ export default function InstructorsPage() {
       {importOpen && (
         <ImportUsersModal
           onClose={() => setImportOpen(false)}
-          onSuccess={() => { setImportOpen(false); refetchTable(); }}
+          onSuccess={() => {
+            setImportOpen(false);
+            // ImportUsersModal only dispatches raw DOM events, not
+            // invalidateFor — and a CSV can contain INSTRUCTOR rows, so this
+            // domain needs an explicit invalidation the modal doesn't do itself.
+            invalidateFor(appQueryClient, 'user.import');
+            refetchTableAndPanel();
+          }}
           showToast={showToast}
         />
       )}

@@ -1,7 +1,7 @@
 {
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\package.json": {
-    "mtime": 1780974114.011105,
-    "ast_hash": "d5d06413ff5c40d69c0f8d84c54910da",
+    "mtime": 1784284829.6000485,
+    "ast_hash": "4fdec990fc29c124b95f85e0f1a56d25",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\prisma.config.ts": {
@@ -10,8 +10,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\server.js": {
-    "mtime": 1781252592.4822495,
-    "ast_hash": "332faf9109a5575eb8d0f05ca31667cd",
+    "mtime": 1785935684.7907755,
+    "ast_hash": "14b930715248d3622d91c32e336ccb99",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\tsconfig.json": {
@@ -25,33 +25,33 @@
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\admin.controller.js": {
-    "mtime": 1779726519.1825457,
-    "ast_hash": "d9c6ced03cd7275869637b4c2095a8bb",
+    "mtime": 1784284829.6100442,
+    "ast_hash": "e9e057b770cd9c332ad0b8dce62592d3",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\dashboard.controller.js": {
-    "mtime": 1780327706.768511,
-    "ast_hash": "10d8e6184f4f88630d3037260c828fee",
+    "mtime": 1782048883.154842,
+    "ast_hash": "e67875f67d725a25f01b0ebb20948c47",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\users.controller.js": {
-    "mtime": 1780984028.2137184,
-    "ast_hash": "0a880443dbcc4e8773aba4cac980c240",
+    "mtime": 1783541920.2924767,
+    "ast_hash": "44299a67fccf8bfc263820ce89daafa6",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\middlewares\\auth.middleware.js": {
-    "mtime": 1781248426.4943802,
-    "ast_hash": "30b0cff3df4df7a3f49bd2c06c296222",
+    "mtime": 1782048883.1588461,
+    "ast_hash": "6d59985acaa9be92323e41e7642c691b",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\middlewares\\rateLimit.middleware.js": {
-    "mtime": 1780974114.018104,
-    "ast_hash": "5382beef8aca1df07e714be601efb5aa",
+    "mtime": 1785935684.7957742,
+    "ast_hash": "b55e95d0a4ff80716e66db77f4d88a56",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\admin.routes.js": {
-    "mtime": 1779726519.184544,
-    "ast_hash": "122c7a0b863b2f8f60975cee423fae50",
+    "mtime": 1783570462.040553,
+    "ast_hash": "8d4743afa5901a366cd0b573b83a45a3",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\dashboard.routes.js": {
@@ -60,13 +60,13 @@
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\users.routes.js": {
-    "mtime": 1781248426.4943802,
-    "ast_hash": "11cfd4edb369a2d5f3515d8bcdf78801",
+    "mtime": 1782179370.01044,
+    "ast_hash": "a5aa8d7d03d166182a2afcff4a3b9d90",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\createFirstAdmin.js": {
-    "mtime": 1779534632.389723,
-    "ast_hash": "6c7d2777a56ce43fe7dd8b1994f86dff",
+    "mtime": 1782360480.3183289,
+    "ast_hash": "f86ca6ffa415aa7790821227494f5c09",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\resetFirstAdminPassword.js": {
@@ -75,18 +75,18 @@
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\admin.service.js": {
-    "mtime": 1781248426.4943802,
-    "ast_hash": "6447c4389fb600b38b8fe43b275a2bae",
+    "mtime": 1784284829.6260436,
+    "ast_hash": "5c585df16341870bc4a40083c399dafe",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\dashboard.service.js": {
-    "mtime": 1781248426.4943802,
-    "ast_hash": "a63630ca1643aa2e0a5191a0bd69383a",
+    "mtime": 1785348693.6005683,
+    "ast_hash": "9519819d78cb756e7cf7272f9ababb5b",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\users.service.js": {
-    "mtime": 1781248426.5100071,
-    "ast_hash": "deec0df7bde4aa193d002d5a59e7738e",
+    "mtime": 1785935684.8137734,
+    "ast_hash": "f8591acf9c403f8d9a1b37bc184b8987",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\utils\\otp.js": {
@@ -95,18 +95,18 @@
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\utils\\passwordPolicy.js": {
-    "mtime": 1779534632.389723,
-    "ast_hash": "e7a06963c629de9f9f30ef7bb3e5701f",
+    "mtime": 1783541920.310605,
+    "ast_hash": "37d067a15a93fcd1e0ed8ac13d04de24",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\adminAuth.validator.js": {
-    "mtime": 1781248426.5110228,
+    "mtime": 1781261614.918412,
     "ast_hash": "4ec73dee77f3d70cba11215150da2ff8",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\organization.controller.js": {
-    "mtime": 1781252563.1083014,
-    "ast_hash": "11127ee1a0367e21d0efec9c1ebe75ec",
+    "mtime": 1783570462.0291927,
+    "ast_hash": "6b33e0e87ac322bbe3b2554fa11bc440",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\middlewares\\upload.middleware.js": {
@@ -115,8 +115,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\organization.routes.js": {
-    "mtime": 1781252577.073554,
-    "ast_hash": "a658dda2ceddd52b7953b19afe05d78e",
+    "mtime": 1781261616.781112,
+    "ast_hash": "55ae737b65b83c7e19134f7403666f60",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\addUsersImportedEnum.js": {
@@ -125,23 +125,638 @@
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\organization.service.js": {
-    "mtime": 1781253620.3098805,
-    "ast_hash": "1bfaedb4a7864b33d787289b5ebcb554",
+    "mtime": 1783570462.1288166,
+    "ast_hash": "44fd53a9d8c32fe805f77ae57f34ac7c",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\organization.validator.js": {
-    "mtime": 1781252446.7661324,
-    "ast_hash": "15ee646bd7a75113c1955882e076778f",
+    "mtime": 1781261616.7831104,
+    "ast_hash": "3b51a8aea1eed6acecea1fd8b6c88d98",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\users.validator.js": {
-    "mtime": 1780885982.1700573,
-    "ast_hash": "942b307591f81a4524022d8b0f8304bd",
+    "mtime": 1782057025.5770435,
+    "ast_hash": "8efd57d50fdb9c940aaef9acc9c89d8d",
     "semantic_hash": ""
   },
   "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\usersImport.validator.js": {
-    "mtime": 1780974114.0251014,
-    "ast_hash": "04661ac16e542db6984a0c4e23454e1d",
+    "mtime": 1781262509.2348008,
+    "ast_hash": "fdd02be93ae1ce332bb343582051e782",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\prisma\\seed-groups.js": {
+    "mtime": 1781547670.4708788,
+    "ast_hash": "52d871964b394d8391779d8e5c173634",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\prisma\\seed.js": {
+    "mtime": 1782490749.230662,
+    "ast_hash": "469d8b700c48ef4f2fe7cdb66d289516",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\scripts\\auditTestData.js": {
+    "mtime": 1782837596.5805967,
+    "ast_hash": "3a91049f28ae26c093a0391e28c1a3ed",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\scripts\\cleanAllTestData.js": {
+    "mtime": 1782837596.5805967,
+    "ast_hash": "a0f98da043b3c3fc4e6e540d6293e985",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\scripts\\cleanTestRoles.js": {
+    "mtime": 1782837596.5805967,
+    "ast_hash": "42f883edeff6b25080f95df47eec694e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\scripts\\cleanup-test-data.js": {
+    "mtime": 1782349973.7586608,
+    "ast_hash": "9cb0c2cc29e175be8c0bef1e69ed72d4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\scripts\\listRoles.js": {
+    "mtime": 1782837596.5805967,
+    "ast_hash": "b34c73e6e1ebd3cd31bad12c124fae1b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\scripts\\resetLoginLockout.js": {
+    "mtime": 1782874338.567618,
+    "ast_hash": "ab9a702ff3c7c2a4f91c0bb0d2964024",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\accessPolicies.controller.js": {
+    "mtime": 1782360480.3143263,
+    "ast_hash": "fd3b770c2b7b786db670f4745a547473",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\categories.controller.js": {
+    "mtime": 1784050495.7763963,
+    "ast_hash": "41fce5b6474e8451b65bfc143f98b285",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\certificates.controller.js": {
+    "mtime": 1784284829.6110451,
+    "ast_hash": "f982a77e0d04e07a3ed2e6f88a4ef697",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\content.controller.js": {
+    "mtime": 1784995130.3163407,
+    "ast_hash": "ca7151c8b87a95e330f14006f6017cf5",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\courseBuilder.controller.js": {
+    "mtime": 1783281626.5526402,
+    "ast_hash": "d78d1e3493cd512ec2678ca200278b4b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\courses.controller.js": {
+    "mtime": 1784284842.5184903,
+    "ast_hash": "e3328d2950ed8b2c089eebded171073a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\courseWorkflow.controller.js": {
+    "mtime": 1784050495.7773964,
+    "ast_hash": "2a8729edd0e8b67c4fe8409f4a5df536",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\enrollments.controller.js": {
+    "mtime": 1784995130.3173416,
+    "ast_hash": "1164246bd075516304cf71c81a3022d9",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\groups.controller.js": {
+    "mtime": 1783570462.0241964,
+    "ast_hash": "4adc834f6544e1a913e2275dfe1639a7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\instructorApplications.controller.js": {
+    "mtime": 1785935684.7927756,
+    "ast_hash": "3e5e43a877d71a1508afc8c1600e586e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\instructors.controller.js": {
+    "mtime": 1785935684.793774,
+    "ast_hash": "6b66691e9934386da9012fc17c92606e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\invitations.controller.js": {
+    "mtime": 1781792959.6416795,
+    "ast_hash": "1726bfb20059455cb5adbef80909a343",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\learningPaths.controller.js": {
+    "mtime": 1784284829.6120465,
+    "ast_hash": "2f472e865f397071a9de8706fdebf232",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\liveSessions.controller.js": {
+    "mtime": 1785348693.5975678,
+    "ast_hash": "2e37759d8a78faf37944f32855bde056",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\lm.controller.js": {
+    "mtime": 1782837359.0442936,
+    "ast_hash": "e4a8aff54a1c1c98842a65c5b889af55",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\messages.controller.js": {
+    "mtime": 1783541920.2924767,
+    "ast_hash": "786c238ab14346c37cee45a3fe912974",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\quizzes.controller.js": {
+    "mtime": 1784284829.613046,
+    "ast_hash": "1663d204670e0e6bb66ee968221b2d42",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\roles.controller.js": {
+    "mtime": 1782157074.610647,
+    "ast_hash": "1b13586bd868a21f70b87b8dbd75b935",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\roleTemplates.controller.js": {
+    "mtime": 1782490749.3215158,
+    "ast_hash": "94b05559c9565cafa44667aa620ef999",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\uploads.controller.js": {
+    "mtime": 1783869905.7863078,
+    "ast_hash": "e8bbb2dc47939d88508de51cf19d8628",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\controllers\\userRoleAssignments.controller.js": {
+    "mtime": 1782837359.0452962,
+    "ast_hash": "d9eeae39e075de7fdaa092f490774221",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\accessPolicies.routes.js": {
+    "mtime": 1782360480.3163228,
+    "ast_hash": "052c8111f7b4aa51e551c52f4c7faeca",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\categories.routes.js": {
+    "mtime": 1784050495.7793946,
+    "ast_hash": "83774b0718eaf17704d56ab2435fd164",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\certificates.routes.js": {
+    "mtime": 1784284829.6160443,
+    "ast_hash": "50c18135e92d0abe5efa2e805842d7d0",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\certificateTemplates.routes.js": {
+    "mtime": 1784284829.6150458,
+    "ast_hash": "6de1fd4c1353b9c92581ed09a546364e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\content.routes.js": {
+    "mtime": 1784995130.3203487,
+    "ast_hash": "1987bc55b1caf4d702c5cdce407a77d9",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\courseBuilder.routes.js": {
+    "mtime": 1783281626.562769,
+    "ast_hash": "1b389a1daa69934be80ce0139c46bddb",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\courses.routes.js": {
+    "mtime": 1784284842.5204895,
+    "ast_hash": "9c5b98f277fc266a29f2420236ac05b9",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\courseWorkflow.routes.js": {
+    "mtime": 1784050495.7803943,
+    "ast_hash": "a3b2f7bc6ddff5ce39ee258a31a36f36",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\enrollments.routes.js": {
+    "mtime": 1784995130.3213418,
+    "ast_hash": "063cbc16dd524608159b59a7153568d4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\groups.routes.js": {
+    "mtime": 1781547670.4739254,
+    "ast_hash": "d936431024bbf6868d49d117a780e524",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\instructorApplications.routes.js": {
+    "mtime": 1785935684.7967744,
+    "ast_hash": "03e31aa1d035efbe1c2404d996b9927b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\instructors.routes.js": {
+    "mtime": 1785935684.798775,
+    "ast_hash": "6163f3b0c9fffc759d5024b517eafa2d",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\invitations.routes.js": {
+    "mtime": 1781563496.1077013,
+    "ast_hash": "5b583e910b4ebf31f58ad8a25c5ddcd7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\learningPaths.routes.js": {
+    "mtime": 1784284829.6170444,
+    "ast_hash": "a08fcc641f28b35193781247c6248169",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\liveSessions.routes.js": {
+    "mtime": 1785348693.5985794,
+    "ast_hash": "494a24cfafffa54d038015f6f902100e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\lm.routes.js": {
+    "mtime": 1782837359.0462942,
+    "ast_hash": "906ae42c00e74b6a444feaf988b3deb4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\messages.routes.js": {
+    "mtime": 1781803713.071109,
+    "ast_hash": "3e4cb872fa444536cf9d04b6c94300fd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\permissionMatrix.routes.js": {
+    "mtime": 1782157074.6116607,
+    "ast_hash": "f65c094c292a3264e68a524dfd571f54",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\permissions.routes.js": {
+    "mtime": 1781532036.3559985,
+    "ast_hash": "a9b87e732c0d7c9f9ff6787f38f068ac",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\publicCertificates.routes.js": {
+    "mtime": 1784284829.6170444,
+    "ast_hash": "e573f01ecc8be9ea84adcfb0f6a83a5b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\publicInstructorApplications.routes.js": {
+    "mtime": 1785935684.8017764,
+    "ast_hash": "694bf2c686055a2c38f2a466d1800d47",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\quizzes.routes.js": {
+    "mtime": 1784284829.618044,
+    "ast_hash": "c0c63f573327fba800a063b91a7a0b25",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\roles.routes.js": {
+    "mtime": 1782048883.160842,
+    "ast_hash": "0668d1b5b3bf523f7cfa6def733b8ec1",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\roleTemplates.routes.js": {
+    "mtime": 1782490749.3215158,
+    "ast_hash": "c37fc2e17e04d915208c264c348d123e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\uploads.routes.js": {
+    "mtime": 1783281626.562769,
+    "ast_hash": "3ee17fc36c7f5a10c762b3a94dc5b299",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\routes\\userRoleAssignments.routes.js": {
+    "mtime": 1782837359.0472944,
+    "ast_hash": "46e4445b628d87d8b73f538f46406183",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\backfillCertificateCodes.js": {
+    "mtime": 1784284829.6190474,
+    "ast_hash": "37d95716d38e749833787c38af6dcbca",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\certificatesSmokeTest.js": {
+    "mtime": 1784284829.620047,
+    "ast_hash": "c7d86c57e9c6bd436955c3976fa87943",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\cleanup-test-data.js": {
+    "mtime": 1785935684.8047726,
+    "ast_hash": "54ab63832275fdb33c7c701c378ad27c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\contentSmokeTest.js": {
+    "mtime": 1784995130.323341,
+    "ast_hash": "00ff5cf025a9386feefc42dec9d6a6b3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\courseBuilderSmokeTest.js": {
+    "mtime": 1783281626.562769,
+    "ast_hash": "5fb3ee53f7114d286f831da073d81279",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\coursesSmokeTest.js": {
+    "mtime": 1782997806.727899,
+    "ast_hash": "0eeef3ab3b972ef126bca66418229d23",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\courseWizardSmokeTest.js": {
+    "mtime": 1784050495.7813945,
+    "ast_hash": "00c390bb985e6b9562a3ac459c84afe6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\diagnose-courses-500.js": {
+    "mtime": 1784050499.4225059,
+    "ast_hash": "4f8d2c8cb11e8c457ceec3cfe459dec9",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\enrollmentsSmokeTest.js": {
+    "mtime": 1784995130.3253438,
+    "ast_hash": "b9d7833dca9b4f2a5fac0222323047cd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\ensureLibraryBucket.js": {
+    "mtime": 1784995130.3263428,
+    "ast_hash": "f7fe956451208e882260215a06369a6c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\fixSeedInstructorIds.js": {
+    "mtime": 1785938999.8436677,
+    "ast_hash": "aed46e90a5faabd7b773850303d5dcb2",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\instructorsSmokeTest.js": {
+    "mtime": 1785935684.805784,
+    "ast_hash": "8b3fb64224e711d3561d8840ecd6f7c2",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\learningPathsSmokeTest.js": {
+    "mtime": 1784284829.6210458,
+    "ast_hash": "95dc14d2baa3c02e2a644aab20f6f723",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\liveSessionsSmokeTest.js": {
+    "mtime": 1784995130.3297417,
+    "ast_hash": "a9f5c92b93e47440dc20bc39799c0a18",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\mintSmokeSession.js": {
+    "mtime": 1784284829.622054,
+    "ast_hash": "a58b0de7f1ebd0d2af5ba8408621f1f2",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\quizzesSmokeTest.js": {
+    "mtime": 1784284829.623046,
+    "ast_hash": "06759879d07b92c1d4a87b9a0c3ce2cc",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\seedCategoriesFromCourses.js": {
+    "mtime": 1784050495.7813945,
+    "ast_hash": "51669064825be39f1a3ddb6ad7d330f2",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\seedLearning.js": {
+    "mtime": 1785938968.1785934,
+    "ast_hash": "59d82f85fbc46525fbf4cbab1f3e1e54",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\scripts\\uploadsSmokeTest.js": {
+    "mtime": 1783869905.7863078,
+    "ast_hash": "3fd332e702c75800929d98be74e1d0b6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\accessPolicies.service.js": {
+    "mtime": 1782360480.3203235,
+    "ast_hash": "c31f0d0bab8edc723d9b82d5b2375d13",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\categories.service.js": {
+    "mtime": 1784050495.783395,
+    "ast_hash": "04e36e4837d973d3a8cff077ef60eb72",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\certificatePdf.service.js": {
+    "mtime": 1784995130.3307407,
+    "ast_hash": "6f17a6eddcf7190bd6de80e73213d2d3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\certificates.service.js": {
+    "mtime": 1784284829.631046,
+    "ast_hash": "b3ce03cbd2cc83a958602e2149fb8788",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\content.service.js": {
+    "mtime": 1784995130.3317406,
+    "ast_hash": "45d6cf573a5ec355508272ed7872bf4a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\courseBuilder.service.js": {
+    "mtime": 1783869906.6372123,
+    "ast_hash": "dd63c0fd9933ba924a0f17f69295ce45",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\courses.service.js": {
+    "mtime": 1784284842.523492,
+    "ast_hash": "0adb441437ce4e89717735d7dd5ddb97",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\courseWorkflow.service.js": {
+    "mtime": 1785935684.8077743,
+    "ast_hash": "a05d14572d6ba94dd7b0d16f228c0e5f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\enrollments.service.js": {
+    "mtime": 1784995130.3337421,
+    "ast_hash": "6850b5bd3fc5dc6b2a13387d31263eab",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\groups.service.js": {
+    "mtime": 1783570462.047534,
+    "ast_hash": "527cd2f969e8c6b6430468eda81b7a0e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\instructorApplications.service.js": {
+    "mtime": 1785935684.8087864,
+    "ast_hash": "cea70d4d5e6789b1c35f78d0e49b6de6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\instructors.service.js": {
+    "mtime": 1785935684.8107748,
+    "ast_hash": "e99345ce5136698b0eb2e5c42fc8cdaf",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\invitations.service.js": {
+    "mtime": 1783570462.0495398,
+    "ast_hash": "b5acb6aa249fb5dd36f3e177e8ae7846",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\learningPaths.service.js": {
+    "mtime": 1784284829.632046,
+    "ast_hash": "114e3c71bd115309808da24a0a95871c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\liveSessions.service.js": {
+    "mtime": 1785348693.6015687,
+    "ast_hash": "881b9a3466d4585dadb06a6e1723d9bf",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\lm.service.js": {
+    "mtime": 1784284829.6330454,
+    "ast_hash": "d400755428120329095be926de314928",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\messages.service.js": {
+    "mtime": 1783570462.0916212,
+    "ast_hash": "96a1255ed239528bfc88d750e3eba032",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\quizzes.service.js": {
+    "mtime": 1784284829.6340466,
+    "ast_hash": "30da6f34b6775fadce59372bd232085e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\roles.service.js": {
+    "mtime": 1782362956.1413553,
+    "ast_hash": "2fa8cb6a5f7e78ee5a2ed09bdaaf344c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\roleTemplates.service.js": {
+    "mtime": 1782490766.4976175,
+    "ast_hash": "ab48fdfdc69efebe1a2785107abae45b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\uploads.service.js": {
+    "mtime": 1783869905.826987,
+    "ast_hash": "f6d69b546c0decc139823c4f1bc3eff7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\userRoleAssignments.service.js": {
+    "mtime": 1782837359.0502985,
+    "ast_hash": "f61faafa8721e6acb2a5f723b9a98cb6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\meetings\\index.js": {
+    "mtime": 1784995130.3367405,
+    "ast_hash": "0d50839e1b3cddd45590d5b230a33ddb",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\meetings\\zoomProvider.js": {
+    "mtime": 1785348693.6045685,
+    "ast_hash": "f2938336687cce85cf1d0c432a9597d6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\storage\\index.js": {
+    "mtime": 1783869905.7964294,
+    "ast_hash": "92f695e39a40b3f005ef9309630ff4a4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\services\\storage\\supabaseProvider.js": {
+    "mtime": 1783869905.804467,
+    "ast_hash": "2119e7fd61196f729120d598b9e5e525",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\utils\\auditLog.js": {
+    "mtime": 1783869906.638211,
+    "ast_hash": "f84441a4d9012b9eb3ac7ab83eff4b66",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\utils\\mailer.js": {
+    "mtime": 1784284829.6360452,
+    "ast_hash": "41b96290e4a7fa4a2c60d1b6e6908298",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\accessPolicies.validator.js": {
+    "mtime": 1782360480.3329735,
+    "ast_hash": "b022e33fe15a7dfbeb41cb7ad2559458",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\categories.validator.js": {
+    "mtime": 1784050495.7886708,
+    "ast_hash": "c70ed0519393fc5fc65f8b4cc442a0fb",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\certificates.validator.js": {
+    "mtime": 1784284829.6380465,
+    "ast_hash": "7ff3c9c0a7225b041b141f17d51697c4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\content.validator.js": {
+    "mtime": 1784995130.3387408,
+    "ast_hash": "b44d671291c98d5e77e0b421fd434aa7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\courseBuilder.validator.js": {
+    "mtime": 1783281626.572852,
+    "ast_hash": "1b13a2438fc2c46f36e5bd98e08a4f99",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\courses.validator.js": {
+    "mtime": 1784050495.7898996,
+    "ast_hash": "f5534d79a685a5c1695ca768b8f28a80",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\enrollments.validator.js": {
+    "mtime": 1784995130.340742,
+    "ast_hash": "6e35538b34868ca73321db81ca2e55ab",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\instructorApplications.validator.js": {
+    "mtime": 1785935684.815772,
+    "ast_hash": "038c421678a671426b685b04e2558870",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\instructors.validator.js": {
+    "mtime": 1785935684.817776,
+    "ast_hash": "ac7b41ddf4af746baf8bd04c4bdf32e0",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\learningPaths.validator.js": {
+    "mtime": 1784284829.6390493,
+    "ast_hash": "7ef0f966c9050daf79362beed598b0aa",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\liveSessions.validator.js": {
+    "mtime": 1784995130.3417404,
+    "ast_hash": "09974fc6ee8989fbf99fc5121342d03b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\lm.validator.js": {
+    "mtime": 1782837359.0522983,
+    "ast_hash": "4c8b833ed7e32df4a12391b24ef45203",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\messages.validator.js": {
+    "mtime": 1781803713.0796077,
+    "ast_hash": "34dfd4e36b916bef4031f2dc91cbd992",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\quizzes.validator.js": {
+    "mtime": 1784284829.6400468,
+    "ast_hash": "7b3b4963c247e790729c8dc491201ebb",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\roles.validator.js": {
+    "mtime": 1782157074.6167507,
+    "ast_hash": "48c83459700f63f20ceecdb4d073ad32",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\roleTemplates.validator.js": {
+    "mtime": 1782490749.3215158,
+    "ast_hash": "6daea79d5deeba65a39819af4b4d44ee",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\uploads.validator.js": {
+    "mtime": 1783869905.8289864,
+    "ast_hash": "4f55bf6508722478545a402db695589b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\src\\validators\\userRoleAssignments.validator.js": {
+    "mtime": 1782837359.0533,
+    "ast_hash": "b512dfcd4cc71282aba35870ba9c32be",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\contact md files\\ACCESS_POLICIES_API.md": {
+    "mtime": 1782997806.703899,
+    "ast_hash": "8ea5efe9bfa1720903b3c4e6b2f6e5bc",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\contact md files\\COURSES_API.md": {
+    "mtime": 1782997806.705896,
+    "ast_hash": "13cf799b5d87a40e9af2b8118c12f471",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\Bilal\\Desktop\\mindnavy LMS\\backend\\contact md files\\LM_OVERVIEW_CONTRACT.md": {
+    "mtime": 1782997806.707895,
+    "ast_hash": "7b6b8d5ea1d9be1a8892f5888324afc4",
     "semantic_hash": ""
   }
 }

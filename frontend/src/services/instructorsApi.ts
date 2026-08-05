@@ -44,10 +44,13 @@ async function instructorsFetch<T>(
   if (!res.ok || json.success === false) {
     const msg =
       res.status === 429 ? 'Rate limited — slow down and retry.' :
-      res.status === 404 ? 'Instructor not found.' :
       res.status === 500 ? 'Something went wrong on the server.' :
-      json.message ?? `HTTP ${res.status}`;
-    throw new InstructorApiError(res.status, msg);
+      json.message ?? (res.status === 404 ? 'Not found.' : `HTTP ${res.status}`);
+    // 409 delete-blocked responses carry { courses, liveSessions } — this helper
+    // also backs the applications endpoints, so `data`'s shape varies by call;
+    // callers that care (deleteInstructor) read it off the thrown error.
+    const errData = json.data as unknown as { courses?: number; liveSessions?: number } | undefined;
+    throw new InstructorApiError(res.status, msg, errData);
   }
 
   return json.data as T;
@@ -93,8 +96,12 @@ export function createInstructor(body: CreateInstructorRequest): Promise<Instruc
   return instructorsFetch<Instructor>('/instructors', 'POST', body);
 }
 
-export function updateInstructor(id: string, body: UpdateInstructorRequest): Promise<InstructorDetail> {
-  return instructorsFetch<InstructorDetail>(`/instructors/${encodeURIComponent(id)}`, 'PATCH', body);
+// Real backend PATCH /instructors/:id returns mapInstructor(updated) — a bare
+// Instructor, not the full InstructorDetail (verify/suspend/reactivate DO
+// return InstructorDetail, since their service functions end with
+// getInstructor(id); update's does not).
+export function updateInstructor(id: string, body: UpdateInstructorRequest): Promise<Instructor> {
+  return instructorsFetch<Instructor>(`/instructors/${encodeURIComponent(id)}`, 'PATCH', body);
 }
 
 export function verifyInstructor(id: string): Promise<InstructorDetail> {
@@ -145,15 +152,18 @@ export function approveInstructorApplication(
   });
 }
 
+// Real backend returns the mapped application flat (no `{ application }`
+// wrapper) for reject/request-changes — only approve wraps it, since approve
+// also returns a sibling `userId`.
 export function rejectInstructorApplication(
   id: string, rejectionReason: string,
-): Promise<{ application: InstructorApplication }> {
+): Promise<InstructorApplication> {
   return instructorsFetch(`/instructor-applications/${encodeURIComponent(id)}/reject`, 'PATCH', { rejectionReason });
 }
 
 export function requestChangesInstructorApplication(
   id: string, changeRequest: string,
-): Promise<{ application: InstructorApplication }> {
+): Promise<InstructorApplication> {
   return instructorsFetch(`/instructor-applications/${encodeURIComponent(id)}/request-changes`, 'PATCH', { changeRequest });
 }
 
