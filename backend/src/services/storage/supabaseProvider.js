@@ -77,6 +77,18 @@ function getPublicUrl(bucket, path) {
   return client.storage.from(bucket).getPublicUrl(path).data.publicUrl;
 }
 
+// Time-limited read URL for an object in a PRIVATE bucket.
+//
+// getPublicUrl is not an alternative for private data: it returns a permanent,
+// unauthenticated link that cannot be revoked once it has been seen. This grant
+// expires, so a leaked instructor-document URL stops working on its own.
+async function createSignedDownloadUrl(bucket, path, expiresIn) {
+  const client = getClient();
+  const { data, error } = await client.storage.from(bucket).createSignedUrl(path, expiresIn);
+  if (error) throw Object.assign(new Error(error.message), { code: "STORAGE_SIGN_FAILED" });
+  return data.signedUrl;
+}
+
 async function removeObject(bucket, path) {
   const client = getClient();
   const { error } = await client.storage.from(bucket).remove([path]);
@@ -90,5 +102,6 @@ module.exports = {
   statObject,
   objectExists,
   getPublicUrl,
+  createSignedDownloadUrl,
   removeObject,
 };

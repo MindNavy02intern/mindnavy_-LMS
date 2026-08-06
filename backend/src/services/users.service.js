@@ -7,6 +7,7 @@ const {
   validateHeaders,
   validateImportRows,
 } = require("../validators/usersImport.validator");
+const { normalizeViolationType } = require("../validators/users.validator");
 
 const VALID_ROLES = new Set(["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"]);
 const VALID_STATUSES = new Set(["ACTIVE", "SUSPENDED", "PENDING", "ARCHIVED", "INVITED"]);
@@ -661,6 +662,11 @@ async function suspendUser(id, body, admin = {}) {
   const existing = await assertUserExists(id);
   const reason = body.reason.trim();
   const notes = body.notes ? body.notes.trim() : null;
+  // Re-normalized here rather than trusted from the caller: this service is the
+  // single writer of the suspension audit row, and both the Users route and
+  // instructors.service reach it. An unrecognised value becomes null — the
+  // validators are what turn it into a 400.
+  const violationType = normalizeViolationType(body.violationType);
 
   const user = await prisma.appUser.update({
     where: { id },
@@ -668,12 +674,17 @@ async function suspendUser(id, body, admin = {}) {
     select: USER_SELECT,
   });
 
+  // These details ARE the suspension record — there is no suspensions table, and
+  // AppUser.suspendedAt holds only the latest timestamp. GET
+  // /instructors/:id/suspension-history reads these rows back, so any field
+  // dropped here is gone from compliance history for good.
   await createUserAuditLog(admin.id, "USER_SUSPENDED", {
     userId: id,
     oldStatus: existing.status,
     newStatus: "SUSPENDED",
     reason,
     notes,
+    violationType,
   });
 
   return {
@@ -683,8 +694,12 @@ async function suspendUser(id, body, admin = {}) {
   };
 }
 
-async function reactivateUser(id, admin = {}) {
+// Signature is (id, body, admin) to match suspendUser — the two are always read
+// and changed together, and mirrored argument orders are how an `admin` object
+// ends up silently parsed as a `body`.
+async function reactivateUser(id, body = {}, admin = {}) {
   const existing = await assertUserExists(id);
+  const notes = typeof body.notes === "string" && body.notes.trim() ? body.notes.trim() : null;
 
   const user = await prisma.appUser.update({
     where: { id },
@@ -692,10 +707,13 @@ async function reactivateUser(id, admin = {}) {
     select: USER_SELECT,
   });
 
+  // Paired with the USER_SUSPENDED details above: both actions are replayed by
+  // GET /instructors/:id/suspension-history as one timeline.
   await createUserAuditLog(admin.id, "USER_REACTIVATED", {
     userId: id,
     oldStatus: existing.status,
     newStatus: "ACTIVE",
+    notes,
   });
 
   return {

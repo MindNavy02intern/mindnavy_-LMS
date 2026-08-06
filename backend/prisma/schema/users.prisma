@@ -43,6 +43,9 @@ model AppUser {
   // non-instructor AND for instructors created before the Instructors module —
   // reads must left-join it, never filter on its existence.
   instructorProfile  InstructorProfile?
+  // Administrative documents on file (instructors.prisma). Empty for everyone
+  // who is not an instructor.
+  instructorDocuments InstructorDocument[] @relation("InstructorDocuments")
 
   @@index([branchId])
   @@index([departmentId])

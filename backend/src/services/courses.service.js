@@ -12,6 +12,16 @@ const STATUS_ENUM  = { Draft: "DRAFT", Pending: "PENDING", Published: "PUBLISHED
 const LEVEL_LABEL  = { BEGINNER: "Beginner", INTERMEDIATE: "Intermediate", ADVANCED: "Advanced" };
 const STATUS_LABEL = { DRAFT: "Draft", PENDING: "Pending", PUBLISHED: "Published", ARCHIVED: "Archived" };
 
+// "Rejected" is a VIEW over Draft, not a status — CourseStatus has no REJECTED
+// member. rejectCourse() returns the course to DRAFT and stores the reason, so a
+// rejected course is exactly `DRAFT AND rejectionReason IS NOT NULL`.
+//
+// The two Prisma fragments below keep Draft and Rejected a clean partition of the
+// DRAFT rows: a rejected course must appear in the Rejected tab and NOT in Draft,
+// or the sub-tab counts would double-count it against the total.
+const REJECTED_WHERE = { status: "DRAFT", rejectionReason: { not: null } };
+const PLAIN_DRAFT_WHERE = { status: "DRAFT", rejectionReason: null };
+
 const DEFAULT_CATEGORY = "Uncategorized";
 
 async function safe(fn, fallback) {
@@ -59,6 +69,11 @@ const ROW_SELECT = {
   id: true, title: true, category: true, level: true, status: true,
   thumbnail: true, updatedAt: true, instructorId: true,
   instructor: { select: { fullName: true } },
+  // Approval state on every row: the Instructor Courses tab renders Draft /
+  // Pending / Published / Archived / Rejected from one list, and Rejected is only
+  // distinguishable by rejectionReason. submittedAt is the truthful "waiting
+  // since" for the Pending view (updatedAt is overwritten by any later edit).
+  rejectionReason: true, submittedAt: true, reviewedAt: true,
 };
 
 const VISIBILITY_ENUM  = { Public: "PUBLIC", Private: "PRIVATE", Unlisted: "UNLISTED" };
@@ -73,7 +88,6 @@ const FULL_SELECT = {
   isFree: true, price: true, currency: true, enrollmentLimit: true,
   visibility: true, certificateEnabled: true, dripContentEnabled: true,
   accessRules: true, seoTitle: true, seoDescription: true,
-  rejectionReason: true, reviewedAt: true,
   categoryId: true,
 };
 
@@ -86,7 +100,15 @@ function mapRow(c, enrolledCount = 0) {
     category:     c.category ?? null,
     level:        LEVEL_LABEL[c.level]   ?? c.level,
     enrolledCount,
+    // Stays "Draft" for a rejected course, because that is what it is — it is
+    // editable and resubmittable again. `isRejected` is the derived flag the
+    // Rejected tab badges on; overloading `status` with a value the enum does
+    // not have would make this row disagree with the database.
     status:       STATUS_LABEL[c.status] ?? c.status,
+    isRejected:   c.status === "DRAFT" && Boolean(c.rejectionReason),
+    rejectionReason: c.rejectionReason ?? null,
+    submittedAt:  iso(c.submittedAt),
+    reviewedAt:   iso(c.reviewedAt),
     thumbnail:    c.thumbnail ?? null,
     updatedAt:    iso(c.updatedAt),
   };
@@ -114,8 +136,8 @@ function mapFull(c, enrolledCount = 0) {
       seoTitle:           c.seoTitle ?? null,
       seoDescription:     c.seoDescription ?? null,
     },
-    rejectionReason: c.rejectionReason ?? null,
-    reviewedAt:      iso(c.reviewedAt),
+    // rejectionReason / submittedAt / reviewedAt / isRejected come from mapRow —
+    // one definition, so the list row and the detail can never disagree.
   };
 }
 
@@ -151,16 +173,23 @@ async function listCourses({ page, limit, status, category, instructor, search }
 
   const where = { ...baseWhere };
   // "All" shows every status EXCEPT Archived — archived courses live only in the
-  // Archived tab. A specific status filters to exactly that status.
-  if (status === "All") where.status = { not: "ARCHIVED" };
-  else if (status)      where.status = STATUS_ENUM[status];
+  // Archived tab. A specific status filters to exactly that status, except for
+  // the two halves of DRAFT (see REJECTED_WHERE): Rejected selects the drafts
+  // carrying a rejection reason, Draft selects the ones that do not.
+  if (status === "All")           where.status = { not: "ARCHIVED" };
+  else if (status === "Rejected") Object.assign(where, REJECTED_WHERE);
+  else if (status === "Draft")    Object.assign(where, PLAIN_DRAFT_WHERE);
+  else if (status)                where.status = STATUS_ENUM[status];
 
   const { skip, take, page: p, limit: l } = paginate(page, limit);
 
-  const [total, rows, statusGroups] = await Promise.all([
+  const [total, rows, statusGroups, rejected] = await Promise.all([
     safe(() => prisma.course.count({ where }), 0),
     safe(() => prisma.course.findMany({ where, skip, take, orderBy: { updatedAt: "desc" }, select: ROW_SELECT }), []),
     safe(() => prisma.course.groupBy({ by: ["status"], where: baseWhere, _count: { _all: true } }), []),
+    // groupBy cannot express "DRAFT with a reason", so the rejected slice needs
+    // its own count. Same baseWhere as the group, so every filter applies to it.
+    safe(() => prisma.course.count({ where: { ...baseWhere, ...REJECTED_WHERE } }), 0),
   ]);
 
   // Enrolled count per course for just this page (one grouped query — no N+1).
@@ -171,16 +200,22 @@ async function listCourses({ page, limit, status, category, instructor, search }
   const countById = new Map(agg.map((a) => [a.courseId, a._count._all]));
 
   const byStatus  = Object.fromEntries(statusGroups.map((g) => [g.status, g._count._all]));
-  const draft     = byStatus.DRAFT     ?? 0;
+  const allDrafts = byStatus.DRAFT     ?? 0;
   const pending   = byStatus.PENDING   ?? 0;
   const published = byStatus.PUBLISHED ?? 0;
   const archived  = byStatus.ARCHIVED  ?? 0;
+  // Rejected courses ARE drafts in the database, so they must come out of the
+  // draft count — otherwise draft + rejected exceeds the number of rows the two
+  // tabs actually list between them. Clamped at 0 in case the two queries land
+  // either side of a concurrent rejection.
+  const draft = Math.max(0, allDrafts - rejected);
   const statusCounts = {
-    all: draft + pending + published, // excludes Archived — matches the "All" tab list
+    all: allDrafts + pending + published, // excludes Archived — matches the "All" tab list
     draft,
     pending,
     published,
     archived,
+    rejected,
   };
 
   return {

@@ -12,6 +12,10 @@
 //   • `verifiedAt` / `verifiedById` are server-stamped, never client input.
 
 const { validatePasswordStrength } = require("../utils/passwordPolicy");
+// The violation taxonomy lives with the Users module because users.service
+// performs the suspend write and owns the USER_SUSPENDED audit row that records
+// it. Imported, not re-declared — two copies of an enum is how they drift.
+const { VIOLATION_TYPES, normalizeViolationType } = require("./users.validator");
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -29,6 +33,9 @@ const MAX = {
   revenueShareBps: 10000, // 100.00%
   search: 200,
   limit: 100,
+  // Suspension history is a side-panel section, not a report — a tighter ceiling
+  // than the main list keeps an unbounded audit scan off the table.
+  historyLimit: 50,
 };
 
 // Statuses a NEW instructor may be created with. SUSPENDED/ARCHIVED are
@@ -272,11 +279,58 @@ function validateSuspend(body = {}) {
   const errors = [];
   const reason = readString(body.reason, "reason", 500, errors, { required: true, min: 3 });
   const notes  = readString(body.notes, "notes", 2000, errors);
+
+  // OPTIONAL in v1 and required in a later commit, once the Suspend modal ships
+  // its dropdown — the endpoint is already live and the current UI sends only
+  // { reason, notes }, so requiring it today would break suspension outright.
+  // A value that IS sent must be in the taxonomy: a typo has to be a 400, not a
+  // suspension silently filed with no violation type.
+  let violationType = null;
+  if (body.violationType !== undefined && body.violationType !== null) {
+    violationType = normalizeViolationType(body.violationType);
+    if (violationType === null) {
+      errors.push(`violationType must be one of: ${[...VIOLATION_TYPES].join(", ")}.`);
+    }
+  }
+
   return {
     isValid: errors.length === 0,
     errors,
-    data: { reason, notes: notes ?? null },
+    data: { reason, notes: notes ?? null, violationType },
   };
+}
+
+// ── Reactivate (everything optional — the action itself is the payload) ─────────
+
+function validateReactivate(body = {}) {
+  const errors = [];
+  const notes = readString(body.notes, "notes", 2000, errors);
+  // No foreign-field check: reactivate takes exactly one field, so anything else
+  // in the body is ignored rather than rejected (an empty body is the norm).
+  return { isValid: errors.length === 0, errors, data: { notes: notes ?? null } };
+}
+
+// ── Suspension history query ────────────────────────────────────────────────────
+
+function validateHistoryQuery(query = {}) {
+  const errors = [];
+  const data = { page: 1, limit: 20 };
+
+  if (query.page !== undefined) {
+    const n = Number(query.page);
+    if (!Number.isInteger(n) || n < 1) errors.push("page must be a positive integer.");
+    else data.page = n;
+  }
+  if (query.limit !== undefined) {
+    const n = Number(query.limit);
+    if (!Number.isInteger(n) || n < 1 || n > MAX.historyLimit) {
+      errors.push(`limit must be an integer between 1 and ${MAX.historyLimit}.`);
+    } else {
+      data.limit = n;
+    }
+  }
+
+  return { isValid: errors.length === 0, errors, data };
 }
 
 // ── List query ──────────────────────────────────────────────────────────────────
@@ -334,5 +388,7 @@ module.exports = {
   validateInstructorCreate,
   validateInstructorUpdate,
   validateSuspend,
+  validateReactivate,
+  validateHistoryQuery,
   validateListQuery,
 };

@@ -5,7 +5,10 @@
 
 const LEVELS        = ["Beginner", "Intermediate", "Advanced"];
 const STATUSES      = ["Draft", "Pending", "Published", "Archived"];
-const LIST_STATUSES = ["All", ...STATUSES];
+// "Rejected" is a LIST filter only, never a writable status: CourseStatus has no
+// REJECTED member (a rejected course is a DRAFT carrying a rejectionReason). It
+// belongs here and not in STATUSES so no write path can ever accept it.
+const LIST_STATUSES = ["All", ...STATUSES, "Rejected"];
 const VISIBILITIES  = ["Public", "Private", "Unlisted"];
 
 const MAX = {
@@ -66,7 +69,7 @@ function validateListQuery(q = {}) {
   let status = "All";
   if (q.status !== undefined && q.status !== null && String(q.status).trim() !== "") {
     const c = canon(LIST_STATUSES, q.status);
-    if (!c) errors.push("status must be one of All, Draft, Pending, Published, Archived.");
+    if (!c) errors.push(`status must be one of ${LIST_STATUSES.join(", ")}.`);
     else status = c;
   }
 

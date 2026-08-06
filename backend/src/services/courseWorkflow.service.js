@@ -176,4 +176,35 @@ async function rejectCourse(id, reason, adminId) {
   return { id, status: "Draft", rejectionReason: reason, reviewedAt: iso(reviewedAt) };
 }
 
-module.exports = { updateSettings, getPreview, submitCourse, approveCourse, rejectCourse };
+// Take a live course off the catalogue: PUBLISHED → DRAFT.
+//
+// Not the inverse of approve — it is the inverse of PUBLISHING. The course goes
+// back to Draft so the instructor can fix it and resubmit through the normal
+// submit → approve path; there is no way to jump straight back to Published.
+//
+// reviewedAt / reviewedById are deliberately KEPT: they record that this course
+// was approved once, and the stats month-over-month figures read reviewedAt as
+// the publish date. Clearing them would silently rewrite that history.
+//
+// rejectionReason is also untouched: it is null on a published course, and
+// unpublishing is not a rejection — a course pulled for maintenance must not
+// show up in the Rejected tab.
+async function unpublishCourse(id, adminId) {
+  const course = await getCourseOrThrow(id, { id: true, status: true, title: true });
+  if (course.status !== "PUBLISHED") {
+    throw domainError("ONLY_PUBLISHED_UNPUBLISHABLE", { status: STATUS_LABEL[course.status] });
+  }
+
+  // Atomic transition, same guard as approve/reject: two admins clicking at once
+  // cannot both apply it.
+  const { count } = await prisma.course.updateMany({
+    where: { id, status: "PUBLISHED" },
+    data:  { status: "DRAFT" },
+  });
+  if (count === 0) throw domainError("STATE_CHANGED");
+
+  await auditLog(adminId, "COURSE_UNPUBLISHED", { courseId: id, title: course.title });
+  return { id, status: "Draft" };
+}
+
+module.exports = { updateSettings, getPreview, submitCourse, approveCourse, rejectCourse, unpublishCourse };

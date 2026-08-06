@@ -22,6 +22,8 @@ function handleDomainError(res, err) {
     return badRequest(res, `Only Draft courses can be submitted (course is ${err.status}).`);
   if (err.code === "ONLY_PENDING_DECIDABLE")
     return badRequest(res, `Only Pending courses can be approved or rejected (course is ${err.status}).`);
+  if (err.code === "ONLY_PUBLISHED_UNPUBLISHABLE")
+    return badRequest(res, `Only Published courses can be unpublished (course is ${err.status}).`);
   if (err.code === "SUBMIT_CHECKS_FAILED")
     return badRequest(res, "Course is not ready to submit.", { errors: err.errors });
   if (err.code === "STATE_CHANGED")
@@ -78,4 +80,9 @@ const rejectCourse = endpoint(async (req, res) => {
   return res.json({ success: true, message: "Course rejected — returned to Draft.", data: result });
 });
 
-module.exports = { updateSettings, getPreview, submitCourse, approveCourse, rejectCourse };
+const unpublishCourse = endpoint(async (req, res) => {
+  const result = await svc.unpublishCourse(req.params.id, req.admin?.id);
+  return res.json({ success: true, message: "Course unpublished — returned to Draft.", data: result });
+});
+
+module.exports = { updateSettings, getPreview, submitCourse, approveCourse, rejectCourse, unpublishCourse };

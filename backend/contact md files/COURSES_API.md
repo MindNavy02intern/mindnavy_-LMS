@@ -39,11 +39,26 @@ shapes so the frontend and backend never conflict.
 |---|---|
 | `level` | `Beginner`, `Intermediate`, `Advanced` |
 | `status` | `Draft`, `Pending`, `Published`, `Archived` |
-| `status` (list filter) | `All`, `Draft`, `Pending`, `Published`, `Archived` |
+| `status` (list filter) | `All`, `Draft`, `Pending`, `Published`, `Archived`, `Rejected` |
 
 - **Create always saves as `Draft`** — any `status` you send to `POST` is ignored.
 - **`All` excludes `Archived`.** Archived courses appear **only** under `?status=Archived`.
 - `instructorId` must reference a real user whose role is **`INSTRUCTOR`** (else 400/404).
+
+> ### ⚠️ `Rejected` is a filter, not a status
+>
+> There is **no `Rejected` course status.** Rejecting a course returns it to
+> **`Draft`** and stores the reason on it, so a rejected course is exactly
+> *"Draft **and** `rejectionReason` is set"*.
+>
+> - `?status=Rejected` lists those courses. Every row comes back with
+>   `status: "Draft"` and `isRejected: true` — **badge off `isRejected`, not off
+>   `status`.** The status is genuinely Draft: the course is editable and can be
+>   resubmitted.
+> - `?status=Draft` **excludes** rejected courses, so the two tabs partition the
+>   drafts between them and `statusCounts.draft + statusCounts.rejected` is the
+>   total number of drafts. Neither tab double-counts.
+> - `?status=All` still contains both.
 
 ---
 
@@ -60,10 +75,24 @@ interface CourseListRow {
   level: "Beginner" | "Intermediate" | "Advanced";
   enrolledCount: number;       // read-only, derived from enrollments
   status: "Draft" | "Pending" | "Published" | "Archived";
+
+  // Approval state — present on every row.
+  isRejected: boolean;             // status === "Draft" && rejectionReason !== null
+  rejectionReason: string | null;  // why it was sent back; null unless rejected
+  submittedAt: string | null;      // stamped on every Draft→Pending transition.
+                                   // null on courses submitted before this column
+                                   // existed → render "—", never an epoch date.
+  reviewedAt: string | null;       // when it was last approved/rejected
+
   thumbnail: string | null;    // URL string
   updatedAt: string;           // ISO date
 }
 ```
+
+- **`submittedAt` is the only truthful "waiting since"** for the Pending tab —
+  `updatedAt` is overwritten by any later edit.
+- **`reviewedAt` survives an unpublish.** A course that was published once keeps
+  its approval timestamp; unpublishing is not an un-approval.
 
 **`CourseDetail`** — returned by get-one / create / update (all row fields **plus**):
 ```ts
@@ -91,7 +120,7 @@ GET /courses
 |---|---|---|---|
 | `page` | integer ≥ 1 | `1` | |
 | `limit` | integer 1..100 | `10` | capped at 100 |
-| `status` | `All` \| `Draft` \| `Pending` \| `Published` \| `Archived` | `All` | `All` excludes Archived |
+| `status` | `All` \| `Draft` \| `Pending` \| `Published` \| `Archived` \| `Rejected` | `All` | `All` excludes Archived · `Draft` excludes Rejected |
 | `category` | string | — | exact category name |
 | `instructor` | string (uuid) | — | instructor id |
 | `search` | string | — | matches `title` (contains, case-insensitive) |
@@ -111,18 +140,42 @@ GET /courses
         "level": "Beginner",
         "enrolledCount": 340,
         "status": "Published",
+        "isRejected": false,
+        "rejectionReason": null,
+        "submittedAt": "2026-06-28T09:12:00.000Z",
+        "reviewedAt": "2026-06-29T11:40:00.000Z",
         "thumbnail": "https://cdn.example.com/thumb.jpg",
         "updatedAt": "2026-06-30T14:05:00.000Z"
       }
     ],
     "pagination": { "total": 250, "page": 1, "limit": 10, "pages": 25 },
-    "statusCounts": { "all": 250, "draft": 12, "pending": 8, "published": 230, "archived": 6 }
+    "statusCounts": { "all": 250, "draft": 12, "pending": 8, "published": 230, "archived": 6, "rejected": 3 }
   }
 }
 ```
 - Ordered by `updatedAt` (desc).
 - `statusCounts` feeds the filter tabs; it honors `category`/`instructor`/`search` but ignores `status`.
 - **`all` = Draft + Pending + Published (excludes Archived)** — matches the `All` list.
+  Note `all` counts **every** draft, rejected ones included, because the `All`
+  list shows them.
+- **`draft` excludes rejected; `rejected` is its own bucket.** `draft + rejected`
+  = all drafts. This is computed server-side precisely so the sub-tabs cannot
+  double-count — do not re-derive either number on the client.
+
+#### Instructor Courses tab (blueprint 05 §6)
+
+The instructor profile's Courses tab is **this endpoint**, filtered — there is
+deliberately no `/api/admin/instructors/:id/courses`. A second endpoint over
+course rows would be a second owner of the same data.
+
+```
+GET /api/admin/courses?instructor=<instructorId>&status=Draft|Pending|Published|Archived|Rejected
+queryKey: ['courses', { instructorId, status }]
+```
+
+Use the **same mutation IDs as the Courses module** for the row actions
+(`course.approve`, `course.reject`, `course.unpublish`, `course.archive`) —
+never instructor-scoped forks.
 
 ---
 
@@ -178,15 +231,19 @@ POST /courses
 PATCH /courses/:id
 ```
 Send **any subset** of: `title`, `subtitle`, `description`, `category`, `tags`,
-`language`, `level`, `thumbnail`, `instructorId`, `status`. Only included fields change.
+`language`, `level`, `thumbnail`, `instructorId`. Only included fields change.
 ```json
-{ "subtitle": "New subtitle", "level": "Intermediate", "status": "Published" }
+{ "subtitle": "New subtitle", "level": "Intermediate" }
 ```
 - **200:** `{ "success": true, "message": "Course updated.", "data": <CourseDetail> }`
 - **400:** validation failed / no valid fields / not an instructor.
 - **404:** course id or instructor not found.
-- **Publishing has no readiness checks yet:** setting `status: "Published"` succeeds even for a Draft with
-  only a title. Content/completeness validation belongs to the later Course Builder steps (2–6).
+
+> ⚠️ **`status` is NOT accepted here** and returns 400: *"status cannot be set
+> here — use submit/approve/reject (or DELETE to archive)."* Status changes only
+> through the transition endpoints below, so every transition is guarded and
+> audited in exactly one place. (This doc previously said `status` was patchable;
+> that stopped being true when the approval workflow shipped.)
 
 ---
 
@@ -197,8 +254,38 @@ DELETE /courses/:id
 Sets `status = "Archived"` — the row is **not** removed.
 - **200:** `{ "success": true, "message": "Course archived.", "data": { "id": "...", "status": "Archived" } }`
 - **404:** `{ "success": false, "message": "Course not found." }`
-- **Un-archive / restore:** there is no separate endpoint — send `PATCH /courses/:id` with
-  `{ "status": "Draft" }` (or `"Published"`).
+- **Un-archive / restore:** `POST /courses/:id/restore` → returns it to `Draft`.
+  (This doc previously said to PATCH `status` instead; that path is gone.)
+
+---
+
+### 4.6 Unpublish course
+
+```
+POST /courses/:id/unpublish
+```
+
+Takes a live course off the catalogue: **`Published` → `Draft`**. No body.
+
+- **200:** `{ "success": true, "message": "Course unpublished — returned to Draft.", "data": { "id": "...", "status": "Draft" } }`
+- **400:** the course is not Published — *"Only Published courses can be unpublished (course is Draft)."*
+  Two admins clicking at once: the second gets this 400, never a double-apply.
+- **404:** course not found.
+
+**What it is not:**
+
+- **Not a rejection.** `rejectionReason` stays `null`, so an unpublished course
+  does **not** appear in the Rejected tab. It is a plain Draft again.
+- **Not an un-approval.** `reviewedAt` / `reviewedById` are kept — the course
+  really was approved once, and the instructor stats read `reviewedAt` as the
+  publish date.
+
+To put it back: `submit` → `approve`, the same path as any other Draft. There is
+no jump straight back to Published.
+
+Mutation ID: `course.unpublish` → invalidate `['courses']`, `['courses', id]`,
+`['instructors']` (the instructor's published count changes),
+`['dashboard','stats']`.
 
 ---
 

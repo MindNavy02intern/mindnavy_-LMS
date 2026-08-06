@@ -4,6 +4,8 @@ const {
   validateInstructorCreate,
   validateInstructorUpdate,
   validateSuspend,
+  validateReactivate,
+  validateHistoryQuery,
   validateListQuery,
 } = require("../validators/instructors.validator");
 
@@ -133,8 +135,21 @@ const suspendInstructor = run(async (req, res) => {
 const reactivateInstructor = run(async (req, res) => {
   const idErr = validateId(req.params.id, "instructorId");
   if (idErr) return badRequest(res, idErr);
-  const instructor = await svc.reactivateInstructor(req.params.id, req.admin?.id);
+  const v = validateReactivate(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const instructor = await svc.reactivateInstructor(req.params.id, v.data, req.admin?.id);
   return res.json({ success: true, message: "Instructor reactivated.", data: instructor });
+});
+
+// Replays the USER_SUSPENDED / USER_REACTIVATED audit rows for this instructor —
+// see the service for why there is no suspensions table.
+const getSuspensionHistory = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "instructorId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateHistoryQuery(req.query);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const result = await svc.getSuspensionHistory(req.params.id, v.data);
+  return res.json({ success: true, data: result });
 });
 
 const deleteInstructor = run(async (req, res) => {
@@ -154,5 +169,6 @@ module.exports = {
   verifyInstructor,
   suspendInstructor,
   reactivateInstructor,
+  getSuspensionHistory,
   deleteInstructor,
 };

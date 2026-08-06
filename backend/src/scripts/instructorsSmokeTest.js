@@ -269,7 +269,20 @@ async function main() {
   const noReason = await req("PATCH", `/instructors/${inst.id}/suspend`, {});
   ok("suspend without reason -> 400 (never a 500)", noReason.status === 400, `got ${noReason.status}`);
 
-  const suspended = await req("PATCH", `/instructors/${inst.id}/suspend`, { reason: "Smoke test suspension" });
+  const badViolation = await req("PATCH", `/instructors/${inst.id}/suspend`, {
+    reason: "Smoke test suspension", violationType: "NOT_A_REAL_TYPE",
+  });
+  ok("unknown violationType -> 400 (a typo is never filed as untyped)", badViolation.status === 400, `got ${badViolation.status}`);
+
+  // violationType is OPTIONAL in v1 — the live Suspend modal still sends only
+  // { reason, notes }, so this must keep working until the dropdown ships.
+  const legacyShape = await req("PATCH", `/instructors/${inst.id}/suspend`, { reason: "Smoke legacy-shape suspension" });
+  ok("suspend without violationType -> 200 (existing UI not broken)", legacyShape.status === 200, `got ${legacyShape.status}`);
+  await req("PATCH", `/instructors/${inst.id}/reactivate`);
+
+  const suspended = await req("PATCH", `/instructors/${inst.id}/suspend`, {
+    reason: "Smoke test suspension", notes: "Filed by the smoke test.", violationType: "policy",
+  });
   ok("suspend -> 200", suspended.status === 200 && suspended.json?.data?.status === "suspended", `got ${suspended.status}: ${suspended.json?.data?.status}`);
 
   // "Verify" must never double as a hidden un-suspend.
@@ -282,8 +295,33 @@ async function main() {
   const usersStatus = usersView.json?.user?.status ?? usersView.json?.data?.status;
   ok("Users module sees the same status (one owner, no drift)", usersStatus === "suspended", `users says ${usersStatus}`);
 
-  const reactivated = await req("PATCH", `/instructors/${inst.id}/reactivate`);
+  const reactivated = await req("PATCH", `/instructors/${inst.id}/reactivate`, { notes: "Cleared by the smoke test." });
   ok("reactivate -> 200", reactivated.status === 200 && reactivated.json?.data?.status === "active", `got ${reactivated.status}`);
+
+  // ── 7b. Suspension history (task 117) ─────────────────────────────────────────
+  console.log("\nGET /instructors/:id/suspension-history");
+  const history = await req("GET", `/instructors/${inst.id}/suspension-history`);
+  const rows = history.json?.data?.history ?? [];
+  ok("history -> 200", history.status === 200 && Array.isArray(rows), `got ${history.status}`);
+  ok("carries pagination", typeof history.json?.data?.pagination?.total === "number");
+  ok("newest first", rows[0]?.action === "reactivated", rows[0]?.action);
+  const suspendRow = rows.find((r) => r.action === "suspended" && r.violationType === "POLICY");
+  ok("the typed suspension is recorded", Boolean(suspendRow), JSON.stringify(rows.map((r) => r.action)));
+  ok("reason survived into history", suspendRow?.reason === "Smoke test suspension", suspendRow?.reason);
+  ok("notes survived into history", suspendRow?.notes === "Filed by the smoke test.", suspendRow?.notes);
+  ok("violationType is normalized to the enum casing", suspendRow?.violationType === "POLICY", suspendRow?.violationType);
+  ok("reactivate notes recorded", rows.find((r) => r.action === "reactivated")?.notes === "Cleared by the smoke test.");
+  ok("acting admin is named", typeof suspendRow?.adminName === "string" && suspendRow.adminName.length > 0, suspendRow?.adminName);
+  // The suspension WITHOUT a violationType must still be listed — just untyped.
+  ok("untyped legacy-shape suspension is listed with violationType null",
+    rows.some((r) => r.action === "suspended" && r.violationType === null));
+
+  const historyBadLimit = await req("GET", `/instructors/${inst.id}/suspension-history?limit=5000`);
+  ok("limit above the ceiling -> 400", historyBadLimit.status === 400, `got ${historyBadLimit.status}`);
+  const historyOfLearner = await req("GET", `/instructors/${learnerId}/suspension-history`);
+  ok("history for a non-instructor -> 404", historyOfLearner.status === 404, `got ${historyOfLearner.status}`);
+  const historyNoAuth = await req("GET", `/instructors/${inst.id}/suspension-history`, undefined, false);
+  ok("history without a token -> 401", historyNoAuth.status === 401, `got ${historyNoAuth.status}`);
 
   // ── 8. Legacy instructor (created via /users, no profile row) ─────────────────
   console.log("\nLegacy instructor without a profile row");
@@ -329,6 +367,210 @@ async function main() {
     await req("DELETE", `/courses/${pendingCourseId}`);
   } else {
     ok("setup: pending course created", false, `got ${pendingCourse.status}`);
+  }
+
+  // ── 8c. Instructor Courses tab: Rejected view + unpublish (task 115) ──────────
+  //
+  // The tab is the COURSES list filtered by instructor — there is deliberately no
+  // /instructors/:id/courses endpoint. "Rejected" is a view over Draft, so the
+  // key property under test is that Draft and Rejected partition the drafts.
+  console.log("\nInstructor Courses tab (GET /courses?instructor=…)");
+  const wfCourse = await req("POST", "/courses", {
+    title: `INSTRUCTOR SMOKE WORKFLOW ${stamp}`, instructorId: inst.id, category: "Smoke", level: "Beginner",
+  });
+  const wfId = wfCourse.json?.data?.id;
+  ok("setup: workflow course created", Boolean(wfId), `got ${wfCourse.status}`);
+
+  if (wfId) {
+    const scoped = await req("GET", `/courses?instructor=${inst.id}&status=Draft`);
+    ok("scoped to the instructor -> 200", scoped.status === 200, `got ${scoped.status}`);
+    ok("only this instructor's courses come back",
+      (scoped.json?.data?.courses ?? []).every((c) => c.instructorId === inst.id));
+    ok("statusCounts carries a rejected bucket", typeof scoped.json?.data?.statusCounts?.rejected === "number");
+    const draftsBefore  = scoped.json?.data?.statusCounts?.draft ?? 0;
+    const rejectedBefore = scoped.json?.data?.statusCounts?.rejected ?? 0;
+
+    // Make it submittable, submit, then reject it — that is what produces a
+    // "rejected" course (status DRAFT + rejectionReason).
+    await req("PATCH", `/courses/${wfId}`, {
+      description: "Workflow course for the smoke test.", thumbnail: "https://example.com/t.png",
+    });
+    const wfSection = await req("POST", `/courses/${wfId}/sections`, { title: "Intro" });
+    await req("POST", `/sections/${wfSection.json?.data?.id}/lessons`, { title: "Welcome", type: "TEXT", content: "Hi" });
+    await req("POST", `/courses/${wfId}/submit`);
+    const rejected = await req("POST", `/courses/${wfId}/reject`, { reason: "Needs more lessons." });
+    ok("reject -> back to Draft", rejected.status === 200 && rejected.json?.data?.status === "Draft", `got ${rejected.status}`);
+
+    const rejectedList = await req("GET", `/courses?instructor=${inst.id}&status=Rejected`);
+    const rejRow = (rejectedList.json?.data?.courses ?? []).find((c) => c.id === wfId);
+    ok("Rejected filter -> 200", rejectedList.status === 200, `got ${rejectedList.status}`);
+    ok("the rejected course is in the Rejected view", Boolean(rejRow));
+    ok("row carries isRejected + the reason", rejRow?.isRejected === true && rejRow?.rejectionReason === "Needs more lessons.");
+    ok("row keeps its true status (Draft — it is editable again)", rejRow?.status === "Draft", rejRow?.status);
+    ok("row exposes submittedAt for the Pending view", rejRow?.submittedAt !== undefined);
+
+    const draftList = await req("GET", `/courses?instructor=${inst.id}&status=Draft`);
+    ok("a rejected course is NOT in the plain Draft view (tabs partition)",
+      !(draftList.json?.data?.courses ?? []).some((c) => c.id === wfId));
+    // The partition property: a rejected course MOVES from the draft bucket to
+    // the rejected one. It must not be counted in both (which is what the naked
+    // groupBy would have done) and it must not vanish from both.
+    const counts = draftList.json?.data?.statusCounts ?? {};
+    ok("rejected count went up by one", counts.rejected === rejectedBefore + 1, `${rejectedBefore} -> ${counts.rejected}`);
+    ok("draft count went down by one (moved, not copied)", counts.draft === draftsBefore - 1, `${draftsBefore} -> ${counts.draft}`);
+    ok("draft + rejected is unchanged (no double-count, nothing lost)",
+      counts.draft + counts.rejected === draftsBefore + rejectedBefore,
+      `${draftsBefore}+${rejectedBefore} -> ${counts.draft}+${counts.rejected}`);
+
+    // Unpublish: the one action in task 115 that did not exist.
+    const notPublished = await req("POST", `/courses/${wfId}/unpublish`);
+    ok("unpublish a Draft -> 400", notPublished.status === 400, `got ${notPublished.status}`);
+
+    await req("POST", `/courses/${wfId}/submit`);
+    const approved = await req("POST", `/courses/${wfId}/approve`);
+    ok("approve -> Published", approved.status === 200 && approved.json?.data?.status === "Published", `got ${approved.status}`);
+
+    const unpublished = await req("POST", `/courses/${wfId}/unpublish`);
+    ok("unpublish a Published course -> 200 Draft",
+      unpublished.status === 200 && unpublished.json?.data?.status === "Draft", `got ${unpublished.status}: ${unpublished.json?.message}`);
+
+    const afterUnpublish = await req("GET", `/courses/${wfId}`);
+    ok("unpublishing keeps reviewedAt (approval history is not rewritten)",
+      Boolean(afterUnpublish.json?.data?.reviewedAt), afterUnpublish.json?.data?.reviewedAt);
+    ok("unpublishing is not a rejection (no rejectionReason, stays out of Rejected)",
+      afterUnpublish.json?.data?.rejectionReason === null && afterUnpublish.json?.data?.isRejected === false);
+
+    const twiceUnpublished = await req("POST", `/courses/${wfId}/unpublish`);
+    ok("unpublish twice -> 400 (atomic guard)", twiceUnpublished.status === 400, `got ${twiceUnpublished.status}`);
+
+    const badFilter = await req("GET", `/courses?instructor=${inst.id}&status=Nonsense`);
+    ok("unknown status filter -> 400", badFilter.status === 400, `got ${badFilter.status}`);
+
+    await req("DELETE", `/courses/${wfId}`);
+  }
+
+  // ── 8d. Documents (task 119) ──────────────────────────────────────────────────
+  console.log("\nInstructor documents");
+  const docsList = await req("GET", `/instructors/${inst.id}/documents`);
+  ok("list documents -> 200", docsList.status === 200 && Array.isArray(docsList.json?.data?.documents), `got ${docsList.status}`);
+
+  const docsNoAuth = await req("GET", `/instructors/${inst.id}/documents`, undefined, false);
+  ok("documents without a token -> 401", docsNoAuth.status === 401, `got ${docsNoAuth.status}`);
+  const docsOfLearner = await req("GET", `/instructors/${learnerId}/documents`);
+  ok("documents for a non-instructor -> 404", docsOfLearner.status === 404, `got ${docsOfLearner.status}`);
+
+  const badType = await req("POST", `/instructors/${inst.id}/documents/sign`, {
+    fileName: "id.pdf", fileType: "application/pdf", type: "CERTIFICATION",
+  });
+  ok("type=CERTIFICATION -> 400 (certifications are a separate entity)", badType.status === 400, `got ${badType.status}`);
+
+  const badMime = await req("POST", `/instructors/${inst.id}/documents/sign`, {
+    fileName: "payload.svg", fileType: "image/svg+xml", type: "IDENTITY",
+  });
+  ok("SVG upload -> 400 (scriptable file type)", badMime.status === 400, `got ${badMime.status}`);
+
+  const signed = await req("POST", `/instructors/${inst.id}/documents/sign`, {
+    fileName: "smoke identity/../scan.pdf", fileType: "application/pdf", type: "IDENTITY",
+  });
+  // 503 is a legitimate answer when storage is not configured on this machine —
+  // the suite must not fail for that, but everything below it needs a real URL.
+  const storageReady = signed.status === 200;
+  ok("sign -> 200 (or 503 when storage is unconfigured)",
+    storageReady || signed.status === 503, `got ${signed.status}: ${signed.json?.message}`);
+
+  if (storageReady) {
+    const uploadUrl = signed.json?.data?.uploadUrl;
+    const path = signed.json?.data?.path;
+    ok("path is scoped to this instructor", typeof path === "string" && path.startsWith(`instructors/${inst.id}/`), path);
+    ok("traversal in fileName is neutralised", typeof path === "string" && !path.includes(".."), path);
+    ok("the signed URL is not a public URL", typeof uploadUrl === "string" && uploadUrl.length > 0);
+
+    // Confirm before the file exists must not create a row.
+    const earlyConfirm = await req("POST", `/instructors/${inst.id}/documents/confirm`, {
+      path, fileName: "scan.pdf", type: "IDENTITY",
+    });
+    ok("confirm before the upload lands -> 400", earlyConfirm.status === 400, `got ${earlyConfirm.status}`);
+
+    const foreignConfirm = await req("POST", `/instructors/${inst.id}/documents/confirm`, {
+      path: `instructors/${learnerId}/stolen.pdf`, fileName: "stolen.pdf", type: "IDENTITY",
+    });
+    ok("confirm a path outside this instructor's prefix -> 400", foreignConfirm.status === 400, `got ${foreignConfirm.status}`);
+
+    const traversalConfirm = await req("POST", `/instructors/${inst.id}/documents/confirm`, {
+      path: `instructors/${inst.id}/../../etc/passwd`, fileName: "x.pdf", type: "IDENTITY",
+    });
+    ok("confirm with traversal -> 400", traversalConfirm.status === 400, `got ${traversalConfirm.status}`);
+
+    // Real upload → real confirm.
+    const pdfBytes = Buffer.from("%PDF-1.4\n% smoke test document\n");
+    const put = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "application/pdf" },
+      body: pdfBytes,
+    });
+    ok("client PUT straight to storage succeeds", put.ok, `got ${put.status}`);
+
+    if (put.ok) {
+      const confirmed = await req("POST", `/instructors/${inst.id}/documents/confirm`, {
+        path, fileName: "scan.pdf", type: "IDENTITY",
+      });
+      const docId = confirmed.json?.data?.id;
+      ok("confirm -> 201", confirmed.status === 201 && Boolean(docId), `got ${confirmed.status}: ${confirmed.json?.message}`);
+      ok("status starts PENDING", confirmed.json?.data?.status === "PENDING", confirmed.json?.data?.status);
+      ok("size + mime come from the stored object, not the client",
+        confirmed.json?.data?.fileSize === pdfBytes.length && confirmed.json?.data?.mimeType === "application/pdf",
+        `${confirmed.json?.data?.fileSize} / ${confirmed.json?.data?.mimeType}`);
+      ok("no filePath is exposed to the client", confirmed.json?.data?.filePath === undefined);
+
+      const expiredDate = await req("POST", `/instructors/${inst.id}/documents/confirm`, {
+        path, fileName: "scan.pdf", type: "CONTRACT", expiresAt: "2020-01-01T00:00:00.000Z",
+      });
+      ok("expiresAt in the past -> 400", expiredDate.status === 400, `got ${expiredDate.status}`);
+
+      const listed = await req("GET", `/instructors/${inst.id}/documents`);
+      const row = (listed.json?.data?.documents ?? []).find((d) => d.id === docId);
+      ok("the document is listed", Boolean(row));
+      ok("download URL is signed and short-lived",
+        typeof row?.downloadUrl === "string" && row.downloadUrl.includes("token"), row?.downloadUrl?.slice(0, 60));
+      ok("download expiry is reported to the client", row?.downloadExpiresIn > 0);
+
+      const download = await fetch(row.downloadUrl);
+      ok("the signed URL actually resolves the file", download.ok, `got ${download.status}`);
+      const unsigned = await fetch(row.downloadUrl.split("?")[0]);
+      ok("the same URL WITHOUT its token is refused (bucket is private)", !unsigned.ok, `got ${unsigned.status}`);
+
+      const noReasonReject = await req("PATCH", `/instructors/${inst.id}/documents/${docId}/reject`, {});
+      ok("reject without a reason -> 400", noReasonReject.status === 400, `got ${noReasonReject.status}`);
+
+      const rejectedDoc = await req("PATCH", `/instructors/${inst.id}/documents/${docId}/reject`, { reason: "Illegible scan." });
+      ok("reject -> 200 REJECTED with the reason",
+        rejectedDoc.status === 200 && rejectedDoc.json?.data?.status === "REJECTED" && rejectedDoc.json?.data?.rejectionReason === "Illegible scan.",
+        `got ${rejectedDoc.status}`);
+
+      const verifiedDoc = await req("PATCH", `/instructors/${inst.id}/documents/${docId}/verify`);
+      ok("verify -> 200 VERIFIED", verifiedDoc.status === 200 && verifiedDoc.json?.data?.status === "VERIFIED", `got ${verifiedDoc.status}`);
+      ok("verifying clears the old rejection reason", verifiedDoc.json?.data?.rejectionReason === null);
+      ok("verifiedAt / verifiedById stamped",
+        Boolean(verifiedDoc.json?.data?.verifiedAt) && Boolean(verifiedDoc.json?.data?.verifiedById));
+
+      // Cross-instructor access: a real doc id under the WRONG instructor.
+      const crossRead = await req("PATCH", `/instructors/${learnerId}/documents/${docId}/verify`);
+      ok("another user's document id -> 404 (no existence leak)", crossRead.status === 404, `got ${crossRead.status}`);
+
+      const archivedDoc = await req("DELETE", `/instructors/${inst.id}/documents/${docId}`);
+      ok("delete -> 200 and is SOFT (status ARCHIVED)",
+        archivedDoc.status === 200 && archivedDoc.json?.data?.status === "ARCHIVED", `got ${archivedDoc.status}`);
+
+      const afterArchiveList = await req("GET", `/instructors/${inst.id}/documents`);
+      ok("archived documents are hidden by default",
+        !(afterArchiveList.json?.data?.documents ?? []).some((d) => d.id === docId));
+      const withArchived = await req("GET", `/instructors/${inst.id}/documents?includeArchived=true`);
+      ok("…but are still retrievable for a compliance review",
+        (withArchived.json?.data?.documents ?? []).some((d) => d.id === docId));
+
+      const verifyArchived = await req("PATCH", `/instructors/${inst.id}/documents/${docId}/verify`);
+      ok("verifying an archived document -> 409", verifyArchived.status === 409, `got ${verifyArchived.status}`);
+    }
   }
 
   // ── 9. Delete guard ───────────────────────────────────────────────────────────

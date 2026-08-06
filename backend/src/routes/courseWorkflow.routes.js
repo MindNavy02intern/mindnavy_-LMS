@@ -22,5 +22,9 @@ router.get("/courses/:id/preview", requireAdminAuth, coursesReadRateLimiter, c.g
 router.post("/courses/:id/submit",  requireAdminAuth, adminUserActionRateLimiter, c.submitCourse);
 router.post("/courses/:id/approve", requireAdminAuth, adminUserActionRateLimiter, c.approveCourse);
 router.post("/courses/:id/reject",  requireAdminAuth, adminUserActionRateLimiter, c.rejectCourse);
+// Pull a live course back to Draft. Archive is NOT here — that stays
+// DELETE /api/admin/courses/:id (courses.routes), with POST /:id/restore as its
+// inverse. One verb per transition, one place each.
+router.post("/courses/:id/unpublish", requireAdminAuth, adminUserActionRateLimiter, c.unpublishCourse);
 
 module.exports = router;

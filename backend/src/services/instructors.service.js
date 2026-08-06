@@ -787,10 +787,87 @@ async function suspendInstructor(id, body, adminId) {
   return getInstructor(id);
 }
 
-async function reactivateInstructor(id, adminId) {
+async function reactivateInstructor(id, body, adminId) {
   await assertIsInstructor(id);
-  await usersService.reactivateUser(id, { id: adminId });
+  await usersService.reactivateUser(id, body, { id: adminId });
   return getInstructor(id);
+}
+
+// ── Suspension history (blueprint 05 §14) ───────────────────────────────────────
+//
+// Read from audit_logs, NOT from a suspensions table — deliberately:
+//   • AppUser.suspendedAt holds only the LATEST timestamp and is nulled on
+//     reactivate, so the row itself remembers nothing.
+//   • users.service already writes USER_SUSPENDED / USER_REACTIVATED against
+//     this exact user, with reason, notes and violationType in `details`. A
+//     second table would be a second writer for one event (the same reasoning
+//     that keeps verify/suspend/reactivate on the USER_* actions).
+//   • targetUserId and action are both indexed (admin.prisma), so this is a
+//     bounded, index-backed read, not an audit scan.
+//
+// The trade-off is documented in the contract: rows recorded before this feature
+// have no violationType, and rows written before targetUserId existed are not
+// reachable at all. Both surface as null / absent, never as a guessed value.
+const SUSPENSION_ACTIONS = ["USER_SUSPENDED", "USER_REACTIVATED"];
+
+const SUSPENSION_ACTION_LABEL = {
+  USER_SUSPENDED:   "suspended",
+  USER_REACTIVATED: "reactivated",
+};
+
+// `details` is a Json column: it can be null, a scalar, or an array on rows
+// written by other code paths. Read every field through this guard so one odd
+// legacy row cannot throw and take the whole side panel down.
+function detailString(details, key) {
+  if (!details || typeof details !== "object" || Array.isArray(details)) return null;
+  const value = details[key];
+  return typeof value === "string" && value.trim() ? value : null;
+}
+
+async function getSuspensionHistory(id, { page = 1, limit = 20 } = {}) {
+  await assertIsInstructor(id);
+
+  const where = { targetUserId: id, action: { in: SUSPENSION_ACTIONS } };
+  const skip = (page - 1) * limit;
+
+  const [total, rows] = await Promise.all([
+    safe(() => prisma.auditLog.count({ where }), 0),
+    safe(() => prisma.auditLog.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      skip,
+      take: limit,
+      select: {
+        id: true,
+        action: true,
+        details: true,
+        createdAt: true,
+        adminId: true,
+        // Nullable: the admin account may have been removed since, and system
+        // writes carry no adminId at all.
+        admin: { select: { fullName: true } },
+      },
+    }), []),
+  ]);
+
+  return {
+    history: rows.map((r) => ({
+      id:            r.id,
+      action:        SUSPENSION_ACTION_LABEL[r.action] ?? r.action,
+      reason:        detailString(r.details, "reason"),
+      notes:         detailString(r.details, "notes"),
+      violationType: detailString(r.details, "violationType"),
+      adminId:       r.adminId ?? null,
+      adminName:     r.admin?.fullName ?? null,
+      createdAt:     iso(r.createdAt),
+    })),
+    pagination: {
+      total,
+      page,
+      limit,
+      pages: Math.max(1, Math.ceil(total / limit)),
+    },
+  };
 }
 
 // Soft delete: archive the user (users.service owns that transition) and KEEP
@@ -831,5 +908,6 @@ module.exports = {
   verifyInstructor,
   suspendInstructor,
   reactivateInstructor,
+  getSuspensionHistory,
   deleteInstructor,
 };

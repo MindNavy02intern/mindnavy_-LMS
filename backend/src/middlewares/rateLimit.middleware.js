@@ -11,10 +11,17 @@ const adminLoginRateLimiter = rateLimit({
   },
 });
 
-// Stricter limiter for write operations on user management endpoints
+// Stricter limiter for write operations on user management endpoints.
+//
+// PRODUCTION IS UNCHANGED at 60/10min. The dev ceiling is raised because the
+// module smoke suites now perform well over 60 writes in a single run (create →
+// suspend → reactivate → verify → submit → approve → unpublish → upload →
+// verify → archive → cleanup) and would otherwise fail on 429 partway through,
+// hiding real regressions behind a rate limit. Same dev-only carve-out, and the
+// same reasoning, as adminUsersAnalyticsRateLimiter below.
 const adminUserActionRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
-  limit: 60,
+  limit: process.env.NODE_ENV !== "production" ? 600 : 60,
   standardHeaders: true,
   legacyHeaders: false,
   message: {

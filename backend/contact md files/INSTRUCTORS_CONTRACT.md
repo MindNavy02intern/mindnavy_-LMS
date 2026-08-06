@@ -373,13 +373,68 @@ on suspended rows.
 
 ### `PATCH /api/admin/instructors/:id/suspend`
 ```jsonc
-{ "reason": "Policy violation", "notes": "optional" }   // reason REQUIRED, ≥3 chars → 400 otherwise
+{
+  "reason": "Repeated copyright complaints",  // REQUIRED, ≥3 chars → 400 otherwise
+  "violationType": "COPYRIGHT",               // OPTIONAL in v1 — see below
+  "notes": "optional"
+}
 ```
 `200` → `InstructorDetail` with `status: "suspended"`. Their courses are **not**
 touched (unpublish-on-suspend is not a v1 rule — see the open question below).
 
+**`violationType`** — one of `COPYRIGHT` · `POLICY` · `FRAUD` · `BEHAVIOR` ·
+`FAKE_CERT` · `SECURITY` (case-insensitive on input, stored upper-case).
+
+- It is **optional right now on purpose**: the endpoint shipped before the field
+  existed and the live Suspend modal still sends `{ reason, notes }`. Requiring
+  it today would break suspension outright.
+- **Once the dropdown ships, tell Hassan and it becomes required** — that flip is
+  a one-line change and is the intended end state.
+- A value that *is* sent must be in the list: a typo is a **400**, never a
+  suspension silently filed as untyped.
+- The same field works on `PATCH /api/admin/users/:id/suspend` — one taxonomy,
+  both screens.
+
 ### `PATCH /api/admin/instructors/:id/reactivate`
+```jsonc
+{ "notes": "optional" }   // may also be sent with no body at all
+```
 `200` → `InstructorDetail` with `status: "active"`, `suspendedAt` cleared.
+
+### `GET /api/admin/instructors/:id/suspension-history`
+
+The Suspension & Compliance section of the side panel. Query: `page` (default 1)
+· `limit` (default 20, **max 50**).
+
+```jsonc
+{ "success": true, "data": {
+  "history": [
+    { "id": "…", "action": "reactivated", "reason": null,
+      "notes": "Appeal upheld.", "violationType": null,
+      "adminId": "…", "adminName": "Sara Admin",
+      "createdAt": "2026-08-05T10:22:00.000Z" },
+    { "id": "…", "action": "suspended", "reason": "Repeated copyright complaints",
+      "notes": null, "violationType": "COPYRIGHT",
+      "adminId": "…", "adminName": "Sara Admin",
+      "createdAt": "2026-08-01T09:12:00.000Z" }
+  ],
+  "pagination": { "total": 2, "page": 1, "limit": 20, "pages": 1 }
+}}
+```
+
+- `action` is `"suspended"` | `"reactivated"` — lowercase, same vocabulary as
+  `status` elsewhere in this module. Newest first.
+- **This reads the audit log, not a suspensions table.** `AppUser.suspendedAt`
+  holds only the latest timestamp and is nulled on reactivate, so the row itself
+  remembers nothing; `users.service` has always written `USER_SUSPENDED` /
+  `USER_REACTIVATED` with the reason attached. A separate table would be a second
+  writer for one event.
+- **`violationType` is `null` on every suspension recorded before this feature.**
+  Render `—`. Never default it to a type — an untyped suspension is not a policy
+  violation.
+- `adminName` is `null` if the acting admin's account has since been removed.
+- `404` for an unknown id **and** for a non-instructor user id, same as the other
+  reads here.
 
 ### `DELETE /api/admin/instructors/:id`
 **Soft** — archives the AppUser and **keeps** the profile, so reactivating
@@ -405,6 +460,130 @@ filtered by role. Verified working:
 
 Do **not** ask for `/instructors/export` — a second exporter over the same rows
 is exactly the fork this module was designed to avoid.
+
+---
+
+## Documents
+
+The Documents tab of the instructor profile (blueprint 05 §12).
+`queryKey: ['instructors', id, 'documents']`
+
+> **Administrative paperwork only.** Teaching certificates, licences and degrees
+> are a **different entity** with their own verification queue and their own tab
+> (blueprint 05 §11). There is deliberately **no `CERTIFICATION` type** here, and
+> sending one is a 400.
+
+```ts
+export type DocumentType   = 'IDENTITY' | 'CONTRACT' | 'AGREEMENT' | 'TAX' | 'COMPLIANCE';
+export type DocumentStatus = 'PENDING' | 'VERIFIED' | 'REJECTED' | 'ARCHIVED';
+
+export interface InstructorDocument {
+  id: string;
+  instructorId: string;
+  type: DocumentType;
+  status: DocumentStatus;
+  fileName: string;
+  fileSize: number;                 // bytes — taken from the stored object
+  mimeType: string;                 // ditto: never what the client claimed
+  downloadUrl: string | null;       // SIGNED, expires — see below
+  downloadExpiresIn: number | null; // seconds (300)
+  rejectionReason: string | null;
+  expiresAt: string | null;         // when the DOCUMENT lapses; null = never
+  uploadedById: string | null;
+  uploadedAt: string;
+  verifiedAt: string | null;        // stamped by verify AND by reject (decision time)
+  verifiedById: string | null;
+  updatedAt: string;
+}
+```
+
+### ⚠️ `downloadUrl` expires — do not cache it
+
+The bucket is **private**. These are identity documents and tax forms, so unlike
+thumbnails and lesson video there is no public URL anywhere in this flow: each
+list response mints a fresh signed link valid for **5 minutes**.
+
+- **Do not store `downloadUrl` in React Query cache, component state, or an
+  `<img src>` that outlives the response.** Refetch the list when the user
+  clicks Download.
+- `downloadUrl` is `null` when storage is unconfigured — disable the button, the
+  rest of the row still renders.
+
+### `GET /api/admin/instructors/:id/documents`
+
+Query: `type` · `status` · `includeArchived` (`true` to include soft-deleted rows).
+
+```jsonc
+{ "success": true, "data": { "documents": [ /* InstructorDocument[] */ ], "total": 4 } }
+```
+
+Archived documents are **hidden by default** — pass `?includeArchived=true` (or
+`?status=ARCHIVED`) for a compliance review. Newest first.
+
+### Upload = three steps (the API never receives the file)
+
+Same flow as course uploads: the backend issues a signed URL, the browser PUTs
+straight to storage, then the backend verifies what actually landed. `express.json`
+is capped at 50kb — a multipart POST to our API is not an option.
+
+**1.** `POST /api/admin/instructors/:id/documents/sign`
+```jsonc
+{ "fileName": "passport.pdf", "fileType": "application/pdf", "type": "IDENTITY" }
+→ { "uploadUrl": "…", "path": "instructors/<id>/<uuid>-passport.pdf",
+    "type": "IDENTITY", "maxBytes": 10485760, "expiresIn": 600 }
+```
+Allowed `fileType`: `application/pdf` · `image/png` · `image/jpeg` · `image/webp`.
+Anything else (including **SVG** — it can carry script) is a 400.
+
+**2.** `PUT` the file to `uploadUrl` with the matching `Content-Type`. This request
+goes to storage, not to us. If it fails, **do not call confirm.**
+
+**3.** `POST /api/admin/instructors/:id/documents/confirm`
+```jsonc
+{ "path": "<the path from step 1>", "fileName": "passport.pdf",
+  "type": "IDENTITY", "expiresAt": "2027-01-01T00:00:00.000Z" }   // expiresAt optional, must be future
+→ 201 { "success": true, "message": "Document uploaded.", "data": <InstructorDocument> }
+```
+- `fileSize` and `mimeType` are read from the object itself — sending them does
+  nothing.
+- **400** if the upload never landed, is oversized, or is the wrong type (the
+  stray object is deleted rather than left orphaned in the bucket).
+- New documents always start `PENDING`.
+
+### `PATCH …/documents/:docId/verify`
+`200` → the document, `VERIFIED`, with `verifiedAt` / `verifiedById` stamped and
+any previous `rejectionReason` **cleared**.
+
+### `PATCH …/documents/:docId/reject`
+```jsonc
+{ "reason": "Illegible scan." }   // REQUIRED, ≥3 chars → 400 otherwise
+```
+`200` → the document, `REJECTED`. `verifiedAt` / `verifiedById` record who made
+*that decision* — a rejection has a reviewer too.
+
+### `DELETE …/documents/:docId` — **soft**
+`200` → the document with `status: "ARCHIVED"`. **The file stays in the bucket.**
+This is a compliance record: "an admin rejected my ID and then erased it" has to
+stay answerable. Verify/reject on an archived document is a **409** — upload a
+replacement instead.
+
+### Security notes worth knowing on the frontend
+
+- A `docId` belonging to a different instructor answers **404**, not 403 — the
+  API never confirms that someone else's document exists.
+- Upload paths are built server-side from the route's `:id`. You cannot choose
+  where a file lands, and a `path` outside `instructors/<id>/` is a 400.
+- **503** `"Document storage is not configured yet."` means the bucket/env is
+  missing on that environment, not that the request was wrong.
+
+### Mutation IDs
+
+| Mutation ID | Invalidate |
+|---|---|
+| `instructorDoc.upload` | `['instructors', id, 'documents']`, `['instructors', id]` |
+| `instructorDoc.verify` | `['instructors', id, 'documents']`, `['approvals']` |
+| `instructorDoc.reject` | `['instructors', id, 'documents']`, `['approvals']` |
+| `instructorDoc.archive` | `['instructors', id, 'documents']` |
 
 ---
 
@@ -496,6 +675,9 @@ Already present: `instructorApplication.submit` · `.approve` · `.reject` ·
 | `instructor.reactivate` | `['instructors']`, `['instructors', id]`, `['users']`, `['dashboard','user-analytics']` |
 | `instructor.delete` | `['instructors']`, `['users']`, `['courses']`, `['dashboard','user-analytics']` |
 | `instructorApplication.requestChanges` | `['instructor-applications']`, `['approvals']` |
+| `instructor.reactivate` | `['instructors']`, `['instructors', id]`, `['users']` |
+| `instructorDoc.upload` / `.verify` / `.reject` / `.archive` | see the Documents section |
+| `course.unpublish` | `['courses']`, `['courses', id]`, `['instructors']` |
 
 Every one also gets the §2 defaults (`['activity']`, `['notifications']`,
 `['dashboard','stats']`). `instructor.suspend` / `.reactivate` / `.verify` must
@@ -513,12 +695,37 @@ table is showing.
    module owns, so it was **not** done here — it needs a deliberate call.
 2. **Suspending an instructor does not unpublish their courses.** IMPACT_MAP
    §5.3 flags this as "confirm rule with Hassan". v1 leaves courses untouched.
-3. **Blueprint 05 lists more mutations than exist**: payouts, reviews,
-   certifications, documents, badges, restrictions, warnings. All of them need
-   models that do not exist (Finance, Review, Document). They stay `[planned]`.
+3. **Blueprint 05 still lists more mutations than exist**: payouts, reviews,
+   certifications, badges, restrictions, warnings. Those need models that do not
+   exist (Finance, Review, InstructorCertification). They stay `[planned]`.
+   **Documents shipped** — see the Documents section above.
+   **Certifications deliberately did NOT ship with them**: they are a separate
+   entity with their own data and verification queue (blueprint 05 §11), and
+   folding them into Documents would have made both half-features.
 4. **Audit actions for verify/suspend/reactivate are the `USER_*` ones**
    (`USER_VERIFICATION_APPROVED`, `USER_SUSPENDED`, `USER_REACTIVATED`) because
    users.service performs the write. One action, one audit row — the activity
    feed would otherwise show every suspension twice.
 
+---
+
+## Setup note for other environments
+
+The documents bucket is **private** and must exist before uploads work:
+
+```
+node src/scripts/ensureInstructorDocsBucket.js
+```
+
+Idempotent. It refuses to continue if a bucket of that name already exists and is
+**public** — instructor documents are PII and must not sit behind permanent URLs.
+Override the name with `SUPABASE_INSTRUCTOR_DOCS_BUCKET`.
+
+---
+
 *Backend built 2026-08-03 · smoke `src/scripts/instructorsSmokeTest.js` — 89/89 green.*
+*Extended 2026-08-06 (tasks 115 · 117 · 119): suspension `violationType` +
+reactivate notes + suspension history · instructor courses via
+`GET /courses?instructor=` with the new `Rejected` filter and
+`POST /courses/:id/unpublish` (see COURSES_API.md) · administrative documents on
+a private bucket. Smoke — **187/187 green**.*

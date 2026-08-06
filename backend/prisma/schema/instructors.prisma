@@ -98,3 +98,70 @@ enum InstructorApplicationStatus {
   APPROVED
   REJECTED
 }
+
+// Administrative documents held on file for an instructor (blueprint 05 §12).
+//
+// SCOPE: administrative paperwork ONLY. Teaching certificates, licences and
+// degrees are a DIFFERENT entity with their own verification queue and their own
+// tab (blueprint 05 §11) — there is deliberately no CERTIFICATION type here, so
+// the two never become two half-implementations of each other.
+//
+// The row stores the storage KEY (`filePath`), never a public URL: the bucket is
+// private and every read mints a short-lived signed URL. Identity and tax
+// documents are the most sensitive data this system holds, and a stored public
+// URL is a permanent, unrevocable grant to anyone who ever sees it.
+model InstructorDocument {
+  id           String @id @default(uuid())
+  instructorId String
+
+  type   InstructorDocumentType
+  status InstructorDocumentStatus @default(PENDING)
+
+  fileName String
+  // Key inside the private bucket: instructors/<instructorId>/<uuid>-<name>.
+  // Required — without it the object can be neither signed for download nor
+  // deleted, which is how orphaned files accumulate in a bucket forever.
+  filePath String
+  fileSize Int
+  mimeType String
+
+  // Set by /reject. Cleared again by /verify, so a re-verified document does not
+  // keep contradicting itself.
+  rejectionReason String?
+
+  // Expiry is a property of the DOCUMENT, not of the row: contracts, agreements
+  // and tax forms lapse on a date the file itself states. Null = does not expire.
+  expiresAt DateTime?
+
+  uploadedById String?
+  uploadedAt   DateTime  @default(now())
+  verifiedAt   DateTime?
+  verifiedById String?
+
+  updatedAt DateTime @updatedAt
+
+  instructor AppUser @relation("InstructorDocuments", fields: [instructorId], references: [id], onDelete: Cascade)
+
+  // Every list read is scoped to one instructor and usually one status/type.
+  @@index([instructorId, status])
+  @@index([instructorId, type])
+  @@map("instructor_documents")
+}
+
+enum InstructorDocumentType {
+  IDENTITY
+  CONTRACT
+  AGREEMENT
+  TAX
+  COMPLIANCE
+}
+
+enum InstructorDocumentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  // Soft delete. Blueprint 05 §12 lists Archive, not Delete, and every other
+  // module here soft-deletes — a compliance record that an admin can erase
+  // outright is not a compliance record.
+  ARCHIVED
+}

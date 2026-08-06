@@ -4,6 +4,33 @@ const VALID_ROLES = new Set(["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTAN
 const VALID_STATUSES = new Set(["ACTIVE", "SUSPENDED", "PENDING", "ARCHIVED", "INVITED"]);
 const VALID_VERIFICATION_STATES = new Set(["VERIFIED", "PENDING", "REJECTED", "EXPIRED"]);
 
+// Violation taxonomy for a suspension (blueprint 05 §14). It lives HERE, next to
+// the suspend write and the USER_SUSPENDED audit row that records it, so the
+// Instructors module imports one list instead of declaring a second one that
+// could drift.
+//
+// OPTIONAL in v1 on purpose: this endpoint shipped before the field existed and
+// the Instructors UI is still adding the dropdown, so an omitted value is valid
+// and stored as null. Making it required now would break every caller that is
+// already suspending with { reason, notes }.
+const VIOLATION_TYPES = new Set([
+  "COPYRIGHT",
+  "POLICY",
+  "FRAUD",
+  "BEHAVIOR",
+  "FAKE_CERT",
+  "SECURITY",
+]);
+
+// Single normalizer for the field, shared by both validators and by the service
+// that performs the write. Returns the canonical value, or null when absent.
+// Throws nothing — callers decide whether an unrecognised value is an error.
+function normalizeViolationType(value) {
+  if (typeof value !== "string") return null;
+  const v = value.trim().toUpperCase();
+  return VIOLATION_TYPES.has(v) ? v : null;
+}
+
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -170,7 +197,7 @@ function validateUpdateUserStatusInput(body) {
 
 function validateSuspendUserInput(body) {
   const errors = [];
-  const { reason, notes } = body || {};
+  const { reason, notes, violationType } = body || {};
 
   if (!reason || typeof reason !== "string" || reason.trim().length === 0 || reason.trim().length > 300) {
     errors.push("reason is required and must be up to 300 characters.");
@@ -180,6 +207,13 @@ function validateSuspendUserInput(body) {
     if (typeof notes !== "string" || notes.trim().length > 500) {
       errors.push("notes must be a string up to 500 characters.");
     }
+  }
+
+  // Optional (see VIOLATION_TYPES) — but a value that IS sent must be in the
+  // taxonomy. Silently dropping a typo would file the suspension under "no
+  // violation type" and the compliance history would under-report it.
+  if (violationType != null && normalizeViolationType(violationType) === null) {
+    errors.push(`violationType must be one of: ${[...VIOLATION_TYPES].join(", ")}.`);
   }
 
   return errors;
@@ -264,6 +298,8 @@ function validateForceLogoutInput(body) {
 }
 
 module.exports = {
+  VIOLATION_TYPES,
+  normalizeViolationType,
   validateUuidParam,
   validateCreateUserInput,
   validateUpdateUserInput,

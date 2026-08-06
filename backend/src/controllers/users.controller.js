@@ -206,7 +206,7 @@ async function reactivateUser(req, res) {
   }
 
   try {
-    const result = await usersService.reactivateUser(req.params.id, req.admin);
+    const result = await usersService.reactivateUser(req.params.id, req.body || {}, req.admin);
     return res.status(200).json(result);
   } catch (error) {
     if (error.statusCode === 404) {
