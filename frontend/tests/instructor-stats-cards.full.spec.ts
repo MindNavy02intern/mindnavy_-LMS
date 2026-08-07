@@ -112,7 +112,8 @@ test('Suspending an instructor updates the Suspended Instructors card without a 
   await page.getByLabel(`More actions for ${testInstructorName}`).click()
   await page.getByRole('button', { name: 'Suspend', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Suspend Instructor' })).toBeVisible({ timeout: 5000 })
-  await page.getByLabel('Suspension reason').fill('Automated QA suspension test (stats reflection)')
+  await page.getByLabel('Violation type').selectOption('POLICY')
+  await page.getByLabel('Suspension reason').fill('Automated QA suspension test (stats reflection) — Phase B check')
 
   const [suspendResp, statsResp] = await Promise.all([
     page.waitForResponse(r => r.url().includes(`/instructors/${testInstructorId}/suspend`) && r.ok(), { timeout: 15000 }),

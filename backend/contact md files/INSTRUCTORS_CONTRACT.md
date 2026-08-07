@@ -695,13 +695,19 @@ table is showing.
    module owns, so it was **not** done here — it needs a deliberate call.
 2. **Suspending an instructor does not unpublish their courses.** IMPACT_MAP
    §5.3 flags this as "confirm rule with Hassan". v1 leaves courses untouched.
-3. **Blueprint 05 still lists more mutations than exist**: payouts, reviews,
-   certifications, badges, restrictions, warnings. Those need models that do not
-   exist (Finance, Review, InstructorCertification). They stay `[planned]`.
+3. **Blueprint 05 still lists more mutations than exist**: payouts, badges,
+   restrictions, warnings. Those need models that do not exist (Finance). They
+   stay `[planned]`.
    **Documents shipped** — see the Documents section above.
-   **Certifications deliberately did NOT ship with them**: they are a separate
-   entity with their own data and verification queue (blueprint 05 §11), and
-   folding them into Documents would have made both half-features.
+   **Reviews and Certifications shipped 2026-08-07** — see the Addendum at the
+   bottom of this file. Both were built AFTER this note (above) originally
+   said they were deliberately unshipped gaps pending a decision from Hassan.
+   The conflict was flagged to the user before building; the user chose to
+   build both anyway. Anyone relying on "no Review model" or "Certifications
+   deliberately did NOT ship" elsewhere in this file (§2, §Types, this
+   section) should treat those specific claims as stale and read the Addendum
+   instead — the rest of this contract (Instructors, Applications, Documents)
+   is unaffected and still accurate.
 4. **Audit actions for verify/suspend/reactivate are the `USER_*` ones**
    (`USER_VERIFICATION_APPROVED`, `USER_SUSPENDED`, `USER_REACTIVATED`) because
    users.service performs the write. One action, one audit row — the activity
@@ -729,3 +735,81 @@ reactivate notes + suspension history · instructor courses via
 `GET /courses?instructor=` with the new `Rejected` filter and
 `POST /courses/:id/unpublish` (see COURSES_API.md) · administrative documents on
 a private bucket. Smoke — **187/187 green**.*
+
+---
+
+## Addendum (2026-08-07) — Reviews & Certifications shipped
+
+**These two features were built despite this contract documenting them as
+deliberate, unshipped `[planned]` gaps** ("no Review model" in the Types
+section and note 2; "Certifications deliberately did NOT ship" in Known gaps
+#3). Before building, the conflict was flagged explicitly to the user —
+including that this contract calls the decision "for Hassan, not a bug" — and
+the user chose to build both anyway. Read this addendum as the current truth
+for these two areas; the rest of the contract above is unaffected.
+
+### Reviews
+
+`InstructorReview`: `id`, `instructorId`, `studentId`, `courseId`, `rating`
+(1–5), `comment`, `status` (`PENDING` \| `APPROVED` \| `REMOVED` \| `FLAGGED`),
+`createdAt`, `updatedAt`. No student-facing submission endpoint exists — there
+is no instructor-facing or student-facing app in this system, same reasoning
+as `recentActivities` in the main contract body. Rows are moderation-queue-only
+from the admin side; nothing currently writes new ones outside direct DB/seed
+access.
+
+```
+GET   /api/admin/instructors/:id/reviews                    (?page, ?limit, ?status)
+PATCH /api/admin/instructors/:id/reviews/:reviewId/approve
+PATCH /api/admin/instructors/:id/reviews/:reviewId/remove
+PATCH /api/admin/instructors/:id/reviews/:reviewId/flag
+```
+
+`GET` response: `{ reviews: Review[], pagination }` where `Review` also carries
+`studentName` and `courseTitle` (joined, so the list needs no extra requests).
+All three PATCH actions return the updated `Review` and share ONE mutation ID,
+`review.moderate` — see IMPACT_MAP §5.3.
+
+**This does not change note 2** ("Rating and revenue do not exist in this
+system") for the INSTRUCTOR ROW: `Instructor.rating` (list/stats/analytics) is
+still always `null` — it is an AppUser-level aggregate that nothing computes
+from `InstructorReview` rows. The two are unrelated on purpose; wiring row
+aggregation into `rating` was out of scope for this addendum.
+
+### Certifications
+
+`InstructorCertification`: `id`, `instructorId`, `name`, `type` (`TEACHING` \|
+`PROFESSIONAL` \| `ACADEMIC` \| `TECHNICAL` \| `TRAINING`), `issuer`, `fileUrl`
+(private bucket key, never a public URL — mapped to a fresh 5-minute SIGNED
+url on every read, same rule as `InstructorDocument.downloadUrl`; do not cache
+it), `status` (`PENDING` \| `VERIFIED` \| `REJECTED`), `createdAt`,
+`updatedAt`, `verifiedAt`, `verifiedById`. A file is optional — a row may exist
+unattached.
+
+Upload is the same sign → client PUT → confirm pattern as Documents (§ above)
+— this API never receives file bytes (`express.json` is capped at 50kb). Own
+private bucket, `SUPABASE_INSTRUCTOR_CERTS_BUCKET` (default
+`instructor-certifications`), path prefix `instructors/<id>/certifications/`.
+Allowed `fileType`: `application/pdf` · `image/png` · `image/jpeg` ·
+`image/webp` (10MB cap) — same allow-list as Documents, SVG rejected for the
+same script-injection reason.
+
+```
+GET    /api/admin/instructors/:id/certifications              (?type, ?status)
+POST   /api/admin/instructors/:id/certifications/sign          { fileName, fileType }
+POST   /api/admin/instructors/:id/certifications                { name, issuer, type, path?, fileName? }
+PATCH  /api/admin/instructors/:id/certifications/:certId/verify
+PATCH  /api/admin/instructors/:id/certifications/:certId/reject
+DELETE /api/admin/instructors/:id/certifications/:certId
+```
+
+`DELETE` is a **hard** delete (unlike `instructorDoc.archive`) — this model
+has no `ARCHIVED` status. `reject` takes no reason (the task spec for this
+model has no `rejectionReason` field, unlike `InstructorDocument`) — it is a
+pure status flip, stamping `verifiedAt`/`verifiedById` as the decision
+provenance either way. Mutation IDs: `instructorCert.upload` / `.verify` /
+`.reject` / `.delete` — see IMPACT_MAP §5.3.
+
+Smoke: not covered by `instructorsSmokeTest.js` (89/89 above predates this
+addendum) — covered instead by
+`frontend/tests/instructor-phase-cd.full.spec.ts`.

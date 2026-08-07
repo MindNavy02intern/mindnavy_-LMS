@@ -128,7 +128,12 @@ function buildMockCourses(): MockRow[] {
       level:        LEVELS[i % LEVELS.length],
       enrolledCount: 100 + ((i * 97) % 1400),
       status:       statuses[i],
+      isRejected:      false,
+      rejectionReason: null,
+      submittedAt:     null,
+      reviewedAt:      null,
       thumbnail:    null,
+      updatedAt:    new Date(2026, 0, i + 1).toISOString(),
     };
   });
 }
@@ -141,6 +146,7 @@ const MOCK_STATUS_COUNTS: CourseStatusCounts = {
   draft:     8,
   pending:   5,
   archived:  4,
+  rejected:  0,
 };
 
 function filterMock(params: CoursesListParams): CoursesListResponse {
@@ -196,12 +202,14 @@ const MOCK_DETAIL: CourseDetail = {
   instructorId:    'u1',
   status:          'Published',
   enrolledCount:   600,
+  isRejected:      false,
+  rejectionReason: null,
+  submittedAt:     null,
+  reviewedAt:      null,
   createdBy:       null,
   createdAt:       '2026-01-15T10:00:00.000Z',
   updatedAt:       '2026-06-30T14:05:00.000Z',
   settings:        MOCK_SETTINGS_DEFAULT,
-  rejectionReason: null,
-  reviewedAt:      null,
 };
 
 let NEXT_ID = 30;
@@ -253,7 +261,12 @@ export async function createCourse(payload: CreateCoursePayload): Promise<Course
       level:         payload.level    ?? 'Beginner',
       enrolledCount: 0,
       status:        'Draft',           // always Draft per contract
+      isRejected:      false,
+      rejectionReason: null,
+      submittedAt:     null,
+      reviewedAt:      null,
       thumbnail:     payload.thumbnail ?? null,
+      updatedAt:     new Date().toISOString(),
     };
     MOCK_COURSES.push(newRow);
     MOCK_STATUS_COUNTS.draft += 1;

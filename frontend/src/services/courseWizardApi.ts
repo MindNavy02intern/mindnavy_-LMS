@@ -14,6 +14,7 @@ import {
   type CourseSettingsResponse,
   type RejectCourseResponse,
   type SubmitCourseResponse,
+  type UnpublishCourseResponse,
   type UpdateSettingsPayload,
 } from '../types/courses';
 
@@ -131,6 +132,8 @@ export async function getPreview(courseId: string): Promise<CoursePreviewData> {
         instructorId:    null,
         status:          'Draft',
         enrolledCount:   0,
+        isRejected:      false,
+        submittedAt:     null,
         createdBy:       null,
         createdAt:       new Date().toISOString(),
         updatedAt:       new Date().toISOString(),
@@ -220,5 +223,19 @@ export async function rejectCourse(
     { reason },
   );
   invalidateFor(appQueryClient, 'course.reject', { id: courseId, ...extraCtx });
+  return result;
+}
+
+// ── Unpublish: Published -> Draft (not a rejection, not an un-approval) ───────
+
+export async function unpublishCourse(courseId: string, extraCtx?: Partial<MutationCtx>): Promise<UnpublishCourseResponse> {
+  if (USE_MOCK) {
+    return mockDelay<UnpublishCourseResponse>({ id: courseId, status: 'Draft' });
+  }
+  const result = await wizardFetch<UnpublishCourseResponse>(
+    `/courses/${encodeURIComponent(courseId)}/unpublish`,
+    'POST',
+  );
+  invalidateFor(appQueryClient, 'course.unpublish', { id: courseId, ...extraCtx });
   return result;
 }

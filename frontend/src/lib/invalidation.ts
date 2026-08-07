@@ -73,11 +73,16 @@ export type MutationName =
   | 'instructor.create' | 'instructor.update' | 'instructor.verify'
   | 'instructor.suspend' | 'instructor.reactivate' | 'instructor.delete'
   | 'review.moderate'
+  | 'instructorDoc.upload' | 'instructorDoc.verify' | 'instructorDoc.reject' | 'instructorDoc.archive'
+  // NOT in INSTRUCTORS_CONTRACT.md v1 (Certifications documented as a
+  // deliberately unshipped, separate entity) — shipped 2026-08-07 at the
+  // user's explicit direction. See types/instructors.ts for the full note.
+  | 'instructorCert.upload' | 'instructorCert.verify' | 'instructorCert.reject' | 'instructorCert.delete'
   // §5.4 COURSE / LEARNING
   | 'course.createDraft' | 'course.update' | 'course.settings.update'
   | 'course.submitForApproval'
   | 'course.approve' | 'course.reject' | 'course.requestChanges'
-  | 'course.archive' | 'course.restore'
+  | 'course.archive' | 'course.restore' | 'course.unpublish'
   | 'category.create' | 'category.rename' | 'category.delete'
   | 'learningPath.create' | 'learningPath.update' | 'learningPath.delete'
   | 'learningPath.item.add' | 'learningPath.item.remove' | 'learningPath.item.reorder'
@@ -400,6 +405,41 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     ...(ctx?.id ? [queryKeys.instructors.reviews(ctx.id)] : []),
   ],
 
+  // Documents (INSTRUCTORS_CONTRACT.md "Documents" section — administrative
+  // paperwork only, no CERTIFICATION type). ctx.id is the instructorId.
+  'instructorDoc.upload': (ctx) => [
+    ...(ctx?.id ? [queryKeys.instructors.documents(ctx.id), queryKeys.instructors.detail(ctx.id)] : []),
+  ],
+  'instructorDoc.verify': (ctx) => [
+    ...(ctx?.id ? [queryKeys.instructors.documents(ctx.id)] : []),
+    queryKeys.approvals(),
+  ],
+  'instructorDoc.reject': (ctx) => [
+    ...(ctx?.id ? [queryKeys.instructors.documents(ctx.id)] : []),
+    queryKeys.approvals(),
+  ],
+  'instructorDoc.archive': (ctx) => [
+    ...(ctx?.id ? [queryKeys.instructors.documents(ctx.id)] : []),
+  ],
+
+  // Certifications — NOT in INSTRUCTORS_CONTRACT.md v1, shipped 2026-08-07 at
+  // the user's explicit direction (see the MutationName union above). ctx.id
+  // is the instructorId, matching the instructorDoc.* rows above.
+  'instructorCert.upload': (ctx) => [
+    ...(ctx?.id ? [queryKeys.instructors.certifications(ctx.id), queryKeys.instructors.detail(ctx.id)] : []),
+  ],
+  'instructorCert.verify': (ctx) => [
+    ...(ctx?.id ? [queryKeys.instructors.certifications(ctx.id)] : []),
+    queryKeys.approvals(),
+  ],
+  'instructorCert.reject': (ctx) => [
+    ...(ctx?.id ? [queryKeys.instructors.certifications(ctx.id)] : []),
+    queryKeys.approvals(),
+  ],
+  'instructorCert.delete': (ctx) => [
+    ...(ctx?.id ? [queryKeys.instructors.certifications(ctx.id)] : []),
+  ],
+
   // ── §5.4 COURSE / LEARNING ────────────────────────────────────────────────
   'course.createDraft': () => [
     queryKeys.courses.list(),
@@ -441,15 +481,27 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.notifications(),
     ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
   ],
-  'course.archive': () => [
+  // instructorId is set when archived from the Instructor Courses tab — their
+  // coursesCount (non-archived) changes, so the panel/list must refresh too.
+  'course.archive': (ctx) => [
     queryKeys.courses.list(),
     queryKeys.dashboard.courseAnalytics(),
     queryKeys.learningPaths(),
+    ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
+    ...(ctx?.instructorId ? [queryKeys.instructors.detail(ctx.instructorId), queryKeys.instructors.list()] : []),
   ],
   'course.restore': () => [
     queryKeys.courses.list(),
     queryKeys.dashboard.courseAnalytics(),
     queryKeys.learningPaths(),
+  ],
+  // Published -> Draft. reviewedAt/rejectionReason untouched (not a rejection,
+  // not an un-approval) — per COURSES_API.md §4.6.
+  'course.unpublish': (ctx) => [
+    queryKeys.courses.list(),
+    queryKeys.dashboard.courseAnalytics(),
+    ...(ctx?.id ? [queryKeys.courses.detail(ctx.id)] : []),
+    ...(ctx?.instructorId ? [queryKeys.instructors.detail(ctx.instructorId), queryKeys.instructors.list()] : []),
   ],
   'category.create': () => [
     queryKeys.categories(),

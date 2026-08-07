@@ -165,3 +165,92 @@ enum InstructorDocumentStatus {
   // outright is not a compliance record.
   ARCHIVED
 }
+
+// Student reviews of an instructor's courses (blueprint 05 §10-ish / moderation
+// queue). NOTE: INSTRUCTORS_CONTRACT.md v1 documents "no Review model" and lists
+// this as a [planned] gap ("decision for Hassan, not a bug") — shipped anyway on
+// 2026-08-07 at the user's explicit direction (see INSTRUCTORS_CONTRACT.md
+// changelog). Flagged here so the contract mismatch is traceable, not hidden.
+//
+// A review is left by a STUDENT (AppUser, role LEARNER) on a COURSE taught by
+// the instructor — three-way link, not a duplicate of CourseEnrollment.
+model InstructorReview {
+  id           String @id @default(uuid())
+  instructorId String
+  studentId    String
+  courseId     String
+
+  rating  Int // 1-5. No write endpoint creates these rows in this system (no
+  // student-facing app exists — see the addendum in INSTRUCTORS_CONTRACT.md);
+  // this is a moderation queue over rows seeded/inserted directly.
+  comment String?
+
+  status InstructorReviewStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  instructor AppUser @relation("InstructorReviews", fields: [instructorId], references: [id], onDelete: Cascade)
+  student    AppUser @relation("StudentReviews", fields: [studentId], references: [id], onDelete: Cascade)
+  course     Course  @relation("CourseReviews", fields: [courseId], references: [id], onDelete: Cascade)
+
+  // Every list read is scoped to one instructor and usually one status.
+  @@index([instructorId, status])
+  @@index([courseId])
+  @@index([studentId])
+  @@map("instructor_reviews")
+}
+
+enum InstructorReviewStatus {
+  PENDING
+  APPROVED
+  REMOVED
+  FLAGGED
+}
+
+// Teaching certificates / licences / degrees (blueprint 05 §11) — a SEPARATE
+// entity from InstructorDocument (administrative paperwork, above): different
+// verification queue, different data shape. INSTRUCTORS_CONTRACT.md v1
+// deliberately did NOT ship this ("folding them into Documents would have made
+// both half-features") — shipped anyway on 2026-08-07 at the user's explicit
+// direction. Same private-bucket sign/confirm upload flow as InstructorDocument,
+// own bucket/prefix (see instructorCertifications.service).
+model InstructorCertification {
+  id           String @id @default(uuid())
+  instructorId String
+
+  name   String
+  type   InstructorCertificationType
+  issuer String
+
+  // Key inside the private bucket (instructorCertifications.service), never a
+  // public URL — same reasoning as InstructorDocument.filePath. Null until the
+  // sign→PUT→confirm flow completes.
+  fileUrl String?
+
+  status InstructorCertificationStatus @default(PENDING)
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  verifiedAt   DateTime?
+  verifiedById String?
+
+  instructor AppUser @relation("InstructorCertifications", fields: [instructorId], references: [id], onDelete: Cascade)
+
+  @@index([instructorId, status])
+  @@map("instructor_certifications")
+}
+
+enum InstructorCertificationType {
+  TEACHING
+  PROFESSIONAL
+  ACADEMIC
+  TECHNICAL
+  TRAINING
+}
+
+enum InstructorCertificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}

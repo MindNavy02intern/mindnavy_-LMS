@@ -50,6 +50,8 @@ model Course {
   categoryRef  Category?          @relation(fields: [categoryId], references: [id])
   liveSessions LiveSession[]
   quizzes      Quiz[]
+  // Student reviews of the instructor for THIS course (instructors.prisma).
+  reviews      InstructorReview[] @relation("CourseReviews")
 
   @@index([status])
   @@index([category])

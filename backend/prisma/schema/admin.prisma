@@ -248,4 +248,15 @@ enum AuditAction {
   INSTRUCTOR_APPLICATION_APPROVED
   INSTRUCTOR_APPLICATION_REJECTED
   INSTRUCTOR_APPLICATION_CHANGES_REQUESTED
+  // Reviews moderation queue — shipped 2026-08-07, see instructors.prisma
+  // InstructorReview comment for the contract-gap note.
+  REVIEW_APPROVED
+  REVIEW_REMOVED
+  REVIEW_FLAGGED
+  // Teaching certifications — shipped 2026-08-07, see instructors.prisma
+  // InstructorCertification comment for the contract-gap note.
+  INSTRUCTOR_CERTIFICATION_UPLOADED
+  INSTRUCTOR_CERTIFICATION_VERIFIED
+  INSTRUCTOR_CERTIFICATION_REJECTED
+  INSTRUCTOR_CERTIFICATION_DELETED
 }

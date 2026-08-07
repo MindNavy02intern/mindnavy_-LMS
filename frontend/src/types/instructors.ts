@@ -222,13 +222,166 @@ export interface UpdateInstructorRequest {
   revenueShareBps?:  number;
 }
 
+export type InstructorViolationType = 'COPYRIGHT' | 'POLICY' | 'FRAUD' | 'BEHAVIOR' | 'FAKE_CERT' | 'SECURITY';
+
 export interface SuspendInstructorRequest {
   reason: string;
+  violationType?: InstructorViolationType;
   notes?: string;
+}
+
+// ── Suspension history — GET /instructors/:id/suspension-history ─────────────
+// Reads the audit log (USER_SUSPENDED/USER_REACTIVATED), not a suspensions
+// table — AppUser.suspendedAt only holds the latest timestamp.
+
+export type SuspensionHistoryAction = 'suspended' | 'reactivated';
+
+export interface SuspensionHistoryEntry {
+  id:            string;
+  action:        SuspensionHistoryAction;
+  reason:        string | null;
+  notes:         string | null;
+  violationType: InstructorViolationType | null; // null on suspensions recorded before this field existed — render "—"
+  adminId:       string | null;
+  adminName:     string | null; // null if the acting admin's account has since been removed
+  createdAt:     string;
+}
+
+export interface SuspensionHistoryResponse {
+  history:    SuspensionHistoryEntry[];
+  pagination: Pagination;
 }
 
 export interface ActionResponse<T = unknown> {
   success: boolean;
   data?:   T;
   message?: string;
+}
+
+// ── Documents — INSTRUCTORS_CONTRACT.md "Documents" section ──────────────────
+// Administrative paperwork only. Deliberately NO 'CERTIFICATION' type — teaching
+// certs/licences/degrees are a separate entity with their own queue (not built
+// here); sending CERTIFICATION here is a 400.
+
+export type DocumentType   = 'IDENTITY' | 'CONTRACT' | 'AGREEMENT' | 'TAX' | 'COMPLIANCE';
+export type DocumentStatus = 'PENDING' | 'VERIFIED' | 'REJECTED' | 'ARCHIVED';
+
+export interface InstructorDocument {
+  id:                string;
+  instructorId:      string;
+  type:              DocumentType;
+  status:            DocumentStatus;
+  fileName:          string;
+  fileSize:          number;
+  mimeType:          string;
+  downloadUrl:       string | null;      // SIGNED, expires in 5 min — never cache
+  downloadExpiresIn: number | null;
+  rejectionReason:   string | null;
+  expiresAt:         string | null;
+  uploadedById:      string | null;
+  uploadedAt:        string;
+  verifiedAt:        string | null;
+  verifiedById:      string | null;
+  updatedAt:         string;
+}
+
+export interface InstructorDocumentsResponse {
+  documents: InstructorDocument[];
+  total:     number;
+}
+
+export interface SignDocumentRequest {
+  fileName: string;
+  fileType: string; // application/pdf | image/png | image/jpeg | image/webp
+  type:     DocumentType;
+}
+
+export interface SignDocumentResponse {
+  uploadUrl: string;
+  path:      string;
+  type:      DocumentType;
+  maxBytes:  number;
+  expiresIn: number;
+}
+
+export interface ConfirmDocumentRequest {
+  path:      string;
+  fileName:  string;
+  type:      DocumentType;
+  expiresAt?: string;
+}
+
+// ── Reviews — moderation queue ────────────────────────────────────────────────
+// NOT in INSTRUCTORS_CONTRACT.md v1 ("no Review model" is documented as a
+// deliberate [planned] gap — decision for Hassan, not a bug). Shipped anyway at
+// the user's explicit direction 2026-08-07; see backend instructors.prisma
+// InstructorReview for the full note.
+
+export type ReviewStatus = 'PENDING' | 'APPROVED' | 'REMOVED' | 'FLAGGED';
+
+export interface InstructorReview {
+  id:           string;
+  instructorId: string;
+  studentId:    string;
+  studentName:  string | null;
+  courseId:     string;
+  courseTitle:  string | null;
+  rating:       number;
+  comment:      string | null;
+  status:       ReviewStatus;
+  createdAt:    string;
+  updatedAt:    string;
+}
+
+export interface InstructorReviewsResponse {
+  reviews:    InstructorReview[];
+  pagination: Pagination;
+}
+
+// ── Certifications — teaching certs/licences/degrees ─────────────────────────
+// NOT in INSTRUCTORS_CONTRACT.md v1 ("Certifications deliberately did NOT ship"
+// is documented as a [planned] gap — separate entity from Documents). Shipped
+// anyway at the user's explicit direction 2026-08-07; see backend
+// instructors.prisma InstructorCertification for the full note.
+
+export type CertificationType   = 'TEACHING' | 'PROFESSIONAL' | 'ACADEMIC' | 'TECHNICAL' | 'TRAINING';
+export type CertificationStatus = 'PENDING' | 'VERIFIED' | 'REJECTED';
+
+export interface InstructorCertification {
+  id:           string;
+  instructorId: string;
+  name:         string;
+  type:         CertificationType;
+  issuer:       string;
+  fileUrl:      string | null; // SIGNED, expires in 5 min — never cache, like InstructorDocument.downloadUrl
+  status:       CertificationStatus;
+  createdAt:    string;
+  updatedAt:    string;
+  verifiedAt:   string | null;
+  verifiedById: string | null;
+}
+
+export interface InstructorCertificationsResponse {
+  certifications: InstructorCertification[];
+  total:          number;
+}
+
+export interface SignCertificationRequest {
+  fileName: string;
+  fileType: string; // application/pdf | image/png | image/jpeg | image/webp
+}
+
+export interface SignCertificationResponse {
+  uploadUrl: string;
+  path:      string;
+  maxBytes:  number;
+  expiresIn: number;
+}
+
+export interface CreateCertificationRequest {
+  name:      string;
+  issuer:    string;
+  type:      CertificationType;
+  path?:     string;     // present only when a file was signed + uploaded first
+  fileName?: string;
 }

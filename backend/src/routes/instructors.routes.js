@@ -8,6 +8,8 @@ const {
 } = require("../middlewares/rateLimit.middleware");
 const c = require("../controllers/instructors.controller");
 const docs = require("../controllers/instructorDocuments.controller");
+const reviews = require("../controllers/instructorReviews.controller");
+const certs = require("../controllers/instructorCertifications.controller");
 
 // Mounted at /api/admin/instructors (see server.js).
 //
@@ -53,6 +55,48 @@ router.patch("/:id/documents/:docId/verify", requireAdminAuth, adminUserActionRa
 router.patch("/:id/documents/:docId/reject", requireAdminAuth, adminUserActionRateLimiter, docs.rejectDocument);
 // Soft — archives the row, keeps the file (see the service).
 router.delete("/:id/documents/:docId", requireAdminAuth, adminUserActionRateLimiter, docs.archiveDocument);
+
+// ── Reviews (moderation queue) ──────────────────────────────────────────────────
+// NOT in INSTRUCTORS_CONTRACT.md v1 ("no Review model" is documented as a
+// deliberate [planned] gap — decision for Hassan, not a bug). Shipped anyway at
+// the user's explicit direction 2026-08-07; see instructors.prisma
+// InstructorReview for the full note. Contract shape:
+//
+//   GET   /:id/reviews                       -> { reviews: Review[], pagination }
+//   PATCH /:id/reviews/:reviewId/approve     -> Review (status: APPROVED)
+//   PATCH /:id/reviews/:reviewId/remove      -> Review (status: REMOVED)
+//   PATCH /:id/reviews/:reviewId/flag        -> Review (status: FLAGGED)
+//
+//   Review = { id, instructorId, studentId, studentName, courseId, courseTitle,
+//              rating, comment, status, createdAt, updatedAt }
+router.get("/:id/reviews", requireAdminAuth, coursesReadRateLimiter, reviews.listReviews);
+router.patch("/:id/reviews/:reviewId/approve", requireAdminAuth, adminUserActionRateLimiter, reviews.approveReview);
+router.patch("/:id/reviews/:reviewId/remove",  requireAdminAuth, adminUserActionRateLimiter, reviews.removeReview);
+router.patch("/:id/reviews/:reviewId/flag",    requireAdminAuth, adminUserActionRateLimiter, reviews.flagReview);
+
+// ── Certifications (teaching certs/licences — separate entity from Documents) ──
+// NOT in INSTRUCTORS_CONTRACT.md v1 ("Certifications deliberately did NOT ship"
+// is documented as a [planned] gap). Shipped anyway at the user's explicit
+// direction 2026-08-07; see instructors.prisma InstructorCertification. Upload
+// is sign -> client PUT -> create (same 3-step pattern as Documents — the API
+// never receives file bytes). Contract shape:
+//
+//   GET    /:id/certifications                    -> { certifications: Certification[], total }
+//   POST   /:id/certifications/sign                -> { uploadUrl, path, maxBytes, expiresIn }
+//   POST   /:id/certifications                     -> Certification (body: { name, type, issuer, path?, fileName? })
+//   PATCH  /:id/certifications/:certId/verify      -> Certification (status: VERIFIED)
+//   PATCH  /:id/certifications/:certId/reject      -> Certification (status: REJECTED)
+//   DELETE /:id/certifications/:certId             -> { id } (hard delete — no ARCHIVED status in this model)
+//
+//   Certification = { id, instructorId, name, type, issuer, fileUrl (signed,
+//                     5-min expiry, never cached), status, createdAt, updatedAt,
+//                     verifiedAt, verifiedById }
+router.get("/:id/certifications",  requireAdminAuth, coursesReadRateLimiter, certs.listCertifications);
+router.post("/:id/certifications/sign", requireAdminAuth, adminUserActionRateLimiter, certs.signUpload);
+router.post("/:id/certifications", requireAdminAuth, adminUserActionRateLimiter, certs.createCertification);
+router.patch("/:id/certifications/:certId/verify", requireAdminAuth, adminUserActionRateLimiter, certs.verifyCertification);
+router.patch("/:id/certifications/:certId/reject", requireAdminAuth, adminUserActionRateLimiter, certs.rejectCertification);
+router.delete("/:id/certifications/:certId", requireAdminAuth, adminUserActionRateLimiter, certs.deleteCertification);
 
 router.patch("/:id",  requireAdminAuth, adminUserActionRateLimiter, c.updateInstructor);
 router.delete("/:id", requireAdminAuth, adminUserActionRateLimiter, c.deleteInstructor);

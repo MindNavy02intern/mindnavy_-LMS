@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { suspendInstructor } from '../../services/instructorsApi';
 import { InstructorApiError } from '../../types/instructors';
+import type { InstructorViolationType } from '../../types/instructors';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 
 interface Props {
@@ -11,6 +12,15 @@ interface Props {
   showToast:    (type: 'success' | 'error', message: string) => void;
 }
 
+const VIOLATION_TYPES: { value: InstructorViolationType; label: string }[] = [
+  { value: 'COPYRIGHT', label: 'Copyright' },
+  { value: 'POLICY',    label: 'Policy Violation' },
+  { value: 'FRAUD',     label: 'Fraud' },
+  { value: 'BEHAVIOR',  label: 'Inappropriate Behavior' },
+  { value: 'FAKE_CERT', label: 'Fake Certification' },
+  { value: 'SECURITY',  label: 'Security' },
+];
+
 const TA: React.CSSProperties = {
   width: '100%', padding: '8px 10px', fontSize: 13,
   border: '1px solid #e5e7eb', borderRadius: 6,
@@ -20,6 +30,8 @@ const TA: React.CSSProperties = {
 };
 
 export default function SuspendInstructorDialog({ instructorId, fullName, onClose, onSuccess, showToast }: Props) {
+  const [violationType, setViolationType] = useState<InstructorViolationType | ''>('');
+  const [violationErr,  setViolationErr]  = useState('');
   const [reason,     setReason]     = useState('');
   const [notes,      setNotes]      = useState('');
   const [reasonErr,  setReasonErr]  = useState('');
@@ -27,12 +39,20 @@ export default function SuspendInstructorDialog({ instructorId, fullName, onClos
 
   async function handleSubmit() {
     if (submitting) return;
+    let hasError = false;
+    if (!violationType) { setViolationErr('Violation type is required.'); hasError = true; }
     const trimmed = reason.trim();
-    if (trimmed.length < 3) { setReasonErr('Reason must be at least 3 characters.'); return; }
+    if (trimmed.length < 20) { setReasonErr('Reason must be at least 20 characters.'); hasError = true; }
+    if (hasError) return;
     setReasonErr('');
+    setViolationErr('');
     setSubmitting(true);
     try {
-      await suspendInstructor(instructorId, { reason: trimmed, ...(notes.trim() ? { notes: notes.trim() } : {}) });
+      await suspendInstructor(instructorId, {
+        reason: trimmed,
+        violationType: violationType as InstructorViolationType,
+        ...(notes.trim() ? { notes: notes.trim() } : {}),
+      });
       invalidateFor(appQueryClient, 'instructor.suspend', { id: instructorId });
       showToast('success', `${fullName} has been suspended.`);
       onSuccess();
@@ -68,6 +88,22 @@ export default function SuspendInstructorDialog({ instructorId, fullName, onClos
 
         <div style={{ marginBottom: 12 }}>
           <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#374151', marginBottom: 4 }}>
+            Violation Type <span style={{ color: '#ef4444' }}>*</span>
+          </label>
+          <select
+            aria-label="Violation type"
+            value={violationType}
+            onChange={e => { setViolationType(e.target.value as InstructorViolationType); setViolationErr(''); }}
+            style={violationErr ? { ...TA, borderColor: '#fca5a5', background: '#fef2f2' } : TA}
+          >
+            <option value="">Select a violation type…</option>
+            {VIOLATION_TYPES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
+          </select>
+          {violationErr && <div style={{ fontSize: 11, color: '#dc2626', marginTop: 3 }}>{violationErr}</div>}
+        </div>
+
+        <div style={{ marginBottom: 12 }}>
+          <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#374151', marginBottom: 4 }}>
             Reason <span style={{ color: '#ef4444' }}>*</span>
           </label>
           <textarea
@@ -75,7 +111,7 @@ export default function SuspendInstructorDialog({ instructorId, fullName, onClos
             style={reasonErr ? { ...TA, borderColor: '#fca5a5', background: '#fef2f2', height: 72 } : { ...TA, height: 72 }}
             value={reason}
             onChange={e => { setReason(e.target.value); setReasonErr(''); }}
-            placeholder="Enter reason for suspension (min. 3 characters)…"
+            placeholder="Enter reason for suspension (min. 20 characters)…"
           />
           {reasonErr && <div style={{ fontSize: 11, color: '#dc2626', marginTop: 3 }}>{reasonErr}</div>}
         </div>

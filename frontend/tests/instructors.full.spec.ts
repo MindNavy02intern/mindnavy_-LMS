@@ -116,8 +116,9 @@ test('Suspend action opens the reason modal, submits, and the status badge updat
 
   await expect(page.getByRole('heading', { name: 'Suspend Instructor' })).toBeVisible({ timeout: 5000 })
 
-  // Confirm is disabled/no-ops without a reason (≥3 chars per contract)
-  await page.getByLabel('Suspension reason').fill('Automated QA suspension test')
+  // Violation Type + Reason (≥20 chars) are both required per Phase B
+  await page.getByLabel('Violation type').selectOption('POLICY')
+  await page.getByLabel('Suspension reason').fill('Automated QA suspension test — Phase B regression check')
 
   const [resp] = await Promise.all([
     page.waitForResponse(r => r.url().includes(`/instructors/${testInstructorId}/suspend`) && r.ok(), { timeout: 15000 }),

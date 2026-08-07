@@ -8,6 +8,7 @@ import InstructorsStatsCards from '../../components/instructors/InstructorsStats
 import InstructorsAnalyticsSection from '../../components/instructors/InstructorsAnalyticsSection';
 import InstructorsTable, { type InstructorsTableHandle, type ServerTab } from '../../components/instructors/InstructorsTable';
 import ApplicationsTab from '../../components/instructors/ApplicationsTab';
+import InstructorInvitationsTab from '../../components/instructors/InstructorInvitationsTab';
 import InstructorSidePanel, { type InstructorSidePanelHandle } from '../../components/instructors/InstructorSidePanel';
 import AddEditInstructorModal from '../../components/instructors/AddEditInstructorModal';
 import ImportUsersModal from '../../components/users/ImportUsersModal';
@@ -30,13 +31,11 @@ const TABS: { key: PageTab; label: string }[] = [
 ];
 
 // Page tabs that hit GET /instructors?tab=… directly (contract §"tab" table).
-// 'invitations' reuses the 'inactive' bucket, client-filtered to status==='invited'
-// — the contract has no dedicated tab value for it, but 'invited' IS a real status
-// on that bucket's rows (inactive = PENDING | INVITED), so this is real data, not
-// a client-side fabrication. 'pending' and 'payouts' never call this endpoint.
+// 'pending', 'invitations' and 'payouts' never call this endpoint — 'invitations'
+// now renders InstructorInvitationsTab (real GET /api/admin/invitations, filtered
+// to role==='instructor' client-side, since that endpoint has no role filter).
 const SERVER_TAB: Partial<Record<PageTab, ServerTab>> = {
-  all: 'all', active: 'active', inactive: 'inactive', suspended: 'suspended',
-  top: 'top', invitations: 'inactive',
+  all: 'all', active: 'active', inactive: 'inactive', suspended: 'suspended', top: 'top',
 };
 
 export default function InstructorsPage() {
@@ -153,6 +152,8 @@ export default function InstructorsPage() {
                 onCountsChanged={counts => setPendingAppCount(counts.PENDING + counts.CHANGES_REQUESTED)}
                 onInstructorCreated={refreshTabCountsInBackground}
               />
+            ) : tab === 'invitations' ? (
+              <InstructorInvitationsTab showToast={showToast} />
             ) : tab === 'payouts' ? (
               <div style={{ border: '1px dashed #cbd5e1', borderRadius: 12, background: '#f8fafc', padding: '48px 24px', textAlign: 'center' }}>
                 <div style={{ fontSize: 14, fontWeight: 600, color: '#475569', marginBottom: 6 }}>Payouts not available yet</div>
@@ -165,7 +166,6 @@ export default function InstructorsPage() {
               <InstructorsTable
                 ref={tableRef}
                 serverTab={SERVER_TAB[tab] ?? 'all'}
-                filterInvitedOnly={tab === 'invitations'}
                 onTabCountsChanged={setTabCounts}
                 onView={openPanel}
                 onEdit={setEditTarget}

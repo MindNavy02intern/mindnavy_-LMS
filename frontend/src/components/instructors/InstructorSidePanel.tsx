@@ -10,6 +10,11 @@ import type { InstructorDetail, InstructorPendingApproval } from '../../types/in
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import SendMessageModal from '../users/SendMessageModal';
 import SuspendInstructorDialog from './SuspendInstructorDialog';
+import InstructorCoursesTab from './InstructorCoursesTab';
+import InstructorSuspensionHistory from './InstructorSuspensionHistory';
+import InstructorDocumentsTab from './InstructorDocumentsTab';
+import InstructorReviewsTab from './InstructorReviewsTab';
+import InstructorCertificationsTab from './InstructorCertificationsTab';
 
 interface Props {
   instructorId: string;
@@ -49,12 +54,23 @@ const SECTION_TITLE: React.CSSProperties = { fontSize: 12, fontWeight: 700, colo
 
 export interface InstructorSidePanelHandle { refetch: () => void }
 
+type PanelTab = 'overview' | 'courses' | 'documents' | 'reviews' | 'certifications';
+const PANEL_TABS: { key: PanelTab; label: string }[] = [
+  { key: 'overview',       label: 'Overview' },
+  { key: 'courses',        label: 'Courses' },
+  { key: 'documents',      label: 'Documents' },
+  { key: 'reviews',        label: 'Reviews' },
+  { key: 'certifications', label: 'Certifications' },
+];
+
 const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(function InstructorSidePanel(
   { instructorId, onClose, onEdit, onChanged, onDeleted, showToast }, ref,
 ) {
   const [detail,  setDetail]  = useState<InstructorDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);
+  const [panelTab, setPanelTab] = useState<PanelTab>('overview');
+  const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
 
   const [verifying,   setVerifying]   = useState(false);
   const [reactivating, setReactivating] = useState(false);
@@ -87,6 +103,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
   }, [instructorId]);
 
   useEffect(() => { fetchDetail(); }, [fetchDetail]);
+  useEffect(() => { setPanelTab('overview'); }, [instructorId]);
   useImperativeHandle(ref, () => ({ refetch: fetchDetail }), [fetchDetail]);
 
   async function handleVerify() {
@@ -116,6 +133,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
       if (requestIdRef.current === myRequestId) setDetail(updated);
       invalidateFor(appQueryClient, 'instructor.reactivate', { id: detail.id });
       showToast('success', `${detail.fullName} reactivated.`);
+      setHistoryRefreshKey(k => k + 1);
       onChanged();
     } catch (err) {
       showToast('error', err instanceof InstructorApiError ? err.message : 'Reactivation failed.');
@@ -189,7 +207,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
 
   return (
     <div style={{
-      width: 380, flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12,
+      width: 460, flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12,
       display: 'flex', flexDirection: 'column', maxHeight: 'calc(100vh - 140px)', position: 'sticky', top: 16,
       animation: 'mn-panel-in 0.18s ease',
     }}>
@@ -216,6 +234,50 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
         )}
 
         {!loading && detail && (
+          <>
+            {/* Panel tabs */}
+            <div style={{ display: 'flex', gap: 4, padding: '0 20px', borderBottom: '1px solid #f1f5f9' }}>
+              {PANEL_TABS.map(t => {
+                const active = panelTab === t.key;
+                return (
+                  <button
+                    key={t.key}
+                    type="button"
+                    onClick={() => setPanelTab(t.key)}
+                    style={{
+                      padding: '10px 10px', fontSize: 12, fontWeight: 600, fontFamily: 'inherit',
+                      background: 'none', cursor: 'pointer', border: 'none',
+                      borderBottom: active ? '2px solid #2563eb' : '2px solid transparent',
+                      color: active ? '#2563eb' : '#64748b', marginBottom: -1,
+                    }}
+                  >
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {panelTab === 'courses' && (
+              <InstructorCoursesTab
+                instructorId={detail.id}
+                onChanged={() => { fetchDetail(); onChanged(); }}
+                showToast={showToast}
+              />
+            )}
+
+            {panelTab === 'documents' && (
+              <InstructorDocumentsTab instructorId={detail.id} showToast={showToast} />
+            )}
+
+            {panelTab === 'reviews' && (
+              <InstructorReviewsTab instructorId={detail.id} showToast={showToast} />
+            )}
+
+            {panelTab === 'certifications' && (
+              <InstructorCertificationsTab instructorId={detail.id} showToast={showToast} />
+            )}
+
+          {panelTab === 'overview' && (
           <>
             {/* Identity */}
             <div style={SECTION}>
@@ -265,7 +327,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
                 <button type="button" disabled title="Instructor profile page not built yet" style={{ ...ACTION_BTN, opacity: 0.45, cursor: 'not-allowed' }}>
                   View Profile
                 </button>
-                <button type="button" disabled title="Instructor-filtered course view not built yet" style={{ ...ACTION_BTN, opacity: 0.45, cursor: 'not-allowed' }}>
+                <button type="button" onClick={() => setPanelTab('courses')} style={ACTION_BTN}>
                   View Courses
                 </button>
                 <button type="button" disabled title="Available with Finance module" style={{ ...ACTION_BTN, opacity: 0.45, cursor: 'not-allowed' }}>
@@ -377,7 +439,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
             </div>
 
             {/* Recent activity */}
-            <div style={{ ...SECTION, borderBottom: 'none' }}>
+            <div style={SECTION}>
               <div style={SECTION_TITLE}>Recent Activity</div>
               {detail.recentActivities.length === 0 ? (
                 <div style={{ fontSize: 12, color: '#94a3b8' }}>No recent activity.</div>
@@ -392,6 +454,14 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
                 </div>
               )}
             </div>
+
+            {/* Suspension & Compliance */}
+            <div style={{ ...SECTION, borderBottom: 'none' }}>
+              <div style={SECTION_TITLE}>Suspension History</div>
+              <InstructorSuspensionHistory instructorId={detail.id} refreshKey={historyRefreshKey} />
+            </div>
+          </>
+          )}
           </>
         )}
       </div>
@@ -435,7 +505,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
           instructorId={detail.id}
           fullName={detail.fullName}
           onClose={() => setSuspendOpen(false)}
-          onSuccess={() => { setSuspendOpen(false); fetchDetail(); onChanged(); }}
+          onSuccess={() => { setSuspendOpen(false); fetchDetail(); setHistoryRefreshKey(k => k + 1); onChanged(); }}
           showToast={showToast}
         />
       )}

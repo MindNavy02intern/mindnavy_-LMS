@@ -10,8 +10,9 @@ export type CourseLevel  = 'Beginner' | 'Intermediate' | 'Advanced';
 export type CourseStatus = 'Published' | 'Draft' | 'Pending' | 'Archived';
 export type CourseVisibility = 'Public' | 'Private' | 'Unlisted';
 
-// 'All' excludes Archived; Archived only shown when ?status=Archived
-export type CourseStatusFilter = 'All' | CourseStatus;
+// 'All' excludes Archived; Archived only shown when ?status=Archived.
+// 'Rejected' is a query-only filter, never a real status — see isRejected below.
+export type CourseStatusFilter = 'All' | CourseStatus | 'Rejected';
 
 export interface CourseStatusCounts {
   all:       number;
@@ -19,6 +20,7 @@ export interface CourseStatusCounts {
   pending:   number;
   published: number;
   archived:  number;
+  rejected:  number;  // Draft rows with isRejected true — draft + rejected = all drafts
 }
 
 // Validated keys for accessRules (backend allow-lists exactly these).
@@ -45,7 +47,8 @@ export interface CourseSettings {
   seoDescription:     string | null;       // max 200
 }
 
-// GET /courses list row (table display)
+// GET /courses list row (table display). No createdAt here — only CourseDetail
+// has it; list-row consumers that need a date column use updatedAt.
 export interface CourseListRow {
   id:           string;
   title:        string;
@@ -55,6 +58,10 @@ export interface CourseListRow {
   level:        CourseLevel;
   enrolledCount: number;
   status:       CourseStatus;
+  isRejected:      boolean;         // status === 'Draft' && rejectionReason !== null — badge off this, not status
+  rejectionReason: string | null;
+  submittedAt:     string | null;   // stamped on every Draft->Pending transition; null pre-existing
+  reviewedAt:      string | null;   // last approve/reject timestamp; survives unpublish
   thumbnail:    string | null;
   updatedAt:    string;        // ISO
 }
@@ -69,8 +76,6 @@ export interface CourseDetail extends CourseListRow {
   createdAt:       string;          // ISO
   categoryId:      string | null;   // Category table FK (null if unlinked)
   settings:        CourseSettings;  // wizard step 4 fields
-  rejectionReason: string | null;   // set when a course is rejected
-  reviewedAt:      string | null;   // ISO — last approve/reject timestamp
 }
 
 // GET /courses response envelope data
@@ -146,6 +151,12 @@ export interface RejectCourseResponse {
   status:          'Draft';
   rejectionReason: string;
   reviewedAt:      string;
+}
+
+// POST /courses/:id/unpublish response — Published -> Draft, not a rejection
+export interface UnpublishCourseResponse {
+  id:     string;
+  status: 'Draft';
 }
 
 // Error thrown by every coursesApi / courseWizardApi function on non-2xx

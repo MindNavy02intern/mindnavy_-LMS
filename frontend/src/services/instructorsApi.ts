@@ -5,15 +5,29 @@ import { getStoredToken } from '../api/adminAuth';
 import {
   InstructorApiError,
   type ActionResponse,
+  type ConfirmDocumentRequest,
+  type CreateCertificationRequest,
   type CreateInstructorRequest,
+  type DocumentType,
   type Instructor,
   type InstructorApplication,
   type InstructorApplicationsListResponse,
+  type InstructorCertification,
+  type InstructorCertificationsResponse,
   type InstructorDetail,
+  type InstructorDocument,
+  type InstructorDocumentsResponse,
+  type InstructorReview,
+  type InstructorReviewsResponse,
   type InstructorsAnalytics,
   type InstructorsListResponse,
   type InstructorsStats,
+  type SignCertificationRequest,
+  type SignCertificationResponse,
+  type SignDocumentRequest,
+  type SignDocumentResponse,
   type SuspendInstructorRequest,
+  type SuspensionHistoryResponse,
   type UpdateInstructorRequest,
 } from '../types/instructors';
 
@@ -116,8 +130,113 @@ export function reactivateInstructor(id: string): Promise<InstructorDetail> {
   return instructorsFetch<InstructorDetail>(`/instructors/${encodeURIComponent(id)}/reactivate`, 'PATCH', {});
 }
 
+export function getSuspensionHistory(
+  id: string, params: { page?: number; limit?: number } = {},
+): Promise<SuspensionHistoryResponse> {
+  const qs = new URLSearchParams();
+  if (params.page  !== undefined) qs.set('page',  String(params.page));
+  if (params.limit !== undefined) qs.set('limit', String(params.limit));
+  return instructorsFetch<SuspensionHistoryResponse>(`/instructors/${encodeURIComponent(id)}/suspension-history?${qs.toString()}`);
+}
+
 export function deleteInstructor(id: string): Promise<{ id: string }> {
   return instructorsFetch<{ id: string }>(`/instructors/${encodeURIComponent(id)}`, 'DELETE');
+}
+
+// ── Documents ──────────────────────────────────────────────────────────────
+// Upload is 3 steps — this API never receives the file. sign() -> browser PUTs
+// straight to storage -> confirm(). If the PUT fails, do not call confirm.
+
+export function listInstructorDocuments(
+  id: string, params: { type?: DocumentType; status?: string; includeArchived?: boolean } = {},
+): Promise<InstructorDocumentsResponse> {
+  const qs = new URLSearchParams();
+  if (params.type)   qs.set('type',   params.type);
+  if (params.status) qs.set('status', params.status);
+  if (params.includeArchived) qs.set('includeArchived', 'true');
+  return instructorsFetch<InstructorDocumentsResponse>(`/instructors/${encodeURIComponent(id)}/documents?${qs.toString()}`);
+}
+
+export function signInstructorDocument(id: string, body: SignDocumentRequest): Promise<SignDocumentResponse> {
+  return instructorsFetch<SignDocumentResponse>(`/instructors/${encodeURIComponent(id)}/documents/sign`, 'POST', body);
+}
+
+export function confirmInstructorDocument(id: string, body: ConfirmDocumentRequest): Promise<InstructorDocument> {
+  return instructorsFetch<InstructorDocument>(`/instructors/${encodeURIComponent(id)}/documents/confirm`, 'POST', body);
+}
+
+export function verifyInstructorDocument(id: string, docId: string): Promise<InstructorDocument> {
+  return instructorsFetch<InstructorDocument>(`/instructors/${encodeURIComponent(id)}/documents/${encodeURIComponent(docId)}/verify`, 'PATCH', {});
+}
+
+export function rejectInstructorDocument(id: string, docId: string, reason: string): Promise<InstructorDocument> {
+  return instructorsFetch<InstructorDocument>(`/instructors/${encodeURIComponent(id)}/documents/${encodeURIComponent(docId)}/reject`, 'PATCH', { reason });
+}
+
+export function archiveInstructorDocument(id: string, docId: string): Promise<InstructorDocument> {
+  return instructorsFetch<InstructorDocument>(`/instructors/${encodeURIComponent(id)}/documents/${encodeURIComponent(docId)}`, 'DELETE');
+}
+
+// ── Reviews (moderation queue) ────────────────────────────────────────────────
+// NOT in INSTRUCTORS_CONTRACT.md v1 — shipped 2026-08-07 at the user's explicit
+// direction despite the contract documenting "no Review model" as a deliberate
+// gap. See types/instructors.ts InstructorReview for the full note.
+
+export function listInstructorReviews(
+  id: string, params: { page?: number; limit?: number; status?: string } = {},
+): Promise<InstructorReviewsResponse> {
+  const qs = new URLSearchParams();
+  if (params.page   !== undefined) qs.set('page',   String(params.page));
+  if (params.limit  !== undefined) qs.set('limit',  String(params.limit));
+  if (params.status)               qs.set('status', params.status);
+  return instructorsFetch<InstructorReviewsResponse>(`/instructors/${encodeURIComponent(id)}/reviews?${qs.toString()}`);
+}
+
+export function approveInstructorReview(id: string, reviewId: string): Promise<InstructorReview> {
+  return instructorsFetch<InstructorReview>(`/instructors/${encodeURIComponent(id)}/reviews/${encodeURIComponent(reviewId)}/approve`, 'PATCH', {});
+}
+
+export function removeInstructorReview(id: string, reviewId: string): Promise<InstructorReview> {
+  return instructorsFetch<InstructorReview>(`/instructors/${encodeURIComponent(id)}/reviews/${encodeURIComponent(reviewId)}/remove`, 'PATCH', {});
+}
+
+export function flagInstructorReview(id: string, reviewId: string): Promise<InstructorReview> {
+  return instructorsFetch<InstructorReview>(`/instructors/${encodeURIComponent(id)}/reviews/${encodeURIComponent(reviewId)}/flag`, 'PATCH', {});
+}
+
+// ── Certifications (teaching certs — separate entity from Documents) ─────────
+// NOT in INSTRUCTORS_CONTRACT.md v1 — shipped 2026-08-07 at the user's explicit
+// direction despite the contract documenting this as a deliberately unshipped,
+// separate entity. Upload is sign -> client PUT -> create (same pattern as
+// Documents; this API never receives file bytes).
+
+export function listInstructorCertifications(
+  id: string, params: { type?: string; status?: string } = {},
+): Promise<InstructorCertificationsResponse> {
+  const qs = new URLSearchParams();
+  if (params.type)   qs.set('type',   params.type);
+  if (params.status) qs.set('status', params.status);
+  return instructorsFetch<InstructorCertificationsResponse>(`/instructors/${encodeURIComponent(id)}/certifications?${qs.toString()}`);
+}
+
+export function signInstructorCertification(id: string, body: SignCertificationRequest): Promise<SignCertificationResponse> {
+  return instructorsFetch<SignCertificationResponse>(`/instructors/${encodeURIComponent(id)}/certifications/sign`, 'POST', body);
+}
+
+export function createInstructorCertification(id: string, body: CreateCertificationRequest): Promise<InstructorCertification> {
+  return instructorsFetch<InstructorCertification>(`/instructors/${encodeURIComponent(id)}/certifications`, 'POST', body);
+}
+
+export function verifyInstructorCertification(id: string, certId: string): Promise<InstructorCertification> {
+  return instructorsFetch<InstructorCertification>(`/instructors/${encodeURIComponent(id)}/certifications/${encodeURIComponent(certId)}/verify`, 'PATCH', {});
+}
+
+export function rejectInstructorCertification(id: string, certId: string): Promise<InstructorCertification> {
+  return instructorsFetch<InstructorCertification>(`/instructors/${encodeURIComponent(id)}/certifications/${encodeURIComponent(certId)}/reject`, 'PATCH', {});
+}
+
+export function deleteInstructorCertification(id: string, certId: string): Promise<{ id: string }> {
+  return instructorsFetch<{ id: string }>(`/instructors/${encodeURIComponent(id)}/certifications/${encodeURIComponent(certId)}`, 'DELETE');
 }
 
 // ── Applications ────────────────────────────────────────────────────────────

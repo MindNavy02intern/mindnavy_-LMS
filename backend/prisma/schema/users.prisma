@@ -46,6 +46,12 @@ model AppUser {
   // Administrative documents on file (instructors.prisma). Empty for everyone
   // who is not an instructor.
   instructorDocuments InstructorDocument[] @relation("InstructorDocuments")
+  // Reviews left ON this user as an instructor, and reviews this user wrote AS
+  // a student — two distinct relations to the same model, so each needs its
+  // own name (instructors.prisma).
+  instructorReviews    InstructorReview[]         @relation("InstructorReviews")
+  studentReviews       InstructorReview[]         @relation("StudentReviews")
+  instructorCertifications InstructorCertification[] @relation("InstructorCertifications")
 
   @@index([branchId])
   @@index([departmentId])
