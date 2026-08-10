@@ -1,0 +1,296 @@
+// Learners v1 — EXTENDS AppUser, never replaces it. Mirrors instructors.prisma's
+// architecture exactly (same author, same reasoning, same day):
+//
+// A learner already IS an `AppUser` with role = LEARNER, and CourseEnrollment /
+// Certificate already key off AppUser.id (learning.prisma) — a parallel
+// `learners` table would fork both (IMPACT_MAP B2, same reasoning as
+// InstructorProfile).
+//
+// So this file adds ONE optional side table holding only learner-specific
+// fields. Identity, status and verificationState stay owned by AppUser and are
+// written exclusively through users.service — learners.service delegates.
+//
+// The profile row is OPTIONAL on purpose: every LEARNER that existed before
+// this module (and every one created through POST /api/admin/users) has no
+// profile, and MUST still appear in the Learners table. Reads left-join it —
+// see learners.service INSTRUCTOR_SELECT-equivalent.
+//
+// NOTE ON TERMINOLOGY: docs/blueprint/pages/06-students.md and the dead
+// queryKeys.students.*/'student.*' mutation IDs in invalidation.ts predate this
+// module and use "Student" — that scaffolding is unused by any component
+// (verified in the Step 0 audit) and is left alone here, not renamed. This
+// module — model names, fields, endpoints, everything below — uses "Learner"
+// exclusively, per explicit instruction.
+model LearnerProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  // STD-style codes would read as "Student" in the UI, which the terminology
+  // rule forbids — LRN-0001 style instead. Generated in the service
+  // (sequential, zero-padded, retried on the unique-constraint race — see
+  // generateLearnerCode in learners.service).
+  learnerCode String @unique
+
+  program    String?
+  level      LearnerLevel @default(BEGINNER)
+  department String?
+  batch      String?
+
+  // The advising INSTRUCTOR (AppUser, typically role=INSTRUCTOR but not
+  // enforced at the DB level — same non-enforcement as Course.instructorId).
+  // Nullable: most learners have no assigned advisor.
+  advisorId String?
+
+  verificationStatus LearnerVerificationStatus @default(PENDING)
+
+  // 0-100, admin/derived signal for the "at-risk" tab (AT_RISK_THRESHOLD in
+  // learners.service). Null = no signal yet, NOT zero risk — never defaulted.
+  riskScore Int?
+
+  joinedDate   DateTime  @default(now())
+  lastActiveAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    AppUser  @relation("LearnerProfileUser", fields: [userId], references: [id], onDelete: Cascade)
+  advisor AppUser? @relation("LearnerProfileAdvisor", fields: [advisorId], references: [id])
+
+  @@index([program])
+  @@index([department])
+  @@index([advisorId])
+  @@map("learner_profiles")
+}
+
+enum LearnerLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum LearnerVerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+// ── Assessment attempts (blueprint 06 §6 "Assignments & Exams") ────────────────
+//
+// Genuinely absent before this module: learning.prisma's Quiz/Question are the
+// admin-side BUILDER only ("Learner attempts/submissions ship with the learner
+// runtime" — learning.prisma comment on Quiz). This IS that runtime's admin-
+// facing half: the learner-side attempt-taking flow still doesn't exist (no
+// learner-facing app in this system), so rows here are written by admin actions
+// (grade override) and read-only elsewhere until one does.
+//
+// One row per learner-per-quiz attempt. status starts IN_PROGRESS in principle,
+// but v1's only writers are admin actions (reopen/reset/grade), so every row
+// that exists in practice is already SUBMITTED or GRADED.
+model QuizAttempt {
+  id     String @id @default(uuid())
+  quizId String
+  userId String
+
+  status    QuizAttemptStatus @default(SUBMITTED)
+  score     Int? // 0-100, null until graded
+  feedback  String?
+  attemptNo Int               @default(1)
+
+  startedAt   DateTime  @default(now())
+  submittedAt DateTime?
+  gradedAt    DateTime?
+  gradedById  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  quiz Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  user AppUser @relation("LearnerQuizAttempts", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([quizId])
+  @@map("quiz_attempts")
+}
+
+enum QuizAttemptStatus {
+  IN_PROGRESS
+  SUBMITTED
+  GRADED
+  // Set by POST .../reopen — distinct from a fresh IN_PROGRESS row so the
+  // history shows it was reopened, not that it's the learner's first pass.
+  REOPENED
+}
+
+// ── Attendance (blueprint 06 §8) ────────────────────────────────────────────────
+//
+// Genuinely absent before this module: LiveSession (learning.prisma) is
+// SCHEDULING only — title/time/status — no per-learner participant record.
+// One row per (session, learner). Manual admin correction is v1's only writer
+// (per the task spec); a real join/leave webhook from the meeting provider is
+// [phase-later], same status as LiveSession's own "hosting features" note.
+model SessionAttendance {
+  id        String @id @default(uuid())
+  sessionId String
+  userId    String
+
+  status             AttendanceStatus @default(ABSENT)
+  joinedAt           DateTime?
+  leftAt             DateTime?
+  durationMin        Int?
+  participationScore Int? // 0-100, optional
+
+  recordedById String? // admin who made the manual correction; null = system
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  session LiveSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user    AppUser     @relation("LearnerAttendance", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, userId])
+  @@index([userId, status])
+  @@index([sessionId])
+  @@map("session_attendance")
+}
+
+enum AttendanceStatus {
+  PRESENT
+  LATE
+  ABSENT
+  EXCUSED
+}
+
+// ── Support tickets (blueprint 06 §10) ──────────────────────────────────────────
+//
+// Genuinely absent before this module: no Ticket/SupportTicket model exists
+// anywhere in the schema. `raisedByRole` is stored (not derived from the user's
+// CURRENT role) because a role can change after a ticket is filed and the
+// ticket should keep saying who filed it at the time — same snapshot reasoning
+// as Certificate.metadata.
+model SupportTicket {
+  id     String @id @default(uuid())
+  userId String
+
+  subject  String
+  body     String
+  category TicketCategory @default(GENERAL)
+  status   TicketStatus   @default(OPEN)
+  priority TicketPriority @default(NORMAL)
+
+  assignedToId String? // AdminUser id, plain reference like AuditLog.adminId
+
+  resolvedAt DateTime?
+  resolution String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     AppUser         @relation("LearnerTickets", fields: [userId], references: [id], onDelete: Cascade)
+  messages TicketMessage[]
+
+  @@index([userId, status])
+  @@index([status])
+  @@index([createdAt])
+  @@map("support_tickets")
+}
+
+// Respond thread — kept separate from SupportTicket.resolution (the final
+// decision note) so a ticket can carry a back-and-forth, not just one reply.
+model TicketMessage {
+  id       String @id @default(uuid())
+  ticketId String
+
+  authorAdminId String? // null = the learner's own message (no learner-facing app writes this yet — admin-composed on their behalf, same as AuditLog system rows)
+  body          String
+
+  createdAt DateTime @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId])
+  @@map("ticket_messages")
+}
+
+enum TicketCategory {
+  TECHNICAL
+  ENROLLMENT
+  PAYMENT
+  ACCESS
+  GENERAL
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  ESCALATED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+// ── Documents (blueprint-equivalent of instructors.prisma InstructorDocument,
+// Part 7) ─────────────────────────────────────────────────────────────────────
+//
+// A separate model, not a reuse of InstructorDocument — different type
+// taxonomy (IDENTITY/ENROLLMENT_AGREEMENT/ACADEMIC_RECORD/COMPLIANCE_FORM/
+// CERTIFICATE vs instructor's IDENTITY/CONTRACT/AGREEMENT/TAX/COMPLIANCE), and
+// two AppUsers should never share one polymorphic documents table (same
+// "one entity, one owner" reasoning InstructorDocument itself follows).
+//
+// Storage: same PRIVATE-bucket sign→PUT→confirm pattern as InstructorDocument
+// (learnerDocuments.service). No dedicated "learner-documents" bucket exists
+// yet (confirmed live against Supabase before writing this) — reuses the
+// EXISTING "instructor-documents" bucket under a learners/<id>/ prefix,
+// override-able via SUPABASE_LEARNER_DOCS_BUCKET the same way
+// SUPABASE_INSTRUCTOR_DOCS_BUCKET works, so provisioning a dedicated bucket
+// later needs zero code changes.
+model LearnerDocument {
+  id        String @id @default(uuid())
+  learnerId String
+
+  type   LearnerDocumentType
+  status LearnerDocumentStatus @default(PENDING)
+
+  fileName String
+  filePath String
+  fileSize Int
+  mimeType String
+
+  rejectionReason String?
+  expiresAt       DateTime?
+
+  uploadedById String?
+  uploadedAt   DateTime  @default(now())
+  verifiedAt   DateTime?
+  verifiedById String?
+
+  updatedAt DateTime @updatedAt
+
+  learner AppUser @relation("LearnerDocuments", fields: [learnerId], references: [id], onDelete: Cascade)
+
+  @@index([learnerId, status])
+  @@index([learnerId, type])
+  @@map("learner_documents")
+}
+
+enum LearnerDocumentType {
+  IDENTITY
+  ENROLLMENT_AGREEMENT
+  ACADEMIC_RECORD
+  COMPLIANCE_FORM
+  CERTIFICATE
+}
+
+enum LearnerDocumentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  // Soft delete — same compliance reasoning as InstructorDocumentStatus.ARCHIVED.
+  ARCHIVED
+}

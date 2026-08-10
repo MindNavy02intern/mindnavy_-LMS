@@ -95,13 +95,48 @@ async function removeObject(bucket, path) {
   if (error) throw Object.assign(new Error(error.message), { code: "STORAGE_DELETE_FAILED" });
 }
 
+// Read-only connectivity check for the Integrations module's "Test Connection"
+// button — lists buckets (cheapest real call against the project) instead of
+// touching any object.
+async function testConnection() {
+  const client = getClient();
+  if (!client) throw Object.assign(new Error("Supabase is not configured (SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY missing)."), { code: "STORAGE_NOT_CONFIGURED" });
+  const { data, error } = await client.storage.listBuckets();
+  if (error) throw Object.assign(new Error(error.message), { code: "STORAGE_LIST_FAILED" });
+  return { buckets: (data ?? []).map((b) => b.name) };
+}
+
+// Storage tab usage summary — bucket list + top-level file count/size per
+// bucket. Non-recursive (lists each bucket's root only): Supabase's list()
+// has no recursive mode, and a full recursive walk would mean N+1 calls per
+// nested folder on every Settings > Storage page load. Good enough for a
+// usage estimate; exact totals would need a scheduled job, out of scope here.
+async function getBucketUsage() {
+  const client = getClient();
+  if (!client) throw Object.assign(new Error("Supabase is not configured (SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY missing)."), { code: "STORAGE_NOT_CONFIGURED" });
+
+  const { data: buckets, error } = await client.storage.listBuckets();
+  if (error) throw Object.assign(new Error(error.message), { code: "STORAGE_LIST_FAILED" });
+
+  const usage = [];
+  for (const bucket of buckets ?? []) {
+    const { data: objects } = await client.storage.from(bucket.name).list("", { limit: 1000 });
+    const files = (objects ?? []).filter((o) => o.id != null); // folders have no id
+    const totalSizeBytes = files.reduce((sum, f) => sum + (f.metadata?.size ?? 0), 0);
+    usage.push({ bucket: bucket.name, public: Boolean(bucket.public), fileCount: files.length, totalSizeBytes });
+  }
+  return usage;
+}
+
 module.exports = {
   name: "supabase",
   isConfigured,
+  testConnection,
   createSignedUpload,
   statObject,
   objectExists,
   getPublicUrl,
   createSignedDownloadUrl,
   removeObject,
+  getBucketUsage,
 };

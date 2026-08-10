@@ -35,7 +35,9 @@ function getTransporter() {
   return transporter;
 }
 
-async function sendMail({ to, subject, text, html }) {
+// attachments: nodemailer's own [{ filename, content }] shape, passed through
+// as-is — optional, existing OTP-email callers never set it.
+async function sendMail({ to, subject, text, html, attachments }) {
   if (!isMailerConfigured()) {
     console.warn(`[mailer] SMTP not configured (SMTP_HOST/SMTP_USER/SMTP_PASS) — "${subject}" not sent.`);
     return { sent: false, reason: "NOT_CONFIGURED" };
@@ -47,6 +49,7 @@ async function sendMail({ to, subject, text, html }) {
       subject,
       text,
       html,
+      attachments,
     });
     return { sent: true };
   } catch (err) {
@@ -86,4 +89,12 @@ function sendOtpEmail(to, code, purpose) {
   return sendMail({ to, subject, text, html });
 }
 
-module.exports = { isMailerConfigured, sendMail, sendOtpEmail };
+// Read-only connectivity check for the Integrations module's "Test Connection"
+// button — nodemailer's built-in SMTP handshake (login only, no message sent).
+async function verifyTransport() {
+  if (!isMailerConfigured()) throw new Error("SMTP is not configured (SMTP_HOST/SMTP_USER/SMTP_PASS missing).");
+  await getTransporter().verify();
+  return { host: process.env.SMTP_HOST, port: Number(process.env.SMTP_PORT) || 587 };
+}
+
+module.exports = { isMailerConfigured, sendMail, sendOtpEmail, verifyTransport };

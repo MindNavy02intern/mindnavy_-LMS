@@ -24,6 +24,7 @@ function handleDomainError(res, err) {
     case "USER_NOT_FOUND":       return badRequest(res, "Referenced user does not exist (or is archived).");
     case "ALREADY_ENROLLED":     return badRequest(res, "This user is already enrolled in this course.");
     case "COURSE_FULL":          return badRequest(res, "Course is full: its enrollment limit has been reached.");
+    case "COHORT_NOT_FOUND":     return badRequest(res, "Referenced cohort (group) does not exist.");
     default:                     return null;
   }
 }

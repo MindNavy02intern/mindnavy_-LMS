@@ -213,7 +213,11 @@ async function issueCertificate({ userId, courseId, templateId }, adminId) {
   return mapCertificate(cert);
 }
 
-async function revokeCertificate(id, adminId) {
+// `reason` is optional and additive (Learners module Part 5) — the Certificate
+// model has no revocationReason column (a second writer of "why" belongs in
+// the audit trail, not a new schema field for one caller). Existing callers
+// that don't pass it are unaffected; the detail is simply absent.
+async function revokeCertificate(id, adminId, reason) {
   const current = await getCertificateOrThrow(id);
   if (current.revokedAt) throw domainError("ALREADY_REVOKED");
 
@@ -222,7 +226,7 @@ async function revokeCertificate(id, adminId) {
     data: { revokedAt: new Date() },
     select: CERT_SELECT,
   });
-  await certAuditLog(adminId, "CERTIFICATE_REVOKED", { certificateId: id });
+  await certAuditLog(adminId, "CERTIFICATE_REVOKED", { certificateId: id, ...(reason ? { reason } : {}) });
   return mapCertificate(cert);
 }
 

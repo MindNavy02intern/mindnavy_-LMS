@@ -1,0 +1,124 @@
+// System Settings module — single-row platform configuration, mirrors the
+// CompetencySettings/FinanceSettings/HierarchySettings pattern (lazy-create-
+// on-read, flat config fields, id via @default(cuid())). SystemConfigLog is
+// the one deliberate deviation from those: a per-field old/new-value audit
+// trail (the Config Logs tab needs a Setting/Old/New/Changed By/Date table),
+// distinct from the coarse AuditLog "which fields changed" entry every other
+// settings model already writes.
+
+model SystemSettings {
+  id String @id @default(cuid())
+
+  // ── General ──────────────────────────────────────────────────────────────
+  platformName        String  @default("MindNavy LMS")
+  platformDescription String?
+  timezone            String  @default("UTC")
+  defaultLanguage     String  @default("en")
+  dateFormat          String  @default("MM/DD/YYYY")
+  currency            String  @default("USD")
+  contactEmail        String?
+  contactPhone        String?
+
+  // ── Registration ─────────────────────────────────────────────────────────
+  registrationMode          RegistrationMode @default(OPEN)
+  emailVerificationRequired Boolean          @default(true)
+  phoneVerificationRequired Boolean          @default(false)
+  captchaEnabled            Boolean          @default(false)
+  allowedEmailDomains       String[]         @default([])
+  defaultUserRole           AppUserRole      @default(LEARNER)
+
+  // ── Learning ─────────────────────────────────────────────────────────────
+  // String, not the CourseVisibility enum — this is a default TEMPLATE value
+  // (never assigned directly to Course.visibility), and includes
+  // ENROLLED_ONLY which CourseVisibility doesn't have. Validated in
+  // settings.validator.js instead.
+  defaultCourseVisibility String  @default("PUBLIC")
+  autoEnrollmentEnabled   Boolean @default(false)
+  certificatesEnabled     Boolean @default(true)
+  quizPassingScore        Int     @default(70)
+  maxQuizAttempts         Int     @default(3)
+  scormEnabled            Boolean @default(false)
+  progressTrackingEnabled Boolean @default(true)
+
+  // ── Security ─────────────────────────────────────────────────────────────
+  passwordMinLength        Int      @default(8)
+  passwordRequireUppercase Boolean  @default(true)
+  passwordRequireNumbers   Boolean  @default(true)
+  passwordRequireSymbols   Boolean  @default(false)
+  sessionTimeoutMinutes    Int      @default(60)
+  maxLoginAttempts         Int      @default(5)
+  mfaEnabled               Boolean  @default(false)
+  ipRestrictionEnabled     Boolean  @default(false)
+  allowedIPs               String[] @default([])
+
+  // ── Media ────────────────────────────────────────────────────────────────
+  maxUploadSizeMb         Int      @default(100)
+  allowedFileTypes        String[] @default(["pdf", "mp4", "jpg", "png"])
+  videoProcessingEnabled  Boolean  @default(false)
+  imageCompressionEnabled Boolean  @default(true)
+
+  // ── Branding (not in the original spec table, but Part 3's Branding tab
+  // needs somewhere to persist logo/favicon/color — same single row) ────────
+  logoUrl      String?
+  faviconUrl   String?
+  primaryColor String? @default("#2563eb")
+
+  // ── Email Config / Notifications / Automation / Domain — the Part 1 field
+  // spec didn't include these, but Part 3 gives each of these tabs a real
+  // editable field (not just a "Coming soon" stub), so they need somewhere
+  // to persist. SMTP host/port/user/pass stay .env-only (never in DB, per
+  // the "never expose .env values" rule) — these are the DB-editable ones. ─
+  emailFromName                String?
+  emailFromEmail               String?
+  emailNotificationsEnabled    Boolean @default(true)
+  digestEmailsEnabled          Boolean @default(false)
+  autoCertificationEnabled     Boolean @default(false)
+  reminderNotificationsEnabled Boolean @default(true)
+  metaTitle                    String?
+  metaDescription              String?
+
+  // ── Maintenance ──────────────────────────────────────────────────────────
+  maintenanceMode        Boolean   @default(false)
+  maintenanceMessage     String?
+  scheduledMaintenanceAt DateTime?
+
+  // ── Features ─────────────────────────────────────────────────────────────
+  liveSessionsEnabled       Boolean @default(true)
+  certificatesModuleEnabled Boolean @default(true)
+  marketplaceEnabled        Boolean @default(false)
+  aiEnabled                 Boolean @default(false)
+  gamificationEnabled       Boolean @default(false)
+  scormModuleEnabled        Boolean @default(false)
+  mobileAppEnabled          Boolean @default(false)
+
+  lastBackupAt DateTime? // set by createBackup() — read-only, not PATCHable
+
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedById String?
+
+  @@map("system_settings")
+}
+
+// Per-field diff trail for the Config Logs tab. changedById is a plain string
+// (AdminUser.id — same "no relation" convention FinanceSettings.updatedById
+// uses) so this table never blocks on admin-row lifecycle.
+model SystemConfigLog {
+  id          String   @id @default(cuid())
+  setting     String
+  oldValue    String?
+  newValue    String?
+  changedById String
+  createdAt   DateTime @default(now())
+
+  @@index([setting])
+  @@index([changedById])
+  @@index([createdAt])
+  @@map("system_config_logs")
+}
+
+enum RegistrationMode {
+  OPEN
+  INVITE_ONLY
+  APPROVAL_REQUIRED
+}

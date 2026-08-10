@@ -81,7 +81,7 @@ model InstructorApplication {
   changeRequest   String?
   reviewedById    String?
   reviewedAt      DateTime?
-  createdUserId   String?   @unique
+  createdUserId   String?                     @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

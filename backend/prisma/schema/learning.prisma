@@ -1,18 +1,18 @@
 model Course {
-  id           String             @id @default(uuid())
+  id           String       @id @default(uuid())
   title        String
   category     String
-  level        CourseLevel        @default(BEGINNER)
-  status       CourseStatus       @default(DRAFT)
+  level        CourseLevel  @default(BEGINNER)
+  status       CourseStatus @default(DRAFT)
   thumbnail    String?
   instructorId String?
-  createdAt    DateTime           @default(now())
-  updatedAt    DateTime           @updatedAt
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   createdBy    String?
   description  String?
   language     String?
   subtitle     String?
-  tags         String[]           @default([])
+  tags         String[]     @default([])
 
   // Wizard Step 4 — settings. Owned exclusively by PATCH /courses/:id/settings;
   // the generic course PATCH never reads or writes these. price is integer cents.
@@ -92,8 +92,24 @@ model CourseEnrollment {
   completedAt DateTime?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
-  course      Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  user        AppUser          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Added for the Learners module (learners.prisma / Part 3) — EXTENDED in
+  // place rather than forked, same reasoning as every other model in this
+  // codebase that gained fields for a later feature (Certificate.metadata,
+  // Course's Wizard Step 4 block). All three nullable and additive: existing
+  // callers (ENROLLMENTS_CONTRACT.md's POST /, the Learning Management
+  // EnrollmentsTab) are entirely unaffected — they simply never set these.
+  // startDate/expiryDate let an admin enroll someone with access opening or
+  // closing on a different date than the enrollment record itself was created
+  // (createdAt / "enrolledAt" in the API). cohortId is optional and points at
+  // the EXISTING Group model (groups.prisma) — no new cohort concept invented.
+  startDate  DateTime?
+  expiryDate DateTime?
+  cohortId   String?
+
+  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user   AppUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cohort Group?  @relation(fields: [cohortId], references: [id])
 
   @@unique([courseId, userId])
   @@index([courseId])
@@ -101,6 +117,7 @@ model CourseEnrollment {
   @@index([status])
   @@index([completedAt])
   @@index([createdAt])
+  @@index([cohortId])
   @@map("course_enrollments")
 }
 
@@ -145,28 +162,31 @@ model CourseContent {
 // every read (no manual status writes), so the LM dashboard stays accurate free.
 // Defaults on durationMin/timezone/provider backfill pre-existing seed rows.
 model LiveSession {
-  id              String            @id @default(uuid())
+  id              String              @id @default(uuid())
   title           String
   description     String?
   courseId        String?
   instructorId    String?
   startTime       DateTime
-  durationMin     Int               @default(60)
-  timezone        String            @default("UTC")
+  durationMin     Int                 @default(60)
+  timezone        String              @default("UTC")
   maxParticipants Int?
-  provider        MeetingProvider   @default(ZOOM)
+  provider        MeetingProvider     @default(ZOOM)
   zoomMeetingId   String?
   joinUrl         String?
   startUrl        String?
-  status          LiveSessionStatus @default(UPCOMING)
+  status          LiveSessionStatus   @default(UPCOMING)
   // Set only by PATCH /:id/end (admin manual override) — presence means an
   // admin ended this session early, before its scheduled startTime+durationMin
   // window closed. deriveStatus() checks this FIRST, before any time math.
   endedAt         DateTime?
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  course          Course?           @relation(fields: [courseId], references: [id])
-  instructor      AppUser?          @relation("LiveSessionInstructor", fields: [instructorId], references: [id])
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  course          Course?             @relation(fields: [courseId], references: [id])
+  instructor      AppUser?            @relation("LiveSessionInstructor", fields: [instructorId], references: [id])
+  // Per-learner attendance records (learners.prisma) — this model itself only
+  // ever tracked the SCHEDULE, never who showed up.
+  attendance      SessionAttendance[]
 
   @@index([status])
   @@index([startTime])
@@ -196,16 +216,16 @@ enum MeetingProvider {
 // v1 triggers: MANUAL issue only (quiz/path/attendance runtimes don't exist yet);
 // service exposes one issueCertificate() for future triggers to call.
 model Certificate {
-  id               String    @id @default(uuid())
+  id               String               @id @default(uuid())
   courseId         String
   userId           String
   templateId       String?
-  verificationCode String?   @unique
-  issuedAt         DateTime  @default(now())
+  verificationCode String?              @unique
+  issuedAt         DateTime             @default(now())
   revokedAt        DateTime?
   metadata         Json?
-  course           Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  user             AppUser   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course           Course               @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user             AppUser              @relation(fields: [userId], references: [id], onDelete: Cascade)
   template         CertificateTemplate? @relation(fields: [templateId], references: [id])
 
   @@unique([courseId, userId])
@@ -329,8 +349,11 @@ model Quiz {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
-  course    Course?    @relation(fields: [courseId], references: [id])
+  course    Course?       @relation(fields: [courseId], references: [id])
   questions Question[]
+  // Learner attempts (learners.prisma) — the admin-facing half of the runtime
+  // that doesn't otherwise exist yet (see QuizAttempt's model comment).
+  attempts  QuizAttempt[]
 
   @@index([courseId])
   @@index([createdAt])

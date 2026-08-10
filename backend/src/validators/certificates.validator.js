@@ -185,6 +185,20 @@ function validateReissue(body = {}) {
   return { isValid: errors.length === 0, errors, data };
 }
 
+// Optional — see the CERTIFICATES_CONTRACT.md addendum (Learners module Part
+// 5). No body at all is still valid; an empty/whitespace-only reason is
+// treated as "not provided" rather than a validation error.
+function validateRevoke(body = {}) {
+  const errors = [];
+  let reason;
+  if (body.reason !== undefined && body.reason !== null) {
+    if (typeof body.reason !== "string") errors.push("reason must be a string.");
+    else if (body.reason.trim().length > 1000) errors.push("reason must be at most 1000 characters.");
+    else reason = body.reason.trim() || undefined;
+  }
+  return { isValid: errors.length === 0, errors, data: { reason } };
+}
+
 // ── List filters (query string) ────────────────────────────────────────────────────
 
 function validateListQuery(query = {}) {
@@ -228,6 +242,7 @@ module.exports = {
   validateTemplateUpdate,
   validateIssue,
   validateReissue,
+  validateRevoke,
   validateListQuery,
   DEFAULT_LAYOUT,
 };

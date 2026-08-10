@@ -1,5 +1,5 @@
 # 10 · Notifications — `/notifications`
-Doc: Notifications §1–§13 · Entity: NOTIFICATION/CAMPAIGN (IMPACT §5.12 extension) · Status: `[planned]`
+Doc: Notifications §1–§13 · Entity: NOTIFICATION/CAMPAIGN (IMPACT §5.12 extension) · Status: `[built]` — shipped 2026-08-10, see `NOTIFICATIONS_CONTRACT.md`
 
 ## Topbar NotificationsPanel `[built]`
 
@@ -7,9 +7,10 @@ A drop-down panel opened by the bell icon in `AdminLayout.tsx` topbar. This is a
 
 | Surface | Query key | Kind | Notes |
 |---|---|---|---|
-| Bell icon → panel open | `['notifications']` | read | Same key as dashboard widget and future `/notifications` page (rule R4 — one datum, one owner). Reads `GET /api/admin/dashboard/core → recentActivities` |
-| "Mark all read" button | — | mut stub | Not yet wired to a mutation; UI stub only |
-| "View all notifications →" | nav | nav | Links to `/notifications` page (not yet built) |
+| Bell icon → panel open | `['notifications']` | read | Same key as dashboard widget and the `/notifications` page (rule R4 — one datum, one owner). Reads `GET /api/admin/dashboard/core → recentActivities` — unchanged, deliberately separate from the module's own `NotificationLog` data (contract decision #1) |
+| Sidebar badge (shipped 2026-08-10) | — | read | Real unread count: `GET /api/admin/notifications?read=false&limit=1 → total`. Was a hardcoded `badge: 12` before this build |
+| "Mark all read" button | — | mut stub | Still a UI stub — it operates on `recentActivities` (audit log), which has no real read-state; the module's own bulk mark-read lives on the In-App tab (`PATCH /notifications/read-all`) |
+| "View all notifications →" | nav | nav | Shipped 2026-08-10 — navigates to `/notifications?tab=inapp` |
 
 > **Rule R4 enforcement:** `['notifications']` is the single source of truth for notification data across three surfaces: this topbar panel, the Dashboard Notifications widget, and the future `/notifications` page. All three must read the same query key — never duplicate with a different key.
 
@@ -41,7 +42,7 @@ Mutations: `notificationRule.create/update/delete/toggle` (→ §5.12 rule row).
 
 ## Tab: Templates (`?tab=templates`) — `['notification-templates']` (doc §7)
 Types: email, push, SMS, announcement, security. Components: subject, body, dynamic variables, branding, CTA buttons, localization.
-Actions: Create→`template.create` · Edit→`template.update` · Add variables (part of update) · Preview (read) · Duplicate→`template.duplicate` (all local: templates key).
+Actions: Create→`notificationTemplate.create` · Edit→`notificationTemplate.update` · Add variables (part of update) · Preview (read, `POST .../preview`) · Duplicate→`notificationTemplate.duplicate` · Delete→`notificationTemplate.delete` (all local: templates key).
 
 ## Tab: Announcement Center (`?tab=announcements`) (doc §8)
 Types: platform, maintenance, promotions, company updates, live events, emergency.

@@ -1,5 +1,5 @@
 # 11 · Integrations — `/integrations`
-Doc: Integrations §1–§14 · Entity: INTEGRATION (IMPACT §5.15 extension) · Status: `[planned]`
+Doc: Integrations §1–§14 · Entity: INTEGRATION (IMPACT §5.15 extension) · Status: `[built]` (2026-08-10, see INTEGRATIONS_CONTRACT.md)
 
 **Module nature:** connection/config surfaces. Domain reflections are indirect — e.g., connecting Zoom changes what the Live Session form offers (file 04 providers list reads `['integrations',{type:'video'}]`).
 

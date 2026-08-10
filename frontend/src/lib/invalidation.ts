@@ -45,6 +45,9 @@ export interface MutationCtx {
                             // side panel — also refresh that instructor's own
                             // GET /instructors/:id (coursesCount/publishedCoursesCount
                             // changed) and the list row behind it.
+  learnerIds?:   string[]; // learner.bulkEnroll — one call, many affected learners
+  frameworkId?:  string;   // framework.addSkill/.removeSkill — the framework
+                            // being edited, distinct from `id` (the skill id)
 }
 
 // ── MutationName union ────────────────────────────────────────────────────────
@@ -78,6 +81,31 @@ export type MutationName =
   // deliberately unshipped, separate entity) — shipped 2026-08-07 at the
   // user's explicit direction. See types/instructors.ts for the full note.
   | 'instructorCert.upload' | 'instructorCert.verify' | 'instructorCert.reject' | 'instructorCert.delete'
+  // §5.2-LEARNER (new namespace — the `student.*` rows below this file already
+  // has are DEAD/unconsumed scaffolding for a /students page that was never
+  // built; kept separate rather than reused, see queryKeys.ts learners note)
+  | 'learner.create' | 'learner.update' | 'learner.suspend' | 'learner.reactivate'
+  | 'learner.delete' | 'learner.resetPassword'
+  // Part 3 — NOT a reuse of 'enrollment.create'/'enrollment.cancel': those
+  // target queryKeys.students.* (dead scaffolding this module doesn't read;
+  // see queryKeys.ts). These target queryKeys.learners.* instead, alongside
+  // the same real queryKeys.enrollments()/courses()/dashboard keys.
+  | 'learner.enroll' | 'learner.unenroll' | 'learner.progressReset'
+  // Backend shipped in Part 3 alongside enroll/unenroll but the frontend was
+  // never wired until now — same target shape as learner.enroll, just N
+  // learners instead of one (see ctx.learnerIds handling below).
+  | 'learner.bulkEnroll'
+  // Part 5/6 — QuizAttempt is brand new, nothing else audits or invalidates
+  // it, so these are genuinely new (unlike certificates below, which reuse
+  // the existing certificate.reissue/.revoke — real, generic, not
+  // students.*-scoped, so no dead-domain issue there).
+  | 'learner.assessmentReopen' | 'learner.assessmentReset' | 'learner.assessmentGrade'
+  // Part 7/8 — Documents: new (LearnerDocument is its own model, mirrors
+  // instructorDoc.* but has to be its own IDs since it's a different
+  // queryKeys.learners.documents(id) target). Tickets: NOT new — reuses the
+  // existing ticket.respond/.resolve/.escalate (real, generic
+  // queryKeys.supportTickets(), no dead-domain issue).
+  | 'learnerDoc.upload' | 'learnerDoc.verify' | 'learnerDoc.reject' | 'learnerDoc.archive'
   // §5.4 COURSE / LEARNING
   | 'course.createDraft' | 'course.update' | 'course.settings.update'
   | 'course.submitForApproval'
@@ -108,30 +136,56 @@ export type MutationName =
   | 'transaction.purchase'
   | 'refund.request' | 'refund.approve' | 'refund.reject'
   | 'payout.execute' | 'payout.hold'
+  // .approve/.complete/.calculate are new (blueprint 09 §7 names .approve, not
+  // .execute — this module's Payouts tab has 3 real actions: Approve/Hold/
+  // Complete + a Calculate Payouts button; .execute stays as the generic ID
+  // §5.3's instructor earnings tab already used, kept, not renamed)
+  | 'payout.approve' | 'payout.complete' | 'payout.calculate'
   | 'subscription.cancel'
+  // .create/.update/.extend are new — this module has no separate Plan model
+  // (blueprint's plan.create/.update stay dead, unbuilt), so Create/Edit/
+  // Extend on the Subscriptions tab write the Subscription row directly
+  | 'subscription.create' | 'subscription.update' | 'subscription.extend'
   // §5.8 CERTIFICATE
   | 'certificate.issue' | 'certificate.revoke' | 'certificate.reissue'
   | 'certificateTemplate.create' | 'certificateTemplate.update' | 'certificateTemplate.delete'
   // §5.11 COMPETENCY / SKILL
   | 'skill.create' | 'skill.update' | 'skill.delete'
-  | 'skillCategory.create' | 'skillCategory.update' | 'skillCategory.archive'
+  | 'skill.assignToCourse' | 'skill.removeCourse'
+  | 'skillCategory.create' | 'skillCategory.update' | 'skillCategory.archive' | 'skillCategory.delete'
   | 'framework.create' | 'framework.update' | 'framework.delete'
+  | 'framework.addSkill' | 'framework.removeSkill'
   | 'skillLevel.configure'
+  | 'assessment.create'
+  | 'skill.import'
+  | 'competencySettings.update'
   | 'competencyMap.link' | 'competencyMap.unlink'
   | 'competencyCert.assign' | 'competencyCert.verify' | 'competencyCert.revoke'
+  // §5.11b REPORTS & ANALYTICS (blueprint 08 — backend shipped, see
+  // REPORTS_CONTRACT.md). `reportSchedule.*` shipped 2026-08-09 (Scheduled
+  // Reports — Export Center tab); `.create`/`.delete` go live alongside the
+  // new `.update`/`.pause`/`.resume` rather than staying dead. `reportTemplate.save`
+  // remains DEAD — no Custom Report Builder save flow exists yet, same
+  // "documented, unbuilt" status as skillLevel.configure above.
+  | 'reportSchedule.create' | 'reportSchedule.update' | 'reportSchedule.delete'
+  | 'reportSchedule.pause' | 'reportSchedule.resume'
+  | 'reportTemplate.save'
   // §5.12 NOTIFICATION CAMPAIGNS
   | 'emailCampaign.create' | 'pushCampaign.send'
-  | 'smsCampaign.send' | 'announcement.send'
+  | 'smsCampaign.send' | 'announcement.send' | 'announcement.delete'
   | 'campaign.schedule' | 'campaign.pause' | 'campaign.cancel' | 'campaign.duplicate'
-  | 'notificationTemplate.create' | 'notificationTemplate.update' | 'notificationTemplate.duplicate'
+  | 'notificationTemplate.create' | 'notificationTemplate.update'
+  | 'notificationTemplate.duplicate' | 'notificationTemplate.delete'
   | 'notificationRule.create' | 'notificationRule.update'
   | 'notificationRule.delete' | 'notificationRule.toggle'
   | 'notification.markRead' | 'notification.archive' | 'notification.pin'
+  | 'notification.send' | 'notification.delete'
+  | 'notificationPrefs.update'
   | 'emergencyAlert.send' | 'delivery.retry'
   // §5.13 FINANCE CONFIG
   | 'plan.create' | 'plan.update'
   | 'invoice.generate' | 'invoice.void' | 'invoice.update' | 'invoice.send'
-  | 'coupon.create' | 'coupon.update' | 'coupon.disable'
+  | 'coupon.create' | 'coupon.update' | 'coupon.disable' | 'coupon.delete'
   | 'tax.configure' | 'billingSettings.update'
   | 'gateway.connect' | 'gateway.configure' | 'gateway.testMode'
   | 'commission.update'
@@ -185,10 +239,12 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.users.pendingVerification(),
     queryKeys.users.invitations(),
     queryKeys.reportsSnapshot(),
-    // A CSV import can include INSTRUCTOR-role rows (ImportUsersModal allows
-    // any of LEARNER/INSTRUCTOR/MANAGER/ADMIN_ASSISTANT) — this domain was
-    // never invalidated on import before the Instructors module existed.
+    // A CSV import can include INSTRUCTOR or LEARNER rows (ImportUsersModal
+    // allows any of LEARNER/INSTRUCTOR/MANAGER/ADMIN_ASSISTANT, LEARNER being
+    // the default) — both domains need invalidating on import, not just
+    // whichever module existed first.
     queryKeys.instructors.list(),
+    queryKeys.learners.list(),
     ...(ctx?.id ? [queryKeys.users.detail(ctx.id)] : []),
   ],
   'user.invite': () => [
@@ -438,6 +494,94 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   ],
   'instructorCert.delete': (ctx) => [
     ...(ctx?.id ? [queryKeys.instructors.certifications(ctx.id)] : []),
+  ],
+
+  // ── LEARNER (new module, see the MutationName union above) ──────────────────
+  // suspend/reactivate/resetPassword delegate to users.service (same AppUser
+  // row the Users table shows) — ['users'] is required here, not optional,
+  // same rule as instructor.suspend.
+  'learner.create': (ctx) => [
+    queryKeys.learners.list(),
+    queryKeys.users.list(),
+    queryKeys.dashboard.userAnalytics(),
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+  ],
+  'learner.update': (ctx) => [
+    queryKeys.learners.list(),
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+  ],
+  'learner.suspend': (ctx) => [
+    queryKeys.learners.list(),
+    queryKeys.users.list(),
+    queryKeys.dashboard.userAnalytics(),
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+  ],
+  'learner.reactivate': (ctx) => [
+    queryKeys.learners.list(),
+    queryKeys.users.list(),
+    queryKeys.dashboard.userAnalytics(),
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+  ],
+  'learner.delete': () => [
+    queryKeys.learners.list(),
+    queryKeys.users.list(),
+    queryKeys.dashboard.userAnalytics(),
+  ],
+  'learner.resetPassword': () => [
+    queryKeys.users.list(),
+  ],
+  'learner.enroll': (ctx) => [
+    queryKeys.learners.list(),
+    queryKeys.enrollments(ctx?.id),
+    queryKeys.enrollments(ctx?.courseId),
+    queryKeys.courses.list(),
+    queryKeys.dashboard.courseAnalytics(),
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'learner.unenroll': (ctx) => [
+    queryKeys.learners.list(),
+    queryKeys.enrollments(ctx?.id),
+    queryKeys.enrollments(ctx?.courseId),
+    queryKeys.courses.list(),
+    queryKeys.dashboard.courseAnalytics(),
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+  ],
+  'learner.bulkEnroll': (ctx) => [
+    queryKeys.learners.list(),
+    queryKeys.enrollments(ctx?.courseId),
+    queryKeys.courses.list(),
+    queryKeys.dashboard.courseAnalytics(),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+    ...(ctx?.learnerIds ?? []).map((id) => queryKeys.learners.detail(id)),
+  ],
+  'learner.progressReset': (ctx) => [
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+    queryKeys.dashboard.courseAnalytics(),
+  ],
+  'learner.assessmentReopen': (ctx) => [
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+  ],
+  'learner.assessmentReset': (ctx) => [
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+  ],
+  'learner.assessmentGrade': (ctx) => [
+    ...(ctx?.id ? [queryKeys.learners.detail(ctx.id)] : []),
+    queryKeys.dashboard.courseAnalytics(),
+  ],
+  'learnerDoc.upload': (ctx) => [
+    ...(ctx?.id ? [queryKeys.learners.documents(ctx.id), queryKeys.learners.detail(ctx.id)] : []),
+  ],
+  'learnerDoc.verify': (ctx) => [
+    ...(ctx?.id ? [queryKeys.learners.documents(ctx.id)] : []),
+    queryKeys.approvals(),
+  ],
+  'learnerDoc.reject': (ctx) => [
+    ...(ctx?.id ? [queryKeys.learners.documents(ctx.id)] : []),
+    queryKeys.approvals(),
+  ],
+  'learnerDoc.archive': (ctx) => [
+    ...(ctx?.id ? [queryKeys.learners.documents(ctx.id)] : []),
   ],
 
   // ── §5.4 COURSE / LEARNING ────────────────────────────────────────────────
@@ -752,10 +896,37 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.payouts(),
     ...(ctx?.id ? [queryKeys.instructors.earnings(ctx.id)] : []),
   ],
+  'payout.approve': (ctx) => [
+    queryKeys.payouts(),
+    ...(ctx?.id ? [queryKeys.instructors.earnings(ctx.id)] : []),
+  ],
+  'payout.complete': (ctx) => [
+    queryKeys.payouts(),
+    queryKeys.dashboard.revenue(),
+    queryKeys.transactionsRecent(),
+    ...(ctx?.id ? [queryKeys.instructors.earnings(ctx.id)] : []),
+  ],
+  'payout.calculate': () => [
+    queryKeys.payouts(),
+    queryKeys.dashboard.revenue(),
+  ],
   'subscription.cancel': (ctx) => [
     queryKeys.dashboard.revenue(),
     queryKeys.billing(ctx?.studentId),
     queryKeys.subscriptions(),
+  ],
+  'subscription.create': () => [
+    queryKeys.subscriptions(),
+    queryKeys.dashboard.revenue(),
+    queryKeys.finance.dashboard(),
+  ],
+  'subscription.update': (ctx) => [
+    queryKeys.subscriptions(),
+    queryKeys.billing(ctx?.studentId),
+  ],
+  'subscription.extend': (ctx) => [
+    queryKeys.subscriptions(),
+    queryKeys.billing(ctx?.studentId),
   ],
 
   // ── §5.8 CERTIFICATE ──────────────────────────────────────────────────────
@@ -792,22 +963,90 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   ],
 
   // ── §5.11 COMPETENCY / SKILL ──────────────────────────────────────────────
-  'skill.create': () => [queryKeys.competencies()],
-  'skill.update': () => [queryKeys.competencies()],
-  'skill.delete': () => [queryKeys.competencies()],
+  'skill.create': (ctx) => [
+    queryKeys.competencies(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(),
+    ...(ctx?.id ? [queryKeys.competencyDetail(ctx.id)] : []),
+  ],
+  'skill.update': (ctx) => [
+    queryKeys.competencies(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(),
+    ...(ctx?.id ? [queryKeys.competencyDetail(ctx.id)] : []),
+  ],
+  'skill.delete': (ctx) => [
+    queryKeys.competencies(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(),
+    ...(ctx?.id ? [queryKeys.competencyDetail(ctx.id)] : []),
+  ],
+  // Assign/remove a course from a skill — local: the skill row (linkedCoursesCount)
+  // and the course's own detail (skill chips), same reasoning as competencyMap.link.
+  'skill.assignToCourse': (ctx) => [
+    queryKeys.competencies(),
+    ...(ctx?.id ? [queryKeys.competencyDetail(ctx.id)] : []),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'skill.removeCourse': (ctx) => [
+    queryKeys.competencies(),
+    ...(ctx?.id ? [queryKeys.competencyDetail(ctx.id)] : []),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
   'skillCategory.create': () => [
-    queryKeys.competenciesCategories(), queryKeys.competencies(),
+    queryKeys.competenciesCategories(), queryKeys.competencies(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(),
   ],
   'skillCategory.update': () => [
-    queryKeys.competenciesCategories(), queryKeys.competencies(),
+    queryKeys.competenciesCategories(), queryKeys.competencies(), queryKeys.competenciesAnalytics(),
   ],
   'skillCategory.archive': () => [
-    queryKeys.competenciesCategories(), queryKeys.competencies(),
+    queryKeys.competenciesCategories(), queryKeys.competencies(), queryKeys.competenciesAnalytics(),
   ],
-  'framework.create': () => [queryKeys.competenciesFrameworks()],
-  'framework.update': () => [queryKeys.competenciesFrameworks()],
-  'framework.delete': () => [queryKeys.competenciesFrameworks()],
+  // DELETE /categories/:id — genuinely exists in the contract (hard delete,
+  // blocked while children/skills exist) alongside the PATCH-status archive
+  // path above; not a duplicate.
+  'skillCategory.delete': () => [
+    queryKeys.competenciesCategories(), queryKeys.competencies(), queryKeys.competenciesStats(),
+  ],
+  'framework.create': (ctx) => [
+    queryKeys.competenciesFrameworks(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(),
+    ...(ctx?.id ? [queryKeys.frameworkDetail(ctx.id)] : []),
+  ],
+  'framework.update': (ctx) => [
+    queryKeys.competenciesFrameworks(), queryKeys.competenciesStats(),
+    ...(ctx?.id ? [queryKeys.frameworkDetail(ctx.id)] : []),
+  ],
+  'framework.delete': (ctx) => [
+    queryKeys.competenciesFrameworks(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(),
+    ...(ctx?.id ? [queryKeys.frameworkDetail(ctx.id)] : []),
+  ],
+  // Adding/removing a required skill changes the framework's own
+  // competenciesCount/usersMapped AND the shared skill-gap definition (every
+  // gap surface — stats card, analytics donut, /skill-gaps tab — reads the
+  // same computeSkillGaps()), so both the framework detail and the module-wide
+  // gap/stat surfaces need refreshing.
+  'framework.addSkill': (ctx) => [
+    queryKeys.competenciesFrameworks(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(), queryKeys.competenciesSkillGaps(),
+    ...(ctx?.frameworkId ? [queryKeys.frameworkDetail(ctx.frameworkId)] : []),
+  ],
+  'framework.removeSkill': (ctx) => [
+    queryKeys.competenciesFrameworks(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(), queryKeys.competenciesSkillGaps(),
+    ...(ctx?.frameworkId ? [queryKeys.frameworkDetail(ctx.frameworkId)] : []),
+  ],
   'skillLevel.configure': () => [queryKeys.competenciesLevels()],
+  // CSV bulk-create — many skills, no single id to target, same shape as
+  // user.import's list-level-only invalidation.
+  'skill.import': () => [
+    queryKeys.competencies(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(),
+  ],
+  // Changes gap-severity thresholds (skillGapOverview donut + /skill-gaps)
+  // and the assessment passing threshold/auto-update toggle (future
+  // assessment.create calls) — analytics/skill-gaps need a refetch, past
+  // assessments are unaffected (not retroactive).
+  'competencySettings.update': () => [
+    queryKeys.competenciesSettings(), queryKeys.competenciesAnalytics(), queryKeys.competenciesSkillGaps(), queryKeys.competenciesStats(),
+  ],
+  // Recording an assessment auto-upserts the assessed user's UserSkillProfile
+  // (competencies.service.createAssessment) — invalidate their skills list,
+  // the assessments log, and every surface the gap/stat computation feeds.
+  'assessment.create': (ctx) => [
+    queryKeys.competenciesAssessments(), queryKeys.competenciesStats(), queryKeys.competenciesAnalytics(), queryKeys.competenciesSkillGaps(),
+    ...(ctx?.userId ? [queryKeys.userSkills(ctx.userId)] : []),
+  ],
   'competencyMap.link': (ctx) => [
     queryKeys.competencies(),
     ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
@@ -831,11 +1070,23 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     ...(ctx?.userId ? [queryKeys.userSkills(ctx.userId)] : []),
   ],
 
+  // ── §5.11b REPORTS & ANALYTICS ────────────────────────────────────────────
+  // `reportSchedule.*` shipped 2026-08-09 — see MutationName union note.
+  'reportSchedule.create': () => [queryKeys.reportSchedules()],
+  'reportSchedule.update': () => [queryKeys.reportSchedules()],
+  'reportSchedule.delete': () => [queryKeys.reportSchedules()],
+  'reportSchedule.pause':  () => [queryKeys.reportSchedules()],
+  'reportSchedule.resume': () => [queryKeys.reportSchedules()],
+  // `reportTemplate.save` — still dead, no Custom Report Builder exists.
+  'reportTemplate.save':   () => [queryKeys.reportsTemplates()],
+
   // ── §5.12 NOTIFICATION CAMPAIGNS ─────────────────────────────────────────
   'emailCampaign.create':            () => [queryKeys.campaigns(), queryKeys.notificationsStats()],
   'pushCampaign.send':               () => [queryKeys.campaigns(), queryKeys.notificationsStats()],
   'smsCampaign.send':                () => [queryKeys.campaigns(), queryKeys.notificationsStats()],
   'announcement.send':               () => [queryKeys.campaigns(), queryKeys.notificationsStats()],
+  // new — Announcements tab "Delete" action had no row yet
+  'announcement.delete':             () => [queryKeys.campaigns()],
   'campaign.schedule':               () => [queryKeys.campaigns(), queryKeys.calendar()],
   'campaign.pause':                  () => [queryKeys.campaigns()],
   'campaign.cancel':                 () => [queryKeys.campaigns()],
@@ -843,6 +1094,8 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   'notificationTemplate.create':     () => [queryKeys.notificationTemplates()],
   'notificationTemplate.update':     () => [queryKeys.notificationTemplates()],
   'notificationTemplate.duplicate':  () => [queryKeys.notificationTemplates()],
+  // new — NOTIFICATIONS_CONTRACT.md Templates tab "Delete" action had no row yet
+  'notificationTemplate.delete':     () => [queryKeys.notificationTemplates()],
   'notificationRule.create':         () => [queryKeys.notificationsRules()],
   'notificationRule.update':         () => [queryKeys.notificationsRules()],
   'notificationRule.delete':         () => [queryKeys.notificationsRules()],
@@ -851,6 +1104,15 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   'notification.markRead':  () => [queryKeys.notifications()],
   'notification.archive':   () => [queryKeys.notifications()],
   'notification.pin':       () => [queryKeys.notifications()],
+  // new — In-App tab row delete, same feed-state-only reasoning as markRead/archive/pin
+  'notification.delete':    () => [queryKeys.notifications()],
+  // new — admin "Send Notification" (In-App tab) sends to specific userIds,
+  // distinct from the broad-audience campaign mutations above; affects the
+  // sentTotal/pending stats too so it keeps the §2 defaults.
+  'notification.send':      () => [queryKeys.notifications(), queryKeys.notificationsStats()],
+  // new — Preferences tab (per-user), distinct from a future admin-global
+  // notificationPrefs.updateGlobal (blueprint 10 §10) which doesn't exist yet.
+  'notificationPrefs.update': () => [queryKeys.notificationsSettings()],
   'emergencyAlert.send':    () => [queryKeys.campaigns(), queryKeys.securityAlerts()],
   'delivery.retry':         () => [queryKeys.notificationsStats()],
 
@@ -868,6 +1130,7 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   'coupon.create':         () => [queryKeys.coupons()],
   'coupon.update':         () => [queryKeys.coupons()],
   'coupon.disable':        () => [queryKeys.coupons()],
+  'coupon.delete':         () => [queryKeys.coupons()],
   'tax.configure':         () => [queryKeys.taxConfig(), queryKeys.invoices()],
   'billingSettings.update': () => [queryKeys.finance.settings()],
   'gateway.connect':       () => [queryKeys.gateways(), queryKeys.integrations()],
@@ -894,17 +1157,20 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   'ticket.escalate': () => [queryKeys.supportTickets()],
 
   // ── §5.15 INTEGRATIONS ────────────────────────────────────────────────────
-  'integration.connect':    () => [queryKeys.integrations(), queryKeys.integrationsStats()],
-  'integration.disconnect': () => [queryKeys.integrations(), queryKeys.integrationsStats()],
+  // integrationsLogs added alongside the IMPACT_MAP §5.15 keys — connect/
+  // disconnect/test/sync all write an IntegrationLog row (integrations.service
+  // logEvent()), so the Logs tab needs the same refresh signal.
+  'integration.connect':    () => [queryKeys.integrations(), queryKeys.integrationsStats(), queryKeys.integrationsLogs()],
+  'integration.disconnect': () => [queryKeys.integrations(), queryKeys.integrationsStats(), queryKeys.integrationsLogs()],
   'integration.configure':  () => [queryKeys.integrations()],
-  'integration.testMode':   () => [queryKeys.integrations()],
+  'integration.testMode':   () => [queryKeys.integrations(), queryKeys.integrationsLogs()],
   'apiKey.generate':        () => [queryKeys.apiKeys()],
   'apiKey.revoke':          () => [queryKeys.apiKeys()],
   'webhook.create':         () => [queryKeys.webhooks()],
   'webhook.update':         () => [queryKeys.webhooks()],
   'webhook.delete':         () => [queryKeys.webhooks()],
   'webhook.toggle':         () => [queryKeys.webhooks()],
-  'sync.run':               () => [queryKeys.integrationsSync(), queryKeys.users.list()],
+  'sync.run':               () => [queryKeys.integrationsSync(), queryKeys.integrationsLogs(), queryKeys.users.list()],
 
   // ── §5.16 SYSTEM SETTINGS ─────────────────────────────────────────────────
   'settings.update':      (ctx) => [queryKeys.settings(ctx?.domain)],
@@ -995,7 +1261,8 @@ export function invalidateFor(
   const skipDefaults =
     mutationName === 'notification.markRead' ||
     mutationName === 'notification.archive' ||
-    mutationName === 'notification.pin';
+    mutationName === 'notification.pin' ||
+    mutationName === 'notification.delete';
 
   const extraKeys = INVALIDATION_MAP[mutationName](ctx);
   const allKeys   = skipDefaults ? extraKeys : [...extraKeys, ...DEFAULT_KEYS];

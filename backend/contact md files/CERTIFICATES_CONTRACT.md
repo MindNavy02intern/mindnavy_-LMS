@@ -147,6 +147,15 @@ All filters optional. `status`: `active` | `revoked` (else `400`).
 `POST /:id/revoke` → `200 { data: Certificate, message }` — soft revoke.
 Already revoked → `400`. Revoked certs: PDF blocked, verify says `revoked`.
 
+**Addendum (2026-08-08, Learners module Part 5):** body now optionally accepts
+`{ "reason": "…" }`. Additive — this route's existing callers keep sending no
+body at all. The reason is recorded in the `CERTIFICATE_REVOKED` audit log
+entry's `details.reason`, not a new `Certificate` column (compliance trail,
+not a UI-facing field on the certificate itself — same pattern as suspension
+reasons living only in the audit log). Learners' `POST /learners/:id/
+certificates/:cid/revoke` is a thin wrapper over this same endpoint/service,
+not a fork — see `LEARNERS_CONTRACT.md`.
+
 ### 9 · Reissue
 `POST /:id/reissue` → `200 { data: Certificate, message }`
 Body optional: `{ "templateId": "<id>" | null }` (null = back to default layout).

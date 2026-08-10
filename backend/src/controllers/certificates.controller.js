@@ -7,6 +7,7 @@ const {
   validateTemplateUpdate,
   validateIssue,
   validateReissue,
+  validateRevoke,
   validateListQuery,
 } = require("../validators/certificates.validator");
 
@@ -116,7 +117,9 @@ const issueCertificate = run(async (req, res) => {
 const revokeCertificate = run(async (req, res) => {
   const idErr = validateId(req.params.id, "certificateId");
   if (idErr) return badRequest(res, idErr);
-  const cert = await svc.revokeCertificate(req.params.id, req.admin?.id);
+  const v = validateRevoke(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const cert = await svc.revokeCertificate(req.params.id, req.admin?.id, v.data.reason);
   return res.json({ success: true, message: "Certificate revoked.", data: cert });
 });
 

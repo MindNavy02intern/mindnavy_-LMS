@@ -1,6 +1,11 @@
 const prisma = require("../config/prisma");
 const { Prisma } = require("@prisma/client");
 const { listSessions: listLiveSessions } = require("./liveSessions.service");
+// Total Revenue / Active Subscriptions are OWNED here (IMPACT_MAP §4a) but
+// COMPUTED by finance.service — the same aggregate finance.service's own
+// getStats() calls, so the two endpoints can never drift (R4, blueprint 09 §1
+// ownership note).
+const { getTotalRevenueValue, getActiveSubscriptionsCountValue } = require("./finance.service");
 
 // Maps the real, schedule-derived LiveSession.status (UPCOMING/LIVE/ENDED,
 // LIVE_SESSIONS_CONTRACT.md) onto this dashboard's own widget-status vocabulary
@@ -135,6 +140,8 @@ async function getDashboardCore(admin) {
     activeInstructors,
     pendingApprovals,
     publishedCourses,
+    totalRevenue,
+    activeSubscriptions,
     recentActivitiesRaw,
     liveSessionRows,
     notificationsRaw,
@@ -144,6 +151,8 @@ async function getDashboardCore(admin) {
     prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }).catch(() => 0),
     prisma.appUser.count({ where: PENDING_APPROVAL_WHERE }).catch(() => 0),
     prisma.course.count({ where: { status: "PUBLISHED" } }).catch(() => 0),
+    getTotalRevenueValue().catch(() => 0),
+    getActiveSubscriptionsCountValue().catch(() => 0),
     prisma.auditLog.findMany({
       take: 10,
       orderBy: { createdAt: "desc" },
@@ -184,8 +193,8 @@ async function getDashboardCore(admin) {
       activeInstructors,
       publishedCourses,
       pendingApprovals,
-      totalRevenue:        0,  // Phase 2 — Finance table not yet built
-      activeSubscriptions: 0,  // Phase 2 — Subscription table not yet built
+      totalRevenue,
+      activeSubscriptions,
       certificatesIssued:  0,  // Phase 2 — Certificate table not yet built
       // Real LiveSession count (status LIVE). NOTE: this is a SEPARATE query
       // from getDashboardAdminWidgets' activeCount below — both filter the
@@ -424,6 +433,31 @@ async function getDashboardAnalytics(filters = {}) {
     .sort((a, b) => b.completionRate - a.completionRate)
     .slice(0, 6);
 
+  // Revenue Overview — same source tables (Payment/Subscription/Refund/
+  // InstructorPayout) finance.service reads; computed here directly rather
+  // than imported since this needs day/month/year buckets finance.service's
+  // exported helpers don't expose (R4 still holds — one table, one query
+  // shape per number, no separate aggregates stored anywhere).
+  const startOfYear = new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
+  const lastMonthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+  const [
+    dailyRevenueAgg, monthlyRevenueAgg, lastMonthRevenueAgg, annualRevenueAgg,
+    subscriptionRevenueAgg, refundTotalAgg, instructorPayoutsAgg,
+  ] = await Promise.all([
+    prisma.payment.aggregate({ where: { status: "SUCCESSFUL", createdAt: { gte: startOfToday } }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
+    prisma.payment.aggregate({ where: { status: "SUCCESSFUL", createdAt: { gte: startOfMonth } }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
+    prisma.payment.aggregate({ where: { status: "SUCCESSFUL", createdAt: { gte: lastMonthStart, lt: startOfMonth } }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
+    prisma.payment.aggregate({ where: { status: "SUCCESSFUL", createdAt: { gte: startOfYear } }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
+    prisma.subscription.aggregate({ where: { status: "ACTIVE" }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
+    prisma.refund.aggregate({ where: { status: "PROCESSED" }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
+    prisma.instructorPayout.aggregate({ where: { status: "COMPLETED" }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
+  ]);
+  const monthlyRevenueValue = monthlyRevenueAgg._sum.amount ?? 0;
+  const lastMonthRevenueValue = lastMonthRevenueAgg._sum.amount ?? 0;
+  const growthPercentage = lastMonthRevenueValue === 0
+    ? (monthlyRevenueValue > 0 ? 100 : 0)
+    : Math.round(((monthlyRevenueValue - lastMonthRevenueValue) / lastMonthRevenueValue) * 1000) / 10;
+
   return {
     filters: {
       dateFrom:     filters.dateFrom     || null,
@@ -437,13 +471,13 @@ async function getDashboardAnalytics(filters = {}) {
     verificationStatus,
     topDepartments,
     revenueOverview: {
-      dailyRevenue:        0,
-      monthlyRevenue:      0,
-      annualRevenue:       0,
-      subscriptionRevenue: 0,
-      refundTotal:         0,
-      instructorPayouts:   0,
-      growthPercentage:    0,
+      dailyRevenue:        dailyRevenueAgg._sum.amount ?? 0,
+      monthlyRevenue:      monthlyRevenueValue,
+      annualRevenue:       annualRevenueAgg._sum.amount ?? 0,
+      subscriptionRevenue: subscriptionRevenueAgg._sum.amount ?? 0,
+      refundTotal:         refundTotalAgg._sum.amount ?? 0,
+      instructorPayouts:   instructorPayoutsAgg._sum.amount ?? 0,
+      growthPercentage,
     },
     userAnalytics: {
       newRegistrations: thisMonthCount,

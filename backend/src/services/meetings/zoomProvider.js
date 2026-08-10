@@ -186,9 +186,19 @@ async function deleteMeeting(meetingId) {
   }
 }
 
+// Read-only connectivity check for the Integrations module's "Test Connection"
+// button — mints/reuses a token via the same getAccessToken() every real
+// meeting call uses, without creating a Zoom meeting as a side effect.
+async function testConnection() {
+  if (!isConfigured()) throw providerError("Zoom is not configured (ZOOM_ACCOUNT_ID/ZOOM_CLIENT_ID/ZOOM_CLIENT_SECRET missing).");
+  await getAccessToken();
+  return { scope: cachedToken?.scope ?? null };
+}
+
 module.exports = {
   name: "zoom",
   isConfigured,
+  testConnection,
   createMeeting,
   updateMeeting,
   deleteMeeting,

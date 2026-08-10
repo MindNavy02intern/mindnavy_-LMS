@@ -1,0 +1,279 @@
+// Finance module v1 — UI + data models only, no real payment gateway (Stripe
+// integration ships later; stripePaymentIntentId/stripeSubscriptionId are
+// reserved columns, not read by anything yet).
+//
+// FK strategy: every userId/courseId/instructorId/approvedById/processedById/
+// createdById below is a PLAIN STRING, not a Prisma relation() — same
+// convention as AuditLog.adminId / CourseContent.uploadedBy (no cross-schema
+// FK). This keeps AppUser/Course untouched: no new back-relation fields, no
+// risk to the modules that already extend them. Services resolve names via a
+// separate AppUser/Course lookup, same as reports.service does for AuditLog.
+//
+// Money is Float here (not Int cents like Course.price) because the task
+// spec calls for Float amount fields throughout — kept consistent across all
+// eight models rather than mixing strategies.
+//
+// All amounts start at 0 / all tables start empty — no seed/fake data.
+
+model Payment {
+  id                    String        @id @default(uuid())
+  userId                String
+  courseId              String?
+  amount                Float
+  currency              String        @default("USD")
+  status                PaymentStatus @default(PENDING)
+  method                PaymentMethod
+  stripePaymentIntentId String?       @unique
+  metadata              Json?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([courseId])
+  @@index([status])
+  @@index([method])
+  @@index([createdAt])
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESSFUL
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  STRIPE
+  PAYPAL
+  BANK_TRANSFER
+  MANUAL
+}
+
+model Subscription {
+  id                   String               @id @default(uuid())
+  userId               String
+  planType             SubscriptionPlanType
+  status               SubscriptionStatus   @default(ACTIVE)
+  billingCycle         BillingCycle
+  amount               Float
+  currency             String               @default("USD")
+  startDate            DateTime             @default(now())
+  endDate              DateTime?
+  renewalDate          DateTime?
+  stripeSubscriptionId String?              @unique
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([planType])
+  @@map("subscriptions")
+}
+
+enum SubscriptionPlanType {
+  MONTHLY
+  ANNUAL
+  ENTERPRISE
+  TEAM
+  CUSTOM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PAUSED
+}
+
+enum BillingCycle {
+  MONTHLY
+  ANNUAL
+}
+
+// items is [{name, qty, unitPrice, total}] — rebuilt field-by-field in the
+// validator, same "never arbitrary Json" rule as CertificateTemplate.layout.
+model Invoice {
+  id            String        @id @default(uuid())
+  userId        String
+  invoiceNumber String        @unique
+  items         Json
+  subtotal      Float
+  taxAmount     Float         @default(0)
+  total         Float
+  status        InvoiceStatus @default(DRAFT)
+  dueDate       DateTime?
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("invoices")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  VOID
+  OVERDUE
+}
+
+// Read-only ledger. paymentId is plain string (see header) — a payment can
+// have many transactions (charge, later refund/payout rows).
+model Transaction {
+  id              String          @id @default(uuid())
+  paymentId       String
+  type            TransactionType
+  amount          Float
+  currency        String          @default("USD")
+  gatewayResponse Json?
+  createdAt       DateTime        @default(now())
+
+  @@index([paymentId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("transactions")
+}
+
+enum TransactionType {
+  PAYMENT
+  REFUND
+  PAYOUT
+  TRANSFER
+  TAX_DEDUCTION
+}
+
+model Refund {
+  id            String       @id @default(uuid())
+  paymentId     String
+  userId        String
+  amount        Float
+  reason        String
+  status        RefundStatus @default(PENDING)
+  requestedAt   DateTime     @default(now())
+  processedAt   DateTime?
+  processedById String?
+
+  @@index([paymentId])
+  @@index([userId])
+  @@index([status])
+  @@map("refunds")
+}
+
+enum RefundStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PROCESSED
+}
+
+// revenueShareBps is a SNAPSHOT of InstructorProfile.revenueShareBps at
+// calculation time (basis points, same integer-not-float convention as the
+// source field) — a later profile edit must not silently rewrite a payout
+// that was already calculated/approved.
+model InstructorPayout {
+  id              String       @id @default(uuid())
+  instructorId    String
+  amount          Float
+  currency        String       @default("USD")
+  status          PayoutStatus @default(PENDING)
+  revenueShareBps Int
+  periodStart     DateTime
+  periodEnd       DateTime
+  approvedById    String?
+  approvedAt      DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([instructorId])
+  @@index([status])
+  @@map("instructor_payouts")
+}
+
+enum PayoutStatus {
+  PENDING
+  APPROVED
+  PROCESSING
+  COMPLETED
+  FAILED
+  HELD
+}
+
+model Coupon {
+  id                  String       @id @default(uuid())
+  code                String       @unique
+  type                CouponType
+  value               Float
+  maxUses             Int?
+  usedCount           Int          @default(0)
+  minPurchaseAmount   Float?
+  applicableCourseIds String[]     @default([])
+  expiresAt           DateTime?
+  status              CouponStatus @default(ACTIVE)
+  createdById         String
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@index([status])
+  @@map("coupons")
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+enum CouponStatus {
+  ACTIVE
+  DISABLED
+  EXPIRED
+}
+
+model TaxRule {
+  id        String        @id @default(uuid())
+  name      String
+  region    String
+  country   String
+  rate      Float
+  type      TaxRuleType
+  status    TaxRuleStatus @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status])
+  @@map("tax_rules")
+}
+
+enum TaxRuleType {
+  VAT
+  SALES_TAX
+  DIGITAL_TAX
+}
+
+enum TaxRuleStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// Billing Settings tab (blueprint 09 §11) needs somewhere to persist —
+// singleton row, same pattern as CompetencySettings (competencies.prisma):
+// service does findFirst() ?? create(defaults). Not in the original model
+// list handed down for this module; added because the endpoint pair
+// (GET/PATCH /finance/settings) requires storage. Flagged in FINANCE_CONTRACT.md.
+model FinanceSettings {
+  id                 String   @id @default(cuid())
+  currency           String   @default("USD")
+  paymentRetryRules  Json?
+  refundPolicy       String?
+  autoBillingEnabled Boolean  @default(true)
+  updatedById        String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("finance_settings")
+}

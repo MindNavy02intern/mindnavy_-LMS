@@ -1,15 +1,18 @@
 model Group {
-  id           String        @id @default(cuid())
-  name         String        @unique
+  id           String             @id @default(cuid())
+  name         String             @unique
   description  String?
   departmentId String?
   leaderId     String?
-  status       String        @default("ACTIVE")
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  status       String             @default("ACTIVE")
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
   members      GroupMember[]
-  department   Department?   @relation(fields: [departmentId], references: [id])
-  leader       AppUser?      @relation("GroupLeader", fields: [leaderId], references: [id])
+  department   Department?        @relation(fields: [departmentId], references: [id])
+  leader       AppUser?           @relation("GroupLeader", fields: [leaderId], references: [id])
+  // Cohort-scoped enrollments (learning.prisma CourseEnrollment.cohortId) —
+  // Learners module Part 3. Optional: most enrollments have no cohort.
+  enrollments  CourseEnrollment[]
 
   @@index([departmentId])
   @@index([leaderId])

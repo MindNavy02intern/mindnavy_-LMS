@@ -1,0 +1,244 @@
+// Competencies module — Skills, Skill Categories, Frameworks, Skill Profiles,
+// Assessments, Course mappings. Confirmed by Step 0 audit: no Skill/Competency/
+// Framework model existed anywhere before this file.
+//
+// `SkillCategory` is a SEPARATE model from `Category` (learning.prisma):
+// `Category` is course taxonomy only (name/parentId, no color, feeds
+// Course.categoryId and is read by the Courses module) — bolting an unrelated
+// color/status shape onto it would make Courses and Competencies fight over
+// one model's meaning. Same "one entity, one owner" reasoning that keeps
+// InstructorDocument and LearnerDocument as two models, not one polymorphic
+// table (instructors.prisma / learners.prisma).
+//
+// Cross-domain references follow the codebase's existing "plain string, no DB
+// FK, existence verified in the service" pattern where a full Prisma relation
+// would require editing a file this module doesn't otherwise touch:
+//   • Skill.createdById / CompetencyFramework.createdById — same as
+//     Course.createdBy (learning.prisma): plain actor id, no relation.
+//   • SkillAssessment.assessedById — same as InstructorDocument.verifiedById /
+//     LearnerDocument.verifiedById: optional "who did this" id, plain string.
+//   • SkillCourseMapping.courseId — same as LearningPathItem.itemId
+//     (learning.prisma): polymorphic-style reference, no db-level FK,
+//     verified against `Course` in competencies.service on insert, reads flag
+//     a dangling reference instead of failing.
+// `Skill.userProfiles` / `Skill.assessments` DO carry real relations back to
+// AppUser (userId) — these need actual joins (skill-gap analysis, per-user
+// skill list), so AppUser gains two new back-relation arrays below, the same
+// way instructors.prisma and learners.prisma each added their own.
+
+model Skill {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  categoryId  String?
+  level       SkillLevel  @default(BEGINNER)
+  status      SkillStatus @default(ACTIVE)
+
+  // Actor id, plain — see header note. No relation, matches Course.createdBy.
+  createdById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category        SkillCategory?       @relation(fields: [categoryId], references: [id])
+  frameworkSkills FrameworkSkill[]
+  userProfiles    UserSkillProfile[]
+  assessments     SkillAssessment[]
+  courseMappings  SkillCourseMapping[]
+
+  @@index([categoryId])
+  @@index([level])
+  @@index([status])
+  @@index([createdAt])
+  @@map("skills")
+}
+
+// 2-level hierarchy, same depth rule as `Category` (learning.prisma): a
+// parent must itself be a root, enforced in the service, not the DB — Postgres
+// treats NULL parentId as distinct in a composite unique, same caveat as
+// Category's own comment.
+model SkillCategory {
+  id          String              @id @default(uuid())
+  name        String
+  description String?
+  color       String?
+  parentId    String?
+  status      SkillCategoryStatus @default(ACTIVE)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  parent   SkillCategory?  @relation("SkillCategoryTree", fields: [parentId], references: [id], onDelete: Restrict)
+  children SkillCategory[] @relation("SkillCategoryTree")
+  skills   Skill[]
+
+  @@unique([name, parentId])
+  @@index([parentId])
+  @@map("skill_categories")
+}
+
+model CompetencyFramework {
+  id          String          @id @default(uuid())
+  name        String
+  description String?
+  status      FrameworkStatus @default(DRAFT)
+
+  // Actor id, plain — see header note.
+  createdById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  skills FrameworkSkill[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("competency_frameworks")
+}
+
+model FrameworkSkill {
+  id            String                   @id @default(uuid())
+  frameworkId   String
+  skillId       String
+  requiredLevel SkillLevel
+  importance    FrameworkSkillImportance @default(MEDIUM)
+  createdAt     DateTime                 @default(now())
+
+  framework CompetencyFramework @relation(fields: [frameworkId], references: [id], onDelete: Cascade)
+  skill     Skill               @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([frameworkId, skillId])
+  @@index([frameworkId])
+  @@index([skillId])
+  @@map("framework_skills")
+}
+
+// One row per (user, skill) — a user's current standing on one skill, updated
+// automatically whenever a SkillAssessment is recorded against them (see
+// competencies.service.recordAssessment). Not the assessment history itself —
+// that lives in SkillAssessment below; this is the derived "current state".
+model UserSkillProfile {
+  id                 String     @id @default(uuid())
+  userId             String
+  skillId            String
+  currentLevel       SkillLevel @default(BEGINNER)
+  proficiencyPercent Int        @default(0)
+  assessedAt         DateTime?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  user  AppUser @relation("UserSkillProfiles", fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, skillId])
+  @@index([userId])
+  @@index([skillId])
+  @@map("user_skill_profiles")
+}
+
+// Assessment attempt history (QUIZ/PRACTICAL/ASSIGNMENT/LIVE_EVALUATION/
+// CERTIFICATION_EXAM) — every row here is a point-in-time result; recording
+// one upserts the corresponding UserSkillProfile (see the service).
+model SkillAssessment {
+  id       String  @id @default(uuid())
+  userId   String
+  skillId  String
+  score    Int
+  maxScore Int
+  passed   Boolean
+
+  // Actor id, plain — see header note.
+  assessedById String?
+
+  type      SkillAssessmentType @default(QUIZ)
+  createdAt DateTime            @default(now())
+
+  user  AppUser @relation("UserSkillAssessments", fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([skillId])
+  @@index([createdAt])
+  @@map("skill_assessments")
+}
+
+// courseId is a plain reference (no db FK) — see header note. Existence is
+// verified against `Course` in the service on insert; reads that encounter a
+// deleted course flag `missing: true` rather than failing, same contract as
+// LearningPathItem.
+model SkillCourseMapping {
+  id        String   @id @default(uuid())
+  skillId   String
+  courseId  String
+  createdAt DateTime @default(now())
+
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([skillId, courseId])
+  @@index([skillId])
+  @@index([courseId])
+  @@map("skill_course_mappings")
+}
+
+// Single-row-per-organization settings — same lazy-create-on-read shape as
+// `HierarchySettings` (organization.prisma): one implicit row, flat config
+// fields, upserted on first read rather than seeded via migration. Backs the
+// Settings tab (was a "coming soon" stub); `gapSeverity*` are gap-SIZE
+// thresholds (1-4, since a 5-level SkillLevel ladder only produces 4 possible
+// positive gap sizes — see competencies.service `computeSkillGaps` note),
+// consumed by `bucketGapSeverity` in place of the previous hardcoded 4/3/2
+// cutoffs; `passingThresholdPercent` replaces the previous hardcoded 60%
+// ratio in `createAssessment`; `autoUpdateLevelOnAssess` gates whether
+// recording an assessment also upserts the assessed user's
+// `UserSkillProfile` (was previously unconditional).
+model CompetencySettings {
+  id                      String              @id @default(cuid())
+  passingThresholdPercent Int                 @default(60)
+  gapSeverityCritical     Int                 @default(4)
+  gapSeverityHigh         Int                 @default(3)
+  gapSeverityMedium       Int                 @default(2)
+  autoUpdateLevelOnAssess Boolean             @default(true)
+  defaultAssessmentType   SkillAssessmentType @default(QUIZ)
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+
+  @@map("competency_settings")
+}
+
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+  CERTIFIED
+}
+
+enum SkillStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum SkillCategoryStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum FrameworkStatus {
+  ACTIVE
+  DRAFT
+  ARCHIVED
+}
+
+enum FrameworkSkillImportance {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum SkillAssessmentType {
+  QUIZ
+  PRACTICAL
+  ASSIGNMENT
+  LIVE_EVALUATION
+  CERTIFICATION_EXAM
+}

@@ -17,6 +17,12 @@ const ProfilePage                    = lazy(() => import('./pages/ProfilePage'))
 const LearningManagementPage         = lazy(() => import('./pages/LearningManagementPage'));
 const PublicVerifyPage               = lazy(() => import('./pages/PublicVerifyPage'));
 const InstructorsPage                = lazy(() => import('./pages/Instructors/InstructorsPage'));
+const LearnersPage                   = lazy(() => import('./pages/Learners/LearnersPage'));
+const CompetenciesPage               = lazy(() => import('./pages/Competencies/CompetenciesPage'));
+const ReportsPage                    = lazy(() => import('./pages/Reports/ReportsPage'));
+const FinancePage                    = lazy(() => import('./pages/Finance/FinancePage'));
+const NotificationsPage              = lazy(() => import('./pages/Notifications/NotificationsPage'));
+const IntegrationsPage               = lazy(() => import('./pages/Integrations/IntegrationsPage'));
 
 function PageLoader() {
   return (
@@ -144,6 +150,57 @@ export default function App() {
           element={
             <ProtectedRoute>
               <InstructorsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/learners"
+          element={
+            <ProtectedRoute>
+              <LearnersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/competencies"
+          element={
+            <ProtectedRoute>
+              <CompetenciesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports-analytics"
+          element={
+            <ProtectedRoute>
+              <ReportsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/finance"
+          element={
+            <ProtectedRoute>
+              <FinancePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <NotificationsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/integrations"
+          element={
+            <ProtectedRoute>
+              <IntegrationsPage />
             </ProtectedRoute>
           }
         />

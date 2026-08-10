@@ -1,6 +1,16 @@
 # 06 · Students — `/students`
 Doc: Students §1–§15 · Entities: STUDENT/ENROLLMENT (IMPACT §5.2), CERTIFICATE (§5.8), FINANCE (§5.7), USER (§5.1) · Status: `[planned]`
 
+> **This page and its `/students` route stay `[planned]` — genuinely
+> unbuilt, not a stale marker.** Most of what this file describes (profiles,
+> enrollment, progress, assessments, certificates, attendance, documents,
+> suspension) shipped for real 2026-08-09 as **`/learners`**, using "Learner"
+> terminology throughout per explicit instruction — see
+> `backend/contact md files/LEARNERS_CONTRACT.md` and `IMPACT_MAP.md` §5.18.
+> Billing/Subscriptions, Support Ticket creation, and Groups & Cohorts UI
+> (§10/§12/§13 below) are the parts that genuinely stayed unbuilt. Don't route
+> new "student" work here — read the Learners contract first.
+
 ## Module sections (doc overview)
 All Students · Profiles · Enrollment · Learning Progress · Course Activity · Assignments & Exams · Certificates · Attendance · Analytics · Support · Communication · Groups & Cohorts · Billing & Subscriptions · Documents · Suspension & Compliance
 

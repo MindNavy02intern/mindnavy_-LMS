@@ -259,4 +259,152 @@ enum AuditAction {
   INSTRUCTOR_CERTIFICATION_VERIFIED
   INSTRUCTOR_CERTIFICATION_REJECTED
   INSTRUCTOR_CERTIFICATION_DELETED
+
+  // Learners module (learners.prisma). Suspend / reactivate / verify are NOT
+  // here on purpose — same reasoning as instructors: they delegate to
+  // users.service, which already logs USER_SUSPENDED / USER_REACTIVATED /
+  // USER_VERIFICATION_APPROVED against the same row.
+  LEARNER_CREATED
+  LEARNER_PROFILE_UPDATED
+  LEARNER_DELETED
+  LEARNER_PASSWORD_RESET
+  // LEARNER_ENROLLED / LEARNER_UNENROLLED deliberately do NOT exist:
+  // enrollments.service already writes ENROLLMENT_CREATED / ENROLLMENT_DELETED
+  // for every learner enroll/unenroll (learners.service delegates, never
+  // forks the write) — a second action here would double the activity feed,
+  // same reasoning as suspend/reactivate using USER_SUSPENDED, not a
+  // LEARNER_SUSPENDED that doesn't exist either.
+  LEARNER_PROGRESS_RESET
+  LEARNER_ASSESSMENT_REOPENED
+  LEARNER_ASSESSMENT_RESET
+  LEARNER_ASSESSMENT_GRADED
+  // LEARNER_CERTIFICATE_REISSUED / LEARNER_CERTIFICATE_REVOKED deliberately do
+  // NOT exist — same reasoning as LEARNER_ENROLLED/LEARNER_UNENROLLED above:
+  // certificates.service already writes CERTIFICATE_REISSUED /
+  // CERTIFICATE_REVOKED for these exact writes (learners.service delegates to
+  // it, never forks). A second action here would double the activity feed.
+  LEARNER_ATTENDANCE_RECORDED
+  LEARNER_DOCUMENT_UPLOADED
+  LEARNER_DOCUMENT_VERIFIED
+  LEARNER_DOCUMENT_REJECTED
+  LEARNER_DOCUMENT_ARCHIVED
+  LEARNER_TICKET_RESPONDED
+  LEARNER_TICKET_RESOLVED
+  LEARNER_TICKET_ESCALATED
+
+  // Competencies module (competencies.prisma) — Part 1: Skills CRUD + course
+  // mapping. Framework/Category/Assessment actions land in Part 2 alongside
+  // their services, same phased-addition pattern as Instructors' Reviews/
+  // Certifications actions above.
+  SKILL_CREATED
+  SKILL_UPDATED
+  SKILL_DELETED
+  SKILL_COURSE_ASSIGNED
+  SKILL_COURSE_UNASSIGNED
+  // Part 2: Frameworks, Skill Categories, Assessments.
+  FRAMEWORK_CREATED
+  FRAMEWORK_UPDATED
+  FRAMEWORK_DELETED
+  FRAMEWORK_SKILL_ADDED
+  FRAMEWORK_SKILL_REMOVED
+  SKILL_CATEGORY_CREATED
+  SKILL_CATEGORY_UPDATED
+  SKILL_CATEGORY_DELETED
+  SKILL_ASSESSMENT_RECORDED
+  // Import/Export + Settings tabs (were "coming soon" stubs, built out
+  // after the fact — same phased-addition pattern as Frameworks/Categories/
+  // Assessments above).
+  SKILLS_EXPORTED
+  SKILLS_IMPORTED
+  COMPETENCY_SETTINGS_UPDATED
+
+  // Reports & Analytics module. Export Center is the one write-adjacent
+  // action among the read-only analytics endpoints (see REPORTS_CONTRACT.md).
+  REPORT_EXPORTED
+  // Scheduled Reports (reports.prisma) — the module's first owned table.
+  // RUN is written by the hourly background sweep (scheduledReports.service),
+  // not by an admin action, same "system-authored audit row" precedent as
+  // ORG_NODE_MOVED being writable by both an admin and an automated reflow.
+  SCHEDULED_REPORT_CREATED
+  SCHEDULED_REPORT_UPDATED
+  SCHEDULED_REPORT_DELETED
+  SCHEDULED_REPORT_PAUSED
+  SCHEDULED_REPORT_RESUMED
+  SCHEDULED_REPORT_RUN
+
+  // Finance module (finance.prisma) — Payments, Subscriptions, Invoices,
+  // Refunds, Instructor Payouts, Coupons, Tax Rules, Billing Settings.
+  PAYMENT_REFUND_REQUESTED
+  REFUND_APPROVED
+  REFUND_REJECTED
+  SUBSCRIPTION_CREATED
+  SUBSCRIPTION_UPDATED
+  SUBSCRIPTION_CANCELLED
+  SUBSCRIPTION_EXTENDED
+  INVOICE_GENERATED
+  INVOICE_UPDATED
+  INVOICE_VOIDED
+  INVOICE_SENT
+  PAYOUT_CALCULATED
+  PAYOUT_APPROVED
+  PAYOUT_HELD
+  PAYOUT_COMPLETED
+  COUPON_CREATED
+  COUPON_UPDATED
+  COUPON_DISABLED
+  COUPON_DELETED
+  TAX_RULE_CREATED
+  TAX_RULE_UPDATED
+  TAX_RULE_DELETED
+  FINANCE_SETTINGS_UPDATED
+
+  // Notifications module (notifications.prisma) — Templates, Announcements,
+  // Automations, in-app sends (logged as NotificationLog channel=IN_APP),
+  // Preferences, Emergency Alerts.
+  NOTIFICATION_TEMPLATE_CREATED
+  NOTIFICATION_TEMPLATE_UPDATED
+  NOTIFICATION_TEMPLATE_DELETED
+  ANNOUNCEMENT_CREATED
+  ANNOUNCEMENT_UPDATED
+  ANNOUNCEMENT_SENT
+  ANNOUNCEMENT_CANCELLED
+  ANNOUNCEMENT_DELETED
+  NOTIFICATION_AUTOMATION_CREATED
+  NOTIFICATION_AUTOMATION_UPDATED
+  NOTIFICATION_AUTOMATION_PAUSED
+  NOTIFICATION_AUTOMATION_RESUMED
+  NOTIFICATION_AUTOMATION_DELETED
+  NOTIFICATION_SENT
+  NOTIFICATION_DELETED
+  NOTIFICATION_PREFERENCES_UPDATED
+  NOTIFICATION_DELIVERY_RETRIED
+  EMERGENCY_ALERT_SENT
+
+  // Integrations module (integrations.prisma) — registry over the real Zoom/
+  // Supabase/SMTP providers plus a COMING_SOON catalog, API keys, webhooks,
+  // logs, data syncs.
+  INTEGRATION_CONNECTED
+  INTEGRATION_DISCONNECTED
+  INTEGRATION_CONFIGURED
+  INTEGRATION_TEST_RUN
+  INTEGRATION_TOGGLED
+  API_KEY_GENERATED
+  API_KEY_REVOKED
+  API_KEY_DELETED
+  WEBHOOK_CREATED
+  WEBHOOK_UPDATED
+  WEBHOOK_DELETED
+  WEBHOOK_PAUSED
+  WEBHOOK_RESUMED
+  WEBHOOK_TESTED
+  DATA_SYNC_TRIGGERED
+
+  // System Settings module (settings.prisma) — single-row platform config +
+  // maintenance mode + backup/restore + per-field SystemConfigLog trail.
+  SYSTEM_SETTINGS_UPDATED
+  MAINTENANCE_MODE_ENABLED
+  MAINTENANCE_MODE_DISABLED
+  SYSTEM_BACKUP_CREATED
+  SYSTEM_SETTINGS_RESTORED
+  SYSTEM_SETTINGS_TEST_EMAIL_SENT
 }

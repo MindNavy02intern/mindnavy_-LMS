@@ -1,0 +1,186 @@
+// Integrations module (blueprint 11 / IMPACT_MAP §5.15). Confirmed by Step 0
+// audit: no Integration/Webhook/ApiKey/IntegrationLog/DataSync model existed
+// anywhere before this file.
+//
+// Zoom (meetings/zoomProvider.js) and Supabase Storage (storage/supabaseProvider.js)
+// already have real working implementations elsewhere in this codebase — this
+// module does NOT reimplement either. It's a REGISTRY: Integration rows are a
+// catalog/status mirror (seeded on first GET, connect/disconnect just flip a
+// status column) that reads the real providers' isConfigured() to know if
+// zoom/supabase/smtp-email are actually CONNECTED. Every other catalog entry
+// (Stripe, Twilio, SendGrid, SSO, HR/ERP, CRM…) has no backing provider at
+// all — those rows stay COMING_SOON forever until a real key/provider exists,
+// per the task's explicit rule (no fake API calls for unbuilt integrations).
+//
+// FK strategy: connectedById/createdById follow the existing "plain string,
+// no cross-schema Prisma relation" convention (notifications.prisma header,
+// finance.prisma header) — same reasoning: these models don't need JOIN-time
+// user data, callers resolve the name via a separate users lookup if needed.
+//
+// ApiKey NEVER stores a plaintext key — only a SHA-256 hash + an 8-char
+// display prefix (mirrors how AppUser stores password hashes, not passwords).
+// Webhook.secret is stored as-is (HMAC signing key, not a login credential —
+// same class of secret as ZOOM_CLIENT_SECRET, kept server-side only, never
+// returned in a GET response body).
+
+model Integration {
+  id        String              @id @default(uuid())
+  name      String
+  slug      String              @unique
+  category  IntegrationCategory
+  status    IntegrationStatus   @default(COMING_SOON)
+  config    Json?
+  isEnabled Boolean             @default(false)
+
+  lastSyncAt DateTime?
+  lastError  String?
+
+  connectedById String?
+  connectedAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([status])
+  @@map("integrations")
+}
+
+model ApiKey {
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  keyHash     String       @unique
+  keyPrefix   String
+  permissions String[]
+  status      ApiKeyStatus @default(ACTIVE)
+
+  lastUsedAt DateTime?
+  expiresAt  DateTime?
+
+  createdById String?
+
+  createdAt DateTime  @default(now())
+  revokedAt DateTime?
+
+  @@index([status])
+  @@index([createdById])
+  @@map("api_keys")
+}
+
+model Webhook {
+  id     String        @id @default(uuid())
+  name   String
+  url    String
+  secret String
+  events String[]
+  status WebhookStatus @default(ACTIVE)
+
+  lastTriggeredAt  DateTime?
+  lastResponseCode Int?
+  failureCount     Int       @default(0)
+
+  createdById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@map("webhooks")
+}
+
+// integrationId is plain string (see header) — logs can reference a catalog
+// slug row without a hard FK, matching NotificationLog's sourceId pattern.
+model IntegrationLog {
+  id            String               @id @default(uuid())
+  integrationId String
+  type          IntegrationLogType
+  status        IntegrationLogStatus
+  method        String?
+  endpoint      String?
+  responseCode  Int?
+  durationMs    Int?
+  metadata      Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([integrationId])
+  @@index([type])
+  @@index([status])
+  @@index([createdAt])
+  @@map("integration_logs")
+}
+
+model DataSync {
+  id            String         @id @default(uuid())
+  integrationId String
+  syncType      String
+  status        DataSyncStatus @default(RUNNING)
+
+  totalRecords     Int @default(0)
+  processedRecords Int @default(0)
+  failedRecords    Int @default(0)
+
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  errorLog    Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([integrationId])
+  @@index([status])
+  @@map("data_syncs")
+}
+
+enum IntegrationCategory {
+  PAYMENT
+  VIDEO
+  EMAIL
+  SMS
+  HR_ERP
+  CRM
+  STORAGE
+  AUTH
+  OTHER
+}
+
+enum IntegrationStatus {
+  CONNECTED
+  DISCONNECTED
+  ERROR
+  PENDING
+  COMING_SOON
+}
+
+enum ApiKeyStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+enum WebhookStatus {
+  ACTIVE
+  PAUSED
+  FAILED
+}
+
+enum IntegrationLogType {
+  API_CALL
+  WEBHOOK
+  SYNC
+  AUTH
+  ERROR
+}
+
+enum IntegrationLogStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}
+
+enum DataSyncStatus {
+  RUNNING
+  COMPLETED
+  FAILED
+  PAUSED
+}

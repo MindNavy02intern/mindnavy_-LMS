@@ -69,8 +69,11 @@ All keys are created via `src/lib/queryKeys.ts` (factory). Never write key array
 **Students domain**
 `['students', filters?]` · `['students', id]` · `['enrollments', studentId | courseId]` · `['students', id, 'progress']` · `['students', id, 'certificates']` · `['attendance', sessionId?]` · `['billing', studentId?]` · `['support-tickets']`
 
-**Competencies domain**
-`['competencies']` · `['competencies','categories']` · `['competencies','frameworks']` · `['competencies','levels']` · `['competencies','analytics']` · `['users', id, 'skills']`
+**Competencies domain** — shipped 2026-08-09, see `COMPETENCIES_CONTRACT.md`
+`['competencies', filters?]` · `['competencies', id]` · `['competencies','stats']` · `['competencies','categories']` · `['competencies','frameworks']` · `['competencies','frameworks', id]` · `['competencies','levels']` · `['competencies','analytics']` · `['competencies','skill-gaps', filters?]` · `['competencies','assessments', filters?]` · `['competencies','settings']` · `['users', id, 'skills']`
+
+**Reports & Analytics domain** — shipped 2026-08-09, see `REPORTS_CONTRACT.md`
+`['reports','overview']` · `['reports','learners', filters?]` · `['reports','instructors', filters?]` · `['reports','courses', filters?]` · `['reports','assessments', filters?]` · `['reports','certificates', filters?]` · `['reports','attendance', filters?]` · `['reports','audit', filters?]` · `['reports','engagement', filters?]` · `['reports','compliance', filters?]`
 
 **Finance domain (module pages)**
 `['finance','dashboard']` · `['plans']` · `['subscriptions', filters?]` · `['invoices', filters?]` · `['payouts', filters?]` · `['coupons']` · `['tax','config']` · `['finance','settings']` · `['gateways']`
@@ -99,7 +102,7 @@ All keys are created via `src/lib/queryKeys.ts` (factory). Never write key array
 | Live Sessions Overview (active, upcoming, attendance, recording status) | `['dashboard','live-overview']` | `GET /api/dashboard/live-overview` | live_sessions, attendance |
 | Instructor Performance (ratings, engagement, revenue, completion, reviews) | `['dashboard','instructor-performance']` | `GET /api/dashboard/instructor-performance` | instructors, reviews, transactions, enrollments |
 | Student Engagement (progress, DAU, quiz participation, completion, drop-off, at-risk) | `['dashboard','student-engagement']` | `GET /api/dashboard/student-engagement` | enrollments, activity_log, quiz_results |
-| Notifications Center | `['notifications']` | `GET /api/notifications` | notifications |
+| Notifications Center (topbar bell — unchanged, reads `recentActivities`) + sidebar unread badge (shipped 2026-08-10, real count from `GET /api/admin/notifications?read=false`) | `['notifications']` | `GET /api/admin/dashboard/core` (bell panel) · `GET /api/admin/notifications` (badge + `/notifications?tab=inapp` page) | audit_log (bell) · notification_logs (badge + page) |
 | Tasks & Reminders | `['tasks']` | `GET /api/tasks` | tasks |
 | Recent Transactions | `['transactions','recent']` | `GET /api/transactions?limit=…` | transactions |
 | Calendar & Events | `['calendar']` | `GET /api/calendar` | live_sessions, events, deadlines |
@@ -146,6 +149,82 @@ All keys are created via `src/lib/queryKeys.ts` (factory). Never write key array
 
 ---
 
+### 4d. Competencies module surfaces (blueprint 07 — backend + frontend built 2026-08-09, see `COMPETENCIES_CONTRACT.md`)
+
+Eight new models (`Skill`, `SkillCategory`, `CompetencyFramework`,
+`FrameworkSkill`, `UserSkillProfile`, `SkillAssessment`,
+`SkillCourseMapping`, `CompetencySettings` — the last added when Import/Export
+and Settings were built out from stubs, see the Addendum in
+`COMPETENCIES_CONTRACT.md`), none reused from an existing entity.
+
+| Surface | Query key | Endpoint | Derived from (source tables) |
+|---|---|---|---|
+| Competency List tab (search/category/level/status filters) | `['competencies', filters]` | `GET /api/admin/competencies/skills` | skills, skill_categories, skill_course_mappings, user_skill_profiles |
+| Competency side panel (`?competency=id`) | `['competencies', id]` | `GET /api/admin/competencies/skills/:id` | + course lookups (mapping's courseId has no db FK — reads flag `missing:true`) |
+| 6 stats cards | `['competencies','stats']` | `GET /api/admin/competencies/stats` | skills, competency_frameworks, skill_assessments, user_skill_profiles |
+| Overview analytics (category donut · gap-severity donut · proficiency-trend line · top-competencies table · competency matrix · recent activity) | `['competencies','analytics']` | `GET /api/admin/competencies/analytics` | + framework_skills, app_users (role, for the matrix) |
+| Frameworks tab (list + detail split pane, required-skills editor) | `['competencies','frameworks']` / `['competencies','frameworks', id]` | `GET /api/admin/competencies/frameworks[/:id]` | competency_frameworks, framework_skills |
+| Categories tab (2-level tree) | `['competencies','categories']` | `GET /api/admin/competencies/categories` | skill_categories, skills |
+| Assessments tab (log + New Assessment) | `['competencies','assessments']` | `GET/POST /api/admin/competencies/assessments` | skill_assessments (write also upserts user_skill_profiles) |
+| Skill Gaps tab (framework/department filters) | `['competencies','skill-gaps']` | `GET /api/admin/competencies/skill-gaps` | framework_skills ⋈ user_skill_profiles — see the shared-definition note below |
+| User Progress tab (search a user → their full skill catalog, `missing` flags) | `['users', id, 'skills']` | `GET /api/admin/competencies/users/:userId/skills` | skills, user_skill_profiles |
+| Proficiency Levels tab | *(no key — static reference)* | *(none — fixed 5-value enum, no config endpoint exists)* | — |
+| Import/Export tab (built, post-v1) | *(none — export is a read, not a mutation)* | `GET /api/admin/competencies/skills/export` (JSON, filtered/uncapped) · `POST /api/admin/competencies/skills/import` (multipart CSV) | skills, skill_categories (category-name resolution) |
+| Settings tab (built, post-v1) | `['competencies','settings']` | `GET/PATCH /api/admin/competencies/settings` | competency_settings (new model, single row) |
+
+**Skill gaps have exactly one definition.** `computeSkillGaps()` in
+`competencies.service.js` is called by the `skillGaps` stats card, the
+`skillGapOverview` analytics donut, and `GET /skill-gaps` — none of the three
+can ever disagree. It has a documented, non-obvious limitation: this schema
+has no user/department↔framework assignment relation, so a gap only fires for
+a `(user, skill)` pair where the user *already* has a `UserSkillProfile` row
+for a framework-required skill, ranked below the requirement. A user with
+zero profile rows for that skill is invisible to gap detection — there is no
+data source that says who is *expected* to hold it, and inventing one would
+be fabricated data (R3).
+
+**`DELETE /skills/:id` is a guarded hard delete** (409 while any profile,
+assessment, framework requirement, or course mapping references it) — the
+everyday deactivation action is `PATCH { status: 'ARCHIVED' }` instead, same
+two-path shape as Instructors' documents (`archive` = soft, a separate hard
+delete exists for genuinely unused rows).
+
+---
+
+### 4e. Reports & Analytics module surfaces (blueprint 08 — shipped 2026-08-09, see `REPORTS_CONTRACT.md`)
+
+Read-only aggregation over EXISTING tables — no new models. Every metric
+either reuses its owning module's function (R4) or is fresh aggregation
+where no owner exists yet (see the contract's reuse table for the
+field-by-field breakdown). `available:false` is used wherever no data model
+exists at all (revenue, watch time, session duration, certificate expiry,
+per-lesson drop-off, per-question response log, mandatory-training/
+compliance-violation tracking) — confirmed by a full schema grep before
+building, never assumed.
+
+| Surface | Query key | Endpoint | Derived from (source tables / reused owner) |
+|---|---|---|---|
+| Overview tab (10 KPI cards + 5 charts) | `['reports','overview']` (KPIs) + reuses the 4 rows below for its charts | `GET /api/admin/reports/overview` | app_users, course_enrollments, certificates, live_sessions, audit_logs + `learners.service`/`instructors.service`/`lm.service`.getStats() |
+| Learner Analytics tab | `['reports','learners', filters]` | `GET /api/admin/reports/learners` | app_users, course_enrollments, learner_profiles + `learners.service.AT_RISK_THRESHOLD` |
+| Instructor Analytics tab | `['reports','instructors', filters]` | `GET /api/admin/reports/instructors` | app_users, courses, course_enrollments, live_sessions, session_attendance + `instructors.service.getStats()`/`.getTopInstructorIds()` |
+| Course Analytics tab | `['reports','courses', filters]` | `GET /api/admin/reports/courses` | courses, course_enrollments |
+| Learning Progress tab | reuses `['reports','learners']` + `['reports','courses']` | *(none — composed from the two above, see contract note on this tab's own spec gap)* | — |
+| Assessments tab | `['reports','assessments', filters]` | `GET /api/admin/reports/assessments` | quiz_attempts |
+| Certificates tab | `['reports','certificates', filters]` | `GET /api/admin/reports/certificates` | certificates |
+| Attendance tab | `['reports','attendance', filters]` | `GET /api/admin/reports/attendance` | session_attendance, live_sessions |
+| Engagement tab | `['reports','engagement', filters]` | `GET /api/admin/reports/engagement` | app_users |
+| Compliance tab | `['reports','compliance', filters]` | `GET /api/admin/reports/compliance` | app_users, learner_profiles (`atRiskUsers` only — the other 4 fields are permanently unavailable, no compliance model exists) |
+| Audit Logs tab | `['reports','audit', filters]` | `GET /api/admin/reports/audit` | audit_logs (same table Users/Instructors/Learners suspension-history already reads, generalized here into the first standalone audit-list endpoint) |
+| Export Center tab | — (file download, not cached) | `GET /api/admin/reports/export` | whichever table the chosen `type` reads — writes `REPORT_EXPORTED` to audit_logs as a side-effect |
+| Custom Reports tab | — | — | Genuine stub — no saved-report-definition model exists |
+
+**`dateRange` is this module's own convention**, distinct from every other
+module's fixed month-over-month: a rolling window (week/month/quarter/
+custom) where `changePercent` compares the current window to the
+immediately preceding window of the SAME length. See contract note 4.
+
+---
+
 ## 5. ENTITY IMPACT MATRICES
 
 Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 are always implied) → surfaces that visibly change.
@@ -168,6 +247,16 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 | `user.assignRole` → see **5.5 ROLE** | | |
 
 ### 5.2 STUDENT / ENROLLMENT (Students doc §1–§15)
+
+> **DEAD SECTION as of 2026-08-09 — do not build against this.** The
+> `/students` page this table describes was never shipped (blueprint
+> `06-students.md` still `[planned]`, no Route exists) — confirmed zero
+> frontend consumers of the `student.*` mutation IDs or `queryKeys.students.*`
+> below before the Learners module was built. **The real, shipped module is
+> `LEARNERS_CONTRACT.md` / §5.18 below** — same underlying `CourseEnrollment`
+> table, entirely separate (real) mutation IDs (`learner.enroll` not
+> `enrollment.create`, `queryKeys.learners.*` not `queryKeys.students.*`).
+> This table is kept for history, not reused or renamed in place.
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
@@ -200,7 +289,7 @@ Users surfaces — `['users']` is not optional on those rows.
 | `instructor.reactivate` (§14) | `['instructors']` `['instructors', id]` `['users']` `['dashboard','user-analytics']` | Same surfaces, opposite direction |
 | `instructor.delete` (§2 — soft archive, 409 while they own courses/sessions) | `['instructors']` `['users']` `['courses']` `['dashboard','user-analytics']` | Row leaves the Instructors table · Users table shows ARCHIVED · Instructor dropdown loses option |
 | `review.moderate` (§10 — one mutation ID covers approve/remove/flag; three distinct endpoints, `PATCH .../reviews/:reviewId/approve` \| `/remove` \| `/flag`) | `['instructors', id, 'reviews']` `['dashboard','instructor-performance']` | Reviews tab list — status badge flips. **Shipped 2026-08-07, NOT in INSTRUCTORS_CONTRACT.md v1** (documented there as a `[planned]` gap — "no Review model", "decision for Hassan, not a bug"). The instructor ROW's `rating` field (list/stats/analytics) is still always null — it is an AppUser aggregate, unrelated to this row-level moderation queue. |
-| `payout.execute` (§9) → see 5.7 FINANCE | | **no Payment model exists yet; revenue is null everywhere** |
+| `payout.execute` (§9) → see 5.7 FINANCE | | Finance module shipped 2026-08-09 (`InstructorPayout` model, `FINANCE_CONTRACT.md`) — payouts are calculated from real `revenueShareBps` × successful `Payment` sums, still 0 everywhere until a real payment gateway exists |
 | `instructorDoc.upload` (§12 — sign → direct PUT to storage → confirm; API never receives the file) | `['instructors', id, 'documents']` `['instructors', id]` | Documents tab list · panel doc count |
 | `instructorDoc.verify` (§12) | `['instructors', id, 'documents']` `['approvals']` | Documents tab row → VERIFIED |
 | `instructorDoc.reject` (§12 — reason required ≥3 chars) | `['instructors', id, 'documents']` `['approvals']` | Documents tab row → REJECTED |
@@ -258,13 +347,28 @@ Users surfaces — `['users']` is not optional on those rows.
 
 ### 5.7 FINANCE (Dashboard §5, §15 · Instructors §9 · Students §13)
 
+Real backend shipped 2026-08-09 (blueprint 09, `FINANCE_CONTRACT.md`) —
+`Payment`/`Subscription`/`Invoice`/`Transaction`/`Refund`/`InstructorPayout`/
+`Coupon`/`TaxRule`/`FinanceSettings` all exist now. `transaction.purchase`
+stays dead (no checkout flow triggers a Payment write yet — no gateway); the
+rows below marked shipped are real. `payout.approve/.complete/.calculate` and
+`subscription.create/.update/.extend` are NEW mutation IDs this module added
+(not in the pre-existing scaffold) — see `FINANCE_CONTRACT.md` decision #7.
+
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `transaction.purchase` (course/subscription) | `['transactions','recent']` `['dashboard','revenue']` `['billing',studentId]` + `['enrollments',…]` via chained enrollment (5.2) | **Total Revenue KPI** · **Active Subscriptions KPI** · Revenue charts · Recent Transactions · Payment Alerts notification |
-| `refund.request` | `['approvals']` `['tasks']` | **Pending Approvals KPI** · Tasks "Review Refund Requests" |
-| `refund.approve` | `['approvals']` `['transactions','recent']` `['dashboard','revenue']` `['billing',studentId]` + possibly `['enrollments',…]` revoke | Refund Statistics · Revenue down · enrollment status |
-| `payout.execute` (instructor) | `['instructors', id, 'earnings']` `['dashboard','revenue']` `['transactions','recent']` | Instructor Payouts metric · earnings tab |
-| `subscription.cancel` | `['dashboard','revenue']` `['billing',studentId]` | **Active Subscriptions KPI** · Subscription Growth chart |
+| `transaction.purchase` (course/subscription, dead — no checkout flow exists) | `['transactions','recent']` `['dashboard','revenue']` `['billing',studentId]` + `['enrollments',…]` via chained enrollment (5.2) | **Total Revenue KPI** · **Active Subscriptions KPI** · Revenue charts · Recent Transactions · Payment Alerts notification |
+| `refund.request` (shipped — `PATCH /finance/payments/:id/refund`, creates a PENDING Refund; Payment status untouched until approved) | `['approvals']` `['tasks']` | **Pending Approvals KPI** · Tasks "Review Refund Requests" · Refunds tab gains a PENDING row |
+| `refund.approve` (shipped — `PATCH /finance/refunds/:id/approve`, terminal PROCESSED in one step, no gateway wait) | `['approvals']` `['transactions','recent']` `['dashboard','revenue']` `['billing',studentId]` + possibly `['enrollments',…]` revoke | Refund Statistics · Revenue down · Payment row flips to REFUNDED |
+| `refund.reject` (shipped — reason written to audit log only, `Refund` has no rejectionReason column) | `['approvals']` | Refund queue |
+| `payout.execute` (instructor, dead alias — Payouts tab uses `.approve`/`.complete` below instead) | `['instructors', id, 'earnings']` `['dashboard','revenue']` `['transactions','recent']` | Instructor Payouts metric · earnings tab |
+| `payout.calculate` (shipped, new — `POST /finance/payouts/calculate`, idempotent per period, skips zero-gross instructors) | `['payouts']` `['dashboard','revenue']` | Payouts tab gains new PENDING rows (0 today — Payment table is empty) |
+| `payout.approve` (shipped, new) | `['payouts']` `['instructors', id, 'earnings']` | Payouts tab row → APPROVED |
+| `payout.complete` (shipped, new — writes a `Transaction(type=PAYOUT)`) | `['payouts']` `['dashboard','revenue']` `['transactions','recent']` `['instructors', id, 'earnings']` | Payouts tab row → COMPLETED · Transactions ledger |
+| `subscription.cancel` (shipped) | `['dashboard','revenue']` `['billing',studentId]` `['subscriptions']` | **Active Subscriptions KPI** · Subscription Growth chart |
+| `subscription.create` (shipped, new — no separate Plan model, writes Subscription directly) | `['subscriptions']` `['dashboard','revenue']` `['finance','dashboard']` | Subscriptions tab gains row · **Active Subscriptions KPI** |
+| `subscription.update` (shipped, new — also covers "Upgrade", no separate endpoint) | `['subscriptions']` `['billing',studentId]` | Subscriptions tab row |
+| `subscription.extend` (shipped, new) | `['subscriptions']` `['billing',studentId]` | Subscriptions tab row's renewal date |
 
 ### 5.8 CERTIFICATE (LMS doc §9 · Students doc §7)
 
@@ -284,74 +388,131 @@ Any mutation that CREATES a pending item (`course.submitForApproval`, `instructo
 
 Activity Feed, Notifications, Tasks, Audit Log, Calendar are **sinks**: mutations write to them (mostly backend-side), surfaces read them. Frontend responsibility = invalidate their keys (§2 covers activity/notifications automatically; add `['tasks']`/`['calendar']` when the matrix says so). Frontend NEVER fabricates sink entries locally.
 
-### 5.11 COMPETENCY / SKILL (blueprint 07)
+### 5.11 COMPETENCY / SKILL (blueprint 07 — shipped 2026-08-09, see `COMPETENCIES_CONTRACT.md`)
+
+Real backend now exists for the rows below marked shipped — the rest
+(`skillLevel.configure`, `competencyMap.*`, `competencyCert.*`) remain the
+pre-existing dead/planned rows this map already carried (no config-levels
+endpoint, no course/path skill-mapping UI, no certification-tracking entity
+in the v1 task spec) — kept, not deleted, same as `ticket.create`/`.assign`
+staying documented-but-dead in §5.14.
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `skill.create` / `skill.update` / `skill.delete` | `['competencies']` | Skills library table · **Skills dropdown in Add User form** (R2) · course/path skill chips |
-| `skillCategory.create/update/archive` | `['competencies','categories']` `['competencies']` | Category filter · hierarchy tree |
-| `framework.create/update/delete` | `['competencies','frameworks']` | Frameworks list |
-| `skillLevel.configure` | `['competencies','levels']` | Level ladders on all skill profiles |
-| skill assessment completion (student side, backend chain) | `['users', id, 'skills']` `['competencies','analytics']` | User skill profile · competency analytics |
-| `competencyMap.link/unlink` | `['competencies']` + target entity key (`['courses', id]` / `['learning-paths']` / `['quizzes',…]`) | Mapping views · skill chips on courses/paths |
-| `competencyCert.assign/verify/revoke` | `['users', id, 'skills']` `['competencies']` | Certification tracking · profiles |
+| `skill.create` / `.update` / `.delete` (shipped) | `['competencies']` `['competencies','stats']` `['competencies','analytics']` `['competencies', id]` (all three callers always pass the skill id) | Competency List table · stats cards · Overview charts · side panel |
+| `skill.assignToCourse` / `.removeCourse` (shipped, new) | `['competencies']` `['competencies', id]` `['courses', courseId]` | Side panel's linked-courses list · List tab's Linked Courses column |
+| `skillCategory.create` / `.update` / `.archive` (shipped) | `['competencies','categories']` `['competencies']` `['competencies','analytics']` + `['competencies','stats']` on create only | Categories tree · category filters |
+| `skillCategory.delete` (shipped, new — hard delete, separate from `.archive`) | `['competencies','categories']` `['competencies']` `['competencies','stats']` | Categories tree |
+| `framework.create` / `.update` / `.delete` (shipped) | `['competencies','frameworks']` `['competencies','stats']` `['competencies','frameworks', id]` (all three callers always pass the framework id) + `['competencies','analytics']` on create/delete only (a rename/status edit doesn't change gap/matrix data — `computeSkillGaps` doesn't filter by framework status) | Frameworks tab list + detail · Overview's frameworks table · stats cards |
+| `framework.addSkill` / `.removeSkill` (shipped, new) | `['competencies','frameworks']` `['competencies','frameworks', frameworkId]` `['competencies','stats']` `['competencies','analytics']` `['competencies','skill-gaps']` | Framework detail's required-skills table · Skill Gaps tab (a framework's requirements are the gap definition's input) |
+| `skillLevel.configure` (dead — no endpoint) | `['competencies','levels']` | Level ladders — Proficiency Levels tab is a static reference instead |
+| `assessment.create` (shipped, new — auto-upserts `UserSkillProfile` server-side unless Settings' auto-update toggle is off, in which case `profile` in the response is `null`) | `['competencies','assessments']` `['users', id, 'skills']` `['competencies','stats']` `['competencies','analytics']` `['competencies','skill-gaps']` | Assessments log · User Progress tab · stats cards · Skill Gaps tab |
+| `skill.import` (shipped, post-v1 — CSV bulk create via Import/Export tab) | `['competencies']` `['competencies','stats']` `['competencies','analytics']` | Competency List table · stats cards · Overview charts (no single id — many skills created at once) |
+| `competencySettings.update` (shipped, post-v1 — one `CompetencySettings` row) | `['competencies','settings']` `['competencies','analytics']` `['competencies','skill-gaps']` `['competencies','stats']` | Settings form · Skill Gap Overview donut + Skill Gaps tab (severity thresholds) · future `assessment.create` calls (passing threshold / auto-update toggle — not retroactive) |
+| `competencyMap.link/unlink` (dead — no endpoint) | `['competencies']` + target entity key (`['courses', id]` / `['learning-paths']` / `['quizzes',…]`) | Mapping views · skill chips on courses/paths |
+| `competencyCert.assign/verify/revoke` (dead — no endpoint) | `['users', id, 'skills']` `['competencies']` | Certification tracking · profiles |
 
-### 5.12 NOTIFICATION CAMPAIGNS (blueprint 10)
+### 5.12 NOTIFICATION CAMPAIGNS (blueprint 10) — shipped 2026-08-10, see `NOTIFICATIONS_CONTRACT.md`
+
+Real backend now exists: `NotificationTemplate`, `Announcement`,
+`NotificationAutomation`, `NotificationLog` (doubles as the in-app feed,
+`channel=IN_APP` — see contract decision #2), `UserNotificationPreference`
+(notifications.prisma). Mounted at `/api/admin/notifications`. Note the
+mutation IDs below predate this build (frontend team pre-scaffolded
+`invalidation.ts` rows against the blueprint's conceptual names) — kept as-is
+rather than renamed, since renaming a working row is churn without benefit.
+`template.*` in the blueprint prose maps to the actually-implemented
+`notificationTemplate.*` IDs (disambiguated from other modules' generic
+"template" mutations, same reasoning as `notificationRule.*` vs a bare
+`rule.*`). Automation trigger EXECUTION is not wired to real events yet
+(contract decision #5) — CRUD/pause/resume are fully live.
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `emailCampaign.create` / `pushCampaign.send` / `smsCampaign.send` / `announcement.send` | `['campaigns']` `['notifications','stats']` (recipients' `['notifications']` update server-side) | Campaign lists · notification dashboard widgets · targeted users' feeds |
-| `campaign.schedule/pause/cancel/duplicate` | `['campaigns']` `['calendar']` | Scheduled tab · delivery calendar |
-| `template.create/update/duplicate` | `['notification-templates']` | Templates tab · **template pickers** (R2) |
-| `notificationRule.create/update/delete/toggle` | `['notifications','rules']` | Automation tab · active-rules widget |
-| `notification.markRead/.archive/.pin` | `['notifications']` only (skip §2 stats default — pure feed state) | Feed everywhere: dashboard widget + in-app tab |
-| `emergencyAlert.send` | `['campaigns']` `['security','alerts']` | Emergency tab · Security Alerts widget (Dashboard §15) |
-| `delivery.retry` | `['notifications','stats']` | Delivery logs · failed count |
+| `emailCampaign.create` / `pushCampaign.send` / `smsCampaign.send` (dead — no separate campaign entity per-channel; a real `Announcement` covers this shape, see contract) / `announcement.send` (shipped) | `['campaigns']` `['notifications','stats']` (recipients' `['notifications']` IN_APP rows created server-side) | Campaign lists · notification dashboard widgets · targeted users' feeds |
+| `announcement.delete` (shipped, new — no row existed) | `['campaigns']` | Announcements tab list |
+| `campaign.schedule/pause/cancel/duplicate` (shipped: `schedule`≈create-with-scheduledAt, `cancel`≈`PATCH .../cancel`; `pause`/`duplicate` dead — no partial-send-pause or campaign-duplicate endpoint) | `['campaigns']` `['calendar']` | Scheduled tab · delivery calendar |
+| `notificationTemplate.create/update/duplicate` (shipped) | `['notification-templates']` | Templates tab · **template pickers** (R2 — Automations' template select) |
+| `notificationTemplate.delete` (shipped, new — no row existed) | `['notification-templates']` | Templates tab list |
+| `notificationRule.create/update/delete/toggle` (shipped — `NotificationAutomation` CRUD + pause/resume, `toggle` covers both) | `['notifications','rules']` | Automation tab · active-rules widget · Dashboard's Active Automations list |
+| `notification.markRead/.archive/.pin` (`.archive`/`.pin` dead — no archived/pinned state on `NotificationLog`, only read via `status`) | `['notifications']` only (skip §2 stats default — pure feed state) | Feed everywhere: dashboard widget + in-app tab |
+| `notification.send` (shipped, new — admin manually sends to specific `userIds`, distinct from broad-audience campaigns) | `['notifications']` `['notifications','stats']` | In-App tab list · sentTotal/pending stat cards |
+| `notification.delete` (shipped, new — same feed-state-only reasoning as markRead/archive/pin) | `['notifications']` only | In-App tab list |
+| `notificationPrefs.update` (shipped, new — per-user; a future admin-global `notificationPrefs.updateGlobal` per blueprint 10 §10 remains dead, no endpoint) | `['notifications','settings']` | Preferences tab |
+| `emergencyAlert.send` (shipped) | `['campaigns']` `['security','alerts']` | Emergency tab · Security Alerts widget (Dashboard §15) |
+| `delivery.retry` (shipped) | `['notifications','stats']` | Delivery logs · failed count |
 
 ### 5.13 FINANCE CONFIG (blueprint 09 — runtime money flows stay in §5.7)
 
+Real backend shipped 2026-08-09 alongside §5.7 (see note there). `plan.*` and
+`gateway.*` stay dead — no `Plan` model, no gateway integration in v1
+(`FINANCE_CONTRACT.md` decisions #1 and Payment Gateways section).
+`tax.configure` now covers all three `TaxRule` CRUD writes (create/update/
+delete collapse to one mutation ID, decision #5).
+
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `plan.create/update` | `['plans']` `['subscriptions']` | Plans table · **plan dropdowns** (R2) · checkout options |
-| `invoice.generate` / `invoice.void` | `['invoices']` `['billing', studentId]` | Invoices table · student Billing tab |
-| `invoice.update/send` | `['invoices']` | Invoice row/status · customer notified |
-| `coupon.create/update/disable` | `['coupons']` | Coupons table · checkout coupon validation |
-| `tax.configure` | `['tax','config']` `['invoices']` | Tax settings · future invoice/checkout totals |
-| `billingSettings.update` | `['finance','settings']` — ⚠️ if currency changed: broad refetch of ALL money displays | Every money surface in the app |
-| `gateway.connect/configure/testMode` | `['gateways']` `['integrations']` | Gateways tab · integrations dashboard · checkout methods |
-| `commission.update` | `['payouts']` `['instructors', id, 'earnings']` `['dashboard','revenue']` | Payout calculations · earnings tabs |
-| `payment.retry` | `['transactions','recent']` `['finance','dashboard']` | Payments table · finance KPIs |
-| `payment.approve` | as §5.7 `transaction.purchase` | — |
-| `refund.reject` | `['approvals']` | Refund queue (approve → §5.7) |
-| `payout.hold` | `['payouts']` `['instructors', id, 'earnings']` | Payout status |
+| `plan.create/update` (dead — no Plan model, see decision #1) | `['plans']` `['subscriptions']` | Plans table · **plan dropdowns** (R2) · checkout options |
+| `invoice.generate` (shipped — subtotal/total are SERVER-computed from `items`, never client-trusted) / `invoice.void` (shipped) | `['invoices']` `['billing', studentId]` | Invoices table · student Billing tab |
+| `invoice.update/send` (shipped) | `['invoices']` | Invoice row/status · customer notified |
+| `coupon.create/update/disable` (shipped) | `['coupons']` | Coupons table · checkout coupon validation |
+| `coupon.delete` (shipped, new — hard delete, separate from `.disable`) | `['coupons']` | Coupons table |
+| `tax.configure` (shipped — covers TaxRule create/update/delete, all three write endpoints) | `['tax','config']` `['invoices']` | Tax Management tab · future invoice/checkout totals |
+| `billingSettings.update` (shipped — `FinanceSettings` singleton, new model not in the original Prisma list, decision #6) | `['finance','settings']` — ⚠️ if currency changed: broad refetch of ALL money displays | Billing Settings tab · every money surface in the app |
+| `gateway.connect/configure/testMode` (dead — Payment Gateways tab is static UI only in v1, buttons disabled) | `['gateways']` `['integrations']` | Gateways tab · integrations dashboard · checkout methods |
+| `commission.update` (dead — no commission-rules endpoint; `revenueShareBps` is edited on `InstructorProfile`, not here) | `['payouts']` `['instructors', id, 'earnings']` `['dashboard','revenue']` | Payout calculations · earnings tabs |
+| `payment.retry` (dead — no gateway to retry against) | `['transactions','recent']` `['finance','dashboard']` | Payments table · finance KPIs |
+| `payment.approve` (dead, alias of §5.7 `transaction.purchase`) | as §5.7 `transaction.purchase` | — |
 
 ### 5.14 SUPPORT TICKETS (blueprint 06 §10)
+
+> `ticket.respond`/`.resolve`/`.escalate` were dead (no `SupportTicket` model
+> existed) until the Learners module (§5.18) shipped `SupportTicket` +
+> `TicketMessage` for real 2026-08-09 and became their first real consumer —
+> REUSED as-is, not forked (the keys were already correct/generic). `ticket.
+> create`/`.assign` remain dead — no create-ticket endpoint exists anywhere
+> (no learner-facing app to raise one from); `.assign` has no admin-side
+> owner-reassignment endpoint either. Don't build against those two yet.
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
 | `ticket.create` (student side) | `['support-tickets']` `['tasks']` | Support tab · Tasks widget |
 | `ticket.assign/respond/resolve/escalate` | `['support-tickets']` | Ticket status · student notified via §2 defaults |
 
-### 5.15 INTEGRATIONS (blueprint 11)
+### 5.15 INTEGRATIONS (blueprint 11) — shipped 2026-08-10, see INTEGRATIONS_CONTRACT.md
+
+> Registry over the real Zoom/Supabase/SMTP providers (Live Sessions and
+> Content/Uploads still own the actual meeting/storage calls; this module
+> never re-implements them — INTEGRATIONS_CONTRACT.md #1) plus a
+> `COMING_SOON` catalog, API keys, webhooks, logs, and data syncs. All five
+> mutation rows below shipped exactly as originally specced here — no
+> renames. `['integrations','logs']` (new, `queryKeys.integrationsLogs()`)
+> was added as an extra key on connect/disconnect/testMode/sync.run since
+> each of those writes a real `IntegrationLog` row.
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `integration.connect/disconnect` | `['integrations']` `['integrations','stats']` + downstream option lists (video providers → live-session form, gateways → checkout) | Integration cards · dashboard widgets · **provider dropdowns** (R2) |
-| `integration.configure/testMode` | `['integrations']` | Config panels |
-| `apiKey.generate/revoke` | `['api-keys']` | API management tab |
+| `integration.connect/disconnect` | `['integrations']` `['integrations','stats']` `['integrations','logs']` — no live provider dropdowns exist yet to cascade into (Live Sessions' provider list and Finance's gateway list are still static in v1) | Integration cards · dashboard widgets |
+| `integration.configure/testMode` | `['integrations']` (+`['integrations','logs']` for testMode) | Config panels · Video/Storage/Email tab cards |
+| `apiKey.generate/revoke` | `['api-keys']` | API Keys tab |
 | `webhook.create/update/delete/toggle` | `['webhooks']` | Webhooks tab |
-| `sync.run` (on completion) | `['integrations','sync']` + synced entity keys (HR sync → `['users']`) | Sync center · synced tables |
+| `sync.run` (on completion) | `['integrations','sync']` `['integrations','logs']` + synced entity keys (HR sync → `['users']`) | Data Sync tab · synced tables |
 
 ### 5.16 SYSTEM SETTINGS (blueprint 12)
 
+Backend built 2026-08-10 — contract `SYSTEM_SETTINGS_CONTRACT.md`. The single
+`SystemSettings` row backs 17 of the 20 tabs (Authentication/Mobile App/API &
+Developer are pure read-only + link-out, nothing to PATCH); Config Logs reads
+`SystemConfigLog`, a new per-field diff table this module owns.
+
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `settings.<domain>.update` | `['settings', domain]` + downstream keys per blueprint 12 table | The settings form + every consumer of that domain |
-| `featureToggle.set` | `['settings','features']` + all gated module keys | Sidebar items appear/disappear · routes gate · widgets hide — **most reflective mutation in the app** |
-| `maintenance.enable/disable` | `['settings','maintenance']` | Global banner/lock · users notified |
-| `backup.run/restore` | `['system','backups']` | Backup tab (restore = destructive confirm flow) |
-| `retention.update` | `['security','retention']` | Retention rules · archived-user policy checks (blueprint 02 §12) |
-| `settings.restoreVersion` | `['settings', affectedDomain]` + its downstream | Config logs → restored state everywhere |
+| `settings.update` (ctx.domain = tab key, e.g. `'general'`) | `['settings', domain]` + `['dashboard','stats']` etc. (§2 defaults) | The settings form that saved + Config Logs (new row per changed field) |
+| `featureToggle.set` | `['settings','features']` | Feature Toggles tab. **Gap:** flags are persisted but nothing reads them yet — sidebar/routes/widgets do NOT gate on `liveSessionsEnabled` etc. Wiring that consumption (AdminLayout nav filter, route guards) is unbuilt; flag before treating a toggle as functionally live. |
+| `maintenance.enable/disable` | `['settings','maintenance']` | Red banner on the System Settings page (all tabs) · `/api/public/*` starts/stops returning 503 (`maintenanceMode.middleware.js`) · `/api/admin/*` is never gated, admins always keep access |
+| `backup.run/restore` | `['system','backups']` | Backup & Restore tab · `lastBackupAt` timestamp |
+| `settings.restoreVersion` — **not used**; restore reuses `backup.restore` since there's one full-row snapshot, not per-domain versions | — | — |
+| `retention.update` — **dead**, no retention UI was built in this module (Security tab's IP/password/session policy is a different set of fields) | — | — |
 
 ### 5.17 SECURITY ACTIONS (blueprint 13)
 
@@ -361,6 +522,56 @@ Activity Feed, Notifications, Tasks, Audit Log, Calendar are **sinks**: mutation
 | `incident.create/update/close` | `['security','incidents']` `['tasks']` | Incidents tab · Tasks widget |
 | `device.block/approve` | `['security','devices']` `['security','sessions']` | Devices tab · affected user sessions |
 | `ip.block/unblock` | `['security','ip']` | IP tab · policy enforcement (03 §19) |
+
+### 5.18 LEARNER (blueprint 06 — shipped 2026-08-09, see `LEARNERS_CONTRACT.md`)
+
+A learner IS an `AppUser` with `role = LEARNER` — same architecture as §5.3
+INSTRUCTOR (one optional `LearnerProfile` side table, never a parallel
+learners table). Reuses the EXISTING `CourseEnrollment`/`Certificate` tables
+(§5.2/§5.8) rather than forking them — `enrollment.create`/`certificate.*`
+keep meaning what they already meant; Learners' own mutation IDs below are
+additive, targeting `queryKeys.learners.*`, not a replacement for §5.2/§5.8.
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `learner.create` | `['learners']` `['learners', id]` `['users']` `['dashboard','user-analytics']` | Learners table · Users table (same AppUser row) |
+| `learner.update` | `['learners']` `['learners', id]` | Learners table row · side panel |
+| `learner.suspend` / `.reactivate` (delegates to users.service, same as instructor.suspend) | `['learners']` `['learners', id]` `['users']` `['dashboard','user-analytics']` | Status badge · Users table · suspension history entry |
+| `learner.delete` (soft archive, 409 while active enrollments exist) | `['learners']` `['users']` `['dashboard','user-analytics']` | Row leaves the table · Users table shows ARCHIVED |
+| `learner.resetPassword` (no Instructors equivalent) | `['users']` | Sessions revoked — no visible table change beyond a toast |
+| `learner.enroll` / `.unenroll` (thin wrapper over `enrollments.service` — §5.2's `enrollment.create`/`.cancel` NOT reused, they target dead `queryKeys.students.*`) | `['learners']` `['learners', id]` `['enrollments', id\|courseId]` `['courses']` `['dashboard','course-analytics']` | Courses tab in side panel · coursesCount stat · course enrolledCount |
+| `learner.bulkEnroll` (thin wrapper over `enrollments.service`, one call/many learners — partial success per learner, same shape as the learning-path expansion) | `['learners']` `['enrollments', courseId]` `['courses']` `['dashboard','course-analytics']` `['learners', id]` per affected learner | Learners table · each enrolled learner's Courses tab |
+| `learner.progressReset` | `['learners', id]` `['dashboard','course-analytics']` | Progress bar resets to 0% in Courses tab |
+| `learner.assessmentReopen` / `.assessmentReset` / `.assessmentGrade` (`QuizAttempt`, brand new — no prior consumer to collide with) | `['learners', id]` (+ `['dashboard','course-analytics']` on grade) | Assessments tab row status/score |
+| `learnerDoc.upload` / `.verify` / `.reject` / `.archive` (mirrors `instructorDoc.*`, own model `LearnerDocument`) | `['learners', id, 'documents']` (+ `['learners', id]` on upload, `['approvals']` on verify/reject) | Documents tab (More) list |
+| `certificate.reissue` / `.revoke` (REUSED from §5.8, not forked — `revokeCertificate` gained an optional `reason` param, additive) | `['certificates']` `['dashboard','course-analytics']` | Certificates tab in side panel |
+| `ticket.respond` / `.resolve` / `.escalate` (REUSED from §5.14 — see that section's note) | `['support-tickets']` | Tickets tab (More) status |
+
+### 5.19 REPORTS & ANALYTICS (blueprint 08 — shipped 2026-08-09, see `REPORTS_CONTRACT.md`)
+
+Almost entirely read-only aggregation (`GET /export` writes a
+`REPORT_EXPORTED` audit-log row as a side-effect but changes no displayed
+number, so it carries no mutation ID). **Scheduled Reports** (shipped
+2026-08-09, `ScheduledReport` — the module's first owned table) is the one
+real CRUD surface, living in the Export Center tab:
+
+| Mutation | Invalidate (extra) | Visible reflections |
+|---|---|---|
+| `reportSchedule.create` / `.update` / `.delete` / `.pause` / `.resume` | `['report-schedules']` | Export Center tab's "Scheduled Reports" list — New Schedule / Edit / Pause / Resume / Delete, Active/Paused/Cancelled badges, Last Run/Next Run |
+| `reportTemplate.save` (dead — no Custom Report Builder exists) | `['report-templates']` | Custom Reports tab's future saved-templates list |
+
+An hourly background sweep (`setInterval` in `server.js`, no node-cron in
+this codebase) sends due reports itself — that's a system-authored
+`SCHEDULED_REPORT_RUN` audit row, not a frontend mutation, so it carries no
+mutation ID either.
+
+Every tab that reads live data (all except Export Center and Custom
+Reports) self-fetches on mount and listens for the app-wide
+`analyticsUpdated` bridge event — the Overview tab in particular aggregates
+too many domains (users/learners/instructors/courses/certificates/
+live-sessions/audit) for any single mutation ID to name them all, so it
+rides the same catch-all event every other module's mutations already
+dispatch rather than needing a bespoke invalidation list.
 
 ---
 
@@ -399,4 +610,18 @@ Minimum coverage set: `user.create` → Total Users · `course.approve` → Publ
 - Renamed/removed anything → update here first, then code.
 - Monthly (or when things feel off): run the full Playwright reflection suite (`npx playwright test --workers=1`) and diff §5 against `INVALIDATION_MAP` keys.
 
-*Last updated: 2026-07-03 — generated from the FULL Admin System documentation, all 13 modules: Login, Dashboard Overview, User Management, Roles & Permissions, Learning Management, Instructors, Students, Competencies, Reports & Analytics, Finance, Notifications, Integrations, System Settings, Audit & Security. Companion blueprint: `docs/blueprint/`.*
+*Generated 2026-07-03 from the FULL Admin System documentation, all 13 modules: Login, Dashboard Overview, User Management, Roles & Permissions, Learning Management, Instructors, Students, Competencies, Reports & Analytics, Finance, Notifications, Integrations, System Settings, Audit & Security. Companion blueprint: `docs/blueprint/`.*
+
+*Last updated: 2026-08-09 — Competencies module (§4d, §5.11) shipped: 7 new models, full Skills/Frameworks/Categories/Assessments/Skill-Gaps/User-Progress backend + frontend. See `COMPETENCIES_CONTRACT.md`.*
+
+*Same-day follow-up: Import/Export and Settings tabs (previously stubs) built out — 8th model `CompetencySettings`, `skill.import`/`competencySettings.update` mutation IDs, `['competencies','settings']` query key. See the Addendum in `COMPETENCIES_CONTRACT.md`.*
+
+*Same-day follow-up #2: Reports & Analytics module (§4e, §5.19) shipped —
+9 core endpoints + Export Center + Compliance, all read-only aggregation
+over existing tables (zero new models). 13 frontend tabs at
+`/reports-analytics` (sidebar link was dead, now wired). Two real bugs
+caught by live-testing against the real dev DB (not just `tsc`/review) and
+fixed before ship: an instructor completion-rate formula that measured the
+wrong population, and an audit-search branch that threw on Prisma's strict
+`AuditAction` enum and got silently swallowed into false empty results. See
+`REPORTS_CONTRACT.md`.*

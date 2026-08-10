@@ -1,0 +1,53 @@
+// Reports & Analytics module's one owned table. Every read endpoint in
+// reports.service.js reuses other modules' models (see REPORTS_CONTRACT.md) —
+// Scheduled Reports is the first (and so far only) table this module owns.
+
+// reportType deliberately plain String, not an enum — must stay in lockstep
+// with EXPORT_TYPES in reports.validator.js (the single source of truth for
+// the 7 valid values), which is a JS Set, not something Prisma can share.
+model ScheduledReport {
+  id          String                   @id @default(uuid())
+  name        String
+  reportType  String
+  format      ScheduledReportFormat
+  frequency   ScheduledReportFrequency
+  // { dateRange, dateFrom?, dateTo?, department?, ... } — same shape
+  // GET /reports/export's query params take, just persisted as JSON.
+  filters     Json?
+  recipients  String[]
+  status      ScheduledReportStatus    @default(ACTIVE)
+  lastRunAt   DateTime?
+  nextRunAt   DateTime
+  // Plain actor id, no relation — same convention as Course.createdBy /
+  // Skill.createdById (competencies.prisma header note): the actor is
+  // whichever AdminUser hit requireAdminAuth, and nothing here needs a join
+  // back to admin_users.
+  createdById String?
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
+
+  @@index([status])
+  @@index([nextRunAt])
+  @@map("scheduled_reports")
+}
+
+enum ScheduledReportFormat {
+  CSV
+  JSON
+}
+
+enum ScheduledReportFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+// CANCELLED exists in the schema for status-badge completeness (frontend
+// spec lists Active/Paused/Cancelled) but no endpoint in this pass sets it —
+// only pause (PAUSED) and resume (ACTIVE) are wired. DELETE hard-deletes the
+// row rather than soft-cancelling, same as every other module's DELETE.
+enum ScheduledReportStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+}

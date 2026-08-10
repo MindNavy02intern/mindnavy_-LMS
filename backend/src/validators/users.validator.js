@@ -6,13 +6,19 @@ const VALID_VERIFICATION_STATES = new Set(["VERIFIED", "PENDING", "REJECTED", "E
 
 // Violation taxonomy for a suspension (blueprint 05 §14). It lives HERE, next to
 // the suspend write and the USER_SUSPENDED audit row that records it, so the
-// Instructors module imports one list instead of declaring a second one that
-// could drift.
+// Instructors and Learners modules import one list instead of each declaring
+// their own that could drift.
 //
 // OPTIONAL in v1 on purpose: this endpoint shipped before the field existed and
 // the Instructors UI is still adding the dropdown, so an omitted value is valid
 // and stored as null. Making it required now would break every caller that is
 // already suspending with { reason, notes }.
+//
+// Extended 2026-08-08 for the Learners module (CHEATING, ACCOUNT_ABUSE,
+// PAYMENT_FRAUD) — additive only, nothing renamed or removed, so no existing
+// Instructors/Users suspension is affected. FRAUD and PAYMENT_FRAUD are kept
+// distinct rather than merged: callers pick the one that actually describes
+// the violation instead of overloading a generic value.
 const VIOLATION_TYPES = new Set([
   "COPYRIGHT",
   "POLICY",
@@ -20,6 +26,9 @@ const VIOLATION_TYPES = new Set([
   "BEHAVIOR",
   "FAKE_CERT",
   "SECURITY",
+  "CHEATING",
+  "ACCOUNT_ABUSE",
+  "PAYMENT_FRAUD",
 ]);
 
 // Single normalizer for the field, shared by both validators and by the service

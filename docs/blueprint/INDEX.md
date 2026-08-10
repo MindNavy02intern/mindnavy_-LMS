@@ -41,11 +41,11 @@ Shared admin sidebar. Routes are **placeholders** — before using a route in co
 | 4 | Learning Management | `/learning-management` | 04 |
 | 5 | Instructors | `/instructors` *(sidebar link; no Route/Page yet)* | 05 |
 | 6 | Students | `/students` *(sidebar link; no Route/Page yet)* | 06 |
-| 7 | Competencies | `/competencies` *(sidebar link; no Route/Page yet)* | 07 |
-| 8 | Reports & Analytics | `/reports-analytics` *(sidebar link; no Route/Page yet)* | 08 |
-| 9 | Finance | `/finance` *(sidebar link; no Route/Page yet)* | 09 |
+| 7 | Competencies | `/competencies` | 07 |
+| 8 | Reports & Analytics | `/reports-analytics` | 08 |
+| 9 | Finance | `/finance` | 09 |
 | 10 | Notifications | `/notifications` *(sidebar link; no Route/Page yet — topbar bell opens a panel)* | 10 |
-| 11 | Integrations | `/integrations` *(sidebar link; no Route/Page yet)* | 11 |
+| 11 | Integrations | `/integrations` | 11 |
 | 12 | System Settings | `/settings` | 12 |
 | 13 | Audit & Security | `/trusted-devices` *(only trusted-devices section built; full audit suite planned)* | 13 |
 

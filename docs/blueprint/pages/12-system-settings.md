@@ -1,5 +1,5 @@
 # 12 · System Settings — `/settings`
-Doc: System Settings §1–§20 · Entity: SETTINGS (IMPACT §5.16 extension) · Status: `[partial]` — `SystemSettingsPage.tsx` exists at `/settings`; full doc §2 tab breakdown not yet implemented.
+Doc: System Settings §1–§20 · Entity: SETTINGS (IMPACT §5.16 extension) · Status: `[built]` — built 2026-08-10, all 20 tabs, contract `SYSTEM_SETTINGS_CONTRACT.md`. Known gaps: Feature Toggles persist but don't gate anything yet (sidebar/routes/widgets); SMTP host/port/user/pass are env-only and never shown (host-level fields below are deliberately not rendered as editable form fields); `defaultCourseVisibility` is a validated String, not a Prisma enum.
 
 **Module nature:** every tab = one settings form = one `settings.<domain>.update` mutation → invalidates `['settings', domain]` + the listed downstream keys. Settings are the ultimate "انعكاس" trap: a currency or feature-toggle change reflects EVERYWHERE. The Downstream column below is the needle-list — do not skip it.
 

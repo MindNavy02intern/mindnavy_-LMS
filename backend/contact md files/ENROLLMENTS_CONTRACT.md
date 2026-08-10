@@ -96,3 +96,28 @@ user · already enrolled · course full (enrollmentLimit)
 *Backend files: `routes/enrollments.routes.js` · `controllers/enrollments.controller.js` ·
 `services/enrollments.service.js` · `validators/enrollments.validator.js` ·
 smoke: `scripts/enrollmentsSmokeTest.js`. No schema change was needed (no db push).*
+
+---
+
+## Addendum (2026-08-08) — startDate / expiryDate / cohortId
+
+Extended for the Learners module (`LEARNERS_CONTRACT.md`, Part 3), which enrolls
+through `POST /api/admin/learners/:id/enrollments` — a thin wrapper over THIS
+same `enrollments.service.createEnrollment`, not a fork. Everything above is
+still accurate; this only adds fields.
+
+`CourseEnrollment` gained three nullable, additive columns (db push required —
+see the Learners contract's own note): `startDate`, `expiryDate` (both
+`DateTime?`), `cohortId` (`String?`, FK to the existing `Group` model —
+groups.prisma, no new cohort concept). Every enrollment created before this
+addendum has all three `null`; nothing back-filled.
+
+`POST /` now also accepts, all optional:
+```jsonc
+{ "courseId": "…", "userId": "…", "startDate": "2026-09-01T00:00:00.000Z",
+  "expiryDate": "2027-03-01T00:00:00.000Z", "cohortId": "<group id>" }
+```
+`expiryDate` must be after `startDate` when both are sent → `400`. Unknown
+`cohortId` → `400 COHORT_NOT_FOUND`. The `Enrollment` type gains the matching
+three response fields (all nullable). `PATCH /:id` is unchanged — still
+`status` only.

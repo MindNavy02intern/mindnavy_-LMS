@@ -40,6 +40,10 @@ const ENROLLMENT_SELECT = {
   id: true, courseId: true, userId: true,
   progress: true, status: true, completedAt: true,
   createdAt: true, updatedAt: true,
+  // Additive (Learners module Part 3) — see the CourseEnrollment schema
+  // comment. Always present in the response; null for every enrollment that
+  // never set them (the whole pre-existing Enrollments UI).
+  startDate: true, expiryDate: true, cohortId: true,
   user: { select: { fullName: true, email: true, avatar: true } },
   course: { select: { title: true } },
 };
@@ -58,6 +62,9 @@ function mapEnrollment(e) {
     enrolledAt:  iso(e.createdAt),
     completedAt: iso(e.completedAt),
     updatedAt:   iso(e.updatedAt),
+    startDate:   iso(e.startDate),
+    expiryDate:  iso(e.expiryDate),
+    cohortId:    e.cohortId ?? null,
   };
 }
 
@@ -121,7 +128,7 @@ async function listEnrollments({ courseId, userId, status, search, page, limit }
 
 // ── Enroll ──────────────────────────────────────────────────────────────────────
 
-async function createEnrollment({ courseId, userId }, adminId) {
+async function createEnrollment({ courseId, userId, startDate, expiryDate, cohortId }, adminId) {
   const course = await prisma.course.findUnique({
     where: { id: courseId },
     select: { id: true, status: true, enrollmentLimit: true },
@@ -131,6 +138,11 @@ async function createEnrollment({ courseId, userId }, adminId) {
 
   const user = await prisma.appUser.findUnique({ where: { id: userId }, select: { id: true, status: true } });
   if (!user || user.status === "ARCHIVED") throw domainError("USER_NOT_FOUND");
+
+  if (cohortId) {
+    const cohort = await prisma.group.findUnique({ where: { id: cohortId }, select: { id: true } });
+    if (!cohort) throw domainError("COHORT_NOT_FOUND");
+  }
 
   // Fast, friendly duplicate check up front; the DB unique constraint (caught as
   // P2002 below) stays the real guarantee under concurrency.
@@ -150,7 +162,12 @@ async function createEnrollment({ courseId, userId }, adminId) {
         if (count >= course.enrollmentLimit) throw domainError("COURSE_FULL");
       }
       return tx.courseEnrollment.create({
-        data: { courseId, userId },
+        data: {
+          courseId, userId,
+          ...(startDate !== undefined ? { startDate } : {}),
+          ...(expiryDate !== undefined ? { expiryDate } : {}),
+          ...(cohortId !== undefined ? { cohortId } : {}),
+        },
         select: ENROLLMENT_SELECT,
       });
     });

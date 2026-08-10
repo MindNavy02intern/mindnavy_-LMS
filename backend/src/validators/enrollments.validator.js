@@ -36,11 +36,38 @@ function readStatus(value, errors) {
   return s;
 }
 
+// Optional, additive fields for the Learners module (Part 3) — startDate/
+// expiryDate/cohortId. Undefined stays undefined (Prisma create ignores an
+// undefined key, same convention as every optional field elsewhere here);
+// null clears it. Validated the same way regardless of caller — the plain
+// Enrollments UI (Learning Management) can send them too, it just never has
+// a reason to yet.
+function readDate(value, key, errors) {
+  if (value === undefined) return undefined;
+  if (value === null) return null;
+  if (typeof value !== "string") { errors.push(`${key} must be an ISO date string.`); return undefined; }
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) { errors.push(`${key} must be a valid ISO date.`); return undefined; }
+  return d;
+}
+
 function validateEnrollCreate(body = {}) {
   const errors = [];
   const courseId = readRef(body.courseId, "courseId", errors, { required: true });
   const userId   = readRef(body.userId, "userId", errors, { required: true });
-  return { isValid: errors.length === 0, errors, data: { courseId, userId } };
+
+  const startDate  = readDate(body.startDate, "startDate", errors);
+  const expiryDate = readDate(body.expiryDate, "expiryDate", errors);
+  if (startDate && expiryDate && expiryDate <= startDate) {
+    errors.push("expiryDate must be after startDate.");
+  }
+  const cohortId = readRef(body.cohortId, "cohortId", errors);
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    data: { courseId, userId, startDate, expiryDate, cohortId },
+  };
 }
 
 function validateEnrollUpdate(body = {}) {

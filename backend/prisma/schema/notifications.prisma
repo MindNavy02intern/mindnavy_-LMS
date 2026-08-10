@@ -1,0 +1,237 @@
+// Notifications module (blueprint 10 / IMPACT_MAP §5.12). Confirmed by Step 0
+// audit: no Notification/Template/Announcement/Automation model existed
+// anywhere before this file.
+//
+// This module is deliberately separate from the existing topbar bell /
+// Dashboard Notifications widget: those already read `['notifications']` off
+// GET /api/admin/dashboard/core → recentActivities (derived live from
+// AuditLog) and stay untouched — this file backs the ADMIN MANAGEMENT side
+// (send campaigns, templates, automations, delivery logs), not that feed.
+//
+// FK strategy: userId/createdById/templateId etc. below follow the existing
+// "plain string, no cross-schema Prisma relation" convention used throughout
+// (finance.prisma header, competencies.prisma header) — except templateId on
+// NotificationAutomation, which is a real relation() because both models live
+// in this same file (no other schema file needs editing for it).
+//
+// NotificationLog deliberately doubles as the in-app feed store (rows with
+// channel=IN_APP are the "In-App Notifications" tab / recipient's inbox) —
+// a separate `Notification` model would just duplicate the same
+// id/userId/title/body/priority/read-state shape NotificationLog already
+// has (IMPACT_MAP R4 — one sink, one owner). "Read" = status flips to OPENED
+// and openedAt is stamped; no extra boolean column needed.
+//
+// sourceType/sourceId trace a log row back to the Announcement/
+// NotificationAutomation that produced it (analytics' topCampaigns /
+// automationPerformance group by these). Announcement.sentCount and
+// NotificationAutomation.sentCount are atomic per-entity counters incremented
+// alongside each log insert — not a recomputed dashboard KPI (IMPACT_MAP R3
+// targets cross-entity aggregate cards; a campaign's own send counter is the
+// same denormalized-counter pattern as Course.enrollmentCount-style fields
+// elsewhere), so it's safe to store.
+
+model NotificationTemplate {
+  id        String                     @id @default(uuid())
+  name      String
+  type      NotificationChannelType
+  subject   String?
+  body      String
+  variables String[]
+  category  NotificationCategory       @default(SYSTEM)
+  status    NotificationTemplateStatus @default(ACTIVE)
+
+  // Actor id, plain — see header note. No relation, matches Skill.createdById.
+  createdById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  automations NotificationAutomation[]
+
+  @@index([type])
+  @@index([category])
+  @@index([status])
+  @@map("notification_templates")
+}
+
+model Announcement {
+  id          String               @id @default(uuid())
+  title       String
+  body        String
+  type        AnnouncementType
+  audience    AnnouncementAudience
+  targetIds   String[]
+  priority    NotificationPriority @default(NORMAL)
+  status      AnnouncementStatus   @default(DRAFT)
+  scheduledAt DateTime?
+  sentAt      DateTime?
+  sentCount   Int                  @default(0)
+
+  createdById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([audience])
+  @@index([scheduledAt])
+  @@index([createdAt])
+  @@map("announcements")
+}
+
+model NotificationAutomation {
+  id          String                       @id @default(uuid())
+  name        String
+  description String?
+  trigger     AutomationTrigger
+  templateId  String
+  channels    String[]
+  status      NotificationAutomationStatus @default(ACTIVE)
+  sentCount   Int                          @default(0)
+
+  createdById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  template NotificationTemplate @relation(fields: [templateId], references: [id])
+
+  @@index([trigger])
+  @@index([status])
+  @@index([templateId])
+  @@map("notification_automations")
+}
+
+// See header note — this is the single sink for every notification instance
+// across every channel, including the in-app feed (channel=IN_APP).
+model NotificationLog {
+  id       String                  @id @default(uuid())
+  userId   String?
+  channel  NotificationChannelType
+  status   NotificationLogStatus   @default(PENDING)
+  subject  String?
+  body     String
+  priority NotificationPriority    @default(NORMAL)
+
+  sourceType NotificationSourceType @default(MANUAL)
+  sourceId   String?
+
+  metadata Json?
+
+  sentAt    DateTime?
+  openedAt  DateTime?
+  clickedAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([channel])
+  @@index([status])
+  @@index([sourceType, sourceId])
+  @@index([createdAt])
+  @@map("notification_logs")
+}
+
+model UserNotificationPreference {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  emailEnabled          Boolean @default(true)
+  pushEnabled           Boolean @default(false)
+  smsEnabled            Boolean @default(false)
+  marketingEnabled      Boolean @default(true)
+  learningAlertsEnabled Boolean @default(true)
+  securityEnabled       Boolean @default(true)
+
+  quietHoursStart String?
+  quietHoursEnd   String?
+
+  updatedAt DateTime @updatedAt
+
+  @@map("user_notification_preferences")
+}
+
+enum NotificationChannelType {
+  EMAIL
+  PUSH
+  SMS
+  IN_APP
+}
+
+enum NotificationCategory {
+  SYSTEM
+  MARKETING
+  LEARNING
+  SECURITY
+  PAYMENT
+}
+
+enum NotificationTemplateStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum AnnouncementType {
+  PLATFORM
+  MAINTENANCE
+  PROMOTION
+  COMPANY
+  EMERGENCY
+}
+
+enum AnnouncementAudience {
+  ALL
+  LEARNERS
+  INSTRUCTORS
+  DEPARTMENTS
+  GROUPS
+  CUSTOM
+}
+
+enum AnnouncementStatus {
+  DRAFT
+  SCHEDULED
+  SENT
+  CANCELLED
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum AutomationTrigger {
+  USER_REGISTRATION
+  COURSE_ENROLLMENT
+  COURSE_COMPLETION
+  QUIZ_FAILURE
+  ASSIGNMENT_DEADLINE
+  PAYMENT_SUCCESS
+  SUBSCRIPTION_EXPIRY
+  LIVE_SESSION_START
+  SECURITY_EVENT
+}
+
+enum NotificationAutomationStatus {
+  ACTIVE
+  PAUSED
+}
+
+enum NotificationLogStatus {
+  SENT
+  FAILED
+  PENDING
+  BOUNCED
+  OPENED
+  CLICKED
+}
+
+enum NotificationSourceType {
+  ANNOUNCEMENT
+  AUTOMATION
+  MANUAL
+  EMERGENCY
+  SYSTEM
+}

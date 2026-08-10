@@ -1,5 +1,5 @@
 # 09 · Finance — `/finance`
-Doc: Finance §1–§13 · Entity: FINANCE (IMPACT §5.7 + §5.13 extension) · Status: `[planned]`
+Doc: Finance §1–§13 · Entity: FINANCE (IMPACT §5.7 + §5.13 extension) · Status: `[built]` (2026-08-09 — see `FINANCE_CONTRACT.md`; no real payment gateway, Payment Gateways tab is static)
 
 ## Module sections
 Financial Dashboard · Payments · Subscriptions · Invoices · Transactions · Refund Management · Instructor Payouts · Revenue Analytics · Coupons & Discounts · Tax Management · Billing Settings · Payment Gateways · Financial Reports

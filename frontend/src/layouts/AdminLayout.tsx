@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../AuthContext';
 import { getStoredToken } from '../api/adminAuth';
+import { listNotifications } from '../services/notificationsApi';
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 
@@ -139,7 +140,7 @@ function NotifTypeIcon({ type }: { type: string }) {
   );
 }
 
-function NotificationsPanel({ items, loading }: { items: NotifPanelItem[]; loading: boolean }) {
+function NotificationsPanel({ items, loading, onViewAll }: { items: NotifPanelItem[]; loading: boolean; onViewAll: () => void }) {
   return (
     <div style={{
       position: 'absolute', top: 44, right: 0, width: 360,
@@ -183,7 +184,7 @@ function NotificationsPanel({ items, loading }: { items: NotifPanelItem[]; loadi
       </div>
 
       <div style={{ padding: '10px 16px', borderTop: '1px solid #f1f5f9', textAlign: 'center' }}>
-        <button style={{ fontSize: '0.78rem', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500 }}>
+        <button onClick={onViewAll} style={{ fontSize: '0.78rem', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500 }}>
           View all notifications →
         </button>
       </div>
@@ -274,8 +275,8 @@ function MessagesPanel({ items, loading }: { items: MsgPanelItem[]; loading: boo
 const QA_TOPBAR_ACTIONS = [
   { label: 'Add User',          route: '/users?modal=addUser', message: null },
   { label: 'Create Course',     route: null, message: 'Course management coming in Learning Mgmt module' },
-  { label: 'Generate Report',   route: null, message: 'Reports coming soon' },
-  { label: 'Send Notification', route: null, message: 'Notifications coming soon' },
+  { label: 'Generate Report',   route: '/reports-analytics?tab=export', message: null },
+  { label: 'Send Notification', route: '/notifications?tab=inapp', message: null },
   { label: 'Manage Roles',      route: '/roles-permissions',  message: null },
   { label: 'System Settings',   route: '/settings',           message: null },
 ];
@@ -295,11 +296,11 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/roles-permissions',   label: 'Roles & Permissions', Icon: ShieldCheck },
   { to: '/learning-management', label: 'Learning Management', Icon: BookOpen },
   { to: '/instructors',         label: 'Instructors',         Icon: GraduationCap },
-  { to: '/students',            label: 'Students',            Icon: UserIcon },
+  { to: '/learners',            label: 'Learners',             Icon: UserIcon },
   { to: '/competencies',        label: 'Competencies',        Icon: Target },
   { to: '/reports-analytics',   label: 'Reports & Analytics', Icon: BarChart3 },
   { to: '/finance',             label: 'Finance',             Icon: Wallet },
-  { to: '/notifications',       label: 'Notifications',       Icon: BellIcon, badge: 12 },
+  { to: '/notifications',       label: 'Notifications',       Icon: BellIcon },
   { to: '/integrations',        label: 'Integrations',        Icon: Plug },
   { to: '/settings',            label: 'System Settings',     Icon: SettingsIcon },
   { to: '/trusted-devices',     label: 'Audit & Security',    Icon: Shield },
@@ -342,6 +343,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
 
   const [notifications,   setNotifications]   = useState<NotifPanelItem[]>([]);
   const [notifsLoading,   setNotifsLoading]   = useState(false);
+  const [unreadCount,     setUnreadCount]     = useState(0);
   const [messages,        setMessages]        = useState<MsgPanelItem[]>([]);
   const [msgsLoading,     setMsgsLoading]     = useState(false);
 
@@ -380,6 +382,18 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
     function handleOpenNotif() { setNotifOpen(true); }
     window.addEventListener('openNotificationsPanel', handleOpenNotif);
     return () => window.removeEventListener('openNotificationsPanel', handleOpenNotif);
+  }, []);
+
+  // Sidebar badge — real unread count from the in-app notifications feed
+  // (Notifications module, channel=IN_APP). Refetches on every mutation via
+  // the same 'analyticsUpdated' bridge every other stats panel listens to.
+  useEffect(() => {
+    function fetchUnread() {
+      listNotifications({ read: false, limit: 1 }).then(res => setUnreadCount(res.total)).catch(() => {});
+    }
+    fetchUnread();
+    window.addEventListener('analyticsUpdated', fetchUnread);
+    return () => window.removeEventListener('analyticsUpdated', fetchUnread);
   }, []);
 
   // Fetch recent activity as notifications when panel opens
@@ -444,22 +458,25 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
         </div>
 
         <nav className="mn-sidebar-nav">
-          {NAV_ITEMS.map(({ to, label, Icon, badge }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) => `mn-nav-link${isActive ? ' active' : ''}`}
-              onClick={() => setOpen(false)}
-            >
-              <Icon className="mn-nav-icon" strokeWidth={2} />
-              <span className="mn-nav-label">{label}</span>
-              {badge !== undefined ? (
-                <span className="mn-nav-badge">{badge}</span>
-              ) : (
-                <ChevronRight className="mn-nav-chevron" strokeWidth={2} />
-              )}
-            </NavLink>
-          ))}
+          {NAV_ITEMS.map(({ to, label, Icon, badge }) => {
+            const effectiveBadge = to === '/notifications' ? (unreadCount > 0 ? unreadCount : undefined) : badge;
+            return (
+              <NavLink
+                key={to}
+                to={to}
+                className={({ isActive }) => `mn-nav-link${isActive ? ' active' : ''}`}
+                onClick={() => setOpen(false)}
+              >
+                <Icon className="mn-nav-icon" strokeWidth={2} />
+                <span className="mn-nav-label">{label}</span>
+                {effectiveBadge !== undefined ? (
+                  <span className="mn-nav-badge">{effectiveBadge}</span>
+                ) : (
+                  <ChevronRight className="mn-nav-chevron" strokeWidth={2} />
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
 
         <div className="mn-sidebar-footer">
@@ -541,7 +558,11 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
                 <span className="mn-notif-dot" aria-hidden="true" />
               </button>
               {notifOpen && (
-                <NotificationsPanel items={notifications} loading={notifsLoading} />
+                <NotificationsPanel
+                  items={notifications}
+                  loading={notifsLoading}
+                  onViewAll={() => { setNotifOpen(false); navigate('/notifications?tab=inapp'); }}
+                />
               )}
             </div>
 

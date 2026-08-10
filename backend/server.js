@@ -33,6 +33,17 @@ const contentRoutes      = require("./src/routes/content.routes");
 const instructorsRoutes  = require("./src/routes/instructors.routes");
 const instructorApplicationsRoutes = require("./src/routes/instructorApplications.routes");
 const publicInstructorApplicationsRoutes = require("./src/routes/publicInstructorApplications.routes");
+const learnersRoutes     = require("./src/routes/learners.routes");
+const competenciesRoutes = require("./src/routes/competencies.routes");
+const reportsRoutes      = require("./src/routes/reports.routes");
+const scheduledReportsRoutes = require("./src/routes/scheduledReports.routes");
+const financeRoutes      = require("./src/routes/finance.routes");
+const notificationsRoutes = require("./src/routes/notifications.routes");
+const integrationsRoutes = require("./src/routes/integrations.routes");
+const settingsRoutes = require("./src/routes/settings.routes");
+const { blockDuringMaintenance } = require("./src/middlewares/maintenanceMode.middleware");
+const { runDueReports: runDueScheduledReports } = require("./src/services/scheduledReports.service");
+const { sendDueAnnouncements } = require("./src/services/notifications.service");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -90,8 +101,8 @@ app.use("/api/admin/certificates", certificatesRoutes);
 // per-IP rate limiter and a minimal response that leaks nothing:
 //   • certificate verification (phones scanning QR codes) — read only
 //   • the public "Become Instructor" form — write only, no read counterpart
-app.use("/api/public/certificates", publicCertificatesRoutes);
-app.use("/api/public/instructor-applications", publicInstructorApplicationsRoutes);
+app.use("/api/public/certificates", blockDuringMaintenance, publicCertificatesRoutes);
+app.use("/api/public/instructor-applications", blockDuringMaintenance, publicInstructorApplicationsRoutes);
 
 // File uploads (sign → confirm → delete) for thumbnails (Phase 1).
 app.use("/api/admin/uploads", uploadsRoutes);
@@ -109,6 +120,43 @@ app.use("/api/admin/content", contentRoutes);
 // "Become Instructor" review queue.
 app.use("/api/admin/instructors", instructorsRoutes);
 app.use("/api/admin/instructor-applications", instructorApplicationsRoutes);
+
+// Learners (AppUser role=LEARNER + profile side table). Mirrors Instructors.
+app.use("/api/admin/learners", learnersRoutes);
+
+// Competencies (Skills, Skill Categories, Frameworks, Skill Profiles,
+// Assessments — Skill<->Course mappings).
+app.use("/api/admin/competencies", competenciesRoutes);
+
+// Reports & Analytics (cross-module read-only aggregation — reuses existing
+// services' getStats()/getAnalytics() where they own a metric, fresh
+// aggregation only where nothing else defines it yet; see REPORTS_CONTRACT.md).
+app.use("/api/admin/reports", reportsRoutes);
+
+// Scheduled Reports CRUD (separate router — see scheduledReports.routes.js
+// header note on why this isn't inline in reports.routes.js).
+app.use("/api/admin/reports/scheduled", scheduledReportsRoutes);
+
+// Finance (Payments, Subscriptions, Invoices, Transactions, Refunds,
+// Instructor Payouts, Coupons, Tax Rules, Billing Settings — see
+// FINANCE_CONTRACT.md). No real payment gateway yet — data models + UI only.
+app.use("/api/admin/finance", financeRoutes);
+
+// Notifications (Templates, Announcements, Automations, delivery logs,
+// per-user preferences, emergency alerts — see NOTIFICATIONS_CONTRACT.md).
+// The existing topbar bell / Dashboard Notifications widget is untouched —
+// this is the separate admin management module (blueprint 10).
+app.use("/api/admin/notifications", notificationsRoutes);
+
+// Integrations (registry over Zoom/Supabase/SMTP + a COMING_SOON catalog,
+// API keys, webhooks, logs, data syncs — see INTEGRATIONS_CONTRACT.md).
+// Reuses the existing meetings/zoomProvider and storage/supabaseProvider
+// adapters; never reimplements their auth.
+app.use("/api/admin/integrations", integrationsRoutes);
+
+// System Settings (single-row platform config, maintenance mode, backup/
+// restore, per-field config log trail — see SYSTEM_SETTINGS_CONTRACT.md).
+app.use("/api/admin/system-settings", settingsRoutes);
 
 // User management routes
 app.use("/api/admin/users", usersRoutes);
@@ -162,6 +210,27 @@ const assignmentExpiryTimer = setInterval(() => {
   expireRoleAssignments().catch(() => {});
 }, ASSIGNMENT_EXPIRY_INTERVAL_MS);
 assignmentExpiryTimer.unref();
+
+// Background job: send every ACTIVE scheduled report whose nextRunAt has
+// passed (generates the file, emails recipients, logs to AuditLog). Same
+// setInterval + .unref() convention as the role-expiry sweep above — no
+// node-cron dependency in this codebase. Errors are swallowed per-report
+// inside runDueReports() itself, so a bad send can never crash this timer.
+const SCHEDULED_REPORTS_INTERVAL_MS = 60 * 60 * 1000;
+const scheduledReportsTimer = setInterval(() => {
+  runDueScheduledReports().catch((err) => console.error("[scheduledReports] sweep failed:", err.message));
+}, SCHEDULED_REPORTS_INTERVAL_MS);
+scheduledReportsTimer.unref();
+
+// Background job: send every SCHEDULED announcement whose scheduledAt has
+// passed. Same setInterval + .unref() convention as the two sweeps above —
+// checked more often (5 min) since announcements are a more time-sensitive
+// surface than reports.
+const ANNOUNCEMENTS_SWEEP_INTERVAL_MS = 5 * 60 * 1000;
+const announcementsSweepTimer = setInterval(() => {
+  sendDueAnnouncements().catch((err) => console.error("[notifications] scheduled sweep failed:", err.message));
+}, ANNOUNCEMENTS_SWEEP_INTERVAL_MS);
+announcementsSweepTimer.unref();
 
 server.on("error", (error) => {
   console.error("Server failed to start:", error.message);

@@ -18,6 +18,17 @@ export const queryKeys = {
   },
 
   reportsSnapshot:    (): QueryKey => ['reports', 'snapshot'],
+  // Reports & Analytics module (backend shipped — REPORTS_CONTRACT.md).
+  reportsOverview:     (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'overview', filters] : ['reports', 'overview'],
+  reportsLearners:     (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'learners', filters] : ['reports', 'learners'],
+  reportsInstructors:  (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'instructors', filters] : ['reports', 'instructors'],
+  reportsCourses:      (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'courses', filters] : ['reports', 'courses'],
+  reportsAssessments:  (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'assessments', filters] : ['reports', 'assessments'],
+  reportsCertificates: (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'certificates', filters] : ['reports', 'certificates'],
+  reportsAttendance:   (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'attendance', filters] : ['reports', 'attendance'],
+  reportsAudit:        (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'audit', filters] : ['reports', 'audit'],
+  reportsEngagement:   (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'engagement', filters] : ['reports', 'engagement'],
+  reportsCompliance:   (filters?: Record<string, unknown>): QueryKey => filters ? ['reports', 'compliance', filters] : ['reports', 'compliance'],
   calendar:           (): QueryKey => ['calendar'],
   tasks:              (): QueryKey => ['tasks'],
   transactionsRecent: (): QueryKey => ['transactions', 'recent'],
@@ -62,7 +73,13 @@ export const queryKeys = {
     chart:       (): QueryKey => ['org', 'chart'],
   },
   groups:       (): QueryKey => ['groups'],
-  competencies: (): QueryKey => ['competencies'],
+  // Filters optional so existing no-arg call sites (skill.create/.update/.delete
+  // etc. in invalidation.ts) stay valid — same backward-compatible shape as
+  // courses.list.
+  competencies: (filters?: Record<string, unknown>): QueryKey =>
+                  filters ? ['competencies', filters] : ['competencies'],
+  competencyDetail:  (id: string): QueryKey => ['competencies', id],
+  competenciesStats: (): QueryKey => ['competencies', 'stats'],
 
   // ── Learning ───────────────────────────────────────────────────────────────
   courses: {
@@ -99,6 +116,23 @@ export const queryKeys = {
     analytics:    (): QueryKey => ['instructors', 'analytics'],
   },
 
+  // ── Learners ───────────────────────────────────────────────────────────────
+  // "Learner" only — never "Student". See learners.prisma header note: the
+  // `students` block below is DEAD (built ahead of a /students page that was
+  // never shipped — verified zero consumers) and is left alone deliberately,
+  // not renamed. More keys (enrollments/progress/activity/assessments/
+  // certificates/attendance/documents/tickets) land as Parts 3/5/7 ship.
+  learners: {
+    list:              (filters?: Record<string, unknown>): QueryKey =>
+                         filters ? ['learners', filters] : ['learners'],
+    detail:            (id: string): QueryKey => ['learners', id],
+    stats:             (): QueryKey => ['learners', 'stats'],
+    analytics:         (): QueryKey => ['learners', 'analytics'],
+    suspensionHistory: (id: string): QueryKey => ['learners', id, 'suspension-history'],
+    documents:         (id: string): QueryKey => ['learners', id, 'documents'],
+    tickets:           (id: string): QueryKey => ['learners', id, 'tickets'],
+  },
+
   // ── Students ───────────────────────────────────────────────────────────────
   students: {
     list:         (filters?: Record<string, unknown>): QueryKey =>
@@ -120,6 +154,12 @@ export const queryKeys = {
   competenciesFrameworks: (): QueryKey => ['competencies', 'frameworks'],
   competenciesLevels:     (): QueryKey => ['competencies', 'levels'],
   competenciesAnalytics:  (): QueryKey => ['competencies', 'analytics'],
+  frameworkDetail:        (id: string): QueryKey => ['competencies', 'frameworks', id],
+  competenciesSkillGaps:  (filters?: Record<string, unknown>): QueryKey =>
+                            filters ? ['competencies', 'skill-gaps', filters] : ['competencies', 'skill-gaps'],
+  competenciesAssessments: (filters?: Record<string, unknown>): QueryKey =>
+                            filters ? ['competencies', 'assessments', filters] : ['competencies', 'assessments'],
+  competenciesSettings:   (): QueryKey => ['competencies', 'settings'],
   userSkills:             (userId: string): QueryKey => ['users', userId, 'skills'],
 
   // ── Finance ────────────────────────────────────────────────────────────────
@@ -152,6 +192,7 @@ export const queryKeys = {
   integrationsSync:  (): QueryKey => ['integrations', 'sync'],
   apiKeys:           (): QueryKey => ['api-keys'],
   webhooks:          (): QueryKey => ['webhooks'],
+  integrationsLogs:  (): QueryKey => ['integrations', 'logs'],
 
   // ── Settings / Security ────────────────────────────────────────────────────
   settings:          (domain?: string): QueryKey =>
