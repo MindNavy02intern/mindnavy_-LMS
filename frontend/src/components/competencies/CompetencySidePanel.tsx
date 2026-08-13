@@ -8,6 +8,7 @@
 // honest "not available" rather than invented — see AvailabilityNote below.
 
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { X, Pencil, Trash2, Plus, Layers, Users, Download, Upload, ClipboardList } from 'lucide-react';
 import { deleteSkill, getSkill } from '../../services/competenciesApi';
 import { CompetenciesApiError } from '../../types/competencies';
@@ -67,6 +68,15 @@ export default function CompetencySidePanel({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [, setSearchParams] = useSearchParams();
+
+  function goToImportExport() {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.set('tab', 'import-export');
+      return next;
+    });
+  }
 
   const fetchDetail = useCallback(() => {
     setLoading(true);
@@ -161,9 +171,9 @@ export default function CompetencySidePanel({
               <QuickAction Icon={Plus} label="Create Competency" onClick={onCreateCompetency} />
               <QuickAction Icon={Layers} label="Create Framework" onClick={onCreateFramework} />
               <QuickAction Icon={Users} label="Assign to Users" onClick={() => onAssignToUsers(detail)} />
-              <QuickAction Icon={ClipboardList} label="Bulk Assessment" onClick={() => showToast('error', 'Bulk assessment is not available yet.')} />
-              <QuickAction Icon={Upload} label="Import Competencies" onClick={() => showToast('error', 'Import is not available yet.')} />
-              <QuickAction Icon={Download} label="Export Report" onClick={() => showToast('error', 'Export is not available yet.')} />
+              <QuickAction Icon={ClipboardList} label="Bulk Assessment" onClick={() => onAssignToUsers(detail)} />
+              <QuickAction Icon={Upload} label="Import Competencies" onClick={goToImportExport} />
+              <QuickAction Icon={Download} label="Export Report" onClick={goToImportExport} />
             </div>
           </div>
 
