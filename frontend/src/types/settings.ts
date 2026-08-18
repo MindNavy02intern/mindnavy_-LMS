@@ -82,6 +82,14 @@ export interface SystemSettings {
   metaTitle: string | null;
   metaDescription: string | null;
 
+  // Video conferencing (Zoom meeting defaults)
+  zoomDefaultDuration: number;
+  zoomRecordingEnabled: boolean;
+
+  // Roles & Permissions settings tab
+  roleInheritanceEnabled: boolean;
+  maxRolesPerUser: number;
+
   // Maintenance
   maintenanceMode: boolean;
   maintenanceMessage: string | null;

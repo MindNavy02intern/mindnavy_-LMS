@@ -109,16 +109,6 @@ const ACTION_TITLE = {
   USERS_EXPORTED:                "exported users",
 };
 
-// Maps audit actions → NotificationType (security | approval | system | payment | course)
-const ACTION_NOTIF_TYPE = {
-  ADMIN_LOGIN:                "security",
-  ADMIN_LOGOUT:               "security",
-  FAILED_LOGIN:               "security",
-  SESSION_REVOKED:            "security",
-  USER_FORCE_LOGOUT:          "security",
-  USER_VERIFICATION_APPROVED: "approval",
-};
-
 function mapAuditToActivity(entries) {
   return entries.map(entry => ({
     id:        entry.id,
@@ -142,9 +132,12 @@ async function getDashboardCore(admin) {
     publishedCourses,
     totalRevenue,
     activeSubscriptions,
+    certificatesIssued,
     recentActivitiesRaw,
     liveSessionRows,
     notificationsRaw,
+    unreadNotificationsCount,
+    pendingInstructorApps,
   ] = await Promise.all([
     prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }).catch(() => 0),
     prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }).catch(() => 0),
@@ -153,6 +146,9 @@ async function getDashboardCore(admin) {
     prisma.course.count({ where: { status: "PUBLISHED" } }).catch(() => 0),
     getTotalRevenueValue().catch(() => 0),
     getActiveSubscriptionsCountValue().catch(() => 0),
+    // Revoked certificates don't count as issued — same rule lm.service's
+    // getStats() certificatesIssued uses (reports.service Overview mirrors it).
+    prisma.certificate.count({ where: { revokedAt: null } }).catch(() => 0),
     prisma.auditLog.findMany({
       take: 10,
       orderBy: { createdAt: "desc" },
@@ -167,12 +163,23 @@ async function getDashboardCore(admin) {
     // (LIVE_SESSIONS_CONTRACT.md). Was previously counting app-user LOGIN
     // sessions, unrelated to actual live classes (fixed 2026-07-27).
     listLiveSessions({}).catch(() => []),
-    // Last 5 audit log entries for the notifications preview panel
-    prisma.auditLog.findMany({
+    // Notifications preview — was reading AuditLog (fake: isRead hardcoded
+    // false, title derived from admin *actions*, not actual notifications).
+    // Real source is NotificationLog{channel:IN_APP} — the same table the
+    // sidebar bell badge (AdminLayout.tsx) and the Notifications module's
+    // In-App tab already read (one sink, one owner).
+    prisma.notificationLog.findMany({
+      where: { channel: "IN_APP" },
       take: 5,
       orderBy: { createdAt: "desc" },
-      select: { id: true, action: true, createdAt: true },
+      select: { id: true, subject: true, body: true, priority: true, status: true, createdAt: true },
     }).catch(() => []),
+    prisma.notificationLog.count({
+      where: { channel: "IN_APP", status: { notIn: ["OPENED", "CLICKED"] } },
+    }).catch(() => 0),
+    // Same OPEN_STATES instructorApplications.service uses for its own queue —
+    // reused here, not redefined, so this count can't drift from that module's.
+    prisma.instructorApplication.count({ where: { status: { in: ["PENDING", "CHANGES_REQUESTED"] } } }).catch(() => 0),
   ]);
 
   const liveSessionsRunning = liveSessionRows.filter((s) => s.status === "LIVE").length;
@@ -192,10 +199,14 @@ async function getDashboardCore(admin) {
       activeStudents,
       activeInstructors,
       publishedCourses,
-      pendingApprovals,
+      // Combined queue — was user-verification-only, silently ignoring the
+      // instructor-application queue (DEFERRED_ITEMS.md). Same combined
+      // definition getDashboardAdminWidgets' pendingApprovals widget uses
+      // below, so the KPI card and the widget total can never disagree.
+      pendingApprovals: pendingApprovals + pendingInstructorApps,
       totalRevenue,
       activeSubscriptions,
-      certificatesIssued:  0,  // Phase 2 — Certificate table not yet built
+      certificatesIssued,
       // Real LiveSession count (status LIVE). NOTE: this is a SEPARATE query
       // from getDashboardAdminWidgets' activeCount below — both filter the
       // same table via the same status-derivation logic, but core and
@@ -211,12 +222,16 @@ async function getDashboardCore(admin) {
     recentActivities:      mapAuditToActivity(recentActivitiesRaw),
     notificationsPreview:  notificationsRaw.map(log => ({
       id:        log.id,
-      title:     ACTION_TITLE[log.action] ?? log.action.replace(/_/g, " ").toLowerCase(),
-      message:   "",
-      type:      ACTION_NOTIF_TYPE[log.action] ?? "system",
-      isRead:    false,
+      title:     log.subject ?? log.body.slice(0, 80),
+      message:   log.subject ? log.body : "",
+      // No category field exists on NotificationLog to map to the 5-way
+      // NotificationType union honestly — URGENT is the one real signal
+      // this table has, everything else is a plain "system" notification.
+      type:      log.priority === "URGENT" ? "security" : "system",
+      isRead:    log.status === "OPENED" || log.status === "CLICKED",
       createdAt: log.createdAt instanceof Date ? log.createdAt.toISOString() : String(log.createdAt),
     })),
+    unreadNotificationsCount: unreadNotificationsCount,
     securityAlertsPreview: [],
 
     quickActions: [
@@ -521,7 +536,12 @@ async function getDashboardAdminWidgets(query = {}) {
   // again the way total/items did before this fix.
   const pendingApprovalWhere = { ...PENDING_APPROVAL_WHERE, ...deptScope };
 
-  const [pendingApprovalCount, pendingApprovalRows, liveSessionRows] = await Promise.all([
+  const [
+    pendingApprovalCount, pendingApprovalRows, liveSessionRows,
+    pendingCourseCount, pendingInstructorAppCount, pendingRefundCount,
+    recentPayments, recentRefunds, recentPayouts,
+    lastScheduledReport, pendingInstructorAppRows,
+  ] = await Promise.all([
     prisma.appUser.count({ where: pendingApprovalWhere }).catch(() => 0),
     prisma.appUser.findMany({
       where: pendingApprovalWhere,
@@ -532,7 +552,78 @@ async function getDashboardAdminWidgets(query = {}) {
     // Real live sessions (LIVE_SESSIONS_CONTRACT.md) — was previously counting
     // app-user LOGIN sessions, unrelated to actual live classes (fixed 2026-07-27).
     listLiveSessions({}).catch(() => []),
+
+    // Pending Tasks — each count is owned elsewhere (Learning Management's
+    // Course.status, Instructors' InstructorApplication queue, Finance's
+    // Refund queue, this widget's own pendingApprovalCount above) and just
+    // read here, never recomputed with a different definition (R4).
+    prisma.course.count({ where: { status: "PENDING" } }).catch(() => 0),
+    prisma.instructorApplication.count({ where: { status: { in: ["PENDING", "CHANGES_REQUESTED"] } } }).catch(() => 0),
+    prisma.refund.count({ where: { status: "PENDING" } }).catch(() => 0),
+
+    // Recent Transactions — merged from Finance's three money-moving tables
+    // (Payment/Refund/InstructorPayout), same tables finance.service reads.
+    prisma.payment.findMany({ orderBy: { createdAt: "desc" }, take: 5, select: { id: true, amount: true, currency: true, status: true, createdAt: true } }).catch(() => []),
+    prisma.refund.findMany({ orderBy: { requestedAt: "desc" }, take: 3, select: { id: true, amount: true, status: true, requestedAt: true } }).catch(() => []),
+    prisma.instructorPayout.findMany({ orderBy: { createdAt: "desc" }, take: 3, select: { id: true, amount: true, currency: true, status: true, createdAt: true } }).catch(() => []),
+
+    // Reports Snapshot's lastGeneratedAt — the one real "a report ran" event
+    // this schema has (ScheduledReport.lastRunAt, reports.prisma).
+    prisma.scheduledReport.findFirst({ where: { lastRunAt: { not: null } }, orderBy: { lastRunAt: "desc" }, select: { lastRunAt: true } }).catch(() => null),
+
+    // Pending Approvals widget rows (DEFERRED_ITEMS.md — the KPI/widget
+    // ignored the instructor-application queue). Same OPEN_STATES filter as
+    // pendingInstructorAppCount above, just the actual rows for the list.
+    prisma.instructorApplication.findMany({
+      where: { status: { in: ["PENDING", "CHANGES_REQUESTED"] } },
+      orderBy: { createdAt: "asc" },
+      take: 10,
+      select: { id: true, fullName: true, createdAt: true },
+    }).catch(() => []),
   ]);
+
+  // Priority is fixed per task type (money/identity queues rank above
+  // content queues) — there's no per-item "waiting since" to derive it from
+  // the way pendingApprovalPriority() below does for individual users.
+  const PENDING_TASK_DEFS = [
+    { type: "user_verification",      count: pendingApprovalCount,      title: "User accounts pending verification", priority: "high",   link: "/users?tab=pending-verification" },
+    { type: "refund",                 count: pendingRefundCount,        title: "Refund requests pending",            priority: "high",   link: "/finance?tab=refunds" },
+    { type: "instructor_application", count: pendingInstructorAppCount, title: "Instructor applications to review",  priority: "medium", link: "/instructors?tab=pending" },
+    { type: "course_approval",        count: pendingCourseCount,        title: "Courses awaiting approval",          priority: "medium", link: "/learning-management?tab=courses" },
+  ];
+  const tasksAndReminders = PENDING_TASK_DEFS
+    .filter((t) => t.count > 0)
+    .map((t) => ({ id: t.type, type: t.type, title: t.title, count: t.count, priority: t.priority, link: t.link }));
+
+  const PAYMENT_TX_STATUS = { PENDING: "pending", SUCCESSFUL: "success", FAILED: "failed", REFUNDED: "refunded", CANCELLED: "failed" };
+  const REFUND_TX_STATUS  = { PENDING: "pending", APPROVED: "pending", REJECTED: "failed", PROCESSED: "success" };
+  const PAYOUT_TX_STATUS  = { PENDING: "pending", APPROVED: "pending", PROCESSING: "pending", HELD: "pending", COMPLETED: "success", FAILED: "failed" };
+  const recentTransactions = [
+    ...recentPayments.map((p) => ({
+      id: p.id, type: p.status === "FAILED" ? "failed_payment" : "payment",
+      amount: p.amount, currency: p.currency, status: PAYMENT_TX_STATUS[p.status] ?? "pending",
+      createdAt: p.createdAt.toISOString(),
+    })),
+    ...recentRefunds.map((r) => ({
+      id: r.id, type: "refund", amount: r.amount, currency: "USD",
+      status: REFUND_TX_STATUS[r.status] ?? "pending", createdAt: r.requestedAt.toISOString(),
+    })),
+    ...recentPayouts.map((p) => ({
+      id: p.id, type: "payout", amount: p.amount, currency: p.currency,
+      status: PAYOUT_TX_STATUS[p.status] ?? "pending", createdAt: p.createdAt.toISOString(),
+    })),
+  ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 8);
+
+  // Static link catalog into Reports & Analytics' real tabs (ReportsPage.tsx
+  // TABS) — this widget doesn't own or recompute report data, it's a
+  // navigation shortcut, same nature as the Quick Actions grid above.
+  const availableReports = [
+    { key: "overview",     label: "Reports Overview", path: "/reports-analytics?tab=overview" },
+    { key: "learners",     label: "Learner Analytics", path: "/reports-analytics?tab=learners" },
+    { key: "courses",      label: "Course Analytics",  path: "/reports-analytics?tab=courses" },
+    { key: "certificates", label: "Certificates",      path: "/reports-analytics?tab=certificates" },
+    { key: "audit",        label: "Audit Logs",        path: "/reports-analytics?tab=audit" },
+  ];
 
   // Priority is a real, derived signal (how long the request has been
   // waiting), not an invented field — there is no separate priority system.
@@ -544,14 +635,28 @@ async function getDashboardAdminWidgets(query = {}) {
     return "low";
   }
 
-  const pendingApprovalItems = pendingApprovalRows.map((u) => ({
-    id:          u.id,
-    type:        "user_verification",
-    title:       `${u.fullName} — account verification`,
-    submittedBy: u.fullName,
-    submittedAt: u.createdAt.toISOString(),
-    priority:    pendingApprovalPriority(u.createdAt),
-  }));
+  // Combined queue — user verifications + instructor applications, same
+  // definition the KPI card (getDashboardCore) uses so the two never
+  // disagree. Longest-waiting first across BOTH types, capped at 10 total
+  // (matches each individual query's own cap).
+  const pendingApprovalItems = [
+    ...pendingApprovalRows.map((u) => ({
+      id:          u.id,
+      type:        "user_verification",
+      title:       `${u.fullName} — account verification`,
+      submittedBy: u.fullName,
+      submittedAt: u.createdAt.toISOString(),
+      priority:    pendingApprovalPriority(u.createdAt),
+    })),
+    ...pendingInstructorAppRows.map((a) => ({
+      id:          a.id,
+      type:        "instructor",
+      title:       `${a.fullName} — instructor application`,
+      submittedBy: a.fullName,
+      submittedAt: a.createdAt.toISOString(),
+      priority:    pendingApprovalPriority(a.createdAt),
+    })),
+  ].sort((a, b) => new Date(a.submittedAt) - new Date(b.submittedAt)).slice(0, 10);
 
   // activeCount/upcomingCount/items all derive from the SAME synced rows —
   // no separate counts that could drift from what's actually listed.
@@ -599,7 +704,7 @@ async function getDashboardAdminWidgets(query = {}) {
     },
 
     pendingApprovals: {
-      total: pendingApprovalCount,
+      total: pendingApprovalCount + pendingInstructorAppCount,
       items: pendingApprovalItems,
     },
 
@@ -612,13 +717,13 @@ async function getDashboardAdminWidgets(query = {}) {
       items: liveSessionItems,
     },
 
-    tasksAndReminders:  [],
-    recentTransactions: [],
+    tasksAndReminders,
+    recentTransactions,
     calendarEvents,
 
     reportsSnapshot: {
-      availableReports: [],
-      lastGeneratedAt:  null,
+      availableReports,
+      lastGeneratedAt: lastScheduledReport?.lastRunAt ? lastScheduledReport.lastRunAt.toISOString() : null,
     },
 
     aiInsights: [],

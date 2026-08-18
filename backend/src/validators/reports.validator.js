@@ -143,6 +143,11 @@ function validateAuditQuery(query = {}) {
   if (search) data.search = search;
   const action = readString(query.action, "action", AUDIT_ACTIONS_FREE_TEXT_MAX, errors);
   if (action) data.action = action.toUpperCase();
+  // Multi-action filter (e.g. Roles & Permissions' Audit & Tracking tab,
+  // which needs every COMPANY_ROLE_*/DELEGATED_ADMIN_* action at once) —
+  // additive alongside the single `action` param, never combined by callers.
+  const actionsRaw = readString(query.actions, "actions", 500, errors);
+  if (actionsRaw) data.actions = actionsRaw.split(",").map((a) => a.trim().toUpperCase()).filter(Boolean).slice(0, 30);
   const userId = readString(query.userId, "userId", 100, errors);
   if (userId) data.userId = userId;
   return { isValid: errors.length === 0, errors, data };
@@ -179,6 +184,110 @@ function validateComplianceQuery(query = {}) {
   return { isValid: errors.length === 0, errors, data: { dateRange, departmentId: departmentId || null } };
 }
 
+// ── Saved Reports (Custom Reports builder) ──────────────────────────────────
+//
+// dataSource reuses EXPORT_TYPES (uppercased for storage/response, same
+// values as GET /reports/export's `type`) — one list of valid data sources,
+// not two. COLUMNS_BY_SOURCE lives in savedReports.service.js (it mirrors
+// getExportData's real column keys, the query engine, not a validator
+// concern) — selectedColumns is checked against it there, not here.
+
+const VISUALIZATIONS = new Set(["TABLE", "LINE_CHART", "BAR_CHART", "PIE_CHART", "KPI_CARDS"]);
+const SAVED_REPORT_MAX = { name: 150, description: 1000, columns: 30, columnName: 60, schedule: 120 };
+
+function readDataSource(value, errors) {
+  const s = typeof value === "string" ? value.trim().toLowerCase() : "";
+  if (!EXPORT_TYPES.has(s)) errors.push(`dataSource must be one of: ${[...EXPORT_TYPES].map((t) => t.toUpperCase()).join(", ")}.`);
+  return s.toUpperCase();
+}
+
+function readSelectedColumns(value, errors) {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) { errors.push("selectedColumns must be an array of strings."); return []; }
+  if (value.length > SAVED_REPORT_MAX.columns) { errors.push(`selectedColumns must have at most ${SAVED_REPORT_MAX.columns} entries.`); return []; }
+  const out = [];
+  for (const v of value) {
+    if (typeof v !== "string" || !v.trim() || v.length > SAVED_REPORT_MAX.columnName) {
+      errors.push("Each selected column must be a non-empty string.");
+      return [];
+    }
+    out.push(v.trim());
+  }
+  return out;
+}
+
+// filters is stored as-is (Json) but its dateRange/dateFrom/dateTo are
+// pre-validated here with the same rules every other report endpoint uses —
+// a bad filters payload 400s at save time, not silently at run time.
+function readFilters(value, errors) {
+  if (value === undefined || value === null) return null;
+  if (typeof value !== "object" || Array.isArray(value)) { errors.push("filters must be an object."); return null; }
+  const localErrors = [];
+  resolveDateRange(value, localErrors);
+  if (localErrors.length > 0) { errors.push(...localErrors); return null; }
+  return value;
+}
+
+function readVisualization(value, errors, { required = false } = {}) {
+  if (value === undefined) {
+    if (required) errors.push("visualization is required.");
+    return undefined;
+  }
+  const s = typeof value === "string" ? value.trim().toUpperCase() : "";
+  if (!VISUALIZATIONS.has(s)) { errors.push(`visualization must be one of: ${[...VISUALIZATIONS].join(", ")}.`); return undefined; }
+  return s;
+}
+
+function validateSavedReportCreate(body = {}) {
+  const errors = [];
+  const data = {};
+
+  data.name = readString(body.name, "name", SAVED_REPORT_MAX.name, errors, { required: true });
+  data.description = body.description === undefined ? null : (body.description === null ? null : readString(body.description, "description", SAVED_REPORT_MAX.description, errors, { required: false }));
+  data.dataSource = readDataSource(body.dataSource, errors);
+  data.selectedColumns = readSelectedColumns(body.selectedColumns, errors);
+  data.filters = readFilters(body.filters, errors);
+  data.visualization = readVisualization(body.visualization, errors) ?? "TABLE";
+
+  if (body.schedule !== undefined && body.schedule !== null) {
+    if (typeof body.schedule !== "string" || body.schedule.length > SAVED_REPORT_MAX.schedule) errors.push(`schedule must be a string of at most ${SAVED_REPORT_MAX.schedule} characters.`);
+    else data.schedule = body.schedule.trim() || null;
+  } else {
+    data.schedule = null;
+  }
+
+  if (body.isPublic !== undefined) {
+    if (typeof body.isPublic !== "boolean") errors.push("isPublic must be a boolean.");
+    else data.isPublic = body.isPublic;
+  }
+
+  return { isValid: errors.length === 0, errors, data };
+}
+
+function validateSavedReportUpdate(body = {}) {
+  const errors = [];
+  const data = {};
+
+  if (body.name !== undefined) data.name = readString(body.name, "name", SAVED_REPORT_MAX.name, errors, { required: true });
+  if (body.description !== undefined) data.description = body.description === null ? null : readString(body.description, "description", SAVED_REPORT_MAX.description, errors, { required: false });
+  if (body.dataSource !== undefined) data.dataSource = readDataSource(body.dataSource, errors);
+  if (body.selectedColumns !== undefined) data.selectedColumns = readSelectedColumns(body.selectedColumns, errors);
+  if (body.filters !== undefined) data.filters = readFilters(body.filters, errors);
+  if (body.visualization !== undefined) data.visualization = readVisualization(body.visualization, errors);
+  if (body.schedule !== undefined) {
+    if (body.schedule === null) data.schedule = null;
+    else if (typeof body.schedule !== "string" || body.schedule.length > SAVED_REPORT_MAX.schedule) errors.push(`schedule must be a string of at most ${SAVED_REPORT_MAX.schedule} characters.`);
+    else data.schedule = body.schedule.trim() || null;
+  }
+  if (body.isPublic !== undefined) {
+    if (typeof body.isPublic !== "boolean") errors.push("isPublic must be a boolean.");
+    else data.isPublic = body.isPublic;
+  }
+
+  if (errors.length === 0 && Object.keys(data).length === 0) errors.push("No valid fields provided to update.");
+  return { isValid: errors.length === 0, errors, data };
+}
+
 module.exports = {
   EXPORT_TYPES,
   resolveDateRange,
@@ -193,4 +302,6 @@ module.exports = {
   validateEngagementQuery,
   validateExportQuery,
   validateComplianceQuery,
+  validateSavedReportCreate,
+  validateSavedReportUpdate,
 };

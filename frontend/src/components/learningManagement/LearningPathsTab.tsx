@@ -1,4 +1,4 @@
-// Learning Paths Tab — v1: COURSE and LIVE_SESSION items only.
+// Learning Paths Tab — COURSE, LIVE_SESSION and QUIZ items.
 //
 // State machine: list → create | edit (form) | detail (items).
 //
@@ -13,7 +13,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, ChevronLeft, Pencil, Trash2, ChevronUp, ChevronDown, BookOpen, Video, AlertTriangle, X } from 'lucide-react';
+import { Plus, ChevronLeft, Pencil, Trash2, ChevronUp, ChevronDown, BookOpen, Video, HelpCircle, AlertTriangle, X } from 'lucide-react';
 import {
   listPaths, getPath, createPath, updatePath, deletePath,
   addItem, removeItem, reorderItems,
@@ -21,10 +21,12 @@ import {
 } from '../../services/learningPathsApi';
 import { listCourses } from '../../services/coursesApi';
 import { getLmLiveSessions } from '../../services/lmApi';
+import { listQuizzes } from '../../services/quizzesApi';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import type { LearningPath, LearningPathDetail, LearningPathItem, LearningPathItemType } from '../../types/learningPaths';
 import type { CourseListRow } from '../../types/courses';
 import type { LiveSession } from '../../types/lm';
+import type { Quiz } from '../../types/quizzes';
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
 
@@ -231,6 +233,7 @@ function ItemPicker({ pathId, onAdded, onClose }: PickerProps) {
   const [itemType,    setItemType]    = useState<LearningPathItemType>('COURSE');
   const [courses,     setCourses]     = useState<CourseListRow[]>([]);
   const [sessions,    setSessions]    = useState<LiveSession[]>([]);
+  const [quizzes,     setQuizzes]     = useState<Quiz[]>([]);
   const [loadingList, setLoadingList] = useState(false);
   const [selected,    setSelected]    = useState('');
   const [adding,      setAdding]      = useState(false);
@@ -241,9 +244,10 @@ function ItemPicker({ pathId, onAdded, onClose }: PickerProps) {
     setSelected('');
     setPickerError(null);
     setLoadingList(true);
-    const fetch = itemType === 'COURSE'
-      ? listCourses({ limit: 200 }).then((r) => { setCourses(r.courses); })
-      : getLmLiveSessions('upcoming').then((r) => setSessions(r));
+    const fetch =
+      itemType === 'COURSE' ? listCourses({ limit: 200 }).then((r) => { setCourses(r.courses); }) :
+      itemType === 'LIVE_SESSION' ? getLmLiveSessions('upcoming').then((r) => setSessions(r)) :
+      listQuizzes().then((r) => setQuizzes(r));
     fetch
       .catch((err) => setPickerError(err instanceof Error ? err.message : 'Failed to load items.'))
       .finally(() => setLoadingList(false));
@@ -298,7 +302,7 @@ function ItemPicker({ pathId, onAdded, onClose }: PickerProps) {
           <div>
             <p className="tw:m-0 tw:mb-2 tw:text-[12px] tw:font-semibold tw:text-slate-700">Item type</p>
             <div className="tw:flex tw:gap-2">
-              {(['COURSE', 'LIVE_SESSION'] as const).map((t) => (
+              {(['COURSE', 'LIVE_SESSION', 'QUIZ'] as const).map((t) => (
                 <button
                   key={t}
                   type="button"
@@ -313,10 +317,12 @@ function ItemPicker({ pathId, onAdded, onClose }: PickerProps) {
                 >
                   {t === 'COURSE' ? (
                     <BookOpen className="tw:h-3.5 tw:w-3.5" strokeWidth={2} />
-                  ) : (
+                  ) : t === 'LIVE_SESSION' ? (
                     <Video className="tw:h-3.5 tw:w-3.5" strokeWidth={2} />
+                  ) : (
+                    <HelpCircle className="tw:h-3.5 tw:w-3.5" strokeWidth={2} />
                   )}
-                  {t === 'COURSE' ? 'Course' : 'Live Session'}
+                  {t === 'COURSE' ? 'Course' : t === 'LIVE_SESSION' ? 'Live Session' : 'Quiz'}
                 </button>
               ))}
             </div>
@@ -325,7 +331,7 @@ function ItemPicker({ pathId, onAdded, onClose }: PickerProps) {
           {/* Item select */}
           <div>
             <label className="tw:mb-1.5 tw:block tw:text-[12px] tw:font-semibold tw:text-slate-700">
-              {itemType === 'COURSE' ? 'Select course' : 'Select live session'}
+              {itemType === 'COURSE' ? 'Select course' : itemType === 'LIVE_SESSION' ? 'Select live session' : 'Select quiz'}
             </label>
             {loadingList ? (
               <div className="tw:h-9 tw:w-full tw:animate-pulse tw:rounded-lg tw:bg-slate-100" />
@@ -333,20 +339,26 @@ function ItemPicker({ pathId, onAdded, onClose }: PickerProps) {
               <select
                 value={selected}
                 onChange={(e) => { setSelected(e.target.value); setPickerError(null); }}
-                aria-label={itemType === 'COURSE' ? 'Select course' : 'Select live session'}
+                aria-label={itemType === 'COURSE' ? 'Select course' : itemType === 'LIVE_SESSION' ? 'Select live session' : 'Select quiz'}
                 className="tw:w-full tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400"
               >
                 <option value="">
                   {itemType === 'COURSE'
                     ? courseOptions.length ? '— Select a course —' : 'No published/draft courses available'
-                    : sessionOptions.length ? '— Select a live session —' : 'No upcoming sessions available'}
+                    : itemType === 'LIVE_SESSION'
+                    ? sessionOptions.length ? '— Select a live session —' : 'No upcoming sessions available'
+                    : quizzes.length ? '— Select a quiz —' : 'No quizzes available'}
                 </option>
                 {itemType === 'COURSE'
                   ? courseOptions.map((c) => (
                     <option key={c.id} value={c.id}>{c.title} ({c.status})</option>
                   ))
-                  : sessionOptions.map((s) => (
+                  : itemType === 'LIVE_SESSION'
+                  ? sessionOptions.map((s) => (
                     <option key={s.id} value={s.id}>{s.title}</option>
+                  ))
+                  : quizzes.map((q) => (
+                    <option key={q.id} value={q.id}>{q.title} ({q.questionCount} question{q.questionCount !== 1 ? 's' : ''})</option>
                   ))
                 }
               </select>
@@ -413,6 +425,7 @@ function PathItemRow({ item, index, total, busy, onMoveUp, onMoveDown, onRemove 
   }
 
   const isSession = item.itemType === 'LIVE_SESSION';
+  const isQuiz    = item.itemType === 'QUIZ';
   const statusBadgeClass = isSession
     ? (SESSION_STATUS_BADGE[item.status ?? ''] ?? 'tw:bg-slate-100 tw:text-slate-600')
     : (COURSE_STATUS_BADGE[item.status ?? ''] ?? 'tw:bg-slate-100 tw:text-slate-600');
@@ -436,6 +449,8 @@ function PathItemRow({ item, index, total, busy, onMoveUp, onMoveDown, onRemove 
       {/* Type icon */}
       {isSession ? (
         <Video className="tw:h-4 tw:w-4 tw:flex-shrink-0 tw:text-sky-500" strokeWidth={2} />
+      ) : isQuiz ? (
+        <HelpCircle className="tw:h-4 tw:w-4 tw:flex-shrink-0 tw:text-amber-500" strokeWidth={2} />
       ) : (
         <BookOpen className="tw:h-4 tw:w-4 tw:flex-shrink-0 tw:text-violet-500" strokeWidth={2} />
       )}
@@ -893,7 +908,7 @@ export default function LearningPathsTab({ openCreateOnMount }: LearningPathsTab
       <div className="tw:flex tw:items-center tw:justify-between">
         <h2 className="tw:m-0 tw:text-[17px] tw:font-semibold tw:text-slate-900">Learning Paths</h2>
         <button type="button" onClick={() => setView({ kind: 'create' })}
-          aria-label="Create learning path"
+          aria-label="Create Learning Path"
           className="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700">
           <Plus className="tw:h-4 tw:w-4" strokeWidth={2.5} />
           Create Learning Path

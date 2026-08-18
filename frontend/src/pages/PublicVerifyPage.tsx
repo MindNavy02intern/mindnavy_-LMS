@@ -72,6 +72,36 @@ function ValidState({ cert }: { cert: VerifiedCertificateInfo }) {
           <p style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.4, margin: '0 0 2px' }}>Issued</p>
           <p style={{ fontSize: 15, fontWeight: 600, color: '#0f172a', margin: 0 }}>{dateLabel}</p>
         </div>
+        {cert.expiresAt && (
+          <div style={{ marginTop: 12 }}>
+            <p style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.4, margin: '0 0 2px' }}>Expires</p>
+            <p style={{ fontSize: 15, fontWeight: 600, color: '#0f172a', margin: 0 }}>
+              {(() => { const d = new Date(cert.expiresAt!); return Number.isNaN(d.getTime()) ? cert.expiresAt : d.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }); })()}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ExpiredState({ cert }: { cert: VerifiedCertificateInfo }) {
+  return (
+    <div>
+      <AlertTriangle size={56} color="#d97706" strokeWidth={1.5} style={{ marginBottom: 12 }} />
+      <h1 style={{ fontSize: 20, fontWeight: 700, color: '#0f172a', margin: '0 0 4px' }}>Certificate Expired</h1>
+      <p style={{ fontSize: 13, color: '#64748b', margin: '0 0 20px' }}>
+        This certificate was genuine but has passed its expiry date.
+      </p>
+      <div style={{ background: '#f8fafc', borderRadius: 12, padding: '18px 16px', textAlign: 'left' }}>
+        <div>
+          <p style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.4, margin: '0 0 2px' }}>Student</p>
+          <p style={{ fontSize: 15, fontWeight: 600, color: '#0f172a', margin: 0 }}>{cert.studentName ?? '—'}</p>
+        </div>
+        <div style={{ marginTop: 12 }}>
+          <p style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.4, margin: '0 0 2px' }}>Course</p>
+          <p style={{ fontSize: 15, fontWeight: 600, color: '#0f172a', margin: 0 }}>{cert.courseTitle ?? '—'}</p>
+        </div>
       </div>
     </div>
   );
@@ -142,6 +172,7 @@ export default function PublicVerifyPage() {
       {loading ? <LoadingState /> :
        error ? <ErrorState message={error} /> :
        result?.status === 'valid' ? <ValidState cert={result.certificate} /> :
+       result?.status === 'expired' ? <ExpiredState cert={result.certificate} /> :
        result?.status === 'revoked' ? <RevokedState /> :
        <NotFoundState />}
     </Card>

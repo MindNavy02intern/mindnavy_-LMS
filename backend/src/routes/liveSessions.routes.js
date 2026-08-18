@@ -19,6 +19,7 @@ router.get("/:id", requireAdminAuth, coursesReadRateLimiter, c.getSession);
 router.post("/",      requireAdminAuth, adminUserActionRateLimiter, c.createSession);
 router.patch("/:id",     requireAdminAuth, adminUserActionRateLimiter, c.updateSession);
 router.patch("/:id/end", requireAdminAuth, adminUserActionRateLimiter, c.endSession);
+router.patch("/:id/attendance", requireAdminAuth, adminUserActionRateLimiter, c.markAttendance);
 router.delete("/:id",    requireAdminAuth, adminUserActionRateLimiter, c.deleteSession);
 
 module.exports = router;

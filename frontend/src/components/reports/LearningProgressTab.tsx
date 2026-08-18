@@ -3,11 +3,15 @@
 // breakdown never details what goes in it (only Learner/Instructor/Course
 // Analytics, Assessments, Certificates, Attendance, Engagement, Compliance,
 // Audit, Export, Custom are spec'd). Judgment call, flagged not silently
-// invented: rather than a dead 13th stub, this composes the two REAL
-// progress-shaped datasets Part 1 already built — Learner Analytics'
-// completion-rate trend/distribution and Course Analytics' per-course
-// completion table — into one cross-cutting progress view. No new endpoint,
-// no new metric definition; same R4 reuse discipline as the Overview tab.
+// invented: rather than a dead 13th stub, this composes the progress-shaped
+// datasets Part 1 already built — Learner Analytics' completion-rate trend/
+// distribution/slow-learners/inactive-users/high-performers/learning-speed
+// and Course Analytics' per-course completion table — into one cross-cutting
+// progress view. No new endpoint, no new metric definition; same R4 reuse
+// discipline as the Overview tab. (Slow Learners / Inactive Users / High
+// Performers / Learning Speed were added to getLearnerAnalytics() itself,
+// not forked into a separate query — same enrollmentWhere/userWhere every
+// other field on that endpoint already shares.)
 
 import { useCallback, useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -38,6 +42,15 @@ function EmptyChart({ label }: { label: string }) {
 }
 function Skeleton() {
   return <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>{[1, 2, 3].map(i => <div key={i} style={{ height: 14, borderRadius: 4, background: '#e5e7eb', width: `${55 + i * 10}%` }} />)}</div>;
+}
+function StatTile({ label, value, reason }: { label: string; value: string | null; reason?: string }) {
+  return (
+    <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 10, padding: '14px 16px' }}>
+      <div style={{ fontSize: 11, color: '#64748b', marginBottom: 4 }}>{label}</div>
+      <div style={{ fontSize: 20, fontWeight: 700, color: value === null ? '#cbd5e1' : '#0f172a' }}>{value ?? '—'}</div>
+      {value === null && reason && <div style={{ fontSize: 10, color: '#9ca3af', marginTop: 2 }}>{reason}</div>}
+    </div>
+  );
 }
 
 export default function LearningProgressTab({ showToast }: Props) {
@@ -93,6 +106,19 @@ export default function LearningProgressTab({ showToast }: Props) {
           <button onClick={() => { showToast('error', error); fetchData(); }} style={{ background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: 5, color: '#b91c1c', fontSize: 12, fontWeight: 600, padding: '3px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>Retry</button>
         </div>
       )}
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
+        {loading || !learner ? <Skeleton /> : (
+          <>
+            <StatTile label="Completed Enrollments" value={String(learner.completedEnrollments)} />
+            <StatTile
+              label="Learning Speed (avg days to complete)"
+              value={learner.learningSpeedDays.available ? String(learner.learningSpeedDays.value) : null}
+              reason={learner.learningSpeedDays.reason}
+            />
+          </>
+        )}
+      </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 16 }}>
         <ChartCard title={`Completion Rate Trend${learner ? ` — ${learner.completionRate.value}% overall` : ''}`}>
@@ -155,6 +181,50 @@ export default function LearningProgressTab({ showToast }: Props) {
           </div>
         )}
       </ChartCard>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+        <ChartCard title="Slow Learners (< 20% after 30+ days)">
+          {loading || !learner ? <Skeleton /> : learner.slowLearners.length === 0 ? <EmptyChart label="No slow learners found" /> : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {learner.slowLearners.map(s => (
+                <div key={s.id} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 12, borderBottom: '1px solid #f8fafc', paddingBottom: 6 }}>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.name ?? '—'}</div>
+                    <div style={{ color: '#9ca3af', fontSize: 11, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.courseTitle ?? '—'} · {s.daysSinceEnrolled}d</div>
+                  </div>
+                  <div style={{ fontWeight: 700, color: '#dc2626', flexShrink: 0 }}>{s.progress}%</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </ChartCard>
+
+        <ChartCard title="Inactive Users (30+ days)">
+          {loading || !learner ? <Skeleton /> : learner.inactiveUsers.length === 0 ? <EmptyChart label="No inactive users found" /> : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {learner.inactiveUsers.map(u => (
+                <div key={u.id} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 12, borderBottom: '1px solid #f8fafc', paddingBottom: 6 }}>
+                  <span style={{ fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.name ?? '—'}</span>
+                  <span style={{ color: '#9ca3af', flexShrink: 0 }}>{u.lastActivityAt ? new Date(u.lastActivityAt).toLocaleDateString() : 'never active'}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </ChartCard>
+
+        <ChartCard title="High Performers (> 80%)">
+          {loading || !learner ? <Skeleton /> : learner.highPerformers.length === 0 ? <EmptyChart label="No high performers found" /> : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {learner.highPerformers.map(p => (
+                <div key={p.userId} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 12, borderBottom: '1px solid #f8fafc', paddingBottom: 6 }}>
+                  <span style={{ fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name ?? '—'}</span>
+                  <span style={{ fontWeight: 700, color: '#16a34a', flexShrink: 0 }}>{p.avgProgress}%</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </ChartCard>
+      </div>
     </div>
   );
 }

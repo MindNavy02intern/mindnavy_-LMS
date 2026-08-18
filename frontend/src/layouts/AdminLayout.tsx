@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../AuthContext';
 import { getStoredToken } from '../api/adminAuth';
-import { listNotifications } from '../services/notificationsApi';
+import { listNotifications, markAllNotificationsRead } from '../services/notificationsApi';
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 
@@ -140,7 +140,10 @@ function NotifTypeIcon({ type }: { type: string }) {
   );
 }
 
-function NotificationsPanel({ items, loading, onViewAll }: { items: NotifPanelItem[]; loading: boolean; onViewAll: () => void }) {
+function NotificationsPanel({ items, loading, unreadCount, marking, onViewAll, onMarkAllRead }: {
+  items: NotifPanelItem[]; loading: boolean; unreadCount: number; marking: boolean;
+  onViewAll: () => void; onMarkAllRead: () => void;
+}) {
   return (
     <div style={{
       position: 'absolute', top: 44, right: 0, width: 360,
@@ -150,8 +153,15 @@ function NotificationsPanel({ items, loading, onViewAll }: { items: NotifPanelIt
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '13px 16px', borderBottom: '1px solid #f1f5f9' }}>
         <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>Notifications</span>
-        <button style={{ fontSize: '0.72rem', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500, padding: 0 }}>
-          Mark all read
+        <button
+          onClick={onMarkAllRead}
+          disabled={marking || unreadCount === 0}
+          style={{
+            fontSize: '0.72rem', color: unreadCount === 0 ? '#94a3b8' : '#2563eb', background: 'none', border: 'none',
+            cursor: marking || unreadCount === 0 ? 'default' : 'pointer', fontWeight: 500, padding: 0,
+          }}
+        >
+          {marking ? 'Marking…' : 'Mark all read'}
         </button>
       </div>
 
@@ -396,16 +406,47 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
     return () => window.removeEventListener('analyticsUpdated', fetchUnread);
   }, []);
 
-  // Fetch recent activity as notifications when panel opens
+  // "Mark all read" — real PATCH /notifications/read-all (no userId = every
+  // user's feed), same endpoint the In-App tab itself uses. This zeroes the
+  // SAME NotificationLog{channel:IN_APP} unread count the badge above reads —
+  // the panel's item LIST stays the pre-existing recentActivities feed
+  // (contract decision #1: a different, intentionally-kept feature), so
+  // marking read clears the badge without changing what's shown here.
+  const [markingRead, setMarkingRead] = useState(false);
+  async function handleMarkAllRead() {
+    setMarkingRead(true);
+    try {
+      await markAllNotificationsRead();
+      setUnreadCount(0);
+      window.dispatchEvent(new CustomEvent('analyticsUpdated'));
+    } catch {
+      // Leave unreadCount as-is — the next 'analyticsUpdated' tick will
+      // reconcile it if the PATCH actually succeeded server-side.
+    } finally {
+      setMarkingRead(false);
+    }
+  }
+
+  // Fetch real in-app notifications (NotificationLog{channel:IN_APP}) when
+  // the panel opens — was reading GET /dashboard/core → recentActivities
+  // (AuditLog-derived: admin actions like "logged in" / "created a user",
+  // not actual notifications), so anything sent via automations/campaigns
+  // never showed up here even though it was really being created. Same
+  // table the unread badge above already reads (one sink, one owner).
   useEffect(() => {
     if (!notifOpen) return;
-    (() => setNotifsLoading(true))();
-    const token = getStoredToken();
-    fetch(`${BASE_URL}/dashboard/core`, {
-      headers: { Authorization: token ? `Bearer ${token}` : '' },
-    })
-      .then(r => r.ok ? r.json() : Promise.resolve({ recentActivities: [] }))
-      .then(d => setNotifications((d.recentActivities ?? []).slice(0, 10)))
+    setNotifsLoading(true);
+    listNotifications({ limit: 10 })
+      .then(res => setNotifications(res.items.map(n => ({
+        id:        n.id,
+        title:     n.subject ?? n.body,
+        actorName: n.userName ?? 'System',
+        // No category field on NotificationLog to bucket into user/course/
+        // certificate — 'system' is the honest default (matches dashboard's
+        // notificationsPreview mapping, same source table).
+        type:      'system',
+        createdAt: n.createdAt,
+      }))))
       .catch(() => {})
       .finally(() => setNotifsLoading(false));
   }, [notifOpen]);
@@ -497,8 +538,13 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
       {/* ── Mobile overlay ── */}
       <div className={`mn-overlay${open ? ' open' : ''}`} onClick={() => setOpen(false)} />
 
-      {/* ── Main (light) ── */}
-      <main
+      {/* ── Main (light) ──
+          This wraps BOTH the topbar chrome and the actual page content, so
+          it's a <div>, not a <main> — the topbar's global controls (search,
+          notifications, profile) aren't page content and shouldn't be
+          announced as part of the <main> landmark. The real <main> is below,
+          around just .mn-content. */}
+      <div
         className="mn-main mn-main-light"
         style={{
           marginLeft: sidebarCollapsed ? 0       : undefined,
@@ -561,7 +607,10 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
                 <NotificationsPanel
                   items={notifications}
                   loading={notifsLoading}
+                  unreadCount={unreadCount}
+                  marking={markingRead}
                   onViewAll={() => { setNotifOpen(false); navigate('/notifications?tab=inapp'); }}
+                  onMarkAllRead={handleMarkAllRead}
                 />
               )}
             </div>
@@ -626,8 +675,8 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
           </div>
         )}
 
-        {/* Page content */}
-        <div className="mn-content">{children}</div>
+        {/* Page content — the actual <main> landmark */}
+        <main className="mn-content">{children}</main>
 
         {/* Quick Actions coming-soon toast */}
         {qaToast && (
@@ -645,7 +694,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
             <button onClick={() => setQaToast(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: 0, fontSize: 16, lineHeight: 1 }}>×</button>
           </div>
         )}
-      </main>
+      </div>
     </>
   );
 }

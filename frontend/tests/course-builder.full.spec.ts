@@ -113,7 +113,10 @@ async function addSection(page: Page, title: string) {
  * Add a TEXT lesson. Same Promise.all pattern as addSection.
  */
 async function addTextLesson(page: Page, title: string, content = '') {
-  await page.getByRole('button', { name: /Add Lesson/ }).first().click()
+  // /i: the per-section button's aria-label is "Add lesson to <section title>"
+  // (sentence-case, matching this codebase's convention for per-item labels)
+  // — a case-sensitive regex against "Add Lesson" never matches it.
+  await page.getByRole('button', { name: /Add Lesson/i }).first().click()
   await expect(page.getByRole('heading', { name: 'Add Lesson' })).toBeVisible({ timeout: 3000 })
 
   const [lessonResp] = await Promise.all([
@@ -124,7 +127,9 @@ async function addTextLesson(page: Page, title: string, content = '') {
     (async () => {
       await page.getByLabel('Lesson title').fill(title)
       if (content) await page.getByLabel('Lesson content').fill(content)
-      await page.getByRole('button', { name: 'Add Lesson' }).click()
+      // exact: true — non-exact also matches the per-section trigger button
+      // (aria-label "Add lesson to <section title>", substring-contains "Add Lesson").
+      await page.getByRole('button', { name: 'Add Lesson', exact: true }).click()
     })(),
   ])
   expect(lessonResp.ok(), 'POST /lessons must succeed').toBeTruthy()
@@ -144,7 +149,9 @@ test('Add section — title appears in the section list', async ({ page }) => {
   const sectionTitle = `Section A ${Date.now()}`
   await addSection(page, sectionTitle)
 
-  await expect(page.getByText(sectionTitle)).toBeVisible({ timeout: 5000 })
+  // .first(): the section row renders before the success toast, whose own
+  // text ('Section "<title>" added.') substring-matches getByText(sectionTitle).
+  await expect(page.getByText(sectionTitle).first()).toBeVisible({ timeout: 5000 })
 })
 
 test('Add text lesson — lesson appears under its section', async ({ page }) => {
@@ -161,7 +168,10 @@ test('Add valid video URL lesson — accepted and appears in list', async ({ pag
   await createDraftAndOpenBuilder(page)
   await addSection(page, `Sec for video ${Date.now()}`)
 
-  await page.getByRole('button', { name: /Add Lesson/ }).first().click()
+  // /i: the per-section button's aria-label is "Add lesson to <section title>"
+  // (sentence-case, matching this codebase's convention for per-item labels)
+  // — a case-sensitive regex against "Add Lesson" never matches it.
+  await page.getByRole('button', { name: /Add Lesson/i }).first().click()
   await expect(page.getByRole('heading', { name: 'Add Lesson' })).toBeVisible({ timeout: 3000 })
 
   const lessonTitle = `Video Lesson ${Date.now()}`
@@ -174,10 +184,12 @@ test('Add valid video URL lesson — accepted and appears in list', async ({ pag
     (async () => {
       await page.getByLabel('Lesson title').fill(lessonTitle)
       await page.getByRole('button', { name: 'Video URL' }).click()
-      await expect(page.getByLabel('Video URL')).toBeVisible({ timeout: 2000 })
-      await page.getByLabel('Video URL').fill('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+      await expect(page.getByLabel('Video URL', { exact: true })).toBeVisible({ timeout: 2000 })
+      await page.getByLabel('Video URL', { exact: true }).fill('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
       await page.getByLabel('Duration in minutes').fill('15')
-      await page.getByRole('button', { name: 'Add Lesson' }).click()
+      // exact: true — non-exact also matches the per-section trigger button
+      // (aria-label "Add lesson to <section title>", substring-contains "Add Lesson").
+      await page.getByRole('button', { name: 'Add Lesson', exact: true }).click()
     })(),
   ])
   expect(lessonResp.ok()).toBeTruthy()
@@ -193,16 +205,20 @@ test('Reject invalid video URL — shows inline error, no API call', async ({ pa
   await createDraftAndOpenBuilder(page)
   await addSection(page, `Sec invalid url ${Date.now()}`)
 
-  await page.getByRole('button', { name: /Add Lesson/ }).first().click()
+  // /i: the per-section button's aria-label is "Add lesson to <section title>"
+  // (sentence-case, matching this codebase's convention for per-item labels)
+  // — a case-sensitive regex against "Add Lesson" never matches it.
+  await page.getByRole('button', { name: /Add Lesson/i }).first().click()
   await page.getByLabel('Lesson title').fill('Bad URL Lesson')
   await page.getByRole('button', { name: 'Video URL' }).click()
-  await page.getByLabel('Video URL').fill('not-a-valid-url')
+  await page.getByLabel('Video URL', { exact: true }).fill('not-a-valid-url')
 
   let lessonPostFired = false
   page.on('request', req => {
     if (req.url().includes('/lessons') && req.method() === 'POST') lessonPostFired = true
   })
-  await page.getByRole('button', { name: 'Add Lesson' }).click()
+  // exact: true — non-exact also matches the per-section trigger button.
+  await page.getByRole('button', { name: 'Add Lesson', exact: true }).click()
 
   await expect(
     page.getByText(/valid http\/https URL/i),
@@ -238,12 +254,14 @@ test('Delete section confirm — dismiss keeps it, confirm removes it', async ({
 
   const secTitle = `Sec to delete ${Date.now()}`
   await addSection(page, secTitle)
-  await expect(page.getByText(secTitle)).toBeVisible({ timeout: 5000 })
+  // .first(): the section row renders before the success toast, whose own
+  // text ('Section "<title>" added.') substring-matches getByText(secTitle).
+  await expect(page.getByText(secTitle).first()).toBeVisible({ timeout: 5000 })
 
   // Dismiss: section stays
   page.once('dialog', dialog => dialog.dismiss())
   await page.getByRole('button', { name: `Delete section ${secTitle}` }).click()
-  await expect(page.getByText(secTitle)).toBeVisible({ timeout: 3000 })
+  await expect(page.getByText(secTitle).first()).toBeVisible({ timeout: 3000 })
 
   // Accept: section removed
   const [deleteResp] = await Promise.all([

@@ -36,6 +36,10 @@ import {
   type UpdateSkillCategoryRequest,
   type UpdateSkillRequest,
   type UserSkillEntry,
+  type CertificationStatus,
+  type CertificationsListResponse,
+  type CompetencyCertification,
+  type AssignCertificationRequest,
 } from '../types/competencies';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
@@ -298,6 +302,76 @@ export function getCompetencySettings(): Promise<CompetencySettings> {
 
 export function updateCompetencySettings(body: UpdateCompetencySettingsRequest): Promise<CompetencySettings> {
   return competenciesFetch<CompetencySettings>('/competencies/settings', 'PATCH', body);
+}
+
+// ── Proficiency Levels ───────────────────────────────────────────────────────
+
+export interface ProficiencyLevel {
+  level: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED' | 'EXPERT' | 'CERTIFIED';
+  minPercent: number;
+  maxPercent: number;
+  color: string;
+  description: string | null;
+}
+
+export function getProficiencyLevels(): Promise<{ levels: ProficiencyLevel[] }> {
+  return competenciesFetch<{ levels: ProficiencyLevel[] }>('/competencies/proficiency-levels');
+}
+
+export function updateProficiencyLevels(levels: ProficiencyLevel[]): Promise<{ levels: ProficiencyLevel[] }> {
+  return competenciesFetch<{ levels: ProficiencyLevel[] }>('/competencies/proficiency-levels', 'PATCH', { levels });
+}
+
+// ── Skill distribution (CompetencySidePanel donut) ──────────────────────────
+
+export type SkillDistribution = Record<ProficiencyLevel['level'], number>;
+
+export function getSkillDistribution(skillId: string): Promise<SkillDistribution> {
+  return competenciesFetch<SkillDistribution>(`/competencies/skills/${encodeURIComponent(skillId)}/distribution`);
+}
+
+// ── Competency Certifications (Certifications tab) ───────────────────────────
+
+export interface CertificationsListParams {
+  userId?:  string;
+  skillId?: string;
+  status?:  CertificationStatus;
+  page?:    number;
+  limit?:   number;
+}
+
+export function listCertifications(params: CertificationsListParams = {}): Promise<CertificationsListResponse> {
+  const qs = new URLSearchParams();
+  if (params.userId)              qs.set('userId',  params.userId);
+  if (params.skillId)             qs.set('skillId', params.skillId);
+  if (params.status)              qs.set('status',  params.status);
+  if (params.page !== undefined)  qs.set('page',    String(params.page));
+  if (params.limit !== undefined) qs.set('limit',   String(params.limit));
+  return competenciesFetch<CertificationsListResponse>(`/competencies/certifications?${qs.toString()}`);
+}
+
+export function getCertification(id: string): Promise<CompetencyCertification> {
+  return competenciesFetch<CompetencyCertification>(`/competencies/certifications/${encodeURIComponent(id)}`);
+}
+
+export function getUserCertifications(userId: string): Promise<CompetencyCertification[]> {
+  return competenciesFetch<CompetencyCertification[]>(`/competencies/users/${encodeURIComponent(userId)}/certifications`);
+}
+
+export function assignCertification(req: AssignCertificationRequest): Promise<CompetencyCertification> {
+  return competenciesFetch<CompetencyCertification>('/competencies/certifications', 'POST', req);
+}
+
+export function verifyCertification(id: string, notes?: string): Promise<CompetencyCertification> {
+  return competenciesFetch<CompetencyCertification>(`/competencies/certifications/${encodeURIComponent(id)}/verify`, 'PATCH', { notes });
+}
+
+export function revokeCertification(id: string, reason: string): Promise<CompetencyCertification> {
+  return competenciesFetch<CompetencyCertification>(`/competencies/certifications/${encodeURIComponent(id)}/revoke`, 'PATCH', { reason });
+}
+
+export function deleteCertification(id: string): Promise<{ id: string }> {
+  return competenciesFetch<{ id: string }>(`/competencies/certifications/${encodeURIComponent(id)}`, 'DELETE');
 }
 
 export { CompetenciesApiError };

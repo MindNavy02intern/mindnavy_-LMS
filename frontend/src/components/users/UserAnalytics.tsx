@@ -6,6 +6,7 @@ import UsersByDepartmentChart   from './charts/UsersByDepartmentChart';
 import NewUsersCard             from './charts/NewUsersCard';
 import UserActivityChart        from './charts/UserActivityChart';
 import VerificationStatusChart  from './charts/VerificationStatusChart';
+import UserGrowthChart          from './charts/UserGrowthChart';
 
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -103,18 +104,12 @@ export default function UserAnalytics() {
             loading={loading}
           />
         </ChartCard>
-        <div style={{
-          background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 10,
-          padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>
-          <div style={{ textAlign: 'center', color: '#9ca3af' }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: 8 }}>
-              <circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" />
-            </svg>
-            <div style={{ fontSize: 13, fontWeight: 600, color: '#374151' }}>More Charts Coming Soon</div>
-            <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 4 }}>Risk distribution, engagement trends & more</div>
-          </div>
-        </div>
+        <ChartCard title="User Growth (Last 12 Weeks)">
+          <UserGrowthChart
+            data={data?.userGrowth ?? []}
+            loading={loading}
+          />
+        </ChartCard>
       </div>
     </div>
   );

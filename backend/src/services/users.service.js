@@ -8,6 +8,10 @@ const {
   validateImportRows,
 } = require("../validators/usersImport.validator");
 const { normalizeViolationType } = require("../validators/users.validator");
+const { sendInAppNotification } = require("./notifications.service");
+const { fireAutomationTrigger } = require("./automationTriggers.service");
+const { deleteEnrollment } = require("./enrollments.service");
+const { sendMail } = require("../utils/mailer");
 
 const VALID_ROLES = new Set(["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"]);
 const VALID_STATUSES = new Set(["ACTIVE", "SUSPENDED", "PENDING", "ARCHIVED", "INVITED"]);
@@ -481,6 +485,11 @@ async function createUser(body, admin = {}) {
     role: user.role,
   });
 
+  // Automation trigger (NOTIFICATIONS_CONTRACT.md #5) — best-effort (never
+  // throws internally), same pattern as certificateTriggers in
+  // enrollments.service.js.
+  await fireAutomationTrigger("USER_REGISTRATION", user.id, { role: user.role });
+
   return {
     success: true,
     message: "User created successfully.",
@@ -687,6 +696,15 @@ async function suspendUser(id, body, admin = {}) {
     violationType,
   });
 
+  // SECURITY_EVENT automation trigger — wired here, not to admin.service.js's
+  // failed-ADMIN-login lockout as the task literally named. That event has no
+  // AppUser to notify (NotificationLog/automations are AppUser-recipient only,
+  // AdminUser is a completely separate table — see [[adminuser_vs_appuser_split]]-
+  // style note) — a suspension IS a real security event on a real AppUser, the
+  // closest fit that actually has a valid recipient. Decision made explicit,
+  // not silently swapped.
+  await fireAutomationTrigger("SECURITY_EVENT", id, { eventType: "ACCOUNT_SUSPENDED", reason });
+
   return {
     success: true,
     message: "User suspended successfully.",
@@ -875,6 +893,11 @@ async function getUsersAnalytics(admin = {}) {
   const last30d          = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
   const startOfMonth     = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(),     1));
   const startOfLastMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+  // User Growth chart — 12 calendar weeks (not "last 84 days") so bucket
+  // boundaries land on the same Monday a calendar shows, matching how an
+  // admin reading week labels would expect them to line up.
+  const currentWeekStart = new Date(startOfToday.getTime() - ((startOfToday.getUTCDay() + 6) % 7) * 24 * 60 * 60 * 1000);
+  const growthWindowStart = new Date(currentWeekStart.getTime() - 11 * 7 * 24 * 60 * 60 * 1000);
 
   const [
     totalUsers,
@@ -886,6 +909,7 @@ async function getUsersAnalytics(admin = {}) {
     activeToday,
     activeLast7d,
     rawDailyTrend,
+    rawWeeklyGrowth,
   ] = await Promise.all([
     prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }),
     prisma.appUser.groupBy({ by: ["role"], _count: { _all: true }, where: { status: { not: "ARCHIVED" } } }),
@@ -905,6 +929,16 @@ async function getUsersAnalytics(admin = {}) {
         AND "lastActivityAt" IS NOT NULL
       GROUP BY DATE("lastActivityAt")
       ORDER BY date ASC
+    `,
+    prisma.$queryRaw`
+      SELECT
+        DATE_TRUNC('week', "createdAt")::date AS week,
+        COUNT(*)::int                         AS count
+      FROM "app_users"
+      WHERE "createdAt" >= ${growthWindowStart}
+        AND "status" <> 'ARCHIVED'
+      GROUP BY week
+      ORDER BY week ASC
     `,
   ]);
 
@@ -947,6 +981,21 @@ async function getUsersAnalytics(admin = {}) {
   const dailyTrend = Object.entries(activityMap).map(([date, count]) => ({ date, count }));
   const userActivity = { activeToday, activeThisWeek: activeLast7d, dailyTrend };
 
+  // userGrowth — 12 zero-filled weekly buckets of NEW signups (createdAt),
+  // distinct from userActivity.dailyTrend (that's lastActivityAt-based).
+  const growthMap = {};
+  for (let i = 11; i >= 0; i--) {
+    const weekStart = new Date(currentWeekStart.getTime() - i * 7 * 24 * 60 * 60 * 1000);
+    growthMap[weekStart.toISOString().slice(0, 10)] = 0;
+  }
+  for (const row of rawWeeklyGrowth) {
+    const key = row.week instanceof Date
+      ? row.week.toISOString().slice(0, 10)
+      : String(row.week).slice(0, 10);
+    if (key in growthMap) growthMap[key] = Number(row.count);
+  }
+  const userGrowth = Object.entries(growthMap).map(([weekStart, count]) => ({ weekStart, count }));
+
   // verificationStatus — lowercase status names + percentage
   const ALL_VERIFICATION = ["VERIFIED", "PENDING", "REJECTED", "EXPIRED"];
   const verificationCountMap = {};
@@ -974,6 +1023,7 @@ async function getUsersAnalytics(admin = {}) {
     usersByDepartment,
     newUsersThisMonth,
     userActivity,
+    userGrowth,
     verificationStatus,
   };
 }
@@ -1191,11 +1241,35 @@ async function bulkActionUsers(body, admin) {
     };
   }
 
-  // notify — stub
-  if (process.env.NODE_ENV !== "production") {
-    userIds.forEach((id) => console.log(`[bulk:notify] user=${id}`));
+  // notify — real send via notifications.service's in-app notification path
+  const message = typeof params.message === "string" ? params.message.trim() : "";
+  if (!message) throw Object.assign(new Error("params.message is required for notify."), { statusCode: 400 });
+
+  let sentCount = 0;
+  try {
+    const result = await sendInAppNotification(
+      {
+        userIds,
+        title:    typeof params.subject === "string" && params.subject.trim() ? params.subject.trim() : "Notification from Admin",
+        body:     message,
+        type:     "system",
+        priority: "NORMAL",
+      },
+      admin.id,
+    );
+    sentCount = result.sentCount;
+  } catch (err) {
+    if (err.code !== "USERS_NOT_FOUND") throw err;
   }
-  return { success: true, message: `Bulk notify: ${userIds.length} notified`, succeeded: userIds.length, failed: 0, errors: [] };
+
+  createUserAuditLog(admin.id, "USER_MESSAGE_SENT", { userIds, count: sentCount, reason: params.reason || "Bulk notification" });
+  return {
+    success:   true,
+    message:   `Bulk notify: ${sentCount} succeeded, ${userIds.length - sentCount} failed`,
+    succeeded: sentCount,
+    failed:    userIds.length - sentCount,
+    errors:    [],
+  };
 }
 
 // ─── Send Message to User ─────────────────────────────────────────────────────
@@ -1329,6 +1403,242 @@ async function forceLogoutUser(userId, body, admin = {}) {
   };
 }
 
+// ─── User Details Drawer: Courses tab ─────────────────────────────────────────
+// Any AppUser can HAVE enrollments (the model isn't role-restricted), but only
+// role=LEARNER can be newly enrolled — enrollmentsService.createEnrollment is
+// reached exclusively through POST /learners/:id/enrollments, which asserts
+// LEARNER. This read + the unenroll below are intentionally role-agnostic so
+// the tab still shows/lets-go of enrollments a user already has.
+
+async function getUserCourses(id) {
+  await assertUserExists(id);
+
+  const rows = await prisma.courseEnrollment.findMany({
+    where: { userId: id },
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      progress: true,
+      status: true,
+      completedAt: true,
+      createdAt: true,
+      course: { select: { id: true, title: true, thumbnail: true } },
+    },
+  });
+
+  return rows.map((r) => ({
+    enrollmentId: r.id,
+    courseId: r.course?.id ?? null,
+    title: r.course?.title ?? "(deleted course)",
+    thumbnail: r.course?.thumbnail ?? null,
+    progress: r.progress,
+    status: r.status,
+    enrolledAt: r.createdAt.toISOString(),
+    completedAt: r.completedAt ? r.completedAt.toISOString() : null,
+  }));
+}
+
+async function unenrollUserCourse(id, enrollmentId, admin = {}) {
+  await assertUserExists(id);
+
+  // Scope to THIS user — same rule as learners.service's deleteLearnerEnrollment:
+  // an enrollment id belonging to someone else answers 404, not a cross-user unenroll.
+  const enrollment = await prisma.courseEnrollment.findFirst({
+    where: { id: enrollmentId, userId: id },
+    select: { id: true },
+  });
+  if (!enrollment) throw makeError("Enrollment not found.", 404);
+
+  // Delegates to enrollments.service, which already writes the ENROLLMENT_DELETED
+  // audit row for this exact write — no second audit call here (same rule
+  // learners.service's deleteLearnerEnrollment follows).
+  await deleteEnrollment(enrollmentId, admin.id);
+
+  return { success: true, message: "User unenrolled from course successfully." };
+}
+
+// ─── User Details Drawer: More tab — Devices & Sessions ───────────────────────
+// AppUserSession (not TrustedDevice — that model belongs to AdminUser, the
+// admin console's own login devices, a different table entirely) is the real
+// per-AppUser login-session log; forceLogoutUser already revokes all of them,
+// this adds list + single-session revoke.
+
+async function getUserSessions(id) {
+  await assertUserExists(id);
+
+  const rows = await prisma.appUserSession.findMany({
+    where: { userId: id },
+    orderBy: { createdAt: "desc" },
+    take: 50,
+    select: {
+      id: true,
+      ipAddress: true,
+      userAgent: true,
+      createdAt: true,
+      lastUsedAt: true,
+      expiresAt: true,
+      revokedAt: true,
+    },
+  });
+
+  return rows.map((r) => ({
+    id: r.id,
+    ipAddress: r.ipAddress ?? null,
+    userAgent: r.userAgent ?? null,
+    createdAt: r.createdAt.toISOString(),
+    lastUsedAt: r.lastUsedAt ? r.lastUsedAt.toISOString() : null,
+    expiresAt: r.expiresAt.toISOString(),
+    revoked: r.revokedAt != null,
+  }));
+}
+
+async function revokeUserSession(id, sessionId, admin = {}) {
+  await assertUserExists(id);
+
+  const session = await prisma.appUserSession.findFirst({
+    where: { id: sessionId, userId: id, revokedAt: null },
+    select: { id: true },
+  });
+  if (!session) throw makeError("Active session not found.", 404);
+
+  await prisma.appUserSession.update({
+    where: { id: sessionId },
+    data: { revokedAt: new Date() },
+  });
+
+  await createUserAuditLog(admin.id, "USER_SESSION_REVOKED", { userId: id, sessionId });
+
+  return { success: true, message: "Session revoked successfully." };
+}
+
+// ─── User Details Drawer: More tab — Notes ─────────────────────────────────────
+
+async function getUserNotes(id) {
+  await assertUserExists(id);
+
+  const rows = await prisma.userNote.findMany({
+    where: { userId: id },
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      content: true,
+      createdAt: true,
+      createdBy: { select: { id: true, fullName: true } },
+    },
+  });
+
+  return rows.map((r) => ({
+    id: r.id,
+    content: r.content,
+    createdAt: r.createdAt.toISOString(),
+    createdByName: r.createdBy?.fullName ?? "Unknown admin",
+  }));
+}
+
+async function addUserNote(id, body, admin = {}) {
+  await assertUserExists(id);
+  const content = body.content.trim();
+
+  const note = await prisma.userNote.create({
+    data: { userId: id, content, createdById: admin.id },
+    select: { id: true, content: true, createdAt: true, createdBy: { select: { fullName: true } } },
+  });
+
+  await createUserAuditLog(admin.id, "USER_NOTE_ADDED", { userId: id, noteId: note.id });
+
+  return {
+    success: true,
+    message: "Note added successfully.",
+    note: {
+      id: note.id,
+      content: note.content,
+      createdAt: note.createdAt.toISOString(),
+      createdByName: note.createdBy?.fullName ?? "Unknown admin",
+    },
+  };
+}
+
+async function deleteUserNote(id, noteId, admin = {}) {
+  await assertUserExists(id);
+
+  const note = await prisma.userNote.findFirst({ where: { id: noteId, userId: id }, select: { id: true } });
+  if (!note) throw makeError("Note not found.", 404);
+
+  await prisma.userNote.delete({ where: { id: noteId } });
+
+  await createUserAuditLog(admin.id, "USER_NOTE_DELETED", { userId: id, noteId });
+
+  return { success: true, message: "Note deleted successfully." };
+}
+
+// ─── User Details Drawer: More tab — Consent & Privacy ────────────────────────
+
+async function exportUserData(id, admin = {}) {
+  const user = await assertUserExists(id);
+
+  const [enrollments, certificates] = await Promise.all([
+    prisma.courseEnrollment.findMany({
+      where: { userId: id },
+      select: { id: true, progress: true, status: true, completedAt: true, createdAt: true, course: { select: { title: true } } },
+    }),
+    prisma.certificate.findMany({
+      where: { userId: id },
+      select: { id: true, issuedAt: true, revokedAt: true, course: { select: { title: true } } },
+    }).catch(() => []),
+  ]);
+
+  await createUserAuditLog(admin.id, "USER_DATA_EXPORTED", { userId: id });
+
+  return {
+    exportedAt: new Date().toISOString(),
+    profile: { ...mapUser(user), updatedAt: user.updatedAt.toISOString() },
+    enrollments: enrollments.map((e) => ({
+      courseTitle: e.course?.title ?? null,
+      progress: e.progress,
+      status: e.status,
+      enrolledAt: e.createdAt.toISOString(),
+      completedAt: e.completedAt ? e.completedAt.toISOString() : null,
+    })),
+    certificates: certificates.map((c) => ({
+      courseTitle: c.course?.title ?? null,
+      issuedAt: c.issuedAt.toISOString(),
+      revoked: c.revokedAt != null,
+    })),
+  };
+}
+
+async function requestAccountDeletion(id, admin = {}) {
+  const user = await assertUserExists(id);
+
+  const recipients = await prisma.adminUser.findMany({
+    where: { status: "ACTIVE" },
+    select: { email: true },
+  });
+
+  const requestedBy = admin.fullName ?? admin.email ?? "An administrator";
+  const subject = `Account deletion requested: ${user.fullName}`;
+  const text =
+    `${requestedBy} requested account deletion for ${user.fullName} (${user.email}).\n\n` +
+    `User ID: ${user.id}\nRequested at: ${new Date().toISOString()}\n\n` +
+    `This is a notification only — no data has been deleted. Review and action this request manually.`;
+
+  // Best-effort, matches the mailer's own "never throws" contract — a delivery
+  // failure must not block the audit trail or the admin's confirmation.
+  await Promise.all(
+    recipients.map((r) => sendMail({ to: r.email, subject, text }).catch(() => {})),
+  );
+
+  await createUserAuditLog(admin.id, "USER_DELETION_REQUESTED", {
+    userId: id,
+    notifiedAdmins: recipients.length,
+  });
+
+  return {
+    success: true,
+    message: `Deletion request sent to ${recipients.length} admin${recipients.length === 1 ? "" : "s"}.`,
+  };
+}
+
 module.exports = {
   // Exported so other modules that surface the SAME AppUser rows (Instructors)
   // render status/verification identically instead of re-declaring the maps
@@ -1355,4 +1665,13 @@ module.exports = {
   sendMessageToUser,
   getUserMessages,
   forceLogoutUser,
+  getUserCourses,
+  unenrollUserCourse,
+  getUserSessions,
+  revokeUserSession,
+  getUserNotes,
+  addUserNote,
+  deleteUserNote,
+  exportUserData,
+  requestAccountDeletion,
 };

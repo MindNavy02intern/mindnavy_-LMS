@@ -97,8 +97,11 @@ test('Live Sessions widget shows counts matching the real LiveSession rows (not 
   expect(real.activeCount, 'dashboard activeCount must match real LIVE session count').toBe(trueActiveCount)
   expect(real.upcomingCount, 'dashboard upcomingCount must match real UPCOMING session count').toBe(trueUpcomingCount)
 
-  await expect(page.getByText('Live Sessions', { exact: true })).toBeVisible({ timeout: 15000 })
+  // Scoped to the widget card directly — the KPI summary strip above it also
+  // shows a "Live Sessions" label, so an unscoped page-wide getByText here
+  // would match both and throw a strict-mode violation.
   const card = page.locator('.mn-db-card').filter({ has: page.getByText('Live Sessions', { exact: true }) })
+  await expect(card).toBeVisible({ timeout: 15000 })
 
   // Stat tiles must match what the dashboard API actually returned. Anchor
   // on the label text first (not the bare number) since Active/Upcoming can
@@ -155,7 +158,9 @@ test('Pending Approvals badge count matches items list exactly (no total/empty-l
   await page.goto('/dashboard')
   const card = page.locator('.mn-db-card').filter({ has: page.getByText('Pending Approvals', { exact: true }) })
   await expect(card.getByText(String(real.total), { exact: true })).toBeVisible({ timeout: 15000 })
-  await expect(card.getByText('Dashboard Pending Probe', { exact: false })).toBeVisible()
+  // .first(): the fixture name legitimately appears twice in the row (item
+  // title + "submittedBy · time" subtitle) — either confirms the row rendered.
+  await expect(card.getByText('Dashboard Pending Probe', { exact: false }).first()).toBeVisible()
   await expect(card.getByText('No pending approvals.')).toHaveCount(0)
 })
 

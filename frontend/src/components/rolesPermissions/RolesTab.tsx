@@ -59,6 +59,7 @@ const RolesTab: React.FC = () => {
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'ACTIVE' | 'INACTIVE'>('ALL');
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -163,6 +164,8 @@ const RolesTab: React.FC = () => {
       closeDeleteDialog();
       load();
       window.dispatchEvent(new CustomEvent('rolesUpdated'));
+      setSuccessMsg('Role deleted successfully.');
+      setTimeout(() => setSuccessMsg(''), 3000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete role.');
       closeDeleteDialog();
@@ -192,6 +195,13 @@ const RolesTab: React.FC = () => {
         <div style={{ padding: '12px 16px', backgroundColor: '#fef2f2', color: '#b91c1c', borderRadius: '8px', marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid #fecaca', fontSize: '14px' }}>
           <span>{error}</span>
           <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#b91c1c', fontSize: '20px', lineHeight: 1 }} onClick={() => setError('')}>×</button>
+        </div>
+      )}
+
+      {successMsg && (
+        <div style={{ padding: '12px 16px', backgroundColor: '#f0fdf4', color: '#15803d', borderRadius: '8px', marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid #bbf7d0', fontSize: '14px' }}>
+          <span>{successMsg}</span>
+          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#15803d', fontSize: '20px', lineHeight: 1 }} onClick={() => setSuccessMsg('')}>×</button>
         </div>
       )}
 

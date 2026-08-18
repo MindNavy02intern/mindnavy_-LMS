@@ -439,6 +439,109 @@ function validateCompetencySettings(body = {}) {
   return errors;
 }
 
+function validateProficiencyLevelsUpdate(body = {}) {
+  const errors = [];
+  const levels = Array.isArray(body?.levels) ? body.levels : null;
+  if (!levels || levels.length === 0) {
+    return { isValid: false, errors: ["levels must be a non-empty array."], data: null };
+  }
+  for (const row of levels) {
+    if (!row || typeof row !== "object") { errors.push("Each level entry must be an object."); continue; }
+    if (!SKILL_LEVELS.includes(row.level)) errors.push(`level must be one of: ${SKILL_LEVELS.join(", ")}.`);
+    if (!Number.isInteger(row.minPercent) || row.minPercent < 0 || row.minPercent > 100) errors.push(`${row.level ?? "?"}: minPercent must be an integer 0-100.`);
+    if (!Number.isInteger(row.maxPercent) || row.maxPercent < 0 || row.maxPercent > 100) errors.push(`${row.level ?? "?"}: maxPercent must be an integer 0-100.`);
+    if (Number.isInteger(row.minPercent) && Number.isInteger(row.maxPercent) && row.minPercent > row.maxPercent) {
+      errors.push(`${row.level ?? "?"}: minPercent cannot exceed maxPercent.`);
+    }
+    if (typeof row.color !== "string" || !/^#[0-9a-fA-F]{6}$/.test(row.color)) errors.push(`${row.level ?? "?"}: color must be a #rrggbb hex string.`);
+    if (row.description !== undefined && row.description !== null && typeof row.description !== "string") errors.push(`${row.level ?? "?"}: description must be a string.`);
+  }
+  return { isValid: errors.length === 0, errors, data: { levels } };
+}
+
+// ── Competency Certifications (Certifications tab) ──────────────────────────
+
+const CERTIFICATION_STATUSES = ["PENDING", "VERIFIED", "REVOKED", "EXPIRED"];
+
+function validateCertificationListQuery(query = {}) {
+  const errors = [];
+  const data = {};
+
+  if (query.userId !== undefined) {
+    if (typeof query.userId !== "string" || !query.userId.trim()) errors.push("userId must be a non-empty string.");
+    else data.userId = query.userId.trim();
+  }
+  if (query.skillId !== undefined) {
+    if (typeof query.skillId !== "string" || !query.skillId.trim()) errors.push("skillId must be a non-empty string.");
+    else data.skillId = query.skillId.trim();
+  }
+  if (query.status !== undefined) {
+    const s = String(query.status).trim().toUpperCase();
+    if (!CERTIFICATION_STATUSES.includes(s)) errors.push(`status must be one of: ${CERTIFICATION_STATUSES.join(", ")}.`);
+    else data.status = s;
+  }
+  data.page = query.page;
+  data.limit = query.limit;
+
+  return { isValid: errors.length === 0, errors, data };
+}
+
+function validateCertificationAssign(body = {}) {
+  const errors = [];
+  const data = {};
+
+  if (typeof body.userId !== "string" || !body.userId.trim()) errors.push("userId is required.");
+  else data.userId = body.userId.trim();
+
+  if (typeof body.skillId !== "string" || !body.skillId.trim()) errors.push("skillId is required.");
+  else data.skillId = body.skillId.trim();
+
+  if (body.frameworkId !== undefined && body.frameworkId !== null) {
+    if (typeof body.frameworkId !== "string" || !body.frameworkId.trim()) errors.push("frameworkId must be a non-empty string or null.");
+    else data.frameworkId = body.frameworkId.trim();
+  } else {
+    data.frameworkId = null;
+  }
+
+  if (body.expiresAt !== undefined && body.expiresAt !== null) {
+    const d = new Date(body.expiresAt);
+    if (Number.isNaN(d.getTime())) errors.push("expiresAt must be a valid date.");
+    else if (d.getTime() <= Date.now()) errors.push("expiresAt must be in the future.");
+    else data.expiresAt = d;
+  } else {
+    data.expiresAt = null;
+  }
+
+  if (body.notes !== undefined && body.notes !== null) {
+    if (typeof body.notes !== "string") errors.push("notes must be a string.");
+    else if (body.notes.length > 2000) errors.push("notes must be at most 2000 characters.");
+    else data.notes = body.notes.trim() || null;
+  } else {
+    data.notes = null;
+  }
+
+  return { isValid: errors.length === 0, errors, data };
+}
+
+function validateCertificationVerify(body = {}) {
+  const errors = [];
+  let notes;
+  if (body.notes !== undefined && body.notes !== null) {
+    if (typeof body.notes !== "string") errors.push("notes must be a string.");
+    else if (body.notes.length > 2000) errors.push("notes must be at most 2000 characters.");
+    else notes = body.notes.trim() || null;
+  }
+  return { isValid: errors.length === 0, errors, data: { notes } };
+}
+
+function validateCertificationRevoke(body = {}) {
+  const errors = [];
+  const reason = typeof body.reason === "string" ? body.reason.trim() : "";
+  if (!reason) errors.push("reason is required.");
+  else if (reason.length > 2000) errors.push("reason must be at most 2000 characters.");
+  return { isValid: errors.length === 0, errors, data: { reason } };
+}
+
 module.exports = {
   SKILL_LEVELS,
   SKILL_STATUSES,
@@ -465,4 +568,10 @@ module.exports = {
   validateSkillCsvHeaders,
   validateSkillCsvRow,
   validateCompetencySettings,
+  validateProficiencyLevelsUpdate,
+  CERTIFICATION_STATUSES,
+  validateCertificationListQuery,
+  validateCertificationAssign,
+  validateCertificationVerify,
+  validateCertificationRevoke,
 };

@@ -51,8 +51,12 @@ test('Integrations page loads with header, stats cards and tabs', async ({ page 
 })
 
 test('Dashboard shows Zoom as CONNECTED', async ({ page }) => {
+  // startsWith(API): endsWith('/integrations') alone also matches the SPA's
+  // own document response for http://localhost:5173/integrations (HTML, not
+  // JSON) — whichever response lands first wins the race, and the doc
+  // response breaks resp.json(). Anchoring to the API origin/path fixes it.
   const [resp] = await Promise.all([
-    page.waitForResponse(r => r.url().endsWith('/integrations') && r.request().method() === 'GET' && r.ok(), { timeout: 15000 }),
+    page.waitForResponse(r => r.url() === `${API}/integrations` && r.request().method() === 'GET' && r.ok(), { timeout: 15000 }),
     page.goto('/integrations'),
   ])
   expect(resp.ok()).toBeTruthy()

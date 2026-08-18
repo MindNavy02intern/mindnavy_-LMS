@@ -1,11 +1,11 @@
-// Learning Paths domain types — v1 (COURSE + LIVE_SESSION items only).
+// Learning Paths domain types — COURSE, LIVE_SESSION and QUIZ items.
 // Source of truth: LEARNING_PATHS_CONTRACT / backend learningPaths.service.js.
 //
 // CRITICAL: LearningPathItem.id is the path-item record's own id — used for
 // remove and reorder. It is NOT the course/session id (that's itemId). Mixing
 // these up causes silent 404s on every remove/reorder call.
 
-export type LearningPathItemType = 'COURSE' | 'LIVE_SESSION';
+export type LearningPathItemType = 'COURSE' | 'LIVE_SESSION' | 'QUIZ';
 
 export interface LearningPath {
   id:          string;
@@ -20,12 +20,12 @@ export interface LearningPath {
 export interface LearningPathItem {
   id:        string;               // path-item id (for remove/reorder)
   itemType:  LearningPathItemType;
-  itemId:    string;               // course or live-session id
+  itemId:    string;               // course, live-session, or quiz id
   order:     number;
   createdAt: string;               // ISO
   // Resolved fields (populated by backend's resolveItems)
   title:     string | null;        // null when missing: true
-  status:    string | null;        // Course: Draft/Pending/Published/Archived; Session: upcoming/live/ended
+  status:    string | null;        // Course: Draft/Pending/Published/Archived; Session: upcoming/live/ended; Quiz: always null (no status concept)
   startTime: string | null;        // LIVE_SESSION only
   missing:   boolean;              // true = referenced row hard-deleted from DB
 }

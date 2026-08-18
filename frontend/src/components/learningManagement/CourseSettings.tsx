@@ -110,7 +110,12 @@ function buildPatch(form: FormState, orig: CourseSettings): UpdateSettingsPayloa
   const p: UpdateSettingsPayload = {};
   if (eff.isFree             !== orig.isFree)             p.isFree             = eff.isFree;
   if (eff.price              !== orig.price)              p.price              = eff.price;
-  if (eff.currency           !== orig.currency)           p.currency           = eff.currency;
+  // Currency is moot while free — skip it entirely rather than compare.
+  // Course.currency defaults to "USD" in the DB (schema) even though isFree
+  // defaults true, but formToEffective always nulls currency when isFree, so
+  // an untouched free course's eff.currency (null) would otherwise always
+  // mismatch its own fetched orig.currency ("USD") and fire a spurious PATCH.
+  if (!eff.isFree && eff.currency !== orig.currency)      p.currency           = eff.currency;
   if (eff.enrollmentLimit    !== orig.enrollmentLimit)    p.enrollmentLimit    = eff.enrollmentLimit;
   if (eff.visibility         !== orig.visibility)         p.visibility         = eff.visibility;
   if (eff.certificateEnabled !== orig.certificateEnabled) p.certificateEnabled = eff.certificateEnabled;
@@ -277,6 +282,11 @@ export default function CourseSettings({ courseId, onBack, onNext }: Props) {
 
   const origSettings = useRef<CourseSettings | null>(null);
   const toastTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Bumped on every load() call so a stale in-flight fetch (StrictMode's
+  // double-invoked mount effect, or a fast courseId change) can't clobber
+  // form state — and any in-progress user edits — after a newer load has
+  // already started.
+  const loadSeq = useRef(0);
 
   function showToast(msg: string) {
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -287,17 +297,20 @@ export default function CourseSettings({ courseId, onBack, onNext }: Props) {
   // ── Load ──────────────────────────────────────────────────────────────────
 
   const load = useCallback(async () => {
+    const seq = ++loadSeq.current;
     setLoading(true);
     setFetchError(null);
     try {
       const course = await getCourse(courseId);
+      if (loadSeq.current !== seq) return; // superseded by a newer load — discard
       origSettings.current = { ...course.settings };
       setForm(settingsToForm(course.settings));
     } catch (err) {
+      if (loadSeq.current !== seq) return;
       if (err instanceof CourseApiError && err.status === 401) { navigate('/login'); return; }
       setFetchError(err instanceof Error ? err.message : 'Failed to load settings.');
     } finally {
-      setLoading(false);
+      if (loadSeq.current === seq) setLoading(false);
     }
   }, [courseId, navigate]);
 

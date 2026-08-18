@@ -1,5 +1,8 @@
 const prisma = require("../config/prisma");
 const { getMeetingProvider } = require("./meetings");
+const { fireAutomationTrigger } = require("./automationTriggers.service");
+const { getCachedFeatureFlags } = require("./settings.service");
+const { onAttendanceMarked } = require("./certificateTriggers.service");
 
 // ── Live Sessions service (scheduling + real Zoom meetings) ─────────────────────
 //
@@ -81,6 +84,26 @@ function deriveStatus(startTime, durationMin, endedAt, now = Date.now()) {
   return "UPCOMING";
 }
 
+// Fires LIVE_SESSION_START for every learner enrolled in the session's
+// course — fire-and-forget (NOT awaited by the caller) because syncStatuses()
+// runs on nearly every read of this module (listSessions/getSession, also
+// hit by dashboard.service/reports.service), and a course's enrolled-learner
+// fan-out could be large; blocking a read on N automation sends would turn a
+// cheap page load into a slow one right at the moment a session goes live.
+// fireAutomationTrigger never throws, so this can't produce an unhandled
+// rejection either way — .catch() here is just defensive.
+async function notifyLiveSessionStarted(session) {
+  if (!session.courseId) return; // standalone session, no course audience to notify
+  const learners = await safe(() => prisma.courseEnrollment.findMany({
+    where: { courseId: session.courseId, user: { role: "LEARNER", status: { not: "ARCHIVED" } } },
+    select: { userId: true },
+    take: 500,
+  }), []);
+  for (const { userId } of learners) {
+    fireAutomationTrigger("LIVE_SESSION_START", userId, { sessionTitle: session.title }).catch(() => {});
+  }
+}
+
 // Lazy status sync — two/three bounded UPDATEs over indexed columns; rows only
 // match near schedule boundaries so this is a no-op almost always. Bumping
 // updatedAt on ENDED also timestamps the LM activity feed's "session completed"
@@ -89,12 +112,21 @@ async function syncStatuses() {
   await safe(() => prisma.$executeRaw`
     UPDATE "live_sessions" SET "status" = 'ENDED', "updatedAt" = NOW()
     WHERE "status" <> 'ENDED' AND ("startTime" + make_interval(mins => "durationMin")) <= NOW()`, 0);
-  await safe(() => prisma.$executeRaw`
+
+  // RETURNING (not a plain $executeRaw) so we know exactly which rows just
+  // transitioned INTO live — the WHERE clause below only ever matches a row
+  // once (status flips away from UPCOMING immediately), so this can't
+  // double-fire the trigger for the same session on a later sync.
+  const justWentLive = await safe(() => prisma.$queryRaw`
     UPDATE "live_sessions" SET "status" = 'LIVE', "updatedAt" = NOW()
-    WHERE "status" = 'UPCOMING' AND "startTime" <= NOW() AND ("startTime" + make_interval(mins => "durationMin")) > NOW()`, 0);
+    WHERE "status" = 'UPCOMING' AND "startTime" <= NOW() AND ("startTime" + make_interval(mins => "durationMin")) > NOW()
+    RETURNING "id", "title", "courseId"`, []);
+
   await safe(() => prisma.$executeRaw`
     UPDATE "live_sessions" SET "status" = 'UPCOMING', "updatedAt" = NOW()
     WHERE "status" = 'LIVE' AND "startTime" > NOW()`, 0);
+
+  for (const session of justWentLive) notifyLiveSessionStarted(session).catch(() => {});
 }
 
 // Best-effort audit — never breaks the primary write (mirrors quizzes.service).
@@ -165,6 +197,9 @@ async function getSession(id) {
 // ── Writes ──────────────────────────────────────────────────────────────────────
 
 async function createSession(data, adminId) {
+  const flags = await getCachedFeatureFlags();
+  if (!flags.liveSessionsEnabled) throw domainError("LIVE_SESSIONS_DISABLED");
+
   if (data.courseId) await assertCourseExists(data.courseId);
   await assertInstructor(data.instructorId);
 
@@ -283,6 +318,55 @@ async function endSession(id, adminId) {
   return mapSession(session);
 }
 
+// ── Attendance (Trigger 4 writer) ────────────────────────────────────────────
+// The one admin writer SessionAttendance has ever had (schema comment on that
+// model — "manual admin correction is v1's only writer"). Every userId is
+// verified as a real AppUser up front so a typo'd id 400s instead of silently
+// creating an orphaned attendance row; writes are upserts (idempotent — marking
+// the same learner twice just corrects the record) inside one transaction so a
+// bulk save either fully lands or fully doesn't.
+async function markAttendance(sessionId, records, adminId) {
+  await getSessionOrThrow(sessionId);
+
+  const userIds = records.map((r) => r.userId);
+  const users = await prisma.appUser.findMany({ where: { id: { in: userIds } }, select: { id: true } });
+  const foundIds = new Set(users.map((u) => u.id));
+  const missing = userIds.filter((id) => !foundIds.has(id));
+  if (missing.length > 0) throw Object.assign(domainError("USERS_NOT_FOUND"), { missing });
+
+  await prisma.$transaction(
+    records.map((r) => prisma.sessionAttendance.upsert({
+      where: { sessionId_userId: { sessionId, userId: r.userId } },
+      create: {
+        sessionId, userId: r.userId, status: r.status,
+        joinedAt: r.joinedAt ?? null, leftAt: r.leftAt ?? null,
+        durationMin: r.durationMin ?? null, participationScore: r.participationScore ?? null,
+        recordedById: adminId ?? null,
+      },
+      update: {
+        status: r.status,
+        ...(r.joinedAt !== undefined ? { joinedAt: r.joinedAt } : {}),
+        ...(r.leftAt !== undefined ? { leftAt: r.leftAt } : {}),
+        ...(r.durationMin !== undefined ? { durationMin: r.durationMin } : {}),
+        ...(r.participationScore !== undefined ? { participationScore: r.participationScore } : {}),
+        recordedById: adminId ?? null,
+      },
+    })),
+  );
+
+  await auditLog(adminId, "SESSION_ATTENDANCE_MARKED", { sessionId, count: records.length });
+
+  // Best-effort, fire-and-forget — same shape as notifyLiveSessionStarted:
+  // never let a certificate-trigger hiccup fail the attendance save itself.
+  for (const r of records) onAttendanceMarked(sessionId, r.userId, adminId).catch(() => {});
+
+  const rows = await prisma.sessionAttendance.findMany({
+    where: { sessionId, userId: { in: userIds } },
+    select: { id: true, userId: true, status: true, joinedAt: true, leftAt: true, durationMin: true, participationScore: true },
+  });
+  return rows.map((r) => ({ ...r, joinedAt: iso(r.joinedAt), leftAt: iso(r.leftAt) }));
+}
+
 module.exports = {
   listSessions,
   getSession,
@@ -290,4 +374,5 @@ module.exports = {
   updateSession,
   deleteSession,
   endSession,
+  markAttendance,
 };

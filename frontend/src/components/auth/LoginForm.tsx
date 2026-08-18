@@ -6,11 +6,16 @@ interface Props {
 }
 
 export default function LoginForm({ onSuccess }: Props) {
-  const { login } = useAuth();
+  const { login, completeMfaLogin } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Set once a password check succeeds and the admin has TOTP MFA enabled —
+  // switches the form to the 6-digit code step instead of navigating in.
+  const [mfaToken, setMfaToken] = useState<string | null>(null);
+  const [mfaCode, setMfaCode] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,7 +23,11 @@ export default function LoginForm({ onSuccess }: Props) {
     setLoading(true);
 
     try {
-      await login(email, password);
+      const result = await login(email, password);
+      if (result.mfaRequired && result.mfaToken) {
+        setMfaToken(result.mfaToken);
+        return;
+      }
       onSuccess();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Sign-in failed. Please try again.');
@@ -26,6 +35,62 @@ export default function LoginForm({ onSuccess }: Props) {
       setLoading(false);
     }
   };
+
+  const handleMfaSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!mfaToken) return;
+    setError(null);
+    setLoading(true);
+    try {
+      await completeMfaLogin(mfaToken, mfaCode.trim());
+      onSuccess();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Invalid code. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (mfaToken) {
+    return (
+      <form onSubmit={handleMfaSubmit} noValidate>
+        {error && <div className="mn-alert-error">{error}</div>}
+        <div style={{ marginBottom: '1rem' }}>
+          <label htmlFor="mfa-code" className="mn-label">
+            Authenticator code
+          </label>
+          <p style={{ fontSize: '0.78rem', color: 'var(--mn-text-600)', margin: '0 0 0.5rem' }}>
+            Enter the 6-digit code from your authenticator app.
+          </p>
+          <input
+            id="mfa-code"
+            type="text"
+            inputMode="numeric"
+            pattern="\d{6}"
+            maxLength={6}
+            className="mn-input"
+            value={mfaCode}
+            onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+            autoComplete="one-time-code"
+            placeholder="000000"
+            required
+            autoFocus
+            disabled={loading}
+          />
+        </div>
+        <button type="submit" className="mn-btn-primary" disabled={loading || mfaCode.length !== 6}>
+          {loading ? 'Verifying…' : 'Verify & Sign In'}
+        </button>
+        <button
+          type="button"
+          onClick={() => { setMfaToken(null); setMfaCode(''); setError(null); }}
+          style={{ display: 'block', width: '100%', marginTop: '0.75rem', background: 'none', border: 'none', color: 'var(--mn-text-600)', fontSize: '0.8rem', cursor: 'pointer', fontFamily: 'inherit' }}
+        >
+          Back to sign in
+        </button>
+      </form>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} noValidate>

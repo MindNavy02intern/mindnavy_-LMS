@@ -74,7 +74,6 @@ export default function OtpVerificationModal({
       setCountdown(RESEND_COOLDOWN);
     })();
 
-    // TODO: BACKEND — this will auto-send an OTP email on modal open
     sendOtp({ email }).catch(() => {
       // Non-fatal — user can click Resend if it didn't arrive
       console.warn('[OTP] Initial send failed, user can retry.');
@@ -146,7 +145,6 @@ export default function OtpVerificationModal({
     setError(null);
 
     try {
-      // TODO: BACKEND — replace verifyOtp with real API call
       const result = await verifyOtp({ code, trustDevice });
 
       if (result.success) {
@@ -173,7 +171,6 @@ export default function OtpVerificationModal({
     setDigits(Array(OTP_LENGTH).fill(''));
 
     try {
-      // TODO: BACKEND — trigger a new OTP email
       await sendOtp({ email });
     } finally {
       setIsSending(false);

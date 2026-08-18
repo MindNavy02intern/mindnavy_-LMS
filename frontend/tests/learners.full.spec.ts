@@ -185,7 +185,9 @@ test('Tab switching updates the URL and refetches the table', async ({ page }) =
 test('Panel deep-link (?learner=<id>) opens the side panel directly', async ({ page }) => {
   test.skip(!learnerId, 'Setup learner was not created — backend may be unavailable')
   await openPanel(page)
-  await expect(page.getByText(learnerName as string)).toBeVisible({ timeout: 10000 })
+  // .first(): the learner's name legitimately appears both in the table row
+  // behind the panel and inside the loaded panel content.
+  await expect(page.getByText(learnerName as string).first()).toBeVisible({ timeout: 10000 })
 })
 
 test('Enrolling a learner in a course makes it appear in the Courses tab', async ({ page }) => {
@@ -195,11 +197,15 @@ test('Enrolling a learner in a course makes it appear in the Courses tab', async
   await page.getByRole('button', { name: 'Enroll', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Enroll in Course' })).toBeVisible({ timeout: 5000 })
 
-  await page.getByLabel('Course').selectOption({ label: courseTitle as string })
+  // exact: true — non-exact also matches "Completed Courses stat card" and
+  // the "Enroll in Course" dialog, both containing "Course" as a substring.
+  await page.getByLabel('Course', { exact: true }).selectOption({ label: courseTitle as string })
 
+  // Scoped to the dialog — the panel's own "Enroll" trigger button is still
+  // present behind it, so an unscoped exact match resolves to both.
   const [enrollResp] = await Promise.all([
     page.waitForResponse(r => r.url().includes(`/learners/${learnerId}/enrollments`) && r.request().method() === 'POST', { timeout: 15000 }),
-    page.getByRole('button', { name: 'Enroll', exact: true }).click(),
+    page.getByLabel('Enroll in Course').getByRole('button', { name: 'Enroll', exact: true }).click(),
   ])
   expect(enrollResp.ok()).toBeTruthy()
 
@@ -244,23 +250,27 @@ test('Bulk Enroll (More Actions) enrolls multiple learners in one course', async
 
   await page.getByRole('button', { name: 'More Actions', exact: true }).click()
   await page.getByRole('button', { name: 'Bulk Enroll', exact: true }).click()
-  await expect(page.getByRole('heading', { name: 'Bulk Enroll Learners' })).toBeVisible({ timeout: 5000 })
+  const modal = page.getByRole('dialog', { name: 'Bulk Enroll Learners' })
+  await expect(modal).toBeVisible({ timeout: 5000 })
 
   // Add both learners via the search-and-add picker.
-  const search = page.getByLabel('Search learners');
+  // Scoped to the modal — the learner's name also matches its own row in
+  // the (still-mounted, behind the modal) main learners table.
+  const search = modal.getByLabel('Search learners');
   await search.fill(learnerName as string)
-  await expect(page.getByText(learnerName as string)).toBeVisible({ timeout: 10000 })
-  await page.getByText(learnerName as string).click()
+  await expect(modal.getByText(learnerName as string)).toBeVisible({ timeout: 10000 })
+  await modal.getByText(learnerName as string).click()
 
   await search.fill(learnerName2 as string)
-  await expect(page.getByText(learnerName2 as string)).toBeVisible({ timeout: 10000 })
-  await page.getByText(learnerName2 as string).click()
+  await expect(modal.getByText(learnerName2 as string)).toBeVisible({ timeout: 10000 })
+  await modal.getByText(learnerName2 as string).click()
 
-  await page.getByLabel('Course').selectOption({ label: bulkCourseTitle as string })
+  // exact: true — non-exact also matches "Completed Courses stat card".
+  await modal.getByLabel('Course', { exact: true }).selectOption({ label: bulkCourseTitle as string })
 
   const [bulkResp] = await Promise.all([
     page.waitForResponse(r => r.url().includes('/learners/bulk-enroll') && r.request().method() === 'POST', { timeout: 15000 }),
-    page.getByRole('button', { name: /^Enroll/ }).click(),
+    modal.getByRole('button', { name: /^Enroll/ }).click(),
   ])
   expect(bulkResp.ok()).toBeTruthy()
   const bulkBody = await bulkResp.json()
@@ -293,7 +303,9 @@ test('Suspending a learner updates the status badge and suspension history', asy
     page.getByRole('button', { name: 'Confirm Suspend' }).click(),
   ])
   expect(resp.ok()).toBeTruthy()
-  await expect(page.getByText('suspended', { exact: true })).toBeVisible({ timeout: 10000 })
+  // .first(): the status flips to "suspended" in both the table row behind
+  // the panel and the panel's own badge — either confirms the update landed.
+  await expect(page.getByText('suspended', { exact: true }).first()).toBeVisible({ timeout: 10000 })
 
   await page.getByRole('button', { name: 'More', exact: true }).click()
   await expect(page.getByText('SUSPENDED', { exact: true })).toBeVisible({ timeout: 10000 })
@@ -303,6 +315,14 @@ test('Suspending a learner updates the status badge and suspension history', asy
   // runs the suite next — not strictly cleanup (afterAll deletes the row
   // regardless) but keeps intermediate runs honest if this test is re-run
   // standalone against a shared dev DB.
+  //
+  // The Reactivate button only exists under panelTab === 'overview'
+  // (LearnerSidePanel.tsx:266) — clicking "More" above switched panelTab to
+  // 'more' to reach the suspension-history text, which unmounts that whole
+  // block including Reactivate. Switch back to Overview before it's clickable.
+  await page.getByRole('button', { name: 'Overview', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Reactivate', exact: true })).toBeVisible({ timeout: 5000 })
+
   page.once('dialog', dialog => dialog.accept())
   await Promise.all([
     page.waitForResponse(r => r.url().includes(`/learners/${learnerId}/reactivate`) && r.ok(), { timeout: 15000 }),
@@ -311,15 +331,17 @@ test('Suspending a learner updates the status badge and suspension history', asy
 })
 
 test('Bottom analytics charts render', async ({ page }) => {
-  await page.goto('/learners')
-  await expect(page.getByRole('heading', { name: 'Learners' })).toBeVisible({ timeout: 10000 })
-
+  // LearnersAnalyticsSection fetches on mount (no scroll/lazy trigger), same
+  // as every sibling *AnalyticsSection — pair the wait with goto itself, not
+  // a later action, or the response resolves before the listener attaches.
   const [resp] = await Promise.all([
     page.waitForResponse(r => r.url().includes('/learners/analytics') && r.ok(), { timeout: 15000 }),
-    page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)),
+    page.goto('/learners'),
   ])
   expect(resp.ok()).toBeTruthy()
+  await expect(page.getByRole('heading', { name: 'Learners' })).toBeVisible({ timeout: 10000 })
 
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
   await expect(page.getByText('Learners by Program')).toBeVisible({ timeout: 10000 })
   await expect(page.getByText('Progress Overview')).toBeVisible({ timeout: 10000 })
   await expect(page.getByText('Enrollment Trend')).toBeVisible({ timeout: 10000 })

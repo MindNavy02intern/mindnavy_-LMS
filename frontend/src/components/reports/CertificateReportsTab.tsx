@@ -1,6 +1,6 @@
 // Certificate Reports tab — summary cards, issued trend, recent certificates.
-// Expired/verification-requests are honest em-dashes (no expiresAt field on
-// Certificate, no verification-page-hit tracking).
+// Verification-requests stays an honest em-dash (no verification-page-hit
+// tracking exists). Expired/Expiring Soon are real counts (Certificate.expiresAt).
 
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -92,8 +92,9 @@ export default function CertificateReportsTab({ showToast }: Props) {
       )}
 
       {loading || !data ? <Skeleton /> : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 14 }}>
           <StatTile label="Issued" value={String(data.totalIssued.value)} />
+          <StatTile label="Expiring Soon" value={data.expiringSoon.available ? String(data.expiringSoon.value) : null} reason={data.expiringSoon.reason} />
           <StatTile label="Expired" value={data.expired.available ? String(data.expired.value) : null} reason={data.expired.reason} />
           <StatTile label="Revoked" value={String(data.revoked.value)} />
           <StatTile label="Verification Requests" value={data.verificationRequests.available ? String(data.verificationRequests.value) : null} reason={data.verificationRequests.reason} />
@@ -134,7 +135,13 @@ export default function CertificateReportsTab({ showToast }: Props) {
                     <td style={{ padding: '8px', color: '#374151' }}>{c.userName ?? '—'}</td>
                     <td style={{ padding: '8px', textAlign: 'right', color: '#6b7280' }}>{new Date(c.issuedAt).toLocaleDateString()}</td>
                     <td style={{ padding: '8px', textAlign: 'right' }}>
-                      <span style={{ padding: '2px 8px', borderRadius: 999, fontSize: 10, fontWeight: 700, background: c.revoked ? '#fee2e2' : '#dcfce7', color: c.revoked ? '#b91c1c' : '#15803d' }}>{c.revoked ? 'Revoked' : 'Active'}</span>
+                      <span style={{
+                        padding: '2px 8px', borderRadius: 999, fontSize: 10, fontWeight: 700,
+                        background: c.revoked ? '#fee2e2' : c.expired ? '#fef3c7' : '#dcfce7',
+                        color: c.revoked ? '#b91c1c' : c.expired ? '#92400e' : '#15803d',
+                      }}>
+                        {c.revoked ? 'Revoked' : c.expired ? 'Expired' : 'Active'}
+                      </span>
                     </td>
                     <td style={{ padding: '8px', textAlign: 'right', color: '#9ca3af', fontFamily: 'monospace', fontSize: 11 }}>{c.verificationCode?.slice(0, 8) ?? '—'}</td>
                   </tr>

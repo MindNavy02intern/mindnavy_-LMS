@@ -139,7 +139,10 @@ All keys are created via `src/lib/queryKeys.ts` (factory). Never write key array
 | Instructor profile page **+ side panel** (badges · pending approvals · activity feed · 12-month enrollment chart) | `['instructors', id]` | `GET /api/admin/instructors/:id` | + live_sessions, certificates, audit_logs |
 | Bottom analytics: specialization donut · courses-by-status donut · Top Instructors ranking · earnings (unavailable) | `['instructors','analytics']` † | `GET /api/admin/instructors/analytics` | app_users, instructor_profiles, courses, course_enrollments |
 | Applications queue (Pending tab) | `['instructor-applications']` | `GET /api/admin/instructor-applications` | instructor_applications |
-| Earnings / Reviews / Documents tabs | `['instructors', id, 'earnings' \| 'reviews' \| 'documents']` | *(no endpoint — no Finance/Review/Document model exists)* | — |
+| Reviews tab (approve/remove/flag) | `queryKeys.instructors.reviews(id)` | `GET/PATCH /api/admin/instructors/:id/reviews[/:reviewId/approve\|remove\|flag]` | instructor_reviews |
+| Documents tab (upload/verify/reject/archive) | `queryKeys.instructors.documents(id)` | `GET/POST/PATCH/DELETE /api/admin/instructors/:id/documents/*` | instructor_documents |
+| Earnings tab | `['instructors', id, 'earnings']` | *(no endpoint — no Finance/earnings model exists for instructors)* | — |
+| Instructor Profile page (`/instructors/:id/profile`) | `['instructors', id]` + the two rows above | `GET /api/admin/instructors/:id` | reuses Courses/Reviews/Certifications/Documents tab components from the side panel |
 
 † `queryKeys.instructors` has no `stats()` or `analytics()` member yet — add both alongside the frontend work (tasks 106 / 112) rather than inventing inline key arrays.
 
@@ -245,6 +248,9 @@ Format per row: **Mutation** → *extra* keys to invalidate (defaults from §2 a
 | `user.merge` (§16) | `['users']` `['users', idA]` `['users', idB]` `['enrollments',…]` `['certificates']` `['billing']` | Both profiles → one · merged learning history |
 | `user.tag.add/remove` (§17) | `['users','tags']` `['users', id]` | Tag filters · profile labels |
 | `user.assignRole` → see **5.5 ROLE** | | |
+| `user.courseUnenroll` (User Details Drawer, Courses tab — new 2026-08-17) | `['users']` `['users', id]` `['enrollments', id]` `['enrollments', courseId]` `['courses']` `['courses', courseId]` `['dashboard','course-analytics']` | Users table enrollment count · drawer Courses tab · Learning Management course roster. Assign (create) reuses `learner.enroll` as-is, gated in the UI to role=learner — the backend enroll path is LEARNER-only (`learners.service.assertIsLearner`); no new mutation ID for it. |
+| `user.note.add` / (delete has no separate id — same drawer-local refresh) (More tab, Notes tile — new 2026-08-17) | local only: drawer refetch, no other surface reads `UserNote` | Notes tile list |
+| `user.revokeSessions` (More tab, Devices & Sessions tile — new 2026-08-17) | local only: drawer refetch | Devices & Sessions tile. Per-session (`DELETE /users/:id/sessions/:sessionId`), distinct from Force Logout (`user.forceLogout`, revokes ALL sessions at once). |
 
 ### 5.2 STUDENT / ENROLLMENT (Students doc §1–§15)
 
@@ -313,9 +319,9 @@ Users surfaces — `['users']` is not optional on those rows.
 | `course.restore` | `['courses']` `['dashboard','course-analytics']` `['learning-paths']` | Archived course reappears in Draft tab · KPI updates · learning-path item badge changes from Archived → Draft |
 | `category.create/rename/delete` (§6) | `['categories']` `['courses']` | Category dropdown everywhere (R2) · course filters |
 | `learningPath.create` / `.update` / `.delete` (§7 — `/api/admin/learning-paths`, contract `LEARNING_PATHS_CONTRACT.md`) | `['learning-paths']` `['dashboard','course-analytics']` | Paths list · path detail · path progress metrics (dashboard side stays stub until v2 progress tracking) |
-| `learningPath.item.add` / `.remove` / `.reorder` (§7 — reorder is ONE bulk call, replace state from response like Course Builder) | `['learning-paths']` | Path detail item list · `itemCount` on the paths list |
+| `learningPath.item.add` / `.remove` / `.reorder` (§7 — reorder is ONE bulk call, replace state from response like Course Builder; items are `COURSE`/`LIVE_SESSION`/`QUIZ` as of 2026-08-17) | `['learning-paths']` | Path detail item list · `itemCount` on the paths list |
 | `quiz.create` / `.update` / `.delete` (§8 — `/api/admin/quizzes`, contract `QUIZZES_CONTRACT.md`) | `['quizzes']` + `['quizzes', courseId]` `['courses', courseId]` when attached | Assessments tab quiz list · course detail (attached quizzes) |
-| `quiz.question.add` / `.update` / `.delete` / `.reorder` (§8 — reorder is ONE bulk call, replace state from response; question writes change server-derived `questionCount`/`totalPoints`/`autoGradable` — next real GET, never computed client-side, R1/R4) | `['quizzes']` | Quiz builder question list · derived counts on the quiz list |
+| `quiz.question.add` / `.update` / `.delete` / `.reorder` (§8 — reorder is ONE bulk call, replace state from response; question writes change server-derived `questionCount`/`totalPoints`/`autoGradable` — next real GET, never computed client-side, R1/R4; all 6 question types incl. `FILL_IN_BLANK`/`MATCHING` as of 2026-08-17) | `['quizzes']` | Quiz builder question list · derived counts on the quiz list |
 | `liveSession.create` / `.update` / `.delete` (§12 — `/api/admin/live-sessions`, contract `LIVE_SESSIONS_CONTRACT.md`; create/update talk to the REAL Zoom API; status is schedule-derived server-side, never written by the client) | `['live-sessions']` `['calendar']` `['dashboard','live-overview']` + `['learning-paths']` (session items show title/status; delete leaves `missing: true` items) | Live Sessions tab · LM Overview live-sessions widget · Calendar & Events · learning-path item badges |
 | `content.confirm` (upload) / `content.update` / `content.delete` (§11, §16 — `/api/admin/content`, contract `CONTENT_LIBRARY_CONTRACT.md`; sign → direct PUT → confirm, same flow as course uploads) | `['content-library']` + `['courses', id]` when the item is course-scoped | Library grid · LM Content stats tiles (same `course_contents` table — B2) · Activity "Instructor Uploaded Content" |
 | `section.create` | `['courses', courseId, 'sections']` `['content-library']` | Section list in Course Builder · content item count |
@@ -374,7 +380,9 @@ rows below marked shipped are real. `payout.approve/.complete/.calculate` and
 
 | Mutation | Invalidate (extra) | Visible reflections |
 |---|---|---|
-| `certificate.issue` (§9 — `POST /api/admin/certificates`, contract `CERTIFICATES_CONTRACT.md`; v1 MANUAL only — auto-triggers wait for the learner runtime; requires `Course.certificateEnabled`) | `['certificates']` `['students', id, 'certificates']` `['dashboard','course-analytics']` | **Certificates Issued KPI** (counts non-revoked only) · student profile · Activity "Certificate Issued" |
+| `certificate.issue` (§9 — `POST /api/admin/certificates`, contract `CERTIFICATES_CONTRACT.md`; requires `Course.certificateEnabled`) | `['certificates']` `['students', id, 'certificates']` `['dashboard','course-analytics']` | **Certificates Issued KPI** (counts non-revoked only) · student profile · Activity "Certificate Issued" |
+| *(server-side only, no frontend mutation)* Auto-issue triggers (`certificateTriggers.service.js`, 2026-08-17) call `issueCertificate()` from enrollment completion, quiz passing grade, and learning-path completion — same DB write as `certificate.issue` above. No new frontend invalidation needed: whichever real mutation fired (`enrollment.statusUpdate` / `learner.assessmentGrade`) already invalidates its own rows; the new certificate shows up next time `['certificates']` is fetched. | — | Certificates list gains a row on next fetch |
+| Logo upload/remove (`CertificateLogoUpload.tsx` → `.../logo/confirm` \| `DELETE .../logo`, 2026-08-17) reuses `certificateTemplate.update`'s invalidation — same write (template layout), same reflections. | `['certificate-templates']` `['certificates']` | Template logo preview · issue dialog template picker |
 | `certificate.revoke` / `.reissue` (`POST /:id/revoke` · `/:id/reissue` — reissue mints a NEW verification code + issuedAt, clears revokedAt; old QR/PDF stop verifying immediately) | same | Same, reversed · verify page flips valid/revoked · reissue can move a revoked cert back into the KPI count |
 | `certificateTemplate.create` (`/api/admin/certificate-templates`) | `['certificate-templates']` | Templates list · template picker in issue dialog |
 | `certificateTemplate.update` | `['certificate-templates']` `['certificates']` (templateName is read live off the relation, not snapshotted — a rename changes what issued certs display) | Templates list · issued-certificates table's Template column |
@@ -625,3 +633,222 @@ fixed before ship: an instructor completion-rate formula that measured the
 wrong population, and an audit-search branch that threw on Prisma's strict
 `AuditAction` enum and got silently swallowed into false empty results. See
 `REPORTS_CONTRACT.md`.*
+
+*2026-08-17 — Dashboard & Reports deferred-items pass (see `DEFERRED_ITEMS.md`
+for the full list this closes). No new Prisma models; all reads over
+existing tables, zero schema change.*
+
+- **Dashboard admin-widgets** (`GET /api/admin/dashboard/admin-widgets`,
+  `dashboard.service.getDashboardAdminWidgets`): `tasksAndReminders`,
+  `recentTransactions`, `reportsSnapshot` were hardcoded empty — now real.
+  Tasks = pending user verifications/refunds/instructor-applications/course-
+  approvals, each read from its owning module's queue (§4a's B4 discipline —
+  no separate copy). Transactions = merged `Payment`/`Refund`/
+  `InstructorPayout`, most recent 8. Reports snapshot links into the real
+  `/reports-analytics` tabs; `lastGeneratedAt` reads `ScheduledReport.lastRunAt`.
+  `TaskItem`'s shape changed (`count`/`link` replace a fake `status`/`dueAt`
+  no completion-tracking model backs) — any future dashboard consumer of
+  `queryKeys.dashboard` widgets should read the new shape.
+- **Reports proxies unblocked** (`reports.service.js`): `Overview.engagementScore`
+  (active/total learner ratio), `Engagement.avgSessionDuration` (from
+  `SessionAttendance.durationMin`), `Compliance.complianceViolations`
+  (`USER_SUSPENDED` audit-log count) all flipped from permanently-unavailable
+  to real proxies — labeled as proxies, not exact metrics. `Certificate`
+  still has no `expiresAt` field, so `expired`/`expiredCertifications` stay
+  correctly unavailable (not stale — confirmed against schema, not assumed).
+- **Stale gap found + fixed**: `instructors.service.getStats().avgRating` was
+  still `unavailable("No Review/Rating model exists yet")` even though
+  `InstructorReview` shipped 2026-08-07 — now a real average over `APPROVED`
+  reviews. This cascades into Reports' Instructor Analytics tab (same field,
+  reused verbatim, R4) with zero changes needed there. `totalRevenue` on the
+  same endpoint stays unavailable but with a corrected reason (blocked on a
+  real payment gateway, not "Finance module doesn't exist" — Finance shipped).
+- **Learning Progress tab** (`/reports-analytics?tab=progress`) extended
+  `reports.service.getLearnerAnalytics()` (not a new endpoint — same
+  `enrollmentWhere`/`userWhere` every other field on it already shares) with
+  `learningSpeedDays`, `slowLearners`, `highPerformers`, `completedEnrollments`.
+  `inactiveUsers`/`topPerformers` were already being fetched by this tab and
+  silently discarded — now rendered.
+- **Audit & Security** (`/trusted-devices`, nav-labeled "Audit & Security"):
+  gained a real "Audit Logs" tab. Deliberately reuses `AuditLogsTab` +
+  `GET /reports/audit` AS-IS rather than forking a parallel `/audit-logs`
+  endpoint with an identical query (R4) — `reports.service.getAuditReports`
+  stays the one owner of that query.
+- **Login → device verification** (`LoginPage.tsx` → `/verify-device`): new
+  `GET /api/admin/devices/check` (`admin.service.checkDeviceTrust`). Root
+  cause was deeper than the missing redirect — `POST /otp/verify`'s
+  `trustDevice` flag was validated-away and never reached the service, so no
+  `TrustedDevice` row was ever written even when the checkbox was checked.
+  Fixed the write path first (`adminAuth.validator` → `admin.controller` →
+  `admin.service.verifyAdminOtp`), then added the check + redirect. Device
+  identity = sha256(ipAddress::userAgent) — no client-side device-id exists
+  anywhere in this codebase to key off instead. Known remaining gap
+  (unchanged, not closed by this pass): the login token issued at password-
+  auth time is a normal `AdminSession` regardless of device-check outcome —
+  this is a client-side UX gate, not server-enforced. See the header comment
+  in `VerifyDevicePage.tsx`.
+
+*2026-08-17 — Notifications & Automations deferred-items pass (see
+`DEFERRED_ITEMS.md` for the full list this closes). One additive schema
+change: `AuditAction` gained `SUBSCRIPTION_EXPIRED` (system-authored, written
+by the new subscription-expiry sweep) — `npx prisma generate` run, `db push`
+still needed against the target DB.*
+
+- **Automation triggers wired for real** (`automationTriggers.service.js`,
+  new file — `fireAutomationTrigger(triggerType, userId, metadata)`,
+  best-effort, called from 6 source services). §5.12's own note that
+  `NotificationAutomation` was "CRUD-only, not wired to real events" is now
+  true for `USER_REGISTRATION`, `COURSE_ENROLLMENT`, `COURSE_COMPLETION`,
+  `QUIZ_FAILURE`, `LIVE_SESSION_START`, `SUBSCRIPTION_EXPIRY` (new hourly
+  sweep in `finance.service.js` — nothing ever flipped a `Subscription` to
+  `EXPIRED` before this). `PAYMENT_SUCCESS` and `ASSIGNMENT_DEADLINE` stay
+  unwired — confirmed no real event exists for either (no checkout flow, no
+  Assignment model), not a missed wiring. `SECURITY_EVENT` fires from
+  `users.service.suspendUser`, not the task's literal
+  admin-login-failure ask — that event has no `AppUser` recipient
+  (`NotificationLog`/automations are `AppUser`-scoped; `AdminUser` logins are
+  a different table entirely), so it would have silently no-op'd forever.
+- **Email delivery: retry + quiet hours** (`notifications.service.js`):
+  `retryPendingDeliveries()` (5-min sweep, `server.js`) drains PENDING EMAIL
+  rows for both the pre-existing `EMAIL_BLAST_CAP` overflow reason and a new
+  `QUIET_HOURS` reason — same PENDING lane, one retry mechanism for both.
+  Quiet hours enforced against UTC only (no timezone field exists on
+  `UserNotificationPreference` — documented gap, not assumed away), EMAIL
+  channel only (IN_APP stays immediate — passive inbox row, not a push),
+  exempt for URGENT/EMERGENCY/SECURITY_EVENT.
+- **Feature toggles now gate real things** (`settings.service.js`
+  `getCachedFeatureFlags()`, 60s cache): `liveSessions.service.createSession`
+  and `certificates.service.issueCertificate` (the one entry point every
+  auto-issue trigger already funnels through) 403 when their toggle is off.
+  New `GET /api/admin/system-settings/features`. Frontend `FeatureFlagsContext`
+  mounted in `ProtectedRoute.tsx` (a true ancestor of every page component,
+  and never fires unauthenticated) gates `LmTabs.tsx`'s Live Sessions/
+  Certificates tabs — corrected from the task's literal "hide the AdminLayout
+  nav item" ask, since neither is a top-level nav item, both are Learning
+  Management tabs. `FeatureTogglesTab.tsx` was calling `invalidateFor(...)` on
+  save and nothing else — that call was always a no-op (confirmed: no
+  `useQuery` consumer exists anywhere in this codebase, so the whole
+  `appQueryClient` layer §6 describes has never actually been wired to a
+  screen) — added the real `analyticsUpdated` event dispatch every other
+  settings-driven panel in this app already relies on.
+- **Bell "Mark all read"** (`AdminLayout.tsx`) had no `onClick` at all — now
+  calls the real `PATCH /notifications/read-all` and zeroes the topbar badge
+  (which already read a real count from an earlier pass). The panel's item
+  list stays the pre-existing `recentActivities` feed by design (§0's own
+  decision #1) — a different, intentionally-kept feature, not touched.
+
+*2026-08-18 — Integrations/Roles & Permissions/Reports/UI-UX deferred-items
+pass (see `DEFERRED_ITEMS.md` for the full list this closes — Parts 5-8 of
+one combined session, continuing straight on from the Finance/Competencies/
+Instructors/Notifications pass above). Several additive schema changes —
+`npx prisma generate` run after each; **`npx prisma db push` still needed
+against the target DB** for all of them (new models `CompanyRole`,
+`DelegatedAdmin`, `FeatureWaitlist`; new fields on `SystemSettings`
+(`zoomDefaultDuration`, `zoomRecordingEnabled`, `roleInheritanceEnabled`,
+`maxRolesPerUser`) and `Certificate` (`expiresAt`); several new `AuditAction`
+enum values). See the chat transcript's final summary for the complete list.*
+
+- **Integrations**: `triggerSync()` no longer fakes a `COMPLETED` `DataSync`
+  after a `setTimeout` — none of `REAL_PROVIDERS` (zoom/supabase/smtp-email)
+  is an actual sync destination for users/courses/departments records, so it
+  now records an honest `FAILED` row with the real reason instead. Zoom's
+  meeting-duration/recording-default moved from `ZoomCard`'s local state to
+  real `SystemSettings` fields via the existing generic `PATCH
+  /system-settings`. Decorative MS Teams/Google Meet cards now name the real
+  blocker (API credentials) instead of a generic description.
+- **Roles & Permissions §4/§5.5**: the four placeholder tabs are real now.
+  `CompanyRole` (console-operator roles — distinct from the LMS-side `Role`
+  model in §5.5, which is assigned to `AppUser` via `UserRoleAssignment`) +
+  full CRUD at `/company-roles`. `DelegatedAdmin` (time-boxed console access
+  grants) + CRUD/revoke at `/delegated-admins` — audit trail only, no
+  auth-middleware enforcement wired to it yet (flagged as a separate,
+  security-sensitive follow-up, not silently assumed). Audit & Tracking
+  reuses `GET /reports/audit` (R4) via a new `actions` (CSV) filter param —
+  no parallel log. Settings tab adds two `SystemSettings` fields, same
+  generic PATCH path every other settings tab uses.
+- **Reports**: `Certificate.expiresAt` added — `status` now derives
+  `'expired'` alongside `'active'`/`'revoked'`; new `PATCH
+  /certificates/:id/expiry`; public verify (`GET /verify/:code`) returns
+  `status:'expired'` instead of falsely saying valid; Certificate Reports
+  tab's `expired`/`expiringSoon` flipped from `unavailable(...)` to real
+  counts. Live Sessions attendance (`SessionAttendance`) finally has a real
+  writer — `PATCH /live-sessions/:id/attendance` (bulk upsert, roster from
+  course enrollment) — which also completes certificate Trigger 4
+  (attendance threshold), the one trigger left unwired from the earlier
+  Notifications pass. `users.service.getUsersAnalytics()` gained `userGrowth`
+  (12 zero-filled weekly signup buckets) for the Users Analytics page's
+  real "coming soon" chart slot — its "Users by Department" chart turned out
+  to already be real, live data (a bar chart, not a donut) — that half of
+  the original deferred-item claim was stale, not a gap.
+- **UI/UX**: Users' role chip now navigates to `/roles-permissions?tab=roles
+  &role=<name>`, which pre-fills the roles table's search on mount — a real
+  filtered landing, not just the tab. Real per-admin TOTP MFA (`otplib` +
+  `qrcode`, no 3rd party) — `POST /auth/mfa/setup|verify|disable` plus a
+  login-time challenge (`POST /auth/mfa/login-verify`, in-memory single-use
+  pending-token map keyed off a random token, never the raw adminId) wired
+  into `loginAdmin()`'s existing flow via a new shared `issueSession()` tail.
+  Setup/disable UI lives in `ProfilePage.tsx`'s Two-Factor Authentication row
+  (not `SecurityTab.tsx`'s toggle, which is a distinct, still-unbuilt
+  org-wide *enforcement* policy — copy corrected to point at the real
+  per-admin control instead of reading as an oversight). New generic
+  `FeatureWaitlist` model (feature key + adminId, reusable for the next
+  not-built-yet feature) backs Custom Reports' "Notify me" button — the
+  report-builder itself is still the real, unchanged stub.
+- **Stale docs corrected in the same pass** (not just code): `IMPACT_MAP.md`
+  §4c (this file, above — Reviews/Documents already had real endpoints,
+  Earnings correctly still doesn't); `LIVE_SESSIONS_CONTRACT.md`'s "no
+  attendance" scope note; `COURSE_WIZARD_AND_CATEGORIES_CONTRACT.md`'s "no
+  quiz system yet" reasoning (quizzes shipped — the real, narrower fact is
+  `getPreview()` was never extended to include quiz data) and its stale
+  "no push-notification system" reject-workflow note.
+
+*2026-08-18 (same-day follow-up) — Content reuse / Competency Certifications /
+Custom Reports builder (see `DEFERRED_ITEMS.md` for the full list this
+closes). Four new models — `npx prisma generate` run; **`npx prisma db push`
+still needed** against the target DB: `CourseContentUsage`, `CompetencyCertification`,
+`SavedReport`, plus `AppUser` gained a `competencyCertifications` back-relation
+and `AuditAction` gained 11 new values (`CONTENT_LINKED_TO_COURSE`/
+`_UNLINKED_FROM_COURSE`, `COMPETENCY_CERTIFICATION_ASSIGNED`/`_VERIFIED`/
+`_REVOKED`/`_DELETED`, `SAVED_REPORT_CREATED`/`_UPDATED`/`_DELETED`/`_RUN`).*
+
+- **Content Library reuse across courses** (`CourseContentUsage`, additive
+  alongside `CourseContent.courseId` — the item's own originating course,
+  unchanged): `GET/POST/DELETE /content/:id/courses[/:courseId]`. Shows a
+  real "Used in X courses" count + link/unlink dialog in `ContentLibraryTab.tsx`;
+  Course Builder's video-lesson form gained a "From Library" input mode
+  (alongside Paste URL / Upload File) that sets the lesson URL from an
+  existing item and records the usage. New `content.linkCourse`/
+  `.unlinkCourse` mutation IDs.
+- **Competency Certifications** (`CompetencyCertification` — own service
+  file, `competencyCertifications.service.js`, competencies.controller/
+  routes stay shared per that module's own convention): `userId` is a real
+  `AppUser` relation; `skillId`/`frameworkId` stay plain cross-domain refs
+  (same contract as `SkillCourseMapping.courseId`); `issuedById`/`revokedById`
+  are the ADMIN actor, plain string — the task spec asked for "FK → AppUser"
+  on these two, which doesn't match this codebase's auth model (no AppUser
+  ever authenticates against `/api/admin/*`), corrected the same way
+  ProfilePage's principal was corrected earlier in this engagement. `EXPIRED`
+  is never a stored status — a `VERIFIED` cert past `expiresAt` reads as
+  `EXPIRED` only at read time (`effectiveStatus`, same lazy-derive pattern as
+  `DelegatedAdmin.effectiveStatus`). New Certifications tab + a Certifications
+  section in `CompetencySidePanel.tsx`. `competencyCert.assign/.verify/.revoke`
+  (already reserved in `invalidation.ts`, per COMPETENCIES_CONTRACT.md) are
+  wired for real; added `.delete`.
+- **Custom Reports builder** (`SavedReport` — own service file,
+  `savedReports.service.js`; reports.controller/routes stay shared):
+  the query ENGINE is reused, not forked — running/exporting a saved report
+  calls `reports.service.getExportData(dataSource, dateRange)`, the exact
+  function `GET /reports/export` (Export Center) already uses (R4). Real
+  column set per data source is therefore whatever that function already
+  returns, not an invented spec. `schedule` is stored but NOT run
+  automatically (no cron scheduler wired — an honest gap, distinct from
+  `ScheduledReport.frequency`'s real sweep). Frontend: 4-step wizard (Data
+  Source → Columns & Filters → Visualization → Save & Run) replaces the
+  "Coming Soon" placeholder; results render as a table or a best-effort
+  chart/KPI view (columns are generic per source — first column = label,
+  first numeric column = value). `reportTemplate.save` (already reserved)
+  wired for real; added `.update`/`.delete`/`.run`.
+- **Known gap, not closed by this pass:** no Playwright coverage was added
+  for any of the three features above — `frontend/CLAUDE.md §3` calls this
+  CRITICAL and it was skipped for scope/time reasons this pass, not silently
+  forgotten. Flag before considering this fully done.

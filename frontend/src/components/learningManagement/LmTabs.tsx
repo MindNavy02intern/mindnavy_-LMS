@@ -8,12 +8,16 @@ export type LmTab = typeof LM_TABS[number];
 interface Props {
   active:   LmTab;
   onChange: (tab: LmTab) => void;
+  /** Tabs to omit entirely — e.g. 'Live Sessions'/'Certificates' when their
+   * System Settings feature toggle is off (see LearningManagementPage.tsx). */
+  hiddenTabs?: LmTab[];
 }
 
-export default function LmTabs({ active, onChange }: Props) {
+export default function LmTabs({ active, onChange, hiddenTabs = [] }: Props) {
+  const visibleTabs = LM_TABS.filter((tab) => !hiddenTabs.includes(tab));
   return (
     <div className="tw:flex tw:gap-6 tw:border-b tw:border-slate-200">
-      {LM_TABS.map((tab) => {
+      {visibleTabs.map((tab) => {
         const isActive = tab === active;
         return (
           <button

@@ -19,6 +19,7 @@ function handleDomainError(res, err) {
     case "NOTIFICATION_NOT_FOUND":  return notFound(res, "Notification not found.");
     case "NOT_RETRYABLE":           return badRequest(res, "Only FAILED or PENDING deliveries can be retried.");
     case "NO_RECIPIENT_EMAIL":      return badRequest(res, "Recipient has no email on file.");
+    case "UNKNOWN_FEATURE":         return badRequest(res, "Unknown feature key.");
     default:                        return null;
   }
 }
@@ -267,6 +268,19 @@ const updatePreferences = run(async (req, res) => {
   res.json({ success: true, message: "Preferences updated.", data });
 });
 
+// ── Feature waitlist ─────────────────────────────────────────────────────────
+
+const joinWaitlist = run(async (req, res) => {
+  const feature = typeof req.body?.feature === "string" ? req.body.feature.trim() : "";
+  if (!feature) return badRequest(res, "feature is required.");
+  const result = await svc.joinWaitlist(feature, req.admin);
+  res.json({
+    success: true,
+    message: result.alreadyJoined ? "You're already on the list." : "You're on the list — we'll email you when this ships.",
+    data: result,
+  });
+});
+
 // ── Emergency ─────────────────────────────────────────────────────────────────
 
 const sendEmergency = run(async (req, res) => {
@@ -292,5 +306,6 @@ module.exports = {
   listNotifications, sendNotification, markRead, markAllRead, deleteNotification,
   listLogs, retryDelivery,
   getPreferences, updatePreferences,
+  joinWaitlist,
   sendEmergency, listEmergencyAlerts,
 };

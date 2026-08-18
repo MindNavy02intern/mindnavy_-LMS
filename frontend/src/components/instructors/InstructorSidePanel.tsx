@@ -1,4 +1,5 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CheckCircle, XCircle } from 'lucide-react';
 import {
   deleteInstructor, getInstructor, reactivateInstructor, verifyInstructor,
@@ -66,6 +67,7 @@ const PANEL_TABS: { key: PanelTab; label: string }[] = [
 const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(function InstructorSidePanel(
   { instructorId, onClose, onEdit, onChanged, onDeleted, showToast }, ref,
 ) {
+  const navigate = useNavigate();
   const [detail,  setDetail]  = useState<InstructorDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);
@@ -324,7 +326,7 @@ const InstructorSidePanel = forwardRef<InstructorSidePanelHandle, Props>(functio
               {/* Actions */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 14 }}>
                 <button type="button" onClick={() => onEdit(detail)} style={ACTION_BTN}>Edit</button>
-                <button type="button" disabled title="Instructor profile page not built yet" style={{ ...ACTION_BTN, opacity: 0.45, cursor: 'not-allowed' }}>
+                <button type="button" onClick={() => navigate(`/instructors/${detail.id}/profile`)} style={ACTION_BTN}>
                   View Profile
                 </button>
                 <button type="button" onClick={() => setPanelTab('courses')} style={ACTION_BTN}>

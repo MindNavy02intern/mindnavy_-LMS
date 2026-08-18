@@ -115,7 +115,9 @@ test('Uploading a certification then verifying it shows VERIFIED', async ({ page
   test.skip(signResp.status() === 503, 'Certification storage bucket not configured in this environment')
   expect(signResp.ok()).toBeTruthy()
 
-  await expect(page.getByText(uploadedCertName)).toBeVisible({ timeout: 20000 })
+  // .first(): the table row renders before the success toast, whose own
+  // text ('"<name>" added.') substring-matches getByText(uploadedCertName).
+  await expect(page.getByText(uploadedCertName).first()).toBeVisible({ timeout: 20000 })
 
   const listResp = await page.request.get(`${API}/instructors/${instructorId}/certifications`, {
     headers: { Authorization: `Bearer ${savedToken}` },

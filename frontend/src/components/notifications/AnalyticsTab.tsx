@@ -44,14 +44,22 @@ export default function AnalyticsTab({ refreshSignal }: { refreshSignal: number 
             <Eye size={16} color="#94a3b8" />
             <h3 style={{ ...CARD_TITLE, margin: 0 }}>Open Rate</h3>
           </div>
-          <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 8 }}>{stats?.openRate.reason ?? 'Not available yet'}</div>
+          {stats?.openRate.available ? (
+            <div style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', marginTop: 6 }}>{stats.openRate.value}%</div>
+          ) : (
+            <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 8 }}>{stats?.openRate.reason ?? 'Not available yet'}</div>
+          )}
         </div>
         <div style={CARD_PAD}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
             <MousePointerClick size={16} color="#94a3b8" />
             <h3 style={{ ...CARD_TITLE, margin: 0 }}>Click Rate</h3>
           </div>
-          <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 8 }}>{stats?.clickRate.reason ?? 'Not available yet'}</div>
+          {stats?.clickRate.available ? (
+            <div style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', marginTop: 6 }}>{stats.clickRate.value}%</div>
+          ) : (
+            <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 8 }}>{stats?.clickRate.reason ?? 'Not available yet'}</div>
+          )}
         </div>
       </div>
 

@@ -5,7 +5,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Plus, ChevronUp, ChevronDown, Pencil, Trash2, Check, X, BookOpen, Video, Link } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, ChevronUp, ChevronDown, Pencil, Trash2, Check, X, BookOpen, Video, Link, Library } from 'lucide-react';
 import VideoUpload from './VideoUpload';
 import {
   getSections,
@@ -17,6 +17,8 @@ import {
   deleteLesson,
   reorderSections,
 } from '../../services/courseBuilderApi';
+import { listContent, linkContentToCourse } from '../../services/contentLibraryApi';
+import type { ContentItem } from '../../types/contentLibrary';
 import { CourseBuilderApiError } from '../../types/courseBuilder';
 import type {
   CourseSection,
@@ -151,9 +153,40 @@ function LessonFormModal({ modal, courseId, onClose, onSaved, onPartialSave }: L
   const [saving, setSaving] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
 
-  // Video input mode: 'url' = paste a link, 'file' = upload a file.
-  const [videoInputMode,   setVideoInputMode]   = useState<'url' | 'file'>('url');
+  // Video input mode: 'url' = paste a link, 'file' = upload a file,
+  // 'library' = pick an existing Content Library item instead of uploading again.
+  const [videoInputMode,   setVideoInputMode]   = useState<'url' | 'file' | 'library'>('url');
   const [isVideoUploading, setIsVideoUploading] = useState(false);
+
+  // Content Library picker (videoInputMode === 'library')
+  const [libraryQuery, setLibraryQuery] = useState('');
+  const [libraryResults, setLibraryResults] = useState<ContentItem[]>([]);
+  const [libraryLoading, setLibraryLoading] = useState(false);
+
+  useEffect(() => {
+    if (videoInputMode !== 'library') return;
+    let cancelled = false;
+    setLibraryLoading(true);
+    const t = setTimeout(() => {
+      listContent({ type: 'VIDEO', search: libraryQuery || undefined, limit: 20 })
+        .then(res => { if (!cancelled) setLibraryResults(res.content); })
+        .catch(() => { if (!cancelled) setLibraryResults([]); })
+        .finally(() => { if (!cancelled) setLibraryLoading(false); });
+    }, 250);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [videoInputMode, libraryQuery]);
+
+  function pickLibraryItem(item: ContentItem) {
+    if (!item.fileUrl) return;
+    setField('content', item.fileUrl);
+    // Best-effort — records this course as a real user of the item (Content
+    // Library's "Used in X courses"). A 409 (already linked, e.g. this IS the
+    // item's own originating course) is expected and silently ignored.
+    linkContentToCourse(item.id, courseId)
+      .then(() => invalidateFor(appQueryClient, 'content.linkCourse', { courseId }))
+      .catch(() => {});
+    setVideoInputMode('url');
+  }
 
   // savedType: the lesson type currently persisted in the DB (may lag form.type
   // while an unsaved type-change is in progress). Upload File is gated behind
@@ -385,9 +418,44 @@ function LessonFormModal({ modal, courseId, onClose, onSaved, onPartialSave }: L
                   >
                     <Video className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> Upload File
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setVideoInputMode('library')}
+                    className={
+                      'tw:flex tw:items-center tw:gap-1.5 tw:rounded-md tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors' +
+                      (videoInputMode === 'library'
+                        ? ' tw:border-emerald-400 tw:bg-emerald-50 tw:text-emerald-700'
+                        : ' tw:border-slate-200 tw:text-slate-500 tw:hover:border-slate-300')
+                    }
+                  >
+                    <Library className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> From Library
+                  </button>
                 </div>
 
-                {videoInputMode === 'url' ? (
+                {videoInputMode === 'library' ? (
+                  <div>
+                    <input
+                      type="text" value={libraryQuery} onChange={e => setLibraryQuery(e.target.value)}
+                      placeholder="Search Content Library videos…" aria-label="Search Content Library"
+                      className="tw:mb-2 tw:w-full tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400"
+                    />
+                    <div className="tw:max-h-48 tw:overflow-y-auto tw:rounded-lg tw:border tw:border-slate-200">
+                      {libraryLoading ? (
+                        <p className="tw:m-0 tw:p-3 tw:text-[12px] tw:text-slate-400">Loading…</p>
+                      ) : libraryResults.length === 0 ? (
+                        <p className="tw:m-0 tw:p-3 tw:text-[12px] tw:text-slate-400">No video content in the library yet.</p>
+                      ) : (
+                        libraryResults.map(item => (
+                          <button key={item.id} type="button" onClick={() => pickLibraryItem(item)} disabled={!item.fileUrl}
+                            className="tw:flex tw:w-full tw:items-center tw:justify-between tw:gap-2 tw:border-b tw:border-slate-50 tw:px-3 tw:py-2 tw:text-left last:tw:border-0 tw:hover:bg-slate-50 tw:disabled:opacity-40">
+                            <span className="tw:min-w-0 tw:truncate tw:text-[12.5px] tw:text-slate-700">{item.title}</span>
+                            <span className="tw:shrink-0 tw:text-[10.5px] tw:text-slate-400">{item.fileUrl ? 'Use' : 'No file'}</span>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                ) : videoInputMode === 'url' ? (
                   <>
                     <label className="tw:mb-1 tw:block tw:text-[12px] tw:font-semibold tw:text-slate-700">
                       Video URL <span className="tw:text-red-500">*</span>

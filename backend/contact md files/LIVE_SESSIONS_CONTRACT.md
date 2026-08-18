@@ -33,10 +33,15 @@ task description, **this contract wins**.
 > **no** "set status" action — sending `status` in a PATCH is a 400. "Cancel
 > session" = DELETE (also deletes the Zoom meeting).
 
-> **v1 scope — scheduling only:** no chat/screen-share/whiteboard/attendance,
-> no notifications, no calendar sync. The LM Overview widget at
+> **v1 scope — scheduling only:** no chat/screen-share/whiteboard, no
+> notifications, no calendar sync. The LM Overview widget at
 > `GET /api/admin/lm/live-sessions` is unchanged and now benefits from
 > auto-synced statuses.
+>
+> **Attendance (added 2026-08-18):** `PATCH /:id/attendance` — manual admin
+> marking only (no join/leave webhook from Zoom). See the Endpoints section
+> below. This also feeds certificate Trigger 4 (attendance threshold) via
+> `certificateTriggers.service.js`'s `onAttendanceMarked`.
 
 > **Existing infra:** `queryKeys.liveSessions(filters?)` already exists in
 > queryKeys.ts — build against it. Add `liveSession.create/.update/.delete`
@@ -110,6 +115,22 @@ write (a Zoom failure = `502`, nothing saved). `status` / `joinUrl` / `startUrl`
 ### `DELETE /:id` — cancel
 Deletes our row, then the Zoom meeting (best-effort — always succeeds for the admin).
 → `200 { success, message: "Live session canceled.", data: { id } }` · unknown id → `404`
+
+### `PATCH /:id/attendance` — mark attendance (added 2026-08-18)
+Bulk upsert, one call per save. Roster comes from `GET /api/admin/enrollments?courseId=<session.courseId>`
+on the frontend — sessions with no `courseId` (standalone) have no roster to mark.
+```jsonc
+{
+  "records": [
+    { "userId": "<uuid>", "status": "PRESENT", "durationMin": 55, "participationScore": 90 },
+    { "userId": "<uuid>", "status": "ABSENT" }
+  ]
+}
+```
+`status` ∈ `PRESENT | LATE | ABSENT | EXCUSED` (required per record). `durationMin`/`participationScore`
+optional. Max 300 records per call. Any `userId` that isn't a real AppUser → `400` with the offending ids,
+nothing is written (all-or-nothing).
+→ `200 { success, message, data: AttendanceRecordResult[] }` · unknown session → `404`
 
 ---
 

@@ -66,6 +66,30 @@ async function getInstructorId(page: Page, H: Record<string, string>): Promise<s
   return id
 }
 
+// The "Issue Certificate" dialog's "Select user" dropdown is populated from
+// GET /users?limit=200 (unfiltered by role, no search, no guaranteed order).
+// Fetching a user id from ANY other endpoint (even the same one with a role
+// filter) isn't reliable once the DB has grown past 200 users — that user
+// may simply not be in the dialog's own list. The only id that's always
+// pickable is one read directly out of the dialog's own rendered options,
+// so open it, capture the first real option's value, and close it again.
+async function getDialogPickableUserId(page: Page): Promise<string> {
+  await gotoCertificatesTab(page)
+  await page.getByRole('button', { name: 'Issue Certificate', exact: true }).click()
+  const dialog = page.getByRole('dialog', { name: 'Issue certificate' })
+  await expect(dialog).toBeVisible({ timeout: 5000 })
+
+  const firstOption = dialog.getByLabel('Select user').locator('option').nth(1)
+  await expect(firstOption, 'At least one user must exist in the dialog picker').toBeAttached({ timeout: 10000 })
+  const id = await firstOption.getAttribute('value')
+  expect(id, 'Dialog user option must have a real id').toBeTruthy()
+
+  await dialog.getByRole('button', { name: 'Close issue dialog' }).click()
+  await expect(dialog).not.toBeVisible({ timeout: 3000 })
+  return id as string
+}
+
+
 async function createFixtureCourse(
   page: Page, H: Record<string, string>, title: string, certificateEnabled = false,
 ): Promise<string> {
@@ -226,6 +250,71 @@ test('Edit template — PATCH body always carries the FULL layout, never a diff'
   expect(layout?.signatureName).toBe('Dr. Original') // unchanged field still sent
 })
 
+// ── Tests: template logo (sign -> PUT -> confirm, mocked storage) ──────────────
+// Mirrors course-upload.full.spec.ts's approach: mocks the storage network
+// calls via page.route() so the suite runs without a configured bucket.
+
+const MOCK_LOGO_SIGN = {
+  uploadUrl: 'https://mock-storage.example.com/upload/logo-signed-url',
+  path: 'certificate-templates/mock-id/uuid-1-logo.png',
+  maxBytes: 2 * 1024 * 1024,
+  expiresIn: 600,
+}
+
+test('Template logo — create form disables upload until saved; edit form uploads, previews, removes', async ({ page }) => {
+  await gotoTemplatesSubTab(page)
+  await ensureToken(page)
+
+  // Create mode: logo zone must be disabled (no templateId yet).
+  await page.getByRole('button', { name: 'Create Template', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Create Certificate Template' })).toBeVisible({ timeout: 5000 })
+  await expect(page.getByText('Save the template first to enable logo upload')).toBeVisible({ timeout: 5000 })
+  await expect(page.locator('input[type="file"][aria-label="Choose logo image"]')).toHaveCount(0)
+  await page.getByRole('button', { name: 'Cancel' }).click()
+
+  // Create a real template via API, then open it in Edit mode (templateId known).
+  const H = await apiHeaders(page)
+  const name = `Cert Logo Test ${Date.now()}`
+  const templateId = await createFixtureTemplate(page, H, name)
+
+  await gotoTemplatesSubTab(page)
+  await expect(page.getByText(name)).toBeVisible({ timeout: 10000 })
+  await page.getByRole('button', { name: `Edit ${name}` }).click()
+  await expect(page.getByRole('heading', { name: 'Edit Certificate Template' })).toBeVisible({ timeout: 5000 })
+
+  const mockConfirmData = { id: templateId, name, layout: { title: 'Certificate of Completion', body: 'x', primaryColor: '#1E3A8A', accentColor: '#B8860B', signatureName: null, signatureTitle: null, logoUrl: 'https://mock-storage.example.com/logo.png' }, certificateCount: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
+
+  await page.route(`**/certificate-templates/${templateId}/logo/sign`, route =>
+    route.fulfill({ json: { success: true, data: MOCK_LOGO_SIGN } })
+  )
+  await page.route('**/mock-storage.example.com/**', async route => {
+    if (route.request().method() === 'PUT') await route.fulfill({ status: 200, body: '' })
+    else await route.continue()
+  })
+  await page.route(`**/certificate-templates/${templateId}/logo/confirm`, route =>
+    route.fulfill({ json: { success: true, message: 'Logo uploaded.', data: mockConfirmData } })
+  )
+
+  const fileInput = page.locator('input[type="file"][aria-label="Choose logo image"]')
+  await fileInput.setInputFiles({ name: 'logo.png', mimeType: 'image/png', buffer: Buffer.from('fake png data') })
+
+  await expect(page.locator('[data-testid="logo-done"]')).toBeVisible({ timeout: 15000 })
+  await expect(page.getByText('Logo uploaded')).toBeVisible()
+  await expect(page.getByAltText('Certificate logo preview')).toHaveAttribute('src', mockConfirmData.layout.logoUrl)
+
+  // Remove — DELETE .../logo, preview clears back to the drop zone.
+  await page.route(`**/certificate-templates/${templateId}/logo`, route =>
+    route.fulfill({ json: { success: true, message: 'Logo removed.', data: { ...mockConfirmData, layout: { ...mockConfirmData.layout, logoUrl: null } } } })
+  )
+  const removeResp = page.waitForResponse(
+    r => r.url().includes(`/certificate-templates/${templateId}/logo`) && r.request().method() === 'DELETE' && r.ok(),
+    { timeout: 10000 },
+  )
+  await page.getByRole('button', { name: /Remove/i }).click()
+  await removeResp
+  await expect(page.locator('[data-testid="logo-drop-zone"]')).toBeVisible({ timeout: 5000 })
+})
+
 test('Delete template — confirm mentions surviving certificates, issued cert keeps working', async ({ page }) => {
   await page.goto('/dashboard')
   const H = await apiHeaders(page)
@@ -267,7 +356,7 @@ test('Delete template — confirm mentions surviving certificates, issued cert k
 test('Issue certificate — success case, appears in the list', async ({ page }) => {
   await page.goto('/dashboard')
   const H = await apiHeaders(page)
-  const userId = await getInstructorId(page, H)
+  const userId = await getDialogPickableUserId(page)
   const courseTitle = `Cert Issue Course ${Date.now()}`
   const courseId = await createFixtureCourse(page, H, courseTitle, true)
 
@@ -287,13 +376,51 @@ test('Issue certificate — success case, appears in the list', async ({ page })
   expect(cert.status).toBe('active')
 
   await expect(dialog).not.toBeVisible({ timeout: 5000 })
-  await expect(page.getByText(courseTitle)).toBeVisible({ timeout: 5000 })
+  // getByRole('cell'): the plain course title also matches the (hidden but
+  // DOM-present) <option> inside the filter <select>, tripping strict mode.
+  await expect(page.getByRole('cell', { name: courseTitle })).toBeVisible({ timeout: 5000 })
+})
+
+test('Auto-issue on enrollment completion (Trigger 1) — certificate appears without a hard reload', async ({ page }) => {
+  await page.goto('/dashboard')
+  const H = await apiHeaders(page)
+  const userId = await getDialogPickableUserId(page)
+  const courseTitle = `Cert AutoTrigger Course ${Date.now()}`
+  const courseId = await createFixtureCourse(page, H, courseTitle, true) // certificateEnabled
+
+  // Enroll the user, then mark the enrollment COMPLETED — this is the real
+  // trigger point (enrollments.service.updateEnrollment → certificateTriggers
+  // .onEnrollmentCompleted → issueCertificate()), not a UI action of its own.
+  const enrollRes = await page.request.post(`${API}/enrollments`, { data: { courseId, userId }, headers: H })
+  expect(enrollRes.ok(), 'POST /enrollments must succeed').toBeTruthy()
+  const enrollmentId: string = (await enrollRes.json()).data?.id
+  expect(enrollmentId, 'Enrollment id must be returned').toBeTruthy()
+
+  const patchRes = await page.request.patch(`${API}/enrollments/${enrollmentId}`, {
+    data: { status: 'COMPLETED' }, headers: H,
+  })
+  expect(patchRes.ok(), 'PATCH /enrollments/:id must succeed').toBeTruthy()
+
+  // Certificate must exist server-side (best-effort trigger, but deterministic
+  // for a course with certificateEnabled=true and no prior certificate).
+  const certRes = await page.request.get(`${API}/certificates?courseId=${courseId}&userId=${userId}`, { headers: H })
+  const certBody = await certRes.json()
+  const cert = certBody.data?.items?.[0]
+  expect(cert, 'Certificate must be auto-issued on enrollment completion').toBeTruthy()
+  createdCertificateIds.push(cert.id)
+
+  // Reflects in the Certificates tab without a hard reload.
+  await gotoCertificatesTab(page)
+  const filterResp = page.waitForResponse(r => r.url().includes(`/certificates?`) && r.url().includes(courseId) && r.ok(), { timeout: 10000 }).catch(() => null)
+  await page.getByLabel('Filter by course').selectOption(courseId)
+  await filterResp
+  await expect(page.getByRole('cell', { name: courseTitle })).toBeVisible({ timeout: 10000 })
 })
 
 test('Issue with certificateEnabled=false — exact backend message + link to course settings', async ({ page }) => {
   await page.goto('/dashboard')
   const H = await apiHeaders(page)
-  const userId = await getInstructorId(page, H)
+  const userId = await getDialogPickableUserId(page)
   const courseTitle = `Cert Disabled Course ${Date.now()}`
   const courseId = await createFixtureCourse(page, H, courseTitle, false) // certificates NOT enabled
 
@@ -322,7 +449,7 @@ test('Issue with certificateEnabled=false — exact backend message + link to co
 test('Issue duplicate (course,user) pair — exact message + Reissue shortcut', async ({ page }) => {
   await page.goto('/dashboard')
   const H = await apiHeaders(page)
-  const userId = await getInstructorId(page, H)
+  const userId = await getDialogPickableUserId(page)
   const courseTitle = `Cert Dup Course ${Date.now()}`
   const courseId = await createFixtureCourse(page, H, courseTitle, true)
   const { id: existingCertId, verificationCode: oldCode } = await issueCertificateViaApi(page, H, userId, courseId)
@@ -368,9 +495,15 @@ test('Revoke certificate — succeeds, Revoke action disabled once already revok
 
   await gotoCertificatesTab(page)
   await page.getByLabel('Filter by course').selectOption(courseId)
-  await expect(page.getByText(courseTitle)).toBeVisible({ timeout: 10000 })
+  // getByRole('cell'): the plain course title also matches the (hidden but
+  // DOM-present) <option> inside the filter <select>, tripping strict mode.
+  await expect(page.getByRole('cell', { name: courseTitle })).toBeVisible({ timeout: 10000 })
 
-  const revokeBtn = page.getByRole('button', { name: /Revoke certificate for/i })
+  // Scoped to this course's row — every certificate fixture in this file
+  // shares the same recipient name, so an unscoped regex here matches every
+  // revoke button accumulated across the whole file's run (strict-mode violation).
+  const row = page.locator('tr', { hasText: courseTitle })
+  const revokeBtn = row.getByRole('button', { name: /Revoke certificate for/i })
   await expect(revokeBtn).toBeEnabled()
 
   page.once('dialog', (d) => d.accept())
@@ -383,7 +516,9 @@ test('Revoke certificate — succeeds, Revoke action disabled once already revok
 
   // Status badge flips, and the SAME button is now disabled — UI never lets
   // a second click hit the backend's "already revoked" 400.
-  await expect(page.getByText('revoked', { exact: true })).toBeVisible({ timeout: 5000 })
+  // Scoped to this course's row — every other already-revoked cert
+  // accumulated in this file's run also shows an exact "revoked" badge.
+  await expect(row.getByText('revoked', { exact: true })).toBeVisible({ timeout: 5000 })
   await expect(revokeBtn).toBeDisabled()
 })
 
@@ -399,7 +534,9 @@ test('Reissue — confirm dialog states old QR/PDF stop working, new code differ
 
   await gotoCertificatesTab(page)
   await page.getByLabel('Filter by course').selectOption(courseId)
-  await expect(page.getByText(courseTitle)).toBeVisible({ timeout: 10000 })
+  // getByRole('cell'): the plain course title also matches the (hidden but
+  // DOM-present) <option> inside the filter <select>, tripping strict mode.
+  await expect(page.getByRole('cell', { name: courseTitle })).toBeVisible({ timeout: 10000 })
 
   let dialogMessage = ''
   page.once('dialog', (d) => { dialogMessage = d.message(); d.accept() })
@@ -408,7 +545,8 @@ test('Reissue — confirm dialog states old QR/PDF stop working, new code differ
     r => r.url().includes(`/certificates/${certId}/reissue`) && r.request().method() === 'POST' && r.ok(),
     { timeout: 10000 },
   )
-  await page.getByRole('button', { name: /Reissue certificate for/i }).click()
+  // Scoped to this course's row — see the Revoke test's comment above.
+  await page.locator('tr', { hasText: courseTitle }).getByRole('button', { name: /Reissue certificate for/i }).click()
   const resp = await reissueResp
 
   expect(dialogMessage).toContain('This will generate a new certificate.')
@@ -430,10 +568,13 @@ test('PDF download — fetched with Bearer header (not a bare anchor), not a doc
 
   await gotoCertificatesTab(page)
   await page.getByLabel('Filter by course').selectOption(courseId)
-  await expect(page.getByText(courseTitle)).toBeVisible({ timeout: 10000 })
+  // getByRole('cell'): the plain course title also matches the (hidden but
+  // DOM-present) <option> inside the filter <select>, tripping strict mode.
+  await expect(page.getByRole('cell', { name: courseTitle })).toBeVisible({ timeout: 10000 })
 
   const pdfRequest = page.waitForRequest(r => r.url().includes(`/certificates/${certId}/pdf`), { timeout: 10000 })
-  await page.getByRole('button', { name: /Download PDF for/i }).click()
+  // Scoped to this course's row — see the Revoke test's comment above.
+  await page.locator('tr', { hasText: courseTitle }).getByRole('button', { name: /Download PDF for/i }).click()
   const req = await pdfRequest
 
   expect(req.headers()['authorization'], 'PDF fetch must carry the Bearer token').toMatch(/^Bearer /)
@@ -452,19 +593,27 @@ test('PDF download on a revoked certificate — handled as an error state, no br
 
   await gotoCertificatesTab(page)
   await page.getByLabel('Filter by course').selectOption(courseId)
-  await expect(page.getByText(courseTitle)).toBeVisible({ timeout: 10000 })
+  // getByRole('cell'): the plain course title also matches the (hidden but
+  // DOM-present) <option> inside the filter <select>, tripping strict mode.
+  await expect(page.getByRole('cell', { name: courseTitle })).toBeVisible({ timeout: 10000 })
 
   let downloadFired = false
   page.on('download', () => { downloadFired = true })
 
   const pdfResp = page.waitForResponse(r => r.url().includes(`/certificates/${certId}/pdf`), { timeout: 10000 })
-  await page.getByRole('button', { name: /Download PDF for/i }).click()
+  // Scoped to this course's row — see the Revoke test's comment above.
+  await page.locator('tr', { hasText: courseTitle }).getByRole('button', { name: /Download PDF for/i }).click()
   const resp = await pdfResp
   expect(resp.status()).toBe(400)
   expect((resp.headers()['content-type'] ?? '')).toContain('application/json')
 
   // Error surfaced as a toast, never a browser download.
-  await expect(page.getByText(/revoked/i)).toBeVisible({ timeout: 5000 })
+  // Scoped to this course's row, exact match — the fixture course is
+  // itself titled "Cert PdfRevoked Course …" (matches a non-exact regex on
+  // its own), the course/status filter <option>s also contain "revoked",
+  // and every other already-revoked cert accumulated in this file's run
+  // also shows an exact "revoked" badge if left unscoped.
+  await expect(page.locator('tr', { hasText: courseTitle }).getByText('revoked', { exact: true })).toBeVisible({ timeout: 5000 })
   expect(downloadFired, 'a revoked cert must never trigger a real file download').toBe(false)
 })
 
@@ -498,11 +647,13 @@ test.describe('Public verify page (no auth)', () => {
   test('valid code — success state with student/course/date', async ({ page, request }) => {
     const { cert } = await issueFixtureCertificate(request, `Cert PublicVerify Course ${Date.now()}`)
 
+    await page.goto(`/verify/${cert.verificationCode}`)
+
     // No token in localStorage in this context — genuinely logged out.
+    // (Read after goto: localStorage is inaccessible on the pre-navigation about:blank page.)
     const token = await page.evaluate(() => localStorage.getItem('mn_admin_token'))
     expect(token, 'this context must have no admin token').toBeFalsy()
 
-    await page.goto(`/verify/${cert.verificationCode}`)
     await expect(page.getByRole('heading', { name: 'Certificate Verified' })).toBeVisible({ timeout: 10000 })
     await expect(page.getByText(cert.studentName)).toBeVisible()
     await expect(page.getByText(cert.courseTitle)).toBeVisible()

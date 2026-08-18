@@ -22,6 +22,7 @@ import LiveSessionsTab from '../components/learningManagement/LiveSessionsTab';
 import EnrollmentsTab from '../components/learningManagement/EnrollmentsTab';
 import ContentLibraryTab from '../components/learningManagement/ContentLibraryTab';
 import { useTabParam } from '../hooks/useTabParam';
+import { useFeatureFlags } from '../FeatureFlagsContext';
 
 const LM_TAB_KEYS: Record<LmTab, string> = {
   'Overview':       'overview',
@@ -44,6 +45,19 @@ export default function LearningManagementPage() {
   const [tabKey, setTabKey] = useTabParam('overview');
   const tab: LmTab = KEY_TO_LM_TAB[tabKey] ?? LM_TABS[0];
   const setTab = (t: LmTab) => setTabKey(LM_TAB_KEYS[t]);
+
+  // System Settings' Feature Toggles (?tab=features) gate these two real
+  // modules — everything else on that tab is either always-on or has no
+  // gated module behind it yet (see FeatureTogglesTab.tsx's own header note).
+  const { flags } = useFeatureFlags();
+  const hiddenTabs: LmTab[] = [
+    ...(flags.liveSessionsEnabled ? [] : (['Live Sessions'] as LmTab[])),
+    ...(flags.certificatesModuleEnabled ? [] : (['Certificates'] as LmTab[])),
+  ];
+  useEffect(() => {
+    if (hiddenTabs.includes(tab)) setTab('Overview');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab, flags.liveSessionsEnabled, flags.certificatesModuleEnabled]);
 
   // When the guide's "Create New Course" is clicked from the Overview tab,
   // switch to Courses and signal CoursesTab to open the create form on mount.
@@ -133,7 +147,7 @@ export default function LearningManagementPage() {
       <div className="lm-page-root tw:mx-auto tw:flex tw:max-w-[1440px] tw:flex-col tw:gap-5 tw:font-lm-sans">
         <LmPageHeader onCreateCourse={handleGuideCreateCourse} onViewPendingApprovals={handleViewPendingApprovals} />
         <KpiCards />
-        <LmTabs active={tab} onChange={setTab} />
+        <LmTabs active={tab} onChange={setTab} hiddenTabs={hiddenTabs} />
 
         {tab === 'Courses' ? (
           <CoursesTab

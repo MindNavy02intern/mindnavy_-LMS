@@ -19,4 +19,9 @@ router.post("/",      requireAdminAuth, adminUserActionRateLimiter, c.createTemp
 router.patch("/:id",  requireAdminAuth, adminUserActionRateLimiter, c.updateTemplate);
 router.delete("/:id", requireAdminAuth, adminUserActionRateLimiter, c.deleteTemplate);
 
+// Logo (sign -> PUT direct to storage -> confirm)
+router.post("/:id/logo/sign",    requireAdminAuth, adminUserActionRateLimiter, c.signLogo);
+router.post("/:id/logo/confirm", requireAdminAuth, adminUserActionRateLimiter, c.confirmLogo);
+router.delete("/:id/logo",       requireAdminAuth, adminUserActionRateLimiter, c.removeLogo);
+
 module.exports = router;

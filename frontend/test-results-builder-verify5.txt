@@ -1,0 +1,7 @@
+
+Running 2 tests using 1 worker
+
+  ok 1 [setup] › tests\setup\auth.setup.ts:3:1 › authenticate (2.3s)
+  ok 2 [authenticated] › tests\course-video-upload.full.spec.ts:269:1 › Create mode shows "save lesson first" — no upload available (5.1s)
+
+  2 passed (10.2s)

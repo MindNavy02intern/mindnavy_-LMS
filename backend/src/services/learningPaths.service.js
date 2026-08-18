@@ -79,21 +79,32 @@ async function getPathOrThrow(id) {
 async function resolveItems(items) {
   const courseIds  = items.filter((i) => i.itemType === "COURSE").map((i) => i.itemId);
   const sessionIds = items.filter((i) => i.itemType === "LIVE_SESSION").map((i) => i.itemId);
+  const quizIds     = items.filter((i) => i.itemType === "QUIZ").map((i) => i.itemId);
 
-  const [courses, sessions] = await Promise.all([
+  const [courses, sessions, quizzes] = await Promise.all([
     courseIds.length
       ? prisma.course.findMany({ where: { id: { in: courseIds } }, select: { id: true, title: true, status: true } })
       : [],
     sessionIds.length
       ? prisma.liveSession.findMany({ where: { id: { in: sessionIds } }, select: { id: true, title: true, status: true, startTime: true } })
       : [],
+    quizIds.length
+      ? prisma.quiz.findMany({ where: { id: { in: quizIds } }, select: { id: true, title: true } })
+      : [],
   ]);
 
   const courseMap  = new Map(courses.map((c) => [c.id, c]));
   const sessionMap = new Map(sessions.map((s) => [s.id, s]));
+  const quizMap     = new Map(quizzes.map((q) => [q.id, q]));
+
+  function refFor(it) {
+    if (it.itemType === "COURSE") return courseMap.get(it.itemId);
+    if (it.itemType === "LIVE_SESSION") return sessionMap.get(it.itemId);
+    return quizMap.get(it.itemId);
+  }
 
   return items.map((it) => {
-    const ref = it.itemType === "COURSE" ? courseMap.get(it.itemId) : sessionMap.get(it.itemId);
+    const ref = refFor(it);
     return {
       id:        it.id,
       itemType:  it.itemType,
@@ -103,7 +114,8 @@ async function resolveItems(items) {
       // Resolved view of the referenced entity. `missing: true` = the row no longer
       // exists (dangling polymorphic ref) — the UI shows it flagged, never hides it.
       title:     ref?.title ?? null,
-      status:    refStatus(it.itemType, ref),
+      // Quiz has no status concept (unlike Course/LiveSession) — stays null.
+      status:    it.itemType === "QUIZ" ? null : refStatus(it.itemType, ref),
       startTime: it.itemType === "LIVE_SESSION" ? iso(ref?.startTime) : null,
       missing:   !ref,
     };
@@ -164,7 +176,9 @@ async function addItem(pathId, data, adminId) {
   // The polymorphic ref has no db FK — verify the target exists for a clean 400.
   const ref = data.itemType === "COURSE"
     ? await prisma.course.findUnique({ where: { id: data.itemId }, select: { id: true } })
-    : await prisma.liveSession.findUnique({ where: { id: data.itemId }, select: { id: true } });
+    : data.itemType === "LIVE_SESSION"
+    ? await prisma.liveSession.findUnique({ where: { id: data.itemId }, select: { id: true } })
+    : await prisma.quiz.findUnique({ where: { id: data.itemId }, select: { id: true } });
   if (!ref) throw domainError("REF_NOT_FOUND");
 
   // Default order = end of the current list, so a new item lands at the bottom.

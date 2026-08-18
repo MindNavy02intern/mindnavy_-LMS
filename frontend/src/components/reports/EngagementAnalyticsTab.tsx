@@ -1,5 +1,7 @@
 // Engagement Analytics tab — daily/weekly active users, retention, low
-// engagement users. Session duration/watch time are honest em-dashes.
+// engagement users. Avg Session Duration reads real SessionAttendance
+// durations when any exist in the window; Watch Time stays an honest
+// em-dash (no video-progress tracking model exists).
 
 import { useCallback, useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -133,10 +135,18 @@ export default function EngagementAnalyticsTab({ showToast }: Props) {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
         <ChartCard title="Avg Session Duration">
-          <div style={{ fontSize: 12, color: '#9ca3af' }}>{data?.avgSessionDuration.reason ?? 'Not available yet'}</div>
+          {loading || !data ? <Skeleton /> : data.avgSessionDuration.available ? (
+            <div style={{ fontSize: 20, fontWeight: 700, color: '#0f172a' }}>{data.avgSessionDuration.value} min</div>
+          ) : (
+            <div style={{ fontSize: 12, color: '#9ca3af' }}>{data.avgSessionDuration.reason ?? 'Not available yet'}</div>
+          )}
         </ChartCard>
         <ChartCard title="Video Watch Time">
-          <div style={{ fontSize: 12, color: '#9ca3af' }}>{data?.videoWatchTime.reason ?? 'Not available yet'}</div>
+          {loading || !data ? <Skeleton /> : data.videoWatchTime.available ? (
+            <div style={{ fontSize: 20, fontWeight: 700, color: '#0f172a' }}>{data.videoWatchTime.value} min</div>
+          ) : (
+            <div style={{ fontSize: 12, color: '#9ca3af' }}>{data.videoWatchTime.reason ?? 'Not available yet'}</div>
+          )}
         </ChartCard>
       </div>
 

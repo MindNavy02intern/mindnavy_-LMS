@@ -1,5 +1,7 @@
 const svc = require("../services/finance.service");
 const v = require("../validators/finance.validator");
+const { renderInvoicePdf } = require("../services/invoicePdf.service");
+const { getSystemSettings } = require("../services/settings.service");
 
 // ── Helpers (mirrors certificates.controller) ─────────────────────────────────
 
@@ -186,8 +188,11 @@ const sendInvoice = run(async (req, res) => {
 const downloadInvoice = run(async (req, res) => {
   const idErr = v.validateId(req.params.id, "invoiceId");
   if (idErr) return badRequest(res, idErr);
-  const placeholder = await svc.getInvoiceDownloadPlaceholder(req.params.id);
-  return res.json({ success: true, data: placeholder });
+  const [inv, settings] = await Promise.all([
+    svc.getInvoiceForPdf(req.params.id),
+    getSystemSettings(),
+  ]);
+  renderInvoicePdf(res, inv, settings.platformName);
 });
 
 // ── Transactions ──────────────────────────────────────────────────────────────

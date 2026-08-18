@@ -77,6 +77,16 @@ model SystemSettings {
   metaTitle                    String?
   metaDescription              String?
 
+  // ── Roles & Permissions settings tab ────────────────────────────────────
+  roleInheritanceEnabled Boolean @default(false)
+  maxRolesPerUser        Int     @default(3)
+
+  // ── Video conferencing (Zoom meeting defaults — VideoTab.tsx's ZoomCard;
+  // MS Teams/Google Meet are decorative-only, no catalog row, nothing to
+  // persist for them) ─────────────────────────────────────────────────────
+  zoomDefaultDuration  Int     @default(60)
+  zoomRecordingEnabled Boolean @default(false)
+
   // ── Maintenance ──────────────────────────────────────────────────────────
   maintenanceMode        Boolean   @default(false)
   maintenanceMessage     String?

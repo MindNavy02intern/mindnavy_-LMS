@@ -84,13 +84,16 @@ export interface SystemHealth {
 }
 
 export interface DashboardCoreResponse {
-  welcome:               WelcomeInfo;
-  kpis:                  DashboardKpis;
-  recentActivities:      ActivityItem[];
-  notificationsPreview:  NotificationItem[];
-  securityAlertsPreview: SecurityAlert[];
-  quickActions:          QuickActionItem[];
-  systemHealth:          SystemHealth;
+  welcome:                  WelcomeInfo;
+  kpis:                     DashboardKpis;
+  recentActivities:         ActivityItem[];
+  notificationsPreview:     NotificationItem[];
+  // Real unread count — NotificationLog{channel:IN_APP, status NOT IN
+  // [OPENED,CLICKED]} — same source the sidebar bell badge reads.
+  unreadNotificationsCount: number;
+  securityAlertsPreview:    SecurityAlert[];
+  quickActions:             QuickActionItem[];
+  systemHealth:             SystemHealth;
 }
 
 // ── TASK 5B.1 Analytics types ─────────────────────────────────────────────────
@@ -276,14 +279,18 @@ export interface LiveSessions {
 }
 
 export type TaskPriority = 'low' | 'medium' | 'high' | 'urgent';
-export type TaskStatus   = 'pending' | 'completed';
+export type TaskType = 'user_verification' | 'refund' | 'instructor_application' | 'course_approval';
 
+// Each row is a live pending-item count (from its owning module's queue),
+// not an admin-completable to-do — there is no per-item "done" state to
+// track, so unlike a real task list there is no `status`/`dueAt`.
 export interface TaskItem {
   id:       string;
+  type:     TaskType;
   title:    string;
+  count:    number;
   priority: TaskPriority;
-  status:   TaskStatus;
-  dueAt:    string | null;
+  link:     string | null;
 }
 
 export type TransactionType   = 'payment' | 'refund' | 'subscription' | 'payout' | 'failed_payment';
@@ -308,7 +315,7 @@ export interface CalendarEventItem {
   endsAt:   string | null;
 }
 
-export type ReportKey = 'revenue' | 'users' | 'courses' | 'engagement' | 'audit';
+export type ReportKey = 'overview' | 'learners' | 'courses' | 'certificates' | 'audit';
 
 export interface ReportItem {
   key:   ReportKey;

@@ -614,10 +614,13 @@ const SYNC_COUNTERS = {
   departments: () => prisma.department.count(),
 };
 
-// No job queue in this codebase (see server.js's setInterval sweeps) — a
-// triggered sync completes itself shortly after via a one-shot timer instead
-// of a real worker, same "best-effort background work, never blocks the
-// request" shape as those sweeps.
+// None of the REAL_PROVIDERS (zoom/supabase/smtp-email) is an actual data
+// destination for users/courses/departments — Zoom doesn't store a roster,
+// Supabase already IS this DB, and SMTP has no storage at all. Until a real
+// HR/CRM/storage target is connected (Stripe/Salesforce/SAP/BambooHR/etc —
+// all COMING_SOON, not in REAL_PROVIDERS), there is nothing to actually sync
+// records to. Recording a FAILED sync with the real reason is honest;
+// counting local rows and rubber-stamping COMPLETED after a timer is not.
 async function triggerSync(slug, syncType, adminId) {
   const row = await mustFindIntegration(slug);
   const liveStatus = computeLiveStatus(row);
@@ -625,23 +628,18 @@ async function triggerSync(slug, syncType, adminId) {
   if (liveStatus !== "CONNECTED") return { success: false, message: `${row.name} must be connected before syncing.` };
 
   const totalRecords = await safe(SYNC_COUNTERS[syncType] ?? (() => Promise.resolve(0)), 0);
+  const errorLog = { reason: `${row.name} has no data-sync target configured — it does not accept ${syncType} records. Data sync will work once a real HR/CRM/storage integration is connected.` };
   const sync = await prisma.dataSync.create({
-    data: { integrationId: row.id, syncType, status: "RUNNING", totalRecords, startedAt: new Date() },
+    data: {
+      integrationId: row.id, syncType, status: "FAILED", totalRecords,
+      processedRecords: 0, failedRecords: totalRecords,
+      startedAt: new Date(), completedAt: new Date(), errorLog,
+    },
   });
-  await logEvent(row.id, "SYNC", "PENDING", { endpoint: `/integrations/${slug}/syncs/trigger`, metadata: { syncType } });
-  await safe(() => prisma.integration.update({ where: { slug }, data: { lastSyncAt: new Date() } }), null);
-  await auditLog(adminId, "DATA_SYNC_TRIGGERED", { slug, syncType, syncId: sync.id });
+  await logEvent(row.id, "SYNC", "FAILED", { endpoint: `/integrations/${slug}/syncs/trigger`, metadata: { syncType, reason: errorLog.reason } });
+  await auditLog(adminId, "DATA_SYNC_TRIGGERED", { slug, syncType, syncId: sync.id, result: "no_target" });
 
-  const timer = setTimeout(() => {
-    prisma.dataSync.update({
-      where: { id: sync.id },
-      data: { status: "COMPLETED", processedRecords: totalRecords, completedAt: new Date() },
-    }).then(() => logEvent(row.id, "SYNC", "SUCCESS", { endpoint: `/integrations/${slug}/syncs/${sync.id}`, metadata: { syncType, totalRecords } }))
-      .catch((err) => console.error("[integrations.service] sync completion failed:", err.message));
-  }, 1500);
-  timer.unref();
-
-  return { success: true, message: "Sync started.", data: mapSync(sync) };
+  return { success: false, message: errorLog.reason, data: mapSync(sync) };
 }
 
 module.exports = {

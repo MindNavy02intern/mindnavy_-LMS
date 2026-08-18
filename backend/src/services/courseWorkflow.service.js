@@ -99,7 +99,7 @@ async function getPreview(id) {
 
 // ── Step 6: Submit for approval ──────────────────────────────────────────────────
 
-// v1 readiness checks (quiz/SCORM checks deferred — those systems don't exist yet).
+// Readiness checks (SCORM checks stay deferred — that system doesn't exist yet).
 // ALL failures are returned at once so the frontend can render the full list inline.
 async function submitCourse(id, adminId) {
   const course = await getCourseOrThrow(id, {
@@ -122,6 +122,16 @@ async function submitCourse(id, adminId) {
   const lessonCount = sections.reduce((sum, s) => sum + s._count.lessons, 0);
   if (sections.length === 0)  errors.push("Course needs at least one section.");
   else if (lessonCount === 0) errors.push("Course needs at least one lesson.");
+
+  // Any quiz attached to this course must have at least one question — an
+  // empty quiz would publish as an unwinnable/unpassable assessment.
+  const quizzes = await prisma.quiz.findMany({
+    where: { courseId: id },
+    select: { title: true, _count: { select: { questions: true } } },
+  });
+  for (const quiz of quizzes) {
+    if (quiz._count.questions === 0) errors.push(`Quiz "${quiz.title}" has no questions.`);
+  }
 
   if (errors.length > 0) throw domainError("SUBMIT_CHECKS_FAILED", { errors });
 

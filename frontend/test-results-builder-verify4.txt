@@ -1,0 +1,42 @@
+
+Running 16 tests using 1 worker
+
+  ok  1 [setup] › tests\setup\auth.setup.ts:3:1 › authenticate (3.0s)
+  ok  2 [authenticated] › tests\course-builder.full.spec.ts:146:1 › Add section — title appears in the section list (9.0s)
+  ok  3 [authenticated] › tests\course-builder.full.spec.ts:157:1 › Add text lesson — lesson appears under its section (10.6s)
+  ok  4 [authenticated] › tests\course-builder.full.spec.ts:167:1 › Add valid video URL lesson — accepted and appears in list (6.0s)
+  ok  5 [authenticated] › tests\course-builder.full.spec.ts:204:1 › Reject invalid video URL — shows inline error, no API call (4.1s)
+  ok  6 [authenticated] › tests\course-builder.full.spec.ts:231:1 › Edit lesson prefill — form opens with existing values (6.2s)
+  ok  7 [authenticated] › tests\course-builder.full.spec.ts:252:1 › Delete section confirm — dismiss keeps it, confirm removes it (8.6s)
+  ok  8 [authenticated] › tests\course-builder.full.spec.ts:281:1 › Reorder sends ONE bulk PATCH and replaces state from response (6.3s)
+  ok  9 [authenticated] › tests\course-video-upload.full.spec.ts:195:1 › Edit mode TEXT→VIDEO_URL gates Upload File until type is saved, then unlocks (5.2s)
+  x  10 [authenticated] › tests\course-video-upload.full.spec.ts:269:1 › Create mode shows "save lesson first" — no upload available (13.7s)
+  ok 11 [authenticated] › tests\course-video-upload.full.spec.ts:296:1 › Type rejection — non-video file blocked client-side, no sign request (5.6s)
+  ok 12 [authenticated] › tests\course-video-upload.full.spec.ts:318:1 › Size rejection — file > 50 MB blocked client-side, no sign request (8.0s)
+  ok 13 [authenticated] › tests\course-video-upload.full.spec.ts:344:1 › Successful video upload — sign → PUT → confirm → done state visible (5.6s)
+  ok 14 [authenticated] › tests\course-video-upload.full.spec.ts:365:1 › Progress bar renders during video transfer (9.8s)
+  ok 15 [authenticated] › tests\course-video-upload.full.spec.ts:404:1 › Cancel mid-upload resets UI to drop zone (9.6s)
+  ok 16 [authenticated] › tests\course-video-upload.full.spec.ts:439:1 › Save Lesson button is disabled while video upload is in progress (11.8s)
+
+
+  1) [authenticated] › tests\course-video-upload.full.spec.ts:269:1 › Create mode shows "save lesson first" — no upload available 
+
+    TimeoutError: page.waitForResponse: Timeout 10000ms exceeded while waiting for event "response"
+
+      125 |   ])
+      126 |   expect(postSection.ok()).toBeTruthy()
+    > 127 |   await page.waitForResponse(r => r.url().includes('/sections') && r.request().method() === 'GET' && r.ok(), { timeout: 10000 })
+          |              ^
+      128 |
+      129 |   return true
+      130 | }
+        at gotoCourseBuilderWithSection (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:127:14)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:272:14
+
+    Error Context: test-results\course-video-upload.full-C-f1658-first-—-no-upload-available-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-C-f1658-first-—-no-upload-available-authenticated\error-context.md
+
+  1 failed
+    [authenticated] › tests\course-video-upload.full.spec.ts:269:1 › Create mode shows "save lesson first" — no upload available 
+  15 passed (2.2m)

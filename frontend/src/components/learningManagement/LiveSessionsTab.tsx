@@ -15,16 +15,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Plus, ChevronLeft, Pencil, Trash2, Radio, ExternalLink, ShieldAlert, AlertCircle, Info, Square,
+  Plus, ChevronLeft, Pencil, Trash2, Radio, ExternalLink, ShieldAlert, AlertCircle, Info, Square, UserCheck, X,
 } from 'lucide-react';
 import {
-  listLiveSessions, createLiveSession, updateLiveSession, deleteLiveSession, endLiveSession,
+  listLiveSessions, createLiveSession, updateLiveSession, deleteLiveSession, endLiveSession, markAttendance,
   LiveSessionApiError,
 } from '../../services/liveSessionsApi';
 import { listCourses } from '../../services/coursesApi';
 import { getUsers } from '../../api/users';
+import { listEnrollments } from '../../services/enrollmentsApi';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
-import type { LiveSession, LiveSessionStatus } from '../../types/liveSessions';
+import type { LiveSession, LiveSessionStatus, AttendanceStatus } from '../../types/liveSessions';
 import type { CourseListRow } from '../../types/courses';
 import type { User } from '../../types/users';
 
@@ -341,9 +342,10 @@ interface SessionRowProps {
   onEdit:   () => void;
   onCancel: () => void;
   onEnd:    () => void;
+  onMarkAttendance: () => void;
 }
 
-function SessionRow({ session, onEdit, onCancel, onEnd }: SessionRowProps) {
+function SessionRow({ session, onEdit, onCancel, onEnd, onMarkAttendance }: SessionRowProps) {
   const start = new Date(session.startTime).toLocaleString('en-US', {
     month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit',
   });
@@ -394,6 +396,13 @@ function SessionRow({ session, onEdit, onCancel, onEnd }: SessionRowProps) {
               <Square className="tw:h-3 tw:w-3" strokeWidth={2} /> End Session
             </button>
           )}
+          {(session.status === 'LIVE' || session.status === 'ENDED') && (
+            <button type="button" onClick={onMarkAttendance} aria-label={`Mark attendance for ${session.title}`}
+              title="Mark attendance"
+              className="tw:flex tw:items-center tw:gap-1 tw:rounded tw:border tw:border-blue-200 tw:bg-blue-50 tw:px-2 tw:py-1 tw:text-[11px] tw:font-medium tw:text-blue-700 tw:hover:bg-blue-100">
+              <UserCheck className="tw:h-3 tw:w-3" strokeWidth={2} /> Attendance
+            </button>
+          )}
           <button type="button" onClick={onEdit} aria-label={`Edit ${session.title}`}
             className="tw:rounded tw:p-1 tw:text-slate-400 tw:hover:bg-slate-100 tw:hover:text-blue-600">
             <Pencil className="tw:h-3.5 tw:w-3.5" strokeWidth={2} />
@@ -405,6 +414,106 @@ function SessionRow({ session, onEdit, onCancel, onEnd }: SessionRowProps) {
         </div>
       </td>
     </tr>
+  );
+}
+
+// ── Attendance modal ─────────────────────────────────────────────────────────
+// Roster is derived from the session's own course enrollment — standalone
+// sessions (no courseId) have no enrolled roster in this schema, so this
+// stays an honest empty state rather than a free-text "pick any user" picker.
+
+const ATTENDANCE_OPTIONS: AttendanceStatus[] = ['PRESENT', 'LATE', 'ABSENT', 'EXCUSED'];
+
+function AttendanceModal({ session, onClose, showToast }: {
+  session: LiveSession;
+  onClose: () => void;
+  showToast: (type: 'success' | 'error', message: string) => void;
+}) {
+  const [loading, setLoading] = useState(true);
+  const [roster, setRoster] = useState<{ userId: string; name: string }[]>([]);
+  const [statuses, setStatuses] = useState<Record<string, AttendanceStatus>>({});
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!session.courseId) { setLoading(false); return; }
+    let cancelled = false;
+    listEnrollments({ courseId: session.courseId, limit: 200 })
+      .then((res) => {
+        if (cancelled) return;
+        const rows = res.enrollments.map((e) => ({ userId: e.userId, name: e.userName ?? e.userEmail ?? e.userId }));
+        setRoster(rows);
+        setStatuses(Object.fromEntries(rows.map((r) => [r.userId, 'ABSENT' as AttendanceStatus])));
+      })
+      .catch(() => showToast('error', 'Failed to load enrolled learners.'))
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session.courseId]);
+
+  async function handleSave() {
+    setSaving(true);
+    try {
+      await markAttendance(session.id, roster.map((r) => ({ userId: r.userId, status: statuses[r.userId] ?? 'ABSENT' })));
+      showToast('success', 'Attendance recorded.');
+      onClose();
+    } catch (err) {
+      showToast('error', err instanceof Error ? err.message : 'Failed to record attendance.');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <div aria-label="modal backdrop" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={onClose} />
+      <div role="dialog" aria-modal="true" aria-label="Mark attendance"
+        className="tw:relative tw:w-full tw:max-w-md tw:max-h-[80vh] tw:rounded-xl tw:bg-white tw:shadow-2xl tw:flex tw:flex-col">
+        <div className="tw:flex tw:items-center tw:justify-between tw:border-b tw:border-slate-200 tw:px-5 tw:py-4">
+          <h3 className="tw:m-0 tw:text-[15px] tw:font-semibold tw:text-slate-900">Mark Attendance — {session.title}</h3>
+          <button type="button" onClick={onClose} aria-label="Close" className="tw:rounded tw:p-1 tw:text-slate-400 tw:hover:bg-slate-100">
+            <X className="tw:h-4 tw:w-4" strokeWidth={2} />
+          </button>
+        </div>
+        <div className="tw:flex-1 tw:overflow-y-auto tw:px-5 tw:py-4">
+          {!session.courseId ? (
+            <p className="tw:m-0 tw:text-[13px] tw:text-slate-500">
+              This is a standalone session (no linked course), so there's no enrolled roster to mark attendance against.
+            </p>
+          ) : loading ? (
+            <div className="tw:flex tw:flex-col tw:gap-2">
+              {[1, 2, 3].map((i) => <div key={i} className="tw:h-9 tw:w-full tw:animate-pulse tw:rounded-lg tw:bg-slate-100" />)}
+            </div>
+          ) : roster.length === 0 ? (
+            <p className="tw:m-0 tw:text-[13px] tw:text-slate-500">No learners are enrolled in this session's course yet.</p>
+          ) : (
+            <div className="tw:flex tw:flex-col tw:gap-2">
+              {roster.map((r) => (
+                <div key={r.userId} className="tw:flex tw:items-center tw:justify-between tw:gap-3 tw:rounded-lg tw:border tw:border-slate-100 tw:px-3 tw:py-2">
+                  <span className="tw:text-[13px] tw:font-medium tw:text-slate-800">{r.name}</span>
+                  <select value={statuses[r.userId] ?? 'ABSENT'}
+                    onChange={(e) => setStatuses((prev) => ({ ...prev, [r.userId]: e.target.value as AttendanceStatus }))}
+                    className="tw:rounded-lg tw:border tw:border-slate-200 tw:px-2 tw:py-1 tw:text-[12px] tw:text-slate-700 tw:outline-none focus:tw:border-blue-400">
+                    {ATTENDANCE_OPTIONS.map((o) => <option key={o} value={o}>{o.charAt(0) + o.slice(1).toLowerCase()}</option>)}
+                  </select>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="tw:flex tw:flex-shrink-0 tw:justify-end tw:gap-2 tw:border-t tw:border-slate-100 tw:px-5 tw:py-3.5">
+          <button type="button" onClick={onClose} disabled={saving}
+            className="tw:rounded-lg tw:border tw:border-slate-200 tw:px-4 tw:py-2 tw:text-[13px] tw:font-medium tw:text-slate-600 tw:hover:bg-slate-50 tw:disabled:opacity-40">
+            Cancel
+          </button>
+          {roster.length > 0 && (
+            <button type="button" onClick={handleSave} disabled={saving}
+              className="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-40">
+              {saving ? 'Saving…' : 'Save Attendance'}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -434,6 +543,7 @@ export default function LiveSessionsTab({ openCreateOnMount }: LiveSessionsTabPr
   const [error, setError]         = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [toast, setToast]         = useState<Toast | null>(null);
+  const [attendanceSession, setAttendanceSession] = useState<LiveSession | null>(null);
 
   function showToast(type: 'success' | 'error', message: string) {
     setToast({ type, message });
@@ -628,6 +738,7 @@ export default function LiveSessionsTab({ openCreateOnMount }: LiveSessionsTabPr
                   onEdit={() => setView({ kind: 'edit', session: s })}
                   onCancel={() => handleCancel(s)}
                   onEnd={() => handleEnd(s)}
+                  onMarkAttendance={() => setAttendanceSession(s)}
                 />
               ))}
             </tbody>
@@ -636,6 +747,14 @@ export default function LiveSessionsTab({ openCreateOnMount }: LiveSessionsTabPr
       )}
 
       {toast && <ToastBanner {...toast} />}
+
+      {attendanceSession && (
+        <AttendanceModal
+          session={attendanceSession}
+          showToast={showToast}
+          onClose={() => setAttendanceSession(null)}
+        />
+      )}
     </div>
   );
 }

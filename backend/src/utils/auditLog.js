@@ -1,7 +1,4 @@
-// TEMPORARY STUB — replace with Hassan's real backend/src/utils/auditLog.js
-// This exists only so the server can start locally. Do not build on this logic.
-// Functions stubbed: createAuditLog
-// Used by: organization.service.js, groups.service.js, invitations.service.js
+const prisma = require("../config/prisma");
 
 /**
  * @param {string|null} adminId
@@ -11,7 +8,18 @@
  * @returns {Promise<void>}
  */
 async function createAuditLog(adminId, action, meta, entityId) {
-  console.log('[STUB auditLog]', { adminId, action, meta, entityId });
+  try {
+    await prisma.auditLog.create({
+      data: {
+        adminId: adminId ?? null,
+        action,
+        details: meta ?? null,
+        targetUserId: entityId ?? null,
+      },
+    });
+  } catch (err) {
+    console.error(`Audit log error (${action}):`, err.message);
+  }
 }
 
 module.exports = { createAuditLog };

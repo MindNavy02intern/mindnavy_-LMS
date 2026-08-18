@@ -71,6 +71,15 @@ const getSettings = run(async (req, res) => {
   return res.json({ success: true, data: withEnvStatus(settings) });
 });
 
+// Lightweight, cached — the safe subset of flags the frontend needs to hide
+// nav/tabs for disabled features. Not the full settings row (no reason for
+// every authenticated admin request to pull the whole config object just to
+// check a handful of booleans).
+const getFeatures = run(async (req, res) => {
+  const flags = await svc.getCachedFeatureFlags();
+  return res.json({ success: true, data: flags });
+});
+
 const updateSettings = run(async (req, res) => {
   const v = validateSettingsUpdate(req.body);
   if (!v.isValid) return badRequest(res, v.errors[0]);
@@ -150,7 +159,7 @@ const confirmBranding = run(async (req, res) => {
 });
 
 module.exports = {
-  getSettings, updateSettings, getLogs,
+  getSettings, getFeatures, updateSettings, getLogs,
   enableMaintenance, disableMaintenance,
   testEmail,
   backup, restore,

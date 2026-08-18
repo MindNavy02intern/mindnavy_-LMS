@@ -23,12 +23,20 @@ export default function AutomationsTab({ showToast, refreshSignal, onBumpRefresh
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    listAutomations({ limit: 100 })
-      .then(res => { if (!cancelled) setItems(res.items); })
-      .catch(() => {})
-      .finally(() => { if (!cancelled) setLoading(false); });
-    return () => { cancelled = true; };
+    function load() {
+      setLoading(true);
+      listAutomations({ limit: 100 })
+        .then(res => { if (!cancelled) setItems(res.items); })
+        .catch(() => {})
+        .finally(() => { if (!cancelled) setLoading(false); });
+    }
+    load();
+    // sentCount increments server-side from source services this tab has no
+    // other signal for (a user registering, an enrollment completing, ...) —
+    // without this, an already-open tab shows a stale count until remounted.
+    window.addEventListener('analyticsUpdated', load);
+    window.addEventListener('userDataChanged', load);
+    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', load); window.removeEventListener('userDataChanged', load); };
   }, [refreshSignal]);
 
   async function handleToggle(a: NotificationAutomation) {
@@ -68,10 +76,6 @@ export default function AutomationsTab({ showToast, refreshSignal, onBumpRefresh
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <button type="button" style={BTN_PRIMARY} onClick={onCreate}>+ Create Automation</button>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '10px 14px', fontSize: 12.5, color: '#1e40af' }}>
-        Trigger events aren't wired to live activity yet (registration, enrollment, etc.) — automations are fully configurable, but Sent Count stays 0 until a later phase adds real event hooks.
       </div>
 
       <div style={{ ...CARD, overflow: 'hidden' }}>

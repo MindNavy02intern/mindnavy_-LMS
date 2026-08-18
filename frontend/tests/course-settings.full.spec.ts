@@ -104,17 +104,43 @@ test('Settings form: renders all sections and saves changed fields', async ({ pa
   await navigateToSettingsStep(page, title)
 
   // All sections present
-  await expect(page.getByText('Pricing')).toBeVisible()
-  await expect(page.getByText('Enrollment')).toBeVisible()
+  // getByRole('heading'): plain text also substring-matches the step
+  // breadcrumb ("Step 4 — Pricing, access & SEO").
+  await expect(page.getByRole('heading', { name: 'Pricing', exact: true })).toBeVisible()
+  // getByRole('heading'): plain text also matches "Total Enrollments" (sidebar
+  // + main) and the "Enrollments" nav tab button.
+  await expect(page.getByRole('heading', { name: 'Enrollment', exact: true })).toBeVisible()
   await expect(page.getByText('Features')).toBeVisible()
   await expect(page.getByText('Access Rules')).toBeVisible()
-  await expect(page.getByText('SEO')).toBeVisible()
+  // getByRole('heading'): plain text also matches the step breadcrumb
+  // ("Step 4 — Pricing, access & SEO") and the "SEO Title"/"SEO Description" labels.
+  await expect(page.getByRole('heading', { name: 'SEO', exact: true })).toBeVisible()
 
-  // Flip to Paid, enter price
+  // Flip to Paid, enter price. The Price field only mounts once "Paid" is
+  // selected, and under full-suite load it can detach/remount once more
+  // right after — retried with a fresh locator query per attempt rather
+  // than relying on a single fill()'s own actionability retry against a
+  // locator that was resolved before the remount.
   await page.getByRole('button', { name: /^Paid$/i }).click()
   await expect(page.getByLabel('Price')).toBeVisible()
-  await page.getByLabel('Price').fill('49.99')
-  await page.getByLabel('Currency').fill('USD')
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      await page.getByLabel('Price').fill('49.99', { timeout: 8000 })
+      break
+    } catch (err) {
+      if (attempt === 3) throw err
+    }
+  }
+  // Same remount race as Price above — Currency mounts in the same
+  // conditional block and has now been observed detaching mid-fill too.
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      await page.getByLabel('Currency').fill('USD', { timeout: 8000 })
+      break
+    } catch (err) {
+      if (attempt === 3) throw err
+    }
+  }
 
   // Change visibility
   await page.getByLabel('Visibility').selectOption('Private')

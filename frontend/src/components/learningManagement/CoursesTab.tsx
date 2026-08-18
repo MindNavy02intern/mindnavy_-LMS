@@ -101,6 +101,12 @@ export default function CoursesTab({ openCreateOnMount, openSettingsForCourseId,
 
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Bumped on every fetchList() call so a stale in-flight fetch (StrictMode's
+  // double-invoked mount effect, or a fast status-tab switch) can't clobber a
+  // newer response — e.g. a slow "All" tab fetch landing after the "Archived"
+  // tab's fetch already resolved.
+  const fetchSeq = useRef(0);
+
   // Filter options
   const [filterOptions, setFilterOptions] = useState<LmFilterOptions | null>(null);
 
@@ -135,6 +141,7 @@ export default function CoursesTab({ openCreateOnMount, openSettingsForCourseId,
 
   // Fetch list whenever filters/page change
   const fetchList = useCallback(() => {
+    const seq = ++fetchSeq.current;
     (() => { setLoading(true); setListError(null); })();
     const params: CoursesListParams = {
       page, limit, status: statusFilter,
@@ -144,16 +151,18 @@ export default function CoursesTab({ openCreateOnMount, openSettingsForCourseId,
     };
     listCourses(params)
       .then((res) => {
+        if (fetchSeq.current !== seq) return; // superseded by a newer fetch — discard
         setRows(res.courses);
         setStatusCounts(res.statusCounts);
         setTotal(res.pagination.total);
         setPages(res.pagination.pages);
       })
       .catch((err) => {
+        if (fetchSeq.current !== seq) return;
         if (err instanceof CourseApiError && err.status === 401) { navigate('/login'); return; }
         setListError(err instanceof Error ? err.message : 'Failed to load courses.');
       })
-      .finally(() => setLoading(false));
+      .finally(() => { if (fetchSeq.current === seq) setLoading(false); });
   }, [page, statusFilter, category, instructor, search, navigate]);
 
   useEffect(() => { fetchList(); }, [fetchList]);

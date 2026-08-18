@@ -119,7 +119,9 @@ test('Categories: create root category via UI modal → appears in tree', async 
   const id: string = (await resp.json()).data?.id
   if (id) createdCategoryIds.push(id)
 
-  await expect(page.getByText(name)).toBeVisible({ timeout: 8000 })
+  // .first(): the row renders before the success toast in DOM order, and the
+  // toast's own text ('Category "<name>" created.') substring-matches getByText(name).
+  await expect(page.getByText(name).first()).toBeVisible({ timeout: 8000 })
 })
 
 test('Categories: subcategory shown under parent when expanded', async ({ page }) => {
@@ -169,7 +171,9 @@ test('Categories: rename category via Edit modal → updated in tree', async ({ 
   const resp = await patchResp
   expect(resp.ok(), 'PATCH /categories/:id must succeed').toBeTruthy()
 
-  await expect(page.getByText(newName)).toBeVisible({ timeout: 8000 })
+  // .first(): the row renders before the success toast, whose own text
+  // ('Category "<name>" updated.') substring-matches getByText(newName).
+  await expect(page.getByText(newName).first()).toBeVisible({ timeout: 8000 })
   await expect(page.getByText(oldName)).not.toBeVisible()
 })
 
@@ -216,9 +220,12 @@ test('Categories: delete blocked when has subcategories → shows exact backend 
   page.once('dialog', d => d.accept())
   await page.getByLabel(`Delete ${rootName}`).first().click()
 
-  // Toast must contain the exact backend error message (not "Something went wrong")
+  // Toast must contain the exact backend error message (not "Something went wrong").
   // Backend returns 400 with errorCode HAS_CHILDREN_DELETE and a descriptive message.
-  await expect(page.getByText(/subcategor|children|cannot delete/i)).toBeVisible({ timeout: 8000 })
+  // Scoped to the fixed-position toast banner — an unscoped regex this broad
+  // also matches unrelated "course"/"children" text elsewhere on the page.
+  const toast = page.locator('div[style*="position: fixed"]').filter({ hasText: /subcategor|children|cannot delete/i })
+  await expect(toast).toBeVisible({ timeout: 8000 })
 })
 
 test('Categories: delete blocked when has courses → shows exact backend message', async ({ page }) => {
@@ -249,8 +256,11 @@ test('Categories: delete blocked when has courses → shows exact backend messag
   page.once('dialog', d => d.accept())
   await page.getByLabel(`Delete ${catName}`).first().click()
 
-  // Toast must contain backend message about assigned courses
-  await expect(page.getByText(/course|assigned|cannot delete/i)).toBeVisible({ timeout: 8000 })
+  // Toast must contain backend message about assigned courses.
+  // Scoped to the fixed-position toast banner — an unscoped regex this broad
+  // also matches unrelated "course"/"assigned" text elsewhere on the page.
+  const toast = page.locator('div[style*="position: fixed"]').filter({ hasText: /course|assigned|cannot delete/i })
+  await expect(toast).toBeVisible({ timeout: 8000 })
 })
 
 test('Categories: CourseForm category picker shows categories by UUID, not free text', async ({ page }) => {
@@ -260,15 +270,26 @@ test('Categories: CourseForm category picker shows categories by UUID, not free 
   const catName = `Cat FormPicker ${Date.now()}`
   await createRootCategory(page, H, catName)
 
-  // Navigate to course create form
+  // Navigate to course create form. role-scoped exact match + confirming the
+  // real "Courses" heading (not just "a table") — the previous plain-text
+  // locator here could land on the Overview tab's own mini course table
+  // without ever actually switching to the Courses tab, silently leaving
+  // the "Create Course" click below with nothing real to open.
   await page.goto('/learning-management')
-  await page.locator('button', { hasText: /^Courses$/ }).first().click()
-  await expect(page.locator('table')).toBeVisible({ timeout: 10000 })
-  await page.getByRole('button', { name: /Create Course|New Course/i }).first().click()
+  await page.getByRole('button', { name: 'Courses', exact: true }).click()
+  await expect(page).toHaveURL(/[?&]tab=courses/)
+  await expect(page.getByRole('heading', { name: 'Courses', exact: true })).toBeVisible({ timeout: 10000 })
+  // .last(): two exact "Create Course" buttons can exist (page header +
+  // this tab's own) — same pattern as courses-tab.full.spec.ts.
+  await page.getByRole('button', { name: 'Create Course', exact: true }).last().click()
+  await expect(page.getByRole('heading', { name: 'Create Course' })).toBeVisible({ timeout: 5000 })
 
   // Category select should appear with the category name as a visible option
-  await expect(page.getByLabel('Category')).toBeVisible({ timeout: 5000 })
-  const catSelect = page.getByLabel('Category')
+  // exact: true — non-exact also matches the Courses list's own "Filter by
+  // category" dropdown (a client-side text filter whose option values are
+  // literal category names, not UUIDs — that's the wrong element entirely).
+  await expect(page.getByLabel('Category', { exact: true })).toBeVisible({ timeout: 5000 })
+  const catSelect = page.getByLabel('Category', { exact: true })
   // Verify the option exists with the name we created
   await expect(catSelect.locator('option', { hasText: catName })).toBeAttached({ timeout: 5000 })
 

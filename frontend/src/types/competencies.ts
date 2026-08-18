@@ -333,3 +333,46 @@ export interface CompetencySettings {
 }
 
 export type UpdateCompetencySettingsRequest = Partial<Omit<CompetencySettings, 'id' | 'createdAt' | 'updatedAt'>>;
+
+// ── Competency Certifications (Certifications tab) ───────────────────────────
+
+export type CertificationStatus = 'PENDING' | 'VERIFIED' | 'REVOKED' | 'EXPIRED';
+export const CERTIFICATION_STATUSES: CertificationStatus[] = ['PENDING', 'VERIFIED', 'REVOKED', 'EXPIRED'];
+
+export interface CompetencyCertification {
+  id:               string;
+  userId:           string;
+  userName:         string | null;
+  userEmail:        string | null;
+  skillId:          string;
+  skillName:        string | null;
+  frameworkId:      string | null;
+  frameworkName:    string | null;
+  // `status` is the raw persisted value (never EXPIRED — see backend schema
+  // comment); `effectiveStatus` is what the UI should render (EXPIRED once
+  // a VERIFIED cert's expiresAt has passed, derived at read time).
+  status:           Exclude<CertificationStatus, 'EXPIRED'>;
+  effectiveStatus:  CertificationStatus;
+  issuedAt:         string;
+  expiresAt:        string | null;
+  issuedById:       string | null;
+  revokedAt:        string | null;
+  revokedById:      string | null;
+  verificationCode: string;
+  notes:            string | null;
+  createdAt:        string;
+  updatedAt:        string;
+}
+
+export interface CertificationsListResponse {
+  certifications: CompetencyCertification[];
+  pagination:     Pagination;
+}
+
+export interface AssignCertificationRequest {
+  userId:       string;
+  skillId:      string;
+  frameworkId?: string | null;
+  expiresAt?:   string | null;
+  notes?:       string | null;
+}

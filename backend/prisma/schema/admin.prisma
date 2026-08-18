@@ -3,6 +3,18 @@ model AdminUser {
   email          String          @unique
   passwordHash   String
   fullName       String
+  // Self-service Profile page fields (phone/bio) — AdminUser has no other
+  // contact/bio fields; additive and nullable so no existing admin row needs
+  // a backfill.
+  phone          String?
+  bio            String?
+  // Real TOTP-based 2FA (SecurityTab.tsx). mfaEnabled here is per-admin
+  // ("has this admin turned it on"), distinct from SystemSettings.mfaEnabled
+  // (an org-wide policy toggle that doesn't enroll anyone by itself — see
+  // that field's own note). mfaSecret is the base32 TOTP seed, only ever set
+  // once verify succeeds; null while unconfigured/disabled.
+  mfaSecret      String?
+  mfaEnabled     Boolean         @default(false)
   role           String          @default("admin")
   status         AdminStatus     @default(ACTIVE)
   lastLoginAt    DateTime?
@@ -14,6 +26,7 @@ model AdminUser {
   loginAttempts  LoginAttempt[]
   otpCodes       OtpCode[]
   trustedDevices TrustedDevice[]
+  userNotes      UserNote[]      @relation("AdminCreatedUserNotes")
 
   @@map("admin_users")
 }
@@ -214,9 +227,19 @@ enum AuditAction {
   CERTIFICATE_TEMPLATE_CREATED
   CERTIFICATE_TEMPLATE_UPDATED
   CERTIFICATE_TEMPLATE_DELETED
+  // Logo upload (sign->PUT->confirm) is a distinct write from the general
+  // name/layout PATCH above — its own audit trail entry, same granularity as
+  // INSTRUCTOR_DOCUMENT_UPLOADED vs INSTRUCTOR_PROFILE_UPDATED.
+  CERTIFICATE_TEMPLATE_LOGO_UPLOADED
+  CERTIFICATE_TEMPLATE_LOGO_REMOVED
   CERTIFICATE_ISSUED
   CERTIFICATE_REVOKED
   CERTIFICATE_REISSUED
+  CERTIFICATE_EXPIRY_UPDATED
+  FEATURE_WAITLIST_JOINED
+  // Attendance write endpoint (Trigger 4) — see certificateTriggers.service's
+  // schema-comment update: SessionAttendance now has a real writer.
+  SESSION_ATTENDANCE_MARKED
   LIVE_SESSION_CREATED
   LIVE_SESSION_UPDATED
   LIVE_SESSION_DELETED
@@ -226,6 +249,8 @@ enum AuditAction {
   CONTENT_CREATED
   CONTENT_UPDATED
   CONTENT_DELETED
+  CONTENT_LINKED_TO_COURSE
+  CONTENT_UNLINKED_FROM_COURSE
   // Was already written by liveSessions.service PATCH /:id/end but missing from
   // this enum, so every manual-end audit write failed silently in its catch
   // (same class as the LEARNING_PATH_* bug).
@@ -317,6 +342,9 @@ enum AuditAction {
   SKILLS_EXPORTED
   SKILLS_IMPORTED
   COMPETENCY_SETTINGS_UPDATED
+  // Proficiency Levels tab (per-level min/max%/color/description config for
+  // the fixed SkillLevel ladder — see ProficiencyLevel's schema comment).
+  PROFICIENCY_LEVELS_UPDATED
 
   // Reports & Analytics module. Export Center is the one write-adjacent
   // action among the read-only analytics endpoints (see REPORTS_CONTRACT.md).
@@ -341,6 +369,9 @@ enum AuditAction {
   SUBSCRIPTION_UPDATED
   SUBSCRIPTION_CANCELLED
   SUBSCRIPTION_EXTENDED
+  // System-authored (adminId: null), written by finance.service's hourly
+  // checkExpiringSubscriptions sweep — same precedent as SCHEDULED_REPORT_RUN.
+  SUBSCRIPTION_EXPIRED
   INVOICE_GENERATED
   INVOICE_UPDATED
   INVOICE_VOIDED
@@ -407,4 +438,102 @@ enum AuditAction {
   SYSTEM_BACKUP_CREATED
   SYSTEM_SETTINGS_RESTORED
   SYSTEM_SETTINGS_TEST_EMAIL_SENT
+
+  // User Details Drawer "More" tab (DEFERRED_ITEMS.md Users item) + Profile
+  // Page self-service — see users.prisma UserNote comment and admin.service's
+  // updateAdminProfile/changeAdminPassword.
+  USER_NOTE_ADDED
+  USER_NOTE_DELETED
+  USER_SESSION_REVOKED
+  USER_DATA_EXPORTED
+  USER_DELETION_REQUESTED
+  ADMIN_PROFILE_UPDATED
+  ADMIN_PASSWORD_CHANGED
+  // Real TOTP-based MFA (SecurityTab.tsx toggle) — per-admin secret on
+  // AdminUser, distinct from SystemSettings.mfaEnabled (that's an org-wide
+  // policy flag, not a per-admin enrollment state).
+  ADMIN_MFA_ENABLED
+  ADMIN_MFA_DISABLED
+
+  // Roles & Permissions — Company Roles tab (own model, distinct from the
+  // existing Role/AccessPolicy system — see CompanyRole's schema comment).
+  COMPANY_ROLE_CREATED
+  COMPANY_ROLE_UPDATED
+  COMPANY_ROLE_DELETED
+  // Roles & Permissions — Delegated Admins tab.
+  DELEGATED_ADMIN_GRANTED
+  DELEGATED_ADMIN_REVOKED
+
+  // Competencies — Certifications tab (own model — see CompetencyCertification's
+  // schema comment).
+  COMPETENCY_CERTIFICATION_ASSIGNED
+  COMPETENCY_CERTIFICATION_VERIFIED
+  COMPETENCY_CERTIFICATION_REVOKED
+  COMPETENCY_CERTIFICATION_DELETED
+
+  // Reports — Custom Reports builder (own model — see SavedReport's schema
+  // comment).
+  SAVED_REPORT_CREATED
+  SAVED_REPORT_UPDATED
+  SAVED_REPORT_DELETED
+  SAVED_REPORT_RUN
+}
+
+// Roles & Permissions "Company Roles" tab — roles for ADMIN CONSOLE
+// operators (AdminUser), distinct from the existing Role model (LMS-side
+// roles assigned to AppUser via UserRoleAssignment, e.g. Learner/Instructor).
+// AdminUser.role stays a plain string (unchanged) and is matched against
+// CompanyRole.name loosely (same "no FK" convention as changedById
+// elsewhere) — nothing here enforces permissions yet, this is the console
+// role catalog + CRUD; wiring it into requireAdminAuth is a separate,
+// security-sensitive change not in scope for this pass.
+model CompanyRole {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  permissions String[] @default([])
+  isSystem    Boolean  @default(false) // seeded/built-in — blocked from delete
+  status      String   @default("ACTIVE") // ACTIVE | INACTIVE
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("company_roles")
+}
+
+// Roles & Permissions "Delegated Admins" tab — a time-boxed grant record
+// (who granted elevated console access to whom, under which company role,
+// until when). CRUD + audit trail only, same scope note as CompanyRole
+// above: no auth-middleware enforcement wired to this yet.
+model DelegatedAdmin {
+  id          String    @id @default(cuid())
+  adminId     String
+  grantedById String
+  scopeRole   String
+  reason      String?
+  status      String    @default("ACTIVE") // ACTIVE | REVOKED
+  expiresAt   DateTime?
+  grantedAt   DateTime  @default(now())
+  revokedAt   DateTime?
+  revokedById String?
+
+  @@index([adminId])
+  @@index([status])
+  @@map("delegated_admins")
+}
+
+// Admin notes on an AppUser (Users "More" tab, Notes tile). Mirrors
+// AdminMessage's sender/receiver shape (messages.prisma) — one admin author,
+// one AppUser subject — rather than inventing a new relation pattern.
+model UserNote {
+  id          String    @id @default(uuid())
+  userId      String
+  content     String
+  createdById String
+  createdAt   DateTime  @default(now())
+  user        AppUser   @relation("UserNotes", fields: [userId], references: [id], onDelete: Cascade)
+  createdBy   AdminUser @relation("AdminCreatedUserNotes", fields: [createdById], references: [id])
+
+  @@index([userId])
+  @@map("user_notes")
 }

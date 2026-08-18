@@ -63,6 +63,10 @@ export type MutationName =
   | 'user.archive' | 'user.restore'
   | 'user.delete' | 'user.update' | 'user.merge'
   | 'user.tag.add' | 'user.tag.remove'
+  // User Details Drawer Courses tab (DEFERRED_ITEMS.md Users item). Assign
+  // reuses 'learner.enroll' as-is (gated to role=learner, same backend path
+  // as the Learners module) — only Unenroll is new, and role-agnostic.
+  | 'user.courseUnenroll'
   // §5.2 STUDENT / ENROLLMENT
   | 'enrollment.create' | 'enrollment.statusUpdate' | 'enrollment.cancel' | 'student.dropout'
   | 'progress.update' | 'course.complete'
@@ -118,6 +122,7 @@ export type MutationName =
   | 'question.create' | 'question.update' | 'question.delete' | 'question.reorder'
   | 'liveSession.create' | 'liveSession.update' | 'liveSession.delete' | 'liveSession.end'
   | 'content.confirm' | 'content.update' | 'content.delete'
+  | 'content.linkCourse' | 'content.unlinkCourse'
   // §5.4 Course Builder (sections & lessons)
   | 'section.create' | 'section.update' | 'section.delete'
   | 'lesson.create'  | 'lesson.update'  | 'lesson.delete'
@@ -160,16 +165,16 @@ export type MutationName =
   | 'skill.import'
   | 'competencySettings.update'
   | 'competencyMap.link' | 'competencyMap.unlink'
-  | 'competencyCert.assign' | 'competencyCert.verify' | 'competencyCert.revoke'
+  | 'competencyCert.assign' | 'competencyCert.verify' | 'competencyCert.revoke' | 'competencyCert.delete'
   // §5.11b REPORTS & ANALYTICS (blueprint 08 — backend shipped, see
   // REPORTS_CONTRACT.md). `reportSchedule.*` shipped 2026-08-09 (Scheduled
   // Reports — Export Center tab); `.create`/`.delete` go live alongside the
   // new `.update`/`.pause`/`.resume` rather than staying dead. `reportTemplate.save`
-  // remains DEAD — no Custom Report Builder save flow exists yet, same
-  // "documented, unbuilt" status as skillLevel.configure above.
+  // is real now too (Custom Reports builder, savedReports.service.js) —
+  // `.update`/`.delete`/`.run` are new alongside it.
   | 'reportSchedule.create' | 'reportSchedule.update' | 'reportSchedule.delete'
   | 'reportSchedule.pause' | 'reportSchedule.resume'
-  | 'reportTemplate.save'
+  | 'reportTemplate.save' | 'reportTemplate.update' | 'reportTemplate.delete' | 'reportTemplate.run'
   // §5.12 NOTIFICATION CAMPAIGNS
   | 'emailCampaign.create' | 'pushCampaign.send'
   | 'smsCampaign.send' | 'announcement.send' | 'announcement.delete'
@@ -321,6 +326,18 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   'user.tag.remove': (ctx) => [
     queryKeys.users.tags(),
     ...(ctx?.id ? [queryKeys.users.detail(ctx.id)] : []),
+  ],
+  // Enrollment count shown on the Users list row (User.enrollmentCount) and
+  // course.list's enrolled-count both change — same surfaces learner.unenroll
+  // invalidates, minus queryKeys.learners.* (this action isn't learner-scoped).
+  'user.courseUnenroll': (ctx) => [
+    queryKeys.users.list(),
+    queryKeys.enrollments(ctx?.id),
+    queryKeys.enrollments(ctx?.courseId),
+    queryKeys.courses.list(),
+    queryKeys.dashboard.courseAnalytics(),
+    ...(ctx?.id ? [queryKeys.users.detail(ctx.id)] : []),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
   ],
 
   // ── §5.2 STUDENT / ENROLLMENT ─────────────────────────────────────────────
@@ -754,6 +771,14 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.contentLibrary(),
     ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
   ],
+  'content.linkCourse': (ctx) => [
+    queryKeys.contentLibrary(),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
+  'content.unlinkCourse': (ctx) => [
+    queryKeys.contentLibrary(),
+    ...(ctx?.courseId ? [queryKeys.courses.detail(ctx.courseId)] : []),
+  ],
 
   // Course Builder — sections & lessons (§5.4 addendum)
   'section.create': (ctx) => [
@@ -1069,6 +1094,10 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
     queryKeys.competenciesAnalytics(),
     ...(ctx?.userId ? [queryKeys.userSkills(ctx.userId)] : []),
   ],
+  'competencyCert.delete': (ctx) => [
+    queryKeys.competenciesAnalytics(),
+    ...(ctx?.userId ? [queryKeys.userSkills(ctx.userId)] : []),
+  ],
 
   // ── §5.11b REPORTS & ANALYTICS ────────────────────────────────────────────
   // `reportSchedule.*` shipped 2026-08-09 — see MutationName union note.
@@ -1077,8 +1106,12 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
   'reportSchedule.delete': () => [queryKeys.reportSchedules()],
   'reportSchedule.pause':  () => [queryKeys.reportSchedules()],
   'reportSchedule.resume': () => [queryKeys.reportSchedules()],
-  // `reportTemplate.save` — still dead, no Custom Report Builder exists.
+  // `reportTemplate.*` — Custom Reports builder (savedReports.service.js).
   'reportTemplate.save':   () => [queryKeys.reportsTemplates()],
+  'reportTemplate.update': () => [queryKeys.reportsTemplates()],
+  'reportTemplate.delete': () => [queryKeys.reportsTemplates()],
+  // .run only bumps lastRunAt — same list key, no other surface changes.
+  'reportTemplate.run':    () => [queryKeys.reportsTemplates()],
 
   // ── §5.12 NOTIFICATION CAMPAIGNS ─────────────────────────────────────────
   'emailCampaign.create':            () => [queryKeys.campaigns(), queryKeys.notificationsStats()],

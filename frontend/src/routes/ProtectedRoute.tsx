@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { FeatureFlagsProvider } from '../FeatureFlagsContext';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import type { UserRole } from '../types/auth';
 
@@ -22,5 +23,11 @@ export default function ProtectedRoute({ children, allowedRoles }: Props) {
     return <Navigate to="/dashboard" replace />;
   }
 
-  return <>{children}</>;
+  // FeatureFlagsProvider lives here (the single shared wrapper for every
+  // protected route, App.tsx) rather than main.tsx — it only ever fetches
+  // for an authenticated admin on a real page, never on /login, /signup,
+  // /verify-device. Wrapping here (not inside AdminLayout) also means it's
+  // a true ancestor of the page component itself, not just of AdminLayout's
+  // children — so a page's own body can call useFeatureFlags() directly.
+  return <FeatureFlagsProvider>{children}</FeatureFlagsProvider>;
 }

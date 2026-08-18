@@ -78,7 +78,9 @@ test('Finance page loads with header, KPI cards, and all tabs', async ({ page })
   await expect(page.getByRole('heading', { name: 'Finance' })).toBeVisible({ timeout: 10000 })
   await expect(page.getByText('Total Revenue')).toBeVisible({ timeout: 10000 })
   await expect(page.getByText('Monthly Revenue')).toBeVisible({ timeout: 10000 })
-  await expect(page.getByText('Active Subscriptions')).toBeVisible({ timeout: 10000 })
+  // exact: true — non-exact also substring-matches the Dashboard tab's
+  // "No active subscriptions yet." empty-state text.
+  await expect(page.getByText('Active Subscriptions', { exact: true })).toBeVisible({ timeout: 10000 })
   for (const label of ['Dashboard', 'Payments', 'Subscriptions', 'Invoices', 'Refunds', 'Payouts', 'Coupons', 'Tax Management']) {
     await expect(page.getByRole('button', { name: label, exact: true })).toBeVisible({ timeout: 10000 })
   }
@@ -150,7 +152,9 @@ test('Generate Invoice creates an invoice with a correct sequential number', asy
   test.skip(!learnerId, 'Setup learner was not created — backend may be unavailable')
 
   await page.goto('/finance?tab=invoices')
-  await page.getByRole('button', { name: 'Generate Invoice', exact: true }).click()
+  // .first(): both the page header's "Generate Invoice" and the Invoices
+  // tab's own button are visible at once — either opens the same modal.
+  await page.getByRole('button', { name: 'Generate Invoice', exact: true }).first().click()
   await expect(page.getByRole('heading', { name: 'Generate Invoice' })).toBeVisible({ timeout: 5000 })
 
   await page.getByPlaceholder('Search by name or email…').fill(learnerName as string)

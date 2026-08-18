@@ -98,6 +98,7 @@ const CONTENT_SELECT = {
   fileUrl: true, filePath: true, sizeBytes: true, mimeType: true,
   tags: true, uploadedBy: true, createdAt: true, updatedAt: true,
   course: { select: { title: true } },
+  _count: { select: { usages: true } },
 };
 
 function mapItem(i) {
@@ -112,6 +113,9 @@ function mapItem(i) {
     mimeType:    i.mimeType ?? null,
     tags:        i.tags ?? [],
     uploadedBy:  i.uploadedBy ?? null,
+    // Reuse count (CourseContentUsage rows) — separate from courseId, which is
+    // this item's own originating course, not a "usage".
+    courseUsageCount: i._count?.usages ?? 0,
     createdAt:   iso(i.createdAt),
     updatedAt:   iso(i.updatedAt),
   };
@@ -245,10 +249,60 @@ async function deleteContent(id, adminId) {
   return { id };
 }
 
+// ── Course reuse (CourseContentUsage) ────────────────────────────────────────
+// Additive alongside courseId (the item's own originating course) — this is
+// every OTHER course that has also linked the item. See the schema comment.
+
+async function listContentCourses(id) {
+  await getItemOrThrow(id);
+  const rows = await safe(() => prisma.courseContentUsage.findMany({
+    where: { contentId: id },
+    orderBy: { addedAt: "desc" },
+    select: { id: true, courseId: true, addedAt: true, course: { select: { title: true, status: true } } },
+  }), []);
+  return rows.map((r) => ({
+    usageId:      r.id,
+    courseId:     r.courseId,
+    courseTitle:  r.course?.title ?? null,
+    courseStatus: r.course?.status ?? null,
+    addedAt:      iso(r.addedAt),
+  }));
+}
+
+async function linkContentToCourse(id, courseId, adminId) {
+  await getItemOrThrow(id);
+  await assertCourseExists(courseId);
+
+  let usage;
+  try {
+    usage = await prisma.courseContentUsage.create({ data: { contentId: id, courseId } });
+  } catch (err) {
+    if (err.code === "P2002") throw domainError("ALREADY_LINKED");
+    throw err;
+  }
+
+  await auditLog(adminId, "CONTENT_LINKED_TO_COURSE", { contentId: id, courseId });
+  return { usageId: usage.id, courseId, addedAt: iso(usage.addedAt) };
+}
+
+async function unlinkContentFromCourse(id, courseId, adminId) {
+  const usage = await prisma.courseContentUsage.findUnique({
+    where: { contentId_courseId: { contentId: id, courseId } },
+  });
+  if (!usage) throw domainError("USAGE_NOT_FOUND");
+
+  await prisma.courseContentUsage.delete({ where: { id: usage.id } });
+  await auditLog(adminId, "CONTENT_UNLINKED_FROM_COURSE", { contentId: id, courseId });
+  return { id: usage.id };
+}
+
 module.exports = {
   listContent,
   signUpload,
   confirmUpload,
   updateContent,
   deleteContent,
+  listContentCourses,
+  linkContentToCourse,
+  unlinkContentFromCourse,
 };

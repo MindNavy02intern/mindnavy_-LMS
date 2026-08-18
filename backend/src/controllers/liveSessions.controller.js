@@ -4,6 +4,7 @@ const {
   validateSessionCreate,
   validateSessionUpdate,
   validateListQuery,
+  validateMarkAttendance,
 } = require("../validators/liveSessions.validator");
 
 // ── Helpers (same pattern as quizzes.controller) ────────────────────────────────
@@ -16,12 +17,18 @@ function notFound(res, msg = "Not found.") {
   return res.status(404).json({ success: false, message: msg });
 }
 
+function forbidden(res, msg) {
+  return res.status(403).json({ success: false, message: msg });
+}
+
 function handleDomainError(res, err) {
   switch (err.code) {
+    case "LIVE_SESSIONS_DISABLED": return forbidden(res, "Live Sessions is disabled in System Settings.");
     case "LIVE_SESSION_NOT_FOUND": return notFound(res, "Live session not found.");
     case "COURSE_NOT_FOUND":       return badRequest(res, "Referenced course does not exist.");
     case "INSTRUCTOR_NOT_FOUND":   return badRequest(res, "instructorId must be an existing, non-archived INSTRUCTOR user.");
     case "ALREADY_ENDED":          return badRequest(res, "This session has already ended.");
+    case "USERS_NOT_FOUND":        return badRequest(res, `One or more users do not exist: ${(err.missing || []).join(", ")}`);
     case "MEETINGS_NOT_CONFIGURED":
       return res.status(503).json({
         success: false,
@@ -100,6 +107,15 @@ const endSession = run(async (req, res) => {
   return res.json({ success: true, message: "Live session ended.", data: session });
 });
 
+const markAttendance = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "sessionId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateMarkAttendance(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const records = await svc.markAttendance(req.params.id, v.data, req.admin?.id);
+  return res.json({ success: true, message: `Attendance recorded for ${records.length} learner(s).`, data: records });
+});
+
 module.exports = {
   listSessions,
   getSession,
@@ -107,4 +123,5 @@ module.exports = {
   updateSession,
   deleteSession,
   endSession,
+  markAttendance,
 };

@@ -21,21 +21,22 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Plus, Pencil, Trash2, ChevronLeft, ChevronRight, Download, RotateCcw, Ban, X, Award,
+  Plus, Pencil, Trash2, ChevronLeft, ChevronRight, Download, RotateCcw, Ban, X, Award, CalendarClock,
 } from 'lucide-react';
 import {
   listTemplates, createTemplate, updateTemplate, deleteTemplate,
   CertificateTemplateApiError,
 } from '../../services/certificateTemplatesApi';
+import CertificateLogoUpload from './CertificateLogoUpload';
 import {
-  listCertificates, issueCertificate, revokeCertificate, reissueCertificate,
+  listCertificates, issueCertificate, revokeCertificate, reissueCertificate, setCertificateExpiry,
   downloadCertificatePdf, triggerPdfDownload,
   CertificateApiError,
 } from '../../services/certificatesApi';
 import { listCourses } from '../../services/coursesApi';
 import { getUsers } from '../../api/users';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
-import type { CertificateTemplate, CertificateLayout, Certificate } from '../../types/certificates';
+import type { CertificateTemplate, CertificateLayout, Certificate, CertificateListFilter } from '../../types/certificates';
 import type { CourseListRow } from '../../types/courses';
 import type { User } from '../../types/users';
 
@@ -88,6 +89,7 @@ const DEFAULT_LAYOUT: CertificateLayout = {
 const STATUS_BADGE: Record<Certificate['status'], string> = {
   active:  'tw:bg-green-50 tw:text-green-700',
   revoked: 'tw:bg-red-50 tw:text-red-600',
+  expired: 'tw:bg-amber-50 tw:text-amber-700',
 };
 
 // ── Layout editor (shared by create + edit template forms) ─────────────────────
@@ -121,9 +123,14 @@ function ColorField({ label, value, onChange }: ColorFieldProps) {
   );
 }
 
-interface LayoutEditorProps { value: CertificateLayout; onChange: (next: CertificateLayout) => void }
+interface LayoutEditorProps {
+  value: CertificateLayout;
+  onChange: (next: CertificateLayout) => void;
+  /** undefined until the template has been saved once (create mode) */
+  templateId: string | undefined;
+}
 
-function LayoutEditor({ value, onChange }: LayoutEditorProps) {
+function LayoutEditor({ value, onChange, templateId }: LayoutEditorProps) {
   const bodyRef = useRef<HTMLTextAreaElement>(null);
 
   function insertChip(token: string) {
@@ -192,6 +199,15 @@ function LayoutEditor({ value, onChange }: LayoutEditorProps) {
         <ColorField label="Accent color"  value={value.accentColor}  onChange={(v) => onChange({ ...value, accentColor: v })} />
       </div>
 
+      <div className="tw:flex tw:flex-col tw:gap-1.5">
+        <label className="tw:text-[12px] tw:font-semibold tw:text-slate-700">Logo (optional)</label>
+        <CertificateLogoUpload
+          templateId={templateId}
+          initialUrl={value.logoUrl}
+          onChange={(url) => onChange({ ...value, logoUrl: url })}
+        />
+      </div>
+
       <div className="tw:flex tw:gap-4">
         <div className="tw:flex tw:flex-1 tw:flex-col tw:gap-1.5">
           <label className="tw:text-[12px] tw:font-semibold tw:text-slate-700">Signature name (optional)</label>
@@ -224,13 +240,14 @@ function LayoutEditor({ value, onChange }: LayoutEditorProps) {
 
 interface TemplateFormProps {
   mode:          'create' | 'edit';
+  templateId:    string | undefined; // undefined in create mode until first save
   initialName:   string;
   initialLayout: CertificateLayout;
   onSave:        (name: string, layout: CertificateLayout) => Promise<void>;
   onBack:        () => void;
 }
 
-function TemplateForm({ mode, initialName, initialLayout, onSave, onBack }: TemplateFormProps) {
+function TemplateForm({ mode, templateId, initialName, initialLayout, onSave, onBack }: TemplateFormProps) {
   const [name,   setName]   = useState(initialName);
   const [layout, setLayout] = useState<CertificateLayout>(initialLayout);
   const [saving, setSaving] = useState(false);
@@ -309,7 +326,7 @@ function TemplateForm({ mode, initialName, initialLayout, onSave, onBack }: Temp
           />
         </div>
 
-        <LayoutEditor value={layout} onChange={setLayout} />
+        <LayoutEditor value={layout} onChange={setLayout} templateId={templateId} />
 
         <div className="tw:flex tw:items-center tw:justify-end tw:gap-2 tw:border-t tw:border-slate-100 tw:pt-4">
           <button type="button" onClick={onBack} disabled={saving}
@@ -392,6 +409,7 @@ function TemplatesSection({ showToast }: { showToast: (type: 'success' | 'error'
     return (
       <TemplateForm
         mode="create"
+        templateId={undefined}
         initialName=""
         initialLayout={DEFAULT_LAYOUT}
         onSave={handleCreate}
@@ -405,6 +423,7 @@ function TemplatesSection({ showToast }: { showToast: (type: 'success' | 'error'
     return (
       <TemplateForm
         mode="edit"
+        templateId={t.id}
         initialName={t.name}
         initialLayout={t.layout}
         onSave={(name, layout) => handleEdit(t, name, layout)}
@@ -418,7 +437,7 @@ function TemplatesSection({ showToast }: { showToast: (type: 'success' | 'error'
       <div className="tw:flex tw:items-center tw:justify-between">
         <h3 className="tw:m-0 tw:text-[15px] tw:font-semibold tw:text-slate-900">Certificate Templates</h3>
         <button type="button" onClick={() => setView({ kind: 'create' })}
-          aria-label="Create certificate template"
+          aria-label="Create Template"
           className="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700">
           <Plus className="tw:h-4 tw:w-4" strokeWidth={2.5} /> Create Template
         </button>
@@ -640,6 +659,56 @@ function IssueDialog({ courses, users, templates, onIssued, onClose, onGoToCours
   );
 }
 
+// ── Expiry dialog ─────────────────────────────────────────────────────────────
+
+function ExpiryDialog({ cert, onSaved, onClose, showToast }: {
+  cert: Certificate;
+  onSaved: (updated: Certificate) => void;
+  onClose: () => void;
+  showToast: (type: 'success' | 'error', message: string) => void;
+}) {
+  const [date, setDate] = useState(cert.expiresAt ? cert.expiresAt.slice(0, 10) : '');
+  const [saving, setSaving] = useState(false);
+
+  async function handleSave() {
+    setSaving(true);
+    try {
+      const updated = await setCertificateExpiry(cert.id, date ? new Date(date).toISOString() : null);
+      showToast('success', date ? 'Expiry date set.' : 'Expiry date cleared.');
+      onSaved(updated);
+    } catch (err) {
+      showToast('error', err instanceof Error ? err.message : 'Failed to update expiry.');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <div aria-label="modal backdrop" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={onClose} />
+      <div role="dialog" aria-modal="true" aria-label="Set certificate expiry"
+        className="tw:relative tw:w-full tw:max-w-sm tw:rounded-xl tw:bg-white tw:shadow-2xl tw:p-5 tw:flex tw:flex-col tw:gap-4">
+        <h3 className="tw:m-0 tw:text-[15px] tw:font-semibold tw:text-slate-900">Set Expiry Date</h3>
+        <p className="tw:m-0 tw:text-[12.5px] tw:text-slate-500">
+          {cert.studentName ?? 'This certificate'} — leave blank for no expiry.
+        </p>
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} aria-label="Expiry date"
+          className="tw:w-full tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400" />
+        <div className="tw:flex tw:justify-end tw:gap-2">
+          <button type="button" onClick={onClose} disabled={saving}
+            className="tw:rounded-lg tw:border tw:border-slate-200 tw:px-4 tw:py-2 tw:text-[13px] tw:font-medium tw:text-slate-600 tw:hover:bg-slate-50 tw:disabled:opacity-40">
+            Cancel
+          </button>
+          <button type="button" onClick={handleSave} disabled={saving}
+            className="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-40">
+            {saving ? 'Saving…' : 'Save'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Issued certificates section ─────────────────────────────────────────────────
 
 function IssuedCertificatesSection({
@@ -660,12 +729,13 @@ function IssuedCertificatesSection({
 
   const [courseFilter, setCourseFilter] = useState('');
   const [userFilter,   setUserFilter]   = useState('');
-  const [statusFilter, setStatusFilter] = useState<'' | 'active' | 'revoked'>('');
+  const [statusFilter, setStatusFilter] = useState<'' | CertificateListFilter>('');
   const [offset, setOffset] = useState(0);
   const limit = 20;
 
   const [showIssue, setShowIssue] = useState(false);
   const [busyId,    setBusyId]    = useState<string | null>(null);
+  const [expiryCert, setExpiryCert] = useState<Certificate | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -695,7 +765,7 @@ function IssuedCertificatesSection({
     listTemplates().then(setTemplates).catch(() => {});
   }, []);
 
-  function handleFilterChange(next: { courseId?: string; userId?: string; status?: '' | 'active' | 'revoked' }) {
+  function handleFilterChange(next: { courseId?: string; userId?: string; status?: '' | CertificateListFilter }) {
     if (next.courseId !== undefined) setCourseFilter(next.courseId);
     if (next.userId   !== undefined) setUserFilter(next.userId);
     if (next.status   !== undefined) setStatusFilter(next.status);
@@ -769,7 +839,7 @@ function IssuedCertificatesSection({
       <div className="tw:flex tw:items-center tw:justify-between">
         <h3 className="tw:m-0 tw:text-[15px] tw:font-semibold tw:text-slate-900">Issued Certificates</h3>
         <button type="button" onClick={() => setShowIssue(true)}
-          aria-label="Issue certificate"
+          aria-label="Issue Certificate"
           className="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700">
           <Award className="tw:h-4 tw:w-4" strokeWidth={2.5} /> Issue Certificate
         </button>
@@ -789,11 +859,13 @@ function IssuedCertificatesSection({
           <option value="">All users</option>
           {users.map((u) => <option key={u.id} value={u.id}>{u.fullName}</option>)}
         </select>
-        <select value={statusFilter} onChange={(e) => handleFilterChange({ status: e.target.value as '' | 'active' | 'revoked' })}
+        <select value={statusFilter} onChange={(e) => handleFilterChange({ status: e.target.value as '' | CertificateListFilter })}
           aria-label="Filter by status"
           className="tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-1.5 tw:text-[12px] tw:text-slate-700 tw:outline-none focus:tw:border-blue-400">
           <option value="">All statuses</option>
           <option value="active">Active</option>
+          <option value="expiring_soon">Expiring soon</option>
+          <option value="expired">Expired</option>
           <option value="revoked">Revoked</option>
         </select>
       </div>
@@ -821,6 +893,7 @@ function IssuedCertificatesSection({
                 <th className="tw:px-4 tw:py-3 tw:text-left tw:text-[11px] tw:font-semibold tw:uppercase tw:tracking-wide tw:text-slate-500">Template</th>
                 <th className="tw:px-4 tw:py-3 tw:text-left tw:text-[11px] tw:font-semibold tw:uppercase tw:tracking-wide tw:text-slate-500">Status</th>
                 <th className="tw:px-4 tw:py-3 tw:text-left tw:text-[11px] tw:font-semibold tw:uppercase tw:tracking-wide tw:text-slate-500">Issued</th>
+                <th className="tw:px-4 tw:py-3 tw:text-left tw:text-[11px] tw:font-semibold tw:uppercase tw:tracking-wide tw:text-slate-500">Expires</th>
                 <th className="tw:px-4 tw:py-3" />
               </tr>
             </thead>
@@ -836,12 +909,18 @@ function IssuedCertificatesSection({
                     </span>
                   </td>
                   <td className="tw:px-4 tw:py-3 tw:text-[12px] tw:text-slate-400">{new Date(c.issuedAt).toLocaleDateString()}</td>
+                  <td className="tw:px-4 tw:py-3 tw:text-[12px] tw:text-slate-400">{c.expiresAt ? new Date(c.expiresAt).toLocaleDateString() : '—'}</td>
                   <td className="tw:px-4 tw:py-3">
                     <div className="tw:flex tw:items-center tw:justify-end tw:gap-1 tw:text-slate-400">
                       <button type="button" onClick={() => handleDownload(c)} disabled={busyId === c.id}
                         aria-label={`Download PDF for ${c.studentName ?? 'certificate'}`} title="Download PDF"
                         className="tw:rounded tw:p-1 tw:hover:bg-slate-100 tw:hover:text-blue-600 tw:disabled:opacity-40">
                         <Download className="tw:h-4 tw:w-4" strokeWidth={2} />
+                      </button>
+                      <button type="button" onClick={() => setExpiryCert(c)} disabled={busyId === c.id}
+                        aria-label={`Set expiry for ${c.studentName ?? 'this student'}`} title="Set Expiry"
+                        className="tw:rounded tw:p-1 tw:hover:bg-slate-100 tw:hover:text-blue-600 tw:disabled:opacity-40">
+                        <CalendarClock className="tw:h-4 tw:w-4" strokeWidth={2} />
                       </button>
                       <button type="button" onClick={() => handleReissue(c)} disabled={busyId === c.id}
                         aria-label={`Reissue certificate for ${c.studentName ?? 'this student'}`} title="Reissue"
@@ -889,6 +968,18 @@ function IssuedCertificatesSection({
           onIssued={handleIssued}
           onClose={() => setShowIssue(false)}
           onGoToCourseSettings={onGoToCourseSettings}
+        />
+      )}
+
+      {expiryCert && (
+        <ExpiryDialog
+          cert={expiryCert}
+          showToast={showToast}
+          onClose={() => setExpiryCert(null)}
+          onSaved={(updated) => {
+            setCerts((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
+            setExpiryCert(null);
+          }}
         />
       )}
     </div>

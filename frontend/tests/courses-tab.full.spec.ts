@@ -251,17 +251,27 @@ test('Guide "Create New Course" button opens the create form on the Courses tab'
   // exact:true avoids strict-mode collision with the guide panel's h3 "Learning Management Guide".
   await expect(page.getByRole('heading', { name: 'Learning Management', exact: true })).toBeVisible({ timeout: 15000 })
 
-  // The guide renders in the Overview sidebar — click the wired button.
-  const guideBtn = page.getByRole('button', { name: 'Create New Course', exact: true })
-  await expect(guideBtn).toBeVisible({ timeout: 10000 })
+  // The guide renders in the Overview sidebar — click the wired button. Not
+  // exact: true — the button has no aria-label (LmGuide.tsx), so its real
+  // accessible name is the full concatenated text "Create New Course Build a
+  // new course from scratch" (title + description divs), which an exact
+  // match against just the title can never equal. No other guide item's text
+  // contains this substring, so the default substring match stays unambiguous.
+  const guideBtn = page.getByRole('button', { name: 'Create New Course' })
+  await expect(guideBtn).toBeVisible({ timeout: 15000 })
   await guideBtn.click()
 
   // Should switch to the Courses tab and immediately open the create form.
+  // This button goes through a cross-component signal (setOpenCreate +
+  // setTab, consumed by a useEffect in the parent once CoursesTab mounts)
+  // rather than a direct local state set, so it's inherently a couple of
+  // render cycles slower than the tab's own "Create Course" button —
+  // timeout is generous accordingly, not because the outcome is optional.
   await expect(page).toHaveURL(/[?&]tab=courses/)
   await expect(
     page.getByRole('heading', { name: 'Create Course' }),
     'Create Course heading must appear after clicking guide button',
-  ).toBeVisible({ timeout: 10000 })
+  ).toBeVisible({ timeout: 15000 })
 })
 
 test('Overview header "Create Course" button opens the create form on the Courses tab', async ({ page }) => {
@@ -384,8 +394,12 @@ test('View modal: backdrop click closes', async ({ page }) => {
   await page.locator('table tbody tr').first().getByRole('button', { name: /^View /i }).click()
   await expect(page.getByRole('dialog')).toBeVisible({ timeout: 5000 })
 
-  // Click the backdrop element (behind the panel)
-  await page.locator('[aria-label="modal backdrop"]').click()
+  // Click the backdrop element (behind the panel) — the backdrop is a
+  // full-viewport `position: absolute; inset: 0` div (CourseQuickViewModal.tsx),
+  // and Playwright's default click targets its bounding-box CENTER, which is
+  // exactly where the centered dialog panel sits on top of it. Click an
+  // offset corner instead, clear of the panel.
+  await page.locator('[aria-label="modal backdrop"]').click({ position: { x: 10, y: 10 } })
   await expect(page.getByRole('dialog')).not.toBeVisible()
 })
 
@@ -408,6 +422,8 @@ test('View modal: 404 response shows error message and Retry', async ({ page }) 
 
 // R1: Restore — archive a course then restore it, confirm it moves Draft → Archived → Draft.
 test('Restore: archived course moves to Draft tab after restore', async ({ page, request }) => {
+  // localStorage is inaccessible before the first navigation (about:blank origin).
+  await page.goto('/dashboard')
   await ensureToken(page)
   const H = { Authorization: `Bearer ${savedToken}` }
 
@@ -441,17 +457,36 @@ test('Restore: archived course moves to Draft tab after restore', async ({ page,
 
   // Our test course must be visible
   const courseRow = page.getByRole('row').filter({ hasText: `RESTORE SMOKE ${ts}` })
-  await expect(courseRow).toBeVisible({ timeout: 5000 })
+  await expect(courseRow).toBeVisible({ timeout: 10000 })
 
   // Accept the restore confirm dialog, watch the POST /restore response
   page.on('dialog', (d) => d.accept())
-  const restoreRespPromise = page.waitForResponse(
-    (r) => r.url().includes(`/courses/${courseId}/restore`) && r.ok(),
-    { timeout: 10000 },
-  )
 
-  await courseRow.getByRole('button', { name: /Restore/i }).click()
-  await restoreRespPromise
+  // ^Restore /i — the fixture course is itself titled "RESTORE SMOKE ...",
+  // so an unanchored /Restore/i also matches the row's "View RESTORE SMOKE…"
+  // and "Edit RESTORE SMOKE…" buttons (title text, not the action).
+  //
+  // Retried as a whole unit (re-querying the row fresh each attempt), not
+  // just relying on a single click's own actionability retry — under
+  // full-suite load this row can get detached and re-inserted by a table
+  // re-render right as the click lands, and re-resolving from a brand new
+  // `courseRow` query (rather than reusing the same locator) gives each
+  // attempt a genuinely fresh element rather than repeatedly racing the
+  // same in-flight re-render.
+  let restoreResp: Awaited<ReturnType<typeof page.waitForResponse>> | null = null
+  for (let attempt = 1; attempt <= 3 && !restoreResp; attempt++) {
+    try {
+      const respPromise = page.waitForResponse(
+        (r) => r.url().includes(`/courses/${courseId}/restore`) && r.ok(),
+        { timeout: 8000 },
+      )
+      await page.getByRole('row').filter({ hasText: `RESTORE SMOKE ${ts}` })
+        .getByRole('button', { name: /^Restore /i }).click({ timeout: 8000 })
+      restoreResp = await respPromise
+    } catch (err) {
+      if (attempt === 3) throw err
+    }
+  }
 
   // Success toast
   await expect(page.getByText(/restored/i)).toBeVisible({ timeout: 10000 })

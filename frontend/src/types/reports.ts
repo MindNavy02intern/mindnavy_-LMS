@@ -77,14 +77,32 @@ export interface InactiveUser {
   lastActivityAt: string | null;
 }
 
+export interface SlowLearner {
+  id:                string;
+  userId:            string | null;
+  name:              string | null;
+  courseTitle:       string | null;
+  progress:          number;
+  daysSinceEnrolled: number;
+}
+
 export interface LearnerAnalytics {
   activityTrend:       { labels: string[]; activeUsers: number[] };
   progressDistribution: { excellent: number; good: number; average: number; poor: number };
   completionRate:      { value: number; trend: number[] };
   dropoutRisk:         { high: RiskUser[]; medium: RiskUser[]; low: RiskUser[] };
   retentionRate:       Metric;
+  // Raw count backing completionRate.value — "completed courses", not
+  // "completed lessons" (no per-lesson tracking model exists in this schema).
+  completedEnrollments: number;
   topPerformers:       LearnerPerformer[];
   inactiveUsers:       InactiveUser[];
+  // avg days from enrollment to completion, over completions in this window.
+  learningSpeedDays:   Metric;
+  // still-in-progress enrollments, started 30+ days ago, progress < 20%.
+  slowLearners:        SlowLearner[];
+  // topPerformers threshold-filtered to avgProgress > 80 (same data, no new query).
+  highPerformers:      LearnerPerformer[];
 }
 
 // ── 3. Instructor Analytics ──────────────────────────────────────────────
@@ -178,12 +196,15 @@ export interface CertificateRow {
   userName:         string | null;
   issuedAt:         string;
   revoked:          boolean;
+  expiresAt:        string | null;
+  expired:          boolean;
   verificationCode: string | null;
 }
 
 export interface CertificateReports {
   totalIssued:          Metric;
   expired:              Metric;
+  expiringSoon:         Metric;
   revoked:              Metric;
   verificationRequests: Metric;
   issuedTrend:          TrendSeries;
@@ -312,4 +333,56 @@ export interface ScheduledReport {
 export interface ScheduledReportsList {
   reports:    ScheduledReport[];
   pagination: Pagination;
+}
+
+// ── Saved Reports (Custom Reports builder) ────────────────────────────────
+// dataSource reuses the same 7 sources as ExportType above (uppercased for
+// storage/response — matches GET /reports/export's `type` values 1:1, see
+// savedReports.service.js's header comment).
+
+export type SavedReportDataSource = 'LEARNERS' | 'INSTRUCTORS' | 'COURSES' | 'CERTIFICATES' | 'ASSESSMENTS' | 'ATTENDANCE' | 'AUDIT';
+export const SAVED_REPORT_DATA_SOURCES: SavedReportDataSource[] = ['LEARNERS', 'INSTRUCTORS', 'COURSES', 'CERTIFICATES', 'ASSESSMENTS', 'ATTENDANCE', 'AUDIT'];
+
+export type SavedReportVisualization = 'TABLE' | 'LINE_CHART' | 'BAR_CHART' | 'PIE_CHART' | 'KPI_CARDS';
+export const SAVED_REPORT_VISUALIZATIONS: SavedReportVisualization[] = ['TABLE', 'LINE_CHART', 'BAR_CHART', 'PIE_CHART', 'KPI_CARDS'];
+
+export interface SavedReportFilters {
+  dateRange?: 'week' | 'month' | 'quarter' | 'custom';
+  dateFrom?:  string;
+  dateTo?:    string;
+}
+
+export interface SavedReport {
+  id:              string;
+  name:            string;
+  description:     string | null;
+  dataSource:      SavedReportDataSource;
+  selectedColumns: string[];
+  filters:         SavedReportFilters | null;
+  visualization:   SavedReportVisualization;
+  schedule:        string | null;
+  lastRunAt:       string | null;
+  createdById:     string | null;
+  isPublic:        boolean;
+  createdAt:       string;
+  updatedAt:       string;
+}
+
+export interface SavedReportInput {
+  name:             string;
+  description?:     string | null;
+  dataSource:       SavedReportDataSource;
+  selectedColumns?: string[];
+  filters?:         SavedReportFilters | null;
+  visualization?:   SavedReportVisualization;
+  schedule?:        string | null;
+  isPublic?:        boolean;
+}
+
+export interface ReportColumn { key: string; label: string }
+
+export interface SavedReportRunResult {
+  columns:     ReportColumn[];
+  rows:        Record<string, unknown>[];
+  generatedAt: string;
 }

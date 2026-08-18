@@ -1,11 +1,9 @@
 // Learners table. Mirrors InstructorsTable.tsx's structure (fetch/search/
 // sort/pagination/row-menu patterns) with the column set + actions Part 2
 // literally specifies — no optional-columns toggle, no top-performer badge
-// (not asked for here). Enroll / Assign Path are disabled with a tooltip:
-// their endpoints (POST /learners/:id/enrollments, learning-path variant)
-// don't exist until Part 3 — same "don't wire UI to endpoints that don't
-// exist" rule the task states explicitly for Part 4's Quick Actions grid,
-// applied here too.
+// (not asked for here). Enroll / Assign Path reuse EnrollLearnerModal (same
+// component LearnerSidePanel's Quick Actions use) against the real
+// POST /learners/:id/enrollments endpoint.
 
 import {
   forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState,
@@ -20,6 +18,7 @@ import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import SuspendLearnerDialog from './SuspendLearnerDialog';
 import ResetLearnerPasswordDialog from './ResetLearnerPasswordDialog';
 import SendMessageModal from '../users/SendMessageModal';
+import EnrollLearnerModal from './EnrollLearnerModal';
 
 export type ServerTab = 'all' | 'active' | 'inactive' | 'suspended' | 'at-risk' | 'completed' | 'pending-verification' | 'graduated';
 export type SortKey = 'recent' | 'name' | 'courses' | 'progress';
@@ -129,6 +128,7 @@ const LearnersTable = forwardRef<LearnersTableHandle, Props>(function LearnersTa
   const [suspendTarget, setSuspendTarget] = useState<Learner | null>(null);
   const [resetPasswordTarget, setResetPasswordTarget] = useState<Learner | null>(null);
   const [messageTarget, setMessageTarget] = useState<Learner | null>(null);
+  const [enrollTarget, setEnrollTarget] = useState<{ learner: Learner; mode: 'course' | 'path' } | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -403,8 +403,8 @@ const LearnersTable = forwardRef<LearnersTableHandle, Props>(function LearnersTa
                         </button>
                         {openMenuId === row.id && (
                           <div style={{ position: 'absolute', right: 0, top: 'calc(100% + 4px)', zIndex: 40, width: 180, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, boxShadow: '0 10px 30px rgba(0,0,0,0.12)', overflow: 'hidden' }}>
-                            <MenuItem label="Enroll" disabled title="Coming in Part 3 — POST /learners/:id/enrollments" />
-                            <MenuItem label="Assign Path" disabled title="Coming in Part 3 — learning-path enrollment" />
+                            <MenuItem label="Enroll" onClick={() => { setOpenMenuId(null); setEnrollTarget({ learner: row, mode: 'course' }); }} />
+                            <MenuItem label="Assign Path" onClick={() => { setOpenMenuId(null); setEnrollTarget({ learner: row, mode: 'path' }); }} />
                             <MenuItem label="Message" onClick={() => { setOpenMenuId(null); setMessageTarget(row); }} />
                             <MenuItem label="Reset Password" onClick={() => { setOpenMenuId(null); setResetPasswordTarget(row); }} />
                             {row.status === 'suspended' ? (
@@ -467,6 +467,17 @@ const LearnersTable = forwardRef<LearnersTableHandle, Props>(function LearnersTa
           userName={messageTarget.fullName}
           onClose={() => setMessageTarget(null)}
           onSuccess={() => setMessageTarget(null)}
+          showToast={showToast}
+        />
+      )}
+
+      {enrollTarget && (
+        <EnrollLearnerModal
+          mode={enrollTarget.mode}
+          learnerId={enrollTarget.learner.id}
+          fullName={enrollTarget.learner.fullName}
+          onClose={() => setEnrollTarget(null)}
+          onSuccess={() => { const id = enrollTarget.learner.id; setEnrollTarget(null); fetchList(); onMutated?.(id); }}
           showToast={showToast}
         />
       )}

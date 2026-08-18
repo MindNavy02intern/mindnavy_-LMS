@@ -99,12 +99,15 @@ async function requireAdminAuth(req, res, next) {
     }
 
     const admin = {
-      id:       session.admin.id,
-      email:    session.admin.email,
-      fullName: session.admin.fullName,
-      name:     session.admin.fullName,
-      role:     session.admin.role,
-      status:   session.admin.status,
+      id:         session.admin.id,
+      email:      session.admin.email,
+      fullName:   session.admin.fullName,
+      name:       session.admin.fullName,
+      phone:      session.admin.phone,
+      bio:        session.admin.bio,
+      role:       session.admin.role,
+      status:     session.admin.status,
+      mfaEnabled: session.admin.mfaEnabled,
     };
 
     const adminSession = {

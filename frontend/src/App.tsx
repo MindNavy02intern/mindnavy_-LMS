@@ -17,6 +17,7 @@ const ProfilePage                    = lazy(() => import('./pages/ProfilePage'))
 const LearningManagementPage         = lazy(() => import('./pages/LearningManagementPage'));
 const PublicVerifyPage               = lazy(() => import('./pages/PublicVerifyPage'));
 const InstructorsPage                = lazy(() => import('./pages/Instructors/InstructorsPage'));
+const InstructorProfilePage          = lazy(() => import('./pages/Instructors/InstructorProfilePage'));
 const LearnersPage                   = lazy(() => import('./pages/Learners/LearnersPage'));
 const CompetenciesPage               = lazy(() => import('./pages/Competencies/CompetenciesPage'));
 const ReportsPage                    = lazy(() => import('./pages/Reports/ReportsPage'));
@@ -80,9 +81,9 @@ export default function App() {
 
         {/*
          * Device verification route — shown when the backend detects an unrecognised device.
-         * Public so the user can reach it right after Supabase login but before full session.
-         * TODO: BACKEND — redirect here from LoginPage when GET /api/devices/check returns
-         *   { requiresVerification: true } instead of going straight to /dashboard.
+         * Public so the user can reach it right after login but before full session.
+         * LoginPage.tsx redirects here when GET /api/admin/devices/check returns
+         * { requiresVerification: true } instead of going straight to /dashboard.
          */}
         <Route path="/verify-device" element={<VerifyDevicePage />} />
 
@@ -150,6 +151,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <InstructorsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/instructors/:id/profile"
+          element={
+            <ProtectedRoute>
+              <InstructorProfilePage />
             </ProtectedRoute>
           }
         />

@@ -595,12 +595,6 @@ const INSIGHT_STYLE: Record<string, { bg: string; color: string }> = {
   critical: { bg: '#fef2f2', color: '#dc2626' },
 };
 
-const CS_BTN: React.CSSProperties = {
-  fontSize: '0.6rem', padding: '2px 7px', borderRadius: 4,
-  border: '1px solid #e2e8f0', background: '#f8fafc', color: '#94a3b8',
-  cursor: 'not-allowed',
-};
-
 // ── Pending Approvals widget ───────────────────────────────────────────────────
 
 function PendingApprovalsCard({ data, loading }: { data: PendingApprovals | undefined; loading: boolean }) {
@@ -694,34 +688,33 @@ function LiveSessionsCard({ data, loading }: { data: LiveSessions | undefined; l
 // ── Tasks & Reminders widget ───────────────────────────────────────────────────
 
 function TasksRemindersCard({ data, loading }: { data: TaskItem[]; loading: boolean }) {
-  const pending = data.filter(t => t.status === 'pending').length;
+  const navigate = useNavigate();
+  const totalPending = data.reduce((s, t) => s + t.count, 0);
   return (
     <div className="mn-db-card">
       <div className="mn-db-card-header">
         <div className="mn-db-card-title">Tasks & Reminders</div>
-        {data.length > 0 && <span className="mn-db-pill">{pending} pending</span>}
+        {data.length > 0 && <span className="mn-db-pill">{totalPending} pending</span>}
       </div>
-      {loading ? <AnalyticsSpin /> : data.length === 0 ? <ComingSoonBanner text="Task management is coming soon" /> : (
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No pending tasks. You're all caught up." /> : (
         <div>
           {data.map(t => (
-            <div key={t.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, padding: '5px 0', borderBottom: '1px solid #f8fafc', opacity: t.status === 'completed' ? 0.5 : 1 }}>
-              <div style={{
-                width: 13, height: 13, borderRadius: '50%', flexShrink: 0, marginTop: 2,
-                border: `2px solid ${t.status === 'completed' ? '#16a34a' : '#e2e8f0'}`,
-                background: t.status === 'completed' ? '#16a34a' : 'transparent',
-              }} />
+            <button
+              key={t.id}
+              onClick={() => { if (t.link) navigate(t.link); }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 7, padding: '6px 0', borderBottom: '1px solid #f8fafc',
+                width: '100%', background: 'none', border: 'none', borderBottomWidth: 1, cursor: t.link ? 'pointer' : 'default', textAlign: 'left',
+              }}
+            >
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: '0.7rem', fontWeight: t.status === 'pending' ? 600 : 400, color: '#0f172a', textDecoration: t.status === 'completed' ? 'line-through' : 'none' }}>
-                  {t.title}
-                </div>
-                {t.dueAt && t.status === 'pending' && (
-                  <div style={{ fontSize: '0.6rem', color: '#f59e0b', marginTop: 1 }}>Due {formatRelative(t.dueAt)}</div>
-                )}
+                <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#0f172a' }}>{t.title}</div>
               </div>
+              <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#0f172a', flexShrink: 0 }}>{t.count}</span>
               <span style={{ fontSize: '0.6rem', fontWeight: 600, padding: '2px 5px', borderRadius: 10, flexShrink: 0, ...(PRIORITY_STYLE[t.priority] ?? {}) }}>
                 {t.priority}
               </span>
-            </div>
+            </button>
           ))}
         </div>
       )}
@@ -732,13 +725,14 @@ function TasksRemindersCard({ data, loading }: { data: TaskItem[]; loading: bool
 // ── Recent Transactions widget ─────────────────────────────────────────────────
 
 function RecentTransactionsCard({ data, loading }: { data: TransactionItem[]; loading: boolean }) {
+  const navigate = useNavigate();
   return (
     <div className="mn-db-card">
       <div className="mn-db-card-header">
         <div className="mn-db-card-title">Recent Transactions</div>
-        <button style={CS_BTN} disabled title="Coming Soon">View All</button>
+        <button className="mn-db-view-all" onClick={() => navigate('/finance?tab=transactions')}>View All</button>
       </div>
-      {loading ? <AnalyticsSpin /> : data.length === 0 ? <ComingSoonBanner text="Coming in Finance module" /> : (
+      {loading ? <AnalyticsSpin /> : data.length === 0 ? <EmptyMsg msg="No transactions yet." /> : (
         <div>
           {data.map(t => (
             <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: '1px solid #f8fafc' }}>
@@ -799,24 +793,32 @@ function CalendarEventsCard({ data, loading }: { data: CalendarEventItem[]; load
 // ── Reports Snapshot widget ────────────────────────────────────────────────────
 
 function ReportsSnapshotCard({ data, loading }: { data: ReportsSnapshot | undefined; loading: boolean }) {
+  const navigate = useNavigate();
   return (
     <div className="mn-db-card">
       <div className="mn-db-card-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div className="mn-db-card-title">Reports Snapshot</div>
-          {data?.lastGeneratedAt && (
+          {data?.lastGeneratedAt ? (
             <span style={{ fontSize: '0.62rem', color: '#94a3b8' }}>last generated {formatRelative(data.lastGeneratedAt)}</span>
+          ) : (
+            <span style={{ fontSize: '0.62rem', color: '#94a3b8' }}>no scheduled report has run yet</span>
           )}
         </div>
-        <button style={CS_BTN} disabled title="Export — Coming Soon">Export</button>
+        <button
+          onClick={() => navigate('/reports-analytics?tab=export')}
+          style={{ fontSize: '0.6rem', padding: '2px 7px', borderRadius: 4, border: '1px solid #bfdbfe', background: '#eff6ff', color: '#2563eb', cursor: 'pointer' }}
+        >
+          Export
+        </button>
       </div>
-      {loading ? <AnalyticsSpin /> : !data || data.availableReports.length === 0 ? <ComingSoonBanner text="Reports module is coming soon" /> : (
+      {loading ? <AnalyticsSpin /> : !data || data.availableReports.length === 0 ? <EmptyMsg msg="No reports available." /> : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 8 }}>
           {data.availableReports.map(r => (
-            <button key={r.key} disabled title="Coming Soon"
-              style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 8, padding: '9px 10px', textAlign: 'left', cursor: 'not-allowed' }}>
+            <button key={r.key} onClick={() => navigate(r.path ?? '/reports-analytics')}
+              style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 8, padding: '9px 10px', textAlign: 'left', cursor: 'pointer' }}>
               <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#374151', marginBottom: 2 }}>{r.label}</div>
-              <div style={{ fontSize: '0.6rem', color: '#94a3b8' }}>Coming soon</div>
+              <div style={{ fontSize: '0.6rem', color: '#2563eb' }}>View report →</div>
             </button>
           ))}
         </div>
@@ -1201,7 +1203,14 @@ export default function DashboardPage() {
         {/* Notifications */}
         <div className="mn-db-card">
           <div className="mn-db-card-header">
-            <div className="mn-db-card-title">Notifications</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div className="mn-db-card-title">Notifications</div>
+              {(data?.unreadNotificationsCount ?? 0) > 0 && (
+                <span style={{ background: '#fee2e2', color: '#dc2626', fontSize: '0.65rem', fontWeight: 700, padding: '1px 6px', borderRadius: 10 }}>
+                  {data!.unreadNotificationsCount}
+                </span>
+              )}
+            </div>
             <button className="mn-db-view-all" onClick={() => window.dispatchEvent(new CustomEvent('openNotificationsPanel'))}>View All</button>
           </div>
           {loading ? (
@@ -1274,9 +1283,10 @@ export default function DashboardPage() {
             </span>
           )}
         </div>
-        {/* Export button — disabled until backend export endpoint is ready */}
-        <button disabled title="Export Dashboard — Coming Soon"
-          style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', fontSize: '0.72rem', fontWeight: 600, background: '#f8fafc', color: '#94a3b8', border: '1px solid #e2e8f0', borderRadius: 5, cursor: 'not-allowed' }}>
+        {/* No whole-dashboard export endpoint exists — routes to the real
+            Export Center instead of faking a dashboard-only export. */}
+        <button onClick={() => navigate('/reports-analytics?tab=export')} title="Open Export Center"
+          style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', fontSize: '0.72rem', fontWeight: 600, background: '#eff6ff', color: '#2563eb', border: '1px solid #bfdbfe', borderRadius: 5, cursor: 'pointer' }}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
           </svg>

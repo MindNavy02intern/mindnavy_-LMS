@@ -46,6 +46,11 @@ export default function FeatureTogglesTab({ settings, onSaved, showToast }: Prop
     try {
       const updated = await updateSystemSettings(form);
       invalidateFor(appQueryClient, 'featureToggle.set');
+      // Real refresh bridge (no TanStack Query cache is actually wired up
+      // anywhere in this app — invalidateFor() above is a no-op today, see
+      // its own header note) — FeatureFlagsContext listens for this same
+      // event every other stats panel already does.
+      window.dispatchEvent(new CustomEvent('analyticsUpdated'));
       onSaved(updated);
       showToast('success', 'Feature toggles saved.');
     } catch (err) {

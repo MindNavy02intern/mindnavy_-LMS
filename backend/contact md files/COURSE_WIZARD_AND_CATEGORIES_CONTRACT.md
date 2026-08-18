@@ -86,7 +86,10 @@ One call, no composition needed on your side:
   nested, ordered).
 - **404** course not found
 - Desktop/Mobile toggle is purely a container-width change on your side.
-- Quiz preview / video playback test: out of scope v1 (no quiz system yet).
+- Quiz preview / video playback test: still out of scope v1 — `getPreview()`
+  returns `{ course, sections }` only, no quiz data, regardless of the quiz
+  system itself shipping and being smoke-tested elsewhere (this endpoint
+  specifically was never extended to include it).
   Video lessons: render `lesson.content` as the player src.
 
 ---
@@ -129,7 +132,9 @@ Body: `{ reason: string }` — **required**, max 1000 chars. Only **Pending** co
 - **400** missing/too-long reason, or wrong state · **404** not found
 - The reason then shows on `GET /courses/:id` as `rejectionReason` until the
   course is resubmitted or approved. "Notify instructor" v1 = showing this
-  reason (there is no push-notification system).
+  reason — `rejectCourse()` itself never calls the notifications system
+  (NOTIFICATIONS_CONTRACT.md), even though that system now exists for other
+  flows; wiring a real COURSE_REJECTED notification is still a follow-up.
 
 Race safety: transitions are atomic server-side — if two admins act at once the
 loser gets **400** `"Course status changed in the meantime — refresh and try again."`

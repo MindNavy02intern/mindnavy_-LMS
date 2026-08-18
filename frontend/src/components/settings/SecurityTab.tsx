@@ -96,7 +96,7 @@ export default function SecurityTab({ settings, onSaved, showToast }: Props) {
           </Field>
         </FormGrid>
         <div style={{ marginTop: 16 }}>
-          <ToggleRow label={<>Multi-Factor Authentication <ComingSoonBadge /></>} description="Require a second factor at login." checked={false} onChange={() => {}} disabled disabledHint="Coming soon" />
+          <ToggleRow label={<>Org-Wide MFA Enforcement <ComingSoonBadge /></>} description="Require every admin to enroll in TOTP MFA. Individual admins can already enable it for their own account under Profile > Security." checked={false} onChange={() => {}} disabled disabledHint="Coming soon" />
         </div>
       </Card>
 

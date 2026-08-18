@@ -1,0 +1,367 @@
+
+Running 16 tests using 1 worker
+
+  ok  1 [setup] › tests\setup\auth.setup.ts:3:1 › authenticate (3.1s)
+  ok  2 [authenticated] › tests\course-builder.full.spec.ts:144:1 › Add section — title appears in the section list (9.4s)
+  x   3 [authenticated] › tests\course-builder.full.spec.ts:155:1 › Add text lesson — lesson appears under its section (7.6s)
+  x   4 [authenticated] › tests\course-builder.full.spec.ts:165:1 › Add valid video URL lesson — accepted and appears in list (6.8s)
+  x   5 [authenticated] › tests\course-builder.full.spec.ts:200:1 › Reject invalid video URL — shows inline error, no API call (6.7s)
+  x   6 [authenticated] › tests\course-builder.full.spec.ts:226:1 › Edit lesson prefill — form opens with existing values (6.2s)
+  x   7 [authenticated] › tests\course-builder.full.spec.ts:247:1 › Delete section confirm — dismiss keeps it, confirm removes it (4.4s)
+  ok  8 [authenticated] › tests\course-builder.full.spec.ts:276:1 › Reorder sends ONE bulk PATCH and replaces state from response (6.1s)
+  x   9 [authenticated] › tests\course-video-upload.full.spec.ts:189:1 › Edit mode TEXT→VIDEO_URL gates Upload File until type is saved, then unlocks (4.5s)
+  x  10 [authenticated] › tests\course-video-upload.full.spec.ts:261:1 › Create mode shows "save lesson first" — no upload available (9.5s)
+  x  11 [authenticated] › tests\course-video-upload.full.spec.ts:286:1 › Type rejection — non-video file blocked client-side, no sign request (4.9s)
+  x  12 [authenticated] › tests\course-video-upload.full.spec.ts:308:1 › Size rejection — file > 50 MB blocked client-side, no sign request (4.4s)
+  x  13 [authenticated] › tests\course-video-upload.full.spec.ts:332:1 › Successful video upload — sign → PUT → confirm → done state visible (4.4s)
+  x  14 [authenticated] › tests\course-video-upload.full.spec.ts:353:1 › Progress bar renders during video transfer (5.1s)
+  x  15 [authenticated] › tests\course-video-upload.full.spec.ts:392:1 › Cancel mid-upload resets UI to drop zone (8.5s)
+  x  16 [authenticated] › tests\course-video-upload.full.spec.ts:427:1 › Save Lesson button is disabled while video upload is in progress (10.8s)
+
+
+  1) [authenticated] › tests\course-builder.full.spec.ts:155:1 › Add text lesson — lesson appears under its section 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Add Lesson' }) resolved to 2 elements:
+        1) <button type="button" aria-label="Add lesson to Sec for text 1786797861335" class="tw:mt-1 tw:mb-1 tw:flex tw:items-center tw:gap-1 tw:rounded-md tw:px-2 tw:py-1.5 tw:text-[12px] tw:font-medium tw:text-blue-600 tw:hover:bg-blue-50 tw:disabled:opacity-40">…</button> aka getByRole('button', { name: 'Add lesson to Sec for text' })
+        2) <button type="button" class="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-50">Add Lesson</button> aka getByRole('button', { name: 'Add Lesson', exact: true })
+
+    Call log:
+      - waiting for getByRole('button', { name: 'Add Lesson' })
+
+
+      128 |       await page.getByLabel('Lesson title').fill(title)
+      129 |       if (content) await page.getByLabel('Lesson content').fill(content)
+    > 130 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+          |                                                              ^
+      131 |     })(),
+      132 |   ])
+      133 |   expect(lessonResp.ok(), 'POST /lessons must succeed').toBeTruthy()
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:130:62
+        at addTextLesson (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:122:24)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:160:3
+
+    Error Context: test-results\course-builder.full-Add-te-615fe-n-appears-under-its-section-authenticated\error-context.md
+
+    Error Context: test-results\course-builder.full-Add-te-615fe-n-appears-under-its-section-authenticated\error-context.md
+
+  2) [authenticated] › tests\course-builder.full.spec.ts:165:1 › Add valid video URL lesson — accepted and appears in list 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByLabel('Video URL')
+    Expected: visible
+    Error: strict mode violation: getByLabel('Video URL') resolved to 2 elements:
+        1) <button type="button" aria-label="Video URL type" class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700">…</button> aka getByRole('button', { name: 'Video URL type' })
+        2) <input value="" type="url" maxlength="2000" aria-label="Video URL" placeholder="https://www.youtube.com/watch?v=…" class="tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100 tw:border-slate-200 focus:tw:border-blue-400"/> aka getByRole('textbox', { name: 'Video URL' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 2000ms
+      - waiting for getByLabel('Video URL')
+
+
+      183 |       await page.getByLabel('Lesson title').fill(lessonTitle)
+      184 |       await page.getByRole('button', { name: 'Video URL' }).click()
+    > 185 |       await expect(page.getByLabel('Video URL')).toBeVisible({ timeout: 2000 })
+          |                                                  ^
+      186 |       await page.getByLabel('Video URL').fill('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+      187 |       await page.getByLabel('Duration in minutes').fill('15')
+      188 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:185:50
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:177:24
+
+    Error Context: test-results\course-builder.full-Add-va-8bff1-ccepted-and-appears-in-list-authenticated\error-context.md
+
+    Error Context: test-results\course-builder.full-Add-va-8bff1-ccepted-and-appears-in-list-authenticated\error-context.md
+
+  3) [authenticated] › tests\course-builder.full.spec.ts:200:1 › Reject invalid video URL — shows inline error, no API call 
+
+    Error: locator.fill: Error: strict mode violation: getByLabel('Video URL') resolved to 2 elements:
+        1) <button type="button" aria-label="Video URL type" class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700">…</button> aka getByRole('button', { name: 'Video URL type' })
+        2) <input value="" type="url" maxlength="2000" aria-label="Video URL" placeholder="https://www.youtube.com/watch?v=…" class="tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100 tw:border-slate-200 focus:tw:border-blue-400"/> aka getByRole('textbox', { name: 'Video URL' })
+
+    Call log:
+      - waiting for getByLabel('Video URL')
+
+
+      208 |   await page.getByLabel('Lesson title').fill('Bad URL Lesson')
+      209 |   await page.getByRole('button', { name: 'Video URL' }).click()
+    > 210 |   await page.getByLabel('Video URL').fill('not-a-valid-url')
+          |                                      ^
+      211 |
+      212 |   let lessonPostFired = false
+      213 |   page.on('request', req => {
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:210:38
+
+    Error Context: test-results\course-builder.full-Reject-b23e5-ws-inline-error-no-API-call-authenticated\error-context.md
+
+    Error Context: test-results\course-builder.full-Reject-b23e5-ws-inline-error-no-API-call-authenticated\error-context.md
+
+  4) [authenticated] › tests\course-builder.full.spec.ts:226:1 › Edit lesson prefill — form opens with existing values 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Add Lesson' }) resolved to 2 elements:
+        1) <button type="button" aria-label="Add lesson to Sec for edit 1786797887791" class="tw:mt-1 tw:mb-1 tw:flex tw:items-center tw:gap-1 tw:rounded-md tw:px-2 tw:py-1.5 tw:text-[12px] tw:font-medium tw:text-blue-600 tw:hover:bg-blue-50 tw:disabled:opacity-40">…</button> aka getByRole('button', { name: 'Add lesson to Sec for edit' })
+        2) <button type="button" class="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-50">Add Lesson</button> aka getByRole('button', { name: 'Add Lesson', exact: true })
+
+    Call log:
+      - waiting for getByRole('button', { name: 'Add Lesson' })
+
+
+      128 |       await page.getByLabel('Lesson title').fill(title)
+      129 |       if (content) await page.getByLabel('Lesson content').fill(content)
+    > 130 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+          |                                                              ^
+      131 |     })(),
+      132 |   ])
+      133 |   expect(lessonResp.ok(), 'POST /lessons must succeed').toBeTruthy()
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:130:62
+        at addTextLesson (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:122:24)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:231:3
+
+    Error Context: test-results\course-builder.full-Edit-l-c7412--opens-with-existing-values-authenticated\error-context.md
+
+    Error Context: test-results\course-builder.full-Edit-l-c7412--opens-with-existing-values-authenticated\error-context.md
+
+  5) [authenticated] › tests\course-builder.full.spec.ts:247:1 › Delete section confirm — dismiss keeps it, confirm removes it 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sec to delete 1786797893550')
+    Expected: visible
+    Error: strict mode violation: getByText('Sec to delete 1786797893550') resolved to 2 elements:
+        1) <span class="tw:flex-1 tw:text-[13px] tw:font-semibold tw:text-slate-900 tw:truncate">Sec to delete 1786797893550</span> aka getByText('Sec to delete 1786797893550', { exact: true })
+        2) <div>Section "Sec to delete 1786797893550" added.</div> aka getByText('Section "Sec to delete')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 3000ms
+      - waiting for getByText('Sec to delete 1786797893550')
+
+
+      257 |   page.once('dialog', dialog => dialog.dismiss())
+      258 |   await page.getByRole('button', { name: `Delete section ${secTitle}` }).click()
+    > 259 |   await expect(page.getByText(secTitle)).toBeVisible({ timeout: 3000 })
+          |                                          ^
+      260 |
+      261 |   // Accept: section removed
+      262 |   const [deleteResp] = await Promise.all([
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:259:42
+
+    Error Context: test-results\course-builder.full-Delete-b0959-keeps-it-confirm-removes-it-authenticated\error-context.md
+
+    Error Context: test-results\course-builder.full-Delete-b0959-keeps-it-confirm-removes-it-authenticated\error-context.md
+
+  6) [authenticated] › tests\course-video-upload.full.spec.ts:189:1 › Edit mode TEXT→VIDEO_URL gates Upload File until type is saved, then unlocks 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Add Lesson' }) resolved to 2 elements:
+        1) <button type="button" aria-label="Add lesson to Section 1786797905371" class="tw:mt-1 tw:mb-1 tw:flex tw:items-center tw:gap-1 tw:rounded-md tw:px-2 tw:py-1.5 tw:text-[12px] tw:font-medium tw:text-blue-600 tw:hover:bg-blue-50 tw:disabled:opacity-40">…</button> aka getByRole('button', { name: 'Add lesson to Section' })
+        2) <button type="button" class="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-50">Add Lesson</button> aka getByRole('button', { name: 'Add Lesson', exact: true })
+
+    Call log:
+      - waiting for getByRole('button', { name: 'Add Lesson' })
+
+
+      207 |       await page.getByLabel('Lesson title').fill(lessonTitle)
+      208 |       // Leave type as Text (default)
+    > 209 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+          |                                                              ^
+      210 |     })(),
+      211 |   ])
+      212 |   expect(postLesson.ok()).toBeTruthy()
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:209:62
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:201:24
+
+    Error Context: test-results\course-video-upload.full-E-6b9fd--type-is-saved-then-unlocks-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-E-6b9fd--type-is-saved-then-unlocks-authenticated\error-context.md
+
+  7) [authenticated] › tests\course-video-upload.full.spec.ts:261:1 › Create mode shows "save lesson first" — no upload available 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/Save lesson first/i)
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText(/Save lesson first/i)
+
+
+      281 |     'Create mode must show disabled video upload state',
+      282 |   ).toBeVisible({ timeout: 3000 })
+    > 283 |   await expect(page.getByText(/Save lesson first/i)).toBeVisible()
+          |                                                      ^
+      284 | })
+      285 |
+      286 | test('Type rejection — non-video file blocked client-side, no sign request', async ({ page }) => {
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:283:54
+
+    Error Context: test-results\course-video-upload.full-C-f1658-first-—-no-upload-available-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-C-f1658-first-—-no-upload-available-authenticated\error-context.md
+
+  8) [authenticated] › tests\course-video-upload.full.spec.ts:286:1 › Type rejection — non-video file blocked client-side, no sign request 
+
+    Error: locator.fill: Error: strict mode violation: getByLabel('Video URL') resolved to 2 elements:
+        1) <button type="button" aria-label="Video URL type" class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700">…</button> aka getByRole('button', { name: 'Video URL type' })
+        2) <input value="" type="url" maxlength="2000" aria-label="Video URL" placeholder="https://www.youtube.com/watch?v=…" class="tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100 tw:border-slate-200 focus:tw:border-blue-400"/> aka getByRole('textbox', { name: 'Video URL' })
+
+    Call log:
+      - waiting for getByLabel('Video URL')
+
+
+      149 |       await page.getByLabel('Lesson title').fill(lessonTitle)
+      150 |       await page.getByRole('button', { name: 'Video URL' }).click()
+    > 151 |       await page.getByLabel('Video URL').fill('https://example.com/placeholder.mp4')
+          |                                          ^
+      152 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+      153 |     })(),
+      154 |   ])
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:151:42
+        at gotoVideoLessonUploadTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:146:24)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:287:14
+
+    Error Context: test-results\course-video-upload.full-T-d7e7c-client-side-no-sign-request-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-T-d7e7c-client-side-no-sign-request-authenticated\error-context.md
+
+  9) [authenticated] › tests\course-video-upload.full.spec.ts:308:1 › Size rejection — file > 50 MB blocked client-side, no sign request 
+
+    Error: locator.fill: Error: strict mode violation: getByLabel('Video URL') resolved to 2 elements:
+        1) <button type="button" aria-label="Video URL type" class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700">…</button> aka getByRole('button', { name: 'Video URL type' })
+        2) <input value="" type="url" maxlength="2000" aria-label="Video URL" placeholder="https://www.youtube.com/watch?v=…" class="tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100 tw:border-slate-200 focus:tw:border-blue-400"/> aka getByRole('textbox', { name: 'Video URL' })
+
+    Call log:
+      - waiting for getByLabel('Video URL')
+
+
+      149 |       await page.getByLabel('Lesson title').fill(lessonTitle)
+      150 |       await page.getByRole('button', { name: 'Video URL' }).click()
+    > 151 |       await page.getByLabel('Video URL').fill('https://example.com/placeholder.mp4')
+          |                                          ^
+      152 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+      153 |     })(),
+      154 |   ])
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:151:42
+        at gotoVideoLessonUploadTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:146:24)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:309:14
+
+    Error Context: test-results\course-video-upload.full-S-08c82-client-side-no-sign-request-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-S-08c82-client-side-no-sign-request-authenticated\error-context.md
+
+  10) [authenticated] › tests\course-video-upload.full.spec.ts:332:1 › Successful video upload — sign → PUT → confirm → done state visible 
+
+    Error: locator.fill: Error: strict mode violation: getByLabel('Video URL') resolved to 2 elements:
+        1) <button type="button" aria-label="Video URL type" class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700">…</button> aka getByRole('button', { name: 'Video URL type' })
+        2) <input value="" type="url" maxlength="2000" aria-label="Video URL" placeholder="https://www.youtube.com/watch?v=…" class="tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100 tw:border-slate-200 focus:tw:border-blue-400"/> aka getByRole('textbox', { name: 'Video URL' })
+
+    Call log:
+      - waiting for getByLabel('Video URL')
+
+
+      149 |       await page.getByLabel('Lesson title').fill(lessonTitle)
+      150 |       await page.getByRole('button', { name: 'Video URL' }).click()
+    > 151 |       await page.getByLabel('Video URL').fill('https://example.com/placeholder.mp4')
+          |                                          ^
+      152 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+      153 |     })(),
+      154 |   ])
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:151:42
+        at gotoVideoLessonUploadTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:146:24)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:333:14
+
+    Error Context: test-results\course-video-upload.full-S-3c7c5-onfirm-→-done-state-visible-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-S-3c7c5-onfirm-→-done-state-visible-authenticated\error-context.md
+
+  11) [authenticated] › tests\course-video-upload.full.spec.ts:353:1 › Progress bar renders during video transfer 
+
+    Error: locator.fill: Error: strict mode violation: getByLabel('Video URL') resolved to 2 elements:
+        1) <button type="button" aria-label="Video URL type" class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700">…</button> aka getByRole('button', { name: 'Video URL type' })
+        2) <input value="" type="url" maxlength="2000" aria-label="Video URL" placeholder="https://www.youtube.com/watch?v=…" class="tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100 tw:border-slate-200 focus:tw:border-blue-400"/> aka getByRole('textbox', { name: 'Video URL' })
+
+    Call log:
+      - waiting for getByLabel('Video URL')
+
+
+      149 |       await page.getByLabel('Lesson title').fill(lessonTitle)
+      150 |       await page.getByRole('button', { name: 'Video URL' }).click()
+    > 151 |       await page.getByLabel('Video URL').fill('https://example.com/placeholder.mp4')
+          |                                          ^
+      152 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+      153 |     })(),
+      154 |   ])
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:151:42
+        at gotoVideoLessonUploadTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:146:24)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:354:14
+
+    Error Context: test-results\course-video-upload.full-P-59d4e-nders-during-video-transfer-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-P-59d4e-nders-during-video-transfer-authenticated\error-context.md
+
+  12) [authenticated] › tests\course-video-upload.full.spec.ts:392:1 › Cancel mid-upload resets UI to drop zone 
+
+    Error: locator.fill: Error: strict mode violation: getByLabel('Video URL') resolved to 2 elements:
+        1) <button type="button" aria-label="Video URL type" class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700">…</button> aka getByRole('button', { name: 'Video URL type' })
+        2) <input value="" type="url" maxlength="2000" aria-label="Video URL" placeholder="https://www.youtube.com/watch?v=…" class="tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100 tw:border-slate-200 focus:tw:border-blue-400"/> aka getByRole('textbox', { name: 'Video URL' })
+
+    Call log:
+      - waiting for getByLabel('Video URL')
+
+
+      149 |       await page.getByLabel('Lesson title').fill(lessonTitle)
+      150 |       await page.getByRole('button', { name: 'Video URL' }).click()
+    > 151 |       await page.getByLabel('Video URL').fill('https://example.com/placeholder.mp4')
+          |                                          ^
+      152 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+      153 |     })(),
+      154 |   ])
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:151:42
+        at gotoVideoLessonUploadTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:146:24)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:393:14
+
+    Error Context: test-results\course-video-upload.full-C-631db-load-resets-UI-to-drop-zone-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-C-631db-load-resets-UI-to-drop-zone-authenticated\error-context.md
+
+  13) [authenticated] › tests\course-video-upload.full.spec.ts:427:1 › Save Lesson button is disabled while video upload is in progress 
+
+    Error: locator.fill: Error: strict mode violation: getByLabel('Video URL') resolved to 2 elements:
+        1) <button type="button" aria-label="Video URL type" class="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:border tw:px-3 tw:py-1.5 tw:text-[12px] tw:font-medium tw:transition-colors tw:border-blue-400 tw:bg-blue-50 tw:text-blue-700">…</button> aka getByRole('button', { name: 'Video URL type' })
+        2) <input value="" type="url" maxlength="2000" aria-label="Video URL" placeholder="https://www.youtube.com/watch?v=…" class="tw:w-full tw:rounded-lg tw:border tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:ring-2 focus:tw:ring-blue-100 tw:border-slate-200 focus:tw:border-blue-400"/> aka getByRole('textbox', { name: 'Video URL' })
+
+    Call log:
+      - waiting for getByLabel('Video URL')
+
+
+      149 |       await page.getByLabel('Lesson title').fill(lessonTitle)
+      150 |       await page.getByRole('button', { name: 'Video URL' }).click()
+    > 151 |       await page.getByLabel('Video URL').fill('https://example.com/placeholder.mp4')
+          |                                          ^
+      152 |       await page.getByRole('button', { name: 'Add Lesson' }).click()
+      153 |     })(),
+      154 |   ])
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:151:42
+        at gotoVideoLessonUploadTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:146:24)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:428:14
+
+    Error Context: test-results\course-video-upload.full-S-3e14e-video-upload-is-in-progress-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-S-3e14e-video-upload-is-in-progress-authenticated\error-context.md
+
+  13 failed
+    [authenticated] › tests\course-builder.full.spec.ts:155:1 › Add text lesson — lesson appears under its section 
+    [authenticated] › tests\course-builder.full.spec.ts:165:1 › Add valid video URL lesson — accepted and appears in list 
+    [authenticated] › tests\course-builder.full.spec.ts:200:1 › Reject invalid video URL — shows inline error, no API call 
+    [authenticated] › tests\course-builder.full.spec.ts:226:1 › Edit lesson prefill — form opens with existing values 
+    [authenticated] › tests\course-builder.full.spec.ts:247:1 › Delete section confirm — dismiss keeps it, confirm removes it 
+    [authenticated] › tests\course-video-upload.full.spec.ts:189:1 › Edit mode TEXT→VIDEO_URL gates Upload File until type is saved, then unlocks 
+    [authenticated] › tests\course-video-upload.full.spec.ts:261:1 › Create mode shows "save lesson first" — no upload available 
+    [authenticated] › tests\course-video-upload.full.spec.ts:286:1 › Type rejection — non-video file blocked client-side, no sign request 
+    [authenticated] › tests\course-video-upload.full.spec.ts:308:1 › Size rejection — file > 50 MB blocked client-side, no sign request 
+    [authenticated] › tests\course-video-upload.full.spec.ts:332:1 › Successful video upload — sign → PUT → confirm → done state visible 
+    [authenticated] › tests\course-video-upload.full.spec.ts:353:1 › Progress bar renders during video transfer 
+    [authenticated] › tests\course-video-upload.full.spec.ts:392:1 › Cancel mid-upload resets UI to drop zone 
+    [authenticated] › tests\course-video-upload.full.spec.ts:427:1 › Save Lesson button is disabled while video upload is in progress 
+  3 passed (2.0m)

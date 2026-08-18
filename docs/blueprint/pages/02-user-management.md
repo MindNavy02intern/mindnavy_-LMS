@@ -25,15 +25,18 @@ Users · Organization Structure · Roles & Permissions (→ file 03) · Groups �
 **Header buttons:** Add User (dlg/route below) · Import Users · Export Users · Invitations tab link
 
 ## Page: User Profile (`/admin/users/:id`) — reads `['users', id]`
-**Tabs (12):** Overview · Personal Information · Roles & Access (assignment system lives here — 03 §24) · Activity Timeline (`['audit',{userId}]`) · Courses (`['enrollments', studentId]`) · Certificates (`['students',id,'certificates']`) · Competencies (`['users',id,'skills']` → file 07) · Security Logs · Devices & Sessions · Notes & Internal Comments · Preferences · Consent & Privacy
+**Route note (2026-08-17):** the real implementation is `UserDetailsDrawer.tsx`, a side-drawer opened from `/users`, not a dedicated `/admin/users/:id` page route — flagging the mismatch per CLAUDE.md §0 rather than silently rewriting this route. Below, tabs are `[built]` as drawer tabs; the raw-fetch invalidation those mutations use is `invalidateFor` (`src/lib/invalidation.ts`), not the `['users', id]` TanStack-style key literally (this app has no TanStack Query installed yet — see that file's own architecture note).
+**Tabs (12):** Overview `[built]` · Personal Information `[built]` (merged into Overview) · Roles & Access `[built]` (read-only; assignment dialog lives on the row — 03 §24) · Activity Timeline `[built]` (`recentActivity`, part of `GET /users/:id`) · Courses `[built]` (`GET/DELETE /users/:id/courses[/:enrollmentId]`, Assign gated to role=learner — reuses `learner.enroll`) · Certificates `[planned]` (no dedicated tile yet — Consent & Privacy's export includes certs) · Competencies `[built]` (`GET /competencies/users/:userId/skills`, More tab tile) · Security Logs `[built]` (`GET /reports/audit?userId=`, More tab tile) · Devices & Sessions `[built]` (`GET/DELETE /users/:id/sessions[/:sessionId]` — AppUserSession, NOT TrustedDevice/AdminUser's own devices — More tab tile) · Notes & Internal Comments `[built]` (`GET/POST/DELETE /users/:id/notes`, More tab tile) · Preferences `[built]` (`GET/PATCH /notifications/preferences/:userId`, More tab tile) · Consent & Privacy `[built]` (`GET /users/:id/export` download + `POST /users/:id/request-deletion` → emails every active AdminUser, More tab tile)
 **Profile controls:**
 | Action | Kind | Mutation ID | Impact |
 |---|---|---|---|
-| Force logout | mut | `user.forceLogout` | local: `['users', id]` |
-| Revoke sessions | mut | `user.revokeSessions` | local: `['users', id]` |
-| Reset MFA | mut | `user.resetMFA` | local: `['users', id]`; sensitive |
-| Send message | dlg→mut | `message.send` | local: `['notifications']` |
-| Add internal note | mut | `user.note.add` | local: `['users', id]` |
+| Force logout | mut | `user.forceLogout` | local: `['users', id]` — `[built]` |
+| Revoke sessions | mut | `user.revokeSessions` | local: `['users', id]` — `[built]` as per-session `DELETE /users/:id/sessions/:sessionId` (Devices & Sessions tile), not a bulk revoke-all (that's Force Logout, above) |
+| Reset MFA | mut | `user.resetMFA` | local: `['users', id]`; sensitive — `[planned]`, no MFA subsystem exists yet |
+| Send message | dlg→mut | `message.send` | local: `['notifications']` — `[built]` |
+| Add internal note | mut | `user.note.add` | local: `['users', id]` — `[built]`, new `UserNote` model |
+| Unenroll from course | mut | `user.courseUnenroll` | → §5.1 (new row) — `[built]` |
+| Revoke user session | mut | (uses `user.revokeSessions` above) | local only, no cross-surface list depends on it |
 
 ## Dialog/route: Add User (doc §6)
 **Form fields:** Full name · Email · Phone · Role→`['roles']` · Department→`['org','departments']` · Branch→`['org','branches']` · Group→`['groups']` · Access level · Manager→`['users',{role:'manager'}]` · Skills→`['competencies']` · Custom attributes

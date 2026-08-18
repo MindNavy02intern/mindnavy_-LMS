@@ -8,6 +8,7 @@ const c = require("../controllers/settings.controller");
 const router = express.Router();
 
 router.get("/",     requireAdminAuth, coursesReadRateLimiter,   c.getSettings);
+router.get("/features", requireAdminAuth, coursesReadRateLimiter, c.getFeatures);
 router.patch("/",   requireAdminAuth, adminUserActionRateLimiter, c.updateSettings);
 
 router.get("/logs", requireAdminAuth, coursesReadRateLimiter,   c.getLogs);

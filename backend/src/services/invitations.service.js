@@ -1,5 +1,6 @@
 const prisma = require("../config/prisma");
 const { createAuditLog } = require("../utils/auditLog");
+const { sendMail } = require("../utils/mailer");
 
 const VALID_STATUSES = new Set(["PENDING", "ACCEPTED", "EXPIRED", "REVOKED"]);
 const VALID_ROLES    = new Set(["LEARNER", "INSTRUCTOR", "MANAGER", "ADMIN_ASSISTANT"]);
@@ -37,6 +38,38 @@ function mapInvitation(inv) {
     createdAt:       inv.createdAt instanceof Date ? inv.createdAt.toISOString() : String(inv.createdAt),
     updatedAt:       inv.updatedAt instanceof Date ? inv.updatedAt.toISOString() : String(inv.updatedAt),
   };
+}
+
+// ── Invitation email (best-effort — sendMail() never throws) ────────────────────
+
+function inviteLinkFor(id) {
+  const base = (process.env.PUBLIC_APP_URL || "http://localhost:5173").replace(/\/+$/, "");
+  return `${base}/accept-invite/${id}`;
+}
+
+async function sendInvitationEmail(invitation) {
+  const link = inviteLinkFor(invitation.id);
+  const expires = invitation.expiresAt instanceof Date
+    ? invitation.expiresAt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+    : String(invitation.expiresAt);
+
+  const subject = "You're invited to MindNavy LMS";
+  const text = `You've been invited to join MindNavy LMS.\n\nAccept your invitation:\n${link}\n\n`
+      + `This invitation expires on ${expires}.\n\nIf you weren't expecting this, you can ignore this email.`;
+
+  const html = `
+  <div style="font-family:Arial,Helvetica,sans-serif;max-width:480px;margin:0 auto;padding:24px;">
+    <h2 style="color:#1e3a5f;margin:0 0 16px;">MindNavy LMS</h2>
+    <p style="color:#333;font-size:15px;">You've been invited to join MindNavy LMS.</p>
+    <p style="text-align:center;margin:24px 0;">
+      <a href="${link}" style="background:#1e3a5f;color:#fff;text-decoration:none;font-weight:bold;
+         padding:12px 24px;border-radius:8px;display:inline-block;">Accept Invitation</a>
+    </p>
+    <p style="color:#666;font-size:13px;">This invitation expires on <strong>${expires}</strong>.</p>
+    <p style="color:#999;font-size:12px;">If you weren't expecting this, you can safely ignore this email.</p>
+  </div>`;
+
+  await sendMail({ to: invitation.email, subject, text, html });
 }
 
 // Auto-expire PENDING invitations — rate-limited to once every 5 minutes
@@ -150,6 +183,8 @@ async function sendInvitation(body, admin = {}) {
   // Event log only — never log the personal message content (PII).
   console.log(`[invitations] SENT → ${email} | role: ${role} | expires: ${expiresAt.toISOString()}`);
 
+  await sendInvitationEmail(invitation);
+
   await createAuditLog(admin?.id, "INVITATION_SENT", {
     invitationId: invitation.id, email, role, expiresAt: expiresAt.toISOString(),
   });
@@ -176,6 +211,8 @@ async function resendInvitation(id, admin = {}) {
   });
 
   console.log(`[invitations] RESENT → ${inv.email} | new expiry: ${expiresAt.toISOString()}`);
+
+  await sendInvitationEmail(updated);
 
   await createAuditLog(admin?.id, "INVITATION_RESENT", {
     invitationId: id, email: inv.email, expiresAt: expiresAt.toISOString(),

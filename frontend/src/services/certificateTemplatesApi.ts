@@ -13,6 +13,7 @@ import type {
   CertificateTemplate,
   CreateTemplatePayload,
   UpdateTemplatePayload,
+  LogoSignResponse,
 } from '../types/certificates';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
@@ -110,4 +111,34 @@ export async function updateTemplate(id: string, patch: UpdateTemplatePayload): 
 export async function deleteTemplate(id: string): Promise<{ id: string }> {
   if (USE_MOCK) return mockDelay({ id });
   return templatesFetch<{ id: string }>(`/${id}`, 'DELETE');
+}
+
+// ── Logo (sign -> PUT direct to storage -> confirm) ─────────────────────────
+
+export async function signLogoUpload(templateId: string, payload: { fileName: string; fileType: string }): Promise<LogoSignResponse> {
+  if (USE_MOCK) {
+    return mockDelay<LogoSignResponse>({
+      uploadUrl: 'https://mock-storage.example.com/upload/mock-signed-url',
+      path: `certificate-templates/${templateId}/mock-logo.png`,
+      maxBytes: 2 * 1024 * 1024,
+      expiresIn: 600,
+    });
+  }
+  return templatesFetch<LogoSignResponse>(`/${templateId}/logo/sign`, 'POST', payload);
+}
+
+export async function confirmLogoUpload(templateId: string, path: string): Promise<CertificateTemplate> {
+  if (USE_MOCK) {
+    const t = MOCK_TEMPLATES.find((x) => x.id === templateId) ?? MOCK_TEMPLATES[0];
+    return mockDelay<CertificateTemplate>({ ...t, layout: { ...t.layout, logoUrl: 'https://mock-storage.example.com/logo.png' } });
+  }
+  return templatesFetch<CertificateTemplate>(`/${templateId}/logo/confirm`, 'POST', { path });
+}
+
+export async function removeLogo(templateId: string): Promise<CertificateTemplate> {
+  if (USE_MOCK) {
+    const t = MOCK_TEMPLATES.find((x) => x.id === templateId) ?? MOCK_TEMPLATES[0];
+    return mockDelay<CertificateTemplate>({ ...t, layout: { ...t.layout, logoUrl: null } });
+  }
+  return templatesFetch<CertificateTemplate>(`/${templateId}/logo`, 'DELETE');
 }

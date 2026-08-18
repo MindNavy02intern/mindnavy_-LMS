@@ -1,4 +1,5 @@
 const svc = require("../services/competencies.service");
+const certSvc = require("../services/competencyCertifications.service");
 const {
   validateId,
   validateSkillListQuery,
@@ -15,6 +16,11 @@ const {
   validateAssessmentCreate,
   validateSkillGapsQuery,
   validateCompetencySettings,
+  validateProficiencyLevelsUpdate,
+  validateCertificationListQuery,
+  validateCertificationAssign,
+  validateCertificationVerify,
+  validateCertificationRevoke,
 } = require("../validators/competencies.validator");
 
 // ── Helpers (same pattern as instructors.controller) ────────────────────────────
@@ -71,6 +77,12 @@ function handleDomainError(res, err) {
       return badRequest(res, "Reassign this category's skills first.");
     case "USER_NOT_FOUND":
       return notFound(res, "User not found.");
+    case "CERTIFICATION_NOT_FOUND":
+      return notFound(res, "Certification not found.");
+    case "NOT_PENDING":
+      return badRequest(res, err.message);
+    case "ALREADY_REVOKED":
+      return conflict(res, err.message);
     default:
       return null;
   }
@@ -327,6 +339,84 @@ const updateCompetencySettings = run(async (req, res) => {
   return res.json({ success: true, message: "Settings updated.", data: settings });
 });
 
+// ── Proficiency Levels (Proficiency Levels tab) ──────────────────────────────
+
+const getProficiencyLevels = run(async (req, res) => {
+  const levels = await svc.getProficiencyLevels();
+  return res.json({ success: true, data: { levels } });
+});
+
+const updateProficiencyLevels = run(async (req, res) => {
+  const v2 = validateProficiencyLevelsUpdate(req.body);
+  if (!v2.isValid) return badRequest(res, v2.errors[0]);
+  const levels = await svc.updateProficiencyLevels(v2.data.levels, req.admin?.id);
+  return res.json({ success: true, message: "Proficiency levels updated.", data: { levels } });
+});
+
+// ── Skill distribution (CompetencySidePanel donut) ──────────────────────────
+
+const getSkillDistribution = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "skillId");
+  if (idErr) return badRequest(res, idErr);
+  const distribution = await svc.getSkillDistribution(req.params.id);
+  return res.json({ success: true, data: distribution });
+});
+
+// ── Competency Certifications (Certifications tab) ──────────────────────────
+
+const listCertifications = run(async (req, res) => {
+  const v = validateCertificationListQuery(req.query);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const result = await certSvc.listCertifications(v.data);
+  return res.json({ success: true, data: result });
+});
+
+const getCertification = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "certificationId");
+  if (idErr) return badRequest(res, idErr);
+  const cert = await certSvc.getCertification(req.params.id);
+  return res.json({ success: true, data: cert });
+});
+
+const getUserCertifications = run(async (req, res) => {
+  const idErr = validateId(req.params.userId, "userId");
+  if (idErr) return badRequest(res, idErr);
+  const certs = await certSvc.listUserCertifications(req.params.userId);
+  return res.json({ success: true, data: certs });
+});
+
+const assignCertification = run(async (req, res) => {
+  const v = validateCertificationAssign(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const cert = await certSvc.assignCertification(v.data, req.admin?.id);
+  return res.status(201).json({ success: true, message: "Certification assigned.", data: cert });
+});
+
+const verifyCertification = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "certificationId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateCertificationVerify(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const cert = await certSvc.verifyCertification(req.params.id, v.data.notes, req.admin?.id);
+  return res.json({ success: true, message: "Certification verified.", data: cert });
+});
+
+const revokeCertification = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "certificationId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateCertificationRevoke(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const cert = await certSvc.revokeCertification(req.params.id, v.data.reason, req.admin?.id);
+  return res.json({ success: true, message: "Certification revoked.", data: cert });
+});
+
+const deleteCertification = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "certificationId");
+  if (idErr) return badRequest(res, idErr);
+  const result = await certSvc.deleteCertification(req.params.id, req.admin?.id);
+  return res.json({ success: true, message: "Certification deleted.", data: result });
+});
+
 module.exports = {
   listSkills,
   getStats,
@@ -357,4 +447,15 @@ module.exports = {
   importSkills,
   getCompetencySettings,
   updateCompetencySettings,
+  getProficiencyLevels,
+  updateProficiencyLevels,
+  getSkillDistribution,
+  // Certifications
+  listCertifications,
+  getCertification,
+  getUserCertifications,
+  assignCertification,
+  verifyCertification,
+  revokeCertification,
+  deleteCertification,
 };

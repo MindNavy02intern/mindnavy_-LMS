@@ -297,6 +297,12 @@ export default function EnrollmentsTab() {
 
   function invalidateEnrollment(mutation: 'enrollment.create' | 'enrollment.statusUpdate' | 'enrollment.cancel', e: Enrollment) {
     invalidateFor(appQueryClient, mutation, { studentId: e.userId, courseId: e.courseId });
+    // invalidateFor() above is a no-op today (no TanStack Query consumer is
+    // wired up anywhere in this app) — this is the real refresh bridge every
+    // other tab/panel listens to (e.g. NotificationAutomation.sentCount for
+    // COURSE_ENROLLMENT/COURSE_COMPLETION triggers). Without it, enrolling or
+    // completing a course here never refreshed anything outside this tab.
+    window.dispatchEvent(new CustomEvent('analyticsUpdated'));
   }
 
   function handleEnrolled(created: Enrollment) {

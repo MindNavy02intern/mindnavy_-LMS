@@ -204,6 +204,83 @@ model CompetencySettings {
   @@map("competency_settings")
 }
 
+// Per-level display config for the FIXED 5-value SkillLevel ladder below —
+// one row per enum value (seeded lazily with the ranges/colors the frontend
+// used to hardcode, ProficiencyLevelsTab.tsx). This does NOT make the ladder
+// itself dynamic (SkillLevel stays a strict enum everywhere it's written —
+// UserSkillProfile.currentLevel, Skill.level, FrameworkSkill.requiredLevel —
+// changing that would be a much larger, cross-cutting migration); it only
+// makes the min/max percent, color and description editable per level.
+model ProficiencyLevel {
+  id          String     @id @default(cuid())
+  level       SkillLevel @unique
+  minPercent  Int
+  maxPercent  Int
+  color       String
+  description String?
+  updatedAt   DateTime   @updatedAt
+
+  @@map("proficiency_levels")
+}
+
+// Certifications tab — competencyCert.assign/verify/revoke, dead in the v1
+// contract (no certification-tracking entity existed), now real. userId is a
+// genuine relation (AppUser gets a back-relation array, same as
+// UserSkillProfile/SkillAssessment above) — skillId/frameworkId stay plain
+// strings, matching every other cross-domain reference in this module (see
+// the file header note): skillId mirrors SkillCourseMapping.courseId's
+// "verified on insert, existence checked in the service" contract;
+// frameworkId is the same shape, nullable. issuedById/revokedById are the
+// ADMIN who performed the action through this admin-console API
+// (req.admin.id) — same "actor id, plain string" convention as
+// ScheduledReport.createdById / Skill.createdById — NOT an AppUser (no
+// AppUser ever authenticates against /api/admin/*; the task spec's "FK ->
+// AppUser" for these two fields doesn't match this codebase's auth model,
+// corrected here the same way ProfilePage's principal was corrected earlier
+// in this engagement).
+//
+// EXPIRED is never written to `status` directly — same lazy-derive pattern
+// as DelegatedAdmin.effectiveStatus (no cron sweep exists to flip rows): a
+// VERIFIED row past its expiresAt reads as EXPIRED at list/get time only.
+model CompetencyCertification {
+  id      String                         @id @default(uuid())
+  userId  String
+  skillId String
+  // Plain reference, existence verified on insert — see header note above.
+  frameworkId String?
+  status      CompetencyCertificationStatus @default(PENDING)
+
+  issuedAt  DateTime  @default(now())
+  expiresAt DateTime?
+  // Actor id, plain — see header note above.
+  issuedById String?
+
+  revokedAt   DateTime?
+  // Actor id, plain — see header note above.
+  revokedById String?
+
+  verificationCode String  @unique
+  notes            String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user AppUser @relation("UserCompetencyCertifications", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([skillId])
+  @@index([frameworkId])
+  @@index([status])
+  @@map("competency_certifications")
+}
+
+enum CompetencyCertificationStatus {
+  PENDING
+  VERIFIED
+  REVOKED
+  EXPIRED
+}
+
 enum SkillLevel {
   BEGINNER
   INTERMEDIATE

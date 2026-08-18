@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const adminRoutes = require("./src/routes/admin.routes");
+const mfaRoutes = require("./src/routes/mfa.routes");
 const dashboardRoutes = require("./src/routes/dashboard.routes");
 const usersRoutes = require("./src/routes/users.routes");
 const organizationRoutes = require("./src/routes/organization.routes");
@@ -13,6 +14,8 @@ const roleTemplatesRoutes = require("./src/routes/roleTemplates.routes");
 const userRoleAssignmentsRoutes = require("./src/routes/userRoleAssignments.routes");
 const { expireNow: expireRoleAssignments } = require("./src/services/userRoleAssignments.service");
 const accessPoliciesRoutes = require("./src/routes/accessPolicies.routes");
+const companyRolesRoutes = require("./src/routes/companyRoles.routes");
+const delegatedAdminsRoutes = require("./src/routes/delegatedAdmins.routes");
 const groupsRoutes       = require("./src/routes/groups.routes");
 const invitationsRoutes  = require("./src/routes/invitations.routes");
 const messagesRoutes     = require("./src/routes/messages.routes");
@@ -41,9 +44,11 @@ const financeRoutes      = require("./src/routes/finance.routes");
 const notificationsRoutes = require("./src/routes/notifications.routes");
 const integrationsRoutes = require("./src/routes/integrations.routes");
 const settingsRoutes = require("./src/routes/settings.routes");
+const trackRoutes = require("./src/routes/track.routes");
 const { blockDuringMaintenance } = require("./src/middlewares/maintenanceMode.middleware");
 const { runDueReports: runDueScheduledReports } = require("./src/services/scheduledReports.service");
-const { sendDueAnnouncements } = require("./src/services/notifications.service");
+const { sendDueAnnouncements, retryPendingDeliveries } = require("./src/services/notifications.service");
+const { checkExpiringSubscriptions } = require("./src/services/finance.service");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -65,6 +70,7 @@ app.get("/", (req, res) => {
 
 // Admin routes
 app.use("/api/admin", adminRoutes);
+app.use("/api/admin/auth/mfa", mfaRoutes);
 
 // Dashboard routes
 app.use("/api/admin/dashboard", dashboardRoutes);
@@ -103,6 +109,11 @@ app.use("/api/admin/certificates", certificatesRoutes);
 //   • the public "Become Instructor" form — write only, no read counterpart
 app.use("/api/public/certificates", blockDuringMaintenance, publicCertificatesRoutes);
 app.use("/api/public/instructor-applications", blockDuringMaintenance, publicInstructorApplicationsRoutes);
+
+// Email open/click tracking (self-hosted, no 3rd party — DEFERRED_ITEMS.md).
+// Deliberately NOT behind blockDuringMaintenance: a pixel/redirect firing in
+// an already-sent email shouldn't 503 just because maintenance mode is on.
+app.use("/api/track", trackRoutes);
 
 // File uploads (sign → confirm → delete) for thumbnails (Phase 1).
 app.use("/api/admin/uploads", uploadsRoutes);
@@ -171,6 +182,8 @@ app.use("/api/admin/permission-matrix", permissionMatrixRoutes);
 app.use("/api/admin/role-templates", roleTemplatesRoutes);
 app.use("/api/admin/user-role-assignments", userRoleAssignmentsRoutes);
 app.use("/api/admin/access-policies", accessPoliciesRoutes);
+app.use("/api/admin/company-roles", companyRolesRoutes);
+app.use("/api/admin/delegated-admins", delegatedAdminsRoutes);
 
 // Groups routes
 app.use("/api/admin/groups", groupsRoutes);
@@ -231,6 +244,29 @@ const announcementsSweepTimer = setInterval(() => {
   sendDueAnnouncements().catch((err) => console.error("[notifications] scheduled sweep failed:", err.message));
 }, ANNOUNCEMENTS_SWEEP_INTERVAL_MS);
 announcementsSweepTimer.unref();
+
+// Background job: retry EMAIL deliveries logged PENDING for BATCH_CAP
+// (EMAIL_BLAST_CAP overflow) or QUIET_HOURS (deferred send) reasons. Same
+// 5-minute cadence as the announcements sweep — see retryPendingDeliveries'
+// own header note in notifications.service.js for why NOT_CONFIGURED rows
+// are excluded from this sweep.
+const DELIVERY_RETRY_INTERVAL_MS = 5 * 60 * 1000;
+const deliveryRetryTimer = setInterval(() => {
+  retryPendingDeliveries().catch((err) => console.error("[notifications] delivery retry sweep failed:", err.message));
+}, DELIVERY_RETRY_INTERVAL_MS);
+deliveryRetryTimer.unref();
+
+// Background job: flip Subscription{status:ACTIVE, endDate<=now} to EXPIRED
+// and fire the SUBSCRIPTION_EXPIRY automation trigger for each (nothing else
+// in this codebase ever transitions a subscription to EXPIRED — see
+// finance.service.js's checkExpiringSubscriptions header note). Checked
+// hourly, same cadence as the scheduled-reports sweep — expiry isn't a
+// minute-sensitive event the way announcements/OTP are.
+const SUBSCRIPTION_EXPIRY_INTERVAL_MS = 60 * 60 * 1000;
+const subscriptionExpiryTimer = setInterval(() => {
+  checkExpiringSubscriptions().catch((err) => console.error("[finance] subscription expiry sweep failed:", err.message));
+}, SUBSCRIPTION_EXPIRY_INTERVAL_MS);
+subscriptionExpiryTimer.unref();
 
 server.on("error", (error) => {
   console.error("Server failed to start:", error.message);

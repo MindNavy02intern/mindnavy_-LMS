@@ -123,9 +123,12 @@ test('Upload dialog has NO type picker — SCORM/QUIZ structurally cannot be off
   await page.getByRole('button', { name: 'Upload', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Upload Content' })).toBeVisible({ timeout: 5000 })
 
-  await expect(page.getByText('SCORM')).toHaveCount(0)
-  await expect(page.getByText('QUIZ', { exact: false })).toHaveCount(0)
-  await expect(page.getByRole('combobox', { name: /type/i })).toHaveCount(0)
+  // Scoped to the dialog — the content list behind it legitimately shows
+  // "SCORM"/"QUIZ" as content-type badges/filters for existing items.
+  const dialog = page.getByRole('dialog', { name: 'Upload content' })
+  await expect(dialog.getByText('SCORM')).toHaveCount(0)
+  await expect(dialog.getByText('QUIZ', { exact: false })).toHaveCount(0)
+  await expect(dialog.getByRole('combobox', { name: /type/i })).toHaveCount(0)
 })
 
 test('Non-allowed MIME type blocked client-side — no /sign request fired', async ({ page }) => {

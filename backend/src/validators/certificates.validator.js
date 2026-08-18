@@ -17,11 +17,16 @@ const MAX = {
   offset:    1000000,
 };
 
+// Logo upload (sign -> PUT -> confirm) — same allow-list style as
+// uploads.validator.js's thumbnail kind (this reuses that bucket).
+const LOGO_ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp"];
+const LOGO_MAX_BYTES    = 2 * 1024 * 1024;
+
 const HEX_COLOR   = /^#[0-9a-fA-F]{6}$/;
 // crypto.randomBytes(16).toString("hex") — anything else never hits the DB.
 const CODE_FORMAT = /^[a-f0-9]{32}$/;
 
-const LIST_STATUSES = ["active", "revoked"];
+const LIST_STATUSES = ["active", "revoked", "expired", "expiring_soon"];
 
 // Placeholders the PDF renderer substitutes; documented in the contract.
 const DEFAULT_LAYOUT = {
@@ -199,6 +204,21 @@ function validateRevoke(body = {}) {
   return { isValid: errors.length === 0, errors, data: { reason } };
 }
 
+function validateExpiry(body = {}) {
+  const errors = [];
+  let expiresAt;
+  if (body.expiresAt === null) {
+    expiresAt = null; // explicit clear
+  } else if (body.expiresAt !== undefined) {
+    const d = new Date(body.expiresAt);
+    if (Number.isNaN(d.getTime())) errors.push("expiresAt must be a valid date.");
+    else expiresAt = d;
+  } else {
+    errors.push("expiresAt is required (use null to clear it).");
+  }
+  return { isValid: errors.length === 0, errors, data: { expiresAt } };
+}
+
 // ── List filters (query string) ────────────────────────────────────────────────────
 
 function validateListQuery(query = {}) {
@@ -214,7 +234,7 @@ function validateListQuery(query = {}) {
   if (status !== undefined) {
     status = status.toLowerCase();
     if (!LIST_STATUSES.includes(status)) {
-      errors.push("status must be 'active' or 'revoked'.");
+      errors.push(`status must be one of: ${LIST_STATUSES.join(", ")}.`);
       status = undefined;
     }
   }
@@ -235,6 +255,32 @@ function validateListQuery(query = {}) {
   };
 }
 
+// ── Logo upload ──────────────────────────────────────────────────────────────
+
+function validateLogoSign(body = {}) {
+  const errors = [];
+
+  const fileName = typeof body.fileName === "string" ? body.fileName.trim() : "";
+  if (!fileName) errors.push("fileName is required.");
+  else if (fileName.length > 300) errors.push("fileName must be at most 300 characters.");
+
+  const fileType = typeof body.fileType === "string" ? body.fileType.trim().toLowerCase() : "";
+  if (!fileType) errors.push("fileType is required.");
+  else if (!LOGO_ALLOWED_MIME.includes(fileType)) {
+    errors.push(`fileType "${fileType}" is not allowed. Allowed: ${LOGO_ALLOWED_MIME.join(", ")}.`);
+  }
+
+  return { isValid: errors.length === 0, errors, data: { fileName, fileType } };
+}
+
+function validateLogoConfirm(body = {}) {
+  const errors = [];
+  const path = typeof body.path === "string" ? body.path.trim() : "";
+  if (!path) errors.push("path is required.");
+  else if (path.length > 500) errors.push("path must be at most 500 characters.");
+  return { isValid: errors.length === 0, errors, data: { path } };
+}
+
 module.exports = {
   validateId,
   isValidCodeFormat,
@@ -243,6 +289,11 @@ module.exports = {
   validateIssue,
   validateReissue,
   validateRevoke,
+  validateExpiry,
   validateListQuery,
+  validateLogoSign,
+  validateLogoConfirm,
   DEFAULT_LAYOUT,
+  LOGO_ALLOWED_MIME,
+  LOGO_MAX_BYTES,
 };

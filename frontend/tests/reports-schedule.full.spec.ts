@@ -19,6 +19,8 @@ let createdId = ''
 let savedToken = ''
 
 async function getAuthHeaders(page: Page) {
+  // localStorage is inaccessible on the pre-navigation about:blank page.
+  if (page.url() === 'about:blank') await page.goto('/dashboard')
   const token = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
   expect(token, 'mn_admin_token must exist in localStorage').toBeTruthy()
   savedToken = token

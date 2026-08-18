@@ -197,8 +197,16 @@ test('Preview: Back navigates to Settings, Next navigates to Submit', async ({ p
   await page.getByRole('button', { name: /Back to Settings/i }).click()
   await expect(page.getByText('Course Settings')).toBeVisible({ timeout: 5000 })
 
-  // Go back to Preview
+  // Go back to Preview — CoursePreview.tsx gates its "Course Preview" heading
+  // behind loading=false (see load()'s useEffect), so re-entering this step
+  // means waiting on a real GET /preview round trip again, same as the first
+  // visit in navigateToPreviewStep — a bare timeout races that fetch under load.
+  const previewNavResp = page.waitForResponse(
+    r => r.url().includes('/preview') && r.request().method() === 'GET',
+    { timeout: 15000 },
+  )
   await page.getByRole('button', { name: /Next: Preview/i }).click()
+  await previewNavResp
   await expect(page.getByText('Course Preview')).toBeVisible({ timeout: 5000 })
 
   // Next → Submit step
@@ -239,7 +247,7 @@ test('Preview: 404 course → shows error state with Retry button', async ({ pag
   const H = await getAuthHeaders(page)
   const instructorId = await getInstructorId(page, H)
   const title = `Preview 404 ${Date.now()}`
-  await setupCourseWithContent(page, H, instructorId, title)
+  const { courseId } = await setupCourseWithContent(page, H, instructorId, title)
 
   // Navigate through wizard to the Preview step (loads successfully)
   await navigateToPreviewStep(page, title)
@@ -249,27 +257,19 @@ test('Preview: 404 course → shows error state with Retry button', async ({ pag
   await page.getByRole('button', { name: /Back to Settings/i }).click()
   await expect(page.getByText('Course Settings')).toBeVisible({ timeout: 5000 })
 
-  // Delete the course while we're on Settings so the next preview fetch returns 404.
-  // The courseId was pushed to createdCourseIds, so remove it from cleanup first
-  // (it's already deleted — afterAll delete would 404 silently anyway, but be explicit)
-  const previewRow = page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
-  // Re-fetch the ID from the tracking array (last pushed)
-  const deletedId = createdCourseIds[createdCourseIds.length - 1]
-  await page.request.delete(`${API}/courses/${deletedId}`, { headers: H })
-
-  // Navigate forward to Preview — component mounts and calls getPreview → 404
-  const errorResp = page.waitForResponse(
-    r => r.url().includes('/preview') && r.request().method() === 'GET',
-    { timeout: 15000 },
+  // DELETE /courses/:id never hard-deletes — courses.service.js's archiveCourse
+  // only flips status to ARCHIVED, and getCourse() has no status filter, so a
+  // real GET .../preview for an archived course still returns 200. There is no
+  // hard-delete endpoint and no URL-addressable preview route in this app, so a
+  // genuine 404 can't be produced through any real UI/API sequence — mock just
+  // this one response instead, matching the real error shape courseWorkflow
+  // .controller.js returns for COURSE_NOT_FOUND (404, { success:false, message }).
+  await page.route(`**/courses/${courseId}/preview`, route =>
+    route.fulfill({ status: 404, contentType: 'application/json', body: JSON.stringify({ success: false, message: 'Course not found.' }) }),
   )
+
   await page.getByRole('button', { name: /Next: Preview/i }).click()
-  const resp = await errorResp
-  expect(resp.status(), '404 expected for deleted course').toBe(404)
 
   // Error state rendered with Retry button
   await expect(page.getByRole('button', { name: /Retry/i })).toBeVisible({ timeout: 5000 })
-
-  // Remove from cleanup list — already deleted above
-  createdCourseIds.splice(createdCourseIds.indexOf(deletedId), 1)
-  void previewRow  // suppress unused lint hint
 })

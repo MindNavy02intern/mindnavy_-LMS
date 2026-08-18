@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useTabParam } from '../hooks/useTabParam';
 import AdminLayout from '../layouts/AdminLayout';
 import { useToast, ToastContainer } from '../components/users/Toast';
@@ -10,6 +11,10 @@ import PermissionMatrixPreview from '../components/rolesPermissionsPage/Permissi
 import AccessPoliciesTab from '../components/rolesPermissionsPage/AccessPoliciesTab';
 import RoleTemplatesTab from '../components/rolesPermissionsPage/RoleTemplatesTab';
 import UserRoleAssignmentsTab from '../components/rolesPermissionsPage/UserRoleAssignmentsTab';
+import CompanyRolesTab from '../components/rolesPermissionsPage/CompanyRolesTab';
+import DelegatedAdminsTab from '../components/rolesPermissionsPage/DelegatedAdminsTab';
+import AuditTrackingTab from '../components/rolesPermissionsPage/AuditTrackingTab';
+import RolesSettingsTab from '../components/rolesPermissionsPage/RolesSettingsTab';
 import AccessPoliciesPreviewCard from '../components/rolesPermissionsPage/AccessPoliciesPreviewCard';
 import RoleTemplatesPreviewCard from '../components/rolesPermissionsPage/RoleTemplatesPreviewCard';
 import UserRoleAssignmentsPreviewCard from '../components/rolesPermissionsPage/UserRoleAssignmentsPreviewCard';
@@ -135,20 +140,6 @@ function SkeletonRow() {
   );
 }
 
-// ── Coming Soon ───────────────────────────────────────────────────────────────
-
-function ComingSoon({ label }: { label: string }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, minHeight: 240, color: '#9ca3af' }}>
-      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
-        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-      </svg>
-      <div style={{ fontSize: 14, fontWeight: 600 }}>{label} — Coming Soon</div>
-      <div style={{ fontSize: 12 }}>This section is under construction</div>
-    </div>
-  );
-}
-
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function RolesPermissionsStandalonePage() {
@@ -180,9 +171,17 @@ export default function RolesPermissionsStandalonePage() {
   const [totalPages, setTotalPages]   = useState(1);
   const [totalRoles, setTotalRoles]   = useState(0);
 
+  // Deep link from a user's role chip (UserDetailsDrawer) — ?role=<name>
+  // pre-fills the search box so "view this role" actually lands filtered,
+  // not just on the tab. Read once on mount; the search box stays a normal
+  // uncontrolled-from-URL input after that (matches the rest of this page's
+  // filters, none of which are otherwise URL-persisted).
+  const [searchParams] = useSearchParams();
+  const roleDeepLink = searchParams.get('role') ?? '';
+
   const [page,         setPage]         = useState(1);
-  const [search,       setSearch]       = useState('');
-  const [searchInput,  setSearchInput]  = useState('');
+  const [search,       setSearch]       = useState(roleDeepLink);
+  const [searchInput,  setSearchInput]  = useState(roleDeepLink);
   const [statusFilter, setStatusFilter] = useState('');
   const [levelFilter,  setLevelFilter]  = useState('');
 
@@ -649,11 +648,22 @@ export default function RolesPermissionsStandalonePage() {
             <UserRoleAssignmentsTab showToast={showToast as (type: ToastType, message: string) => void} />
           )}
 
-          {/* ── All other tabs ──────────────────────────────────────────────── */}
-          {activeTab !== 'roles' && activeTab !== 'matrix' && activeTab !== 'policies' && activeTab !== 'templates' && activeTab !== 'assignments' && (
-            <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-              <ComingSoon label={TABS.find(t => t.key === activeTab)?.label ?? activeTab} />
-            </div>
+          {/* ── Company Roles tab ───────────────────────────────────────────── */}
+          {activeTab === 'company' && (
+            <CompanyRolesTab showToast={showToast as (type: ToastType, message: string) => void} />
+          )}
+
+          {/* ── Delegated Admins tab ────────────────────────────────────────── */}
+          {activeTab === 'delegated' && (
+            <DelegatedAdminsTab showToast={showToast as (type: ToastType, message: string) => void} />
+          )}
+
+          {/* ── Audit & Tracking tab ────────────────────────────────────────── */}
+          {activeTab === 'audit' && <AuditTrackingTab />}
+
+          {/* ── Settings tab ─────────────────────────────────────────────────── */}
+          {activeTab === 'settings' && (
+            <RolesSettingsTab showToast={showToast as (type: ToastType, message: string) => void} />
           )}
         </div>
       </div>

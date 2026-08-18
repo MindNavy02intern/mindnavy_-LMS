@@ -1,4 +1,7 @@
 import { test, expect, type Page } from '@playwright/test'
+import { writeFileSync, unlinkSync } from 'fs'
+import { join } from 'path'
+import { tmpdir } from 'os'
 
 // Tests for the video file upload UI (VideoUpload component inside LessonFormModal
 // in CourseBuilder).  Requires USE_MOCK=false (real backend) but mocks network
@@ -136,7 +139,10 @@ async function gotoVideoLessonUploadTab(page: Page): Promise<boolean> {
   if (!ok) return false
 
   // Add VIDEO_URL lesson
-  await page.getByRole('button', { name: /Add Lesson/ }).first().click()
+  // /i: the per-section button's aria-label is "Add lesson to <section title>"
+  // (sentence-case, matching this codebase's convention for per-item labels)
+  // — a case-sensitive regex against "Add Lesson" never matches it.
+  await page.getByRole('button', { name: /Add Lesson/i }).first().click()
   await expect(page.getByRole('heading', { name: 'Add Lesson' })).toBeVisible({ timeout: 3000 })
 
   const lessonTitle = `Video Lesson ${Date.now()}`
@@ -145,8 +151,11 @@ async function gotoVideoLessonUploadTab(page: Page): Promise<boolean> {
     (async () => {
       await page.getByLabel('Lesson title').fill(lessonTitle)
       await page.getByRole('button', { name: 'Video URL' }).click()
-      await page.getByLabel('Video URL').fill('https://example.com/placeholder.mp4')
-      await page.getByRole('button', { name: 'Add Lesson' }).click()
+      // exact: true — non-exact also matches the "Video URL type" selector button.
+      await page.getByLabel('Video URL', { exact: true }).fill('https://example.com/placeholder.mp4')
+      // exact: true — non-exact also matches the per-section trigger button
+      // (aria-label "Add lesson to <section title>", substring-contains "Add Lesson").
+      await page.getByRole('button', { name: 'Add Lesson', exact: true }).click()
     })(),
   ])
   expect(postLesson.ok()).toBeTruthy()
@@ -188,7 +197,10 @@ test('Edit mode TEXT→VIDEO_URL gates Upload File until type is saved, then unl
   const ok = await gotoCourseBuilderWithSection(page, 'TypeChange Test')
   if (!ok) return
 
-  await page.getByRole('button', { name: /Add Lesson/ }).first().click()
+  // /i: the per-section button's aria-label is "Add lesson to <section title>"
+  // (sentence-case, matching this codebase's convention for per-item labels)
+  // — a case-sensitive regex against "Add Lesson" never matches it.
+  await page.getByRole('button', { name: /Add Lesson/i }).first().click()
   await expect(page.getByRole('heading', { name: 'Add Lesson' })).toBeVisible({ timeout: 3000 })
 
   const lessonTitle = `Text Lesson ${Date.now()}`
@@ -200,7 +212,9 @@ test('Edit mode TEXT→VIDEO_URL gates Upload File until type is saved, then unl
     (async () => {
       await page.getByLabel('Lesson title').fill(lessonTitle)
       // Leave type as Text (default)
-      await page.getByRole('button', { name: 'Add Lesson' }).click()
+      // exact: true — non-exact also matches the per-section trigger button
+      // (aria-label "Add lesson to <section title>", substring-contains "Add Lesson").
+      await page.getByRole('button', { name: 'Add Lesson', exact: true }).click()
     })(),
   ])
   expect(postLesson.ok()).toBeTruthy()
@@ -259,7 +273,10 @@ test('Create mode shows "save lesson first" — no upload available', async ({ p
   if (!ok) return
 
   // Open "Add Lesson" in create mode (no lessonId — lesson has not been saved yet)
-  await page.getByRole('button', { name: /Add Lesson/ }).first().click()
+  // /i: the per-section button's aria-label is "Add lesson to <section title>"
+  // (sentence-case, matching this codebase's convention for per-item labels)
+  // — a case-sensitive regex against "Add Lesson" never matches it.
+  await page.getByRole('button', { name: /Add Lesson/i }).first().click()
   await expect(page.getByRole('heading', { name: 'Add Lesson' })).toBeVisible({ timeout: 3000 })
   await page.getByRole('button', { name: 'Video URL' }).click()
 
@@ -271,7 +288,9 @@ test('Create mode shows "save lesson first" — no upload available', async ({ p
     page.locator('[data-testid="video-upload-disabled"]'),
     'Create mode must show disabled video upload state',
   ).toBeVisible({ timeout: 3000 })
-  await expect(page.getByText(/Save lesson first/i)).toBeVisible()
+  // CourseBuilder passes VideoUpload a more specific disabled message than
+  // the component's generic fallback ("Save lesson first to enable file upload").
+  await expect(page.getByText(/Save the lesson as Video URL type first/i)).toBeVisible()
 })
 
 test('Type rejection — non-video file blocked client-side, no sign request', async ({ page }) => {
@@ -303,14 +322,16 @@ test('Size rejection — file > 50 MB blocked client-side, no sign request', asy
   let signCalled = false
   await page.route('**/uploads/sign', () => { signCalled = true })
 
-  // 51 MB buffer
-  const bigBuffer = Buffer.alloc(51 * 1024 * 1024)
+  // 51 MB — setInputFiles rejects an inline buffer over 50MB ("write it to a
+  // file and pass its path instead"), so write it to a real temp file.
+  const bigFilePath = join(tmpdir(), `huge-${Date.now()}.mp4`)
+  writeFileSync(bigFilePath, Buffer.alloc(51 * 1024 * 1024))
   const fileInput = page.locator('[data-testid="video-upload-drop-zone"] input[type="file"]')
-  await fileInput.setInputFiles({
-    name: 'huge.mp4',
-    mimeType: 'video/mp4',
-    buffer: bigBuffer,
-  })
+  try {
+    await fileInput.setInputFiles(bigFilePath)
+  } finally {
+    unlinkSync(bigFilePath)
+  }
 
   await expect(
     page.getByText('File must be smaller than 50.0 MB.', { exact: true }),

@@ -52,7 +52,11 @@ export default function DataSyncTab({ showToast, refreshSignal, onBumpRefresh }:
     try {
       const result = await triggerSync(slug, type);
       showToast(result.success ? 'success' : 'error', result.message);
-      if (result.success) { invalidateFor(appQueryClient, 'sync.run'); onBumpRefresh(); }
+      // Even a "no sync target configured" failure writes a real DataSync
+      // row (status FAILED) — refresh either way so the history list stays
+      // truthful instead of only updating on success.
+      invalidateFor(appQueryClient, 'sync.run');
+      onBumpRefresh();
     } catch (err) {
       showToast('error', err instanceof Error ? err.message : 'Sync failed to start.');
     } finally {

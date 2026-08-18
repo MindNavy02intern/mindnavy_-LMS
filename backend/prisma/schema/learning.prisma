@@ -52,6 +52,10 @@ model Course {
   quizzes      Quiz[]
   // Student reviews of the instructor for THIS course (instructors.prisma).
   reviews      InstructorReview[] @relation("CourseReviews")
+  // Content Library reuse — a content item borrowed into THIS course, distinct
+  // from `contents` (items this course itself owns/uploaded to). See
+  // CourseContentUsage's own comment.
+  contentUsages CourseContentUsage[]
 
   @@index([status])
   @@index([category])
@@ -143,12 +147,34 @@ model CourseContent {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @default(now()) @updatedAt
   course     Course?     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  usages     CourseContentUsage[]
 
   @@index([courseId])
   @@index([type])
   @@index([createdAt])
   @@index([tags], type: Gin)
   @@map("course_contents")
+}
+
+// Content Library reuse across courses (CONTENT_LIBRARY_CONTRACT.md's
+// documented v2 gap, "courseUsage[]" — no reuse mechanism existed). Additive
+// alongside `CourseContent.courseId` (the item's ORIGINATING/owning course,
+// or null for a library-wide item) — this join table is every OTHER course
+// that has also linked the same item, so an item can be borrowed into
+// multiple courses without duplicating the file or forking ownership.
+model CourseContentUsage {
+  id        String   @id @default(uuid())
+  contentId String
+  courseId  String
+  addedAt   DateTime @default(now())
+
+  content CourseContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  course  Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([contentId, courseId])
+  @@index([contentId])
+  @@index([courseId])
+  @@map("course_content_usage")
 }
 
 // Live Sessions v1 — SCHEDULING only (no hosting features). EXTENDED in place:
@@ -223,6 +249,7 @@ model Certificate {
   verificationCode String?              @unique
   issuedAt         DateTime             @default(now())
   revokedAt        DateTime?
+  expiresAt        DateTime?
   metadata         Json?
   course           Course               @relation(fields: [courseId], references: [id], onDelete: Cascade)
   user             AppUser              @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -237,9 +264,18 @@ model Certificate {
 }
 
 // Layout is a small validated Json (colors, texts with fixed {{placeholders}},
-// optional logo URL, signature) — rebuilt field-by-field in the validator, never
+// optional logo, signature) — rebuilt field-by-field in the validator, never
 // arbitrary HTML. Deleting a template leaves issued certs intact (templateId
 // SetNull) — they fall back to the default layout + their metadata snapshot.
+//
+// logoUrl/logoPath: added via the sign->PUT->confirm upload flow (never a
+// free-text URL field — that would reopen the SSRF concern the v1 contract
+// deferred this for). logoPath is bucket-internal bookkeeping (delete-on-
+// replace/remove) and is NOT part of the documented CertificateTemplateLayout
+// contract type — only logoUrl is. Both survive a plain name/color PATCH:
+// updateTemplate re-attaches the current logoUrl/logoPath onto whatever layout
+// the validator rebuilds, since PATCH's "layout replaces the whole object"
+// rule would otherwise wipe the logo on every unrelated edit.
 model CertificateTemplate {
   id        String   @id @default(uuid())
   name      String
@@ -285,13 +321,15 @@ model Lesson {
   @@map("lessons")
 }
 
-// Learning Paths — ordered bundles of existing content. v1 items are COURSE and
-// LIVE_SESSION only (Quiz/Assignment/Certificate-template models don't exist yet;
-// extend the enum when they ship). itemId is a polymorphic reference with NO db-level
-// FK — existence is verified in the service on insert, and reads flag dangling
-// references (`missing: true`) instead of failing. Completion rules v1 = the single
-// path-level `sequential` flag; per-item rules/prerequisites/deadlines are deferred
-// until learner progress tracking exists.
+// Learning Paths — ordered bundles of existing content. v1 items were COURSE and
+// LIVE_SESSION only; QUIZ was added once the Quizzes system shipped (per the
+// contract's "quizzes added when that system ships" note — Assignment/
+// Certificate-template models still don't exist, so those stay out). itemId is a
+// polymorphic reference with NO db-level FK — existence is verified in the
+// service on insert, and reads flag dangling references (`missing: true`)
+// instead of failing. Completion rules v1 = the single path-level `sequential`
+// flag; per-item rules/prerequisites/deadlines are deferred until learner
+// progress tracking exists.
 model LearningPath {
   id          String   @id @default(uuid())
   title       String
@@ -324,14 +362,15 @@ model LearningPathItem {
 enum LearningPathItemType {
   COURSE
   LIVE_SESSION
+  QUIZ
 }
 
 // Quizzes & Exams — assessment BUILDER v1 (admin side only). A quiz optionally
 // attaches to a course (nullable FK like LiveSession — course delete sets it null);
 // lesson-level attachment is deferred: the frontend key ['quizzes', courseId?] is
-// course-scoped. QuestionType carries all 6 design-doc values so the enum never
-// needs another db push, but v1 endpoints accept only MULTIPLE_CHOICE, TRUE_FALSE,
-// MULTI_SELECT and ESSAY — MATCHING / FILL_IN_BLANK return 400 until v2.
+// course-scoped. QuestionType carries all 6 design-doc values; all 6 have a real
+// editor now (MATCHING / FILL_IN_BLANK were schema-forward-compat-only at first,
+// 400'd by the validator until their editor UI shipped).
 // Grading v1 is a documented decision, not code: ESSAY = manual, the rest auto.
 // Learner attempts/submissions (QuizAttempt) ship with the learner runtime.
 // NOTE: the LM Content stats `quizzes` count stays owned by CourseContent

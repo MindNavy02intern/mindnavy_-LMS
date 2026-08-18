@@ -23,7 +23,7 @@ function handleDomainError(res, err) {
     case "PATH_NOT_FOUND":   return notFound(res, "Learning path not found.");
     case "ITEM_NOT_FOUND":   return notFound(res, "Item not found in this learning path.");
     case "ITEM_NOT_IN_PATH": return badRequest(res, "An item does not belong to this learning path.");
-    case "REF_NOT_FOUND":    return badRequest(res, "Referenced course or live session does not exist.");
+    case "REF_NOT_FOUND":    return badRequest(res, "Referenced course, live session, or quiz does not exist.");
     case "DUPLICATE_ITEM":   return badRequest(res, "This item is already in the learning path.");
     default:                 return null;
   }

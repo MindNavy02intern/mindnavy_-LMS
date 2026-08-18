@@ -65,13 +65,15 @@ test('System Settings page loads with header and all tabs render', async ({ page
   expect(resp.ok()).toBeTruthy()
   await expect(page.getByRole('heading', { name: 'System Settings' })).toBeVisible({ timeout: 10000 })
 
+  // Scoped to <main> — "Notifications" also matches the topbar's
+  // notification-bell icon button, which would otherwise strict-mode-violate.
   for (const label of [
     'General', 'Branding', 'Localization', 'Registration', 'Learning', 'Security',
     'Authentication', 'Notifications', 'Email Config', 'Storage', 'Media & Upload',
     'Automation', 'Maintenance', 'Backup & Restore', 'Feature Toggles', 'Domain & URL',
     'Mobile App', 'API & Developer', 'AI Features', 'Config Logs',
   ]) {
-    await expect(page.getByRole('button', { name: label, exact: true })).toBeVisible({ timeout: 10000 })
+    await expect(page.getByRole('main').getByRole('button', { name: label, exact: true })).toBeVisible({ timeout: 10000 })
   }
 })
 
@@ -100,8 +102,11 @@ test('General tab: update Platform Name → saved → Config Logs shows the chan
     page.getByRole('button', { name: 'Config Logs', exact: true }).click(),
   ])
   expect(logsResp.ok()).toBeTruthy()
-  await expect(page.getByText('platformName')).toBeVisible({ timeout: 10000 })
-  await expect(page.getByText(newName)).toBeVisible({ timeout: 10000 })
+  // Scoped to the log row for THIS change — "platformName" alone matches
+  // every historical rename row (strict-mode violation with 3+ log entries).
+  const logRow = page.locator('tr', { hasText: newName })
+  await expect(logRow.getByText('platformName')).toBeVisible({ timeout: 10000 })
+  await expect(logRow.getByText(newName)).toBeVisible({ timeout: 10000 })
 })
 
 test('Feature Toggles: toggle Marketplace → saved → reflected on next load', async ({ page, request }) => {
@@ -141,6 +146,14 @@ test('Email Config: Send Test Email returns a result without crashing', async ({
     page.goto('/settings?tab=email'),
   ])
 
+  // The recipient input (EmailConfigTab.tsx:94, the 2nd of 2 type="email"
+  // inputs on this tab) only shows a hint via its placeholder — its actual
+  // value stays empty until filled. With this dev environment's contactEmail
+  // also unset, an empty recipient hits the backend's NO_RECIPIENT 400 guard
+  // (settings.service.js) instead of the graceful "SMTP not configured" 200
+  // this test means to exercise — fill a real recipient, like an actual user would.
+  await page.locator('input[type="email"]').last().fill('qa-test-email@example.com')
+
   const [testResp] = await Promise.all([
     page.waitForResponse(r => r.url().includes('/system-settings/test-email') && r.ok(), { timeout: 15000 }),
     page.getByRole('button', { name: 'Send Test Email' }).click(),
@@ -151,7 +164,9 @@ test('Email Config: Send Test Email returns a result without crashing', async ({
   // This environment has no SMTP_* env vars set — a false/"not configured"
   // result is the CORRECT outcome here, not a failure. The assertion is that
   // the endpoint responds cleanly either way (no 500, a real message shown).
-  await expect(page.getByText(body.message)).toBeVisible({ timeout: 10000 })
+  // .first(): the message legitimately renders twice — a toast AND the
+  // persistent inline result box below the form both show it at once.
+  await expect(page.getByText(body.message).first()).toBeVisible({ timeout: 10000 })
 })
 
 test('Maintenance: enable shows the banner, disable removes it', async ({ page }) => {

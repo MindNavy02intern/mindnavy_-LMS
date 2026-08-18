@@ -1,4 +1,6 @@
 const prisma = require("../config/prisma");
+const certificateTriggers = require("./certificateTriggers.service");
+const { fireAutomationTrigger } = require("./automationTriggers.service");
 
 // ── Enrollments service (admin-side enrollment management) ──────────────────────
 //
@@ -131,7 +133,7 @@ async function listEnrollments({ courseId, userId, status, search, page, limit }
 async function createEnrollment({ courseId, userId, startDate, expiryDate, cohortId }, adminId) {
   const course = await prisma.course.findUnique({
     where: { id: courseId },
-    select: { id: true, status: true, enrollmentLimit: true },
+    select: { id: true, title: true, status: true, enrollmentLimit: true },
   });
   if (!course) throw domainError("COURSE_NOT_FOUND");
   if (course.status === "ARCHIVED") throw domainError("COURSE_ARCHIVED");
@@ -177,6 +179,10 @@ async function createEnrollment({ courseId, userId, startDate, expiryDate, cohor
   }
 
   await auditLog(adminId, "ENROLLMENT_CREATED", { enrollmentId: enrollment.id, courseId, userId });
+
+  // Automation trigger (NOTIFICATIONS_CONTRACT.md #5) — best-effort.
+  await fireAutomationTrigger("COURSE_ENROLLMENT", userId, { courseId, courseTitle: course.title });
+
   return mapEnrollment(enrollment);
 }
 
@@ -198,6 +204,15 @@ async function updateEnrollment(id, { status }, adminId) {
   await auditLog(adminId, "ENROLLMENT_STATUS_UPDATED", {
     enrollmentId: id, from: current.status, to: status,
   });
+
+  // Trigger 1 (CERTIFICATES_CONTRACT.md deferred triggers) — only on the
+  // transition INTO completed, not on every no-op re-save of an already-
+  // completed enrollment. Best-effort — never breaks this status update.
+  if (status === "COMPLETED" && current.status !== "COMPLETED") {
+    await certificateTriggers.onEnrollmentCompleted(current.courseId, current.userId, adminId);
+    await fireAutomationTrigger("COURSE_COMPLETION", current.userId, { courseId: current.courseId });
+  }
+
   return mapEnrollment(enrollment);
 }
 

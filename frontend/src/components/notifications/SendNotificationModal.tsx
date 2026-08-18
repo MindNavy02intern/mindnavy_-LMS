@@ -91,7 +91,7 @@ export default function SendNotificationModal({ onClose, onSuccess, showToast }:
           {serverError && <div style={{ padding: '8px 12px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 6, fontSize: 12, color: '#b91c1c' }}>{serverError}</div>}
 
           <div style={{ position: 'relative' }}>
-            <label style={LABEL}>Recipients *</label>
+            <label style={LABEL} htmlFor="sn-recipients">Recipients *</label>
             {selectedUsers.length > 0 && (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 6 }}>
                 {selectedUsers.map(u => (
@@ -102,7 +102,7 @@ export default function SendNotificationModal({ onClose, onSuccess, showToast }:
                 ))}
               </div>
             )}
-            <input style={{ ...INPUT, width: '100%', boxSizing: 'border-box' }} value={userSearch} onChange={e => setUserSearch(e.target.value)} placeholder="Search by name or email…" />
+            <input id="sn-recipients" style={{ ...INPUT, width: '100%', boxSizing: 'border-box' }} value={userSearch} onChange={e => setUserSearch(e.target.value)} placeholder="Search by name or email…" />
             {userOptions.length > 0 && (
               <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 6, marginTop: 2, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', maxHeight: 180, overflowY: 'auto' }}>
                 {userOptions.map(u => (

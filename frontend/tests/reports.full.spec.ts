@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { readFileSync } from 'fs'
 
 // Reports & Analytics module — full stack, real backend throughout (no route
 // mocking). Unlike competencies.full.spec.ts / learners.full.spec.ts, this
@@ -29,16 +30,27 @@ test('Reports & Analytics page loads with header, 13 tabs, and 10 KPI cards', as
     await expect(page.getByRole('button', { name: label, exact: true })).toBeVisible({ timeout: 10000 })
   }
 
+  // Scoped to <main> — "Courses Completed" also appears verbatim in the
+  // sidebar's quick-status list, which would otherwise strict-mode-violate.
+  // .first(): "System Activity" is ALSO the title of this same page's detail
+  // chart card (a second, legitimate section below the KPI row, not a
+  // duplicate render) — either match proves the KPI label is showing.
   for (const label of [
     'Total Users', 'Active Learners', 'Active Instructors', 'Courses Completed', 'Avg Learning Progress',
     'Live Sessions Today', 'Total Revenue', 'Certificates Issued', 'Engagement Score', 'System Activity',
   ]) {
-    await expect(page.getByText(label, { exact: true })).toBeVisible({ timeout: 10000 })
+    await expect(page.getByRole('main').getByText(label, { exact: true }).first()).toBeVisible({ timeout: 10000 })
   }
 
-  // available:false fields (no Payment model, no engagement-scoring model)
-  // render an em dash, never a fabricated 0 — assert the honest state.
-  await expect(page.getByText('No Payment/Transaction model exists yet')).toBeVisible({ timeout: 10000 })
+  // Total Revenue now reads real data (Finance module's Payment aggregation,
+  // wired 2026-08-16) — assert a real dollar figure renders, not the old
+  // "unavailable" placeholder.
+  await expect(page.getByText('No Payment/Transaction model exists yet')).toHaveCount(0)
+  await expect(page.getByRole('main').getByText(/^\$[\d,]+$/).first()).toBeVisible({ timeout: 10000 })
+
+  // Engagement Score still has no real source — render an em dash, never a
+  // fabricated 0, and keep asserting the honest unavailable state for it.
+  await expect(page.getByText('No engagement-scoring model exists yet')).toBeVisible({ timeout: 10000 })
 })
 
 test('sidebar "Reports & Analytics" link navigates correctly (was previously a dead 404 link)', async ({ page }) => {
@@ -140,7 +152,7 @@ test('Audit Logs tab shows real paginated data and search/action filters actuall
 
 test('Export Center generates a real CSV download end to end', async ({ page }) => {
   await page.goto('/reports-analytics?tab=export')
-  await expect(page.getByText('Generate Export', { exact: true })).toBeVisible({ timeout: 10000 })
+  await expect(page.getByText('Generate Export', { exact: true })).toBeVisible({ timeout: 15000 })
 
   const [download, exportResp] = await Promise.all([
     page.waitForEvent('download', { timeout: 15000 }),
@@ -156,7 +168,7 @@ test('Export Center generates a real CSV download end to end', async ({ page }) 
 
 test('Export Center JSON format downloads the flat {type,columns,rows} shape', async ({ page }) => {
   await page.goto('/reports-analytics?tab=export')
-  await expect(page.getByText('Generate Export', { exact: true })).toBeVisible({ timeout: 10000 })
+  await expect(page.getByText('Generate Export', { exact: true })).toBeVisible({ timeout: 15000 })
 
   await page.getByRole('radio').nth(1).check() // JSON option
   const [download, exportResp] = await Promise.all([
@@ -165,7 +177,13 @@ test('Export Center JSON format downloads the flat {type,columns,rows} shape', a
     page.getByRole('button', { name: 'Generate & Download', exact: true }).click(),
   ])
   expect(exportResp.ok()).toBeTruthy()
-  const jsonBody = await exportResp.json()
+  // Read the JSON from the downloaded FILE, not exportResp.json() — the
+  // browser's own download handling consumes the response body for a real
+  // file download, so re-reading it off the response object races the
+  // download and intermittently returns an empty/exhausted stream.
+  const downloadPath = await download.path()
+  expect(downloadPath, 'download must save to a real file').toBeTruthy()
+  const jsonBody = JSON.parse(readFileSync(downloadPath as string, 'utf-8'))
   expect(jsonBody).toHaveProperty('columns')
   expect(jsonBody).toHaveProperty('rows')
   expect(download.suggestedFilename()).toMatch(/\.json$/)
@@ -185,8 +203,12 @@ test('remaining tabs (Course Analytics, Learning Progress, Assessments, Certific
 
   expect(consoleErrors, `Uncaught page errors while clicking through tabs: ${consoleErrors.join(' | ')}`).toHaveLength(0)
   // Custom Reports is the one genuine "coming soon" tab — confirm it explains
-  // itself rather than showing a bare placeholder.
-  await expect(page.getByText('Custom Report Builder — coming soon')).toBeVisible({ timeout: 10000 })
+  // itself rather than showing a bare placeholder. The heading and the
+  // "COMING SOON" badge are two separate elements (never one combined
+  // string with an em-dash, which is what this checked before and could
+  // never match).
+  await expect(page.getByRole('heading', { name: 'Custom Report Builder', exact: true })).toBeVisible({ timeout: 10000 })
+  await expect(page.getByText('COMING SOON', { exact: true })).toBeVisible()
 })
 
 test.afterAll(async ({ request }, testInfo) => {

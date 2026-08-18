@@ -111,7 +111,7 @@ test('Schedule session — past start time blocked client-side, no POST fired', 
   await expect(page.getByRole('heading', { name: 'Schedule Session' })).toBeVisible({ timeout: 5000 })
 
   await page.getByPlaceholder(/Intro Webinar/i).fill(`Past Session ${Date.now()}`)
-  await page.getByLabel('Instructor').selectOption({ label: new RegExp(instructor.name) })
+  await page.getByLabel('Instructor').selectOption({ value: instructor.id })
 
   const past = new Date(Date.now() - 24 * 60 * 60 * 1000)
   const pad = (n: number) => String(n).padStart(2, '0')
@@ -139,7 +139,7 @@ test('Schedule session — real backend responds; 503 (Zoom unconfigured) render
 
   const title = `LS Create Test ${Date.now()}`
   await page.getByPlaceholder(/Intro Webinar/i).fill(title)
-  await page.getByLabel('Instructor').selectOption({ label: new RegExp(instructor.name) })
+  await page.getByLabel('Instructor').selectOption({ value: instructor.id })
   await page.locator('input[type="datetime-local"]').fill(toDatetimeLocal(futureIso(30)))
 
   const postResp = page.waitForResponse(
@@ -197,7 +197,9 @@ test('startUrl exposed ONLY via "Start (host)" — Join uses joinUrl, startUrl n
   await mockFixtureList(page)
   await gotoLiveSessionsTab(page)
 
-  await expect(page.getByText(FIXTURE_SESSION.title)).toBeVisible({ timeout: 10000 })
+  // exact: true — non-exact also substring-matches the session's own
+  // description text ("A fixture session for UI mechanics tests.").
+  await expect(page.getByText(FIXTURE_SESSION.title, { exact: true })).toBeVisible({ timeout: 10000 })
 
   // startUrl must not appear as visible text anywhere on the page.
   await expect(page.getByText(FIXTURE_SESSION.startUrl)).toHaveCount(0)
@@ -216,8 +218,11 @@ test('Status badge is a pure render of the server value — no status control in
   await mockFixtureList(page)
   await gotoLiveSessionsTab(page)
 
-  await expect(page.getByText(FIXTURE_SESSION.title)).toBeVisible({ timeout: 10000 })
-  await expect(page.getByText('Upcoming', { exact: true })).toBeVisible()
+  // exact: true — non-exact also substring-matches the session's own
+  // description text ("A fixture session for UI mechanics tests.").
+  await expect(page.getByText(FIXTURE_SESSION.title, { exact: true })).toBeVisible({ timeout: 10000 })
+  // Scoped to the table — a status-filter button is also labeled "Upcoming".
+  await expect(page.getByRole('table').getByText('Upcoming', { exact: true })).toBeVisible()
 
   // No select/dropdown/button anywhere offers to set status directly.
   await expect(page.getByLabel(/^status$/i)).toHaveCount(0)
@@ -227,7 +232,9 @@ test('Edit: nothing changed → no PATCH sent (empty patch is a backend 400) (* 
   await mockFixtureList(page)
   await gotoLiveSessionsTab(page)
 
-  await expect(page.getByText(FIXTURE_SESSION.title)).toBeVisible({ timeout: 10000 })
+  // exact: true — non-exact also substring-matches the session's own
+  // description text ("A fixture session for UI mechanics tests.").
+  await expect(page.getByText(FIXTURE_SESSION.title, { exact: true })).toBeVisible({ timeout: 10000 })
   await page.getByRole('button', { name: `Edit ${FIXTURE_SESSION.title}` }).click()
   await expect(page.getByRole('heading', { name: 'Edit Session' })).toBeVisible({ timeout: 5000 })
 
@@ -244,7 +251,9 @@ test('Edit: nothing changed → no PATCH sent (empty patch is a backend 400) (* 
 test('Cancel — confirm dialog explicitly mentions Zoom meeting deletion, DELETE fires (* mock)', async ({ page }) => {
   await mockFixtureList(page)
   await gotoLiveSessionsTab(page)
-  await expect(page.getByText(FIXTURE_SESSION.title)).toBeVisible({ timeout: 10000 })
+  // exact: true — non-exact also substring-matches the session's own
+  // description text ("A fixture session for UI mechanics tests.").
+  await expect(page.getByText(FIXTURE_SESSION.title, { exact: true })).toBeVisible({ timeout: 10000 })
 
   let dialogMessage = ''
   page.once('dialog', (d) => { dialogMessage = d.message(); d.accept() })

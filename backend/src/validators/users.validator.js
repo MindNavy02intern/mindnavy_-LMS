@@ -306,6 +306,17 @@ function validateForceLogoutInput(body) {
   return [];
 }
 
+function validateAddUserNoteInput(body) {
+  const { content } = body || {};
+  if (!content || typeof content !== "string" || content.trim().length === 0) {
+    return ["content is required."];
+  }
+  if (content.trim().length > 2000) {
+    return ["content must not exceed 2000 characters."];
+  }
+  return [];
+}
+
 module.exports = {
   VIOLATION_TYPES,
   normalizeViolationType,
@@ -318,4 +329,5 @@ module.exports = {
   validateResetUserPasswordInput,
   validateSendMessageInput,
   validateForceLogoutInput,
+  validateAddUserNoteInput,
 };

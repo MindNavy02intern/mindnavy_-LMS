@@ -17,6 +17,8 @@ let savedToken: string | null = null
 
 async function stashToken(page: Page) {
   if (!savedToken) {
+    // localStorage is inaccessible on the pre-navigation about:blank page.
+    if (page.url() === 'about:blank') await page.goto('/dashboard')
     savedToken = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
   }
 }

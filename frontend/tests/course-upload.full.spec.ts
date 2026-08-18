@@ -12,6 +12,10 @@ import { test, expect, type Page } from '@playwright/test'
 //          DELETE /api/admin/uploads?path= → { deleted: true }
 // XHR PUT → signed uploadUrl (Supabase / external storage)
 
+const API = 'http://localhost:5001/api/admin'
+const createdCourseIds: string[] = []
+let savedToken = ''
+
 // ── Shared fixtures ───────────────────────────────────────────────────────────
 
 const MOCK_SIGN = {
@@ -31,33 +35,59 @@ const MOCK_CONFIRM = {
   url: 'https://mock-storage.example.com/thumbnails/course-id-test/thumb.jpg',
 };
 
-// Navigate to the edit form for the first available course.
-// Tests that need a real courseId for the upload flow must call this.
+// Navigate to the edit form for a dedicated fixture course created fresh here
+// — never "whichever course is first in the table". Every test below assumes
+// the course starts at the idle/empty thumbnail drop zone, but the table is
+// shared with the rest of the suite and sorted by updatedAt desc, so grabbing
+// the first row broke as soon as some other file's fixture (many of which set
+// a real thumbnail, e.g. instructor-panel-analytics.full.spec.ts) became the
+// most recently updated course — this test then hit the already-uploaded
+// "Replace/Remove" UI instead of a raw <input type="file">, and every test
+// hung for the full 30s timeout waiting on setInputFiles to find an input
+// that was never rendered in that state.
 async function gotoEditForm(page: Page) {
+  // Must navigate before reading localStorage — evaluate() on a fresh
+  // about:blank page throws SecurityError (Chromium restriction).
+  await page.goto('/dashboard')
+  const token = await page.evaluate(() => localStorage.getItem('mn_admin_token') ?? '')
+  expect(token, 'mn_admin_token must exist in localStorage').toBeTruthy()
+  savedToken = token
+  const H = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
+
+  const filterRes = await page.request.get(`${API}/lm/filter-options`, { headers: H })
+  expect(filterRes.ok()).toBeTruthy()
+  const instructorId: string = (await filterRes.json()).data?.instructors?.[0]?.id
+  expect(instructorId, 'At least one INSTRUCTOR user must exist in the DB').toBeTruthy()
+
+  const title = `Upload Fixture ${Date.now()}`
+  const courseRes = await page.request.post(`${API}/courses`, { data: { title, instructorId }, headers: H })
+  expect(courseRes.ok(), 'POST /courses must succeed').toBeTruthy()
+  const courseId: string = (await courseRes.json()).data?.id
+  expect(courseId, 'Course id must be returned').toBeTruthy()
+  createdCourseIds.push(courseId)
+
   await page.goto('/learning-management')
   await page.getByRole('button', { name: 'Courses', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Courses', exact: true })).toBeVisible({ timeout: 15000 })
 
-  // Wait for the data fetch to complete — CoursesTab only renders the pagination
-  // text ("Showing N–M of Z courses") once loading=false, so this is the earliest
-  // moment at which actual data rows (with Edit buttons) are in the DOM.
-  // Checking isVisible() before this point returns false because skeleton rows
-  // have no buttons, which previously caused all 6 tests to skip incorrectly.
-  await expect(page.getByText(/Showing \d+–\d+ of \d+ courses/)).toBeVisible({ timeout: 15000 })
+  const searchResp = page.waitForResponse(r => r.url().includes('/courses') && r.url().includes('search=') && r.ok(), { timeout: 15000 })
+  await page.getByPlaceholder('Search courses…').fill(title)
+  await searchResp
 
-  const firstEditBtn = page.locator('table tbody tr').first()
-    .getByRole('button', { name: /Edit/i })
-
-  // isVisible() is safe here because loading is confirmed done above.
-  const hasEditBtn = await firstEditBtn.isVisible().catch(() => false)
-  if (!hasEditBtn) {
-    test.skip(true, 'No courses in DB — seed at least one course and re-run.')
-    return false
-  }
-  await firstEditBtn.click()
+  const row = page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
+  await expect(row).toBeVisible({ timeout: 10000 })
+  await row.getByRole('button', { name: `Edit ${title}`, exact: true }).click()
   await expect(page.getByRole('heading', { name: /Edit Course|Create Course/i })).toBeVisible({ timeout: 10000 })
   return true
 }
+
+test.afterAll(async ({ request }) => {
+  if (!savedToken) return
+  const H = { Authorization: `Bearer ${savedToken}` }
+  for (const id of createdCourseIds) {
+    await request.delete(`${API}/courses/${id}`, { headers: H }).catch(() => null)
+  }
+})
 
 // Set up the standard upload API mocks (sign → PUT → confirm).
 // Returns a cleanup handle so individual tests can override specific routes.

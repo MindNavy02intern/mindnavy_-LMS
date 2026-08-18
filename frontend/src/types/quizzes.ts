@@ -1,18 +1,16 @@
-// Quizzes & Exams domain types — v1 (4 question types only).
+// Quizzes & Exams domain types — all 6 design-doc question types.
 // Source of truth: backend/src/{validators,services}/quizzes.validator.js / .service.js
 // (no QUIZZES_CONTRACT.md exists in the repo — reverse-engineered from backend source).
 //
-// v1 ships MULTIPLE_CHOICE, TRUE_FALSE, MULTI_SELECT, ESSAY only. FILL_IN_BLANK
-// and MATCHING exist in the Prisma enum for schema-forward-compat but the
-// backend 400s them — they are intentionally absent from QuestionType below so
-// no editor can ever be built for them by accident.
+// FILL_IN_BLANK and MATCHING started as schema-forward-compat-only (400'd by
+// the validator, no editor) — both now have real editors and are accepted.
 //
 // CRITICAL: questionCount / totalPoints / autoGradable are server-derived —
 // never compute them client-side (IMPACT_MAP R1/R4). questionCount ships on
 // both list and detail; totalPoints/autoGradable are detail-only (derived
 // live from the question list server-side, not stored).
 
-export type QuestionType = 'MULTIPLE_CHOICE' | 'TRUE_FALSE' | 'MULTI_SELECT' | 'ESSAY';
+export type QuestionType = 'MULTIPLE_CHOICE' | 'TRUE_FALSE' | 'MULTI_SELECT' | 'ESSAY' | 'FILL_IN_BLANK' | 'MATCHING';
 
 export interface MultipleChoiceData {
   options:      string[]; // 2-10
@@ -28,13 +26,25 @@ export interface MultiSelectData {
   correctIndexes: number[]; // non-empty, unique
 }
 
+export interface FillInBlankData {
+  correctAnswer: string; // 1-500 chars, exact-match graded
+}
+
+export interface MatchingPair { left: string; right: string }
+
+export interface MatchingData {
+  pairs: MatchingPair[]; // 2-10 pairs
+}
+
 // Discriminated union — a question's `data` shape is locked to its `type`.
 // Mirrors the backend rule that (type, data) always travel together.
 export type Question =
   | { id: string; quizId: string; type: 'MULTIPLE_CHOICE'; prompt: string; data: MultipleChoiceData; points: number; order: number; createdAt: string; updatedAt: string }
   | { id: string; quizId: string; type: 'TRUE_FALSE';      prompt: string; data: TrueFalseData;      points: number; order: number; createdAt: string; updatedAt: string }
   | { id: string; quizId: string; type: 'MULTI_SELECT';    prompt: string; data: MultiSelectData;    points: number; order: number; createdAt: string; updatedAt: string }
-  | { id: string; quizId: string; type: 'ESSAY';           prompt: string; data: null;               points: number; order: number; createdAt: string; updatedAt: string };
+  | { id: string; quizId: string; type: 'ESSAY';           prompt: string; data: null;               points: number; order: number; createdAt: string; updatedAt: string }
+  | { id: string; quizId: string; type: 'FILL_IN_BLANK';   prompt: string; data: FillInBlankData;    points: number; order: number; createdAt: string; updatedAt: string }
+  | { id: string; quizId: string; type: 'MATCHING';        prompt: string; data: MatchingData;       points: number; order: number; createdAt: string; updatedAt: string };
 
 export interface Quiz {
   id:                 string;
@@ -84,7 +94,9 @@ export type QuestionTypeData =
   | { type: 'MULTIPLE_CHOICE'; data: MultipleChoiceData }
   | { type: 'TRUE_FALSE';      data: TrueFalseData }
   | { type: 'MULTI_SELECT';    data: MultiSelectData }
-  | { type: 'ESSAY';           data: null };
+  | { type: 'ESSAY';           data: null }
+  | { type: 'FILL_IN_BLANK';   data: FillInBlankData }
+  | { type: 'MATCHING';        data: MatchingData };
 
 export type CreateQuestionPayload = QuestionTypeData & {
   prompt: string;

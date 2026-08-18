@@ -1,5 +1,7 @@
-// Assessments tab (Quizzes & Exams) — end-to-end tests (v1: MULTIPLE_CHOICE,
-// TRUE_FALSE, MULTI_SELECT, ESSAY question types only).
+// Assessments tab (Quizzes & Exams) — end-to-end tests. All 6 question types
+// (MULTIPLE_CHOICE, TRUE_FALSE, MULTI_SELECT, ESSAY, FILL_IN_BLANK, MATCHING)
+// have real editors as of 2026-08-17 — FILL_IN_BLANK/MATCHING used to 400 and
+// have no editor at all; see the "all 6 question types" test below.
 //
 // No QUIZZES_CONTRACT.md exists in the repo — endpoints/shapes were reverse-
 // engineered from backend/src/{routes,controllers,services,validators}/
@@ -186,7 +188,11 @@ test('Edit quiz — passingGrade updates, attempts/timeLimit clear to unlimited/
   await expect(page.getByText(title)).toBeVisible({ timeout: 10000 })
 
   await page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
-    .getByRole('button', { name: /Edit/i }).first().click()
+    // Anchored to the start: an unanchored /Edit/i also matches the row's
+    // title link when the fixture title itself contains "Edit" (e.g. "Quiz
+    // Edit Test ..."), and .first() then grabs that link instead of the
+    // actual Edit action button, since it sits earlier in the row's DOM.
+    .getByRole('button', { name: /^Edit /i }).first().click()
   await expect(page.getByRole('heading', { name: 'Edit Quiz' })).toBeVisible({ timeout: 5000 })
 
   // Change passingGrade, then explicitly clear attempts + time limit to null via their checkboxes
@@ -220,7 +226,11 @@ test('Edit quiz: nothing changed → no PATCH sent (empty patch is a backend 400
   await expect(page.getByText(title)).toBeVisible({ timeout: 10000 })
 
   await page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
-    .getByRole('button', { name: /Edit/i }).first().click()
+    // Anchored to the start: an unanchored /Edit/i also matches the row's
+    // title link when the fixture title itself contains "Edit" (e.g. "Quiz
+    // Edit Test ..."), and .first() then grabs that link instead of the
+    // actual Edit action button, since it sits earlier in the row's DOM.
+    .getByRole('button', { name: /^Edit /i }).first().click()
   await expect(page.getByRole('heading', { name: 'Edit Quiz' })).toBeVisible()
 
   let patchFired = false
@@ -254,7 +264,8 @@ test('Delete quiz — confirm dialog required, permanently removes quiz and its 
     { timeout: 10000 },
   )
   await page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
-    .getByRole('button', { name: /Delete/i }).first().click()
+    // Anchored — same title-substring collision risk as the Edit button above.
+    .getByRole('button', { name: /^Delete /i }).first().click()
   await deleteResp
 
   await expect(page.getByText(title)).not.toBeVisible({ timeout: 5000 })
@@ -266,9 +277,9 @@ test('Delete quiz — confirm dialog required, permanently removes quiz and its 
   if (idx !== -1) createdQuizIds.splice(idx, 1)
 })
 
-// ── Tests: question type picker (v1 scope guard) ────────────────────────────────
+// ── Tests: question type picker (all 6 types) ───────────────────────────────────
 
-test('Question type picker offers ONLY the 4 v1 types — no Fill-in-Blank / Matching', async ({ page }) => {
+test('Question type picker offers all 6 question types, including Fill in the Blank / Matching', async ({ page }) => {
   await page.goto('/dashboard')
   const H = await apiHeaders(page)
   const title = `Quiz Picker Guard ${Date.now()}`
@@ -289,18 +300,16 @@ test('Question type picker offers ONLY the 4 v1 types — no Fill-in-Blank / Mat
   await expect(dialog.getByRole('button', { name: 'True / False' })).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Multi-Select' })).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Essay' })).toBeVisible()
+  await expect(dialog.getByRole('button', { name: 'Fill in the Blank' })).toBeVisible()
+  await expect(dialog.getByRole('button', { name: 'Matching', exact: true })).toBeVisible()
 
-  // Exactly 4 type options in the picker grid
-  await expect(dialog.locator('[aria-pressed]')).toHaveCount(4)
-
-  const dialogText = await dialog.textContent()
-  expect(dialogText).not.toMatch(/Fill.?in.?Blank/i)
-  expect(dialogText).not.toMatch(/Matching/i)
+  // Exactly 6 type options in the picker grid
+  await expect(dialog.locator('[aria-pressed]')).toHaveCount(6)
 })
 
 // ── Tests: questions — all 4 v1 types, correct data shapes ──────────────────────
 
-test('Add all 4 question types via the UI — correct data shapes, Essay flagged manually graded', async ({ page }) => {
+test('Add all 6 question types via the UI — correct data shapes, Essay flagged manually graded', async ({ page }) => {
   await page.goto('/dashboard')
   const H = await apiHeaders(page)
   const title = `Quiz AllTypes ${Date.now()}`
@@ -382,11 +391,46 @@ test('Add all 4 question types via the UI — correct data shapes, Essay flagged
   // Badge visible on the essay row without a reload — appended locally
   await expect(page.getByText('Manually graded')).toBeVisible({ timeout: 5000 })
 
-  // All 4 prompts visible in the list, no refetch-flicker issue
+  // FILL_IN_BLANK — text answer input
+  await page.getByRole('button', { name: 'Add Question' }).click()
+  dialog = page.getByRole('dialog', { name: /Add question/i })
+  await expect(dialog).toBeVisible({ timeout: 5000 })
+  await dialog.getByRole('button', { name: 'Fill in the Blank' }).click()
+  await dialog.getByPlaceholder('Enter the question text…').fill('The capital of France is ____.')
+  await dialog.getByLabel('Correct answer').fill('Paris')
+  postResp = page.waitForResponse(r => r.url().includes('/questions') && r.request().method() === 'POST' && r.ok(), { timeout: 10000 })
+  await dialog.getByRole('button', { name: 'Add Question' }).click()
+  resp = await postResp
+  body = (await resp.json()).data
+  expect(body.type).toBe('FILL_IN_BLANK')
+  expect(body.data.correctAnswer).toBe('Paris')
+  await expect(dialog).not.toBeVisible({ timeout: 5000 })
+
+  // MATCHING — 2 pairs
+  await page.getByRole('button', { name: 'Add Question' }).click()
+  dialog = page.getByRole('dialog', { name: /Add question/i })
+  await expect(dialog).toBeVisible({ timeout: 5000 })
+  await dialog.getByRole('button', { name: 'Matching', exact: true }).click()
+  await dialog.getByPlaceholder('Enter the question text…').fill('Match the capital to its country.')
+  await dialog.getByLabel('Pair 1 left value').fill('France')
+  await dialog.getByLabel('Pair 1 right value').fill('Paris')
+  await dialog.getByLabel('Pair 2 left value').fill('Japan')
+  await dialog.getByLabel('Pair 2 right value').fill('Tokyo')
+  postResp = page.waitForResponse(r => r.url().includes('/questions') && r.request().method() === 'POST' && r.ok(), { timeout: 10000 })
+  await dialog.getByRole('button', { name: 'Add Question' }).click()
+  resp = await postResp
+  body = (await resp.json()).data
+  expect(body.type).toBe('MATCHING')
+  expect(body.data.pairs).toEqual([{ left: 'France', right: 'Paris' }, { left: 'Japan', right: 'Tokyo' }])
+  await expect(dialog).not.toBeVisible({ timeout: 5000 })
+
+  // All 6 prompts visible in the list, no refetch-flicker issue
   await expect(page.getByText('Which hook manages local state?')).toBeVisible()
   await expect(page.getByText('React re-renders every component on every state change.')).toBeVisible()
   await expect(page.getByText('Which of these are valid array methods?')).toBeVisible()
   await expect(page.getByText('Explain the virtual DOM in your own words.')).toBeVisible()
+  await expect(page.getByText('The capital of France is ____.')).toBeVisible()
+  await expect(page.getByText('Match the capital to its country.')).toBeVisible()
 
   void quizId
 })

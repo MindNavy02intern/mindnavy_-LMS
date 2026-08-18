@@ -4,6 +4,8 @@ import {
   apiGetMe,
   apiLogin,
   apiLogout,
+  apiUpdateProfile,
+  apiVerifyMfaLogin,
   getStoredToken,
   removeToken,
   storeToken,
@@ -16,10 +18,17 @@ interface AuthContextType {
   loading: boolean;
   /** True when the demo admin session is active (DEV only). */
   isDemoMode: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  /** Returns { mfaRequired: true, mfaToken } instead of signing in when the admin has TOTP MFA enabled — caller must then call completeMfaLogin(). */
+  login: (email: string, password: string) => Promise<{ mfaRequired: boolean; mfaToken?: string }>;
+  /** Second step of a login that returned mfaRequired — verifies the 6-digit code and completes sign-in. */
+  completeMfaLogin: (mfaToken: string, code: string) => Promise<void>;
   signOut: () => Promise<void>;
   /** Activates the mock admin session for frontend testing (DEV only, no-op in production). */
   enterDemoMode: () => void;
+  /** ProfilePage self-service edit — updates AdminUser.fullName/phone/bio and refreshes local state. */
+  updateProfile: (updates: { fullName?: string; phone?: string | null; bio?: string | null }) => Promise<void>;
+  /** Re-fetches /me — used after an out-of-band change to the current admin (e.g. MFA enable/disable) that AuthContext wouldn't otherwise see. */
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -98,8 +107,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   // ── login ─────────────────────────────────────────────────────────────────
-  const login = async (email: string, password: string): Promise<void> => {
-    const { token, admin } = await apiLogin(email, password);
+  const login = async (email: string, password: string): Promise<{ mfaRequired: boolean; mfaToken?: string }> => {
+    const result = await apiLogin(email, password);
+    if (result.mfaRequired) return { mfaRequired: true, mfaToken: result.mfaToken };
+    storeToken(result.token);
+    setUser(result.admin);
+    setProfile(mapAdminToProfile(result.admin));
+    return { mfaRequired: false };
+  };
+
+  // ── completeMfaLogin ─────────────────────────────────────────────────────────
+  const completeMfaLogin = async (mfaToken: string, code: string): Promise<void> => {
+    const { token, admin } = await apiVerifyMfaLogin(mfaToken, code);
     storeToken(token);
     setUser(admin);
     setProfile(mapAdminToProfile(admin));
@@ -124,6 +143,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setProfile(null);
   };
 
+  // ── updateProfile ─────────────────────────────────────────────────────────
+  const updateProfile = async (updates: { fullName?: string; phone?: string | null; bio?: string | null }): Promise<void> => {
+    const token = getStoredToken();
+    if (!token) throw new Error('Not authenticated.');
+    const { admin } = await apiUpdateProfile(token, updates);
+    setUser(admin);
+    setProfile(mapAdminToProfile(admin));
+  };
+
+  // ── refreshUser ───────────────────────────────────────────────────────────
+  const refreshUser = async (): Promise<void> => {
+    const token = getStoredToken();
+    if (!token) return;
+    const { admin } = await apiGetMe(token);
+    setUser(admin);
+    setProfile(mapAdminToProfile(admin));
+  };
+
   // ── DEV-ONLY: enterDemoMode ───────────────────────────────────────────────
   const enterDemoMode = () => {
     if (!import.meta.env.DEV) return;
@@ -136,7 +173,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, isDemoMode, login, signOut, enterDemoMode }}>
+    <AuthContext.Provider value={{ user, profile, loading, isDemoMode, login, completeMfaLogin, signOut, enterDemoMode, updateProfile, refreshUser }}>
       {!loading && children}
     </AuthContext.Provider>
   );

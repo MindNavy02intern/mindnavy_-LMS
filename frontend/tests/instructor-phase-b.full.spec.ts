@@ -43,18 +43,38 @@ test.beforeAll(async ({ browser, request }) => {
   if (!instructorId) return
 
   courseTitle = `QA Phase B Course ${stamp}`
+  const H = { Authorization: `Bearer ${savedToken}` }
+  // Submit readiness (§4.1) needs description + thumbnail + ≥1 section with
+  // ≥1 lesson — without these the /submit call below 400s and the course
+  // silently stays in Draft, which is what was actually happening here.
   const courseResp = await request.post(`${API}/courses`, {
-    headers: { Authorization: `Bearer ${savedToken}` },
-    data: { title: courseTitle, instructorId },
+    headers: H,
+    data: {
+      title: courseTitle,
+      instructorId,
+      description: 'A test course description for instructor Phase B testing.',
+      thumbnail: 'https://example.com/thumb.jpg',
+    },
   })
   const courseBody = await courseResp.json().catch(() => null)
   courseId = courseBody?.data?.id ?? null
   if (!courseId) return
 
-  // Draft -> Pending, so it lands under the Courses tab's Pending sub-tab.
-  await request.post(`${API}/courses/${courseId}/submit`, {
-    headers: { Authorization: `Bearer ${savedToken}` },
+  const sectionResp = await request.post(`${API}/courses/${courseId}/sections`, {
+    headers: H,
+    data: { title: 'Section 1' },
   })
+  const sectionBody = await sectionResp.json().catch(() => null)
+  const sectionId = sectionBody?.data?.id ?? null
+  if (!sectionId) return
+
+  await request.post(`${API}/sections/${sectionId}/lessons`, {
+    headers: H,
+    data: { title: 'Lesson 1', type: 'TEXT', content: 'Hello world.' },
+  })
+
+  // Draft -> Pending, so it lands under the Courses tab's Pending sub-tab.
+  await request.post(`${API}/courses/${courseId}/submit`, { headers: H })
 })
 
 test.afterAll(async ({ request }) => {
@@ -139,7 +159,9 @@ test('Suspending an instructor with violation type + reason updates the status b
   expect(resp.ok()).toBeTruthy()
 
   // Status badge flips immediately from the PATCH response — no reload.
-  await expect(page.getByText('suspended', { exact: true })).toBeVisible({ timeout: 10000 })
+  // .first(): the status shows in both the table row behind the panel and
+  // the panel's own badge — either confirms the update landed.
+  await expect(page.getByText('suspended', { exact: true }).first()).toBeVisible({ timeout: 10000 })
   // Suspension History section reflects the new entry.
   await expect(page.getByText('SUSPENDED', { exact: true })).toBeVisible({ timeout: 10000 })
 })
@@ -148,7 +170,8 @@ test('Reactivating a suspended instructor returns the status to active', async (
   test.skip(!instructorId, 'Setup instructor was not created — backend may be unavailable')
 
   await openPanel(page)
-  await expect(page.getByText('suspended', { exact: true })).toBeVisible({ timeout: 10000 })
+  // .first(): status shows in both the table row and the panel badge.
+  await expect(page.getByText('suspended', { exact: true }).first()).toBeVisible({ timeout: 10000 })
 
   page.once('dialog', dialog => dialog.accept())
   const [resp] = await Promise.all([
@@ -157,7 +180,7 @@ test('Reactivating a suspended instructor returns the status to active', async (
   ])
   expect(resp.ok()).toBeTruthy()
 
-  await expect(page.getByText('active', { exact: true })).toBeVisible({ timeout: 10000 })
+  await expect(page.getByText('active', { exact: true }).first()).toBeVisible({ timeout: 10000 })
   await expect(page.getByText('REACTIVATED', { exact: true })).toBeVisible({ timeout: 10000 })
 })
 
@@ -190,7 +213,10 @@ test('Uploading a document adds it to the Documents list', async ({ page }) => {
   test.skip(signResp.status() === 503, 'Document storage bucket not configured in this environment')
   expect(signResp.ok()).toBeTruthy()
 
-  await expect(page.getByText(uploadedFileName)).toBeVisible({ timeout: 20000 })
+  // Scoped to the table — the upload success toast ("<file> uploaded.") also
+  // contains the filename and can still be on screen, causing a strict-mode
+  // violation if matched unscoped.
+  await expect(page.locator('table').getByText(uploadedFileName)).toBeVisible({ timeout: 20000 })
 
   const listResp = await page.request.get(`${API}/instructors/${instructorId}/documents`, {
     headers: { Authorization: `Bearer ${savedToken}` },

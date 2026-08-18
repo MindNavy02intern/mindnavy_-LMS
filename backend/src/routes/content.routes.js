@@ -21,4 +21,10 @@ router.post("/confirm", requireAdminAuth, adminUserActionRateLimiter, c.confirm)
 router.patch("/:id",    requireAdminAuth, adminUserActionRateLimiter, c.updateContent);
 router.delete("/:id",   requireAdminAuth, adminUserActionRateLimiter, c.deleteContent);
 
+// ── Course reuse (CourseContentUsage) — additive alongside the item's own
+// courseId; this is every OTHER course that has also linked the item. ──────
+router.get("/:id/courses",              requireAdminAuth, coursesReadRateLimiter, c.listContentCourses);
+router.post("/:id/courses/:courseId",   requireAdminAuth, adminUserActionRateLimiter, c.linkCourse);
+router.delete("/:id/courses/:courseId", requireAdminAuth, adminUserActionRateLimiter, c.unlinkCourse);
+
 module.exports = router;

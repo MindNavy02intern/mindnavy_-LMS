@@ -117,13 +117,36 @@ test('Archive a Published course → Dashboard Courses KPI decrements without ha
   createdCourseId  = createBody.data?.id as string
   expect(createdCourseId, 'Setup: course ID must be returned').toBeTruthy()
 
-  // 2. Publish the course. PATCH /courses/:id accepts { status } per validateUpdate.
-  //    'Published' → STATUS_ENUM['Published'] = 'PUBLISHED' (Prisma enum value).
-  const publishResp = await page.request.patch(`${API}/courses/${createdCourseId}`, {
-    data: { status: 'Published' },
+  // 2. Reach Published the real way. courses.service.js's updateCourse
+  //    explicitly rejects a `status` field in its PATCH body ("transitions go
+  //    through submit/approve/reject/archive only") — a direct PATCH to
+  //    Published always 400s. §4.1 sequencing: description + thumbnail + a
+  //    section with a lesson must exist before /submit accepts the course.
+  const patchResp = await page.request.patch(`${API}/courses/${createdCourseId}`, {
+    data: { description: 'A test course description.', thumbnail: 'https://example.com/thumb.jpg' },
     headers: H,
   })
-  expect(publishResp.ok(), `Setup: PATCH /courses/${createdCourseId} to Published must succeed`).toBeTruthy()
+  expect(patchResp.ok(), 'Setup: PATCH /courses/:id (description+thumbnail) must succeed').toBeTruthy()
+
+  const sectionResp = await page.request.post(`${API}/courses/${createdCourseId}/sections`, {
+    data: { title: 'Section 1' },
+    headers: H,
+  })
+  expect(sectionResp.ok(), 'Setup: POST /courses/:id/sections must succeed').toBeTruthy()
+  const sectionId: string = (await sectionResp.json()).data?.id
+  expect(sectionId, 'Setup: section ID must be returned').toBeTruthy()
+
+  const lessonResp = await page.request.post(`${API}/sections/${sectionId}/lessons`, {
+    data: { title: 'Lesson 1', type: 'TEXT', content: 'Hello world.' },
+    headers: H,
+  })
+  expect(lessonResp.ok(), 'Setup: POST /sections/:id/lessons must succeed').toBeTruthy()
+
+  const submitResp = await page.request.post(`${API}/courses/${createdCourseId}/submit`, { headers: H })
+  expect(submitResp.ok(), 'Setup: POST /courses/:id/submit must succeed').toBeTruthy()
+
+  const approveResp = await page.request.post(`${API}/courses/${createdCourseId}/approve`, { headers: H })
+  expect(approveResp.ok(), 'Setup: POST /courses/:id/approve must succeed').toBeTruthy()
 
   // ── Step 1: Read kpiBefore from a fresh Dashboard load ──
   // Navigate (hard reload) so getDashboardCore() re-runs and picks up the new

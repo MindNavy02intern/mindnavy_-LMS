@@ -82,9 +82,13 @@ async function createPendingCourse(
 async function openCoursesTab(page: Page) {
   await page.goto('/learning-management')
   await page.locator('button', { hasText: /^Courses$/ }).first().click()
-  // Switch to the "Pending" status tab to surface Pending courses
+  // Switch to the "Pending" status tab to surface Pending courses.
+  // Anchored-only-at-start: real text is "Pending" + a count span
+  // concatenated with no separator (CoursesTab.tsx) once statusCounts
+  // loads — a fully-anchored /^Pending$/ only ever matched by luck, before
+  // that count attached.
   await expect(page.locator('table')).toBeVisible({ timeout: 10000 })
-  await page.locator('button', { hasText: /^Pending$/ }).first().click()
+  await page.locator('button', { hasText: /^Pending/ }).first().click()
 }
 
 // ── Cleanup ───────────────────────────────────────────────────────────────────
@@ -174,16 +178,18 @@ test('Approval: Reject modal opens, validates required reason, counter', async (
   await row.locator(`button[aria-label="Reject ${title}"]`).click()
 
   // Modal visible with header and textarea
-  await expect(page.getByText('Request Changes')).toBeVisible({ timeout: 3000 })
+  // getByRole('heading'): plain text also matches the submit button's own
+  // label ("Request Changes"), whose accessible name differs (aria-label
+  // "Submit rejection") but whose visible text content is identical.
+  await expect(page.getByRole('heading', { name: 'Request Changes' })).toBeVisible({ timeout: 3000 })
   const textarea = page.getByLabel('Rejection reason')
   await expect(textarea).toBeVisible()
 
   // Counter starts at 0
   await expect(page.getByText('0/1000')).toBeVisible()
 
-  // Submit with empty reason → validation error
-  await page.getByRole('button', { name: 'Request Changes' }).click()
-  await expect(page.getByText('Reason is required.')).toBeVisible({ timeout: 2000 })
+  // Empty reason → submit is disabled client-side (not a click-then-error flow)
+  await expect(page.getByRole('button', { name: 'Submit rejection' })).toBeDisabled()
 
   // Fill in reason → counter updates
   const reason = 'Please add more detailed examples in each lesson.'
@@ -211,12 +217,12 @@ test('Approval: Reject submits reason → POST reject, toast, course removed fro
     r => r.url().includes('/reject') && r.request().method() === 'POST',
     { timeout: 15000 },
   )
-  await page.getByRole('button', { name: 'Request Changes' }).click()
+  await page.getByRole('button', { name: 'Submit rejection' }).click()
   const resp = await rejectResp
   expect(resp.ok(), 'POST /reject must succeed').toBeTruthy()
 
   // Modal closes and success toast appears
-  await expect(page.getByText('Request Changes')).not.toBeVisible({ timeout: 3000 })
+  await expect(page.getByRole('heading', { name: 'Request Changes' })).not.toBeVisible({ timeout: 3000 })
   await expect(page.getByText(/returned to Draft/i)).toBeVisible({ timeout: 5000 })
 })
 
@@ -241,11 +247,14 @@ test('Approval: rejectionReason banner visible on Basic Info after reject', asyn
     r => r.url().includes('/reject') && r.request().method() === 'POST',
     { timeout: 15000 },
   )
-  await page.getByRole('button', { name: 'Request Changes' }).click()
+  await page.getByRole('button', { name: 'Submit rejection' }).click()
   await rejectResp
 
   // Navigate to the course Basic Info (edit step) — rejection reason must be shown
-  await page.locator('button', { hasText: /^All$/ }).first().click()
+  // Anchored-only-at-start: the tab's real text is "All" + a count span
+  // concatenated with no separator (CoursesTab.tsx), so a fully-anchored
+  // /^All$/ can never match once statusCounts has loaded.
+  await page.locator('button', { hasText: /^All/ }).first().click()
   const draftRow = page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
   await expect(draftRow).toBeVisible({ timeout: 10000 })
   await draftRow.locator(`button[aria-label="Edit ${title}"]`).click()
@@ -306,10 +315,14 @@ test('Approval: double-click prevention — Approve button disabled during reque
   const row = page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
   await expect(row).toBeVisible({ timeout: 10000 })
 
-  // Delay the POST /approve response so we can observe the in-flight disabled state
+  // Delay the POST /approve response so we can observe the in-flight disabled
+  // state. 3000ms (not 1000ms) — under full-suite load the click→re-render
+  // round trip itself can eat a meaningful chunk of a too-tight window, so a
+  // short delay risks the assertion polling past the disabled state entirely
+  // rather than actually catching a real regression.
   await page.route('**/courses/*/approve', async (route) => {
     if (route.request().method() === 'POST') {
-      await new Promise<void>(r => setTimeout(r, 1000))
+      await new Promise<void>(r => setTimeout(r, 3000))
       await route.continue()
     } else {
       await route.continue()
@@ -320,7 +333,7 @@ test('Approval: double-click prevention — Approve button disabled during reque
   await row.locator(`button[aria-label="Approve ${title}"]`).click()
 
   // While request is in-flight the Approve button must be disabled
-  await expect(row.locator(`button[aria-label="Approve ${title}"]`)).toBeDisabled({ timeout: 2000 })
+  await expect(row.locator(`button[aria-label="Approve ${title}"]`)).toBeDisabled({ timeout: 8000 })
 
   // Let the request complete
   await expect(page.getByText(/approved and published/i)).toBeVisible({ timeout: 10000 })
@@ -343,20 +356,25 @@ test('Approval: double-click prevention — Request Changes button disabled duri
   const reason = 'Please fix the introduction section.'
   await page.getByLabel('Rejection reason').fill(reason)
 
-  // Delay the POST /reject response
+  // Delay the POST /reject response. 3000ms — see the Approve test's comment
+  // above for why a longer delay/window is more reliable under load.
   await page.route('**/courses/*/reject', async (route) => {
     if (route.request().method() === 'POST') {
-      await new Promise<void>(r => setTimeout(r, 1000))
+      await new Promise<void>(r => setTimeout(r, 3000))
       await route.continue()
     } else {
       await route.continue()
     }
   })
 
-  await page.getByRole('button', { name: 'Request Changes' }).click()
+  await page.getByRole('button', { name: 'Submit rejection' }).click()
 
-  // While in-flight: button shows "Sending…" and is disabled
-  await expect(page.getByRole('button', { name: /Sending/i })).toBeDisabled({ timeout: 2000 })
+  // While in-flight: button shows "Sending…" and is disabled. The button's
+  // aria-label is the STATIC "Submit rejection" (CoursesTab.tsx:717) — only
+  // its visible text switches to "Sending…" — so the accessible name never
+  // actually changes; re-query by the stable aria-label, same as the sibling
+  // Approve test does via its own stable aria-label locator.
+  await expect(page.getByRole('button', { name: 'Submit rejection' })).toBeDisabled({ timeout: 8000 })
 
   // Let complete — modal closes and toast appears
   await expect(page.getByText(/returned to Draft/i)).toBeVisible({ timeout: 10000 })
@@ -379,7 +397,10 @@ test('Approval: Approve/Reject not shown on non-Pending rows', async ({ page }) 
 
   await openCoursesTab(page)
   // Switch to All tab to see Draft course
-  await page.locator('button', { hasText: /^All$/ }).first().click()
+  // Anchored-only-at-start: the tab's real text is "All" + a count span
+  // concatenated with no separator (CoursesTab.tsx), so a fully-anchored
+  // /^All$/ can never match once statusCounts has loaded.
+  await page.locator('button', { hasText: /^All/ }).first().click()
 
   const row = page.locator('tr').filter({ has: page.locator('td', { hasText: draftTitle }) })
   await expect(row).toBeVisible({ timeout: 10000 })

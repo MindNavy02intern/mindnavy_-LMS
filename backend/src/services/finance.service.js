@@ -1,4 +1,7 @@
 const prisma = require("../config/prisma");
+const { fireAutomationTrigger } = require("./automationTriggers.service");
+const { sendMail } = require("../utils/mailer");
+const settingsService = require("./settings.service");
 
 // ── Finance service — Payments, Subscriptions, Invoices, Transactions,
 // Refunds, Instructor Payouts, Coupons, Tax Rules, Billing Settings,
@@ -290,6 +293,30 @@ async function extendSubscription(id, { renewalDate }, adminId) {
   return mapSubscription(sub, await resolveUsers([current.userId]));
 }
 
+// Background sweep (server.js setInterval, same convention as
+// sendDueAnnouncements/scheduledReports) — nothing else in this codebase ever
+// flips a Subscription to EXPIRED (confirmed: extendSubscription only ever
+// resurrects FROM it). Flips ACTIVE subscriptions whose endDate has passed,
+// fires SUBSCRIPTION_EXPIRY per affected user. adminId null (system-authored),
+// same precedent as ScheduledReport's RUN audit rows.
+async function checkExpiringSubscriptions() {
+  const expired = await safe(() => prisma.subscription.findMany({
+    where: { status: "ACTIVE", endDate: { not: null, lte: new Date() } },
+    select: { id: true, userId: true, planType: true },
+  }), []);
+
+  for (const sub of expired) {
+    try {
+      await prisma.subscription.update({ where: { id: sub.id }, data: { status: "EXPIRED" } });
+      await financeAuditLog(null, "SUBSCRIPTION_EXPIRED", { subscriptionId: sub.id, userId: sub.userId });
+      await fireAutomationTrigger("SUBSCRIPTION_EXPIRY", sub.userId, { planType: sub.planType });
+    } catch (err) {
+      console.error(`[finance.service] subscription expiry failed for ${sub.id}:`, err.message);
+    }
+  }
+  return { expired: expired.length };
+}
+
 // ── Invoices ──────────────────────────────────────────────────────────────────
 
 const INVOICE_SELECT = {
@@ -384,24 +411,59 @@ async function voidInvoice(id, adminId) {
   return mapInvoice(inv, await resolveUsers([current.userId]));
 }
 
+function formatMoney(n) { return `$${round2(n ?? 0).toFixed(2)}`; }
+
+// Best-effort — never blocks the DRAFT→SENT status flip on a mail failure.
+async function sendInvoiceEmail(inv, userId) {
+  try {
+    const user = await prisma.appUser.findUnique({ where: { id: userId }, select: { email: true, fullName: true } });
+    if (!user?.email) return;
+
+    const dueText = inv.dueDate ? new Date(inv.dueDate).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "on receipt";
+    const items = Array.isArray(inv.items) ? inv.items : [];
+    const itemsText = items.map((i) => `- ${i.name} x${i.qty} — ${formatMoney(i.total)}`).join("\n");
+    const itemsHtml = items.map((i) => `<tr><td style="padding:4px 8px;">${i.name}</td><td style="padding:4px 8px;text-align:center;">${i.qty}</td><td style="padding:4px 8px;text-align:right;">${formatMoney(i.total)}</td></tr>`).join("");
+
+    const text = `Invoice ${inv.invoiceNumber}\n\nBill to: ${user.fullName}\nTotal: ${formatMoney(inv.total)}\nDue: ${dueText}\n\nItems:\n${itemsText}\n\nSubtotal: ${formatMoney(inv.subtotal)}\nTax: ${formatMoney(inv.taxAmount)}\nTotal: ${formatMoney(inv.total)}`;
+    const html = `
+      <div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;padding:24px;">
+        <h2 style="color:#1e3a5f;margin:0 0 4px;">Invoice ${inv.invoiceNumber}</h2>
+        <p style="color:#666;font-size:13px;margin:0 0 16px;">Due ${dueText}</p>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead><tr style="border-bottom:1px solid #ddd;"><th style="text-align:left;padding:4px 8px;">Item</th><th style="padding:4px 8px;">Qty</th><th style="text-align:right;padding:4px 8px;">Total</th></tr></thead>
+          <tbody>${itemsHtml}</tbody>
+        </table>
+        <p style="text-align:right;font-size:14px;margin-top:12px;">Subtotal: ${formatMoney(inv.subtotal)}<br/>Tax: ${formatMoney(inv.taxAmount)}<br/><strong>Total: ${formatMoney(inv.total)}</strong></p>
+      </div>`;
+
+    await sendMail({ to: user.email, subject: `Invoice ${inv.invoiceNumber}`, text, html });
+  } catch (err) {
+    console.error("[finance.service] sendInvoiceEmail failed:", err.message);
+  }
+}
+
 async function sendInvoice(id, adminId) {
   const current = await getInvoiceOrThrow(id);
   if (current.status === "VOID") throw domainError("INVOICE_VOID_IMMUTABLE");
+  const wasDraft = current.status === "DRAFT";
   const inv = await prisma.invoice.update({
     where: { id },
-    data: { status: current.status === "DRAFT" ? "SENT" : current.status },
+    data: { status: wasDraft ? "SENT" : current.status },
     select: INVOICE_SELECT,
   });
   await financeAuditLog(adminId, "INVOICE_SENT", { invoiceId: id });
+
+  if (wasDraft) await sendInvoiceEmail(current, current.userId);
+
   return mapInvoice(inv, await resolveUsers([current.userId]));
 }
 
-// PDF generation is out of scope for v1 (no gateway, no template engine
-// wired) — returns a placeholder payload the frontend renders as "coming
-// soon" instead of a broken binary download.
-async function getInvoiceDownloadPlaceholder(id) {
+// Real invoice data for PDF rendering — same mapInvoice() shape every other
+// invoice read uses (userName/userEmail already resolved), plus the
+// company name the controller pulls from SystemSettings.
+async function getInvoiceForPdf(id) {
   const inv = await getInvoiceOrThrow(id);
-  return { invoiceId: id, invoiceNumber: inv.invoiceNumber, message: "PDF export is not yet available — coming in a future release." };
+  return mapInvoice(inv, await resolveUsers([inv.userId]));
 }
 
 // ── Transactions (read-only ledger) ───────────────────────────────────────────
@@ -822,8 +884,8 @@ module.exports = {
   getActiveSubscriptionsCountValue,
   getStats,
   listPayments, getPayment, requestRefund, exportPaymentsCsv,
-  listSubscriptions, createSubscription, updateSubscription, cancelSubscription, extendSubscription,
-  listInvoices, getInvoice, createInvoice, updateInvoice, voidInvoice, sendInvoice, getInvoiceDownloadPlaceholder,
+  listSubscriptions, createSubscription, updateSubscription, cancelSubscription, extendSubscription, checkExpiringSubscriptions,
+  listInvoices, getInvoice, createInvoice, updateInvoice, voidInvoice, sendInvoice, getInvoiceForPdf,
   listTransactions,
   listRefunds, approveRefund, rejectRefund,
   listPayouts, calculatePayouts, approvePayout, holdPayout, completePayout,

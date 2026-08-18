@@ -1,10 +1,11 @@
-// Compliance Reports tab — mandatory training / expired certs / violations /
-// department compliance are honest em-dashes: this schema has no
-// mandatory-training flag, no certificate expiry field, and no
-// compliance-violation tracking model (confirmed by a full schema grep, see
-// REPORTS_CONTRACT.md). At-risk users is the one real field — reuses
-// learners.service's own AT_RISK_THRESHOLD definition, not a bespoke
-// "compliance risk" invented for this tab.
+// Compliance Reports tab — mandatory training / expired certs / department
+// compliance are honest em-dashes: this schema has no mandatory-training
+// flag, no certificate expiry field, and no compliance-violation tracking
+// model (confirmed by a full schema grep, see REPORTS_CONTRACT.md).
+// Compliance Violations is a proxy (USER_SUSPENDED audit events in the
+// current month — no date-range picker on this tab, unlike other Reports
+// tabs, so it's always "this month"). At-risk users reuses learners.service's
+// own AT_RISK_THRESHOLD definition, not a bespoke "compliance risk".
 
 import { useCallback, useEffect, useState } from 'react';
 import { getComplianceReports } from '../../services/reportsApi';
@@ -75,7 +76,7 @@ export default function ComplianceReportsTab({ showToast }: Props) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
           <StatTile label="Mandatory Training Completion" value={data.mandatoryTrainingCompletion.available ? `${data.mandatoryTrainingCompletion.value}%` : null} reason={data.mandatoryTrainingCompletion.reason} />
           <StatTile label="Expired Certifications" value={data.expiredCertifications.available ? String(data.expiredCertifications.value) : null} reason={data.expiredCertifications.reason} />
-          <StatTile label="Compliance Violations" value={data.complianceViolations.available ? String(data.complianceViolations.value) : null} reason={data.complianceViolations.reason} />
+          <StatTile label="Compliance Violations (this month)" value={data.complianceViolations.available ? String(data.complianceViolations.value) : null} reason={data.complianceViolations.reason} />
         </div>
       )}
 

@@ -22,6 +22,9 @@ import {
   type ScheduledReportFormat,
   type ScheduledReportFrequency,
   type ScheduledReportsList,
+  type SavedReport,
+  type SavedReportInput,
+  type SavedReportRunResult,
 } from '../types/reports';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
@@ -185,13 +188,14 @@ export function getAttendanceReports(params: AttendanceReportsParams = {}): Prom
 export interface AuditReportsParams extends DateRangeParams {
   search?: string;
   action?: string;
+  actions?: string[];
   userId?: string;
   page?:   number;
   limit?:  number;
 }
 
 export function getAuditReports(params: AuditReportsParams = {}): Promise<AuditReports> {
-  const qs = buildQuery({ ...dateRangeParams(params), search: params.search, action: params.action, userId: params.userId, page: params.page, limit: params.limit });
+  const qs = buildQuery({ ...dateRangeParams(params), search: params.search, action: params.action, actions: params.actions?.join(','), userId: params.userId, page: params.page, limit: params.limit });
   return reportsFetch<AuditReports>(`/reports/audit?${qs}`);
 }
 
@@ -282,6 +286,59 @@ export function pauseScheduledReport(id: string): Promise<ScheduledReport> {
 
 export function resumeScheduledReport(id: string): Promise<ScheduledReport> {
   return reportsRequest<ScheduledReport>(`/reports/scheduled/${id}/resume`, 'PATCH');
+}
+
+// ── Saved Reports (Custom Reports builder) ────────────────────────────────
+
+export function listSavedReports(): Promise<SavedReport[]> {
+  return reportsFetch<SavedReport[]>('/reports/saved');
+}
+
+export function getSavedReport(id: string): Promise<SavedReport> {
+  return reportsFetch<SavedReport>(`/reports/saved/${id}`);
+}
+
+export function createSavedReport(input: SavedReportInput): Promise<SavedReport> {
+  return reportsRequest<SavedReport>('/reports/saved', 'POST', input);
+}
+
+export function updateSavedReport(id: string, input: Partial<SavedReportInput>): Promise<SavedReport> {
+  return reportsRequest<SavedReport>(`/reports/saved/${id}`, 'PATCH', input);
+}
+
+export function deleteSavedReport(id: string): Promise<{ id: string }> {
+  return reportsRequest<{ id: string }>(`/reports/saved/${id}`, 'DELETE');
+}
+
+export function runSavedReport(id: string): Promise<SavedReportRunResult> {
+  return reportsRequest<SavedReportRunResult>(`/reports/saved/${id}/run`, 'POST');
+}
+
+// CSV download — blob + Bearer, never a plain <a href> (mirrors
+// certificatesApi.ts's downloadCertificatePdf / financeApi.ts's invoice PDF).
+export async function exportSavedReportCsv(id: string): Promise<Blob> {
+  const token = getStoredToken();
+  const res = await fetch(`${BASE}/reports/saved/${id}/export`, {
+    method: 'POST',
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (res.status === 401) throw new ReportsApiError(401, 'Unauthorized — please log in again.');
+  if (!res.ok) {
+    const json = await res.json().catch(() => ({}));
+    throw new ReportsApiError(res.status, (json as { message?: string }).message ?? `HTTP ${res.status}`);
+  }
+  return res.blob();
+}
+
+export function triggerCsvDownload(blob: Blob, filename: string): void {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
 
 export { ReportsApiError };

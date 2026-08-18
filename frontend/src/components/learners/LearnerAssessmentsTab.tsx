@@ -100,6 +100,10 @@ export default function LearnerAssessmentsTab({ learnerId, showToast }: Props) {
     try {
       await gradeAssessment(learnerId, gradeTarget.id, { score: n, feedback: gradeFeedback.trim() || undefined });
       invalidateFor(appQueryClient, 'learner.assessmentGrade', { id: learnerId });
+      // Real refresh bridge (invalidateFor above is a no-op — no TanStack
+      // Query consumer exists anywhere in this app) — a failing grade fires
+      // the QUIZ_FAILURE automation trigger, which nothing else here signals.
+      window.dispatchEvent(new CustomEvent('analyticsUpdated'));
       showToast('success', 'Grade saved.');
       setGradeTarget(null);
       fetchList();

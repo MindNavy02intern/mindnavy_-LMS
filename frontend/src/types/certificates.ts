@@ -18,6 +18,17 @@ export interface CertificateLayout {
   accentColor:    string;       // "#RRGGBB"
   signatureName:  string | null;
   signatureTitle: string | null;
+  // Written ONLY by the logo sign->PUT->confirm endpoints below — never a
+  // free-text field (that would reopen the SSRF concern v1 deferred this
+  // for). Absent on templates that never had a logo uploaded.
+  logoUrl?:       string | null;
+}
+
+export interface LogoSignResponse {
+  uploadUrl: string;
+  path:      string;
+  maxBytes:  number;
+  expiresIn: number; // seconds
 }
 
 export interface CertificateTemplate {
@@ -29,7 +40,8 @@ export interface CertificateTemplate {
   updatedAt:        string;            // ISO
 }
 
-export type CertificateStatus = 'active' | 'revoked';
+export type CertificateStatus = 'active' | 'revoked' | 'expired';
+export type CertificateListFilter = 'active' | 'revoked' | 'expired' | 'expiring_soon';
 
 export interface Certificate {
   id:               string;
@@ -43,6 +55,7 @@ export interface Certificate {
   status:           CertificateStatus;
   issuedAt:         string; // ISO
   revokedAt:        string | null; // ISO
+  expiresAt:        string | null; // ISO
 }
 
 export interface CertificatesPage {
@@ -70,7 +83,7 @@ export interface UpdateTemplatePayload {
 export interface ListCertificatesParams {
   courseId?: string;
   userId?:   string;
-  status?:   CertificateStatus;
+  status?:   CertificateListFilter;
   limit?:    number;
   offset?:   number;
 }
@@ -92,9 +105,11 @@ export interface VerifiedCertificateInfo {
   studentName: string | null;
   courseTitle: string | null;
   issuedAt:    string; // ISO
+  expiresAt?:  string | null; // ISO
 }
 
 export type VerifyResult =
   | { status: 'valid';     certificate: VerifiedCertificateInfo }
+  | { status: 'expired';   certificate: VerifiedCertificateInfo }
   | { status: 'revoked' }
   | { status: 'not_found' };

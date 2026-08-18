@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const prisma = require("../config/prisma");
 const usersService = require("./users.service");
+const courseWorkflowService = require("./courseWorkflow.service");
 const { TAB_STATUS_SCOPE } = require("../validators/instructors.validator");
 
 // ── Instructors service ─────────────────────────────────────────────────────────
@@ -575,14 +576,28 @@ async function getStats() {
     safe(() => prisma.course.count({ where: { ...publishedCourses, reviewedAt: lastMonth } }), 0),
   ]);
 
+  // avgRating — InstructorReview shipped 2026-08-07 (instructors.prisma); this
+  // was still marked unavailable from before that model existed. Only
+  // APPROVED reviews count toward a public-facing average (PENDING/REMOVED/
+  // FLAGGED haven't cleared moderation).
+  const ratingAgg = await safe(
+    () => prisma.instructorReview.aggregate({ where: { status: "APPROVED" }, _avg: { rating: true }, _count: { _all: true } }),
+    { _avg: { rating: null }, _count: { _all: 0 } },
+  );
+
   return {
     totalInstructors:     metric(totalInstructors,  calcChange(totalThisMonth, totalLastMonth)),
     activeInstructors:    metric(activeInstructors, calcChange(activeThisMonth, activeLastMonth)),
     suspendedInstructors: metric(suspendedInstructors),
     pendingApproval:      metric(pendingApproval,   calcChange(pendingThisMonth, pendingLastMonth)),
     coursesPublished:     metric(coursesPublished,  calcChange(coursesThisMonth, coursesLastMonth)),
-    totalRevenue:         unavailable("No Payment/Transaction model exists yet — ships with the Finance module."),
-    avgRating:            unavailable("No Review/Rating model exists yet — ships with instructor reviews."),
+    // Payouts/Earnings stay blocked on a real payment gateway (documented
+    // decision, not a stale gap — Finance's Payment model existing isn't
+    // enough on its own; see DEFERRED_ITEMS.md).
+    totalRevenue: unavailable("No payment gateway is connected yet — ships once one is."),
+    avgRating: ratingAgg._count._all > 0
+      ? metric(Math.round(ratingAgg._avg.rating * 10) / 10, null)
+      : unavailable("No approved instructor reviews exist yet."),
   };
 }
 
@@ -781,9 +796,32 @@ async function verifyInstructor(id, adminId) {
   return getInstructor(id);
 }
 
+// Best-effort — one course failing to unpublish (e.g. a race with another
+// admin's edit) never blocks the suspension itself or the rest of the batch.
+// Reuses courseWorkflow.service.unpublishCourse (not a raw prisma.update)
+// so this goes through the SAME transition + COURSE_UNPUBLISHED audit row
+// every other unpublish path writes — one action, one definition.
+async function unpublishInstructorCourses(instructorId, adminId) {
+  const courses = await prisma.course.findMany({
+    where: { instructorId, status: "PUBLISHED" },
+    select: { id: true },
+  });
+  for (const course of courses) {
+    try {
+      await courseWorkflowService.unpublishCourse(course.id, adminId);
+    } catch (err) {
+      console.error(`[instructors.service] failed to unpublish course ${course.id} on suspend:`, err.message);
+    }
+  }
+}
+
 async function suspendInstructor(id, body, adminId) {
   await assertIsInstructor(id);
   await usersService.suspendUser(id, body, { id: adminId });
+  // Documented v1 decision now closed (DEFERRED_ITEMS.md): suspending an
+  // instructor unpublishes their live courses so learners can't keep
+  // enrolling in a course whose instructor no longer has access.
+  await unpublishInstructorCourses(id, adminId);
   return getInstructor(id);
 }
 

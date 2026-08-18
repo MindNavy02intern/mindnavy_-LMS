@@ -7,10 +7,11 @@ const prisma = require("../config/prisma");
 // verify references first so a bad request is a clean 400/404, never an orphan
 // row or a 500. Deleting a quiz cascades to its questions at the DB level.
 //
-// Grading v1 is a decision, not code: ESSAY = manual, every other type is
-// auto-gradable. `autoGradable` on the detail response is derived live from the
-// question types (computed, never stored — IMPACT_MAP R3). Learner attempts and
-// the grading endpoint ship with the learner runtime.
+// Grading is a decision, not code: ESSAY = manual, every other type (including
+// FILL_IN_BLANK / MATCHING) is auto-gradable. `autoGradable` on the detail
+// response is derived live from the question types (computed, never stored —
+// IMPACT_MAP R3). Learner attempts and the grading endpoint ship with the
+// learner runtime.
 
 async function safe(fn, fallback) {
   try {

@@ -36,18 +36,38 @@ test.beforeAll(async ({ browser, request }) => {
   if (!instructorId) return
 
   courseTitle = `QA Panel Course ${stamp}`
+  const H = { Authorization: `Bearer ${savedToken}` }
+  // Submit readiness (§4.1) needs description + thumbnail + ≥1 section with
+  // ≥1 lesson — without these the /submit call below 400s and the course
+  // silently stays in Draft, so it never reaches pendingApprovals at all.
   const courseResp = await request.post(`${API}/courses`, {
-    headers: { Authorization: `Bearer ${savedToken}` },
-    data: { title: courseTitle, instructorId },
+    headers: H,
+    data: {
+      title: courseTitle,
+      instructorId,
+      description: 'A test course description for instructor panel analytics testing.',
+      thumbnail: 'https://example.com/thumb.jpg',
+    },
   })
   const courseBody = await courseResp.json().catch(() => null)
   courseId = courseBody?.data?.id ?? null
   if (!courseId) return
 
-  // Draft → Pending, so it lands in this instructor's pendingApprovals.
-  await request.post(`${API}/courses/${courseId}/submit`, {
-    headers: { Authorization: `Bearer ${savedToken}` },
+  const sectionResp = await request.post(`${API}/courses/${courseId}/sections`, {
+    headers: H,
+    data: { title: 'Section 1' },
   })
+  const sectionBody = await sectionResp.json().catch(() => null)
+  const sectionId = sectionBody?.data?.id ?? null
+  if (!sectionId) return
+
+  await request.post(`${API}/sections/${sectionId}/lessons`, {
+    headers: H,
+    data: { title: 'Lesson 1', type: 'TEXT', content: 'Hello world.' },
+  })
+
+  // Draft → Pending, so it lands in this instructor's pendingApprovals.
+  await request.post(`${API}/courses/${courseId}/submit`, { headers: H })
 })
 
 test.afterAll(async ({ request }) => {
@@ -100,7 +120,9 @@ test('Panel shows real stats — Courses, Students, and "—" for Rating/Revenue
   const detail = await openPanelByDeepLink(page)
 
   function statValue(label: string) {
-    return page.getByRole('group', { name: `${label} stat` }).locator('[data-value]');
+    // exact: true — e.g. "Rating stat" is also a substring of the group
+    // named "Avg. Rating stat card", which would otherwise strict-mode-violate.
+    return page.getByRole('group', { name: `${label} stat`, exact: true }).locator('[data-value]');
   }
 
   await expect(statValue('Courses')).toHaveText(String(detail.coursesCount));
@@ -129,7 +151,11 @@ test('Approving a pending course removes it from the panel queue without a reloa
 
   await openPanelByDeepLink(page)
   await expect(page.getByText('Pending Course Approvals')).toBeVisible({ timeout: 10000 })
-  await expect(page.getByText(courseTitle as string)).toBeVisible()
+  // .first(): a Pending course legitimately renders twice on this panel — once
+  // in the "Pending Course Approvals" queue (InstructorSidePanel.tsx:397) and
+  // again in the general "Courses" list below it (:431), same pattern as the
+  // approved-course dup noted later in this test.
+  await expect(page.getByText(courseTitle as string).first()).toBeVisible()
 
   page.once('dialog', dialog => dialog.accept())
   const [approveResp, panelResp] = await Promise.all([

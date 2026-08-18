@@ -104,7 +104,9 @@ async function searchApplicant(page: Page, name: string) {
     page.getByPlaceholder('Search applicants…').fill(name),
   ])
   expect(resp.ok()).toBeTruthy()
-  await expect(page.getByText(name)).toBeVisible({ timeout: 10000 })
+  // .first(): a just-shown action toast (e.g. "<name>'s application rejected.")
+  // can still be on screen and substring-matches getByText(name) too.
+  await expect(page.getByText(name).first()).toBeVisible({ timeout: 10000 })
 }
 
 function rowFor(page: Page, name: string) {

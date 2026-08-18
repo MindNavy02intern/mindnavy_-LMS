@@ -13,6 +13,7 @@ import type {
   ContentSignResponse,
   ContentConfirmRequest,
   UpdateContentPayload,
+  ContentCourseUsage,
 } from '../types/contentLibrary';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
@@ -106,7 +107,7 @@ export async function confirmContentUpload(req: ContentConfirmRequest): Promise<
       id: `content-${Date.now()}`, title: req.title ?? 'Untitled', type: 'DOCUMENT',
       courseId: req.courseId ?? null, courseTitle: null,
       fileUrl: 'https://mock-storage.example.com/mock-file', sizeBytes: 1024, mimeType: 'application/pdf',
-      tags: req.tags ?? [], uploadedBy: null, createdAt: now, updatedAt: now,
+      tags: req.tags ?? [], uploadedBy: null, courseUsageCount: 0, createdAt: now, updatedAt: now,
     });
   }
   return contentFetch<ContentItem>('/confirm', 'POST', req);
@@ -117,7 +118,8 @@ export async function updateContent(id: string, patch: UpdateContentPayload): Pr
     return mockDelay<ContentItem>({
       id, title: patch.title ?? 'Untitled', type: 'DOCUMENT', courseId: patch.courseId ?? null,
       courseTitle: null, fileUrl: null, sizeBytes: null, mimeType: null,
-      tags: patch.tags ?? [], uploadedBy: null, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+      tags: patch.tags ?? [], uploadedBy: null, courseUsageCount: 0,
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
     });
   }
   return contentFetch<ContentItem>(`/${id}`, 'PATCH', patch);
@@ -126,4 +128,21 @@ export async function updateContent(id: string, patch: UpdateContentPayload): Pr
 export async function deleteContent(id: string): Promise<{ id: string }> {
   if (USE_MOCK) return mockDelay({ id });
   return contentFetch<{ id: string }>(`/${id}`, 'DELETE');
+}
+
+// ── Course reuse (CourseContentUsage) ────────────────────────────────────────
+
+export async function listContentCourses(id: string): Promise<ContentCourseUsage[]> {
+  if (USE_MOCK) return mockDelay([]);
+  return contentFetch<ContentCourseUsage[]>(`/${id}/courses`);
+}
+
+export async function linkContentToCourse(id: string, courseId: string): Promise<ContentCourseUsage> {
+  if (USE_MOCK) return mockDelay({ usageId: `usage-${Date.now()}`, courseId, courseTitle: null, courseStatus: null, addedAt: new Date().toISOString() });
+  return contentFetch<ContentCourseUsage>(`/${id}/courses/${courseId}`, 'POST');
+}
+
+export async function unlinkContentFromCourse(id: string, courseId: string): Promise<{ id: string }> {
+  if (USE_MOCK) return mockDelay({ id: courseId });
+  return contentFetch<{ id: string }>(`/${id}/courses/${courseId}`, 'DELETE');
 }

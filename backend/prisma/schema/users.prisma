@@ -26,6 +26,7 @@ model AppUser {
   teamId                   String?
   receivedMessages         AdminMessage[]            @relation("UserReceivedMessages")
   sessions                 AppUserSession[]
+  notes                    UserNote[]                @relation("UserNotes")
   orgBranch                Branch?                   @relation("AppUserBranch", fields: [branchId], references: [id])
   orgDepartment            Department?               @relation("AppUserDepartment", fields: [departmentId], references: [id])
   orgTeam                  Team?                     @relation("AppUserTeam", fields: [teamId], references: [id])
@@ -70,6 +71,7 @@ model AppUser {
   // QuizAttempt vs the profile it doesn't have yet in learners.prisma.
   userSkillProfiles        UserSkillProfile[]        @relation("UserSkillProfiles")
   skillAssessments         SkillAssessment[]         @relation("UserSkillAssessments")
+  competencyCertifications CompetencyCertification[] @relation("UserCompetencyCertifications")
 
   @@index([branchId])
   @@index([departmentId])

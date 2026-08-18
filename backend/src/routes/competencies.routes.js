@@ -43,6 +43,9 @@ router.delete("/skills/:id", requireAdminAuth, adminUserActionRateLimiter, c.del
 router.post("/skills/:id/assign-course",       requireAdminAuth, adminUserActionRateLimiter, c.assignCourse);
 router.delete("/skills/:id/courses/:courseId", requireAdminAuth, adminUserActionRateLimiter, c.removeCourse);
 
+// Per-skill level breakdown (CompetencySidePanel's Proficiency Distribution donut).
+router.get("/skills/:id/distribution", requireAdminAuth, coursesReadRateLimiter, c.getSkillDistribution);
+
 // ── Frameworks (Part 2) ──────────────────────────────────────────────────────
 router.get("/frameworks",     requireAdminAuth, coursesReadRateLimiter, c.listFrameworks);
 router.get("/frameworks/:id", requireAdminAuth, coursesReadRateLimiter, c.getFramework);
@@ -61,6 +64,17 @@ router.delete("/categories/:id", requireAdminAuth, adminUserActionRateLimiter, c
 // ── User skill profiles (Part 2) ─────────────────────────────────────────────
 router.get("/users/:userId/skills", requireAdminAuth, coursesReadRateLimiter, c.getUserSkills);
 
+// ── Competency Certifications (Certifications tab) — own service file
+// (competencyCertifications.service.js), routes/controller stay here per
+// this file's own "same file, not a second router" convention. ────────────
+router.get("/certifications",     requireAdminAuth, coursesReadRateLimiter, c.listCertifications);
+router.post("/certifications",    requireAdminAuth, adminUserActionRateLimiter, c.assignCertification);
+router.get("/certifications/:id", requireAdminAuth, coursesReadRateLimiter, c.getCertification);
+router.patch("/certifications/:id/verify", requireAdminAuth, adminUserActionRateLimiter, c.verifyCertification);
+router.patch("/certifications/:id/revoke", requireAdminAuth, adminUserActionRateLimiter, c.revokeCertification);
+router.delete("/certifications/:id", requireAdminAuth, adminUserActionRateLimiter, c.deleteCertification);
+router.get("/users/:userId/certifications", requireAdminAuth, coursesReadRateLimiter, c.getUserCertifications);
+
 // ── Assessments (Part 2) ─────────────────────────────────────────────────────
 router.get("/assessments",  requireAdminAuth, coursesReadRateLimiter, c.listAssessments);
 router.post("/assessments", requireAdminAuth, adminUserActionRateLimiter, c.createAssessment);
@@ -73,5 +87,10 @@ router.get("/skill-gaps", requireAdminAuth, adminUsersAnalyticsRateLimiter, c.ge
 // /hierarchy/settings (organization.routes). ──────────────────────────────
 router.get("/settings",   requireAdminAuth, coursesReadRateLimiter, c.getCompetencySettings);
 router.patch("/settings", requireAdminAuth, adminUserActionRateLimiter, c.updateCompetencySettings);
+
+// ── Proficiency Levels (Proficiency Levels tab) — per-level display config
+// for the fixed SkillLevel ladder, editable min/max%/color/description. ────
+router.get("/proficiency-levels",   requireAdminAuth, coursesReadRateLimiter, c.getProficiencyLevels);
+router.patch("/proficiency-levels", requireAdminAuth, adminUserActionRateLimiter, c.updateProficiencyLevels);
 
 module.exports = router;

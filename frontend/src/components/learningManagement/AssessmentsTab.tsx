@@ -1,7 +1,5 @@
-// Assessments Tab (Quizzes & Exams) — v1: MULTIPLE_CHOICE, TRUE_FALSE,
-// MULTI_SELECT, ESSAY question types only. FILL_IN_BLANK / MATCHING exist in
-// the backend enum for schema-forward-compat but 400 on every v1 endpoint —
-// no editor exists for them here, and the type picker never offers them.
+// Assessments Tab (Quizzes & Exams) — all 6 design-doc question types:
+// MULTIPLE_CHOICE, TRUE_FALSE, MULTI_SELECT, ESSAY, FILL_IN_BLANK, MATCHING.
 //
 // KNOWN GAP (intentional, do not "fix"): this tab's URL param is
 // ?tab=assessments (see LM_TAB_KEYS in LearningManagementPage.tsx) even
@@ -23,7 +21,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Plus, ChevronLeft, Pencil, Trash2, ChevronUp, ChevronDown, X,
-  ListChecks, ToggleLeft, CheckSquare, FileText,
+  ListChecks, ToggleLeft, CheckSquare, FileText, PenLine, ArrowLeftRight,
 } from 'lucide-react';
 import {
   listQuizzes, getQuiz, createQuiz, updateQuiz, deleteQuiz,
@@ -34,7 +32,7 @@ import { listCourses } from '../../services/coursesApi';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import type {
   Quiz, QuizDetail, Question, QuestionType,
-  MultipleChoiceData, MultiSelectData,
+  MultipleChoiceData, MultiSelectData, MatchingPair,
 } from '../../types/quizzes';
 import type { CourseListRow } from '../../types/courses';
 
@@ -63,21 +61,26 @@ type View =
   | { kind: 'edit';   quiz: Quiz }
   | { kind: 'detail'; quizId: string };
 
-// ── Question type metadata (v1 — exactly 4 types, nothing more) ────────────────
+// ── Question type metadata (all 6 design-doc types) ─────────────────────────────
 
-const V1_TYPES: QuestionType[] = ['MULTIPLE_CHOICE', 'TRUE_FALSE', 'MULTI_SELECT', 'ESSAY'];
+const V1_TYPES: QuestionType[] = ['MULTIPLE_CHOICE', 'TRUE_FALSE', 'MULTI_SELECT', 'ESSAY', 'FILL_IN_BLANK', 'MATCHING'];
 
 const TYPE_META: Record<QuestionType, { label: string; icon: typeof ListChecks; hint?: string }> = {
   MULTIPLE_CHOICE: { label: 'Multiple Choice', icon: ListChecks },
   TRUE_FALSE:      { label: 'True / False',    icon: ToggleLeft },
   MULTI_SELECT:    { label: 'Multi-Select',    icon: CheckSquare },
   ESSAY:           { label: 'Essay',           icon: FileText, hint: 'Manually graded' },
+  FILL_IN_BLANK:   { label: 'Fill in the Blank', icon: PenLine },
+  MATCHING:        { label: 'Matching',        icon: ArrowLeftRight },
 };
 
 const MIN_OPTIONS = 2;
 const MAX_OPTIONS = 10;
+const MIN_PAIRS = 2;
+const MAX_PAIRS = 10;
 
 function emptyOptions(): string[] { return ['', '']; }
+function emptyPairs(): MatchingPair[] { return [{ left: '', right: '' }, { left: '', right: '' }]; }
 
 // ── Quiz form (create + edit) ───────────────────────────────────────────────────
 
@@ -352,6 +355,12 @@ function QuestionEditor({ quizId, existing, onSaved, onClose }: QuestionEditorPr
   const [correct, setCorrect] = useState<boolean>(
     existing?.type === 'TRUE_FALSE' ? existing.data.correct : false,
   );
+  const [correctAnswer, setCorrectAnswer] = useState<string>(
+    existing?.type === 'FILL_IN_BLANK' ? existing.data.correctAnswer : '',
+  );
+  const [pairs, setPairs] = useState<MatchingPair[]>(
+    existing?.type === 'MATCHING' ? existing.data.pairs : emptyPairs(),
+  );
 
   const [saving,    setSaving]    = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null); // backend/network failures only
@@ -365,6 +374,23 @@ function QuestionEditor({ quizId, existing, onSaved, onClose }: QuestionEditorPr
     setCorrectIndex(null);
     setCorrectIndexes(new Set());
     setCorrect(false);
+    setCorrectAnswer('');
+    setPairs(emptyPairs());
+    setFieldErrors((prev) => ({ ...prev, options: undefined }));
+  }
+
+  function updatePair(idx: number, side: 'left' | 'right', value: string) {
+    setPairs((prev) => prev.map((p, i) => (i === idx ? { ...p, [side]: value } : p)));
+    setFieldErrors((prev) => ({ ...prev, options: undefined }));
+  }
+
+  function addPair() {
+    setPairs((prev) => (prev.length < MAX_PAIRS ? [...prev, { left: '', right: '' }] : prev));
+    setFieldErrors((prev) => ({ ...prev, options: undefined }));
+  }
+
+  function removePair(idx: number) {
+    setPairs((prev) => (prev.length <= MIN_PAIRS ? prev : prev.filter((_, i) => i !== idx)));
     setFieldErrors((prev) => ({ ...prev, options: undefined }));
   }
 
@@ -414,9 +440,11 @@ function QuestionEditor({ quizId, existing, onSaved, onClose }: QuestionEditorPr
     setFieldErrors((prev) => ({ ...prev, options: undefined }));
   }
 
-  function buildData(): MultipleChoiceData | MultiSelectData | { correct: boolean } | null {
+  function buildData(): MultipleChoiceData | MultiSelectData | { correct: boolean } | { correctAnswer: string } | { pairs: MatchingPair[] } | null {
     if (type === 'ESSAY') return null;
     if (type === 'TRUE_FALSE') return { correct };
+    if (type === 'FILL_IN_BLANK') return { correctAnswer: correctAnswer.trim() };
+    if (type === 'MATCHING') return { pairs: pairs.map((p) => ({ left: p.left.trim(), right: p.right.trim() })) };
     if (type === 'MULTIPLE_CHOICE') return { options: options.map((o) => o.trim()), correctIndex: correctIndex as number };
     return { options: options.map((o) => o.trim()), correctIndexes: [...correctIndexes].sort((a, b) => a - b) };
   }
@@ -445,6 +473,21 @@ function QuestionEditor({ quizId, existing, onSaved, onClose }: QuestionEditorPr
         errors.options = 'Select the correct answer before saving.';
       } else if (type === 'MULTI_SELECT' && correctIndexes.size === 0) {
         errors.options = 'Select at least one correct answer before saving.';
+      }
+    }
+
+    if (type === 'FILL_IN_BLANK') {
+      if (!correctAnswer.trim()) errors.options = 'Correct answer is required.';
+      else if (correctAnswer.trim().length > 500) errors.options = 'Correct answer must be at most 500 characters.';
+    }
+
+    if (type === 'MATCHING') {
+      if (pairs.length < MIN_PAIRS || pairs.length > MAX_PAIRS) {
+        errors.options = `Provide between ${MIN_PAIRS} and ${MAX_PAIRS} pairs.`;
+      } else if (pairs.some((p) => !p.left.trim() || !p.right.trim())) {
+        errors.options = 'Every pair needs both a left and right value.';
+      } else if (pairs.some((p) => p.left.trim().length > 200 || p.right.trim().length > 200)) {
+        errors.options = 'Each pair value must be at most 200 characters.';
       }
     }
 
@@ -635,6 +678,71 @@ function QuestionEditor({ quizId, existing, onSaved, onClose }: QuestionEditorPr
           {type === 'ESSAY' && (
             <div className="tw:rounded-lg tw:border tw:border-amber-100 tw:bg-amber-50 tw:px-3 tw:py-2.5 tw:text-[12px] tw:text-amber-700">
               Essay questions have no answer data — they are graded manually.
+            </div>
+          )}
+
+          {type === 'FILL_IN_BLANK' && (
+            <div ref={optionsRef} className="tw:flex tw:flex-col tw:gap-1.5">
+              <label className="tw:text-[12px] tw:font-semibold tw:text-slate-700">
+                Correct answer <span className="tw:text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={correctAnswer}
+                onChange={(e) => { setCorrectAnswer(e.target.value); setFieldErrors((prev) => ({ ...prev, options: undefined })); }}
+                placeholder="Exact text the learner must fill in"
+                maxLength={500}
+                aria-label="Correct answer"
+                className="tw:w-full tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-1.5 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400"
+              />
+              {fieldErrors.options && (
+                <p role="alert" className="tw:m-0 tw:text-[12px] tw:text-red-600">{fieldErrors.options}</p>
+              )}
+            </div>
+          )}
+
+          {type === 'MATCHING' && (
+            <div ref={optionsRef} className="tw:flex tw:flex-col tw:gap-2">
+              <p className="tw:m-0 tw:text-[12px] tw:font-semibold tw:text-slate-700">
+                Pairs <span className="tw:text-red-500">*</span>{' '}
+                <span className="tw:font-normal tw:text-slate-400">(left matches right)</span>
+              </p>
+              {pairs.map((pair, idx) => (
+                <div key={idx} className="tw:flex tw:items-center tw:gap-2">
+                  <input
+                    type="text"
+                    value={pair.left}
+                    onChange={(e) => updatePair(idx, 'left', e.target.value)}
+                    placeholder={`Left ${idx + 1}`}
+                    maxLength={200}
+                    aria-label={`Pair ${idx + 1} left value`}
+                    className="tw:flex-1 tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-1.5 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400"
+                  />
+                  <ArrowLeftRight className="tw:h-3.5 tw:w-3.5 tw:flex-shrink-0 tw:text-slate-300" strokeWidth={2} />
+                  <input
+                    type="text"
+                    value={pair.right}
+                    onChange={(e) => updatePair(idx, 'right', e.target.value)}
+                    placeholder={`Right ${idx + 1}`}
+                    maxLength={200}
+                    aria-label={`Pair ${idx + 1} right value`}
+                    className="tw:flex-1 tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-1.5 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400"
+                  />
+                  <button type="button" onClick={() => removePair(idx)}
+                    disabled={pairs.length <= MIN_PAIRS}
+                    aria-label={`Remove pair ${idx + 1}`}
+                    className="tw:flex-shrink-0 tw:rounded tw:p-1 tw:text-slate-400 tw:hover:bg-red-50 tw:hover:text-red-500 tw:disabled:opacity-30">
+                    <Trash2 className="tw:h-3.5 tw:w-3.5" strokeWidth={2} />
+                  </button>
+                </div>
+              ))}
+              <button type="button" onClick={addPair} disabled={pairs.length >= MAX_PAIRS}
+                className="tw:flex tw:w-fit tw:items-center tw:gap-1 tw:text-[12px] tw:font-medium tw:text-blue-600 tw:hover:text-blue-700 tw:disabled:opacity-40">
+                <Plus className="tw:h-3.5 tw:w-3.5" strokeWidth={2.5} /> Add pair
+              </button>
+              {fieldErrors.options && (
+                <p role="alert" className="tw:m-0 tw:text-[12px] tw:text-red-600">{fieldErrors.options}</p>
+              )}
             </div>
           )}
 
@@ -1219,7 +1327,7 @@ export default function AssessmentsTab({ openCreateOnMount }: AssessmentsTabProp
       <div className="tw:flex tw:items-center tw:justify-between">
         <h2 className="tw:m-0 tw:text-[17px] tw:font-semibold tw:text-slate-900">Assessments</h2>
         <button type="button" onClick={() => setView({ kind: 'create' })}
-          aria-label="Create quiz"
+          aria-label="Create Quiz"
           className="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700">
           <Plus className="tw:h-4 tw:w-4" strokeWidth={2.5} />
           Create Quiz

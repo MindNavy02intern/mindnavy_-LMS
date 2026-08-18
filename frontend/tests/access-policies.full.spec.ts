@@ -207,6 +207,11 @@ test('Search Access Policies → verify filtered results', async ({ page }) => {
 
 test('Empty state → shown when filters match nothing', async ({ page }) => {
   await gotoAccessPolicies(page)
+  // Same race as the search test above: without letting the tab's own initial
+  // fetch settle first, waitForApi can resolve on that still-in-flight
+  // response instead of the debounced search's own GET, so the empty-state
+  // assertion below fires before the filtered (0-row) response ever lands.
+  await page.waitForLoadState('networkidle')
   const respPromise = waitForApi(page, '/access-policies', 'GET')
   await page.getByPlaceholder('Search policies...').fill(`nomatch-${uid()}`)
   await respPromise

@@ -63,3 +63,22 @@ export interface UpdateLiveSessionPayload {
   timezone?:        string;
   maxParticipants?: number | null;
 }
+
+export type AttendanceStatus = 'PRESENT' | 'LATE' | 'ABSENT' | 'EXCUSED';
+
+export interface MarkAttendanceRecord {
+  userId:              string;
+  status:              AttendanceStatus;
+  durationMin?:        number;
+  participationScore?: number;
+}
+
+export interface AttendanceRecordResult {
+  id:                 string;
+  userId:             string;
+  status:             AttendanceStatus;
+  joinedAt:           string | null;
+  leftAt:             string | null;
+  durationMin:        number | null;
+  participationScore: number | null;
+}

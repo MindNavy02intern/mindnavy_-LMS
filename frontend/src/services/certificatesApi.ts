@@ -69,7 +69,7 @@ const MOCK_CERTIFICATES: Certificate[] = [
     courseId: 'course-1', courseTitle: 'Complete React Developer',
     templateId: null, templateName: null,
     verificationCode: 'a'.repeat(32), status: 'active',
-    issuedAt: '2026-01-01T00:00:00.000Z', revokedAt: null,
+    issuedAt: '2026-01-01T00:00:00.000Z', revokedAt: null, expiresAt: null,
   },
 ];
 
@@ -93,7 +93,7 @@ export async function issueCertificate(payload: IssueCertificatePayload): Promis
       courseId: payload.courseId, courseTitle: 'Mock Course',
       templateId: payload.templateId ?? null, templateName: payload.templateId ? 'Mock Template' : null,
       verificationCode: Math.random().toString(16).slice(2).padEnd(32, '0'),
-      status: 'active', issuedAt: now, revokedAt: null,
+      status: 'active', issuedAt: now, revokedAt: null, expiresAt: null,
     });
   }
   return certFetch<Certificate>('/', 'POST', payload);
@@ -118,6 +118,14 @@ export async function reissueCertificate(id: string, payload: ReissueCertificate
     });
   }
   return certFetch<Certificate>(`/${id}/reissue`, 'POST', payload);
+}
+
+export async function setCertificateExpiry(id: string, expiresAt: string | null): Promise<Certificate> {
+  if (USE_MOCK) {
+    const c = MOCK_CERTIFICATES.find((x) => x.id === id) ?? MOCK_CERTIFICATES[0];
+    return mockDelay<Certificate>({ ...c, expiresAt });
+  }
+  return certFetch<Certificate>(`/${id}/expiry`, 'PATCH', { expiresAt });
 }
 
 // ── PDF download — blob + Bearer, never a plain <a href> ─────────────────────────

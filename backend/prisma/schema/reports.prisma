@@ -31,6 +31,47 @@ model ScheduledReport {
   @@map("scheduled_reports")
 }
 
+// Custom Reports builder — the reportTemplate.save mutation ID stayed dead
+// (documented in CustomReportsTab.tsx) until now. dataSource is plain String,
+// not a Prisma enum, same reasoning as ScheduledReport.reportType above: it
+// must stay in lockstep with reports.validator.js's EXPORT_TYPES Set (the
+// query EXECUTION engine this reuses — see savedReports.service.js), which a
+// Prisma enum can't share. selectedColumns `[]` means "every column the
+// data source returns" (the run/export step resolves that), not "no columns".
+//
+// schedule is stored but NOT run automatically — no cron scheduler exists
+// for it (same honest gap as ScheduledReport.frequency having its own real
+// sweep while this field doesn't; do not assume they behave the same way).
+model SavedReport {
+  id              String                    @id @default(uuid())
+  name            String
+  description     String?
+  dataSource      String
+  selectedColumns String[]                  @default([])
+  filters         Json?
+  visualization   SavedReportVisualization  @default(TABLE)
+  schedule        String?
+  lastRunAt       DateTime?
+  // Actor id, plain — same convention as ScheduledReport.createdById /
+  // Skill.createdById: the admin who created it via requireAdminAuth, no FK.
+  createdById     String?
+  isPublic        Boolean                   @default(false)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
+
+  @@index([createdById])
+  @@index([dataSource])
+  @@map("saved_reports")
+}
+
+enum SavedReportVisualization {
+  TABLE
+  LINE_CHART
+  BAR_CHART
+  PIE_CHART
+  KPI_CARDS
+}
+
 enum ScheduledReportFormat {
   CSV
   JSON

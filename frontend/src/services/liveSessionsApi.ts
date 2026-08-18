@@ -12,6 +12,8 @@ import type {
   LiveSessionListParams,
   CreateLiveSessionPayload,
   UpdateLiveSessionPayload,
+  MarkAttendanceRecord,
+  AttendanceRecordResult,
 } from '../types/liveSessions';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
@@ -142,4 +144,13 @@ export async function endLiveSession(id: string): Promise<LiveSession> {
     return mockDelay<LiveSession>({ ...s, status: 'ENDED', endedAt: now, updatedAt: now });
   }
   return lsFetch<LiveSession>(`/${id}/end`, 'PATCH');
+}
+
+export async function markAttendance(id: string, records: MarkAttendanceRecord[]): Promise<AttendanceRecordResult[]> {
+  if (USE_MOCK) return mockDelay(records.map((r, i) => ({
+    id: `att-${i}`, userId: r.userId, status: r.status,
+    joinedAt: null, leftAt: null,
+    durationMin: r.durationMin ?? null, participationScore: r.participationScore ?? null,
+  })));
+  return lsFetch<AttendanceRecordResult[]>(`/${id}/attendance`, 'PATCH', { records });
 }

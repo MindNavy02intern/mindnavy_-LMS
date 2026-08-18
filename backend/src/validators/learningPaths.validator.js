@@ -4,7 +4,7 @@
 // ever receives safe, bounded values. The polymorphic itemId existence check needs
 // the DB, so it runs in the service, not here.
 
-const ITEM_TYPES = ["COURSE", "LIVE_SESSION"];
+const ITEM_TYPES = ["COURSE", "LIVE_SESSION", "QUIZ"];
 
 const MAX = {
   title:       200,
@@ -108,7 +108,7 @@ function validateItemAdd(body = {}) {
     errors.push("itemType is required.");
   } else {
     const upper = String(body.itemType).trim().toUpperCase();
-    if (!ITEM_TYPES.includes(upper)) errors.push("itemType must be COURSE or LIVE_SESSION.");
+    if (!ITEM_TYPES.includes(upper)) errors.push("itemType must be COURSE, LIVE_SESSION, or QUIZ.");
     else itemType = upper;
   }
 

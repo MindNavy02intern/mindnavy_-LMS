@@ -1,0 +1,1052 @@
+
+Running 345 tests using 1 worker
+
+  ok   1 [setup] › tests\setup\auth.setup.ts:3:1 › authenticate (2.7s)
+  ok   2 [unauthenticated] › tests\auth.spec.ts:3:1 › Login page loads (793ms)
+  ok   3 [unauthenticated] › tests\auth.spec.ts:9:1 › Login with valid credentials (2.3s)
+  ok   4 [unauthenticated] › tests\auth.spec.ts:17:1 › Login with wrong password shows error (2.0s)
+  ok   5 [authenticated] › tests\access-policies.full.spec.ts:69:1 › Access Policies stats → verify all 5 cards render with numbers (2.7s)
+  ok   6 [authenticated] › tests\access-policies.full.spec.ts:82:3 › Access Policy CRUD › Create Policy → verify appears in table (3.9s)
+  ok   7 [authenticated] › tests\access-policies.full.spec.ts:91:3 › Access Policy CRUD › Edit Policy → verify changes saved (3.4s)
+  ok   8 [authenticated] › tests\access-policies.full.spec.ts:112:3 › Access Policy CRUD › Delete Policy → verify removed (2.3s)
+  ok   9 [authenticated] › tests\access-policies.full.spec.ts:139:3 › Filters › Filter by Status → verify correct items shown (1.8s)
+  ok  10 [authenticated] › tests\access-policies.full.spec.ts:148:3 › Filters › Filter by Effect → verify correct items shown (2.3s)
+  ok  11 [authenticated] › tests\access-policies.full.spec.ts:157:3 › Filters › Filter by Resource → verify correct items shown (1.6s)
+  ok  12 [authenticated] › tests\access-policies.full.spec.ts:166:3 › Filters › Filter by Action → verify correct items shown (2.7s)
+  ok  13 [authenticated] › tests\access-policies.full.spec.ts:178:1 › Search Access Policies → verify filtered results (5.0s)
+  ok  14 [authenticated] › tests\access-policies.full.spec.ts:208:1 › Empty state → shown when filters match nothing (3.0s)
+  ok  15 [authenticated] › tests\categories.full.spec.ts:89:1 › Categories: root category appears in tree after creation (3.3s)
+  ok  16 [authenticated] › tests\categories.full.spec.ts:100:1 › Categories: create root category via UI modal → appears in tree (2.9s)
+  ok  17 [authenticated] › tests\categories.full.spec.ts:127:1 › Categories: subcategory shown under parent when expanded (3.4s)
+  ok  18 [authenticated] › tests\categories.full.spec.ts:150:1 › Categories: rename category via Edit modal → updated in tree (4.1s)
+  ok  19 [authenticated] › tests\categories.full.spec.ts:180:1 › Categories: delete leaf category → removed from tree (3.3s)
+  ok  20 [authenticated] › tests\categories.full.spec.ts:208:1 › Categories: delete blocked when has subcategories → shows exact backend message (3.0s)
+  ok  21 [authenticated] › tests\categories.full.spec.ts:231:1 › Categories: delete blocked when has courses → shows exact backend message (4.0s)
+  ok  22 [authenticated] › tests\categories.full.spec.ts:266:1 › Categories: CourseForm category picker shows categories by UUID, not free text (2.8s)
+  ok  23 [authenticated] › tests\certificate-placeholders.full.spec.ts:155:1 › Template editor — unrecognized {{token}} warns immediately, valid chips never do (1.5s)
+  ok  24 [authenticated] › tests\certificate-placeholders.full.spec.ts:180:1 › PDF generation strips an unrecognized {{...}} placeholder even when it reaches the saved template directly via the API (4.2s)
+  ok  25 [authenticated] › tests\certificates.full.spec.ts:175:1 › Create template — layout saved, bad hex color rejected client-side (3.4s)
+  ok  26 [authenticated] › tests\certificates.full.spec.ts:214:1 › Edit template — PATCH body always carries the FULL layout, never a diff (4.7s)
+  ok  27 [authenticated] › tests\certificates.full.spec.ts:253:1 › Delete template — confirm mentions surviving certificates, issued cert keeps working (7.8s)
+  ok  28 [authenticated] › tests\certificates.full.spec.ts:291:1 › Issue certificate — success case, appears in the list (6.4s)
+  ok  29 [authenticated] › tests\certificates.full.spec.ts:319:1 › Issue with certificateEnabled=false — exact backend message + link to course settings (6.1s)
+  ok  30 [authenticated] › tests\certificates.full.spec.ts:348:1 › Issue duplicate (course,user) pair — exact message + Reissue shortcut (8.0s)
+  ok  31 [authenticated] › tests\certificates.full.spec.ts:387:1 › Revoke certificate — succeeds, Revoke action disabled once already revoked (8.7s)
+  ok  32 [authenticated] › tests\certificates.full.spec.ts:426:1 › Reissue — confirm dialog states old QR/PDF stop working, new code differs from old (6.1s)
+  ok  33 [authenticated] › tests\certificates.full.spec.ts:460:1 › PDF download — fetched with Bearer header (not a bare anchor), not a document navigation (5.5s)
+  ok  34 [authenticated] › tests\certificates.full.spec.ts:483:1 › PDF download on a revoked certificate — handled as an error state, no broken download (6.2s)
+  ok  35 [authenticated] › tests\certificates.full.spec.ts:546:3 › Public verify page (no auth) › valid code — success state with student/course/date (3.5s)
+  ok  36 [authenticated] › tests\certificates.full.spec.ts:565:3 › Public verify page (no auth) › revoked code — warning state, no certificate details (3.9s)
+  ok  37 [authenticated] › tests\certificates.full.spec.ts:574:3 › Public verify page (no auth) › unknown code — not-found state (1.6s)
+  ok  38 [authenticated] › tests\certificates.full.spec.ts:579:3 › Public verify page (no auth) › malformed code — not-found state, no DB hit needed (685ms)
+  ok  39 [authenticated] › tests\certificates.full.spec.ts:587:1 › Public verify API — no Authorization header, always 200 (94ms)
+  ok  40 [authenticated] › tests\competencies.full.spec.ts:77:1 › Competencies page loads with header, stats cards and tabs (3.9s)
+  ok  41 [authenticated] › tests\competencies.full.spec.ts:90:1 › Create Competency creates a skill and it appears in the Competency List tab (3.8s)
+  ok  42 [authenticated] › tests\competencies.full.spec.ts:121:1 › Creating a framework and adding the competency as a required skill (3.8s)
+  ok  43 [authenticated] › tests\competencies.full.spec.ts:163:1 › Recording an assessment updates the user, surfaces a skill gap, and renders in User Progress (5.3s)
+  ok  44 [authenticated] › tests\competencies.full.spec.ts:212:1 › Overview analytics charts render (1.5s)
+  ok  45 [authenticated] › tests\competencies.full.spec.ts:229:1 › Competency Matrix header button switches to Overview and scrolls the matrix into view (2.3s)
+  ok  46 [authenticated] › tests\competencies.full.spec.ts:249:1 › Import/Export tab: export downloads a CSV and import creates a competency (3.9s)
+  ok  47 [authenticated] › tests\competencies.full.spec.ts:308:1 › Settings tab: updating the passing threshold persists via PATCH and survives reload (3.6s)
+  ok  48 [authenticated] › tests\content-library.full.spec.ts:89:3 › Known backend bugs (real API — expected RED until Hassan fixes them) › POST /content/confirm currently 500s on a valid sign+PUT+confirm chain (2.9s)
+  ok  49 [authenticated] › tests\content-library.full.spec.ts:107:3 › Known backend bugs (real API — expected RED until Hassan fixes them) › GET /content always returns an empty content array despite a nonzero pagination.total (1.7s)
+  ok  50 [authenticated] › tests\content-library.full.spec.ts:121:1 › Upload dialog has NO type picker — SCORM/QUIZ structurally cannot be offered for upload (1.3s)
+  ok  51 [authenticated] › tests\content-library.full.spec.ts:134:1 › Non-allowed MIME type blocked client-side — no /sign request fired (1.7s)
+  ok  52 [authenticated] › tests\content-library.full.spec.ts:149:1 › Full 3-step upload — sign → PUT → confirm, row appears only after confirm succeeds (* mock) (1.5s)
+  ok  53 [authenticated] › tests\content-library.full.spec.ts:177:1 › Tag normalization — whatever the server returns is re-rendered as-is, never fought client-side (* mock) (1.7s)
+  ok  54 [authenticated] › tests\content-library.full.spec.ts:204:1 › Legacy row with fileUrl:null hides the download action (* mock) (1.4s)
+  ok  55 [authenticated] › tests\content-library.full.spec.ts:214:1 › Delete — confirm dialog mentions removing the stored file, DELETE fires (* mock) (1.5s)
+  ok  56 [authenticated] › tests\content-library.full.spec.ts:242:1 › Edit metadata — PATCH sends only changed fields, file fields never included (* mock) (1.5s)
+  ok  57 [authenticated] › tests\content-library.full.spec.ts:272:1 › Overview guide "Upload Content" switches to Content tab and opens the upload dialog (1.3s)
+  ok  58 [authenticated] › tests\course-approval.full.spec.ts:102:1 › Approval: Approve button visible on Pending row, confirm dialog → POST approve (6.7s)
+  ok  59 [authenticated] › tests\course-approval.full.spec.ts:134:1 › Approval: Approve dismissed by confirm cancel → no API call (6.5s)
+  ok  60 [authenticated] › tests\course-approval.full.spec.ts:162:1 › Approval: Reject modal opens, validates required reason, counter (5.6s)
+  ok  61 [authenticated] › tests\course-approval.full.spec.ts:196:1 › Approval: Reject submits reason → POST reject, toast, course removed from Pending (5.9s)
+  ok  62 [authenticated] › tests\course-approval.full.spec.ts:225:1 › Approval: rejectionReason banner visible on Basic Info after reject (17.2s)
+  ok  63 [authenticated] › tests\course-approval.full.spec.ts:260:1 › Approval: race-condition 400 on approve → no auto-retry, list refetches (7.0s)
+  ok  64 [authenticated] › tests\course-approval.full.spec.ts:298:1 › Approval: double-click prevention — Approve button disabled during request (9.2s)
+  x   65 [authenticated] › tests\course-approval.full.spec.ts:335:1 › Approval: double-click prevention — Request Changes button disabled during request (15.7s)
+  ok  66 [authenticated] › tests\course-approval.full.spec.ts:372:1 › Approval: Approve/Reject not shown on non-Pending rows (4.7s)
+  ok  67 [authenticated] › tests\course-basic-info.full.spec.ts:76:1 › Basic Info edit: "Next: Course Builder" sends PATCH then navigates (regression) (6.8s)
+  ok  68 [authenticated] › tests\course-basic-info.full.spec.ts:109:1 › Basic Info edit: nothing changed → no PATCH, navigate immediately (5.5s)
+  ok  69 [authenticated] › tests\course-basic-info.full.spec.ts:131:1 › Basic Info edit: "Save Draft" button still saves and returns to list (6.2s)
+  ok  70 [authenticated] › tests\course-builder.full.spec.ts:146:1 › Add section — title appears in the section list (4.9s)
+  ok  71 [authenticated] › tests\course-builder.full.spec.ts:157:1 › Add text lesson — lesson appears under its section (6.7s)
+  ok  72 [authenticated] › tests\course-builder.full.spec.ts:167:1 › Add valid video URL lesson — accepted and appears in list (6.1s)
+  ok  73 [authenticated] › tests\course-builder.full.spec.ts:204:1 › Reject invalid video URL — shows inline error, no API call (5.7s)
+  ok  74 [authenticated] › tests\course-builder.full.spec.ts:231:1 › Edit lesson prefill — form opens with existing values (5.5s)
+  ok  75 [authenticated] › tests\course-builder.full.spec.ts:252:1 › Delete section confirm — dismiss keeps it, confirm removes it (8.8s)
+  ok  76 [authenticated] › tests\course-builder.full.spec.ts:281:1 › Reorder sends ONE bulk PATCH and replaces state from response (8.8s)
+  ok  77 [authenticated] › tests\course-preview.full.spec.ts:121:1 › Preview: renders course info, section/lesson tree, and step label (9.7s)
+  ok  78 [authenticated] › tests\course-preview.full.spec.ts:139:1 › Preview: Desktop/Mobile toggle changes layout (CSS only — no new request) (11.6s)
+  ok  79 [authenticated] › tests\course-preview.full.spec.ts:167:1 › Preview: VIDEO_URL lesson renders <video> element (7.6s)
+  ok  80 [authenticated] › tests\course-preview.full.spec.ts:185:1 › Preview: Back navigates to Settings, Next navigates to Submit (10.8s)
+  ok  81 [authenticated] › tests\course-preview.full.spec.ts:209:1 › Preview: empty sections → shows empty state, not a broken render (6.4s)
+  x   82 [authenticated] › tests\course-preview.full.spec.ts:235:1 › Preview: 404 course → shows error state with Retry button (10.2s)
+  x   83 [authenticated] › tests\course-settings.full.spec.ts:95:1 › Settings form: renders all sections and saves changed fields (29.4s)
+  x   84 [authenticated] › tests\course-settings.full.spec.ts:156:1 › Settings form: blocks save when Paid but price is empty (9.1s)
+  x   85 [authenticated] › tests\course-settings.full.spec.ts:178:1 › Settings form: does not PATCH when no fields changed (6.8s)
+  ok  86 [authenticated] › tests\course-settings.full.spec.ts:202:1 › Settings form: "Next: Preview" saves changes then navigates (7.4s)
+  ok  87 [authenticated] › tests\course-settings.full.spec.ts:228:1 › Settings form: "Flipping to Free clears price input" (5.3s)
+  ok  88 [authenticated] › tests\course-settings.full.spec.ts:251:1 › Settings form: accessRules multi-selects save group and prerequisite course, reload restores selection (8.8s)
+  ok  89 [authenticated] › tests\course-submit.full.spec.ts:138:1 › Submit: successfully submits a ready course → shows success + Pending (8.3s)
+  ok  90 [authenticated] › tests\course-submit.full.spec.ts:162:1 › Submit: SUBMIT_CHECKS_FAILED → renders full errors[] list (6.8s)
+  x   91 [authenticated] › tests\course-submit.full.spec.ts:189:1 › Submit: non-Draft course shows status guard (no submit button) (12.7s)
+  ok  92 [authenticated] › tests\course-submit.full.spec.ts:210:1 › Submit: "Save as Draft" navigates back to course list (7.1s)
+  ok  93 [authenticated] › tests\course-submit.full.spec.ts:227:1 › Submit: wrong-state 400 → shows exact backend message inline (not errors[] list) (8.6s)
+  x   94 [authenticated] › tests\course-submit.full.spec.ts:260:1 › Submit: button is disabled during in-flight request (double-submit prevented) (18.1s)
+  ok  95 [authenticated] › tests\course-submit.full.spec.ts:294:1 › Submit: courses list shows Pending badge after submit without hard reload (invalidation) (13.6s)
+  x   96 [authenticated] › tests\course-upload.full.spec.ts:83:1 › Type rejection — non-image file blocked client-side, no API request (30.1s)
+  x   97 [authenticated] › tests\course-upload.full.spec.ts:110:1 › Size rejection — file > 5 MB blocked client-side, no API request (30.1s)
+  x   98 [authenticated] › tests\course-upload.full.spec.ts:136:1 › Successful thumbnail flow — sign → PUT → confirm → preview visible (30.1s)
+  x   99 [authenticated] › tests\course-upload.full.spec.ts:160:1 › Progress bar renders during file transfer (30.1s)
+  x  100 [authenticated] › tests\course-upload.full.spec.ts:204:1 › Cancel mid-upload resets UI to idle drop zone (30.1s)
+  x  101 [authenticated] › tests\course-upload.full.spec.ts:246:1 › Replace thumbnail deletes old storage path (30.1s)
+  ok 102 [authenticated] › tests\course-video-upload.full.spec.ts:195:1 › Edit mode TEXT→VIDEO_URL gates Upload File until type is saved, then unlocks (6.1s)
+  ok 103 [authenticated] › tests\course-video-upload.full.spec.ts:269:1 › Create mode shows "save lesson first" — no upload available (3.8s)
+  ok 104 [authenticated] › tests\course-video-upload.full.spec.ts:296:1 › Type rejection — non-video file blocked client-side, no sign request (4.5s)
+  ok 105 [authenticated] › tests\course-video-upload.full.spec.ts:318:1 › Size rejection — file > 50 MB blocked client-side, no sign request (6.2s)
+  ok 106 [authenticated] › tests\course-video-upload.full.spec.ts:344:1 › Successful video upload — sign → PUT → confirm → done state visible (4.7s)
+  ok 107 [authenticated] › tests\course-video-upload.full.spec.ts:365:1 › Progress bar renders during video transfer (6.6s)
+  ok 108 [authenticated] › tests\course-video-upload.full.spec.ts:404:1 › Cancel mid-upload resets UI to drop zone (5.0s)
+  ok 109 [authenticated] › tests\course-video-upload.full.spec.ts:439:1 › Save Lesson button is disabled while video upload is in progress (5.4s)
+  x  110 [authenticated] › tests\courses-invalidation.full.spec.ts:75:1 › Archive a Published course → Dashboard Courses KPI decrements without hard reload (2.2s)
+  ok 111 [authenticated] › tests\courses-invalidation.full.spec.ts:173:1 › Create a draft course → Dashboard Courses KPI is refreshed (6.1s)
+  ok 112 [authenticated] › tests\courses-tab.full.spec.ts:37:1 › Courses tab renders the list with All status tab selected by default (2.1s)
+  ok 113 [authenticated] › tests\courses-tab.full.spec.ts:52:1 › Status tab click filters by that status and re-fetches (3.5s)
+  ok 114 [authenticated] › tests\courses-tab.full.spec.ts:77:1 › Pagination navigates to page 2 and shows correct row range (3.5s)
+  ok 115 [authenticated] › tests\courses-tab.full.spec.ts:97:1 › Category filter narrows results (2.7s)
+  ok 116 [authenticated] › tests\courses-tab.full.spec.ts:134:1 › Create draft — form opens, validates required fields, submits and returns to list (2.9s)
+  ok 117 [authenticated] › tests\courses-tab.full.spec.ts:181:1 › Edit prefill — form opens with the course's existing title (2.8s)
+  ok 118 [authenticated] › tests\courses-tab.full.spec.ts:202:1 › Archive confirm — dialog shown, confirming removes row from All list (4.9s)
+  ok 119 [authenticated] › tests\courses-tab.full.spec.ts:233:1 › Status tab badges show numeric counts from the backend (4.0s)
+  x  120 [authenticated] › tests\courses-tab.full.spec.ts:248:1 › Guide "Create New Course" button opens the create form on the Courses tab (11.3s)
+  ok 121 [authenticated] › tests\courses-tab.full.spec.ts:272:1 › Overview header "Create Course" button opens the create form on the Courses tab (1.5s)
+  ok 122 [authenticated] › tests\courses-tab.full.spec.ts:289:1 › Overview header "More Actions > Pending Course Approvals" filters Courses tab to Pending (1.6s)
+  ok 123 [authenticated] › tests\courses-tab.full.spec.ts:309:1 › Overview header "Import Content" button is disabled (no import feature built yet) (1.2s)
+  ok 124 [authenticated] › tests\courses-tab.full.spec.ts:317:1 › Empty instructor list shows inline warning near the dropdown (1.7s)
+  ok 125 [authenticated] › tests\courses-tab.full.spec.ts:342:1 › View modal: opens with correct course title from API, X button closes (2.8s)
+  ok 126 [authenticated] › tests\courses-tab.full.spec.ts:373:1 › View modal: Escape key closes (2.3s)
+  x  127 [authenticated] › tests\courses-tab.full.spec.ts:385:1 › View modal: backdrop click closes (30.1s)
+  ok 128 [authenticated] › tests\courses-tab.full.spec.ts:398:1 › View modal: 404 response shows error message and Retry (3.6s)
+  x  129 [authenticated] › tests\courses-tab.full.spec.ts:415:1 › Restore: archived course moves to Draft tab after restore (8.3s)
+  ok 130 [authenticated] › tests\courses-tab.full.spec.ts:499:1 › Filter-options 401 response redirects to login (1.6s)
+  ok 131 [authenticated] › tests\dashboard-kpis.full.spec.ts:15:1 › Dashboard shows all 9 KPI card labels (1.9s)
+  ok 132 [authenticated] › tests\dashboard-kpis.full.spec.ts:39:1 › Dashboard KPI cards with live backend data show numeric values (2.0s)
+  ok 133 [authenticated] › tests\dashboard-kpis.full.spec.ts:67:1 › Dashboard loads exactly 9 KPI cards (no skeleton) (1.8s)
+  ok 134 [authenticated] › tests\dashboard.full.spec.ts:30:1 › KPI cards load with numbers (1.4s)
+  ok 135 [authenticated] › tests\dashboard.full.spec.ts:39:1 › Recent Activity shows entries (1.3s)
+  ok 136 [authenticated] › tests\dashboard.full.spec.ts:44:1 › Users by Role chart loads (1.4s)
+  ok 137 [authenticated] › tests\dashboard.full.spec.ts:50:1 › Quick Actions work (navigate correctly) (3.3s)
+  ok 138 [authenticated] › tests\dashboard.full.spec.ts:60:1 › Date filter changes data (1.3s)
+  ok 139 [authenticated] › tests\dashboard.full.spec.ts:72:1 › Live Sessions widget shows counts matching the real LiveSession rows (not app-login sessions) (1.8s)
+  x  140 [authenticated] › tests\dashboard.full.spec.ts:127:1 › Pending Approvals badge count matches items list exactly (no total/empty-list contradiction) (9.6s)
+  ok 141 [authenticated] › tests\dashboard.full.spec.ts:167:1 › Learning Activity Overview renders real enrollment trend data (no "Coming Soon" stub) (1.4s)
+  ok 142 [authenticated] › tests\dashboard.spec.ts:7:1 › Dashboard loads (865ms)
+  ok 143 [authenticated] › tests\dashboard.spec.ts:11:1 › Total Users KPI shows (1.6s)
+  ok 144 [authenticated] › tests\dashboard.spec.ts:15:1 › Sidebar navigation works (952ms)
+  x  145 [authenticated] › tests\enrollments.full.spec.ts:79:1 › Enroll flow — dialog validates, submits, appears with NOT_STARTED / 0% progress (3.9s)
+  x  146 [authenticated] › tests\enrollments.full.spec.ts:119:1 › Already enrolled — real backend 400 shown next to the submit button, not a toast (30.1s)
+  ok 147 [authenticated] › tests\enrollments.full.spec.ts:152:1 › Course full — exact "Course is full" backend message shown next to submit (* mock) (4.9s)
+  x  148 [authenticated] › tests\enrollments.full.spec.ts:180:1 › Status change — PATCH sends {status} ONLY, progress never in the request body (30.1s)
+  x  149 [authenticated] › tests\enrollments.full.spec.ts:219:1 › Unenroll — DELETE fires, confirm dialog stays neutral (never mentions certificates) (30.1s)
+  ok 150 [authenticated] › tests\enrollments.full.spec.ts:249:1 › Status chips share filters except status — "All" count matches list total (2.2s)
+  ok 151 [authenticated] › tests\finance.full.spec.ts:72:1 › Finance page loads with header, KPI cards, and all tabs (1.5s)
+  ok 152 [authenticated] › tests\finance.full.spec.ts:89:1 › Dashboard tab shows honest empty states for all four charts (1.1s)
+  ok 153 [authenticated] › tests\finance.full.spec.ts:102:1 › Create Coupon creates a coupon and it appears in the Coupons tab (1.5s)
+  ok 154 [authenticated] › tests\finance.full.spec.ts:126:1 › Add Tax Rule creates a rule and it appears in the Tax Management tab (1.5s)
+  ok 155 [authenticated] › tests\finance.full.spec.ts:151:1 › Generate Invoice creates an invoice with a correct sequential number (3.2s)
+  ok 156 [authenticated] › tests\groups.full.spec.ts:99:3 › Group CRUD › Create Group → verify appears in table (3.1s)
+  ok 157 [authenticated] › tests\groups.full.spec.ts:104:3 › Group CRUD › Edit Group → verify changes saved (3.2s)
+  ok 158 [authenticated] › tests\groups.full.spec.ts:117:3 › Group CRUD › Delete Group → verify removed (2.6s)
+  ok 159 [authenticated] › tests\groups.full.spec.ts:143:3 › Group Members › Add Members to Group → verify member count increases (5.9s)
+  ok 160 [authenticated] › tests\groups.full.spec.ts:170:3 › Group Members › Remove Member from Group → verify count decreases (3.5s)
+  ok 161 [authenticated] › tests\groups.full.spec.ts:192:1 › Search Groups → verify filtered results (4.1s)
+  x  162 [authenticated] › tests\instructor-applications.full.spec.ts:120:1 › Pending tab loads the applications list, oldest first, from the applications endpoint (0ms)
+  -  163 [authenticated] › tests\instructor-applications.full.spec.ts:137:1 › Approve: success message appears and the Active Instructors card updates without reload
+  -  164 [authenticated] › tests\instructor-applications.full.spec.ts:165:1 › Reject: reason modal appears, rejection is required, and the status is saved
+  -  165 [authenticated] › tests\instructor-applications.full.spec.ts:194:1 › Request changes: modal appears, change request is required, and the status updates
+  ok 166 [authenticated] › tests\instructor-panel-analytics.full.spec.ts:95:1 › Clicking View on an instructor opens the panel with ?instructor=<id> in the URL (3.0s)
+  ok 167 [authenticated] › tests\instructor-panel-analytics.full.spec.ts:117:1 › Panel shows real stats — Courses, Students, and "—" for Rating/Revenue (2.0s)
+  ok 168 [authenticated] › tests\instructor-panel-analytics.full.spec.ts:138:1 › Performance chart renders exactly 12 data points (1.9s)
+  x  169 [authenticated] › tests\instructor-panel-analytics.full.spec.ts:149:1 › Approving a pending course removes it from the panel queue without a reload (2.3s)
+  ok 170 [authenticated] › tests\instructor-panel-analytics.full.spec.ts:173:1 › Analytics section renders all 4 sections (1.3s)
+  ok 171 [authenticated] › tests\instructor-phase-b.full.spec.ts:109:1 › Courses tab loads the instructor's courses (3.0s)
+  ok 172 [authenticated] › tests\instructor-phase-b.full.spec.ts:125:1 › Approving a pending course changes its status to Published (5.5s)
+  ok 173 [authenticated] › tests\instructor-phase-b.full.spec.ts:145:1 › Suspending an instructor with violation type + reason updates the status badge (4.8s)
+  ok 174 [authenticated] › tests\instructor-phase-b.full.spec.ts:169:1 › Reactivating a suspended instructor returns the status to active (3.4s)
+  ok 175 [authenticated] › tests\instructor-phase-b.full.spec.ts:187:1 › Uploading a document adds it to the Documents list (5.3s)
+  ok 176 [authenticated] › tests\instructor-phase-b.full.spec.ts:227:1 › Verifying a document changes its status to VERIFIED (3.4s)
+  ok 177 [authenticated] › tests\instructor-phase-cd.full.spec.ts:69:1 › Reviews tab loads and shows the empty state (2.2s)
+  ok 178 [authenticated] › tests\instructor-phase-cd.full.spec.ts:84:1 › Uploading a certification then verifying it shows VERIFIED (6.3s)
+  ok 179 [authenticated] › tests\instructor-phase-cd.full.spec.ts:142:1 › Suspension history shows an entry after a suspend action (4.3s)
+  ok 180 [authenticated] › tests\instructor-stats-cards.full.spec.ts:71:1 › Stats cards render above the tabs with real values from /instructors/stats (1.5s)
+  ok 181 [authenticated] › tests\instructor-stats-cards.full.spec.ts:84:1 › Unavailable metrics render — never $0 or 0.0/5 (1.3s)
+  ok 182 [authenticated] › tests\instructor-stats-cards.full.spec.ts:97:1 › Suspending an instructor updates the Suspended Instructors card without a hard reload (3.1s)
+  ok 183 [authenticated] › tests\instructors.full.spec.ts:56:1 › Instructors page loads, table shows real instructors, tabCounts badges visible (1.7s)
+  ok 184 [authenticated] › tests\instructors.full.spec.ts:71:1 › Search filters the table by real instructor name (2.9s)
+  ok 185 [authenticated] › tests\instructors.full.spec.ts:80:1 › Tab switching updates the ?tab= URL param and re-fetches (2.9s)
+  ok 186 [authenticated] › tests\instructors.full.spec.ts:98:1 › Clicking View opens the side panel with ?instructor=<id> in the URL (4.0s)
+  ok 187 [authenticated] › tests\instructors.full.spec.ts:109:1 › Suspend action opens the reason modal, submits, and the status badge updates (5.2s)
+  ok 188 [authenticated] › tests\integrations.full.spec.ts:40:1 › Integrations page loads with header, stats cards and tabs (1.5s)
+  ok 189 [authenticated] › tests\integrations.full.spec.ts:53:1 › Dashboard shows Zoom as CONNECTED (4.1s)
+  ok 190 [authenticated] › tests\integrations.full.spec.ts:74:1 › Generate API Key shows the full key once and it appears in the list (3.0s)
+  ok 191 [authenticated] › tests\integrations.full.spec.ts:105:1 › Create Webhook appears in the list and Test returns a real result (3.2s)
+  ok 192 [authenticated] › tests\integrations.full.spec.ts:140:1 › Logs tab shows entries from the actions above (1.8s)
+  ok 193 [authenticated] › tests\invitations.full.spec.ts:15:3 › Invitation lifecycle › Send Invitation → verify appears in table (5.6s)
+  ok 194 [authenticated] › tests\invitations.full.spec.ts:37:3 › Invitation lifecycle › Resend Invitation → verify success toast (2.3s)
+  ok 195 [authenticated] › tests\invitations.full.spec.ts:44:3 › Invitation lifecycle › Change Expiry → verify date updates (3.2s)
+  ok 196 [authenticated] › tests\invitations.full.spec.ts:56:3 › Invitation lifecycle › Cancel Invitation → verify status changes (2.9s)
+  ok 197 [authenticated] › tests\invitations.full.spec.ts:67:1 › Filter by Status → verify correct items shown (2.8s)
+  ok 198 [authenticated] › tests\learners.full.spec.ts:163:1 › Learners page loads with header, stats and table (2.1s)
+  ok 199 [authenticated] › tests\learners.full.spec.ts:173:1 › Tab switching updates the URL and refetches the table (2.2s)
+  ok 200 [authenticated] › tests\learners.full.spec.ts:185:1 › Panel deep-link (?learner=<id>) opens the side panel directly (1.9s)
+  ok 201 [authenticated] › tests\learners.full.spec.ts:193:1 › Enrolling a learner in a course makes it appear in the Courses tab (5.1s)
+  ok 202 [authenticated] › tests\learners.full.spec.ts:225:1 › Unenrolling a learner removes it from the Courses tab (3.6s)
+  ok 203 [authenticated] › tests\learners.full.spec.ts:245:1 › Bulk Enroll (More Actions) enrolls multiple learners in one course (7.8s)
+  x  204 [authenticated] › tests\learners.full.spec.ts:291:1 › Suspending a learner updates the status badge and suspension history (19.3s)
+  ok 205 [authenticated] › tests\learners.full.spec.ts:325:1 › Bottom analytics charts render (1.8s)
+  ok 206 [authenticated] › tests\learning-management.full.spec.ts:8:1 › Learning Management page renders inside the shared AdminLayout with KPI cards (2.2s)
+  ok 207 [authenticated] › tests\learning-management.full.spec.ts:24:1 › Tabs switch active state and content area updates (1.7s)
+  ok 208 [authenticated] › tests\learning-management.full.spec.ts:48:1 › Recent Courses table renders the wired course rows with pagination (1.8s)
+  ok 209 [authenticated] › tests\learning-management.full.spec.ts:63:1 › Right panel widgets render (2.0s)
+  ok 210 [authenticated] › tests\learning-paths.full.spec.ts:112:1 › Create path — form opens, validates, submits, appears in list (2.1s)
+  ok 211 [authenticated] › tests\learning-paths.full.spec.ts:149:1 › Edit path — title, description, sequential changed and persisted (3.7s)
+  ok 212 [authenticated] › tests\learning-paths.full.spec.ts:186:1 › Edit path: nothing changed → no PATCH sent (3.6s)
+  ok 213 [authenticated] › tests\learning-paths.full.spec.ts:215:1 › Delete path — confirm dialog required, path removed from list (4.4s)
+  ok 214 [authenticated] › tests\learning-paths.full.spec.ts:250:1 › Add COURSE item — appears fully resolved without a page refetch (7.0s)
+  -  215 [authenticated] › tests\learning-paths.full.spec.ts:296:1 › Add LIVE_SESSION item — picker shows sessions, adds successfully
+  ok 216 [authenticated] › tests\learning-paths.full.spec.ts:340:1 › Reject duplicate item — exact backend message shown inline (7.7s)
+  ok 217 [authenticated] › tests\learning-paths.full.spec.ts:375:1 › Reject unknown itemId — exact backend message shown inline (5.8s)
+  ok 218 [authenticated] › tests\learning-paths.full.spec.ts:409:1 › Remove item — uses path-item id (not course id), item disappears (6.0s)
+  ok 219 [authenticated] › tests\learning-paths.full.spec.ts:445:1 › Reorder — ONE bulk PATCH to /reorder, state replaced from full response (6.7s)
+  ok 220 [authenticated] › tests\learning-paths.full.spec.ts:479:1 › missing:true item renders as "unavailable" without crashing (* mock) (4.9s)
+  ok 221 [authenticated] › tests\learning-paths.full.spec.ts:525:1 › Archived course item shows Archived badge — distinct from missing (7.8s)
+  ok 222 [authenticated] › tests\learning-paths.full.spec.ts:555:1 › Overview guide "Create Learning Path" switches to Learning Paths tab and opens the create form (1.3s)
+  ok 223 [authenticated] › tests\live-sessions.full.spec.ts:105:1 › Schedule session — past start time blocked client-side, no POST fired (3.5s)
+  ok 224 [authenticated] › tests\live-sessions.full.spec.ts:132:1 › Schedule session — real backend responds; 503 (Zoom unconfigured) rendered verbatim if that is the current state (9.6s)
+  ok 225 [authenticated] › tests\live-sessions.full.spec.ts:164:1 › Unknown instructor — exact backend message shown inline, not a toast (* mock) (3.1s)
+  ok 226 [authenticated] › tests\live-sessions.full.spec.ts:195:1 › startUrl exposed ONLY via "Start (host)" — Join uses joinUrl, startUrl never leaks elsewhere (* mock) (1.6s)
+  ok 227 [authenticated] › tests\live-sessions.full.spec.ts:217:1 › Status badge is a pure render of the server value — no status control in the UI (* mock) (1.3s)
+  ok 228 [authenticated] › tests\live-sessions.full.spec.ts:231:1 › Edit: nothing changed → no PATCH sent (empty patch is a backend 400) (* mock) (1.5s)
+  ok 229 [authenticated] › tests\live-sessions.full.spec.ts:251:1 › Cancel — confirm dialog explicitly mentions Zoom meeting deletion, DELETE fires (* mock) (1.9s)
+  ok 230 [authenticated] › tests\live-sessions.full.spec.ts:280:1 › Provider picker is never rendered — ZOOM-only v1, no Meet/Teams options anywhere (1.9s)
+  ok 231 [authenticated] › tests\live-sessions.full.spec.ts:290:1 › Overview guide "Schedule Live Session" switches to Live Sessions tab and opens the schedule form (2.6s)
+  ok 232 [authenticated] › tests\lm-deep-link.full.spec.ts:6:1 › Deep link ?tab=courses renders Courses tab directly (888ms)
+  ok 233 [authenticated] › tests\lm-deep-link.full.spec.ts:12:1 › Deep link ?tab=overview renders Overview tab directly (946ms)
+  ok 234 [authenticated] › tests\lm-overview.full.spec.ts:9:1 › KPI cards render stats from the live backend (2.4s)
+  ok 235 [authenticated] › tests\lm-overview.full.spec.ts:35:1 › Distribution donut renders with the API total (1.5s)
+  ok 236 [authenticated] › tests\lm-overview.full.spec.ts:47:1 › Progress range selector re-fetches a different dataset (1.8s)
+  ok 237 [authenticated] › tests\lm-overview.full.spec.ts:72:3 › Top Performing Courses card renders with items or empty state (2.3s)
+  ok 238 [authenticated] › tests\lm-overview.full.spec.ts:88:1 › Content Statistics panel renders (2.1s)
+  ok 239 [authenticated] › tests\lm-overview.full.spec.ts:95:1 › Courses table paginates through real data (3.1s)
+  ok 240 [authenticated] › tests\lm-overview.full.spec.ts:119:1 › Courses table category filter re-fetches and resets to page 1 (2.6s)
+  ok 241 [authenticated] › tests\lm-overview.full.spec.ts:134:1 › Courses table instructor filter passes the instructor id back to the API (2.2s)
+  ok 242 [authenticated] › tests\lm-overview.full.spec.ts:159:1 › Recent Activities converts createdAt timestamps to relative time (2.5s)
+  ok 243 [authenticated] › tests\lm-overview.full.spec.ts:174:1 › Upcoming Live Sessions renders without error (2.3s)
+  ok 244 [authenticated] › tests\notifications.full.spec.ts:76:1 › Notifications page loads with header, stats cards and tabs (1.5s)
+  ok 245 [authenticated] › tests\notifications.full.spec.ts:89:1 › Create Template creates a template and it appears in the Templates tab (1.5s)
+  ok 246 [authenticated] › tests\notifications.full.spec.ts:113:1 › Create Announcement sends to a scoped custom audience and appears in the list (3.5s)
+  ok 247 [authenticated] › tests\notifications.full.spec.ts:143:1 › Create Automation appears in the Automations tab, pause it, and status changes (3.5s)
+  x  248 [authenticated] › tests\notifications.full.spec.ts:177:1 › Send Notification to a real user appears in Delivery Logs (12.7s)
+  ok 249 [authenticated] › tests\organization.full.spec.ts:51:3 › Branches › Add Branch → verify appears in table (2.0s)
+  ok 250 [authenticated] › tests\organization.full.spec.ts:56:3 › Branches › Edit Branch → verify changes saved (2.8s)
+  ok 251 [authenticated] › tests\organization.full.spec.ts:70:3 › Branches › Delete Branch → verify removed (2.3s)
+  ok 252 [authenticated] › tests\organization.full.spec.ts:94:3 › Departments › Add Department → verify appears in table (1.8s)
+  ok 253 [authenticated] › tests\organization.full.spec.ts:99:3 › Departments › Edit Department → verify changes saved (2.4s)
+  ok 254 [authenticated] › tests\organization.full.spec.ts:112:3 › Departments › Delete Department → verify removed (2.0s)
+  ok 255 [authenticated] › tests\organization.full.spec.ts:138:3 › Teams › Add Team → verify appears in table (2.7s)
+  ok 256 [authenticated] › tests\organization.full.spec.ts:151:3 › Teams › Edit Team → verify changes saved (2.0s)
+  ok 257 [authenticated] › tests\organization.full.spec.ts:164:3 › Teams › Delete Team → verify removed (1.9s)
+  ok 258 [authenticated] › tests\organization.full.spec.ts:177:1 › Org Chart → verify loads and shows nodes (1.6s)
+  ok 259 [authenticated] › tests\quizzes.full.spec.ts:116:1 › Create quiz without a course — form opens, validates, submits, appears in list (2.7s)
+  ok 260 [authenticated] › tests\quizzes.full.spec.ts:152:1 › Create quiz attached to a course — courseId carried through (3.7s)
+  ok 261 [authenticated] › tests\quizzes.full.spec.ts:179:1 › Edit quiz — passingGrade updates, attempts/timeLimit clear to unlimited/none (null) (5.7s)
+  ok 262 [authenticated] › tests\quizzes.full.spec.ts:217:1 › Edit quiz: nothing changed → no PATCH sent (empty patch is a backend 400) (3.1s)
+  ok 263 [authenticated] › tests\quizzes.full.spec.ts:244:1 › Delete quiz — confirm dialog required, permanently removes quiz and its questions (3.0s)
+  ok 264 [authenticated] › tests\quizzes.full.spec.ts:280:1 › Question type picker offers ONLY the 4 v1 types — no Fill-in-Blank / Matching (2.9s)
+  ok 265 [authenticated] › tests\quizzes.full.spec.ts:312:1 › Add all 4 question types via the UI — correct data shapes, Essay flagged manually graded (5.7s)
+  ok 266 [authenticated] › tests\quizzes.full.spec.ts:403:1 › Edit an existing question — type+data always sent together, change persists (3.5s)
+  ok 267 [authenticated] › tests\quizzes.full.spec.ts:440:1 › Delete a question — confirm required, removed from the list (3.3s)
+  ok 268 [authenticated] › tests\quizzes.full.spec.ts:470:1 › Multiple Choice: no correct answer selected → visible error, no POST, dialog stays open (3.3s)
+  ok 269 [authenticated] › tests\quizzes.full.spec.ts:501:1 › True/False: empty prompt → visible error, no POST, dialog stays open (3.9s)
+  ok 270 [authenticated] › tests\quizzes.full.spec.ts:530:1 › Multi-Select: no correct checkboxes selected → visible error, no POST, dialog stays open (3.4s)
+  ok 271 [authenticated] › tests\quizzes.full.spec.ts:561:1 › Essay: empty prompt → visible error, no POST, dialog stays open (3.7s)
+  ok 272 [authenticated] › tests\quizzes.full.spec.ts:589:1 › Reorder questions — ONE bulk PATCH to /reorder, state replaced from full response (4.8s)
+  ok 273 [authenticated] › tests\quizzes.full.spec.ts:623:1 › PATCH question with type but no data → 400 (verifies the pairing rule the UI is built to never violate) (1.4s)
+  ok 274 [authenticated] › tests\quizzes.full.spec.ts:643:1 › Overview guide "Create Assessment" switches to Assessments tab and opens the Create Quiz form (1.4s)
+  ok 275 [authenticated] › tests\reports-schedule.full.spec.ts:35:1 › header "Schedule Report" button navigates to Export Center's Scheduled Reports section (1.1s)
+  ok 276 [authenticated] › tests\reports-schedule.full.spec.ts:45:1 › Scheduled Reports: full lifecycle — create, pause, resume, edit, delete (4.0s)
+  ok 277 [authenticated] › tests\reports.full.spec.ts:15:1 › Reports & Analytics page loads with header, 13 tabs, and 10 KPI cards (3.3s)
+  ok 278 [authenticated] › tests\reports.full.spec.ts:50:1 › sidebar "Reports & Analytics" link navigates correctly (was previously a dead 404 link) (11.4s)
+  ok 279 [authenticated] › tests\reports.full.spec.ts:63:1 › Overview date range picker and department filter re-fetch real data (6.1s)
+  ok 280 [authenticated] › tests\reports.full.spec.ts:86:1 › Learner Analytics tab shows real activity/progress/dropout-risk data (1.8s)
+  ok 281 [authenticated] › tests\reports.full.spec.ts:103:1 › Instructor Analytics tab shows real ranking/performance data with honest unavailable rating (1.1s)
+  ok 282 [authenticated] › tests\reports.full.spec.ts:117:1 › Audit Logs tab shows real paginated data and search/action filters actually filter (1.7s)
+  ok 283 [authenticated] › tests\reports.full.spec.ts:147:1 › Export Center generates a real CSV download end to end (2.4s)
+  ok 284 [authenticated] › tests\reports.full.spec.ts:163:1 › Export Center JSON format downloads the flat {type,columns,rows} shape (2.9s)
+  ok 285 [authenticated] › tests\reports.full.spec.ts:186:1 › remaining tabs (Course Analytics, Learning Progress, Assessments, Certificates, Attendance, Engagement, Compliance, Custom Reports) render without error (6.3s)
+  ok 286 [authenticated] › tests\role-templates.full.spec.ts:48:1 › Role Templates tab loads → seeded templates appear with correct permission counts (4.7s)
+  ok 287 [authenticated] › tests\role-templates.full.spec.ts:67:1 › Expand a template card → its permissions load (3.0s)
+  ok 288 [authenticated] › tests\role-templates.full.spec.ts:94:3 › Create / Apply / Re-apply / Delete › Create Template → fill name + permissions + save → appears in grid (2.2s)
+  ok 289 [authenticated] › tests\role-templates.full.spec.ts:121:3 › Create / Apply / Re-apply / Delete › Create with duplicate name → friendly 409 error shown (1.6s)
+  ok 290 [authenticated] › tests\role-templates.full.spec.ts:141:3 › Create / Apply / Re-apply / Delete › Apply template to a role → role picker shows roles (not users), success shown (3.6s)
+  ok 291 [authenticated] › tests\role-templates.full.spec.ts:186:3 › Create / Apply / Re-apply / Delete › Re-apply same template to same role → applied:0 handled gracefully (not an error) (4.2s)
+  ok 292 [authenticated] › tests\role-templates.full.spec.ts:213:3 › Create / Apply / Re-apply / Delete › Delete template → removed from grid (2.8s)
+  ok 293 [authenticated] › tests\roles-permissions-deep-link.full.spec.ts:6:1 › Deep link ?tab=roles renders LMS Roles tab directly (1.4s)
+  ok 294 [authenticated] › tests\roles-permissions-deep-link.full.spec.ts:13:1 › Deep link ?tab=templates renders Role Templates tab directly (1.1s)
+  ok 295 [authenticated] › tests\roles-permissions-deep-link.full.spec.ts:19:1 › Deep link ?tab=assignments renders User Role Assignments tab directly (831ms)
+  ok 296 [authenticated] › tests\roles-permissions-deep-link.full.spec.ts:25:1 › Deep link ?tab=policies renders Access Policies tab directly (1.3s)
+  ok 297 [authenticated] › tests\roles.full.spec.ts:49:3 › Role CRUD › Create Role → verify appears in table (2.0s)
+  ok 298 [authenticated] › tests\roles.full.spec.ts:54:3 › Role CRUD › Edit Role → verify changes saved (2.3s)
+  ok 299 [authenticated] › tests\roles.full.spec.ts:67:3 › Role CRUD › Delete Role without users → verify removed (2.6s)
+  ok 300 [authenticated] › tests\roles.full.spec.ts:92:1 › Assign custom role to user → rejected with system-role validation error (8.9s)
+  ok 301 [authenticated] › tests\roles.full.spec.ts:138:1 › Duplicate Role → verify copy created (4.3s)
+  -  302 [authenticated] › tests\roles.full.spec.ts:147:6 › Add Permission → verify appears in list
+  -  303 [authenticated] › tests\roles.full.spec.ts:153:6 › Edit Permission → verify changes saved
+  -  304 [authenticated] › tests\roles.full.spec.ts:157:6 › Delete Permission → verify removed
+  ok 305 [authenticated] › tests\roles.full.spec.ts:161:1 › Assign Permission to Role → verify checkbox checked (4.2s)
+  ok 306 [authenticated] › tests\roles.full.spec.ts:172:1 › Permission Matrix → verify loads (2.8s)
+  x  307 [authenticated] › tests\roles.full.spec.ts:179:1 › Toggle Permission Matrix cell → verify updates (30.1s)
+  ok 308 [authenticated] › tests\roles.spec.ts:3:1 › Roles page loads (1.2s)
+  ok 309 [authenticated] › tests\roles.spec.ts:8:1 › Create Role button exists (1.0s)
+  ok 310 [authenticated] › tests\stats-consistency.full.spec.ts:21:1 › Access Policies count is consistent between the header card and the tab (1.6s)
+  ok 311 [authenticated] › tests\stats-consistency.full.spec.ts:62:1 › Total Users is consistent between Dashboard and Users page (2.4s)
+  ok 312 [authenticated] › tests\stats-consistency.full.spec.ts:118:1 › Suspended Users is consistent between Dashboard and Users page (2.3s)
+  ok 313 [authenticated] › tests\stats-consistency.full.spec.ts:145:1 › Active Users is consistent between Dashboard and Users page (3.1s)
+  ok 314 [authenticated] › tests\stats-consistency.full.spec.ts:169:1 › Pending Verification is consistent between Users page and its own tab (2.0s)
+  ok 315 [authenticated] › tests\system-settings.full.spec.ts:60:1 › System Settings page loads with header and all tabs render (1.2s)
+  ok 316 [authenticated] › tests\system-settings.full.spec.ts:80:1 › General tab: update Platform Name → saved → Config Logs shows the change (3.2s)
+  ok 317 [authenticated] › tests\system-settings.full.spec.ts:112:1 › Feature Toggles: toggle Marketplace → saved → reflected on next load (2.3s)
+  x  318 [authenticated] › tests\system-settings.full.spec.ts:143:1 › Email Config: Send Test Email returns a result without crashing (16.1s)
+  ok 319 [authenticated] › tests\system-settings.full.spec.ts:162:1 › Maintenance: enable shows the banner, disable removes it (4.8s)
+  ok 320 [authenticated] › tests\system-settings.full.spec.ts:183:1 › Backup & Restore: Create Backup downloads a JSON file (2.2s)
+  ok 321 [authenticated] › tests\user-role-assignments.full.spec.ts:133:1 › User Role Assignments stats → verify all 4 cards render with numbers (3.1s)
+  ok 322 [authenticated] › tests\user-role-assignments.full.spec.ts:155:3 › Assignment CRUD › Create assignment → appears in table with correct role badge (5.0s)
+  ok 323 [authenticated] › tests\user-role-assignments.full.spec.ts:164:3 › Assignment CRUD › Edit assignment type → badge updates (3.6s)
+  ok 324 [authenticated] › tests\user-role-assignments.full.spec.ts:182:3 › Assignment CRUD › Remove assignment → row removed (2.2s)
+  ok 325 [authenticated] › tests\user-role-assignments.full.spec.ts:198:1 › Temporary assignment → expiry date shown in table (9.1s)
+  ok 326 [authenticated] › tests\users.full.spec.ts:134:3 › Add / Edit / Search / Filter › Add User → verify appears in table (4.8s)
+  ok 327 [authenticated] › tests\users.full.spec.ts:140:3 › Add / Edit / Search / Filter › Edit User → verify changes saved (2.8s)
+  ok 328 [authenticated] › tests\users.full.spec.ts:152:3 › Add / Edit / Search / Filter › Search User → verify filtered results (2.1s)
+  ok 329 [authenticated] › tests\users.full.spec.ts:161:3 › Add / Edit / Search / Filter › Filter by Role → verify correct users shown (2.3s)
+  ok 330 [authenticated] › tests\users.full.spec.ts:173:3 › Add / Edit / Search / Filter › Filter by Status → verify correct users shown (1.2s)
+  ok 331 [authenticated] › tests\users.full.spec.ts:186:1 › Suspend User → verify moves to Suspended tab (6.4s)
+  ok 332 [authenticated] › tests\users.full.spec.ts:205:3 › Archive / Restore › Archive User → verify moves to Archived tab (6.4s)
+  ok 333 [authenticated] › tests\users.full.spec.ts:217:3 › Archive / Restore › Restore Archived User → verify back in Users tab (2.9s)
+  ok 334 [authenticated] › tests\users.full.spec.ts:228:1 › Approve Pending Verification → verify status changes (6.5s)
+  ok 335 [authenticated] › tests\users.full.spec.ts:243:1 › Reject Pending Verification → verify status changes (6.7s)
+  ok 336 [authenticated] › tests\users.full.spec.ts:254:1 › Assign Role to User → verify role updated (8.9s)
+  ok 337 [authenticated] › tests\users.full.spec.ts:285:1 › Send Message to User → verify success toast (6.4s)
+  ok 338 [authenticated] › tests\users.full.spec.ts:298:1 › Force Logout User → verify sessions = 0 (7.1s)
+  ok 339 [authenticated] › tests\users.full.spec.ts:311:1 › Import Users CSV → verify users added (5.1s)
+  ok 340 [authenticated] › tests\users.full.spec.ts:335:1 › Export Users → verify file downloads (3.3s)
+  ok 341 [authenticated] › tests\users.full.spec.ts:344:1 › Bulk Suspend → verify multiple users suspended (9.4s)
+  ok 342 [authenticated] › tests\users.full.spec.ts:373:1 › Bulk Assign Role → verify multiple users updated (7.6s)
+  ok 343 [authenticated] › tests\users.spec.ts:3:1 › Users page loads (977ms)
+  ok 344 [authenticated] › tests\users.spec.ts:8:1 › Add User button exists (978ms)
+  ok 345 [authenticated] › tests\users.spec.ts:13:1 › Search users works (1.6s)
+
+
+  1) [authenticated] › tests\course-approval.full.spec.ts:335:1 › Approval: double-click prevention — Request Changes button disabled during request 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: /Sending/i })
+    Expected: disabled
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" with timeout 8000ms
+      - waiting for getByRole('button', { name: /Sending/i })
+
+
+      364 |
+      365 |   // While in-flight: button shows "Sending…" and is disabled
+    > 366 |   await expect(page.getByRole('button', { name: /Sending/i })).toBeDisabled({ timeout: 8000 })
+          |                                                                ^
+      367 |
+      368 |   // Let complete — modal closes and toast appears
+      369 |   await expect(page.getByText(/returned to Draft/i)).toBeVisible({ timeout: 10000 })
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-approval.full.spec.ts:366:64
+
+    Error Context: test-results\course-approval.full-Appro-da991-ton-disabled-during-request-authenticated\error-context.md
+
+    Error Context: test-results\course-approval.full-Appro-da991-ton-disabled-during-request-authenticated\error-context.md
+
+  2) [authenticated] › tests\course-preview.full.spec.ts:235:1 › Preview: 404 course → shows error state with Retry button 
+
+    Error: 404 expected for deleted course
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 404
+    Received: 200
+
+      265 |   // this one response instead, matching the real error shape courseWorkflow
+      266 |   // .controller.js returns for COURSE_NOT_FOUND (404, { success:false, message }).
+    > 267 |   await page.route(`**/courses/${courseId}/preview`, route =>
+          |                                                            ^
+      268 |     route.fulfill({ status: 404, contentType: 'application/json', body: JSON.stringify({ success: false, message: 'Course not found.' }) }),
+      269 |   )
+      270 |
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-preview.full.spec.ts:267:60
+
+    Error Context: test-results\course-preview.full-Previe-b1e24-ror-state-with-Retry-button-authenticated\error-context.md
+
+    Error Context: test-results\course-preview.full-Previe-b1e24-ror-state-with-Retry-button-authenticated\error-context.md
+
+  3) [authenticated] › tests\course-settings.full.spec.ts:95:1 › Settings form: renders all sections and saves changed fields 
+
+    TimeoutError: locator.fill: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Price')
+
+
+      126 |   for (let attempt = 1; attempt <= 3; attempt++) {
+      127 |     try {
+    > 128 |       await page.getByLabel('Price').fill('49.99', { timeout: 8000 })
+          |                                      ^
+      129 |       break
+      130 |     } catch (err) {
+      131 |       if (attempt === 3) throw err
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-settings.full.spec.ts:128:38
+
+    Error Context: test-results\course-settings.full-Setti-4377b-ns-and-saves-changed-fields-authenticated\error-context.md
+
+    Error Context: test-results\course-settings.full-Setti-4377b-ns-and-saves-changed-fields-authenticated\error-context.md
+
+  4) [authenticated] › tests\course-settings.full.spec.ts:156:1 › Settings form: blocks save when Paid but price is empty 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/Price must be a positive number/i)
+    Expected: visible
+    Timeout: 3000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 3000ms
+      - waiting for getByText(/Price must be a positive number/i)
+
+
+      173 |
+      174 |   // Validation error must appear; no network call made
+    > 175 |   await expect(page.getByText(/Price must be a positive number/i)).toBeVisible({ timeout: 3000 })
+          |                                                                    ^
+      176 | })
+      177 |
+      178 | test('Settings form: does not PATCH when no fields changed', async ({ page }) => {
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-settings.full.spec.ts:175:68
+
+    Error Context: test-results\course-settings.full-Setti-14804-hen-Paid-but-price-is-empty-authenticated\error-context.md
+
+    Error Context: test-results\course-settings.full-Setti-14804-hen-Paid-but-price-is-empty-authenticated\error-context.md
+
+  5) [authenticated] › tests\course-settings.full.spec.ts:178:1 › Settings form: does not PATCH when no fields changed 
+
+    Error: No PATCH should be issued when nothing changed
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      196 |   await page.waitForTimeout(1000)
+      197 |
+    > 198 |   expect(patchCalled, 'No PATCH should be issued when nothing changed').toBe(false)
+          |                                                                         ^
+      199 |   await expect(page.getByText('Settings saved.')).toBeVisible({ timeout: 3000 })
+      200 | })
+      201 |
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-settings.full.spec.ts:198:73
+
+    Error Context: test-results\course-settings.full-Setti-5e826-ATCH-when-no-fields-changed-authenticated\error-context.md
+
+    Error Context: test-results\course-settings.full-Setti-5e826-ATCH-when-no-fields-changed-authenticated\error-context.md
+
+  6) [authenticated] › tests\course-submit.full.spec.ts:189:1 › Submit: non-Draft course shows status guard (no submit button) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Submit for Review' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Submit for Review' })
+
+
+      121 |   await page.getByRole('button', { name: /Next: Submit/i }).click()
+      122 |   // getByRole('heading'): plain text also matches the "Submit for Review" button.
+    > 123 |   await expect(page.getByRole('heading', { name: 'Submit for Review' })).toBeVisible({ timeout: 5000 })
+          |                                                                          ^
+      124 | }
+      125 |
+      126 | // ── Cleanup ───────────────────────────────────────────────────────────────────
+        at navigateToSubmitStep (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-submit.full.spec.ts:123:74)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-submit.full.spec.ts:202:3
+
+    Error Context: test-results\course-submit.full-Submit--82a81-tus-guard-no-submit-button--authenticated\error-context.md
+
+    Error Context: test-results\course-submit.full-Submit--82a81-tus-guard-no-submit-button--authenticated\error-context.md
+
+  7) [authenticated] › tests\course-submit.full.spec.ts:260:1 › Submit: button is disabled during in-flight request (double-submit prevented) 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: /Submitting/i })
+    Expected: disabled
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" with timeout 8000ms
+      - waiting for getByRole('button', { name: /Submitting/i })
+
+
+      286 |
+      287 |   // While request is in flight the button must be disabled and show "Submitting…"
+    > 288 |   await expect(page.getByRole('button', { name: /Submitting/i })).toBeDisabled({ timeout: 8000 })
+          |                                                                   ^
+      289 |
+      290 |   // Let the request complete and verify success
+      291 |   await expect(page.getByText('Submitted for Review!')).toBeVisible({ timeout: 10000 })
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-submit.full.spec.ts:288:67
+
+    Error Context: test-results\course-submit.full-Submit--7f0c1-st-double-submit-prevented--authenticated\error-context.md
+
+    Error Context: test-results\course-submit.full-Submit--7f0c1-st-double-submit-prevented--authenticated\error-context.md
+
+  8) [authenticated] › tests\course-upload.full.spec.ts:83:1 › Type rejection — non-image file blocked client-side, no API request 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.setInputFiles: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[type="file"]')
+
+
+      90 |   // Try to upload a PDF (not in ALLOWED_MIME)
+      91 |   const fileInput = page.locator('input[type="file"]')
+    > 92 |   await fileInput.setInputFiles({
+         |   ^
+      93 |     name: 'contract.pdf',
+      94 |     mimeType: 'application/pdf',
+      95 |     buffer: Buffer.from('fake pdf content'),
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-upload.full.spec.ts:92:3
+
+    Error Context: test-results\course-upload.full-Type-re-aa100--client-side-no-API-request-authenticated\error-context.md
+
+  9) [authenticated] › tests\course-upload.full.spec.ts:110:1 › Size rejection — file > 5 MB blocked client-side, no API request 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.setInputFiles: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[type="file"]')
+
+
+      118 |   const bigBuffer = Buffer.alloc(6 * 1024 * 1024)
+      119 |   const fileInput = page.locator('input[type="file"]')
+    > 120 |   await fileInput.setInputFiles({
+          |   ^
+      121 |     name: 'huge.jpg',
+      122 |     mimeType: 'image/jpeg',
+      123 |     buffer: bigBuffer,
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-upload.full.spec.ts:120:3
+
+    Error Context: test-results\course-upload.full-Size-re-25666--client-side-no-API-request-authenticated\error-context.md
+
+  10) [authenticated] › tests\course-upload.full.spec.ts:136:1 › Successful thumbnail flow — sign → PUT → confirm → preview visible 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.setInputFiles: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[type="file"]')
+
+
+      141 |
+      142 |   const fileInput = page.locator('input[type="file"]')
+    > 143 |   await fileInput.setInputFiles({
+          |   ^
+      144 |     name: 'photo.jpg',
+      145 |     mimeType: 'image/jpeg',
+      146 |     buffer: Buffer.from('fake jpeg data'),
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-upload.full.spec.ts:143:3
+
+    Error Context: test-results\course-upload.full-Success-0792f-→-confirm-→-preview-visible-authenticated\error-context.md
+
+  11) [authenticated] › tests\course-upload.full.spec.ts:160:1 › Progress bar renders during file transfer 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.setInputFiles: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[type="file"]')
+
+
+      180 |
+      181 |   const fileInput = page.locator('input[type="file"]')
+    > 182 |   await fileInput.setInputFiles({
+          |   ^
+      183 |     name: 'photo.jpg',
+      184 |     mimeType: 'image/jpeg',
+      185 |     buffer: Buffer.from('fake jpeg data'),
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-upload.full.spec.ts:182:3
+
+    Error Context: test-results\course-upload.full-Progress-bar-renders-during-file-transfer-authenticated\error-context.md
+
+  12) [authenticated] › tests\course-upload.full.spec.ts:204:1 › Cancel mid-upload resets UI to idle drop zone 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.setInputFiles: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[type="file"]')
+
+
+      220 |
+      221 |   const fileInput = page.locator('input[type="file"]')
+    > 222 |   await fileInput.setInputFiles({
+          |   ^
+      223 |     name: 'photo.jpg',
+      224 |     mimeType: 'image/jpeg',
+      225 |     buffer: Buffer.from('fake jpeg data'),
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-upload.full.spec.ts:222:3
+
+    Error Context: test-results\course-upload.full-Cancel--cfbaf-resets-UI-to-idle-drop-zone-authenticated\error-context.md
+
+  13) [authenticated] › tests\course-upload.full.spec.ts:246:1 › Replace thumbnail deletes old storage path 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.setInputFiles: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[type="file"]')
+
+
+      265 |
+      266 |   // Upload first thumbnail
+    > 267 |   await fileInput.setInputFiles({
+          |   ^
+      268 |     name: 'first.jpg',
+      269 |     mimeType: 'image/jpeg',
+      270 |     buffer: Buffer.from('first image'),
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-upload.full.spec.ts:267:3
+
+    Error Context: test-results\course-upload.full-Replace-baadc-il-deletes-old-storage-path-authenticated\error-context.md
+
+  14) [authenticated] › tests\courses-invalidation.full.spec.ts:75:1 › Archive a Published course → Dashboard Courses KPI decrements without hard reload 
+
+    Error: Setup: PATCH /courses/0094373e-a073-456b-a0ae-5be2adc63757 to Published must succeed
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      124 |     headers: H,
+      125 |   })
+    > 126 |   expect(publishResp.ok(), `Setup: PATCH /courses/${createdCourseId} to Published must succeed`).toBeTruthy()
+          |                                                                                                  ^
+      127 |
+      128 |   // ── Step 1: Read kpiBefore from a fresh Dashboard load ──
+      129 |   // Navigate (hard reload) so getDashboardCore() re-runs and picks up the new
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\courses-invalidation.full.spec.ts:126:98
+
+    Error Context: test-results\courses-invalidation.full--ad77a-rements-without-hard-reload-authenticated\error-context.md
+
+  15) [authenticated] › tests\courses-tab.full.spec.ts:248:1 › Guide "Create New Course" button opens the create form on the Courses tab 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Create New Course', exact: true })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for getByRole('button', { name: 'Create New Course', exact: true })
+
+
+      254 |   // The guide renders in the Overview sidebar — click the wired button.
+      255 |   const guideBtn = page.getByRole('button', { name: 'Create New Course', exact: true })
+    > 256 |   await expect(guideBtn).toBeVisible({ timeout: 10000 })
+          |                          ^
+      257 |   await guideBtn.click()
+      258 |
+      259 |   // Should switch to the Courses tab and immediately open the create form.
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\courses-tab.full.spec.ts:256:26
+
+    Error Context: test-results\courses-tab.full-Guide-Cre-f3e5b-ate-form-on-the-Courses-tab-authenticated\error-context.md
+
+    Error Context: test-results\courses-tab.full-Guide-Cre-f3e5b-ate-form-on-the-Courses-tab-authenticated\error-context.md
+
+  16) [authenticated] › tests\courses-tab.full.spec.ts:385:1 › View modal: backdrop click closes ───
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('[aria-label="modal backdrop"]')
+        - locator resolved to <div aria-label="modal backdrop"></div>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div class="tw:h-[160px] tw:w-full tw:animate-pulse tw:rounded-lg tw:bg-slate-100"></div> from <div role="dialog" aria-modal="true" aria-label="Course quick view" class="tw:relative tw:w-full tw:max-w-2xl tw:rounded-xl tw:bg-white tw:shadow-2xl tw:flex tw:flex-col tw:max-h-[90vh]">…</div> subtree intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div class="tw:h-[160px] tw:w-full tw:animate-pulse tw:rounded-lg tw:bg-slate-100"></div> from <div role="dialog" aria-modal="true" aria-label="Course quick view" class="tw:relative tw:w-full tw:max-w-2xl tw:rounded-xl tw:bg-white tw:shadow-2xl tw:flex tw:flex-col tw:max-h-[90vh]">…</div> subtree intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        49 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div aria-label="Settings summary" class="tw:flex tw:flex-wrap tw:gap-1.5">…</div> from <div role="dialog" aria-modal="true" aria-label="Course quick view: QA Phase B Course 1786817043787" class="tw:relative tw:w-full tw:max-w-2xl tw:rounded-xl tw:bg-white tw:shadow-2xl tw:flex tw:flex-col tw:max-h-[90vh]">…</div> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+
+
+      391 |
+      392 |   // Click the backdrop element (behind the panel)
+    > 393 |   await page.locator('[aria-label="modal backdrop"]').click()
+          |                                                       ^
+      394 |   await expect(page.getByRole('dialog')).not.toBeVisible()
+      395 | })
+      396 |
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\courses-tab.full.spec.ts:393:55
+
+    Error Context: test-results\courses-tab.full-View-modal-backdrop-click-closes-authenticated\error-context.md
+
+    Error Context: test-results\courses-tab.full-View-modal-backdrop-click-closes-authenticated\error-context.md
+
+  17) [authenticated] › tests\courses-tab.full.spec.ts:415:1 › Restore: archived course moves to Draft tab after restore 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('row').filter({ hasText: 'RESTORE SMOKE 1786818145701' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByRole('row').filter({ hasText: 'RESTORE SMOKE 1786818145701' })
+
+
+      449 |   // Our test course must be visible
+      450 |   const courseRow = page.getByRole('row').filter({ hasText: `RESTORE SMOKE ${ts}` })
+    > 451 |   await expect(courseRow).toBeVisible({ timeout: 5000 })
+          |                           ^
+      452 |
+      453 |   // Accept the restore confirm dialog, watch the POST /restore response
+      454 |   page.on('dialog', (d) => d.accept())
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\courses-tab.full.spec.ts:451:27
+
+    Error Context: test-results\courses-tab.full-Restore-a-ad58f--to-Draft-tab-after-restore-authenticated\error-context.md
+
+    Error Context: test-results\courses-tab.full-Restore-a-ad58f--to-Draft-tab-after-restore-authenticated\error-context.md
+
+  18) [authenticated] › tests\dashboard.full.spec.ts:127:1 › Pending Approvals badge count matches items list exactly (no total/empty-list contradiction) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.mn-db-card').filter({ has: getByText('Pending Approvals', { exact: true }) }).getByText('Dashboard Pending Probe').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.mn-db-card').filter({ has: getByText('Pending Approvals', { exact: true }) }).getByText('Dashboard Pending Probe').first()
+
+
+      161 |   // .first(): the fixture name legitimately appears twice in the row (item
+      162 |   // title + "submittedBy · time" subtitle) — either confirms the row rendered.
+    > 163 |   await expect(card.getByText('Dashboard Pending Probe', { exact: false }).first()).toBeVisible()
+          |                                                                                     ^
+      164 |   await expect(card.getByText('No pending approvals.')).toHaveCount(0)
+      165 | })
+      166 |
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\dashboard.full.spec.ts:163:85
+
+    Error Context: test-results\dashboard.full-Pending-App-abf20-l-empty-list-contradiction--authenticated\error-context.md
+
+    Error Context: test-results\dashboard.full-Pending-App-abf20-l-empty-list-contradiction--authenticated\error-context.md
+
+  19) [authenticated] › tests\enrollments.full.spec.ts:79:1 › Enroll flow — dialog validates, submits, appears with NOT_STARTED / 0% progress 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Bulk Suspend 1 1786800737952777')
+    Expected: visible
+    Error: strict mode violation: getByText('Bulk Suspend 1 1786800737952777') resolved to 4 elements:
+        1) <p class="tw:m-0 tw:text-[13px] tw:font-semibold tw:text-slate-900">Bulk Suspend 1 1786800737952777</p> aka getByText('Bulk Suspend 1').first()
+        2) <p class="tw:m-0 tw:text-[13px] tw:font-semibold tw:text-slate-900">Bulk Suspend 1 1786800737952777</p> aka getByText('Bulk Suspend 1').nth(1)
+        3) <p class="tw:m-0 tw:text-[13px] tw:font-semibold tw:text-slate-900">Bulk Suspend 1 1786800737952777</p> aka getByText('Bulk Suspend 1').nth(2)
+        4) <p class="tw:m-0 tw:text-[13px] tw:font-semibold tw:text-slate-900">Bulk Suspend 1 1786800737952777</p> aka getByText('Bulk Suspend 1').nth(3)
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText('Bulk Suspend 1 1786800737952777')
+
+
+      110 |
+      111 |   await expect(page.getByRole('heading', { name: 'Enrollments', exact: true })).toBeVisible({ timeout: 5000 })
+    > 112 |   await expect(page.getByText(learner.name)).toBeVisible({ timeout: 5000 })
+          |                                              ^
+      113 |   // Scoped to this learner's row, exact match — every "X0%" progress value
+      114 |   // in the list (100%, 50%, 40%, …) substring-matches a bare "0%".
+      115 |   const row = page.locator('tr', { hasText: learner.name })
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\enrollments.full.spec.ts:112:46
+
+    Error Context: test-results\enrollments.full-Enroll-fl-12d10-with-NOT-STARTED-0-progress-authenticated\error-context.md
+
+    Error Context: test-results\enrollments.full-Enroll-fl-12d10-with-NOT-STARTED-0-progress-authenticated\error-context.md
+
+  20) [authenticated] › tests\enrollments.full.spec.ts:119:1 › Already enrolled — real backend 400 shown next to the submit button, not a toast 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Enrollments', exact: true })
+
+
+      70 | async function gotoEnrollmentsTab(page: Page) {
+      71 |   await page.goto('/learning-management')
+    > 72 |   await page.getByRole('button', { name: 'Enrollments', exact: true }).click()
+         |                                                                        ^
+      73 |   await expect(page).toHaveURL(/[?&]tab=enrollments/)
+      74 |   await expect(page.getByRole('heading', { name: 'Enrollments', exact: true })).toBeVisible({ timeout: 10000 })
+      75 | }
+        at gotoEnrollmentsTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\enrollments.full.spec.ts:72:72)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\enrollments.full.spec.ts:135:3
+
+    Error Context: test-results\enrollments.full-Already-e-fb4cb-e-submit-button-not-a-toast-authenticated\error-context.md
+
+    Error Context: test-results\enrollments.full-Already-e-fb4cb-e-submit-button-not-a-toast-authenticated\error-context.md
+
+  21) [authenticated] › tests\enrollments.full.spec.ts:180:1 › Status change — PATCH sends {status} ONLY, progress never in the request body 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Enrollments', exact: true })
+
+
+      70 | async function gotoEnrollmentsTab(page: Page) {
+      71 |   await page.goto('/learning-management')
+    > 72 |   await page.getByRole('button', { name: 'Enrollments', exact: true }).click()
+         |                                                                        ^
+      73 |   await expect(page).toHaveURL(/[?&]tab=enrollments/)
+      74 |   await expect(page.getByRole('heading', { name: 'Enrollments', exact: true })).toBeVisible({ timeout: 10000 })
+      75 | }
+        at gotoEnrollmentsTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\enrollments.full.spec.ts:72:72)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\enrollments.full.spec.ts:194:3
+
+    Error Context: test-results\enrollments.full-Status-ch-1fbef-s-never-in-the-request-body-authenticated\error-context.md
+
+    Error Context: test-results\enrollments.full-Status-ch-1fbef-s-never-in-the-request-body-authenticated\error-context.md
+
+  22) [authenticated] › tests\enrollments.full.spec.ts:219:1 › Unenroll — DELETE fires, confirm dialog stays neutral (never mentions certificates) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Enrollments', exact: true })
+
+
+      70 | async function gotoEnrollmentsTab(page: Page) {
+      71 |   await page.goto('/learning-management')
+    > 72 |   await page.getByRole('button', { name: 'Enrollments', exact: true }).click()
+         |                                                                        ^
+      73 |   await expect(page).toHaveURL(/[?&]tab=enrollments/)
+      74 |   await expect(page.getByRole('heading', { name: 'Enrollments', exact: true })).toBeVisible({ timeout: 10000 })
+      75 | }
+        at gotoEnrollmentsTab (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\enrollments.full.spec.ts:72:72)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\enrollments.full.spec.ts:232:3
+
+    Error Context: test-results\enrollments.full-Unenroll--a488f-ever-mentions-certificates--authenticated\error-context.md
+
+    Error Context: test-results\enrollments.full-Unenroll--a488f-ever-mentions-certificates--authenticated\error-context.md
+
+  23) [authenticated] › tests\instructor-applications.full.spec.ts:120:1 › Pending tab loads the applications list, oldest first, from the applications endpoint 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 202
+    Received: 429
+
+      48 |     },
+      49 |   })
+    > 50 |   expect(resp.status()).toBe(202)
+         |                         ^
+      51 |   return { fullName, email }
+      52 | }
+      53 |
+        at submitPublicApplication (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\instructor-applications.full.spec.ts:50:25)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\instructor-applications.full.spec.ts:68:38
+
+    Error Context: test-results\instructor-applications.fu-31667-m-the-applications-endpoint-authenticated\error-context.md
+
+    Error Context: test-results\instructor-applications.fu-31667-m-the-applications-endpoint-authenticated\error-context.md
+
+  24) [authenticated] › tests\instructor-panel-analytics.full.spec.ts:149:1 › Approving a pending course removes it from the panel queue without a reload 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('QA Panel Course 1786818343443')
+    Expected: visible
+    Error: strict mode violation: getByText('QA Panel Course 1786818343443') resolved to 3 elements:
+        1) <div>QA Panel Course 1786818343443</div> aka locator('div').filter({ hasText: /^QA Panel Course 1786818343443$/ })
+        2) <span>QA Panel Course 1786818343443</span> aka locator('span').filter({ hasText: 'QA Panel Course' })
+        3) <div>…</div> aka getByText('Course "QA Panel Course')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText('QA Panel Course 1786818343443')
+
+
+      152 |   await openPanelByDeepLink(page)
+      153 |   await expect(page.getByText('Pending Course Approvals')).toBeVisible({ timeout: 10000 })
+    > 154 |   await expect(page.getByText(courseTitle as string)).toBeVisible()
+          |                                                       ^
+      155 |
+      156 |   page.once('dialog', dialog => dialog.accept())
+      157 |   const [approveResp, panelResp] = await Promise.all([
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\instructor-panel-analytics.full.spec.ts:154:55
+
+    Error Context: test-results\instructor-panel-analytics-7d3f5-anel-queue-without-a-reload-authenticated\error-context.md
+
+    Error Context: test-results\instructor-panel-analytics-7d3f5-anel-queue-without-a-reload-authenticated\error-context.md
+
+  25) [authenticated] › tests\learners.full.spec.ts:291:1 › Suspending a learner updates the status badge and suspension history 
+
+    TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event "response"
+
+      318 |   page.once('dialog', dialog => dialog.accept())
+      319 |   await Promise.all([
+    > 320 |     page.waitForResponse(r => r.url().includes(`/learners/${learnerId}/reactivate`) && r.ok(), { timeout: 15000 }),
+          |          ^
+      321 |     page.getByRole('button', { name: 'Reactivate', exact: true }).click(),
+      322 |   ])
+      323 | })
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\learners.full.spec.ts:320:10
+
+    Error Context: test-results\learners.full-Suspending-a-8ff5f-adge-and-suspension-history-authenticated\error-context.md
+
+    Error Context: test-results\learners.full-Suspending-a-8ff5f-adge-and-suspension-history-authenticated\error-context.md
+
+  26) [authenticated] › tests\notifications.full.spec.ts:177:1 › Send Notification to a real user appears in Delivery Logs 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('QA In-App Alert 1786818702543')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for getByText('QA In-App Alert 1786818702543')
+
+
+      207 |   ])
+      208 |   expect(logsResp.ok()).toBeTruthy()
+    > 209 |   await expect(page.getByText(title)).toBeVisible({ timeout: 10000 })
+          |                                       ^
+      210 | })
+      211 |
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\notifications.full.spec.ts:209:39
+
+    Error Context: test-results\notifications.full-Send-No-48bbc-er-appears-in-Delivery-Logs-authenticated\error-context.md
+
+    Error Context: test-results\notifications.full-Send-No-48bbc-er-appears-in-Delivery-Logs-authenticated\error-context.md
+
+  27) [authenticated] › tests\roles.full.spec.ts:179:1 › Toggle Permission Matrix cell → verify updates 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByPlaceholder('e.g. Content Manager')
+        - waiting for navigation to finish...
+        - navigated to "http://localhost:5173/roles-permissions?tab=roles"
+
+
+      28 |   await gotoRoles(page)
+      29 |   await page.getByRole('button', { name: 'Create Role', exact: true }).click()
+    > 30 |   await page.getByPlaceholder('e.g. Content Manager').fill(name)
+         |                                                       ^
+      31 |   if (opts?.checkPermission) {
+      32 |     const modal = modalScope(page, 'Create Role')
+      33 |     await modal.locator('div, label').filter({ hasText: opts.checkPermission }).last().locator('input[type="checkbox"]').check()
+        at createRole (C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\roles.full.spec.ts:30:55)
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\roles.full.spec.ts:181:3
+
+    Error Context: test-results\roles.full-Toggle-Permission-Matrix-cell-→-verify-updates-authenticated\error-context.md
+
+  28) [authenticated] › tests\system-settings.full.spec.ts:143:1 › Email Config: Send Test Email returns a result without crashing 
+
+    TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event "response"
+
+      148 |
+      149 |   const [testResp] = await Promise.all([
+    > 150 |     page.waitForResponse(r => r.url().includes('/system-settings/test-email') && r.ok(), { timeout: 15000 }),
+          |          ^
+      151 |     page.getByRole('button', { name: 'Send Test Email' }).click(),
+      152 |   ])
+      153 |   expect(testResp.ok()).toBeTruthy()
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\system-settings.full.spec.ts:150:10
+
+    Error Context: test-results\system-settings.full-Email-07de8-s-a-result-without-crashing-authenticated\error-context.md
+
+    Error Context: test-results\system-settings.full-Email-07de8-s-a-result-without-crashing-authenticated\error-context.md
+
+  28 failed
+    [authenticated] › tests\course-approval.full.spec.ts:335:1 › Approval: double-click prevention — Request Changes button disabled during request 
+    [authenticated] › tests\course-preview.full.spec.ts:235:1 › Preview: 404 course → shows error state with Retry button 
+    [authenticated] › tests\course-settings.full.spec.ts:95:1 › Settings form: renders all sections and saves changed fields 
+    [authenticated] › tests\course-settings.full.spec.ts:156:1 › Settings form: blocks save when Paid but price is empty 
+    [authenticated] › tests\course-settings.full.spec.ts:178:1 › Settings form: does not PATCH when no fields changed 
+    [authenticated] › tests\course-submit.full.spec.ts:189:1 › Submit: non-Draft course shows status guard (no submit button) 
+    [authenticated] › tests\course-submit.full.spec.ts:260:1 › Submit: button is disabled during in-flight request (double-submit prevented) 
+    [authenticated] › tests\course-upload.full.spec.ts:83:1 › Type rejection — non-image file blocked client-side, no API request 
+    [authenticated] › tests\course-upload.full.spec.ts:110:1 › Size rejection — file > 5 MB blocked client-side, no API request 
+    [authenticated] › tests\course-upload.full.spec.ts:136:1 › Successful thumbnail flow — sign → PUT → confirm → preview visible 
+    [authenticated] › tests\course-upload.full.spec.ts:160:1 › Progress bar renders during file transfer 
+    [authenticated] › tests\course-upload.full.spec.ts:204:1 › Cancel mid-upload resets UI to idle drop zone 
+    [authenticated] › tests\course-upload.full.spec.ts:246:1 › Replace thumbnail deletes old storage path 
+    [authenticated] › tests\courses-invalidation.full.spec.ts:75:1 › Archive a Published course → Dashboard Courses KPI decrements without hard reload 
+    [authenticated] › tests\courses-tab.full.spec.ts:248:1 › Guide "Create New Course" button opens the create form on the Courses tab 
+    [authenticated] › tests\courses-tab.full.spec.ts:385:1 › View modal: backdrop click closes ─────
+    [authenticated] › tests\courses-tab.full.spec.ts:415:1 › Restore: archived course moves to Draft tab after restore 
+    [authenticated] › tests\dashboard.full.spec.ts:127:1 › Pending Approvals badge count matches items list exactly (no total/empty-list contradiction) 
+    [authenticated] › tests\enrollments.full.spec.ts:79:1 › Enroll flow — dialog validates, submits, appears with NOT_STARTED / 0% progress 
+    [authenticated] › tests\enrollments.full.spec.ts:119:1 › Already enrolled — real backend 400 shown next to the submit button, not a toast 
+    [authenticated] › tests\enrollments.full.spec.ts:180:1 › Status change — PATCH sends {status} ONLY, progress never in the request body 
+    [authenticated] › tests\enrollments.full.spec.ts:219:1 › Unenroll — DELETE fires, confirm dialog stays neutral (never mentions certificates) 
+    [authenticated] › tests\instructor-applications.full.spec.ts:120:1 › Pending tab loads the applications list, oldest first, from the applications endpoint 
+    [authenticated] › tests\instructor-panel-analytics.full.spec.ts:149:1 › Approving a pending course removes it from the panel queue without a reload 
+    [authenticated] › tests\learners.full.spec.ts:291:1 › Suspending a learner updates the status badge and suspension history 
+    [authenticated] › tests\notifications.full.spec.ts:177:1 › Send Notification to a real user appears in Delivery Logs 
+    [authenticated] › tests\roles.full.spec.ts:179:1 › Toggle Permission Matrix cell → verify updates 
+    [authenticated] › tests\system-settings.full.spec.ts:143:1 › Email Config: Send Test Email returns a result without crashing 
+  4 skipped
+  3 did not run
+  310 passed (31.1m)

@@ -8,7 +8,10 @@ const {
   validateIssue,
   validateReissue,
   validateRevoke,
+  validateExpiry,
   validateListQuery,
+  validateLogoSign,
+  validateLogoConfirm,
 } = require("../validators/certificates.validator");
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -21,9 +24,14 @@ function notFound(res, msg = "Not found.") {
   return res.status(404).json({ success: false, message: msg });
 }
 
+function forbidden(res, msg) {
+  return res.status(403).json({ success: false, message: msg });
+}
+
 // Domain errors thrown by the service → clean HTTP status + message.
 function handleDomainError(res, err) {
   switch (err.code) {
+    case "CERTIFICATES_MODULE_DISABLED": return forbidden(res, "Certificates is disabled in System Settings.");
     case "TEMPLATE_NOT_FOUND":     return notFound(res, "Certificate template not found.");
     case "CERT_NOT_FOUND":         return notFound(res, "Certificate not found.");
     case "USER_NOT_FOUND":         return badRequest(res, "Referenced user does not exist.");
@@ -33,6 +41,11 @@ function handleDomainError(res, err) {
     case "ALREADY_ISSUED":         return badRequest(res, "A certificate for this user and course already exists — reissue it instead.");
     case "ALREADY_REVOKED":        return badRequest(res, "Certificate is already revoked.");
     case "CERT_REVOKED":           return badRequest(res, "Certificate is revoked — reissue it to enable downloads again.");
+    case "STORAGE_NOT_CONFIGURED": return res.status(503).json({ success: false, message: "File storage is not configured yet." });
+    case "BAD_PATH":                return badRequest(res, "Invalid storage path.");
+    case "OBJECT_NOT_FOUND":        return badRequest(res, "Upload not found — the file may not have finished uploading.");
+    case "FILE_TOO_LARGE":          return badRequest(res, "Logo file is too large.");
+    case "BAD_FILE_TYPE":           return badRequest(res, "Logo must be a JPEG, PNG, or WebP image.");
     default:                       return null;
   }
 }
@@ -98,6 +111,33 @@ const deleteTemplate = run(async (req, res) => {
   return res.json({ success: true, message: "Template deleted. Issued certificates were kept.", data: result });
 });
 
+// ── Template logo (sign -> PUT -> confirm) ────────────────────────────────────
+
+const signLogo = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "templateId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateLogoSign(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const result = await svc.signLogoUpload(req.params.id, v.data);
+  return res.json({ success: true, data: result });
+});
+
+const confirmLogo = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "templateId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateLogoConfirm(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const template = await svc.confirmLogoUpload(req.params.id, v.data, req.admin?.id);
+  return res.json({ success: true, message: "Logo uploaded.", data: template });
+});
+
+const removeLogo = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "templateId");
+  if (idErr) return badRequest(res, idErr);
+  const template = await svc.removeLogo(req.params.id, req.admin?.id);
+  return res.json({ success: true, message: "Logo removed.", data: template });
+});
+
 // ── Issued certificates ───────────────────────────────────────────────────────────
 
 const listCertificates = run(async (req, res) => {
@@ -121,6 +161,15 @@ const revokeCertificate = run(async (req, res) => {
   if (!v.isValid) return badRequest(res, v.errors[0]);
   const cert = await svc.revokeCertificate(req.params.id, req.admin?.id, v.data.reason);
   return res.json({ success: true, message: "Certificate revoked.", data: cert });
+});
+
+const setCertificateExpiry = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "certificateId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateExpiry(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const cert = await svc.setCertificateExpiry(req.params.id, v.data.expiresAt, req.admin?.id);
+  return res.json({ success: true, message: v.data.expiresAt ? "Expiry date set." : "Expiry date cleared.", data: cert });
 });
 
 const reissueCertificate = run(async (req, res) => {
@@ -159,10 +208,14 @@ module.exports = {
   createTemplate,
   updateTemplate,
   deleteTemplate,
+  signLogo,
+  confirmLogo,
+  removeLogo,
   listCertificates,
   issueCertificate,
   revokeCertificate,
   reissueCertificate,
+  setCertificateExpiry,
   downloadPdf,
   verifyCertificate,
 };

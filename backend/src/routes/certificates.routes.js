@@ -20,5 +20,6 @@ router.get("/:id/pdf", requireAdminAuth, coursesReadRateLimiter, c.downloadPdf);
 router.post("/",             requireAdminAuth, adminUserActionRateLimiter, c.issueCertificate);
 router.post("/:id/revoke",   requireAdminAuth, adminUserActionRateLimiter, c.revokeCertificate);
 router.post("/:id/reissue",  requireAdminAuth, adminUserActionRateLimiter, c.reissueCertificate);
+router.patch("/:id/expiry",  requireAdminAuth, adminUserActionRateLimiter, c.setCertificateExpiry);
 
 module.exports = router;

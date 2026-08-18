@@ -61,6 +61,38 @@ async function getSystemSettings() {
   return getOrCreateSettings();
 }
 
+// ── Feature flags (gating) ───────────────────────────────────────────────────
+//
+// Cached 60s so a hot write path (POST /live-sessions, POST /certificates)
+// doesn't take a DB round trip on every single request just to check one
+// boolean — invalidated immediately on updateSystemSettings so a toggle flip
+// takes effect right away instead of waiting out the cache window.
+const FEATURE_FLAG_FIELDS = [
+  "liveSessionsEnabled", "certificatesModuleEnabled", "marketplaceEnabled",
+  "aiEnabled", "gamificationEnabled", "scormModuleEnabled", "mobileAppEnabled",
+];
+const FEATURE_FLAGS_CACHE_MS = 60_000;
+let featureFlagsCache = null;
+let featureFlagsCacheAt = 0;
+
+function pickFeatureFlags(settings) {
+  const flags = {};
+  for (const key of FEATURE_FLAG_FIELDS) flags[key] = settings[key];
+  return flags;
+}
+
+async function getCachedFeatureFlags() {
+  if (featureFlagsCache && Date.now() - featureFlagsCacheAt < FEATURE_FLAGS_CACHE_MS) return featureFlagsCache;
+  const settings = await getOrCreateSettings();
+  featureFlagsCache = pickFeatureFlags(settings);
+  featureFlagsCacheAt = Date.now();
+  return featureFlagsCache;
+}
+
+async function getFeatureFlags() {
+  return pickFeatureFlags(await getOrCreateSettings());
+}
+
 async function updateSystemSettings(data, adminId) {
   const before = await getOrCreateSettings();
   const update = { ...data, updatedById: adminId ?? null };
@@ -70,6 +102,7 @@ async function updateSystemSettings(data, adminId) {
   if (changedFields.length > 0) {
     await auditLog(adminId, "SYSTEM_SETTINGS_UPDATED", { fields: changedFields });
   }
+  featureFlagsCache = null; // force a fresh read next gated request/GET /features call
   return result;
 }
 
@@ -233,6 +266,8 @@ async function confirmBrandingUpload({ kind, path }, adminId) {
 
 module.exports = {
   getSystemSettings,
+  getFeatureFlags,
+  getCachedFeatureFlags,
   updateSystemSettings,
   listConfigLogs,
   enableMaintenance,

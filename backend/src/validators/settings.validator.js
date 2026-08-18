@@ -162,6 +162,14 @@ function validateSettingsUpdate(body = {}) {
   if (body.metaTitle       !== undefined) data.metaTitle       = body.metaTitle === null ? null : readBoundedString(body.metaTitle, "metaTitle", MAX.short, errors, { allowEmpty: true });
   if (body.metaDescription !== undefined) data.metaDescription = body.metaDescription === null ? null : readBoundedString(body.metaDescription, "metaDescription", MAX.medium, errors, { allowEmpty: true });
 
+  // Video conferencing (Zoom meeting defaults)
+  if (body.zoomDefaultDuration  !== undefined) data.zoomDefaultDuration  = readInt(body.zoomDefaultDuration, "zoomDefaultDuration", 15, 480, errors);
+  if (body.zoomRecordingEnabled !== undefined) data.zoomRecordingEnabled = readBool(body.zoomRecordingEnabled, "zoomRecordingEnabled", errors);
+
+  // Roles & Permissions settings tab
+  if (body.roleInheritanceEnabled !== undefined) data.roleInheritanceEnabled = readBool(body.roleInheritanceEnabled, "roleInheritanceEnabled", errors);
+  if (body.maxRolesPerUser        !== undefined) data.maxRolesPerUser        = readInt(body.maxRolesPerUser, "maxRolesPerUser", 1, 20, errors);
+
   // Maintenance (message/schedule editable here; enable/disable have their
   // own endpoints below since they also flip maintenanceMode + audit-log)
   if (body.maintenanceMessage !== undefined) data.maintenanceMessage = body.maintenanceMessage === null ? null : readBoundedString(body.maintenanceMessage, "maintenanceMessage", MAX.long, errors, { allowEmpty: true });

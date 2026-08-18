@@ -235,3 +235,18 @@ enum NotificationSourceType {
   EMERGENCY
   SYSTEM
 }
+
+// Generic "notify me when this ships" waitlist — currently only Custom
+// Reports (Reports > Custom Reports tab) uses it, kept generic (feature key,
+// not a dedicated boolean column) so the next not-built-yet feature reuses
+// the same table instead of growing a new column per feature.
+model FeatureWaitlist {
+  id        String   @id @default(cuid())
+  feature   String
+  adminId   String
+  createdAt DateTime @default(now())
+
+  @@unique([feature, adminId])
+  @@index([feature])
+  @@map("feature_waitlist")
+}

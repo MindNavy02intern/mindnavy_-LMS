@@ -234,6 +234,12 @@ export function updatePreferences(userId: string, body: UpdatePreferencesRequest
   return notificationsFetch(`/notifications/preferences/${encodeURIComponent(userId)}`, 'PATCH', body);
 }
 
+// ── Feature waitlist ("notify me when this ships") ──────────────────────────
+
+export function joinFeatureWaitlist(feature: string): Promise<{ alreadyJoined: boolean }> {
+  return notificationsFetch('/notifications/preferences/waitlist', 'POST', { feature });
+}
+
 // ── Emergency ─────────────────────────────────────────────────────────────────
 
 export function sendEmergencyAlert(body: SendEmergencyRequest): Promise<Announcement & { recipientCount: number }> {

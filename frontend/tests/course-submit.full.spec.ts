@@ -119,7 +119,12 @@ async function navigateToSubmitStep(page: Page, courseTitle: string) {
 
   // Preview → Submit
   await page.getByRole('button', { name: /Next: Submit/i }).click()
-  await expect(page.getByText('Submit for Review')).toBeVisible({ timeout: 5000 })
+  // getByRole('heading'): plain text also matches the "Submit for Review" button.
+  // Two valid landing headings depending on course status (CourseSubmit.tsx):
+  // Draft courses render "Submit for Review" (the real form); non-Draft
+  // courses render "Submit Course" (the status-guard view) — both mean we've
+  // successfully arrived at the Submit step.
+  await expect(page.getByRole('heading', { name: /^Submit (for Review|Course)$/ })).toBeVisible({ timeout: 5000 })
 }
 
 // ── Cleanup ───────────────────────────────────────────────────────────────────
@@ -183,6 +188,37 @@ test('Submit: SUBMIT_CHECKS_FAILED → renders full errors[] list', async ({ pag
   await expect(page.getByText(/Course needs a description/i)).toBeVisible()
   await expect(page.getByText(/Course needs a thumbnail/i)).toBeVisible()
   await expect(page.getByText(/Course needs at least one section/i)).toBeVisible()
+})
+
+test('Submit: course otherwise ready but has an empty attached quiz → blocked with quiz-specific error', async ({ page }) => {
+  await page.goto('/dashboard')
+  await expect(page.locator('.mn-lkpi-grid')).toBeVisible({ timeout: 15000 })
+  const H = await getAuthHeaders(page)
+  const instructorId = await getInstructorId(page, H)
+  const title = `Submit EmptyQuiz ${Date.now()}`
+  const courseId = await createReadyCourse(page, H, title, instructorId)
+
+  // Attach a quiz with zero questions to this course (§4.1: course must exist first)
+  const quizTitle = `Submit Guard Quiz ${Date.now()}`
+  const quizRes = await page.request.post(`${API}/quizzes`, {
+    data: { title: quizTitle, courseId },
+    headers: H,
+  })
+  expect(quizRes.ok(), 'POST /quizzes must succeed').toBeTruthy()
+
+  await navigateToSubmitStep(page, title)
+
+  const submitResp = page.waitForResponse(
+    r => r.url().includes('/submit') && r.request().method() === 'POST',
+    { timeout: 15000 },
+  )
+  page.once('dialog', d => d.accept())
+  await page.getByRole('button', { name: 'Submit for Review' }).click()
+  const resp = await submitResp
+  expect(resp.status(), 'Course with an empty quiz should return 400').toBe(400)
+
+  await expect(page.getByText('Course is not ready to submit')).toBeVisible({ timeout: 5000 })
+  await expect(page.getByText(`Quiz "${quizTitle}" has no questions.`)).toBeVisible()
 })
 
 test('Submit: non-Draft course shows status guard (no submit button)', async ({ page }) => {
@@ -266,10 +302,14 @@ test('Submit: button is disabled during in-flight request (double-submit prevent
 
   await navigateToSubmitStep(page, title)
 
-  // Delay the POST /submit response so we can observe the in-flight disabled state
+  // Delay the POST /submit response so we can observe the in-flight disabled
+  // state. 3000ms (not 1000ms) — under full-suite load the click→re-render
+  // round trip can eat a meaningful chunk of a too-tight window, so a short
+  // delay risks the assertion polling past the disabled state entirely
+  // rather than actually catching a real regression.
   await page.route('**/courses/*/submit', async (route) => {
     if (route.request().method() === 'POST') {
-      await new Promise<void>(r => setTimeout(r, 1000))
+      await new Promise<void>(r => setTimeout(r, 3000))
       await route.continue()
     } else {
       await route.continue()
@@ -279,8 +319,11 @@ test('Submit: button is disabled during in-flight request (double-submit prevent
   page.once('dialog', d => d.accept())
   await page.getByRole('button', { name: 'Submit for Review' }).click()
 
-  // While request is in flight the button must be disabled and show "Submitting…"
-  await expect(page.getByRole('button', { name: /Submitting/i })).toBeDisabled({ timeout: 2000 })
+  // While request is in flight the button must be disabled and show "Submitting…".
+  // aria-label="Submit for Review" (CourseSubmit.tsx:255) is static — only the
+  // visible text switches to "Submitting…" — so the accessible name never
+  // actually changes; re-query by the stable aria-label instead.
+  await expect(page.getByRole('button', { name: 'Submit for Review' })).toBeDisabled({ timeout: 8000 })
 
   // Let the request complete and verify success
   await expect(page.getByText('Submitted for Review!')).toBeVisible({ timeout: 10000 })

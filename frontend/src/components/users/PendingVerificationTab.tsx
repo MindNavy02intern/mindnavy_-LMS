@@ -257,20 +257,22 @@ export default function PendingVerificationTab() {
         </tbody>
       </table>
 
-      {totalPages > 1 && (
+      {total > 0 && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 14px', borderTop: '1px solid #e5e7eb', fontSize: 12, color: '#6b7280' }}>
           <span>{total.toLocaleString()} pending user{total !== 1 ? 's' : ''}</span>
-          <div style={{ display: 'flex', gap: 4 }}>
-            <button onClick={() => setPage(p => p - 1)} disabled={page <= 1 || loading}
-              style={{ padding: '3px 8px', borderRadius: 5, border: '1px solid #e5e7eb', background: '#fff', cursor: page <= 1 ? 'not-allowed' : 'pointer', opacity: page <= 1 ? 0.4 : 1, fontFamily: 'inherit', fontSize: 12 }}>
-              ‹ Prev
-            </button>
-            <span style={{ padding: '3px 8px', fontSize: 12 }}>Page {page} / {totalPages}</span>
-            <button onClick={() => setPage(p => p + 1)} disabled={page >= totalPages || loading}
-              style={{ padding: '3px 8px', borderRadius: 5, border: '1px solid #e5e7eb', background: '#fff', cursor: page >= totalPages ? 'not-allowed' : 'pointer', opacity: page >= totalPages ? 0.4 : 1, fontFamily: 'inherit', fontSize: 12 }}>
-              Next ›
-            </button>
-          </div>
+          {totalPages > 1 && (
+            <div style={{ display: 'flex', gap: 4 }}>
+              <button onClick={() => setPage(p => p - 1)} disabled={page <= 1 || loading}
+                style={{ padding: '3px 8px', borderRadius: 5, border: '1px solid #e5e7eb', background: '#fff', cursor: page <= 1 ? 'not-allowed' : 'pointer', opacity: page <= 1 ? 0.4 : 1, fontFamily: 'inherit', fontSize: 12 }}>
+                ‹ Prev
+              </button>
+              <span style={{ padding: '3px 8px', fontSize: 12 }}>Page {page} / {totalPages}</span>
+              <button onClick={() => setPage(p => p + 1)} disabled={page >= totalPages || loading}
+                style={{ padding: '3px 8px', borderRadius: 5, border: '1px solid #e5e7eb', background: '#fff', cursor: page >= totalPages ? 'not-allowed' : 'pointer', opacity: page >= totalPages ? 0.4 : 1, fontFamily: 'inherit', fontSize: 12 }}>
+                Next ›
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

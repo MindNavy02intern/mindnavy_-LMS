@@ -42,6 +42,7 @@ function calcChange(current, previous) {
   if (previous == null || current == null) return null;
   return Math.round(((current - previous) / previous) * 100);
 }
+function round2(n) { return Math.round((n ?? 0) * 100) / 100; }
 
 // Current window's immediately-preceding window of the same length.
 function priorWindow({ gte, lte }) {
@@ -86,6 +87,7 @@ async function getOverview(query) {
     totalUsersNow, totalUsersPrev,
     liveSessionsToday,
     systemActivityNow, systemActivityPrev,
+    totalRevenueNowAgg, totalRevenuePrevAgg,
     learnerStats, instructorStats, lmStats,
   ] = await Promise.all([
     safe(() => prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }), 0),
@@ -102,6 +104,12 @@ async function getOverview(query) {
     safe(() => prisma.auditLog.count({ where: { createdAt: { gte: dateRange.gte, lte: dateRange.lte } } }), 0),
     safe(() => prisma.auditLog.count({ where: { createdAt: { gte: prev.gte, lt: prev.lte } } }), 0),
 
+    // Same filter finance.service's getStats()/getTotalRevenueValue() use
+    // (status: SUCCESSFUL, _sum: amount) — cumulative-to-date vs
+    // cumulative-as-of-window-start, same convention as totalUsersNow/Prev above.
+    safe(() => prisma.payment.aggregate({ where: { status: "SUCCESSFUL" }, _sum: { amount: true } }), { _sum: { amount: 0 } }),
+    safe(() => prisma.payment.aggregate({ where: { status: "SUCCESSFUL", createdAt: { lt: dateRange.gte } }, _sum: { amount: true } }), { _sum: { amount: 0 } }),
+
     // Owned by learners.service.getStats() — activeLearners / avgProgress.
     learnersService.getStats(),
     // Owned by instructors.service.getStats() — activeInstructors.
@@ -117,9 +125,18 @@ async function getOverview(query) {
     coursesCompleted: metric(lmStats.coursesCompleted.value, lmStats.coursesCompleted.growth),
     avgLearningProgress: learnerStats.avgProgress,
     liveSessionsToday: metric(liveSessionsToday, null),
-    totalRevenue: unavailable("No Payment/Transaction model exists yet — ships with the Finance module."),
+    totalRevenue: metric(
+      round2(totalRevenueNowAgg._sum.amount ?? 0),
+      calcChange(round2(totalRevenueNowAgg._sum.amount ?? 0), round2(totalRevenuePrevAgg._sum.amount ?? 0)),
+    ),
     certificatesIssued: metric(lmStats.certificatesIssued.value, lmStats.certificatesIssued.growth),
-    engagementScore: unavailable("No engagement-scoring model exists yet — same gap Dashboard's studentEngagement metrics already have."),
+    // Proxy metric, not a real engagement-scoring model (watch time/session
+    // activity tracking still doesn't exist — same gap Dashboard's
+    // studentEngagement has). Honest about what it measures: % of learners
+    // who are ACTIVE, nothing about how engaged they are while active.
+    engagementScore: learnerStats.totalLearners.value > 0
+      ? metric(Math.round((learnerStats.activeLearners.value / learnerStats.totalLearners.value) * 1000) / 10, null)
+      : unavailable("No learners exist yet to measure an active-ratio from."),
     systemActivity: metric(systemActivityNow, calcChange(systemActivityNow, systemActivityPrev)),
   };
 }
@@ -148,6 +165,7 @@ async function getLearnerAnalytics(query) {
     topPerformers,
     inactiveUsers,
     activeNowIds, activePrevIds,
+    completedSpanRows, slowLearnerRows,
   ] = await Promise.all([
     countByBuckets(prisma.appUser, "lastActivityAt", buckets, userWhere),
 
@@ -182,6 +200,22 @@ async function getLearnerAnalytics(query) {
 
     safe(() => prisma.appUser.findMany({ where: { ...userWhere, lastActivityAt: { gte: dateRange.gte, lte: dateRange.lte } }, select: { id: true } }), []),
     safe(() => prisma.appUser.findMany({ where: { ...userWhere, lastActivityAt: { gte: priorWindow(dateRange).gte, lt: priorWindow(dateRange).lte } }, select: { id: true } }), []),
+
+    // Learning Progress tab (below): "Learning Speed" — avg days from
+    // enrollment to completion, over enrollments that completed IN this window.
+    safe(() => prisma.courseEnrollment.findMany({
+      where: { ...enrollmentWhere, status: "COMPLETED", completedAt: { gte: dateRange.gte, lte: dateRange.lte } },
+      select: { createdAt: true, completedAt: true },
+    }), []),
+
+    // "Slow learners" — a point-in-time cross-section (like atRiskUsers),
+    // independent of dateRange: still-in-progress enrollments started 30+
+    // days ago that have barely moved.
+    safe(() => prisma.courseEnrollment.findMany({
+      where: { ...enrollmentWhere, status: { not: "COMPLETED" }, progress: { lt: 20 }, createdAt: { lte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) } },
+      orderBy: { createdAt: "asc" }, take: 20,
+      select: { id: true, progress: true, createdAt: true, user: { select: { id: true, fullName: true } }, course: { select: { title: true } } },
+    }), []),
   ]);
 
   const bucketOf = (p) => (p >= 90 ? "excellent" : p >= 70 ? "good" : p >= 40 ? "average" : "poor");
@@ -208,19 +242,48 @@ async function getLearnerAnalytics(query) {
 
   const mapRiskUser = (u) => ({ id: u.id, name: u.fullName, riskScore: u.learnerProfile?.riskScore ?? null });
 
+  // Learning Speed — avg days from enrollment to completion, over completions
+  // IN this window. null (not 0) when nobody completed anything this window.
+  const spanDaysList = completedSpanRows.map((e) => (e.completedAt.getTime() - e.createdAt.getTime()) / 86_400_000);
+  const learningSpeedDays = spanDaysList.length > 0
+    ? metric(Math.round((spanDaysList.reduce((s, d) => s + d, 0) / spanDaysList.length) * 10) / 10, null)
+    : unavailable("No enrollments completed in this window.");
+
+  const now = Date.now();
+  const slowLearners = slowLearnerRows.map((e) => ({
+    id: e.id,
+    userId: e.user?.id ?? null,
+    name: e.user?.fullName ?? null,
+    courseTitle: e.course?.title ?? null,
+    progress: e.progress,
+    daysSinceEnrolled: Math.floor((now - e.createdAt.getTime()) / 86_400_000),
+  }));
+
+  const mappedTopPerformers = topPerformers.map((r) => ({
+    userId: r.userId,
+    name: topPerformerNameById.get(r.userId) ?? null,
+    avgProgress: Math.round(r._avg.progress ?? 0),
+    enrollments: r._count._all,
+  }));
+
   return {
     activityTrend: { labels: buckets.map((b) => b.label), activeUsers: activeCounts },
     progressDistribution,
     completionRate: { value: completionRateValue, trend: completionTrend },
     dropoutRisk: { high: highRisk.map(mapRiskUser), medium: medRisk.map(mapRiskUser), low: lowRisk.map(mapRiskUser) },
     retentionRate: metric(retentionRateValue, calcChange(retentionRateValue, null)),
-    topPerformers: topPerformers.map((r) => ({
-      userId: r.userId,
-      name: topPerformerNameById.get(r.userId) ?? null,
-      avgProgress: Math.round(r._avg.progress ?? 0),
-      enrollments: r._count._all,
-    })),
+    // Raw count backing completionRate.value above — CourseEnrollment has no
+    // per-lesson breakdown, so this is "completed courses", not "completed
+    // lessons" (there's nothing in this schema to count lessons from).
+    completedEnrollments: totalCompleted,
+    topPerformers: mappedTopPerformers,
     inactiveUsers: inactiveUsers.map((u) => ({ id: u.id, name: u.fullName, lastActivityAt: u.lastActivityAt ? u.lastActivityAt.toISOString() : null })),
+    learningSpeedDays,
+    slowLearners,
+    // Reuses topPerformers (already sorted desc, top 10) rather than a new
+    // query — "high performer" here means the same avgProgress this endpoint
+    // already computes, just threshold-filtered instead of ranked.
+    highPerformers: mappedTopPerformers.filter((p) => p.avgProgress > 80),
   };
 }
 
@@ -448,17 +511,21 @@ async function getCertificateReports(query) {
   const prev = priorWindow(dateRange);
   const buckets = buildTrendBuckets(dateRange.gte, dateRange.lte);
   const skip = (page - 1) * limit;
+  const now = new Date();
+  const soon = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
-  const [issuedNow, issuedPrev, revoked, issuedTrend, rows, total] = await Promise.all([
+  const [issuedNow, issuedPrev, revoked, expired, expiringSoon, issuedTrend, rows, total] = await Promise.all([
     safe(() => prisma.certificate.count({ where: { revokedAt: null, issuedAt: { gte: dateRange.gte, lte: dateRange.lte } } }), 0),
     safe(() => prisma.certificate.count({ where: { revokedAt: null, issuedAt: { gte: prev.gte, lt: prev.lte } } }), 0),
     safe(() => prisma.certificate.count({ where: { revokedAt: { not: null } } }), 0),
+    safe(() => prisma.certificate.count({ where: { revokedAt: null, expiresAt: { lte: now } } }), 0),
+    safe(() => prisma.certificate.count({ where: { revokedAt: null, expiresAt: { gt: now, lte: soon } } }), 0),
     countByBuckets(prisma.certificate, "issuedAt", buckets, { revokedAt: null }),
     safe(() => prisma.certificate.findMany({
       where: { issuedAt: { gte: dateRange.gte, lte: dateRange.lte } },
       orderBy: { issuedAt: "desc" }, skip, take: limit,
       select: {
-        id: true, issuedAt: true, revokedAt: true, verificationCode: true,
+        id: true, issuedAt: true, revokedAt: true, expiresAt: true, verificationCode: true,
         course: { select: { id: true, title: true } },
         user: { select: { id: true, fullName: true } },
       },
@@ -468,9 +535,8 @@ async function getCertificateReports(query) {
 
   return {
     totalIssued: metric(issuedNow, calcChange(issuedNow, issuedPrev)),
-    // Certificate has no expiresAt field in this schema — every certificate
-    // is issued without an expiration.
-    expired: unavailable("Certificate model has no expiry field — certificates don't expire in this schema."),
+    expired: metric(expired, null),
+    expiringSoon: metric(expiringSoon, null),
     revoked: metric(revoked, null),
     verificationRequests: unavailable("No tracking of public certificate-verification page hits exists yet."),
     issuedTrend: { labels: buckets.map((b) => b.label), values: issuedTrend },
@@ -482,6 +548,8 @@ async function getCertificateReports(query) {
       userName: c.user?.fullName ?? null,
       issuedAt: c.issuedAt.toISOString(),
       revoked: c.revokedAt !== null,
+      expiresAt: c.expiresAt ? c.expiresAt.toISOString() : null,
+      expired: c.revokedAt === null && c.expiresAt !== null && c.expiresAt <= now,
       verificationCode: c.verificationCode ?? null,
     })),
     pagination: { total, page, limit, pages: Math.max(1, Math.ceil(total / limit)) },
@@ -559,9 +627,10 @@ async function getAttendanceReports(query) {
 // endpoint existed anywhere before this.
 
 async function getAuditReports(query) {
-  const { dateRange, search, action, userId, page, limit } = query;
+  const { dateRange, search, action, actions, userId, page, limit } = query;
   const where = { createdAt: { gte: dateRange.gte, lte: dateRange.lte } };
   if (action) where.action = action;
+  if (actions?.length) where.action = { in: actions };
   if (userId) where.OR = [{ adminId: userId }, { targetUserId: userId }];
   // `action` is a strictly-typed Prisma enum (~150 values) — `contains`
   // isn't even a valid operator for it, and `equals` with an unrecognized
@@ -620,7 +689,7 @@ async function getEngagementAnalytics(query) {
 
   const activeWhere = { status: { not: "ARCHIVED" } };
 
-  const [dailyCounts, weeklyCounts, activeNow, activePrev, lowEngagement] = await Promise.all([
+  const [dailyCounts, weeklyCounts, activeNow, activePrev, lowEngagement, sessionDurationAgg] = await Promise.all([
     countByBuckets(prisma.appUser, "lastActivityAt", dayBuckets, activeWhere),
     countByBuckets(prisma.appUser, "lastActivityAt", weekBuckets, activeWhere),
     safe(() => prisma.appUser.findMany({ where: { ...activeWhere, lastActivityAt: { gte: dateRange.gte, lte: dateRange.lte } }, select: { id: true } }), []),
@@ -630,6 +699,14 @@ async function getEngagementAnalytics(query) {
       orderBy: { lastActivityAt: "asc" }, take: 20,
       select: { id: true, fullName: true, role: true, lastActivityAt: true },
     }), []),
+    // Live-session length, from SessionAttendance.durationMin (learners.prisma)
+    // — the one real duration this schema tracks. NOT platform-wide browsing
+    // session length (no such tracking exists — that's the videoWatchTime gap
+    // right below, still genuinely unavailable).
+    safe(() => prisma.sessionAttendance.aggregate({
+      where: { durationMin: { not: null }, session: { startTime: { gte: dateRange.gte, lte: dateRange.lte } } },
+      _avg: { durationMin: true }, _count: { _all: true },
+    }), { _avg: { durationMin: null }, _count: { _all: 0 } }),
   ]);
 
   const activePrevSet = new Set(activePrev.map((u) => u.id));
@@ -639,8 +716,11 @@ async function getEngagementAnalytics(query) {
   return {
     dailyActiveUsers: { labels: dayBuckets.map((b) => b.label), values: dailyCounts },
     weeklyActiveUsers: { labels: weekBuckets.map((b) => b.label), values: weeklyCounts },
-    // Same "no watch-time/session-duration model" gap as everywhere else.
-    avgSessionDuration: unavailable("No session-duration tracking model exists yet."),
+    avgSessionDuration: sessionDurationAgg._count._all > 0
+      ? metric(Math.round(sessionDurationAgg._avg.durationMin), null)
+      : unavailable("No live sessions with a recorded duration in this window."),
+    // Platform-wide watch-time/video-progress tracking still doesn't exist —
+    // a live-session's duration (above) is a different thing entirely.
     videoWatchTime: unavailable("No watch-time tracking model exists yet."),
     retentionRate: activePrevSet.size > 0 ? metric(retentionRateValue, null) : unavailable("No users were active in the prior comparison window."),
     lowEngagementUsers: lowEngagement.map((u) => ({ id: u.id, name: u.fullName, role: u.role, lastActivityAt: u.lastActivityAt ? u.lastActivityAt.toISOString() : null })),
@@ -749,31 +829,43 @@ async function getExportData(type, dateRange) {
 
 // ── Part 2 — Compliance Reports ──────────────────────────────────────────
 //
-// This schema has NO mandatory-training flag on Course/CompetencyFramework,
-// NO certificate expiry field, and NO compliance-violation tracking model —
-// confirmed by a full schema grep before writing this function. All three
-// concepts are marked unavailable rather than fabricated. `atRiskUsers` is
-// the one real, defensible field here: it reuses learners.service's own
-// AT_RISK_THRESHOLD (the codebase's one existing "risk" definition), scoped
-// to a department when given — not a bespoke "compliance risk" invented for
-// this endpoint.
+// This schema has NO mandatory-training flag on Course/CompetencyFramework
+// and NO certificate expiry field — confirmed by a full schema grep, marked
+// unavailable rather than fabricated. `atRiskUsers` reuses learners.service's
+// own AT_RISK_THRESHOLD (the codebase's one existing "risk" definition),
+// scoped to a department when given. `complianceViolations` is a proxy over
+// the one real signal this schema has for "something went wrong with a
+// user's standing" — a USER_SUSPENDED audit-log row (the single action every
+// suspend path logs, per admin.prisma's AuditAction comment) — not a
+// dedicated violation-tracking model, which still doesn't exist.
 
 async function getComplianceReports(query) {
-  const { departmentId } = query;
+  const { departmentId, dateRange } = query;
   const where = { role: "LEARNER", learnerProfile: { riskScore: { gte: learnersService.AT_RISK_THRESHOLD } } };
   if (departmentId) where.departmentId = departmentId;
 
-  const atRiskUsers = await safe(() => prisma.appUser.findMany({
-    where, orderBy: { learnerProfile: { riskScore: "desc" } }, take: 50,
-    select: { id: true, fullName: true, department: true, learnerProfile: { select: { riskScore: true } } },
-  }), []);
+  const suspensionWhere = { action: "USER_SUSPENDED", createdAt: { gte: dateRange.gte, lte: dateRange.lte } };
+  if (departmentId) {
+    const deptUsers = await safe(() => prisma.appUser.findMany({ where: { departmentId }, select: { id: true } }), []);
+    suspensionWhere.targetUserId = { in: deptUsers.map((u) => u.id) };
+  }
 
-  const NO_COMPLIANCE_MODEL = "No mandatory-training flag or compliance-violation tracking exists in this schema yet.";
+  const [atRiskUsers, complianceViolationsCount] = await Promise.all([
+    safe(() => prisma.appUser.findMany({
+      where, orderBy: { learnerProfile: { riskScore: "desc" } }, take: 50,
+      select: { id: true, fullName: true, department: true, learnerProfile: { select: { riskScore: true } } },
+    }), []),
+    safe(() => prisma.auditLog.count({ where: suspensionWhere }), 0),
+  ]);
+
+  const NO_COMPLIANCE_MODEL = "No mandatory-training flag or compliance-violation-tracking model exists in this schema yet.";
 
   return {
     mandatoryTrainingCompletion: unavailable(NO_COMPLIANCE_MODEL),
     expiredCertifications: unavailable("Certificate model has no expiry field — certificates don't expire in this schema."),
-    complianceViolations: unavailable(NO_COMPLIANCE_MODEL),
+    // Proxy: count of USER_SUSPENDED audit events in the window, not a real
+    // violation-tracking model (see header note above).
+    complianceViolations: metric(complianceViolationsCount, null),
     departmentCompliance: { available: false, reason: NO_COMPLIANCE_MODEL, items: [] },
     atRiskUsers: atRiskUsers.map((u) => ({ id: u.id, name: u.fullName, department: u.department ?? null, riskScore: u.learnerProfile?.riskScore ?? null })),
   };

@@ -16,6 +16,7 @@ const API = 'http://localhost:5001/api/admin'
 let savedToken = ''
 const createdCourseIds: string[] = []
 const createdEnrollmentIds: string[] = []
+let createdLearnerId: string | null = null
 
 test.afterAll(async ({ request }) => {
   if (!savedToken) return
@@ -25,6 +26,16 @@ test.afterAll(async ({ request }) => {
   }
   for (const id of createdCourseIds) {
     await request.delete(`${API}/courses/${id}`, { headers: H }).catch(() => null)
+  }
+  // Unenroll first — deleteLearner 409s while any non-completed enrollment
+  // still exists (same rule as deleteInstructor).
+  if (createdLearnerId) {
+    const listResp = await request.get(`${API}/learners/${createdLearnerId}/enrollments`, { headers: H }).catch(() => null)
+    const listBody = await listResp?.json().catch(() => null)
+    for (const e of listBody?.data?.enrollments ?? []) {
+      await request.delete(`${API}/learners/${createdLearnerId}/enrollments/${e.id}`, { headers: H }).catch(() => null)
+    }
+    await request.delete(`${API}/learners/${createdLearnerId}`, { headers: H }).catch(() => null)
   }
 })
 
@@ -48,12 +59,28 @@ async function getInstructorId(page: Page, H: Record<string, string>): Promise<s
   return id
 }
 
+// A dedicated fixture, not "whatever learner happens to be first" — an
+// existing/accumulated learner can carry unrelated enrollment history from
+// other test runs sharing this dev DB, which breaks exact-name/row-count
+// assertions here in ways that have nothing to do with this file's own flow.
 async function getLearner(page: Page, H: Record<string, string>): Promise<{ id: string; name: string }> {
-  const res = await page.request.get(`${API}/users?role=learner&limit=1`, { headers: H })
+  if (createdLearnerId) {
+    const res = await page.request.get(`${API}/learners/${createdLearnerId}`, { headers: H })
+    const body = await res.json()
+    return { id: createdLearnerId, name: body.data?.fullName }
+  }
+  const stamp = Date.now()
+  const name = `Enroll Fixture Learner ${stamp}`
+  const res = await page.request.post(`${API}/learners`, {
+    data: { fullName: name, email: `enroll.fixture.${stamp}@example.com`, password: 'Qatest!2345678', status: 'ACTIVE' },
+    headers: H,
+  })
+  expect(res.ok(), 'POST /learners must succeed').toBeTruthy()
   const body = await res.json()
-  const u = body.users?.[0]
-  expect(u?.id, 'At least one LEARNER user must exist').toBeTruthy()
-  return { id: u.id, name: u.fullName }
+  const id: string = body.data?.id
+  expect(id, 'Learner id must be returned').toBeTruthy()
+  createdLearnerId = id
+  return { id, name }
 }
 
 async function createFixtureCourse(page: Page, H: Record<string, string>, title: string): Promise<{ id: string }> {
@@ -81,7 +108,7 @@ test('Enroll flow — dialog validates, submits, appears with NOT_STARTED / 0% p
   const H = await apiHeaders(page)
   const learner = await getLearner(page, H)
   const courseTitle = `Enroll Test Course ${Date.now()}`
-  await createFixtureCourse(page, H, courseTitle)
+  const course = await createFixtureCourse(page, H, courseTitle)
 
   await page.getByRole('button', { name: 'Enroll Learner', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Enroll Learner' })).toBeVisible({ timeout: 5000 })
@@ -89,8 +116,11 @@ test('Enroll flow — dialog validates, submits, appears with NOT_STARTED / 0% p
   // Submit disabled until both selected
   await expect(page.getByRole('button', { name: 'Enroll', exact: true })).toBeDisabled()
 
-  await page.getByLabel('Learner').selectOption({ label: new RegExp(learner.name) })
-  await page.getByLabel('Course').selectOption({ label: new RegExp(courseTitle) })
+  // exact: true — non-exact "Learner"/"Course" also substring-matches the
+  // dialog's own aria-label ("Enroll learner"), which strict-mode-violates
+  // or resolves to the wrong element.
+  await page.getByLabel('Learner', { exact: true }).selectOption({ value: learner.id })
+  await page.getByLabel('Course', { exact: true }).selectOption({ value: course.id })
   await expect(page.getByRole('button', { name: 'Enroll', exact: true })).toBeEnabled()
 
   const postResp = page.waitForResponse(
@@ -107,7 +137,10 @@ test('Enroll flow — dialog validates, submits, appears with NOT_STARTED / 0% p
 
   await expect(page.getByRole('heading', { name: 'Enrollments', exact: true })).toBeVisible({ timeout: 5000 })
   await expect(page.getByText(learner.name)).toBeVisible({ timeout: 5000 })
-  await expect(page.getByText('0%')).toBeVisible()
+  // Scoped to this learner's row, exact match — every "X0%" progress value
+  // in the list (100%, 50%, 40%, …) substring-matches a bare "0%".
+  const row = page.locator('tr', { hasText: learner.name })
+  await expect(row.getByText('0%', { exact: true })).toBeVisible()
 })
 
 test('Already enrolled — real backend 400 shown next to the submit button, not a toast', async ({ page }) => {
@@ -125,12 +158,18 @@ test('Already enrolled — real backend 400 shown next to the submit button, not
   const firstId: string = (await firstRes.json()).data?.id
   createdEnrollmentIds.push(firstId)
 
-  await page.goto('/learning-management')
+  // gotoEnrollmentsTab() already does its own page.goto('/learning-management')
+  // — an extra one immediately before it fires two full browser navigations
+  // back to back, and the button click below then races whichever one the
+  // page happens to still be settling from.
   await gotoEnrollmentsTab(page)
   await page.getByRole('button', { name: 'Enroll Learner', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Enroll Learner' })).toBeVisible({ timeout: 5000 })
-  await page.getByLabel('Learner').selectOption({ label: new RegExp(learner.name) })
-  await page.getByLabel('Course').selectOption({ label: new RegExp(courseTitle) })
+  // exact: true — non-exact "Learner"/"Course" also substring-matches the
+  // dialog's own aria-label ("Enroll learner"), which strict-mode-violates
+  // or resolves to the wrong element.
+  await page.getByLabel('Learner', { exact: true }).selectOption({ value: learner.id })
+  await page.getByLabel('Course', { exact: true }).selectOption({ value: course.id })
 
   await page.getByRole('button', { name: 'Enroll', exact: true }).click()
 
@@ -145,7 +184,7 @@ test('Course full — exact "Course is full" backend message shown next to submi
   const H = await apiHeaders(page)
   const learner = await getLearner(page, H)
   const courseTitle = `Full Course Test ${Date.now()}`
-  await createFixtureCourse(page, H, courseTitle)
+  const course = await createFixtureCourse(page, H, courseTitle)
 
   await page.route('**/enrollments/', (route) => {
     if (route.request().method() === 'POST') {
@@ -157,8 +196,11 @@ test('Course full — exact "Course is full" backend message shown next to submi
 
   await page.getByRole('button', { name: 'Enroll Learner', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Enroll Learner' })).toBeVisible({ timeout: 5000 })
-  await page.getByLabel('Learner').selectOption({ label: new RegExp(learner.name) })
-  await page.getByLabel('Course').selectOption({ label: new RegExp(courseTitle) })
+  // exact: true — non-exact "Learner"/"Course" also substring-matches the
+  // dialog's own aria-label ("Enroll learner"), which strict-mode-violates
+  // or resolves to the wrong element.
+  await page.getByLabel('Learner', { exact: true }).selectOption({ value: learner.id })
+  await page.getByLabel('Course', { exact: true }).selectOption({ value: course.id })
   await page.getByRole('button', { name: 'Enroll', exact: true }).click()
 
   const dialog = page.getByRole('dialog', { name: 'Enroll learner' })
@@ -169,7 +211,8 @@ test('Status change — PATCH sends {status} ONLY, progress never in the request
   await gotoEnrollmentsTab(page)
   const H = await apiHeaders(page)
   const learner = await getLearner(page, H)
-  const course = await createFixtureCourse(page, H, `Status Change Course ${Date.now()}`)
+  const courseTitle = `Status Change Course ${Date.now()}`
+  const course = await createFixtureCourse(page, H, courseTitle)
 
   const enrollRes = await page.request.post(`${API}/enrollments`, {
     data: { courseId: course.id, userId: learner.id }, headers: H,
@@ -178,9 +221,17 @@ test('Status change — PATCH sends {status} ONLY, progress never in the request
   const enrollmentId: string = (await enrollRes.json()).data?.id
   createdEnrollmentIds.push(enrollmentId)
 
-  await page.goto('/learning-management')
+  // gotoEnrollmentsTab() already does its own page.goto('/learning-management')
+  // — an extra one immediately before it fires two full browser navigations
+  // back to back, and the button click below then races whichever one the
+  // page happens to still be settling from.
   await gotoEnrollmentsTab(page)
-  await expect(page.getByText(learner.name).first()).toBeVisible({ timeout: 10000 })
+  // Scoped to this test's own row (learner + course title) — the dedicated
+  // fixture learner accumulates one enrollment per test across this file, so
+  // by this point a bare getByLabel('Status for <learner>') matches every
+  // one of that learner's rows, not just this one.
+  const row = page.locator('tr', { hasText: learner.name }).filter({ hasText: courseTitle })
+  await expect(row).toBeVisible({ timeout: 10000 })
 
   let capturedBody: unknown = null
   page.on('request', (req) => {
@@ -193,7 +244,7 @@ test('Status change — PATCH sends {status} ONLY, progress never in the request
     (r) => r.url().includes(`/enrollments/${enrollmentId}`) && r.request().method() === 'PATCH',
     { timeout: 10000 },
   )
-  await page.getByLabel(`Status for ${learner.name}`).selectOption('COMPLETED')
+  await row.getByLabel(`Status for ${learner.name}`).selectOption('COMPLETED')
   const resp = await patchResp
   expect(resp.ok(), 'PATCH must succeed').toBeTruthy()
 
@@ -201,7 +252,11 @@ test('Status change — PATCH sends {status} ONLY, progress never in the request
   expect(Object.keys(capturedBody as object)).toEqual(['status'])
   expect((capturedBody as { status: string }).status).toBe('COMPLETED')
 
-  await expect(page.getByText('Completed', { exact: true })).toBeVisible({ timeout: 5000 })
+  // A native <select>'s <option> children are never "visible" while the
+  // dropdown is closed — every row's status select has its own "Completed"
+  // option regardless of what's currently selected, so getByText here just
+  // matched invisible option elements. Check the select's actual value instead.
+  await expect(row.getByLabel(`Status for ${learner.name}`)).toHaveValue('COMPLETED')
 })
 
 test('Unenroll — DELETE fires, confirm dialog stays neutral (never mentions certificates)', async ({ page }) => {
@@ -216,7 +271,10 @@ test('Unenroll — DELETE fires, confirm dialog stays neutral (never mentions ce
   expect(enrollRes.ok()).toBeTruthy()
   const enrollmentId: string = (await enrollRes.json()).data?.id
 
-  await page.goto('/learning-management')
+  // gotoEnrollmentsTab() already does its own page.goto('/learning-management')
+  // — an extra one immediately before it fires two full browser navigations
+  // back to back, and the button click below then races whichever one the
+  // page happens to still be settling from.
   await gotoEnrollmentsTab(page)
   await expect(page.getByText(learner.name).first()).toBeVisible({ timeout: 10000 })
 

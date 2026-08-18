@@ -445,6 +445,66 @@ async function updateCompetencySettings(data, adminId) {
   return result;
 }
 
+// ── Proficiency Levels — per-level display config for the fixed SkillLevel
+// ladder (see ProficiencyLevel's schema comment) ────────────────────────────
+
+// Same values ProficiencyLevelsTab.tsx used to hardcode — the seed on first
+// read, not a re-invented default (lazy-create-on-read, same shape as
+// CompetencySettings above).
+const PROFICIENCY_LEVEL_DEFAULTS = [
+  { level: "BEGINNER",     minPercent: 0,  maxPercent: 24,  color: "#94a3b8", description: "Just starting out — little to no demonstrated proficiency yet." },
+  { level: "INTERMEDIATE", minPercent: 25, maxPercent: 49,  color: "#3b82f6", description: "Can perform core tasks with some guidance." },
+  { level: "ADVANCED",     minPercent: 50, maxPercent: 74,  color: "#6366f1", description: "Works independently and reliably in most situations." },
+  { level: "EXPERT",       minPercent: 75, maxPercent: 89,  color: "#f59e0b", description: "Deep, consistent mastery — able to guide others." },
+  { level: "CERTIFIED",    minPercent: 90, maxPercent: 100, color: "#16a34a", description: "Top-tier, verified proficiency." },
+];
+
+async function getProficiencyLevels() {
+  const existing = await prisma.proficiencyLevel.findMany();
+  const byLevel = new Map(existing.map((l) => [l.level, l]));
+  const missing = PROFICIENCY_LEVEL_DEFAULTS.filter((d) => !byLevel.has(d.level));
+  if (missing.length > 0) {
+    await prisma.proficiencyLevel.createMany({ data: missing, skipDuplicates: true });
+  }
+  const rows = missing.length > 0 ? await prisma.proficiencyLevel.findMany() : existing;
+  return rows.sort((a, b) => a.minPercent - b.minPercent);
+}
+
+async function updateProficiencyLevels(levels, adminId) {
+  await getProficiencyLevels(); // ensure all 5 rows exist before updating
+  const validLevels = new Set(PROFICIENCY_LEVEL_DEFAULTS.map((d) => d.level));
+
+  for (const row of levels) {
+    if (!validLevels.has(row.level)) throw domainError("INVALID_LEVEL");
+    if (!Number.isInteger(row.minPercent) || !Number.isInteger(row.maxPercent)) throw domainError("INVALID_RANGE");
+    if (row.minPercent < 0 || row.maxPercent > 100 || row.minPercent > row.maxPercent) throw domainError("INVALID_RANGE");
+  }
+
+  await Promise.all(levels.map((row) => prisma.proficiencyLevel.update({
+    where: { level: row.level },
+    data: { minPercent: row.minPercent, maxPercent: row.maxPercent, color: row.color, description: row.description ?? null },
+  })));
+  await auditLog(adminId, "PROFICIENCY_LEVELS_UPDATED", { levels: levels.map((l) => l.level) });
+  return getProficiencyLevels();
+}
+
+// ── Proficiency Distribution — CompetencySidePanel's donut ─────────────────
+//
+// Groups UserSkillProfile.currentLevel for one skill — the ONE per-skill
+// level-breakdown query this module has (CompetencySidePanel's own header
+// comment flagged this as genuinely missing before this fix).
+const ALL_SKILL_LEVELS = ["BEGINNER", "INTERMEDIATE", "ADVANCED", "EXPERT", "CERTIFIED"];
+
+async function getSkillDistribution(skillId) {
+  await assertSkillExists(skillId);
+  const groups = await safe(
+    () => prisma.userSkillProfile.groupBy({ by: ["currentLevel"], where: { skillId }, _count: { _all: true } }),
+    [],
+  );
+  const countByLevel = Object.fromEntries(groups.map((g) => [g.currentLevel, g._count._all]));
+  return Object.fromEntries(ALL_SKILL_LEVELS.map((lvl) => [lvl, countByLevel[lvl] ?? 0]));
+}
+
 // ── Skill gaps — the ONE shared definition ──────────────────────────────────
 //
 // Judgment call (flagged in the Part 1 report, not silently assumed): this
@@ -1298,4 +1358,8 @@ module.exports = {
   // Settings
   getCompetencySettings,
   updateCompetencySettings,
+  // Proficiency Levels + Distribution
+  getProficiencyLevels,
+  updateProficiencyLevels,
+  getSkillDistribution,
 };

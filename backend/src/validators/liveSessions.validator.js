@@ -203,9 +203,58 @@ function validateListQuery(query = {}) {
   return { isValid: errors.length === 0, errors, data };
 }
 
+// ── Attendance (Trigger 4 write endpoint) ────────────────────────────────────
+
+const ATTENDANCE_STATUSES = ["PRESENT", "LATE", "ABSENT", "EXCUSED"];
+const MAX_ATTENDANCE_RECORDS = 300;
+
+function validateMarkAttendance(body = {}) {
+  const errors = [];
+  const records = Array.isArray(body.records) ? body.records : null;
+  if (!records || records.length === 0) { errors.push("records must be a non-empty array."); return { isValid: false, errors, data: null }; }
+  if (records.length > MAX_ATTENDANCE_RECORDS) { errors.push(`records must have at most ${MAX_ATTENDANCE_RECORDS} items.`); return { isValid: false, errors, data: null }; }
+
+  const data = [];
+  const seen = new Set();
+  for (const [i, r] of records.entries()) {
+    const userIdErr = validateId(r?.userId, `records[${i}].userId`);
+    if (userIdErr) { errors.push(userIdErr); continue; }
+    const userId = r.userId.trim();
+    if (seen.has(userId)) { errors.push(`records[${i}].userId is duplicated.`); continue; }
+    seen.add(userId);
+
+    const status = typeof r.status === "string" ? r.status.trim().toUpperCase() : "";
+    if (!ATTENDANCE_STATUSES.includes(status)) { errors.push(`records[${i}].status must be one of: ${ATTENDANCE_STATUSES.join(", ")}.`); continue; }
+
+    let durationMin;
+    if (r.durationMin !== undefined && r.durationMin !== null) {
+      const n = Number(r.durationMin);
+      if (!Number.isInteger(n) || n < 0 || n > MAX.durationMin) { errors.push(`records[${i}].durationMin must be an integer between 0 and ${MAX.durationMin}.`); continue; }
+      durationMin = n;
+    }
+
+    let participationScore;
+    if (r.participationScore !== undefined && r.participationScore !== null) {
+      const n = Number(r.participationScore);
+      if (!Number.isInteger(n) || n < 0 || n > 100) { errors.push(`records[${i}].participationScore must be an integer between 0 and 100.`); continue; }
+      participationScore = n;
+    }
+
+    data.push({
+      userId, status,
+      joinedAt: r.joinedAt ? new Date(r.joinedAt) : undefined,
+      leftAt: r.leftAt ? new Date(r.leftAt) : undefined,
+      durationMin, participationScore,
+    });
+  }
+
+  return { isValid: errors.length === 0, errors, data };
+}
+
 module.exports = {
   validateId,
   validateSessionCreate,
   validateSessionUpdate,
   validateListQuery,
+  validateMarkAttendance,
 };

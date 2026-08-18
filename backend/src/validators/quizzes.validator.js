@@ -5,10 +5,11 @@
 // field-by-field from the request — never stored as received — so nothing
 // unexpected can land in the Json column.
 
-// v1 accepts 4 of the 6 design-doc types. FILL_IN_BLANK / MATCHING exist in the
-// schema enum (so no future db push) but are rejected here until v2.
-const V1_TYPES = ["MULTIPLE_CHOICE", "TRUE_FALSE", "MULTI_SELECT", "ESSAY"];
-const V2_TYPES = ["FILL_IN_BLANK", "MATCHING"];
+// All 6 design-doc types are accepted. FILL_IN_BLANK / MATCHING originally
+// shipped rejected (schema-forward-compat only, 400'd here) — enabled once
+// the editor UI existed. Kept as one combined list rather than a V1/V2 split
+// now that every schema-enum value has a real editor.
+const V1_TYPES = ["MULTIPLE_CHOICE", "TRUE_FALSE", "MULTI_SELECT", "ESSAY", "FILL_IN_BLANK", "MATCHING"];
 
 const MAX = {
   title:        200,
@@ -16,6 +17,9 @@ const MAX = {
   prompt:       2000,
   option:       500,     // chars per option
   options:      10,      // options per question
+  answer:       500,     // chars for a FILL_IN_BLANK correct answer
+  pairText:     200,     // chars per MATCHING pair side
+  pairs:        10,      // pairs per MATCHING question
   points:       100,
   passingGrade: 100,
   attempts:     100,
@@ -24,6 +28,7 @@ const MAX = {
   order:        1000000,
 };
 const MIN_OPTIONS = 2;
+const MIN_PAIRS = 2;
 
 function validateId(id, label = "id") {
   if (!id || typeof id !== "string" || id.trim().length === 0) return `${label} is required.`;
@@ -205,6 +210,29 @@ function buildQuestionData(type, raw, errors) {
       if (raw !== undefined && raw !== null) { errors.push("data must be null for ESSAY questions."); return undefined; }
       return null;
     }
+    case "FILL_IN_BLANK": {
+      if (raw === null || typeof raw !== "object" || Array.isArray(raw)) { errors.push("data is required for FILL_IN_BLANK."); return undefined; }
+      const correctAnswer = typeof raw.correctAnswer === "string" ? raw.correctAnswer.trim() : "";
+      if (!correctAnswer) { errors.push("data.correctAnswer is required for FILL_IN_BLANK."); return undefined; }
+      if (correctAnswer.length > MAX.answer) { errors.push(`data.correctAnswer must be at most ${MAX.answer} characters.`); return undefined; }
+      return { correctAnswer };
+    }
+    case "MATCHING": {
+      if (raw === null || typeof raw !== "object" || Array.isArray(raw)) { errors.push("data is required for MATCHING."); return undefined; }
+      if (!Array.isArray(raw.pairs) || raw.pairs.length < MIN_PAIRS || raw.pairs.length > MAX.pairs) {
+        errors.push(`data.pairs must have between ${MIN_PAIRS} and ${MAX.pairs} entries.`);
+        return undefined;
+      }
+      const pairs = [];
+      for (const p of raw.pairs) {
+        const left  = typeof p?.left  === "string" ? p.left.trim()  : "";
+        const right = typeof p?.right === "string" ? p.right.trim() : "";
+        if (!left || !right) { errors.push("every pair must have a non-empty left and right."); return undefined; }
+        if (left.length > MAX.pairText || right.length > MAX.pairText) { errors.push(`each pair side must be at most ${MAX.pairText} characters.`); return undefined; }
+        pairs.push({ left, right });
+      }
+      return { pairs };
+    }
     default:
       return undefined;
   }
@@ -216,10 +244,6 @@ function readType(value, errors) {
     return undefined;
   }
   const upper = String(value).trim().toUpperCase();
-  if (V2_TYPES.includes(upper)) {
-    errors.push(`${upper} is not available yet (v2) — v1 types: ${V1_TYPES.join(", ")}.`);
-    return undefined;
-  }
   if (!V1_TYPES.includes(upper)) {
     errors.push(`type must be one of: ${V1_TYPES.join(", ")}.`);
     return undefined;
@@ -324,5 +348,4 @@ module.exports = {
   validateQuestionUpdate,
   validateReorder,
   V1_TYPES,
-  V2_TYPES,
 };

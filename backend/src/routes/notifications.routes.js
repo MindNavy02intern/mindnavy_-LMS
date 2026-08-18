@@ -57,6 +57,7 @@ router.post("/logs/:id/retry",  requireAdminAuth, adminUserActionRateLimiter, c.
 // ── User preferences ────────────────────────────────────────────────────────────
 router.get("/preferences/:userId",   requireAdminAuth, coursesReadRateLimiter, c.getPreferences);
 router.patch("/preferences/:userId", requireAdminAuth, adminUserActionRateLimiter, c.updatePreferences);
+router.post("/preferences/waitlist", requireAdminAuth, adminUserActionRateLimiter, c.joinWaitlist);
 
 // ── Emergency alert ────────────────────────────────────────────────────────────
 router.get("/emergency",  requireAdminAuth, coursesReadRateLimiter, c.listEmergencyAlerts);

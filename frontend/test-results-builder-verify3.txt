@@ -1,0 +1,123 @@
+
+Running 16 tests using 1 worker
+
+  ok  1 [setup] › tests\setup\auth.setup.ts:3:1 › authenticate (3.3s)
+  ok  2 [authenticated] › tests\course-builder.full.spec.ts:146:1 › Add section — title appears in the section list (6.0s)
+  ok  3 [authenticated] › tests\course-builder.full.spec.ts:157:1 › Add text lesson — lesson appears under its section (5.0s)
+  ok  4 [authenticated] › tests\course-builder.full.spec.ts:167:1 › Add valid video URL lesson — accepted and appears in list (7.7s)
+  x   5 [authenticated] › tests\course-builder.full.spec.ts:204:1 › Reject invalid video URL — shows inline error, no API call (8.1s)
+  ok  6 [authenticated] › tests\course-builder.full.spec.ts:230:1 › Edit lesson prefill — form opens with existing values (5.0s)
+  x   7 [authenticated] › tests\course-builder.full.spec.ts:251:1 › Delete section confirm — dismiss keeps it, confirm removes it (8.7s)
+  ok  8 [authenticated] › tests\course-builder.full.spec.ts:280:1 › Reorder sends ONE bulk PATCH and replaces state from response (12.0s)
+  ok  9 [authenticated] › tests\course-video-upload.full.spec.ts:192:1 › Edit mode TEXT→VIDEO_URL gates Upload File until type is saved, then unlocks (10.9s)
+  x  10 [authenticated] › tests\course-video-upload.full.spec.ts:266:1 › Create mode shows "save lesson first" — no upload available (10.0s)
+  -  11 [authenticated] › tests\course-video-upload.full.spec.ts:291:1 › Type rejection — non-video file blocked client-side, no sign request
+  x  12 [authenticated] › tests\course-video-upload.full.spec.ts:313:1 › Size rejection — file > 50 MB blocked client-side, no sign request (9.8s)
+  ok 13 [authenticated] › tests\course-video-upload.full.spec.ts:337:1 › Successful video upload — sign → PUT → confirm → done state visible (9.9s)
+  ok 14 [authenticated] › tests\course-video-upload.full.spec.ts:358:1 › Progress bar renders during video transfer (8.2s)
+  ok 15 [authenticated] › tests\course-video-upload.full.spec.ts:397:1 › Cancel mid-upload resets UI to drop zone (9.0s)
+  ok 16 [authenticated] › tests\course-video-upload.full.spec.ts:432:1 › Save Lesson button is disabled while video upload is in progress (7.8s)
+
+
+  1) [authenticated] › tests\course-builder.full.spec.ts:204:1 › Reject invalid video URL — shows inline error, no API call 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Add Lesson' }) resolved to 2 elements:
+        1) <button type="button" aria-label="Add lesson to Sec invalid url 1786798252518" class="tw:mt-1 tw:mb-1 tw:flex tw:items-center tw:gap-1 tw:rounded-md tw:px-2 tw:py-1.5 tw:text-[12px] tw:font-medium tw:text-blue-600 tw:hover:bg-blue-50 tw:disabled:opacity-40">…</button> aka getByRole('button', { name: 'Add lesson to Sec invalid url' })
+        2) <button type="button" class="tw:rounded-lg tw:bg-blue-600 tw:px-4 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-50">Add Lesson</button> aka getByRole('button', { name: 'Add Lesson', exact: true })
+
+    Call log:
+      - waiting for getByRole('button', { name: 'Add Lesson' })
+
+
+      218 |     if (req.url().includes('/lessons') && req.method() === 'POST') lessonPostFired = true
+      219 |   })
+    > 220 |   await page.getByRole('button', { name: 'Add Lesson' }).click()
+          |                                                          ^
+      221 |
+      222 |   await expect(
+      223 |     page.getByText(/valid http\/https URL/i),
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:220:58
+
+    Error Context: test-results\course-builder.full-Reject-b23e5-ws-inline-error-no-API-call-authenticated\error-context.md
+
+    Error Context: test-results\course-builder.full-Reject-b23e5-ws-inline-error-no-API-call-authenticated\error-context.md
+
+  2) [authenticated] › tests\course-builder.full.spec.ts:251:1 › Delete section confirm — dismiss keeps it, confirm removes it 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sec to delete 1786798267990')
+    Expected: visible
+    Error: strict mode violation: getByText('Sec to delete 1786798267990') resolved to 2 elements:
+        1) <span class="tw:flex-1 tw:text-[13px] tw:font-semibold tw:text-slate-900 tw:truncate">Sec to delete 1786798267990</span> aka getByText('Sec to delete 1786798267990', { exact: true })
+        2) <div>Section "Sec to delete 1786798267990" added.</div> aka getByText('Section "Sec to delete')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 3000ms
+      - waiting for getByText('Sec to delete 1786798267990')
+
+
+      261 |   page.once('dialog', dialog => dialog.dismiss())
+      262 |   await page.getByRole('button', { name: `Delete section ${secTitle}` }).click()
+    > 263 |   await expect(page.getByText(secTitle)).toBeVisible({ timeout: 3000 })
+          |                                          ^
+      264 |
+      265 |   // Accept: section removed
+      266 |   const [deleteResp] = await Promise.all([
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-builder.full.spec.ts:263:42
+
+    Error Context: test-results\course-builder.full-Delete-b0959-keeps-it-confirm-removes-it-authenticated\error-context.md
+
+    Error Context: test-results\course-builder.full-Delete-b0959-keeps-it-confirm-removes-it-authenticated\error-context.md
+
+  3) [authenticated] › tests\course-video-upload.full.spec.ts:266:1 › Create mode shows "save lesson first" — no upload available 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/Save lesson first/i)
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText(/Save lesson first/i)
+
+
+      286 |     'Create mode must show disabled video upload state',
+      287 |   ).toBeVisible({ timeout: 3000 })
+    > 288 |   await expect(page.getByText(/Save lesson first/i)).toBeVisible()
+          |                                                      ^
+      289 | })
+      290 |
+      291 | test('Type rejection — non-video file blocked client-side, no sign request', async ({ page }) => {
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:288:54
+
+    Error Context: test-results\course-video-upload.full-C-f1658-first-—-no-upload-available-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-C-f1658-first-—-no-upload-available-authenticated\error-context.md
+
+  4) [authenticated] › tests\course-video-upload.full.spec.ts:313:1 › Size rejection — file > 50 MB blocked client-side, no sign request 
+
+    Error: Cannot set buffer larger than 50Mb, please write it to a file and pass its path instead.
+
+      321 |   const bigBuffer = Buffer.alloc(51 * 1024 * 1024)
+      322 |   const fileInput = page.locator('[data-testid="video-upload-drop-zone"] input[type="file"]')
+    > 323 |   await fileInput.setInputFiles({
+          |                   ^
+      324 |     name: 'huge.mp4',
+      325 |     mimeType: 'video/mp4',
+      326 |     buffer: bigBuffer,
+        at C:\Users\Bilal\Desktop\mindnavy LMS\frontend\tests\course-video-upload.full.spec.ts:323:19
+
+    Error Context: test-results\course-video-upload.full-S-08c82-client-side-no-sign-request-authenticated\error-context.md
+
+    Error Context: test-results\course-video-upload.full-S-08c82-client-side-no-sign-request-authenticated\error-context.md
+
+  4 failed
+    [authenticated] › tests\course-builder.full.spec.ts:204:1 › Reject invalid video URL — shows inline error, no API call 
+    [authenticated] › tests\course-builder.full.spec.ts:251:1 › Delete section confirm — dismiss keeps it, confirm removes it 
+    [authenticated] › tests\course-video-upload.full.spec.ts:266:1 › Create mode shows "save lesson first" — no upload available 
+    [authenticated] › tests\course-video-upload.full.spec.ts:313:1 › Size rejection — file > 50 MB blocked client-side, no sign request 
+  1 skipped
+  11 passed (2.3m)

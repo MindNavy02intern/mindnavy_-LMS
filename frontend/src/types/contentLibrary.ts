@@ -26,8 +26,20 @@ export interface ContentItem {
   mimeType:    string | null;
   tags:        string[];          // server-normalized: trimmed/lowercased/deduped
   uploadedBy:  string | null;
+  // Reuse count (CourseContentUsage rows) — separate from courseId, which is
+  // this item's own originating course, not a "usage".
+  courseUsageCount: number;
   createdAt:   string;
   updatedAt:   string;
+}
+
+// GET /:id/courses — CourseContentUsage rows for one content item.
+export interface ContentCourseUsage {
+  usageId:      string;
+  courseId:     string;
+  courseTitle:  string | null;
+  courseStatus: string | null;
+  addedAt:      string;
 }
 
 // Chips/tiles: counts share every active filter EXCEPT type

@@ -20,6 +20,7 @@ const API = 'http://localhost:5001/api/admin'
 let savedToken = ''
 const createdPathIds:   string[] = []
 const createdCourseIds: string[] = []   // fixture courses; archived in afterAll
+const createdQuizIds:   string[] = []   // fixture quizzes; hard-deleted in afterAll
 
 test.afterAll(async ({ request }) => {
   if (!savedToken) return
@@ -33,6 +34,11 @@ test.afterAll(async ({ request }) => {
   // Soft-archive fixture courses
   for (const id of createdCourseIds) {
     await request.delete(`${API}/courses/${id}`, { headers: H }).catch(() => null)
+  }
+
+  // Hard-delete fixture quizzes
+  for (const id of createdQuizIds) {
+    await request.delete(`${API}/quizzes/${id}`, { headers: H }).catch(() => null)
   }
 })
 
@@ -86,6 +92,19 @@ async function createFixturePath(page: Page, H: Record<string, string>, title: s
   const id: string = body.data?.id
   expect(id, 'Path id must be returned').toBeTruthy()
   createdPathIds.push(id)
+  return id
+}
+
+async function createFixtureQuiz(page: Page, H: Record<string, string>, title: string): Promise<string> {
+  const res = await page.request.post(`${API}/quizzes`, {
+    data: { title },
+    headers: H,
+  })
+  expect(res.ok(), `POST /quizzes must succeed for "${title}"`).toBeTruthy()
+  const body = await res.json()
+  const id: string = body.data?.id
+  expect(id, 'Quiz id must be returned').toBeTruthy()
+  createdQuizIds.push(id)
   return id
 }
 
@@ -156,7 +175,11 @@ test('Edit path — title, description, sequential changed and persisted', async
   await expect(page.getByText(origTitle)).toBeVisible({ timeout: 10000 })
 
   await page.locator('tr').filter({ has: page.locator('td', { hasText: origTitle }) })
-    .getByRole('button', { name: /Edit/i }).first().click()
+    // Anchored to the start: an unanchored /Edit/i also matches the row's
+    // title link when the fixture title itself contains "Edit" (e.g. "LP
+    // Edit Source ..."), and .first() then grabs that link instead of the
+    // actual Edit action button, since it sits earlier in the row's DOM.
+    .getByRole('button', { name: /^Edit /i }).first().click()
   await expect(page.getByRole('heading', { name: 'Edit Learning Path' })).toBeVisible({ timeout: 5000 })
 
   const newTitle = `LP Edit Changed ${Date.now()}`
@@ -189,7 +212,11 @@ test('Edit path: nothing changed → no PATCH sent', async ({ page }) => {
   await expect(page.getByText(title)).toBeVisible({ timeout: 10000 })
 
   await page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
-    .getByRole('button', { name: /Edit/i }).first().click()
+    // Anchored to the start: an unanchored /Edit/i also matches the row's
+    // title link when the fixture title itself contains "Edit" (e.g. "LP
+    // Edit Source ..."), and .first() then grabs that link instead of the
+    // actual Edit action button, since it sits earlier in the row's DOM.
+    .getByRole('button', { name: /^Edit /i }).first().click()
   await expect(page.getByRole('heading', { name: 'Edit Learning Path' })).toBeVisible()
 
   let patchFired = false
@@ -225,7 +252,8 @@ test('Delete path — confirm dialog required, path removed from list', async ({
   )
 
   await page.locator('tr').filter({ has: page.locator('td', { hasText: title }) })
-    .getByRole('button', { name: /Delete/i }).first().click()
+    // Anchored — same title-substring collision risk as the Edit button above.
+    .getByRole('button', { name: /^Delete /i }).first().click()
   await deleteResp
 
   // Path no longer shown in list
@@ -270,7 +298,7 @@ test('Add COURSE item — appears fully resolved without a page refetch', async 
   await expect(page.getByRole('dialog', { name: /Add item/i })).toBeVisible({ timeout: 5000 })
 
   // Ensure COURSE is selected (default) — select the fixture course
-  await page.getByLabel(/Select course/i).selectOption({ label: new RegExp(courseTitle) })
+  await page.getByLabel(/Select course/i).selectOption({ value: courseId })
 
   await page.getByRole('button', { name: 'Add item to path' }).click()
   const resp = await addItemResp
@@ -309,8 +337,9 @@ test('Add LIVE_SESSION item — picker shows sessions, adds successfully', async
   await page.getByRole('button', { name: 'Add Item' }).click()
   await expect(page.getByRole('dialog', { name: /Add item/i })).toBeVisible({ timeout: 5000 })
 
-  // Switch to Live Session type
-  await page.getByRole('button', { name: 'Live Session' }).click()
+  // Switch to Live Session type. exact: true — non-exact also substring-matches
+  // the page's own "Live Sessions" nav tab button.
+  await page.getByRole('button', { name: 'Live Session', exact: true }).click()
   await expect(page.getByLabel(/Select live session/i)).toBeVisible({ timeout: 5000 })
   await page.getByLabel(/Select live session/i).selectOption({ value: session.id })
 
@@ -325,6 +354,43 @@ test('Add LIVE_SESSION item — picker shows sessions, adds successfully', async
   await expect(page.getByText(session.title)).toBeVisible({ timeout: 5000 })
 
   // Cleanup: pathId already in createdPathIds for afterAll deletion
+  void pathId
+})
+
+test('Add QUIZ item — picker shows quizzes, adds successfully, no status badge', async ({ page }) => {
+  await page.goto('/dashboard')
+  const H = await apiHeaders(page)
+  const pathTitle = `LP AddQuiz ${Date.now()}`
+  const quizTitle = `LP Quiz Fixture ${Date.now()}`
+  const pathId = await createFixturePath(page, H, pathTitle, false)
+  const quizId = await createFixtureQuiz(page, H, quizTitle)
+
+  await gotoPathsTab(page)
+  await expect(page.getByText(pathTitle)).toBeVisible({ timeout: 10000 })
+  await page.getByText(pathTitle).first().click()
+  await expect(page.getByRole('button', { name: 'Add Item' })).toBeVisible({ timeout: 5000 })
+
+  await page.getByRole('button', { name: 'Add Item' }).click()
+  await expect(page.getByRole('dialog', { name: /Add item/i })).toBeVisible({ timeout: 5000 })
+
+  // exact: true — non-exact also matches the "Assessments"/"Quiz" nav elsewhere on the page.
+  await page.getByRole('button', { name: 'Quiz', exact: true }).click()
+  await expect(page.getByLabel(/Select quiz/i)).toBeVisible({ timeout: 5000 })
+  await page.getByLabel(/Select quiz/i).selectOption({ value: quizId })
+
+  const addItemResp = page.waitForResponse(
+    r => r.url().includes('/items') && r.request().method() === 'POST' && r.ok(),
+    { timeout: 10000 },
+  )
+  await page.getByRole('button', { name: 'Add item to path' }).click()
+  const resp = await addItemResp
+  const addedItem = ((await resp.json()).data) as { itemType: string; title: string; status: string | null; missing: boolean }
+  expect(addedItem.itemType).toBe('QUIZ')
+  expect(addedItem.missing).toBe(false)
+  expect(addedItem.status, 'QUIZ items have no status concept').toBeNull()
+
+  await expect(page.getByText(quizTitle)).toBeVisible({ timeout: 5000 })
+
   void pathId
 })
 
@@ -346,7 +412,7 @@ test('Reject duplicate item — exact backend message shown inline', async ({ pa
   // Try adding the same course again via the picker
   await page.getByRole('button', { name: 'Add Item' }).click()
   await expect(page.getByRole('dialog', { name: /Add item/i })).toBeVisible({ timeout: 5000 })
-  await page.getByLabel(/Select course/i).selectOption({ label: new RegExp(courseTitle) })
+  await page.getByLabel(/Select course/i).selectOption({ value: courseId })
 
   // Mock the POST to return the duplicate 400
   await page.route(`**/learning-paths/${pathId}/items`, (route) => {
@@ -387,7 +453,13 @@ test('Reject unknown itemId — exact backend message shown inline', async ({ pa
   await expect(page.getByRole('dialog', { name: /Add item/i })).toBeVisible({ timeout: 5000 })
 
   // Force a selection by injecting value directly (picker filters to real courses; we need any selection)
+  // The <select> itself only mounts once ItemPicker's own listCourses() fetch
+  // resolves (a loading skeleton renders in its place until then — see
+  // LearningPathsTab.tsx's ItemPicker) — wait for it to actually be attached
+  // with real options before touching it, instead of racing that fetch.
   const select = page.getByLabel(/Select course/i)
+  await select.waitFor({ state: 'attached', timeout: 10000 })
+  await expect.poll(() => select.evaluate((el: HTMLSelectElement) => el.options.length), { timeout: 10000 }).toBeGreaterThan(1)
   await select.evaluate((el: HTMLSelectElement) => {
     const opt = el.options[1] // first real option after placeholder
     if (opt) { el.value = opt.value; el.dispatchEvent(new Event('change', { bubbles: true })) }
@@ -501,7 +573,8 @@ test('missing:true item renders as "unavailable" without crashing (* mock)', asy
 
   // Must not crash — renders "Unavailable item" row (not an empty/broken row)
   await expect(page.getByText('Unavailable item')).toBeVisible({ timeout: 5000 })
-  await expect(page.getByText('Unavailable')).toBeVisible()
+  // exact: true — non-exact also matches "Unavailable item" itself.
+  await expect(page.getByText('Unavailable', { exact: true })).toBeVisible()
 
   // Remove button is the ONLY action available on a missing item
   await expect(page.getByRole('button', { name: 'Remove unavailable item' })).toBeVisible()
@@ -533,7 +606,9 @@ test('Archived course item shows Archived badge — distinct from missing', asyn
 
   // Must show "Archived" badge — not the amber "Unavailable" treatment
   await expect(page.getByText(courseTitle)).toBeVisible({ timeout: 5000 })
-  await expect(page.getByText('Archived')).toBeVisible({ timeout: 5000 })
+  // exact: true — non-exact also matches the path heading ("LP Archived …")
+  // and the item's own course name ("LP Archived Course …").
+  await expect(page.getByText('Archived', { exact: true })).toBeVisible({ timeout: 5000 })
 
   // Must NOT render as unavailable/missing
   await expect(page.getByText('Unavailable item')).not.toBeVisible()

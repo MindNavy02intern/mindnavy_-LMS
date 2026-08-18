@@ -158,8 +158,39 @@ export function sendInvoice(id: string): Promise<Invoice> {
   return financeFetch<Invoice>(`/finance/invoices/${encodeURIComponent(id)}/send`, 'PATCH');
 }
 
-export function downloadInvoicePlaceholder(id: string): Promise<{ invoiceId: string; invoiceNumber: string; message: string }> {
-  return financeFetch(`/finance/invoices/${encodeURIComponent(id)}/download`);
+// Blob + Bearer fetch — a plain <a href> would never carry the auth token.
+// Same pattern as certificatesApi.ts's downloadCertificatePdf.
+export async function downloadInvoicePdf(id: string): Promise<Blob> {
+  const token = getStoredToken();
+  const res = await fetch(`${BASE}/finance/invoices/${encodeURIComponent(id)}/download`, {
+    headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+  });
+
+  const contentType = res.headers.get('content-type') ?? '';
+
+  if (!res.ok || !contentType.includes('application/pdf')) {
+    let message = res.status === 401 ? 'Unauthorized — please log in again.' : `HTTP ${res.status}`;
+    if (contentType.includes('application/json')) {
+      try {
+        const json = await res.json() as { message?: string };
+        if (json.message) message = json.message;
+      } catch { /* non-JSON despite the header */ }
+    }
+    throw new FinanceApiError(res.status, message);
+  }
+
+  return res.blob();
+}
+
+export function triggerPdfDownload(blob: Blob, filename: string): void {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
 
 // ── Transactions ──────────────────────────────────────────────────────────

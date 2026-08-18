@@ -14,6 +14,7 @@ import CompetencyListTab from '../../components/competencies/CompetencyListTab';
 import FrameworksTab from '../../components/competencies/FrameworksTab';
 import CategoriesTab from '../../components/competencies/CategoriesTab';
 import AssessmentsTab from '../../components/competencies/AssessmentsTab';
+import CertificationsTab from '../../components/competencies/CertificationsTab';
 import SkillGapsTab from '../../components/competencies/SkillGapsTab';
 import UserProgressTab from '../../components/competencies/UserProgressTab';
 import ProficiencyLevelsTab from '../../components/competencies/ProficiencyLevelsTab';
@@ -22,20 +23,21 @@ import SettingsTab from '../../components/competencies/SettingsTab';
 import type { Framework, Skill, SkillDetail } from '../../types/competencies';
 
 type PageTab =
-  | 'overview' | 'list' | 'frameworks' | 'categories' | 'assessments'
+  | 'overview' | 'list' | 'frameworks' | 'categories' | 'assessments' | 'certifications'
   | 'gaps' | 'levels' | 'progress' | 'import-export' | 'settings';
 
 const TABS: { key: PageTab; label: string }[] = [
-  { key: 'overview',      label: 'Overview' },
-  { key: 'list',          label: 'Competency List' },
-  { key: 'frameworks',    label: 'Frameworks' },
-  { key: 'categories',    label: 'Categories' },
-  { key: 'assessments',   label: 'Assessments' },
-  { key: 'gaps',          label: 'Skill Gaps' },
-  { key: 'levels',        label: 'Proficiency Levels' },
-  { key: 'progress',      label: 'User Progress' },
-  { key: 'import-export', label: 'Import/Export' },
-  { key: 'settings',      label: 'Settings' },
+  { key: 'overview',       label: 'Overview' },
+  { key: 'list',           label: 'Competency List' },
+  { key: 'frameworks',     label: 'Frameworks' },
+  { key: 'categories',     label: 'Categories' },
+  { key: 'assessments',    label: 'Assessments' },
+  { key: 'certifications', label: 'Certifications' },
+  { key: 'gaps',           label: 'Skill Gaps' },
+  { key: 'levels',         label: 'Proficiency Levels' },
+  { key: 'progress',       label: 'User Progress' },
+  { key: 'import-export',  label: 'Import/Export' },
+  { key: 'settings',       label: 'Settings' },
 ];
 
 export default function CompetenciesPage() {
@@ -141,10 +143,12 @@ export default function CompetenciesPage() {
               <CategoriesTab showToast={showToast} refreshSignal={refreshSignal} />
             ) : tab === 'assessments' ? (
               <AssessmentsTab showToast={showToast} refreshSignal={refreshSignal} />
+            ) : tab === 'certifications' ? (
+              <CertificationsTab showToast={showToast} refreshSignal={refreshSignal} />
             ) : tab === 'gaps' ? (
               <SkillGapsTab refreshSignal={refreshSignal} />
             ) : tab === 'levels' ? (
-              <ProficiencyLevelsTab />
+              <ProficiencyLevelsTab showToast={showToast} />
             ) : tab === 'progress' ? (
               <UserProgressTab refreshSignal={refreshSignal} />
             ) : tab === 'import-export' ? (

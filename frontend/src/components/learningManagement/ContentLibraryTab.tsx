@@ -19,15 +19,16 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Plus, X, Trash2, Pencil, Search, Upload, FileText, Video, Music, Image as ImageIcon,
-  File as FileIcon, Download, AlertCircle,
+  File as FileIcon, Download, AlertCircle, Link2, Link2Off,
 } from 'lucide-react';
 import {
   listContent, signContentUpload, confirmContentUpload, updateContent, deleteContent,
+  listContentCourses, linkContentToCourse, unlinkContentFromCourse,
   ContentLibraryApiError,
 } from '../../services/contentLibraryApi';
 import { listCourses } from '../../services/coursesApi';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
-import type { ContentItem, ContentType, ContentTypeCounts } from '../../types/contentLibrary';
+import type { ContentItem, ContentType, ContentTypeCounts, ContentCourseUsage } from '../../types/contentLibrary';
 import type { CourseListRow } from '../../types/courses';
 
 // ── Allowed MIME families (client-side pre-check, per contract) ────────────────
@@ -464,15 +465,136 @@ function EditDialog({ item, courses, onClose, onSaved }: EditDialogProps) {
   );
 }
 
+// ── Reuse dialog (link/unlink across courses — CourseContentUsage) ──────────
+
+interface ReuseDialogProps {
+  item:      ContentItem;
+  courses:   CourseListRow[];
+  onClose:   () => void;
+  onChanged: (delta: number) => void;
+  showToast: (type: 'success' | 'error', message: string) => void;
+}
+
+function ReuseDialog({ item, courses, onClose, onChanged, showToast }: ReuseDialogProps) {
+  const [usages, setUsages] = useState<ContentCourseUsage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [pickCourseId, setPickCourseId] = useState('');
+  const [linking, setLinking] = useState(false);
+  const [unlinkingId, setUnlinkingId] = useState<string | null>(null);
+
+  const load = useCallback(() => {
+    setLoading(true);
+    listContentCourses(item.id)
+      .then(setUsages)
+      .catch(() => showToast('error', 'Failed to load courses using this item.'))
+      .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.id]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const linkedCourseIds = new Set(usages.map((u) => u.courseId));
+  const pickableCourses = courses.filter((c) => c.id !== item.courseId && !linkedCourseIds.has(c.id));
+
+  async function handleLink() {
+    if (!pickCourseId) return;
+    setLinking(true);
+    try {
+      await linkContentToCourse(item.id, pickCourseId);
+      invalidateFor(appQueryClient, 'content.linkCourse', { courseId: pickCourseId });
+      showToast('success', 'Content linked to course.');
+      setPickCourseId('');
+      onChanged(1);
+      load();
+    } catch (err) {
+      showToast('error', err instanceof ContentLibraryApiError ? err.message : 'Failed to link course.');
+    } finally {
+      setLinking(false);
+    }
+  }
+
+  async function handleUnlink(usage: ContentCourseUsage) {
+    setUnlinkingId(usage.usageId);
+    try {
+      await unlinkContentFromCourse(item.id, usage.courseId);
+      invalidateFor(appQueryClient, 'content.unlinkCourse', { courseId: usage.courseId });
+      showToast('success', 'Content unlinked from course.');
+      onChanged(-1);
+      load();
+    } catch (err) {
+      showToast('error', err instanceof ContentLibraryApiError ? err.message : 'Failed to unlink course.');
+    } finally {
+      setUnlinkingId(null);
+    }
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <div aria-label="modal backdrop" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={onClose} />
+      <div role="dialog" aria-modal="true" aria-label="Courses using this content"
+        className="tw:relative tw:flex tw:w-full tw:max-w-md tw:max-h-[80vh] tw:flex-col tw:rounded-xl tw:bg-white tw:shadow-2xl">
+        <div className="tw:flex tw:items-center tw:justify-between tw:border-b tw:border-slate-200 tw:px-5 tw:py-4">
+          <h3 className="tw:m-0 tw:text-[15px] tw:font-semibold tw:text-slate-900">Used in Courses — {item.title}</h3>
+          <button type="button" onClick={onClose} aria-label="Close" className="tw:rounded tw:p-1 tw:text-slate-400 tw:hover:bg-slate-100">
+            <X className="tw:h-4 tw:w-4" strokeWidth={2} />
+          </button>
+        </div>
+
+        <div className="tw:flex-1 tw:overflow-y-auto tw:px-5 tw:py-4 tw:flex tw:flex-col tw:gap-3">
+          {item.courseId && (
+            <p className="tw:m-0 tw:text-[12px] tw:text-slate-400">
+              Originally uploaded to <strong className="tw:text-slate-600">{item.courseTitle ?? 'a course'}</strong> — linking below adds it to OTHER courses too, without duplicating the file.
+            </p>
+          )}
+
+          {loading ? (
+            <div className="tw:flex tw:flex-col tw:gap-2">
+              {[1, 2].map((i) => <div key={i} className="tw:h-9 tw:w-full tw:animate-pulse tw:rounded-lg tw:bg-slate-100" />)}
+            </div>
+          ) : usages.length === 0 ? (
+            <p className="tw:m-0 tw:text-[13px] tw:text-slate-400">Not linked to any other course yet.</p>
+          ) : (
+            <div className="tw:flex tw:flex-col tw:gap-2">
+              {usages.map((u) => (
+                <div key={u.usageId} className="tw:flex tw:items-center tw:justify-between tw:gap-3 tw:rounded-lg tw:border tw:border-slate-100 tw:px-3 tw:py-2">
+                  <span className="tw:min-w-0 tw:truncate tw:text-[13px] tw:font-medium tw:text-slate-800">{u.courseTitle ?? 'Untitled course'}</span>
+                  <button type="button" onClick={() => handleUnlink(u)} disabled={unlinkingId === u.usageId}
+                    aria-label={`Unlink from ${u.courseTitle ?? 'course'}`}
+                    className="tw:shrink-0 tw:rounded tw:p-1 tw:text-slate-400 tw:hover:bg-red-50 tw:hover:text-red-500 tw:disabled:opacity-40">
+                    <Link2Off className="tw:h-3.5 tw:w-3.5" strokeWidth={2} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="tw:mt-2 tw:flex tw:gap-2">
+            <select value={pickCourseId} onChange={(e) => setPickCourseId(e.target.value)} aria-label="Pick a course to link"
+              className="tw:flex-1 tw:rounded-lg tw:border tw:border-slate-200 tw:px-3 tw:py-2 tw:text-[13px] tw:text-slate-900 tw:outline-none focus:tw:border-blue-400">
+              <option value="">— Pick a course to link —</option>
+              {pickableCourses.map((c) => <option key={c.id} value={c.id}>{c.title}</option>)}
+            </select>
+            <button type="button" onClick={handleLink} disabled={!pickCourseId || linking}
+              className="tw:flex tw:items-center tw:gap-1.5 tw:rounded-lg tw:bg-blue-600 tw:px-3 tw:py-2 tw:text-[13px] tw:font-semibold tw:text-white tw:hover:bg-blue-700 tw:disabled:opacity-40">
+              <Link2 className="tw:h-3.5 tw:w-3.5" strokeWidth={2} /> {linking ? 'Linking…' : 'Link'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Item card ─────────────────────────────────────────────────────────────────
 
 interface ItemCardProps {
   item:      ContentItem;
   onEdit:    () => void;
   onDelete:  () => void;
+  onReuse:   () => void;
 }
 
-function ItemCard({ item, onEdit, onDelete }: ItemCardProps) {
+function ItemCard({ item, onEdit, onDelete, onReuse }: ItemCardProps) {
   const Icon = TYPE_META[item.type].icon;
   return (
     <div className="tw:flex tw:flex-col tw:gap-2 tw:rounded-xl tw:border tw:border-slate-200 tw:bg-white tw:p-4">
@@ -489,6 +611,12 @@ function ItemCard({ item, onEdit, onDelete }: ItemCardProps) {
       <p className="tw:m-0 tw:text-[12px] tw:text-slate-400">
         {item.courseTitle ?? 'Library-wide'} · {fmtBytes(item.sizeBytes)}
       </p>
+
+      <button type="button" onClick={onReuse}
+        className="tw:self-start tw:flex tw:items-center tw:gap-1 tw:text-[11px] tw:font-medium tw:text-blue-600 tw:hover:text-blue-700">
+        <Link2 className="tw:h-3 tw:w-3" strokeWidth={2} />
+        {item.courseUsageCount > 0 ? `Used in ${item.courseUsageCount} course${item.courseUsageCount === 1 ? '' : 's'}` : 'Link to another course'}
+      </button>
 
       {item.tags.length > 0 && (
         <div className="tw:flex tw:flex-wrap tw:gap-1">
@@ -545,7 +673,14 @@ export default function ContentLibraryTab({ openUploadOnMount }: ContentLibraryT
   const [courses, setCourses]       = useState<CourseListRow[]>([]);
   const [showUpload, setShowUpload] = useState(!!openUploadOnMount);
   const [editing, setEditing]       = useState<ContentItem | null>(null);
+  const [reusing, setReusing]       = useState<ContentItem | null>(null);
   const [toast, setToast]           = useState<Toast | null>(null);
+
+  // Bumped on every load() call so a stale in-flight fetch (StrictMode's
+  // double-invoked mount effect, or a fast filter change) can't clobber a
+  // newer response — e.g. the post-upload refetch landing, then being
+  // overwritten by a slow-to-resolve earlier request.
+  const loadSeq = useRef(0);
 
   function showToast(type: 'success' | 'error', message: string) {
     setToast({ type, message });
@@ -557,6 +692,7 @@ export default function ContentLibraryTab({ openUploadOnMount }: ContentLibraryT
   }, []);
 
   const load = useCallback(async () => {
+    const seq = ++loadSeq.current;
     setLoading(true);
     setError(null);
     try {
@@ -564,14 +700,16 @@ export default function ContentLibraryTab({ openUploadOnMount }: ContentLibraryT
         type: typeFilter === 'All' ? undefined : typeFilter,
         search: search || undefined, page, limit: PAGE_SIZE,
       });
+      if (loadSeq.current !== seq) return; // superseded by a newer load — discard
       setContent(data.content);
       setTypeCounts(data.typeCounts);
       setPagination(data.pagination);
     } catch (err) {
+      if (loadSeq.current !== seq) return;
       if (err instanceof ContentLibraryApiError && err.status === 401) { navigate('/login'); return; }
       setError(err instanceof Error ? err.message : 'Failed to load content library.');
     } finally {
-      setLoading(false);
+      if (loadSeq.current === seq) setLoading(false);
     }
   }, [navigate, typeFilter, search, page]);
 
@@ -659,7 +797,7 @@ export default function ContentLibraryTab({ openUploadOnMount }: ContentLibraryT
         <>
           <div className="tw:grid tw:grid-cols-3 tw:gap-3">
             {content.map((item) => (
-              <ItemCard key={item.id} item={item} onEdit={() => setEditing(item)} onDelete={() => handleDelete(item)} />
+              <ItemCard key={item.id} item={item} onEdit={() => setEditing(item)} onDelete={() => handleDelete(item)} onReuse={() => setReusing(item)} />
             ))}
           </div>
 
@@ -679,6 +817,15 @@ export default function ContentLibraryTab({ openUploadOnMount }: ContentLibraryT
 
       {showUpload && <UploadDialog courses={courses} onClose={() => setShowUpload(false)} onUploaded={handleUploaded} />}
       {editing && <EditDialog item={editing} courses={courses} onClose={() => setEditing(null)} onSaved={handleEdited} />}
+      {reusing && (
+        <ReuseDialog
+          item={reusing}
+          courses={courses}
+          showToast={showToast}
+          onClose={() => setReusing(null)}
+          onChanged={(delta) => setContent((prev) => prev.map((c) => (c.id === reusing.id ? { ...c, courseUsageCount: c.courseUsageCount + delta } : c)))}
+        />
+      )}
       {toast && <ToastBanner {...toast} />}
     </div>
   );

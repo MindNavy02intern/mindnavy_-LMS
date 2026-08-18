@@ -12,17 +12,31 @@ with a task description, **this contract wins**.
 - **IDs:** uuid strings · **Dates:** ISO 8601 strings
 - **Rate limits:** admin reads 120/min, admin writes 60/10min, public verify **30/min per IP**
 
-> **v1 scope — triggers:** issuance is **MANUAL only** (admin picks user + course).
-> The four auto-triggers from the design doc (course completion, passing grade,
-> path completion, session attendance) are deferred: their runtimes don't exist
-> yet (no enrollment-completion writes, no quiz attempts, no path progress, no
-> attendance model). The backend has a single `issueCertificate()` entry point
-> that future triggers will call — **no trigger UI in v1.**
+> **Triggers (updated 2026-08-17):** manual issuance (admin picks user +
+> course) still works unchanged. Three of the four design-doc auto-triggers
+> are now wired, all calling the same `issueCertificate()` entry point
+> (`certificateTriggers.service.js`), best-effort and audit-logged with a
+> `trigger` tag: **course completion** (fires from `enrollments.service`'s
+> `updateEnrollment` on the transition into `COMPLETED`), **quiz passing
+> grade** (fires from `learners.service`'s `gradeAssessment` when the score
+> passes AND the learner's enrollment in the quiz's course is already
+> `COMPLETED`), and **learning path completion** (cascades into the normal
+> per-course certificate for every `COURSE` item in a path once every item —
+> course/session/quiz — is complete for that learner; there is still no
+> path-level certificate model, by design). **Attendance threshold** is NOT
+> wired — `SessionAttendance` has no write endpoint anywhere in the codebase
+> yet, so there is no event to hook into. **Still no trigger UI** — these are
+> silent backend side effects, same as manual issuance's audit trail.
 
-> **v1 scope — templates:** a template is a name + a small validated layout
-> object (colors, texts, signature) — **not** a freeform designer and **no
-> logoUrl** (embedding remote images means server-side fetching of arbitrary
-> URLs = SSRF; logos come in v2 through the uploads sign→confirm flow).
+> **Templates — logo (updated 2026-08-17):** a template is a name + a small
+> validated layout object (colors, texts, signature) plus an optional
+> **`logoUrl`**, added via the same sign→PUT→confirm uploads flow as course
+> thumbnails (`POST/PATCH/DELETE .../certificate-templates/:id/logo/*`) —
+> never a free-text URL field, so the original SSRF concern (server-side
+> fetching of an arbitrary admin-supplied URL) does not apply. `logoUrl` is
+> written ONLY by the logo endpoints; a plain name/color `PATCH` always
+> carries the current logo forward rather than wiping it via the "layout
+> replaces the whole object" rule.
 
 > **Issue requires `Course.certificateEnabled`** (the wizard Step 4 flag).
 > Issuing against a course with it off → `400` — surface that message and link
@@ -48,6 +62,8 @@ export interface CertificateTemplateLayout {
   accentColor: string;     // "#RRGGBB" — inner border + rule
   signatureName: string | null;   // ≤100 — omit both for no signature block
   signatureTitle: string | null;  // ≤100
+  logoUrl?: string | null;        // written ONLY by POST .../logo/confirm and
+                                   // DELETE .../logo below — never client-set text
 }
 
 export interface CertificateTemplate {
@@ -122,6 +138,18 @@ Empty body → `400`.
 ### 5 · Delete template
 `DELETE /:id` → `200 { data: { id } }` — issued certificates are **kept**
 (`templateId` becomes null; they render with the default layout + their snapshot).
+
+### 5a · Logo (sign → PUT direct to storage → confirm)
+Same pattern as course thumbnails — reuses that bucket under a
+`certificate-templates/<id>/` prefix.
+
+- `POST /:id/logo/sign` → `200 { data: { uploadUrl, path, maxBytes, expiresIn } }`
+  Body: `{ fileName, fileType }` — `fileType` must be `image/jpeg` | `image/png` | `image/webp`.
+- `POST /:id/logo/confirm` → `200 { data: CertificateTemplate, message }`
+  Body: `{ path }` (the `path` returned by sign). Sets `layout.logoUrl`; the
+  previous logo object (if any) is deleted best-effort.
+- `DELETE /:id/logo` → `200 { data: CertificateTemplate, message }` — clears
+  `layout.logoUrl` and deletes the stored object best-effort.
 
 ---
 

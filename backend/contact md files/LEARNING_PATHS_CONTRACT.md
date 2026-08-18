@@ -11,11 +11,13 @@ with a task description, **this contract wins**.
 - **IDs:** uuid strings · **Dates:** ISO 8601 strings
 - **Rate limits:** reads 120/min, writes 60/10min → on `429` show "slow down and retry"
 
-> **v1 scope:** items are **`COURSE` and `LIVE_SESSION` only**. Quizzes,
-> assignments and certificates get added to the enum when those systems ship —
-> don't render pickers for them. Completion rules v1 = one path-level
-> `sequential` flag (free order vs. must-follow-order). Prerequisites,
-> deadlines, skill mapping and learner progress are **deferred to v2**.
+> **Scope (updated 2026-08-17):** items are **`COURSE`, `LIVE_SESSION` and
+> `QUIZ`** — quizzes were added once the Quizzes system shipped, per this
+> contract's original "when that system ships" note. Assignments and
+> certificate-templates still have no item type — don't render pickers for
+> them. Completion rules v1 = one path-level `sequential` flag (free order vs.
+> must-follow-order). Prerequisites, deadlines, skill mapping and learner
+> progress are **deferred to v2**.
 
 > **Existing infra:** the tab shell (`?tab=paths`), the `['learning-paths']`
 > query key (queryKeys.ts) and its invalidation wiring already exist — build
@@ -26,7 +28,7 @@ with a task description, **this contract wins**.
 ## Types
 
 ```ts
-export type LearningPathItemType = 'COURSE' | 'LIVE_SESSION';
+export type LearningPathItemType = 'COURSE' | 'LIVE_SESSION' | 'QUIZ';
 
 export interface LearningPath {
   id: string;
@@ -41,13 +43,14 @@ export interface LearningPath {
 export interface LearningPathItem {
   id: string;                 // the path-item id (use THIS for remove/reorder)
   itemType: LearningPathItemType;
-  itemId: string;             // id of the referenced course / live session
+  itemId: string;             // id of the referenced course / live session / quiz
   order: number;
   createdAt: string;
   // Resolved view of the referenced entity (server-side join):
   title: string | null;       // null only when missing === true
   status: string | null;      // COURSE: 'Draft'|'Pending'|'Published'|'Archived'
                               // LIVE_SESSION: 'upcoming'|'live'|'ended'
+                              // QUIZ: always null — no status concept
   startTime: string | null;   // LIVE_SESSION only, else null
   missing: boolean;           // true = referenced row no longer exists.
                               // Render flagged (e.g. "unavailable"), NEVER hide.
@@ -93,8 +96,8 @@ cascade. Confirm in the UI before calling.
 ```json
 { "itemType": "COURSE", "itemId": "<courseId>" }
 ```
-- `itemType`: `COURSE` | `LIVE_SESSION` (anything else → `400`)
-- `itemId` must exist in its table → else `400 "Referenced course or live session does not exist."`
+- `itemType`: `COURSE` | `LIVE_SESSION` | `QUIZ` (anything else → `400`)
+- `itemId` must exist in its table → else `400 "Referenced course, live session, or quiz does not exist."`
 - Same item twice in one path → `400 "This item is already in the learning path."`
 - `order` optional — defaults to end of list. The returned item is already resolved
   (title/status filled in) → append it to local state, no refetch needed.

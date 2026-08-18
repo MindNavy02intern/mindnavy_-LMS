@@ -1,9 +1,23 @@
 import { useEffect, useState } from 'react';
 import AdminLayout from '../layouts/AdminLayout';
 import OtpVerificationModal from '../components/auth/OtpVerificationModal';
+import AuditLogsTab from '../components/reports/AuditLogsTab';
+import { useToast, ToastContainer } from '../components/users/Toast';
+import { useTabParam } from '../hooks/useTabParam';
 import { getTrustedDevices, revokeDevice } from '../api/trustedDevices';
 import { useAuth } from '../AuthContext';
 import type { TrustedDevice } from '../types/device';
+
+// This page is the whole "Audit & Security" module (AdminLayout nav label,
+// docs/blueprint/pages/13-audit-security.md) for now — Trusted Devices is the
+// only tab with a real backend behind it besides Audit Logs (the other ~18
+// tabs the blueprint describes — security dashboard, threat detection,
+// incident management, etc. — have no backing model anywhere and are
+// out of scope here, see DEFERRED_ITEMS.md). Audit Logs reuses reports'
+// AuditLogsTab AS-IS (same GET /reports/audit query reports.service.js
+// already owns) rather than forking a parallel /audit-logs endpoint with an
+// identical query — one datum, one owner (R4).
+type SecurityTab = 'devices' | 'audit';
 
 // ── Platform SVG icons ────────────────────────────────────────────────────────
 
@@ -177,6 +191,9 @@ function DeviceCard({ device, onRevoke, isRevoking }: DeviceCardProps) {
 
 export default function TrustedDevicesPage() {
   const { user } = useAuth();
+  const [tabKey, setTabKey] = useTabParam('devices');
+  const tab = (tabKey === 'audit' ? 'audit' : 'devices') as SecurityTab;
+  const { toasts, showToast, dismiss } = useToast();
 
   const [devices, setDevices] = useState<TrustedDevice[]>([]);
   const [loadingDevices, setLoadingDevices] = useState(true);
@@ -194,7 +211,6 @@ export default function TrustedDevicesPage() {
       setLoadingDevices(true);
       setLoadError(null);
       try {
-        // TODO: BACKEND — pass real userId once API is connected
         const data = await getTrustedDevices();
         if (!cancelled) setDevices(data);
       } catch {
@@ -212,7 +228,6 @@ export default function TrustedDevicesPage() {
   const handleRevoke = async (deviceId: string) => {
     setRevokingId(deviceId);
     try {
-      // TODO: BACKEND — call real DELETE /api/devices/:deviceId
       await revokeDevice(deviceId);
       setDevices((prev) => prev.filter((d) => d.id !== deviceId));
     } catch {
@@ -228,8 +243,31 @@ export default function TrustedDevicesPage() {
   const trustedCount = devices.length;
 
   return (
-    <AdminLayout pageTitle="Trusted Devices">
+    <AdminLayout pageTitle={tab === 'audit' ? 'Audit Logs' : 'Trusted Devices'}>
 
+      {/* Tab switcher — this page is the whole Audit & Security module for now */}
+      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #e2e8f0', marginBottom: '1.25rem' }}>
+        {([{ key: 'devices', label: 'Trusted Devices' }, { key: 'audit', label: 'Audit Logs' }] as const).map(t => (
+          <button
+            key={t.key}
+            type="button"
+            onClick={() => setTabKey(t.key)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6, padding: '10px 14px', fontSize: 13, fontWeight: 600,
+              fontFamily: 'inherit', background: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
+              border: 'none', borderBottom: tab === t.key ? '2px solid #2563eb' : '2px solid transparent',
+              color: tab === t.key ? '#2563eb' : '#64748b', marginBottom: -1,
+            }}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'audit' ? (
+        <AuditLogsTab showToast={showToast} />
+      ) : (
+      <>
       {/* Page header */}
       <div className="mn-page-header" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
@@ -322,11 +360,14 @@ export default function TrustedDevicesPage() {
         onClose={() => setOtpOpen(false)}
         onSuccess={() => {
           setOtpOpen(false);
-          // TODO: BACKEND — after successful OTP, refresh device list to show newly trusted device
           getTrustedDevices().then(setDevices).catch(() => null);
         }}
         email={user?.email ?? 'your email'}
       />
+      </>
+      )}
+
+      <ToastContainer toasts={toasts} onDismiss={dismiss} />
 
     </AdminLayout>
   );

@@ -7,6 +7,8 @@ const enrollmentsService = require("./enrollments.service");
 // Reused, not forked (Part 5) — the SAME service backing the Certificates
 // module (CERTIFICATES_CONTRACT.md).
 const certificatesService = require("./certificates.service");
+const certificateTriggers = require("./certificateTriggers.service");
+const { fireAutomationTrigger } = require("./automationTriggers.service");
 const { DERIVED_TABS, TAB_STATUS_SCOPE } = require("../validators/learners.validator");
 
 // ── Learners service ─────────────────────────────────────────────────────────────
@@ -655,8 +657,19 @@ async function getAnalytics() {
 // strictly gapless: retries on the unique-constraint race rather than trusting
 // a count-then-insert (two concurrent creates could both read the same count).
 async function generateLearnerCode() {
-  const count = await safe(() => prisma.learnerProfile.count(), 0);
-  return `LRN-${String(count + 1).padStart(4, "0")}`;
+  // Increment from the highest EXISTING code, not the row count — count()
+  // permanently diverges from the real max once any learnerProfile has ever
+  // been deleted (leaves a gap), which then deterministically regenerates an
+  // already-taken code on every retry (count doesn't change between retries
+  // within one request either, so all 3 attempts collide identically).
+  // String sort matches numeric order here since every code is zero-padded
+  // to the same 4-digit width.
+  const top = await safe(
+    () => prisma.learnerProfile.findFirst({ orderBy: { learnerCode: "desc" }, select: { learnerCode: true } }),
+    null,
+  );
+  const topNum = top?.learnerCode ? parseInt(top.learnerCode.replace("LRN-", ""), 10) || 0 : 0;
+  return `LRN-${String(topNum + 1).padStart(4, "0")}`;
 }
 
 // ── Writes ──────────────────────────────────────────────────────────────────────
@@ -1157,6 +1170,20 @@ async function gradeAssessment(id, attemptId, { score, feedback }, adminId) {
     select: ASSESSMENT_SELECT,
   });
   await auditLog(adminId, "LEARNER_ASSESSMENT_GRADED", { userId: id, attemptId, score });
+
+  // Trigger 2 (CERTIFICATES_CONTRACT.md deferred triggers) — best-effort,
+  // never breaks grading.
+  await certificateTriggers.onQuizGraded({ quizId: updated.quizId, userId: id, score }, adminId);
+
+  // QUIZ_FAILURE automation trigger — same 60% default reports.service.js's
+  // assessment pass/fail split uses when Quiz.passingGrade is null.
+  const passingGrade = updated.quiz?.passingGrade ?? 60;
+  if (score < passingGrade) {
+    await fireAutomationTrigger("QUIZ_FAILURE", id, {
+      quizTitle: updated.quiz?.title ?? null, score, passingGrade,
+    });
+  }
+
   return mapAssessment(updated);
 }
 

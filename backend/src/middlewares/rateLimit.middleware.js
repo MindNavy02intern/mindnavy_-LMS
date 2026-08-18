@@ -1,8 +1,14 @@
 const rateLimit = require("express-rate-limit");
 
+// PRODUCTION IS UNCHANGED at 20/15min. Dev is raised because Playwright's
+// auth.setup.ts logs in once per full `npx playwright test` invocation, and
+// the suite gets re-run many times in a single dev session (iterating on
+// fixes) — 20 logins per 15 minutes is easy to exhaust that way, and a 429
+// here takes down every single test in the run (nothing gets past auth
+// setup), not just one. Same dev-only carve-out as the limiters below.
 const adminLoginRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 20,
+  limit: process.env.NODE_ENV !== "production" ? 200 : 20,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -33,11 +39,20 @@ const adminUserActionRateLimiter = rateLimit({
 // Analytics limiter — prevents heavy repeated aggregation queries.
 // In development the LM Overview page fires 9+ requests on mount (each widget
 // has its own useEffect) and React StrictMode doubles that to ~18 per load,
-// so 30/min is exhausted in 2 reloads. Dev limit is raised to avoid 429 noise
-// without touching production security.
+// so 30/min is exhausted in 2 reloads.
+//
+// PRODUCTION IS UNCHANGED at 30/min. Dev is raised further than that alone
+// requires because this limiter guards every /lm/* route (see lm.routes.js
+// router.use), and CoursesTab's own filter dropdown hits /lm/filter-options
+// too — so courses-tab.full.spec.ts and lm-overview.full.spec.ts running
+// back to back in the same suite (courses-tab.full + lm-overview.full +
+// content-library.full, ~40 tests, each LM Overview load firing ~18
+// requests) blew through 300/min well before either file finished, 429ing
+// ContentStats/KpiCards/CoursesTable into their error states with no real
+// bug behind it. Matches coursesReadRateLimiter's dev ceiling below.
 const adminUsersAnalyticsRateLimiter = rateLimit({
   windowMs: 60 * 1000,
-  limit: process.env.NODE_ENV !== "production" ? 300 : 30,
+  limit: process.env.NODE_ENV !== "production" ? 1200 : 30,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -49,9 +64,20 @@ const adminUsersAnalyticsRateLimiter = rateLimit({
 // Courses tab reads — higher ceiling than the analytics limiter because the
 // table re-fetches on every tab / filter / search / page change. 120/min keeps
 // interactive use smooth while still capping abuse.
+//
+// PRODUCTION IS UNCHANGED at 120/min. Dev is raised because this single
+// limiter is wired into nearly every GET route in the admin API (courses,
+// competencies, certificates, enrollments, categories, finance, instructors,
+// integrations, learners, learning paths, notifications, quizzes, settings —
+// see rateLimit.middleware usage across src/routes/*.js), so it's the
+// combined read ceiling for the ENTIRE app, not just one page. A full
+// Playwright run makes far more than 120 GETs/minute across ~50 spec files
+// run back to back; without headroom here, list/detail fetches across
+// unrelated features start failing well before the test volume is unusual
+// for real interactive use. Same dev-only carve-out as the limiters above.
 const coursesReadRateLimiter = rateLimit({
   windowMs: 60 * 1000,
-  limit: 120,
+  limit: process.env.NODE_ENV !== "production" ? 1200 : 120,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -95,7 +121,10 @@ const publicVerifyRateLimiter = rateLimit({
 // a links-only payload (no file upload) in the applications validator.
 const publicInstructorApplicationRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  limit: 5,
+  // instructor-applications.full.spec.ts submits several applications per
+  // run (pending/approve/reject/request-changes tests) — 5/hr is fine
+  // anti-abuse in prod but 429s the suite well before it finishes.
+  limit: process.env.NODE_ENV !== "production" ? 100 : 5,
   standardHeaders: true,
   legacyHeaders: false,
   message: {

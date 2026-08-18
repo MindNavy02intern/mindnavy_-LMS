@@ -166,12 +166,14 @@ export interface NewUsersThisMonth       { count: number; changePercentage: numb
 export interface DailyTrendItem          { date: string; count: number; }
 export interface UserActivity            { activeToday: number; activeThisWeek: number; dailyTrend: DailyTrendItem[]; }
 export interface VerificationStatusItem  { status: string; count: number; percentage: number; }
+export interface UserGrowthWeek          { weekStart: string; count: number; }
 
 export interface AnalyticsResponse {
   usersByRole:        RoleAnalyticsItem[];
   usersByDepartment:  DepartmentAnalyticsItem[];
   newUsersThisMonth:  NewUsersThisMonth;
   userActivity:       UserActivity;
+  userGrowth:         UserGrowthWeek[];
   verificationStatus: VerificationStatusItem[];
 }
 
@@ -188,6 +190,65 @@ export interface ImportSummary {
   created:   number;
   failed:    number;
   skipped:   number;
+}
+
+// ── User Details Drawer: Courses tab (GET /users/:id/courses) ─────────────────
+// Real EnrollmentStatus enum values (learning.prisma) — distinct from the dead
+// `CourseStatus`/`EnrolledCourse` types above, which describe
+// UserDetailsResponse.enrolledCourses (always [] — getUserDetails never
+// populated it; this is a separate, real endpoint).
+
+export type EnrollmentStatus = 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED' | 'OVERDUE';
+
+export interface UserCourseEnrollment {
+  enrollmentId: string;
+  courseId:     string | null;
+  title:        string;
+  thumbnail:    string | null;
+  progress:     number;
+  status:       EnrollmentStatus;
+  enrolledAt:   string;
+  completedAt:  string | null;
+}
+
+// ── User Details Drawer: More tab — Devices & Sessions (GET /users/:id/sessions) ──
+
+export interface UserSession {
+  id:         string;
+  ipAddress:  string | null;
+  userAgent:  string | null;
+  createdAt:  string;
+  lastUsedAt: string | null;
+  expiresAt:  string;
+  revoked:    boolean;
+}
+
+// ── User Details Drawer: More tab — Notes (GET/POST/DELETE /users/:id/notes) ──
+
+export interface UserNote {
+  id:            string;
+  content:       string;
+  createdAt:     string;
+  createdByName: string;
+}
+
+// ── User Details Drawer: More tab — Consent & Privacy (GET /users/:id/export) ──
+
+export interface UserDataExport {
+  exportedAt: string;
+  profile:    UserDetails;
+  enrollments: Array<{
+    courseTitle:  string | null;
+    progress:     number;
+    status:       EnrollmentStatus;
+    enrolledAt:   string;
+    completedAt:  string | null;
+  }>;
+  certificates: Array<{
+    courseTitle: string | null;
+    issuedAt:    string;
+    revoked:     boolean;
+  }>;
 }
 
 export interface ImportResult {

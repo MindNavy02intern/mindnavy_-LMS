@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Video, CheckCircle2, Link2Off, RefreshCw } from 'lucide-react';
 import { listIntegrations, testIntegration, disconnectIntegration } from '../../services/integrationsApi';
+import { getSystemSettings, updateSystemSettings } from '../../services/settingsApi';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import type { Integration } from '../../types/integrations';
 import { CARD_PAD, CARD_TITLE, EMPTY, BTN_SECONDARY, BTN_DANGER, StatusBadge, ComingSoonCard, fmtDate } from './shared';
@@ -16,15 +17,54 @@ interface Props {
 // Access" is a local toast regardless of provider, so these are safe to show
 // without a backend dependency.
 const DECORATIVE_VIDEO = [
-  { name: 'Microsoft Teams', description: 'Schedule and host live sessions through Microsoft Teams meetings.' },
-  { name: 'Google Meet',     description: 'Schedule and host live sessions through Google Meet.' },
+  { name: 'Microsoft Teams', description: 'Needs Microsoft Graph API credentials (Azure AD app registration) before this can be added — not started yet.' },
+  { name: 'Google Meet',     description: 'Needs a Google Workspace API project + OAuth credentials before this can be added — not started yet.' },
 ];
 
 function ZoomCard({ item, showToast, onBumpRefresh }: { item: Integration; showToast: Props['showToast']; onBumpRefresh: () => void }) {
   const [testing, setTesting] = useState(false);
   const [disconnecting, setDisconnecting] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [durationMin, setDurationMin] = useState(60);
   const [recordingEnabled, setRecordingEnabled] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    getSystemSettings()
+      .then(s => {
+        if (cancelled) return;
+        setDurationMin(s.zoomDefaultDuration);
+        setRecordingEnabled(s.zoomRecordingEnabled);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  async function saveDuration() {
+    const clamped = Math.min(480, Math.max(15, Math.round(durationMin) || 60));
+    setDurationMin(clamped);
+    setSaving(true);
+    try {
+      await updateSystemSettings({ zoomDefaultDuration: clamped });
+    } catch (err) {
+      showToast('error', err instanceof Error ? err.message : 'Failed to save meeting duration.');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function toggleRecording(checked: boolean) {
+    setRecordingEnabled(checked);
+    setSaving(true);
+    try {
+      await updateSystemSettings({ zoomRecordingEnabled: checked });
+    } catch (err) {
+      setRecordingEnabled(!checked);
+      showToast('error', err instanceof Error ? err.message : 'Failed to save recording default.');
+    } finally {
+      setSaving(false);
+    }
+  }
 
   async function handleTest() {
     setTesting(true);
@@ -88,14 +128,17 @@ function ZoomCard({ item, showToast, onBumpRefresh }: { item: Integration; showT
       </div>
 
       <div style={{ marginTop: 16, paddingTop: 14, borderTop: '1px solid #f1f5f9' }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: '#374151', marginBottom: 8 }}>Meeting Settings (local defaults)</div>
+        <div style={{ fontSize: 12, fontWeight: 700, color: '#374151', marginBottom: 8 }}>
+          Meeting Settings {saving && <span style={{ fontWeight: 400, color: '#94a3b8' }}>· saving…</span>}
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
           <label style={{ fontSize: 12, color: '#64748b', flex: 1 }}>Default meeting duration (min)</label>
           <input type="number" min={15} max={480} value={durationMin} onChange={e => setDurationMin(Number(e.target.value))}
+            onBlur={saveDuration}
             style={{ width: 70, padding: '5px 8px', fontSize: 12, border: '1px solid #d1d5db', borderRadius: 6 }} />
         </div>
         <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#64748b', cursor: 'pointer' }}>
-          <input type="checkbox" checked={recordingEnabled} onChange={e => setRecordingEnabled(e.target.checked)} />
+          <input type="checkbox" checked={recordingEnabled} onChange={e => toggleRecording(e.target.checked)} />
           Enable cloud recording by default
         </label>
       </div>

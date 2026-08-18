@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Plus, Eye, Download, Send, Ban } from 'lucide-react';
-import { listInvoices, createInvoice, voidInvoice, sendInvoice, downloadInvoicePlaceholder } from '../../services/financeApi';
+import { listInvoices, createInvoice, voidInvoice, sendInvoice, downloadInvoicePdf, triggerPdfDownload } from '../../services/financeApi';
 import { FinanceApiError, INVOICE_STATUSES } from '../../types/finance';
 import type { Invoice, InvoiceStatus } from '../../types/finance';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
@@ -209,10 +209,10 @@ export default function InvoicesTab({ showToast, refreshSignal, autoOpenCreate, 
 
   async function handleDownload(inv: Invoice) {
     try {
-      const res = await downloadInvoicePlaceholder(inv.id);
-      showToast('success', res.message);
+      const blob = await downloadInvoicePdf(inv.id);
+      triggerPdfDownload(blob, `invoice-${inv.invoiceNumber}.pdf`);
     } catch (err) {
-      showToast('error', err instanceof FinanceApiError ? err.message : 'Failed to load download info.');
+      showToast('error', err instanceof FinanceApiError ? err.message : 'Failed to download invoice.');
     }
   }
 

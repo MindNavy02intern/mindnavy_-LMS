@@ -21,6 +21,8 @@ function handleDomainError(res, err) {
   switch (err.code) {
     case "CONTENT_NOT_FOUND": return notFound(res, "Content item not found.");
     case "COURSE_NOT_FOUND":  return badRequest(res, "Referenced course does not exist.");
+    case "ALREADY_LINKED":    return res.status(409).json({ success: false, message: "This content item is already linked to that course." });
+    case "USAGE_NOT_FOUND":   return notFound(res, "This content item is not linked to that course.");
     case "BAD_PATH":          return badRequest(res, "Invalid path.");
     case "OBJECT_NOT_FOUND":  return badRequest(res, "No uploaded file found at this path — upload it first, then confirm.");
     case "FILE_TOO_LARGE":    return badRequest(res, "The uploaded file exceeds the size limit.");
@@ -95,10 +97,38 @@ const deleteContent = run(async (req, res) => {
   return res.json({ success: true, message: "Content deleted.", data: result });
 });
 
+const listContentCourses = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "contentId");
+  if (idErr) return badRequest(res, idErr);
+  const courses = await svc.listContentCourses(req.params.id);
+  return res.json({ success: true, data: courses });
+});
+
+const linkCourse = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "contentId");
+  if (idErr) return badRequest(res, idErr);
+  const courseIdErr = validateId(req.params.courseId, "courseId");
+  if (courseIdErr) return badRequest(res, courseIdErr);
+  const usage = await svc.linkContentToCourse(req.params.id, req.params.courseId, req.admin?.id);
+  return res.status(201).json({ success: true, message: "Content linked to course.", data: usage });
+});
+
+const unlinkCourse = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "contentId");
+  if (idErr) return badRequest(res, idErr);
+  const courseIdErr = validateId(req.params.courseId, "courseId");
+  if (courseIdErr) return badRequest(res, courseIdErr);
+  const result = await svc.unlinkContentFromCourse(req.params.id, req.params.courseId, req.admin?.id);
+  return res.json({ success: true, message: "Content unlinked from course.", data: result });
+});
+
 module.exports = {
   listContent,
   sign,
   confirm,
   updateContent,
   deleteContent,
+  listContentCourses,
+  linkCourse,
+  unlinkCourse,
 };

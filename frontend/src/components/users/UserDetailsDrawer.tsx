@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getUserDetails, reactivateUser, resetPassword } from '../../api/users';
 import { getStoredToken } from '../../api/adminAuth';
 import type {
@@ -6,7 +7,6 @@ import type {
   UserStatus,
   RoleType,
   RiskScore,
-  CourseStatus,
 } from '../../types/users';
 import type { ToastType } from './Toast';
 import EditUserModal, { type EditInitialData } from './EditUserModal';
@@ -14,6 +14,8 @@ import SuspendUserDialog from './SuspendUserDialog';
 import AssignRoleModal  from './AssignRoleModal';
 import ConfirmDialog    from './ConfirmDialog';
 import SendMessageModal from './SendMessageModal';
+import UserCoursesTab   from './UserCoursesTab';
+import UserMoreTab      from './UserMoreTab';
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -74,12 +76,6 @@ function riskBadge(risk: RiskScore): { bg: string; color: string; label: string 
   if (risk === 'medium') return { bg: '#fefce8', color: '#a16207', label: 'Medium Risk' };
   if (risk === 'high')   return { bg: '#fff7ed', color: '#c2410c', label: 'High Risk'   };
   return                        { bg: '#fef2f2', color: '#b91c1c', label: 'Critical'    };
-}
-
-function courseStatusStyle(status: CourseStatus): { color: string; label: string; bar: string } {
-  if (status === 'completed') return { color: '#16a34a', label: 'Completed', bar: '#16a34a' };
-  if (status === 'dropped')   return { color: '#dc2626', label: 'Dropped',   bar: '#dc2626' };
-  return                              { color: '#2563eb', label: 'Active',    bar: '#2563eb' };
 }
 
 const ROLE_DISPLAY: Record<string, string> = {
@@ -203,6 +199,7 @@ interface Props {
 }
 
 export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUpdated }: Props) {
+  const navigate = useNavigate();
   const [data,      setData]      = useState<UserDetailsResponse | null>(null);
   const [loading,   setLoading]   = useState(true);
   const [error,     setError]     = useState<string | null>(null);
@@ -618,7 +615,14 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
                   {/* System role — always shown */}
                   <div style={{ padding: '12px 14px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
-                      <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{ROLE_DISPLAY[u.role] ?? u.role}</span>
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/roles-permissions?tab=roles&role=${encodeURIComponent(ROLE_DISPLAY[u.role] ?? u.role)}`)}
+                        title="View this role in Roles & Permissions"
+                        style={{ fontSize: 13, fontWeight: 600, color: '#1d4ed8', background: 'none', border: 'none', padding: 0, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 2, fontFamily: 'inherit' }}
+                      >
+                        {ROLE_DISPLAY[u.role] ?? u.role}
+                      </button>
                       <span style={{ background: '#1d4ed8', color: '#fff', borderRadius: 100, fontSize: 10, fontWeight: 600, padding: '2px 9px' }}>System Role</span>
                     </div>
                     <div style={{ fontSize: 12, color: '#6b7280' }}>Assigned at registration · No expiry</div>
@@ -684,81 +688,18 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
 
               {/* ══ COURSES ══ */}
               {activeTab === 'courses' && (
-                (data!.enrolledCourses ?? []).length > 0 ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    {(data!.enrolledCourses ?? []).map(course => {
-                      const cs = courseStatusStyle(course.status);
-                      return (
-                        <div key={course.id} style={{ padding: '12px 14px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8 }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                            <span style={{ fontSize: 13, fontWeight: 600, color: '#111827', flex: 1, marginRight: 10 }}>{course.title}</span>
-                            <span style={{ fontSize: 11, fontWeight: 600, color: cs.color, flexShrink: 0 }}>{cs.label}</span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <div style={{ flex: 1, height: 6, background: '#f0f0f0', borderRadius: 3, overflow: 'hidden' }}>
-                              <div style={{
-                                height: '100%', width: `${course.progress}%`,
-                                background: cs.bar, borderRadius: 3,
-                                transition: 'width 0.4s ease',
-                              }} />
-                            </div>
-                            <span style={{ fontSize: 11, color: '#6b7280', fontWeight: 600, minWidth: 34, textAlign: 'right' }}>
-                              {course.progress}%
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-                    <div style={{ fontSize: 32, marginBottom: 12 }}>📚</div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: '#374151', marginBottom: 6 }}>No courses enrolled</div>
-                    <div style={{ fontSize: 12, color: '#9ca3af', marginBottom: 20, lineHeight: 1.6 }}>
-                      Course assignments will be available<br />when Learning Management is set up.
-                    </div>
-                    <button disabled style={{
-                      padding: '8px 18px', fontSize: 13, fontFamily: 'inherit',
-                      fontWeight: 600, background: '#e5e7eb', color: '#9ca3af',
-                      border: 'none', borderRadius: 7, cursor: 'not-allowed',
-                    }}>
-                      Assign Course — Coming Soon
-                    </button>
-                  </div>
-                )
+                <UserCoursesTab
+                  userId={u.id}
+                  userRole={u.role}
+                  fullName={u.fullName}
+                  showToast={showToast}
+                  onChanged={handleSuccess}
+                />
               )}
 
               {/* ══ MORE ══ */}
               {activeTab === 'more' && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
-                  {[
-                    { label: 'Competencies',      icon: '🎯' },
-                    { label: 'Security Logs',      icon: '🔒' },
-                    { label: 'Devices & Sessions', icon: '💻' },
-                    { label: 'Notes',              icon: '📝' },
-                    { label: 'Preferences',        icon: '⚙️' },
-                    { label: 'Consent & Privacy',  icon: '🛡️' },
-                  ].map(({ label, icon }) => (
-                    <div
-                      key={label}
-                      style={{
-                        padding: '18px 14px', background: '#f9fafb',
-                        border: '1px solid #e5e7eb', borderRadius: 8,
-                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7,
-                        cursor: 'not-allowed', opacity: 0.72, userSelect: 'none',
-                      }}
-                    >
-                      <span style={{ fontSize: 24 }}>{icon}</span>
-                      <span style={{ fontSize: 12, fontWeight: 600, color: '#374151' }}>{label}</span>
-                      <span style={{
-                        background: '#e0f2fe', color: '#0369a1',
-                        borderRadius: 100, fontSize: 10, fontWeight: 600, padding: '2px 9px',
-                      }}>
-                        Coming Soon
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                <UserMoreTab user={u} showToast={showToast} />
               )}
 
             </div>

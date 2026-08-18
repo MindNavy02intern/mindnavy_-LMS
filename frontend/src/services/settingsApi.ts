@@ -65,6 +65,22 @@ export function updateSystemSettings(body: UpdateSystemSettingsRequest): Promise
   return settingsFetch<SystemSettings>('/system-settings', 'PATCH', body);
 }
 
+// ── Feature flags (gating) ───────────────────────────────────────────────
+
+export interface FeatureFlags {
+  liveSessionsEnabled: boolean;
+  certificatesModuleEnabled: boolean;
+  marketplaceEnabled: boolean;
+  aiEnabled: boolean;
+  gamificationEnabled: boolean;
+  scormModuleEnabled: boolean;
+  mobileAppEnabled: boolean;
+}
+
+export function getFeatureFlags(): Promise<FeatureFlags> {
+  return settingsFetch<FeatureFlags>('/system-settings/features');
+}
+
 // ── Config Logs ───────────────────────────────────────────────────────────
 
 export function getConfigLogs(params: ConfigLogsParams = {}): Promise<ConfigLogsResult> {

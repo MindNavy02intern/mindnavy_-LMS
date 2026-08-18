@@ -14,6 +14,10 @@ import type {
   Invitation,
   InvitationsResponse,
   SendInvitationRequest,
+  UserCourseEnrollment,
+  UserSession,
+  UserNote,
+  UserDataExport,
 } from '../types/users';
 import { getStoredToken } from './adminAuth';
 
@@ -41,6 +45,14 @@ export interface ExportParams {
   verificationState?: string;
   createdAfter?:      string;
   createdBefore?:     string;
+}
+
+// Response shape for mutations that don't touch a `user` record (session
+// revoke, note delete, unenroll, deletion request) — distinct from
+// ActionResponse, which promises the caller a `user: Partial<User>`.
+export interface SimpleActionResponse {
+  success: boolean;
+  message: string;
 }
 
 // ── ApiError ───────────────────────────────────────────────────────────────────
@@ -87,11 +99,14 @@ export async function getUsers(params: UsersParams = {}): Promise<UsersResponse>
 
 // ── Shared action fetch helper ────────────────────────────────────────────────
 
-async function actionFetch(
+// Generic over the response shape — most callers get the ActionResponse
+// default (mutations that return the updated `user`), but a few return only
+// { success, message } (no user record involved) and pass SimpleActionResponse.
+async function actionFetch<T = ActionResponse>(
   url:     string,
   method:  string,
   body?:   unknown,
-): Promise<ActionResponse> {
+): Promise<T> {
   const token = getStoredToken();
   const headers: Record<string, string> = {};
   if (token) headers['Authorization'] = `Bearer ${token}`;
@@ -103,7 +118,7 @@ async function actionFetch(
       headers,
       ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
     });
-    if (res.ok) return await res.json() as ActionResponse;
+    if (res.ok) return await res.json() as T;
     const err = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
     throw new ApiError(res.status, (err as { message?: string }).message ?? `HTTP ${res.status}`);
   } catch (err) {
@@ -308,4 +323,77 @@ export async function getAnalytics(): Promise<AnalyticsResponse> {
     if (err instanceof ApiError) throw err;
     throw new ApiError(0, 'Network error fetching analytics');
   }
+}
+
+// ── Shared GET fetch helper ───────────────────────────────────────────────────
+
+async function getFetch<T>(url: string): Promise<T> {
+  const token = getStoredToken();
+  try {
+    const headers: Record<string, string> = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const res = await fetch(url, { headers });
+    if (res.ok) return await res.json() as T;
+    const body = await res.json().catch(() => null);
+    throw new ApiError(res.status, (body as { message?: string })?.message ?? `HTTP ${res.status}`);
+  } catch (err) {
+    if (err instanceof ApiError) throw err;
+    throw new ApiError(0, 'Network error. Please check your connection.');
+  }
+}
+
+// ── User Details Drawer: Courses tab ──────────────────────────────────────────
+
+export async function getUserCourses(userId: string): Promise<UserCourseEnrollment[]> {
+  const res = await getFetch<{ success: boolean; courses: UserCourseEnrollment[] }>(
+    `${BASE_URL}/users/${encodeURIComponent(userId)}/courses`,
+  );
+  return res.courses;
+}
+
+export function unenrollUserCourse(userId: string, enrollmentId: string): Promise<SimpleActionResponse> {
+  return actionFetch<SimpleActionResponse>(`${BASE_URL}/users/${encodeURIComponent(userId)}/courses/${encodeURIComponent(enrollmentId)}`, 'DELETE');
+}
+
+// ── User Details Drawer: More tab — Devices & Sessions ────────────────────────
+
+export async function getUserSessions(userId: string): Promise<UserSession[]> {
+  const res = await getFetch<{ success: boolean; sessions: UserSession[] }>(
+    `${BASE_URL}/users/${encodeURIComponent(userId)}/sessions`,
+  );
+  return res.sessions;
+}
+
+export function revokeUserSession(userId: string, sessionId: string): Promise<SimpleActionResponse> {
+  return actionFetch<SimpleActionResponse>(`${BASE_URL}/users/${encodeURIComponent(userId)}/sessions/${encodeURIComponent(sessionId)}`, 'DELETE');
+}
+
+// ── User Details Drawer: More tab — Notes ─────────────────────────────────────
+
+export async function getUserNotes(userId: string): Promise<UserNote[]> {
+  const res = await getFetch<{ success: boolean; notes: UserNote[] }>(
+    `${BASE_URL}/users/${encodeURIComponent(userId)}/notes`,
+  );
+  return res.notes;
+}
+
+export async function addUserNote(userId: string, content: string): Promise<UserNote> {
+  const res = await actionFetch<{ success: boolean; message: string; note: UserNote }>(
+    `${BASE_URL}/users/${encodeURIComponent(userId)}/notes`, 'POST', { content },
+  );
+  return res.note;
+}
+
+export function deleteUserNote(userId: string, noteId: string): Promise<SimpleActionResponse> {
+  return actionFetch<SimpleActionResponse>(`${BASE_URL}/users/${encodeURIComponent(userId)}/notes/${encodeURIComponent(noteId)}`, 'DELETE');
+}
+
+// ── User Details Drawer: More tab — Consent & Privacy ─────────────────────────
+
+export function getUserDataExport(userId: string): Promise<UserDataExport> {
+  return getFetch<UserDataExport>(`${BASE_URL}/users/${encodeURIComponent(userId)}/export`);
+}
+
+export function requestAccountDeletion(userId: string): Promise<SimpleActionResponse> {
+  return actionFetch<SimpleActionResponse>(`${BASE_URL}/users/${encodeURIComponent(userId)}/request-deletion`, 'POST', {});
 }

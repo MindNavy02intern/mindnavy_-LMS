@@ -9,6 +9,7 @@ const {
   validateResetUserPasswordInput,
   validateSendMessageInput,
   validateForceLogoutInput,
+  validateAddUserNoteInput,
 } = require("../validators/users.validator");
 
 // ─── Analytics endpoint (Task 6D) ────────────────────────────────────────────
@@ -405,6 +406,143 @@ async function forceLogoutUser(req, res) {
   }
 }
 
+// ─── Courses tab ──────────────────────────────────────────────────────────────
+
+async function getUserCourses(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  try {
+    const courses = await usersService.getUserCourses(req.params.id);
+    return res.status(200).json({ success: true, courses });
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] getUserCourses error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to load user courses." });
+  }
+}
+
+async function unenrollUserCourse(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  try {
+    const result = await usersService.unenrollUserCourse(req.params.id, req.params.enrollmentId, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] unenrollUserCourse error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to unenroll user." });
+  }
+}
+
+// ─── Devices & Sessions ─────────────────────────────────────────────────────────
+
+async function getUserSessions(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  try {
+    const sessions = await usersService.getUserSessions(req.params.id);
+    return res.status(200).json({ success: true, sessions });
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] getUserSessions error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to load user sessions." });
+  }
+}
+
+async function revokeUserSession(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  try {
+    const result = await usersService.revokeUserSession(req.params.id, req.params.sessionId, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] revokeUserSession error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to revoke session." });
+  }
+}
+
+// ─── Notes ────────────────────────────────────────────────────────────────────
+
+async function getUserNotes(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  try {
+    const notes = await usersService.getUserNotes(req.params.id);
+    return res.status(200).json({ success: true, notes });
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] getUserNotes error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to load user notes." });
+  }
+}
+
+async function addUserNote(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  const errors = validateAddUserNoteInput(req.body || {});
+  if (errors.length > 0) return res.status(400).json({ success: false, message: errors[0] });
+
+  try {
+    const result = await usersService.addUserNote(req.params.id, req.body, req.admin);
+    return res.status(201).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] addUserNote error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to add note." });
+  }
+}
+
+async function deleteUserNote(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  try {
+    const result = await usersService.deleteUserNote(req.params.id, req.params.noteId, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] deleteUserNote error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to delete note." });
+  }
+}
+
+// ─── Consent & Privacy ────────────────────────────────────────────────────────
+
+async function exportUserData(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  try {
+    const data = await usersService.exportUserData(req.params.id, req.admin);
+    return res.status(200).json(data);
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] exportUserData error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to export user data." });
+  }
+}
+
+async function requestUserDeletion(req, res) {
+  const idError = validateUuidParam(req.params.id);
+  if (idError) return res.status(400).json({ success: false, message: idError });
+
+  try {
+    const result = await usersService.requestAccountDeletion(req.params.id, req.admin);
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) return res.status(404).json({ success: false, message: error.message });
+    console.error("[users] requestUserDeletion error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to send deletion request." });
+  }
+}
+
 module.exports = {
   getUsersList,
   getUserDetails,
@@ -426,4 +564,13 @@ module.exports = {
   sendMessage,
   getUserMessagesList,
   forceLogoutUser,
+  getUserCourses,
+  unenrollUserCourse,
+  getUserSessions,
+  revokeUserSession,
+  getUserNotes,
+  addUserNote,
+  deleteUserNote,
+  exportUserData,
+  requestUserDeletion,
 };
