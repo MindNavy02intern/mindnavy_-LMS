@@ -795,11 +795,14 @@ function bucketKey(date, bucket) {
   return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
 }
 
-async function getTrend(model, whereExtra, amountField, period) {
+// dateField differs per model: Payment has createdAt, Refund tracks
+// requestedAt/processedAt instead — bucket processed refunds by when they
+// were actually processed.
+async function getTrend(model, whereExtra, amountField, period, dateField = "createdAt") {
   const { spanDays, bucket } = periodConfig(period);
   const start = new Date(Date.now() - spanDays * 86400000);
   const rows = await safe(
-    () => prisma[model].findMany({ where: { ...whereExtra, createdAt: { gte: start } }, select: { [amountField]: true, createdAt: true } }),
+    () => prisma[model].findMany({ where: { ...whereExtra, [dateField]: { gte: start } }, select: { [amountField]: true, [dateField]: true } }),
     [],
   );
 
@@ -810,7 +813,7 @@ async function getTrend(model, whereExtra, amountField, period) {
   for (let t = start.getTime(); t <= Date.now(); t += step * 86400000) buckets.set(bucketKey(new Date(t), bucket), 0);
 
   for (const r of rows) {
-    const key = bucketKey(r.createdAt, bucket);
+    const key = bucketKey(r[dateField], bucket);
     if (!buckets.has(key)) buckets.set(key, 0);
     buckets.set(key, buckets.get(key) + r[amountField]);
   }
@@ -872,7 +875,7 @@ async function getAnalytics({ period }) {
     getTrend("payment", { status: "SUCCESSFUL" }, "amount", period),
     getRevenueByCategory(),
     getSubscriptionBreakdown(),
-    getTrend("refund", { status: "PROCESSED" }, "amount", period),
+    getTrend("refund", { status: "PROCESSED" }, "amount", period, "processedAt"),
     getTopCoursesByRevenue(),
     getPayoutSummary(),
   ]);

@@ -1,13 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getStoredToken } from '../../api/adminAuth';
+import { getAuditReports } from '../../services/reportsApi';
+import type { AuditLogRow } from '../../types/reports';
+import { ROLE_AUDIT_ACTIONS, ROLE_AUDIT_RANGE, humanizeAuditAction } from '../../constants/roleAuditActions';
 
-const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
-
-interface AuditLogItem {
-  id?:        string;
-  action?:    string;
-  createdAt?: string;
-}
+const PREVIEW_LIMIT = 4;
 
 function formatRelative(iso?: string): string {
   if (!iso) return '';
@@ -20,12 +16,6 @@ function formatRelative(iso?: string): string {
   if (h < 24) return `${h}h ago`;
   if (d < 30) return `${d}d ago`;
   return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-}
-
-// Backend audit log actions are SCREAMING_SNAKE_CASE — humanize for display.
-function humanizeAction(action?: string): string {
-  if (!action) return 'Activity';
-  return action.toLowerCase().split('_').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
 }
 
 function ActivityIcon() {
@@ -56,24 +46,27 @@ interface Props {
   onViewAll: () => void;
 }
 
-// `items === null` means the fetch failed or the endpoint doesn't exist (no
-// /audit-logs route is registered in backend/server.js today) — rendered as
-// a permanent skeleton placeholder rather than a misleading "no activity"
-// empty state. `items === []` means the endpoint answered with zero rows.
+// Previews the same rows AuditTrackingTab shows in full — same endpoint, same
+// ROLE_AUDIT_ACTIONS filter, same window, just the top PREVIEW_LIMIT (R4: one
+// datum, one owner). "View All" opens that tab, so the two must never disagree.
+//
+// `items === null` means the fetch failed — rendered as a skeleton placeholder
+// rather than a misleading "no activity" empty state. `items === []` means the
+// endpoint answered with zero rows.
 export default function RecentRoleActivityPreviewCard({ onViewAll }: Props) {
-  const [items,   setItems]   = useState<AuditLogItem[] | null>(null);
+  const [items,   setItems]   = useState<AuditLogRow[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchActivity = useCallback(async () => {
-    (() => setLoading(true))();
+    setLoading(true);
     try {
-      const token = getStoredToken();
-      const res = await fetch(`${BASE}/audit-logs?limit=4`, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      const res = await getAuditReports({
+        actions: ROLE_AUDIT_ACTIONS,
+        dateRange: ROLE_AUDIT_RANGE,
+        page: 1,
+        limit: PREVIEW_LIMIT,
       });
-      if (!res.ok) { setItems(null); return; }
-      const json = await res.json().catch(() => null) as { data?: AuditLogItem[] } | null;
-      setItems(json && Array.isArray(json.data) ? json.data : null);
+      setItems(res.logs);
     } catch {
       setItems(null);
     } finally {
@@ -121,8 +114,8 @@ export default function RecentRoleActivityPreviewCard({ onViewAll }: Props) {
 
         {list && (
           <div style={{ padding: '8px 16px 12px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {list.slice(0, 4).map((item, i) => (
-              <div key={item.id ?? i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {list.map((item) => (
+              <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <div style={{
                   width: 26, height: 26, borderRadius: '50%', background: '#eff6ff', color: '#2563eb',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
@@ -131,7 +124,7 @@ export default function RecentRoleActivityPreviewCard({ onViewAll }: Props) {
                 </div>
                 <div style={{ minWidth: 0, flex: 1 }}>
                   <div style={{ fontSize: 12, fontWeight: 600, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {humanizeAction(item.action)}
+                    {humanizeAuditAction(item.action)}
                   </div>
                   <div style={{ fontSize: 10.5, color: '#9ca3af', marginTop: 1 }}>{formatRelative(item.createdAt)}</div>
                 </div>

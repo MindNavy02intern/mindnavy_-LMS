@@ -1,23 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getAuditReports } from '../../services/reportsApi';
 import type { AuditLogRow } from '../../types/reports';
-
-// Every role-related AuditAction this tab surfaces — Company Roles CRUD +
-// Delegated Admins grant/revoke. Filtered server-side via the `actions` CSV
-// param (reports.validator.js) so this reuses the existing audit report
-// endpoint instead of forking a parallel log.
-const ROLE_ACTIONS = [
-  'COMPANY_ROLE_CREATED', 'COMPANY_ROLE_UPDATED', 'COMPANY_ROLE_DELETED',
-  'DELEGATED_ADMIN_GRANTED', 'DELEGATED_ADMIN_REVOKED',
-];
-
-const ACTION_LABEL: Record<string, string> = {
-  COMPANY_ROLE_CREATED: 'Company role created',
-  COMPANY_ROLE_UPDATED: 'Company role updated',
-  COMPANY_ROLE_DELETED: 'Company role deleted',
-  DELEGATED_ADMIN_GRANTED: 'Delegated admin granted',
-  DELEGATED_ADMIN_REVOKED: 'Delegated admin revoked',
-};
+import {
+  ROLE_AUDIT_ACTIONS,
+  ROLE_AUDIT_RANGE,
+  ROLE_AUDIT_ACTION_LABEL as ACTION_LABEL,
+} from '../../constants/roleAuditActions';
 
 const ACTION_BADGE: Record<string, { bg: string; color: string }> = {
   COMPANY_ROLE_CREATED: { bg: '#f0fdf4', color: '#16a34a' },
@@ -50,7 +38,7 @@ export default function AuditTrackingTab() {
 
   const fetchLogs = useCallback(() => {
     setLoading(true);
-    getAuditReports({ actions: ROLE_ACTIONS, dateRange: 'quarter', page: 1, limit: 50 })
+    getAuditReports({ actions: ROLE_AUDIT_ACTIONS, dateRange: ROLE_AUDIT_RANGE, page: 1, limit: 50 })
       .then(res => { setLogs(res.logs); setTotal(res.pagination.total); })
       .catch(() => { setLogs([]); setTotal(0); })
       .finally(() => setLoading(false));
