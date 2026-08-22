@@ -122,15 +122,21 @@ async function listCertifications({ userId, skillId, status, page, limit }) {
     // same shape as DelegatedAdmin's status filter.
   };
 
+  // paginate() here returns the normalized page/limit alongside skip/take, so
+  // destructure it — spreading the whole object into findMany passes `page`/
+  // `limit` as Prisma args and every request 400s. Same shape accessPolicies /
+  // content / courses / enrollments already use.
+  const { skip, take, page: p, limit: l } = paginate(page, limit);
+
   const [total, rows] = await Promise.all([
     prisma.competencyCertification.count({ where }),
-    prisma.competencyCertification.findMany({ where, orderBy: { createdAt: "desc" }, ...paginate(page, limit) }),
+    prisma.competencyCertification.findMany({ where, orderBy: { createdAt: "desc" }, skip, take }),
   ]);
 
   let data = await withNames(rows);
   if (status) data = data.filter((r) => r.effectiveStatus === status);
 
-  return { certifications: data, pagination: buildPagination(total, page, limit) };
+  return { certifications: data, pagination: buildPagination(total, p, l) };
 }
 
 async function getCertification(id) {
