@@ -122,9 +122,10 @@ async function listCertifications({ userId, skillId, status, page, limit }) {
     // same shape as DelegatedAdmin's status filter.
   };
 
+  const { skip, take } = paginate(page, limit);
   const [total, rows] = await Promise.all([
     prisma.competencyCertification.count({ where }),
-    prisma.competencyCertification.findMany({ where, orderBy: { createdAt: "desc" }, ...paginate(page, limit) }),
+    prisma.competencyCertification.findMany({ where, orderBy: { createdAt: "desc" }, skip, take }),
   ]);
 
   let data = await withNames(rows);

@@ -48,6 +48,17 @@ function buildUserScope({ departmentId, dateFrom, dateTo } = {}) {
   return scope;
 }
 
+// Shared KPI date-range filter (getDashboardCore + getDashboardAnalytics'
+// Performance Overview) — null when no bound was given at all (caller keeps
+// its existing unfiltered/all-time query), otherwise a Prisma date filter
+// with only the bound(s) actually supplied.
+function buildDateRangeWhere(dateFrom, dateTo) {
+  const from = parseDateInput(dateFrom);
+  const to   = parseDateInput(dateTo);
+  if (!from && !to) return null;
+  return { ...(from && { gte: from }), ...(to && { lte: endOfUtcDay(to) }) };
+}
+
 // Inclusive list of UTC day strings (YYYY-MM-DD) between two dates, capped so a
 // huge custom range can never blow up memory.
 function enumerateUtcDays(start, end, cap = 366) {
@@ -121,7 +132,14 @@ function mapAuditToActivity(entries) {
   }));
 }
 
-async function getDashboardCore(admin) {
+async function getDashboardCore(admin, query = {}) {
+  // No dateFrom/dateTo → null → every KPI below keeps its existing
+  // unfiltered/all-time query untouched. With a date range, each KPI is
+  // real-filtered by the field that actually represents "happened in this
+  // window" for that entity (see per-line comments) — never the same
+  // unfiltered query with a fake label.
+  const dateWhere = buildDateRangeWhere(query.dateFrom, query.dateTo);
+
   // Each query falls back independently so a single failed count cannot 500 the
   // whole dashboard.
   const [
@@ -134,21 +152,30 @@ async function getDashboardCore(admin) {
     activeSubscriptions,
     certificatesIssued,
     recentActivitiesRaw,
-    liveSessionRows,
+    liveSessionsRunning,
     notificationsRaw,
     unreadNotificationsCount,
     pendingInstructorApps,
   ] = await Promise.all([
-    prisma.appUser.count({ where: { status: { not: "ARCHIVED" } } }).catch(() => 0),
-    prisma.appUser.count({ where: { role: "LEARNER",    status: "ACTIVE" } }).catch(() => 0),
-    prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }).catch(() => 0),
-    prisma.appUser.count({ where: PENDING_APPROVAL_WHERE }).catch(() => 0),
-    prisma.course.count({ where: { status: "PUBLISHED" } }).catch(() => 0),
-    getTotalRevenueValue().catch(() => 0),
+    prisma.appUser.count({ where: { status: { not: "ARCHIVED" }, ...(dateWhere && { createdAt: dateWhere }) } }).catch(() => 0),
+    // Active Learners: unfiltered = currently-ACTIVE-status learners (a
+    // snapshot). With a date range, "active" means "had activity in this
+    // window" instead — status stays merely non-archived, lastActivityAt
+    // carries the real filter (same field the Analytics tab's activeToday/
+    // activeThisWeek already read).
+    dateWhere
+      ? prisma.appUser.count({ where: { role: "LEARNER", status: { not: "ARCHIVED" }, lastActivityAt: dateWhere } }).catch(() => 0)
+      : prisma.appUser.count({ where: { role: "LEARNER", status: "ACTIVE" } }).catch(() => 0),
+    dateWhere
+      ? prisma.appUser.count({ where: { role: "INSTRUCTOR", status: { not: "ARCHIVED" }, lastActivityAt: dateWhere } }).catch(() => 0)
+      : prisma.appUser.count({ where: { role: "INSTRUCTOR", status: "ACTIVE" } }).catch(() => 0),
+    prisma.appUser.count({ where: { ...PENDING_APPROVAL_WHERE, ...(dateWhere && { createdAt: dateWhere }) } }).catch(() => 0),
+    prisma.course.count({ where: { status: "PUBLISHED", ...(dateWhere && { createdAt: dateWhere }) } }).catch(() => 0),
+    (dateWhere ? getTotalRevenueValue(dateWhere) : getTotalRevenueValue()).catch(() => 0),
     getActiveSubscriptionsCountValue().catch(() => 0),
     // Revoked certificates don't count as issued — same rule lm.service's
     // getStats() certificatesIssued uses (reports.service Overview mirrors it).
-    prisma.certificate.count({ where: { revokedAt: null } }).catch(() => 0),
+    prisma.certificate.count({ where: { revokedAt: null, ...(dateWhere && { issuedAt: dateWhere }) } }).catch(() => 0),
     prisma.auditLog.findMany({
       take: 10,
       orderBy: { createdAt: "desc" },
@@ -159,10 +186,14 @@ async function getDashboardCore(admin) {
         admin: { select: { fullName: true } },
       },
     }).catch(() => []),
-    // Real live sessions — same status-synced query GET /live-sessions uses
-    // (LIVE_SESSIONS_CONTRACT.md). Was previously counting app-user LOGIN
-    // sessions, unrelated to actual live classes (fixed 2026-07-27).
-    listLiveSessions({}).catch(() => []),
+    // Live Sessions KPI: unfiltered = sessions LIVE right now (a real-time
+    // snapshot, via the same status-synced query GET /live-sessions uses).
+    // With a date range, "live sessions" means "sessions scheduled to start
+    // in this window" instead — a historical count, any status, since
+    // UPCOMING/LIVE/ENDED is only meaningful relative to "now".
+    dateWhere
+      ? prisma.liveSession.count({ where: { startTime: dateWhere } }).catch(() => 0)
+      : listLiveSessions({}).then((rows) => rows.filter((s) => s.status === "LIVE").length).catch(() => 0),
     // Notifications preview — was reading AuditLog (fake: isRead hardcoded
     // false, title derived from admin *actions*, not actual notifications).
     // Real source is NotificationLog{channel:IN_APP} — the same table the
@@ -179,10 +210,8 @@ async function getDashboardCore(admin) {
     }).catch(() => 0),
     // Same OPEN_STATES instructorApplications.service uses for its own queue —
     // reused here, not redefined, so this count can't drift from that module's.
-    prisma.instructorApplication.count({ where: { status: { in: ["PENDING", "CHANGES_REQUESTED"] } } }).catch(() => 0),
+    prisma.instructorApplication.count({ where: { status: { in: ["PENDING", "CHANGES_REQUESTED"] }, ...(dateWhere && { createdAt: dateWhere }) } }).catch(() => 0),
   ]);
-
-  const liveSessionsRunning = liveSessionRows.filter((s) => s.status === "LIVE").length;
 
   return {
     welcome: {
@@ -235,12 +264,12 @@ async function getDashboardCore(admin) {
     securityAlertsPreview: [],
 
     quickActions: [
-      { key: "add_user",            label: "Add User",            enabled: true, path: "/users"              },
-      { key: "create_course",       label: "Create Course",       enabled: true, path: "/learning/courses"   },
-      { key: "approve_instructor",  label: "Approve Instructor",  enabled: true, path: "/learning/approvals" },
-      { key: "generate_report",     label: "Generate Report",     enabled: true, path: "/reports"            },
-      { key: "create_live_session", label: "Create Live Session", enabled: true, path: "/learning/sessions"  },
-      { key: "system_settings",     label: "System Settings",     enabled: true, path: "/settings"           },
+      { key: "add_user",            label: "Add User",            enabled: true, path: "/users"                            },
+      { key: "create_course",       label: "Create Course",       enabled: true, path: "/learning-management?tab=courses" },
+      { key: "approve_instructor",  label: "Approve Instructor",  enabled: true, path: "/instructors?tab=pending"          },
+      { key: "generate_report",     label: "Generate Report",     enabled: true, path: "/reports-analytics"                },
+      { key: "create_live_session", label: "Create Live Session", enabled: true, path: "/learning-management?tab=live"    },
+      { key: "system_settings",     label: "System Settings",     enabled: true, path: "/settings"                        },
     ],
 
     systemHealth: {
@@ -286,6 +315,13 @@ async function getDashboardAnalytics(filters = {}) {
   // filtered queries.
   const retentionEligibleWhere = { createdAt: { lte: last30d }, status: { not: "ARCHIVED" }, ...deptScope };
 
+  // Performance Overview — averageScore/passRate only, real QuizAttempt data
+  // (same model Reports' Assessment tab reads). Unfiltered = all-time, like
+  // the other snapshot Analytics cards (Revenue/User/Course Analytics), NOT
+  // the trend charts' last-30-days fallback — a stat row, not a trend line.
+  const perfDateWhere = buildDateRangeWhere(filters.dateFrom, filters.dateTo);
+  const quizWhere = { score: { not: null }, ...(perfDateWhere && { submittedAt: perfDateWhere }) };
+
   const [
     roleGroups,
     departmentGroups,
@@ -301,6 +337,8 @@ async function getDashboardAnalytics(filters = {}) {
     retentionEligibleCount,
     retentionRetainedCount,
     enrollmentsWithCourse,
+    quizAgg,
+    quizPassCount,
   ] = await Promise.all([
     prisma.appUser.groupBy({ by: ["role"],              _count: { _all: true }, where: { status: { not: "ARCHIVED" }, ...scope } }),
     prisma.appUser.groupBy({ by: ["department"],        _count: { _all: true }, where: { department: { not: null }, ...scope } }),
@@ -347,9 +385,19 @@ async function getDashboardAnalytics(filters = {}) {
     // Course Completion's averageCompletion/categories from ONE real query —
     // same "one datum, one owner" principle as elsewhere on this dashboard,
     // so the two widgets can never show two different numbers for the same thing.
+    // Filtered by the same scope (department + enrollment date) as every
+    // other Analytics widget — was unfiltered (2026-08-20 fix), so a date
+    // range never changed either card's numbers.
     prisma.courseEnrollment.findMany({
+      where: {
+        ...(hasDateRange && { createdAt: scope.createdAt }),
+        ...(scope.department && { user: { department: scope.department } }),
+      },
       select: { status: true, courseId: true, course: { select: { title: true, category: true } } },
     }).catch(() => []),
+    prisma.quizAttempt.aggregate({ where: quizWhere, _avg: { score: true }, _count: { _all: true } }).catch(() => ({ _avg: { score: null }, _count: { _all: 0 } })),
+    // Passing convention: same 60% default reports.service's getAssessmentReports uses.
+    prisma.quizAttempt.count({ where: { ...quizWhere, score: { gte: 60 } } }).catch(() => 0),
   ]);
 
   const totalUsers     = statusGroups.filter((g) => g.status !== "ARCHIVED").reduce((s, g) => s + g._count._all, 0);
@@ -467,6 +515,17 @@ async function getDashboardAnalytics(filters = {}) {
     prisma.refund.aggregate({ where: { status: "PROCESSED" }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
     prisma.instructorPayout.aggregate({ where: { status: "COMPLETED" }, _sum: { amount: true } }).catch(() => ({ _sum: { amount: 0 } })),
   ]);
+  // averageScore/passRate: real, from QuizAttempt. engagement/satisfaction
+  // stay null — no engagement-scoring or satisfaction-survey model exists
+  // anywhere in this schema (never a fake 0 next to real numbers).
+  const quizGradedTotal = quizAgg._count._all;
+  const performanceOverview = {
+    averageScore: quizGradedTotal > 0 ? Math.round((quizAgg._avg.score ?? 0) * 10) / 10 : null,
+    passRate:     quizGradedTotal > 0 ? Math.round((quizPassCount / quizGradedTotal) * 1000) / 10 : null,
+    engagement:   null,
+    satisfaction: null,
+  };
+
   const monthlyRevenueValue = monthlyRevenueAgg._sum.amount ?? 0;
   const lastMonthRevenueValue = lastMonthRevenueAgg._sum.amount ?? 0;
   const growthPercentage = lastMonthRevenueValue === 0
@@ -524,7 +583,7 @@ async function getDashboardAnalytics(filters = {}) {
       assignmentCompletionRate:   0,
       averageLearningTimeMinutes: 0,
     },
-    performanceOverview: { averageScore: 0, passRate: 0, engagement: 0, satisfaction: 0 },
+    performanceOverview,
   };
 }
 

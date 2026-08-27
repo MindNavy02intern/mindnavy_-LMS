@@ -3,6 +3,11 @@ const cors = require("cors");
 require("dotenv").config();
 
 const adminRoutes = require("./src/routes/admin.routes");
+const instructorAuthRoutes = require("./src/routes/instructorAuth.routes");
+const instructorDashboardRoutes = require("./src/routes/instructorDashboard.routes");
+const instructorProfileRoutes = require("./src/routes/instructorProfile.routes");
+const instructorCoursesRoutes = require("./src/routes/instructorCourses.routes");
+const instructorLiveSessionsRoutes = require("./src/routes/instructorLiveSessions.routes");
 const mfaRoutes = require("./src/routes/mfa.routes");
 const dashboardRoutes = require("./src/routes/dashboard.routes");
 const usersRoutes = require("./src/routes/users.routes");
@@ -70,6 +75,11 @@ app.get("/", (req, res) => {
 
 // Admin routes
 app.use("/api/admin", adminRoutes);
+app.use("/api/instructor/auth", instructorAuthRoutes);
+app.use("/api/instructor/dashboard", instructorDashboardRoutes);
+app.use("/api/instructor/profile", instructorProfileRoutes);
+app.use("/api/instructor/courses", instructorCoursesRoutes);
+app.use("/api/instructor/live-sessions", instructorLiveSessionsRoutes);
 app.use("/api/admin/auth/mfa", mfaRoutes);
 
 // Dashboard routes

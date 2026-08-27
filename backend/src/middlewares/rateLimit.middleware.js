@@ -145,6 +145,19 @@ const adminUsersImportRateLimiter = rateLimit({
   },
 });
 
+// Instructor Dashboard auth — same shape as adminLoginRateLimiter (20/15min
+// prod, raised in dev for repeated Playwright auth.setup.ts runs).
+const instructorLoginRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: process.env.NODE_ENV !== "production" ? 200 : 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many login requests. Please try again later.",
+  },
+});
+
 module.exports = {
   adminLoginRateLimiter,
   adminUserActionRateLimiter,
@@ -154,4 +167,5 @@ module.exports = {
   otpRequestRateLimiter,
   publicVerifyRateLimiter,
   publicInstructorApplicationRateLimiter,
+  instructorLoginRateLimiter,
 };

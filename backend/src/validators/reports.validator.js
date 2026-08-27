@@ -64,7 +64,12 @@ function resolveDateRange(query, errors) {
       return null;
     }
     if (from > to) { errors.push("dateFrom must be before dateTo."); return null; }
-    return { range: "custom", gte: from, lte: to };
+    // A date-only "to" (YYYY-MM-DD) parses to UTC midnight, which would
+    // otherwise exclude every record from that day itself — same fix
+    // dashboard.service.js's endOfUtcDay already applies for this exact
+    // class of bug.
+    const toEndOfDay = new Date(Date.UTC(to.getUTCFullYear(), to.getUTCMonth(), to.getUTCDate(), 23, 59, 59, 999));
+    return { range: "custom", gte: from, lte: toEndOfDay };
   }
 
   let gte;

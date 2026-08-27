@@ -9,9 +9,18 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api
 
 // ── Core API (TASK 5A) ────────────────────────────────────────────────────────
 
-export async function getDashboardCore(): Promise<DashboardCoreResponse> {
+export interface DashboardCoreParams {
+  dateFrom?: string | null;
+  dateTo?:   string | null;
+}
+
+export async function getDashboardCore(params: DashboardCoreParams = {}): Promise<DashboardCoreResponse> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE_URL}/dashboard/core?_t=${Date.now()}`, {
+  const qs = new URLSearchParams();
+  if (params.dateFrom) qs.set('dateFrom', params.dateFrom);
+  if (params.dateTo)   qs.set('dateTo',   params.dateTo);
+  qs.set('_t', String(Date.now()));
+  const res = await fetch(`${BASE_URL}/dashboard/core?${qs.toString()}`, {
     headers: { Authorization: token ? `Bearer ${token}` : '' },
   });
   if (!res.ok) {

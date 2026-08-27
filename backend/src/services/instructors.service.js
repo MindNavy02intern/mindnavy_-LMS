@@ -948,4 +948,9 @@ module.exports = {
   reactivateInstructor,
   getSuspensionHistory,
   deleteInstructor,
+  // Exported additively for instructorSelf.service.js (Phase 2) — the
+  // largest-remainder rounding a donut chart needs so its slices sum to
+  // exactly 100.0 is real logic worth sharing, not a one-liner worth
+  // duplicating. Nothing above this line changed.
+  withPercentages,
 };
