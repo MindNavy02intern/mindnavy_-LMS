@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './routes/ProtectedRoute';
+import InstructorProtectedRoute from './routes/InstructorProtectedRoute';
+import { InstructorAuthProvider } from './context/InstructorAuthContext';
 
 const LoginPage          = lazy(() => import('./pages/LoginPage'));
 const SignupPage         = lazy(() => import('./pages/SignupPage'));
@@ -24,6 +26,23 @@ const ReportsPage                    = lazy(() => import('./pages/Reports/Report
 const FinancePage                    = lazy(() => import('./pages/Finance/FinancePage'));
 const NotificationsPage              = lazy(() => import('./pages/Notifications/NotificationsPage'));
 const IntegrationsPage               = lazy(() => import('./pages/Integrations/IntegrationsPage'));
+
+// Instructor Dashboard — separate portal, separate session (see
+// context/InstructorAuthContext.tsx). Phase 2 replaces the Phase 1 stub
+// landing page with the real Dashboard + Profile; the other 10 nav items
+// (blueprint Section 1.4) share one Coming Soon placeholder until their own
+// phase lands. Aliased to avoid colliding with the admin-side
+// pages/Instructors/InstructorProfilePage import above — same base name,
+// different folder, different audience.
+const InstructorLoginPage            = lazy(() => import('./pages/instructor/InstructorLoginPage'));
+const InstructorDashboardPage        = lazy(() => import('./pages/instructor/InstructorDashboardPage'));
+const InstructorSelfProfilePage      = lazy(() => import('./pages/instructor/InstructorProfilePage'));
+const InstructorComingSoonPage       = lazy(() => import('./pages/instructor/InstructorComingSoonPage'));
+// Phase 3 — My Courses + Course Builder + My Live Sessions replace their
+// Coming Soon stubs.
+const InstructorCoursesPage          = lazy(() => import('./pages/instructor/InstructorCoursesPage'));
+const InstructorCourseBuilderPage    = lazy(() => import('./pages/instructor/InstructorCourseBuilderPage'));
+const InstructorLiveSessionsPage     = lazy(() => import('./pages/instructor/InstructorLiveSessionsPage'));
 
 function PageLoader() {
   return (
@@ -213,6 +232,91 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        {/*
+         * Instructor Dashboard subtree — entirely separate session from the
+         * admin AuthContext above (InstructorAuthContext, separate
+         * localStorage key, separate backend session table). Scoped to just
+         * these two routes via a layout Route rather than wrapping the whole
+         * app in main.tsx like AuthProvider does: AuthProvider is the
+         * primary, always-needed session for every admin page, so it's fine
+         * to have it resolve on every load. InstructorAuthProvider would
+         * otherwise force EVERY admin page load to also wait on a GET
+         * /api/instructor/auth/me call that has nothing to do with the page
+         * being viewed — scoping it here means only /instructor/* pays that
+         * cost, and the two logins can coexist in the same browser without
+         * either clobbering the other's token.
+         */}
+        <Route element={<InstructorAuthProvider><Outlet /></InstructorAuthProvider>}>
+          <Route path="/instructor/login" element={<InstructorLoginPage />} />
+          <Route
+            path="/instructor/dashboard"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorDashboardPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/profile"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorSelfProfilePage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/courses"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorCoursesPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/courses/:id/builder"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorCourseBuilderPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/live-sessions"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorLiveSessionsPage />
+              </InstructorProtectedRoute>
+            }
+          />
+
+          {/*
+           * Not built this phase — one shared placeholder per remaining
+           * NAV_ITEMS entry in InstructorLayout.tsx, each its own route so
+           * the sidebar link and the URL are both real, just the page
+           * content isn't yet.
+           */}
+          {([
+            ['/instructor/students', 'My Students'],
+            ['/instructor/reviews', 'My Reviews'],
+            ['/instructor/certifications', 'My Certifications'],
+            ['/instructor/competencies', 'My Competencies'],
+            ['/instructor/earnings', 'My Earnings'],
+            ['/instructor/messages', 'Messages'],
+            ['/instructor/reports', 'My Reports'],
+            ['/instructor/settings', 'Settings'],
+          ] as const).map(([path, title]) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <InstructorProtectedRoute>
+                  <InstructorComingSoonPage title={title} />
+                </InstructorProtectedRoute>
+              }
+            />
+          ))}
+        </Route>
 
         {/* 404 catch-all */}
         <Route path="*" element={<NotFoundPage />} />

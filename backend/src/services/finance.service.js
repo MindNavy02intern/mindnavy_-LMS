@@ -72,8 +72,15 @@ async function resolveCourses(ids) {
 
 // ── §Shared: Total Revenue / Active Subscriptions (single owner — R4) ────────
 
-async function getTotalRevenueValue() {
-  const agg = await safe(() => prisma.payment.aggregate({ where: { status: "SUCCESSFUL" }, _sum: { amount: true } }), { _sum: { amount: 0 } });
+// dateRange (optional {gte,lte}) scopes to Payment.createdAt — used by
+// dashboard.service's Revenue KPI when a date filter is applied; omitted
+// (all-time), this stays the exact same call finance.service's own
+// getStats() makes (R4 — one computation, never two divergent queries).
+async function getTotalRevenueValue(dateRange) {
+  const agg = await safe(() => prisma.payment.aggregate({
+    where: { status: "SUCCESSFUL", ...(dateRange && { createdAt: dateRange }) },
+    _sum: { amount: true },
+  }), { _sum: { amount: 0 } });
   return round2(agg._sum.amount ?? 0);
 }
 

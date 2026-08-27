@@ -5,6 +5,7 @@ import { updateSystemSettings, uploadBrandingAsset } from '../../services/settin
 import { SettingsApiError } from '../../types/settings';
 import type { SystemSettings } from '../../types/settings';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
+import { applyPrimaryColor, applyLogo, applyFavicon } from '../../lib/theme';
 import { Card, FormGrid, Field, FULL_INPUT, BTN_SECONDARY, ToggleRow, ComingSoonBadge } from './_shared';
 
 interface Props {
@@ -54,6 +55,7 @@ export default function BrandingTab({ settings, onSaved, showToast }: Props) {
       const updated = await updateSystemSettings(kind === 'logo' ? { logoUrl: url } : { faviconUrl: url });
       invalidateFor(appQueryClient, 'settings.update', { domain: 'branding' });
       onSaved(updated);
+      if (kind === 'logo') applyLogo(updated.logoUrl); else applyFavicon(updated.faviconUrl);
       showToast('success', `${kind === 'logo' ? 'Logo' : 'Favicon'} updated.`);
     } catch (err) {
       showToast('error', err instanceof SettingsApiError ? err.message : `Failed to upload ${kind}.`);
@@ -69,6 +71,7 @@ export default function BrandingTab({ settings, onSaved, showToast }: Props) {
       const updated = await updateSystemSettings({ primaryColor: color });
       invalidateFor(appQueryClient, 'settings.update', { domain: 'branding' });
       onSaved(updated);
+      applyPrimaryColor(updated.primaryColor);
       showToast('success', 'Primary color saved.');
     } catch (err) {
       showToast('error', err instanceof SettingsApiError ? err.message : 'Failed to save color.');

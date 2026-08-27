@@ -8,6 +8,8 @@ import {
 import { useAuth } from '../AuthContext';
 import { getStoredToken } from '../api/adminAuth';
 import { listNotifications, markAllNotificationsRead } from '../services/notificationsApi';
+import { getSystemSettings } from '../services/settingsApi';
+import { applyPrimaryColor, applyLogo, applyFavicon } from '../lib/theme';
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 
@@ -78,13 +80,14 @@ interface NotifPanelItem {
 }
 
 interface MsgPanelItem {
-  id:          string;
-  subject:     string | null;
-  body:        string;
-  messageType: string;
-  status:      string;
-  createdAt:   string;
-  readAt:      string | null;
+  id:           string;
+  subject:      string | null;
+  body:         string;
+  messageType:  string;
+  status:       string;
+  createdAt:    string;
+  readAt:       string | null;
+  receiverName: string | null;
 }
 
 // ── Spinner ───────────────────────────────────────────────────────────────────
@@ -92,7 +95,7 @@ interface MsgPanelItem {
 function PanelSpinner() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: 24 }}>
-      <div style={{ width: 20, height: 20, border: '2px solid #e2e8f0', borderTopColor: '#2563eb', borderRadius: '50%', animation: 'mn-spin 0.65s linear infinite' }} />
+      <div style={{ width: 20, height: 20, border: '2px solid #e2e8f0', borderTopColor: 'var(--color-primary)', borderRadius: '50%', animation: 'mn-spin 0.65s linear infinite' }} />
     </div>
   );
 }
@@ -157,7 +160,7 @@ function NotificationsPanel({ items, loading, unreadCount, marking, onViewAll, o
           onClick={onMarkAllRead}
           disabled={marking || unreadCount === 0}
           style={{
-            fontSize: '0.72rem', color: unreadCount === 0 ? '#94a3b8' : '#2563eb', background: 'none', border: 'none',
+            fontSize: '0.72rem', color: unreadCount === 0 ? '#94a3b8' : 'var(--color-primary)', background: 'none', border: 'none',
             cursor: marking || unreadCount === 0 ? 'default' : 'pointer', fontWeight: 500, padding: 0,
           }}
         >
@@ -188,13 +191,13 @@ function NotificationsPanel({ items, loading, unreadCount, marking, onViewAll, o
               </div>
               <div style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: 3 }}>{formatAgo(item.createdAt)}</div>
             </div>
-            <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#2563eb', flexShrink: 0, marginTop: 5 }} />
+            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--color-primary)', flexShrink: 0, marginTop: 5 }} />
           </div>
         ))}
       </div>
 
       <div style={{ padding: '10px 16px', borderTop: '1px solid #f1f5f9', textAlign: 'center' }}>
-        <button onClick={onViewAll} style={{ fontSize: '0.78rem', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500 }}>
+        <button onClick={onViewAll} style={{ fontSize: '0.78rem', color: 'var(--color-primary)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500 }}>
           View all notifications →
         </button>
       </div>
@@ -222,7 +225,9 @@ function MessageAvatar({ name }: { name: string }) {
   );
 }
 
-function MessagesPanel({ items, loading }: { items: MsgPanelItem[]; loading: boolean }) {
+function MessagesPanel({ items, loading, onCompose, onViewAll }: {
+  items: MsgPanelItem[]; loading: boolean; onCompose: () => void; onViewAll: () => void;
+}) {
   return (
     <div style={{
       position: 'absolute', top: 44, right: 0, width: 360,
@@ -231,8 +236,8 @@ function MessagesPanel({ items, loading }: { items: MsgPanelItem[]; loading: boo
       border: '1px solid #e2e8f0', zIndex: 1000,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '13px 16px', borderBottom: '1px solid #f1f5f9' }}>
-        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>Messages</span>
-        <button style={{ fontSize: '0.72rem', color: '#fff', background: '#2563eb', border: 'none', cursor: 'pointer', fontWeight: 500, padding: '4px 10px', borderRadius: 6 }}>
+        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>Messages Sent</span>
+        <button onClick={onCompose} style={{ fontSize: '0.72rem', color: '#fff', background: 'var(--color-primary)', border: 'none', cursor: 'pointer', fontWeight: 500, padding: '4px 10px', borderRadius: 6 }}>
           + Compose
         </button>
       </div>
@@ -252,7 +257,7 @@ function MessagesPanel({ items, loading }: { items: MsgPanelItem[]; loading: boo
             alignItems: 'flex-start',
             background: msg.readAt ? '#fff' : '#fafbff',
           }}>
-            <MessageAvatar name={MSG_TYPE_LABEL[msg.messageType] ?? 'System'} />
+            <MessageAvatar name={msg.receiverName ?? MSG_TYPE_LABEL[msg.messageType] ?? 'System'} />
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
                 <span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#0f172a' }}>
@@ -260,20 +265,23 @@ function MessagesPanel({ items, loading }: { items: MsgPanelItem[]; loading: boo
                 </span>
                 <span style={{ fontSize: '0.65rem', color: '#94a3b8', flexShrink: 0, marginLeft: 6 }}>{formatAgo(msg.createdAt)}</span>
               </div>
+              {msg.receiverName && (
+                <div style={{ fontSize: '0.66rem', color: '#94a3b8', marginBottom: 2 }}>To: {msg.receiverName}</div>
+              )}
               <div style={{ fontSize: '0.72rem', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {msg.body.slice(0, 60)}{msg.body.length > 60 ? '…' : ''}
               </div>
             </div>
             {!msg.readAt && (
-              <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#2563eb', flexShrink: 0, marginTop: 5 }} />
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--color-primary)', flexShrink: 0, marginTop: 5 }} />
             )}
           </div>
         ))}
       </div>
 
       <div style={{ padding: '10px 16px', borderTop: '1px solid #f1f5f9', textAlign: 'center' }}>
-        <button style={{ fontSize: '0.78rem', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500 }}>
-          View all messages →
+        <button onClick={onViewAll} style={{ fontSize: '0.78rem', color: 'var(--color-primary)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500 }}>
+          View all in Users →
         </button>
       </div>
     </div>
@@ -283,12 +291,12 @@ function MessagesPanel({ items, loading }: { items: MsgPanelItem[]; loading: boo
 // ── Quick Actions (topbar dropdown) ──────────────────────────────────────────
 
 const QA_TOPBAR_ACTIONS = [
-  { label: 'Add User',          route: '/users?modal=addUser', message: null },
-  { label: 'Create Course',     route: null, message: 'Course management coming in Learning Mgmt module' },
-  { label: 'Generate Report',   route: '/reports-analytics?tab=export', message: null },
-  { label: 'Send Notification', route: '/notifications?tab=inapp', message: null },
-  { label: 'Manage Roles',      route: '/roles-permissions',  message: null },
-  { label: 'System Settings',   route: '/settings',           message: null },
+  { label: 'Add User',          route: '/users?modal=addUser',                     message: null },
+  { label: 'Create Course',     route: '/learning-management?tab=courses',         message: null },
+  { label: 'Generate Report',   route: '/reports-analytics?tab=export',            message: null },
+  { label: 'Send Notification', route: '/notifications?tab=inapp&modal=send',      message: null },
+  { label: 'Manage Roles',      route: '/roles-permissions',                       message: null },
+  { label: 'System Settings',   route: '/settings',                                message: null },
 ];
 
 // ── Nav config ────────────────────────────────────────────────────────────────
@@ -394,6 +402,16 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
     return () => window.removeEventListener('openNotificationsPanel', handleOpenNotif);
   }, []);
 
+  // Apply admin-configured branding (SystemSettings primaryColor/logoUrl/
+  // faviconUrl) so buttons/sidebar/links/logo/favicon pick it up — src/lib/theme.ts.
+  useEffect(() => {
+    getSystemSettings().then(s => {
+      applyPrimaryColor(s.primaryColor);
+      applyLogo(s.logoUrl);
+      applyFavicon(s.faviconUrl);
+    }).catch(() => {});
+  }, []);
+
   // Sidebar badge — real unread count from the in-app notifications feed
   // (Notifications module, channel=IN_APP). Refetches on every mutation via
   // the same 'analyticsUpdated' bridge every other stats panel listens to.
@@ -451,21 +469,23 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
       .finally(() => setNotifsLoading(false));
   }, [notifOpen]);
 
-  // Fetch messages when panel opens
+  // Fetch messages when panel opens — this admin's own outbox (no recipientId
+  // = GET /messages returns messages sent BY the authenticated admin). There
+  // is no admin-facing "inbox" in this schema (AdminMessage is one-way
+  // admin→user), so "recent messages" here means "recently sent", not
+  // "received" — same distinction the panel header/footer copy now reflects.
   useEffect(() => {
     if (!messagesOpen) return;
-    const adminId = user?.id;
-    if (!adminId) { (() => setMsgsLoading(false))(); return; }
     (() => setMsgsLoading(true))();
     const token = getStoredToken();
-    fetch(`${BASE_URL}/messages?recipientId=${encodeURIComponent(adminId)}&limit=10`, {
+    fetch(`${BASE_URL}/messages?limit=10`, {
       headers: { Authorization: token ? `Bearer ${token}` : '' },
     })
       .then(r => r.ok ? r.json() : Promise.resolve({ messages: [] }))
       .then(d => setMessages(d.messages ?? []))
       .catch(() => {})
       .finally(() => setMsgsLoading(false));
-  }, [messagesOpen, user?.id]);
+  }, [messagesOpen]);
 
   const displayName = profile?.full_name ?? user?.fullName ?? user?.name ?? 'Admin';
   const roleLabel   = profile?.role ?? user?.role ?? 'Administrator';
@@ -494,7 +514,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
         }}
       >
         <div className="mn-sidebar-logo-wrap">
-          <img src="/brand/logowhite.png" alt="MindNavy LMS" />
+          <img data-brand-logo src="/brand/logowhite.png" alt="MindNavy LMS" />
           <span className="mn-sidebar-tagline">Enterprise</span>
         </div>
 
@@ -601,7 +621,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
                 onClick={() => { setNotifOpen(o => !o); setMessagesOpen(false); setProfileOpen(false); }}
               >
                 <IconBell />
-                <span className="mn-notif-dot" aria-hidden="true" />
+                {unreadCount > 0 && <span className="mn-notif-dot" aria-hidden="true" />}
               </button>
               {notifOpen && (
                 <NotificationsPanel
@@ -625,7 +645,12 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
                 <IconMessage />
               </button>
               {messagesOpen && (
-                <MessagesPanel items={messages} loading={msgsLoading} />
+                <MessagesPanel
+                  items={messages}
+                  loading={msgsLoading}
+                  onCompose={() => { setMessagesOpen(false); navigate('/users'); }}
+                  onViewAll={() => { setMessagesOpen(false); navigate('/users'); }}
+                />
               )}
             </div>
 

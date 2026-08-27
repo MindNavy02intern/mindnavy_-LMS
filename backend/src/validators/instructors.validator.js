@@ -391,4 +391,11 @@ module.exports = {
   validateReactivate,
   validateHistoryQuery,
   validateListQuery,
+  // Exported additively for instructorSelf.validator.js (Phase 2) to compose
+  // its own narrower self-service validator from — same field readers, same
+  // MAX limits, no duplicated constraints. Nothing above this line changed.
+  readProfileFields,
+  pickDefined,
+  rejectForeignFields,
+  FOREIGN_FIELDS,
 };

@@ -291,7 +291,7 @@ Users surfaces — `['users']` is not optional on those rows.
 | `instructor.create` (§2 — `POST /api/admin/instructors`) | `['instructors']` `['users']` `['dashboard','user-analytics']` | Instructors table · Users table (same AppUser row) · Instructor dropdown gains option (R2) |
 | `instructor.update` (§5) | `['instructors']` `['instructors', id]` | Instructors table row · profile page |
 | `instructor.verify` (§5) | `['instructors']` `['instructors', id]` `['users']` | Verification badge here AND in the Users table (one AppUser field) |
-| `instructor.suspend` (§14 — delegates to users.service) | `['instructors']` `['instructors', id]` `['users']` `['courses']` (their courses do NOT unpublish in v1 — open decision) `['dashboard','instructor-performance']` | Instructors table · Users table status chip · **Active Instructors KPI** |
+| `instructor.suspend` (§14 — delegates to users.service) | `['instructors']` `['instructors', id]` `['users']` `['courses']` `['dashboard','instructor-performance']` | Instructors table · Users table status chip · **Active Instructors KPI** · **CORRECTED 2026-08-27** (was documented here as "courses do NOT unpublish in v1 — open decision"; that was stale — `instructors.service.js:suspendInstructor` calls `unpublishInstructorCourses()` on every suspend and always has, confirmed by direct code read while building Instructor Dashboard Phase 1 auth. Every PUBLISHED course the instructor owns is force-unpublished to Draft in the same transaction. See INSTRUCTOR_DASHBOARD_BLUEPRINT.docx Appendix A #18 and Section 3.1 for the instructor-facing consequence — the Instructor Dashboard's My Courses page must surface WHY a course silently reverted to Draft.) |
 | `instructor.reactivate` (§14) | `['instructors']` `['instructors', id]` `['users']` `['dashboard','user-analytics']` | Same surfaces, opposite direction |
 | `instructor.delete` (§2 — soft archive, 409 while they own courses/sessions) | `['instructors']` `['users']` `['courses']` `['dashboard','user-analytics']` | Row leaves the Instructors table · Users table shows ARCHIVED · Instructor dropdown loses option |
 | `review.moderate` (§10 — one mutation ID covers approve/remove/flag; three distinct endpoints, `PATCH .../reviews/:reviewId/approve` \| `/remove` \| `/flag`) | `['instructors', id, 'reviews']` `['dashboard','instructor-performance']` | Reviews tab list — status badge flips. **Shipped 2026-08-07, NOT in INSTRUCTORS_CONTRACT.md v1** (documented there as a `[planned]` gap — "no Review model", "decision for Hassan, not a bug"). The instructor ROW's `rating` field (list/stats/analytics) is still always null — it is an AppUser aggregate, unrelated to this row-level moderation queue. |
@@ -852,3 +852,77 @@ and `AuditAction` gained 11 new values (`CONTENT_LINKED_TO_COURSE`/
   for any of the three features above — `frontend/CLAUDE.md §3` calls this
   CRITICAL and it was skipped for scope/time reasons this pass, not silently
   forgotten. Flag before considering this fully done.
+
+*2026-08-27 — Instructor Dashboard Phase 1: instructor authentication
+shipped (see `INSTRUCTOR_DASHBOARD_BLUEPRINT.docx` Section 0 for the full
+spec this closes — "no instructor login exists anywhere" was the single
+largest gap identified there). Zero schema changes — `AppUserSession`
+already existed and was unused by any writer; wired up for real for the
+first time. Zero new `AuditAction` enum values — reused the existing
+generic `SESSION_CREATED`/`SESSION_REVOKED`/`FAILED_LOGIN` values with
+`adminId:null, targetUserId:<instructor id>` (both `AuditLog` and
+`LoginAttempt` were already actor-agnostic). This pass touches ONLY the new
+`/api/instructor/*` surface — zero admin-side query keys, mutations, or
+`INVALIDATION_MAP` rows changed, so §3–§6 of this file are unaffected.*
+
+- **New backend**: `POST/GET /api/instructor/auth/{login,me,logout}` —
+  `instructorAuth.{service,controller,routes}.js`. Mirrors
+  `admin.service.js`'s `loginAdmin()` shape (lockout window, generic
+  non-leaking error messages, LoginAttempt/AuditLog trail) with one
+  deliberate improvement: `AppUserSession.tokenHash` is stored as a SHA-256
+  hash of the bearer token, not the raw token — `AdminSession.sessionToken`
+  stores it raw; the instructor table's own column name signalled the
+  intended (stronger) design, followed rather than the weaker precedent.
+- **New middleware**: `requireInstructorAuth`
+  (`instructorAuth.middleware.js`), mirrors `requireAdminAuth` (60s
+  in-memory session cache, same revoked/expired checks) plus two instructor-
+  specific checks: `AppUser.role === 'INSTRUCTOR'` and — critically —
+  `AppUser.status === 'ACTIVE'` re-checked on every request. This is the
+  entire mechanism behind "admin suspends an instructor → they're logged
+  out" (Section 3.1 of the blueprint) — no separate session-revocation step
+  was needed, just this live status check. Verified end-to-end with real
+  curl calls against a throwaway instructor: suspend a still-logged-in
+  instructor's session → their existing (non-revoked, non-expired) token
+  gets `403 Access denied` on the next request once the 60s cache entry
+  naturally expires (same staleness ceiling `requireAdminAuth` already
+  accepts for admins — not instantaneous, bounded by the cache TTL).
+- **New reusable guards, not yet wired into any route** (Phase 3+ work):
+  `ownershipGuard.js` (`assertOwnsCourse/LiveSession/Document/Certification`
+  — 403 if the caller isn't the owning row's `instructorId`, 404 if the row
+  doesn't exist; every admin write endpoint these will eventually guard has
+  ZERO ownership check today, confirmed by code read) and `selfScope.js`
+  (`forceOwnInstructorId` — overwrites a request body's `instructorId` to
+  the caller's own id, for the future instructor-facing `POST /courses` /
+  `POST /live-sessions` equivalents, which today accept an arbitrary
+  client-supplied `instructorId`). Both verified against real/throwaway data
+  via `scripts/verify-ownership-guard.js` and `scripts/verify-self-scope.js`
+  (5/5 and 5/5 passing) — no test framework exists on the backend, so these
+  follow the project's existing `scripts/` convention (real dev DB,
+  throwaway rows, cleanup) rather than introducing Jest for one file.
+- **New frontend**: `/instructor/login` (real login form) and
+  `/instructor/dashboard` (stub — "Coming Soon", proves the full flow) —
+  `InstructorAuthContext.tsx`, `InstructorProtectedRoute.tsx`,
+  `api/instructorAuth.ts`. Separate `mn_instructor_token` localStorage key
+  from the admin's `mn_admin_token`, so an admin and an instructor session
+  coexist in the same browser without collision. `InstructorAuthProvider`
+  is deliberately NOT global in `main.tsx` like the admin `AuthProvider` —
+  scoped to just the `/instructor/*` subtree via a layout `Route` in
+  `App.tsx`, so no existing admin page pays the cost of an extra `GET
+  /api/instructor/auth/me` call on every load.
+- **Corrected a stale row in this file** (§5.3, `instructor.suspend`, above)
+  while building this — the row claimed courses "do NOT unpublish in v1",
+  contradicted by the actual `instructors.service.js` code, which has
+  called `unpublishInstructorCourses()` on every suspend for some time.
+  Fixed in place with a dated correction note rather than silently editing
+  the history.
+- **`DEFERRED_ITEMS.md` referenced throughout this file does not exist in
+  this repository** — confirmed by a full-repo glob before writing this
+  entry, not assumed. Every "see DEFERRED_ITEMS.md" pointer elsewhere in
+  this file predates this pass and was left as-is (not this pass's gap to
+  close), but flagging it here since the task that produced this entry
+  explicitly asked for a DEFERRED_ITEMS.md update and none could be made.
+- **Known gap, not closed by this pass**: `ownershipGuard.js`/`selfScope.js`
+  are built and verified in isolation but not yet wired into any real route
+  — every existing admin course/live-session/document/certification write
+  endpoint remains exactly as open as it was before this pass. Phase 3 (see
+  blueprint Section 2.3/2.4) is what actually closes that exposure.

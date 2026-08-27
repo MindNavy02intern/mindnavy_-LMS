@@ -178,10 +178,10 @@ export interface StudentEngagement {
 }
 
 export interface PerformanceOverview {
-  averageScore: number;
-  passRate:     number;
-  engagement:   number;
-  satisfaction: number;
+  averageScore: number | null;
+  passRate:     number | null;
+  engagement:   number | null;
+  satisfaction: number | null;
 }
 
 export interface TopDepartmentItem {
