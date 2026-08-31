@@ -76,6 +76,7 @@ test('Instructor adds a section and a lesson', async ({ page }) => {
   expect(testCourseId).toBeTruthy()
   await loginAsInstructor(page)
   await page.goto(`/instructor/courses/${testCourseId}/builder`)
+  await page.click('text=2. Content')
 
   await page.fill('input[placeholder="New section title…"]', 'Section 1')
   const sectionResponse = page.waitForResponse(
@@ -113,6 +114,7 @@ test('Instructor submits for review -> moves to Pending Approval; admin approves
   })
 
   await page.goto(`/instructor/courses/${testCourseId}/builder`)
+  await page.click('text=6. Submit')
   const submitResponse = page.waitForResponse(
     (res) => res.url().includes('/submit') && res.request().method() === 'POST',
   )

@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getStoredToken } from '../../api/adminAuth';
+import { getUsers } from '../../api/users';
+import type { User } from '../../types/users';
 import type { ToastType } from './Toast';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
@@ -39,14 +41,26 @@ function focusOut(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTM
 }
 
 interface Props {
-  userId:    string;
-  userName:  string;
+  userId?:   string;
+  userName?: string;
   onClose:   () => void;
   onSuccess: () => void;
   showToast: (type: ToastType, message: string) => void;
 }
 
+// When userId/userName aren't supplied (topbar "+ Compose", no pre-chosen
+// recipient), the admin picks one inline via search instead of the static
+// "Sending to X" header — everything else about the form is unchanged.
 export default function SendMessageModal({ userId, userName, onClose, onSuccess, showToast }: Props) {
+  const needsPicker = !userId;
+  const [pickedUser,   setPickedUser]   = useState<{ id: string; fullName: string } | null>(
+    userId && userName ? { id: userId, fullName: userName } : null,
+  );
+  const [query,         setQuery]         = useState('');
+  const [results,       setResults]       = useState<User[]>([]);
+  const [searching,     setSearching]     = useState(false);
+  const [recipientError, setRecipientError] = useState<string | null>(null);
+
   const [subject,      setSubject]      = useState('');
   const [body,         setBody]         = useState('');
   const [type,         setType]         = useState('DIRECT');
@@ -56,8 +70,30 @@ export default function SendMessageModal({ userId, userName, onClose, onSuccess,
   const [bodyError,    setBodyError]    = useState<string | null>(null);
   const [serverError,  setServerError]  = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!needsPicker || pickedUser || query.trim().length < 2) {
+      setResults([]);
+      return;
+    }
+    let cancelled = false;
+    setSearching(true);
+    const timer = setTimeout(() => {
+      getUsers({ search: query.trim(), limit: 8 })
+        .then((res) => { if (!cancelled) setResults(res.users); })
+        .catch(() => { if (!cancelled) setResults([]); })
+        .finally(() => { if (!cancelled) setSearching(false); });
+    }, 300);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [needsPicker, pickedUser, query]);
+
   function validate(): boolean {
     let ok = true;
+    if (needsPicker && !pickedUser) {
+      setRecipientError('Please select a recipient.');
+      ok = false;
+    } else {
+      setRecipientError(null);
+    }
     if (!subject.trim()) {
       setSubjectError('Subject is required.');
       ok = false;
@@ -91,7 +127,7 @@ export default function SendMessageModal({ userId, userName, onClose, onSuccess,
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
         body: JSON.stringify({
-          recipientId: userId,
+          recipientId: userId ?? pickedUser?.id,
           subject:     subject.trim(),
           body:        body.trim(),
           type,
@@ -130,9 +166,20 @@ export default function SendMessageModal({ userId, userName, onClose, onSuccess,
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
           <div>
             <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: '#111827' }}>Send Message</h3>
-            <p style={{ margin: '3px 0 0', fontSize: 12, color: '#6b7280' }}>
-              Sending to <strong>{userName}</strong>
-            </p>
+            {pickedUser && (
+              <p style={{ margin: '3px 0 0', fontSize: 12, color: '#6b7280' }}>
+                Sending to <strong>{pickedUser.fullName}</strong>
+                {needsPicker && (
+                  <button
+                    type="button"
+                    onClick={() => { setPickedUser(null); setQuery(''); }}
+                    style={{ marginLeft: 8, fontSize: 11, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}
+                  >
+                    Change
+                  </button>
+                )}
+              </p>
+            )}
           </div>
           <button
             onClick={onClose}
@@ -152,6 +199,42 @@ export default function SendMessageModal({ userId, userName, onClose, onSuccess,
 
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+
+            {/* Recipient picker — only when no fixed userId was supplied */}
+            {needsPicker && !pickedUser && (
+              <div>
+                <label style={LABEL}>Recipient <span style={{ color: '#ef4444' }}>*</span></label>
+                <input
+                  type="text"
+                  value={query}
+                  onChange={e => { setQuery(e.target.value); setRecipientError(null); }}
+                  placeholder="Search by name or email…"
+                  style={{ ...INPUT, borderColor: recipientError ? '#ef4444' : '#d1d5db' }}
+                  onFocus={focusIn} onBlur={focusOut}
+                  autoFocus
+                />
+                {recipientError && <div style={{ fontSize: 11, color: '#ef4444', marginTop: 3 }}>{recipientError}</div>}
+                {query.trim().length >= 2 && (
+                  <div style={{ marginTop: 6, border: '1px solid #e5e7eb', borderRadius: 6, maxHeight: 160, overflowY: 'auto' }}>
+                    {searching ? (
+                      <div style={{ padding: 10, fontSize: 12, color: '#9ca3af' }}>Searching…</div>
+                    ) : results.length === 0 ? (
+                      <div style={{ padding: 10, fontSize: 12, color: '#9ca3af' }}>No users found.</div>
+                    ) : results.map(u => (
+                      <button
+                        key={u.id}
+                        type="button"
+                        onClick={() => { setPickedUser({ id: u.id, fullName: u.fullName }); setRecipientError(null); }}
+                        style={{ display: 'block', width: '100%', textAlign: 'left', padding: '8px 10px', background: '#fff', border: 'none', borderBottom: '1px solid #f3f4f6', cursor: 'pointer', fontFamily: 'inherit' }}
+                      >
+                        <div style={{ fontSize: 13, color: '#111827', fontWeight: 500 }}>{u.fullName}</div>
+                        <div style={{ fontSize: 11, color: '#9ca3af' }}>{u.email}</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Subject */}
             <div>
@@ -240,12 +323,12 @@ export default function SendMessageModal({ userId, userName, onClose, onSuccess,
             </button>
             <button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || (needsPicker && !pickedUser)}
               style={{
                 padding: '8px 18px', fontSize: 13, fontFamily: 'inherit',
-                fontWeight: 600, background: submitting ? '#93c5fd' : '#2563eb',
+                fontWeight: 600, background: submitting || (needsPicker && !pickedUser) ? '#93c5fd' : '#2563eb',
                 border: 'none', borderRadius: 7,
-                cursor: submitting ? 'not-allowed' : 'pointer', color: '#fff',
+                cursor: submitting || (needsPicker && !pickedUser) ? 'not-allowed' : 'pointer', color: '#fff',
               }}
             >
               {submitting ? 'Sending…' : '✉ Send Message'}

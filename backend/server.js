@@ -8,6 +8,15 @@ const instructorDashboardRoutes = require("./src/routes/instructorDashboard.rout
 const instructorProfileRoutes = require("./src/routes/instructorProfile.routes");
 const instructorCoursesRoutes = require("./src/routes/instructorCourses.routes");
 const instructorLiveSessionsRoutes = require("./src/routes/instructorLiveSessions.routes");
+const instructorStudentsRoutes = require("./src/routes/instructorStudents.routes");
+const instructorLearningPathsRoutes = require("./src/routes/instructorLearningPaths.routes");
+const instructorReviewsSelfRoutes = require("./src/routes/instructorReviewsSelf.routes");
+const instructorCompetenciesRoutes = require("./src/routes/instructorCompetencies.routes");
+const instructorEarningsRoutes = require("./src/routes/instructorEarnings.routes");
+const instructorReportsRoutes = require("./src/routes/instructorReports.routes");
+const instructorMessagesRoutes = require("./src/routes/instructorMessages.routes");
+const instructorNotificationsRoutes = require("./src/routes/instructorNotifications.routes");
+const instructorSessionsRoutes = require("./src/routes/instructorSessions.routes");
 const mfaRoutes = require("./src/routes/mfa.routes");
 const dashboardRoutes = require("./src/routes/dashboard.routes");
 const usersRoutes = require("./src/routes/users.routes");
@@ -80,6 +89,15 @@ app.use("/api/instructor/dashboard", instructorDashboardRoutes);
 app.use("/api/instructor/profile", instructorProfileRoutes);
 app.use("/api/instructor/courses", instructorCoursesRoutes);
 app.use("/api/instructor/live-sessions", instructorLiveSessionsRoutes);
+app.use("/api/instructor/students", instructorStudentsRoutes);
+app.use("/api/instructor/learning-paths", instructorLearningPathsRoutes);
+app.use("/api/instructor/reviews", instructorReviewsSelfRoutes);
+app.use("/api/instructor/competencies", instructorCompetenciesRoutes);
+app.use("/api/instructor/earnings", instructorEarningsRoutes);
+app.use("/api/instructor/reports", instructorReportsRoutes);
+app.use("/api/instructor/messages", instructorMessagesRoutes);
+app.use("/api/instructor/notifications", instructorNotificationsRoutes);
+app.use("/api/instructor/sessions", instructorSessionsRoutes);
 app.use("/api/admin/auth/mfa", mfaRoutes);
 
 // Dashboard routes

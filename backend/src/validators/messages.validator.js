@@ -52,4 +52,36 @@ function validateSendAdminMessageInput(body) {
   return errors;
 }
 
-module.exports = { validateSendAdminMessageInput };
+// Instructor reply to an admin message (this task). Same body-length rules
+// as the original send (validateSendAdminMessageInput above) — a reply is
+// still a real message, not a throwaway acknowledgment.
+function validateReplyInput(body) {
+  const errors = [];
+  const { originalMessageId, body: replyBody } = body || {};
+
+  if (!originalMessageId || typeof originalMessageId !== "string" || !UUID_REGEX.test(originalMessageId.trim())) {
+    errors.push("originalMessageId must be a valid UUID.");
+  }
+
+  if (!replyBody || typeof replyBody !== "string") {
+    errors.push("Reply body is required.");
+    return errors;
+  }
+
+  if (replyBody.trim().length === 0) {
+    errors.push("Reply body cannot be empty.");
+    return errors;
+  }
+
+  if (replyBody.trim().length < 2) {
+    errors.push("Reply body is too short.");
+  }
+
+  if (replyBody.trim().length > 2000) {
+    errors.push("Reply body must not exceed 2000 characters.");
+  }
+
+  return errors;
+}
+
+module.exports = { validateSendAdminMessageInput, validateReplyInput };

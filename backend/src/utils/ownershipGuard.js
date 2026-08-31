@@ -16,6 +16,17 @@ function domainError(code, status) {
   return Object.assign(new Error(code), { code, status });
 }
 
+// List of course ids (+ titles) this instructor owns — the join key every
+// "my students" / "my learning paths" style query needs (Phase 4). A plain
+// findMany, not a guard that throws: an instructor with zero courses is a
+// valid state (empty results), not an error.
+async function getOwnedCourses(instructorId) {
+  return prisma.course.findMany({
+    where: { instructorId },
+    select: { id: true, title: true },
+  });
+}
+
 async function assertOwnsCourse(courseId, callerId) {
   const course = await prisma.course.findUnique({
     where: { id: courseId },
@@ -120,6 +131,7 @@ async function assertOwnsCertification(certId, callerId) {
 }
 
 module.exports = {
+  getOwnedCourses,
   assertOwnsCourse,
   assertOwnsLiveSession,
   assertOwnsDocument,

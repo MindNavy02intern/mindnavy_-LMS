@@ -12,6 +12,7 @@ model AdminMessage {
   updatedAt      DateTime      @updatedAt
   receiverUser   AppUser       @relation("UserReceivedMessages", fields: [receiverUserId], references: [id])
   senderAdmin    AdminUser     @relation("AdminSentMessages", fields: [senderAdminId], references: [id])
+  replies        AdminMessageReply[]
 
   @@index([senderAdminId])
   @@index([receiverUserId])
@@ -24,4 +25,32 @@ enum MessageStatus {
   SENT
   READ
   ARCHIVED
+}
+
+// Instructor (AppUser) reply to an AdminMessage — a separate child model
+// rather than a schema change to AdminMessage itself, which is intentionally
+// one-way (admin->user, senderAdminId is a REQUIRED relation to AdminUser —
+// see its own header). Mirrors TicketMessage's exact shape (learners.prisma:
+// a nullable authorAdminId distinguishing "admin's message" from "the other
+// party's"), except here EVERY reply is AppUser-authored by construction (the
+// parent AdminMessage already carries the one-way admin->user leg), so no
+// nullable actor column is needed — userId is always the receiving
+// instructor replying back.
+model AdminMessageReply {
+  id        String    @id @default(uuid())
+  messageId String
+  userId    String
+  body      String
+  createdAt DateTime  @default(now())
+  // Set when the sending admin opens the thread (GET .../thread) — drives
+  // the outbox "N new reply" indicator. Mirrors AdminMessage.readAt's own
+  // null-until-viewed shape.
+  readAt    DateTime?
+
+  message AdminMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user    AppUser      @relation("UserSentMessageReplies", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([messageId])
+  @@index([userId])
+  @@map("admin_message_replies")
 }
