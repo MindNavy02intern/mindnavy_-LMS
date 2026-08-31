@@ -37,12 +37,26 @@ const IntegrationsPage               = lazy(() => import('./pages/Integrations/I
 const InstructorLoginPage            = lazy(() => import('./pages/instructor/InstructorLoginPage'));
 const InstructorDashboardPage        = lazy(() => import('./pages/instructor/InstructorDashboardPage'));
 const InstructorSelfProfilePage      = lazy(() => import('./pages/instructor/InstructorProfilePage'));
-const InstructorComingSoonPage       = lazy(() => import('./pages/instructor/InstructorComingSoonPage'));
 // Phase 3 — My Courses + Course Builder + My Live Sessions replace their
 // Coming Soon stubs.
 const InstructorCoursesPage          = lazy(() => import('./pages/instructor/InstructorCoursesPage'));
 const InstructorCourseBuilderPage    = lazy(() => import('./pages/instructor/InstructorCourseBuilderPage'));
 const InstructorLiveSessionsPage     = lazy(() => import('./pages/instructor/InstructorLiveSessionsPage'));
+const InstructorStudentsPage         = lazy(() => import('./pages/instructor/InstructorStudentsPage'));
+// Phase 5 — My Reviews + My Competencies + My Earnings + My Reports replace
+// their Coming Soon stubs.
+const InstructorReviewsPage          = lazy(() => import('./pages/instructor/InstructorReviewsPage'));
+const InstructorCompetenciesPage     = lazy(() => import('./pages/instructor/InstructorCompetenciesPage'));
+const InstructorEarningsPage         = lazy(() => import('./pages/instructor/InstructorEarningsPage'));
+const InstructorReportsPage          = lazy(() => import('./pages/instructor/InstructorReportsPage'));
+// Phase 6 (FINAL) — Messages + Settings replace their Coming Soon stubs.
+// My Certifications is also wired here even though it wasn't explicitly
+// scoped to Phase 6 — its feature already existed as a tab inside My
+// Profile, but the dedicated sidebar route never pointed at it; see
+// InstructorCertificationsPage.tsx's header comment.
+const InstructorMessagesPage         = lazy(() => import('./pages/instructor/InstructorMessagesPage'));
+const InstructorSettingsPage         = lazy(() => import('./pages/instructor/InstructorSettingsPage'));
+const InstructorCertificationsPage   = lazy(() => import('./pages/instructor/InstructorCertificationsPage'));
 
 function PageLoader() {
   return (
@@ -289,33 +303,70 @@ export default function App() {
               </InstructorProtectedRoute>
             }
           />
-
-          {/*
-           * Not built this phase — one shared placeholder per remaining
-           * NAV_ITEMS entry in InstructorLayout.tsx, each its own route so
-           * the sidebar link and the URL are both real, just the page
-           * content isn't yet.
-           */}
-          {([
-            ['/instructor/students', 'My Students'],
-            ['/instructor/reviews', 'My Reviews'],
-            ['/instructor/certifications', 'My Certifications'],
-            ['/instructor/competencies', 'My Competencies'],
-            ['/instructor/earnings', 'My Earnings'],
-            ['/instructor/messages', 'Messages'],
-            ['/instructor/reports', 'My Reports'],
-            ['/instructor/settings', 'Settings'],
-          ] as const).map(([path, title]) => (
-            <Route
-              key={path}
-              path={path}
-              element={
-                <InstructorProtectedRoute>
-                  <InstructorComingSoonPage title={title} />
-                </InstructorProtectedRoute>
-              }
-            />
-          ))}
+          <Route
+            path="/instructor/students"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorStudentsPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/reviews"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorReviewsPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/competencies"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorCompetenciesPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/earnings"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorEarningsPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/reports"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorReportsPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/certifications"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorCertificationsPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/messages"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorMessagesPage />
+              </InstructorProtectedRoute>
+            }
+          />
+          <Route
+            path="/instructor/settings"
+            element={
+              <InstructorProtectedRoute>
+                <InstructorSettingsPage />
+              </InstructorProtectedRoute>
+            }
+          />
         </Route>
 
         {/* 404 catch-all */}

@@ -10,6 +10,10 @@ import { getStoredToken } from '../api/adminAuth';
 import { listNotifications, markAllNotificationsRead } from '../services/notificationsApi';
 import { getSystemSettings } from '../services/settingsApi';
 import { applyPrimaryColor, applyLogo, applyFavicon } from '../lib/theme';
+import { useToast, ToastContainer } from '../components/users/Toast';
+import SendMessageModal from '../components/users/SendMessageModal';
+import MessageThreadModal from '../components/messages/MessageThreadModal';
+import { MessageTypeBadge, PriorityBadge } from '../components/notifications/shared';
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 
@@ -84,10 +88,18 @@ interface MsgPanelItem {
   subject:      string | null;
   body:         string;
   messageType:  string;
+  priority:     string;
   status:       string;
   createdAt:    string;
   readAt:       string | null;
   receiverName: string | null;
+  // Instructor (AppUser) replies — a separate AdminMessageReply row per
+  // reply, never a reversed AdminMessage (that model stays strictly
+  // admin->user). This panel is a compact "sent" list, not a full thread
+  // view, so only a count + the latest reply are shown here.
+  repliesCount:   number;
+  lastReply:      { body: string; createdAt: string } | null;
+  hasUnreadReply: boolean;
 }
 
 // ── Spinner ───────────────────────────────────────────────────────────────────
@@ -225,8 +237,8 @@ function MessageAvatar({ name }: { name: string }) {
   );
 }
 
-function MessagesPanel({ items, loading, onCompose, onViewAll }: {
-  items: MsgPanelItem[]; loading: boolean; onCompose: () => void; onViewAll: () => void;
+function MessagesPanel({ items, loading, onCompose, onViewAll, onOpenThread }: {
+  items: MsgPanelItem[]; loading: boolean; onCompose: () => void; onViewAll: () => void; onOpenThread: (id: string) => void;
 }) {
   return (
     <div style={{
@@ -251,12 +263,16 @@ function MessagesPanel({ items, loading, onCompose, onViewAll }: {
             <div style={{ fontSize: '0.82rem', color: '#94a3b8' }}>No messages yet</div>
           </div>
         ) : items.map((msg, i) => (
-          <div key={msg.id} style={{
-            display: 'flex', gap: 10, padding: '10px 16px',
-            borderBottom: i < items.length - 1 ? '1px solid #f8fafc' : 'none',
-            alignItems: 'flex-start',
-            background: msg.readAt ? '#fff' : '#fafbff',
-          }}>
+          <div
+            key={msg.id}
+            onClick={() => onOpenThread(msg.id)}
+            style={{
+              display: 'flex', gap: 10, padding: '10px 16px',
+              borderBottom: i < items.length - 1 ? '1px solid #f8fafc' : 'none',
+              alignItems: 'flex-start', cursor: 'pointer',
+              background: msg.readAt ? '#fff' : '#fafbff',
+            }}
+          >
             <MessageAvatar name={msg.receiverName ?? MSG_TYPE_LABEL[msg.messageType] ?? 'System'} />
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
@@ -265,15 +281,34 @@ function MessagesPanel({ items, loading, onCompose, onViewAll }: {
                 </span>
                 <span style={{ fontSize: '0.65rem', color: '#94a3b8', flexShrink: 0, marginLeft: 6 }}>{formatAgo(msg.createdAt)}</span>
               </div>
+              {(msg.messageType !== 'DIRECT' || msg.priority !== 'NORMAL') && (
+                <div style={{ display: 'flex', gap: 5, marginBottom: 2 }}>
+                  {msg.messageType !== 'DIRECT' && <MessageTypeBadge messageType={msg.messageType} />}
+                  {msg.priority !== 'NORMAL' && <PriorityBadge priority={msg.priority} />}
+                </div>
+              )}
               {msg.receiverName && (
                 <div style={{ fontSize: '0.66rem', color: '#94a3b8', marginBottom: 2 }}>To: {msg.receiverName}</div>
               )}
               <div style={{ fontSize: '0.72rem', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {msg.body.slice(0, 60)}{msg.body.length > 60 ? '…' : ''}
               </div>
+              {msg.repliesCount > 0 && msg.lastReply && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 4, fontSize: '0.68rem', color: msg.hasUnreadReply ? '#dc2626' : '#2563eb' }}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 17 4 12 9 7" /><path d="M20 18v-2a4 4 0 0 0-4-4H4" />
+                  </svg>
+                  <span style={{ fontWeight: 700 }}>
+                    {msg.hasUnreadReply ? `${msg.repliesCount} new repl${msg.repliesCount === 1 ? 'y' : 'ies'}` : `${msg.repliesCount} repl${msg.repliesCount === 1 ? 'y' : 'ies'}`}
+                  </span>
+                  <span style={{ color: '#94a3b8', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    · {msg.lastReply.body.slice(0, 40)}{msg.lastReply.body.length > 40 ? '…' : ''}
+                  </span>
+                </div>
+              )}
             </div>
-            {!msg.readAt && (
-              <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--color-primary)', flexShrink: 0, marginTop: 5 }} />
+            {(!msg.readAt || msg.hasUnreadReply) && (
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: msg.hasUnreadReply ? '#dc2626' : 'var(--color-primary)', flexShrink: 0, marginTop: 5 }} />
             )}
           </div>
         ))}
@@ -364,12 +399,16 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
   const [unreadCount,     setUnreadCount]     = useState(0);
   const [messages,        setMessages]        = useState<MsgPanelItem[]>([]);
   const [msgsLoading,     setMsgsLoading]     = useState(false);
+  const [threadMessageId, setThreadMessageId] = useState<string | null>(null);
+  const [composeOpen,     setComposeOpen]     = useState(false);
+  const { toasts, showToast, dismiss } = useToast();
 
   const qaRef       = useRef<HTMLDivElement>(null);
   const profileRef  = useRef<HTMLDivElement>(null);
   const notifRef    = useRef<HTMLDivElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
   const qaToastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const msgsFetchIdRef = useRef(0);
 
   const handleQaAction = (route: string | null, label: string, message?: string | null) => {
     setQaOpen(false);
@@ -474,17 +513,38 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
   // is no admin-facing "inbox" in this schema (AdminMessage is one-way
   // admin→user), so "recent messages" here means "recently sent", not
   // "received" — same distinction the panel header/footer copy now reflects.
-  useEffect(() => {
-    if (!messagesOpen) return;
-    (() => setMsgsLoading(true))();
+  function fetchMessages() {
+    // Called from 3 uncoordinated sites (mount, panel-open, and
+    // MessageThreadModal's onChanged after marking replies read) — without
+    // this sequence guard, an earlier in-flight response (e.g. from mount)
+    // can resolve AFTER a later one (e.g. from opening a thread) and
+    // clobber the just-corrected hasUnreadReply state with stale data,
+    // leaving the topbar dot stuck red.
+    const fetchId = ++msgsFetchIdRef.current;
+    setMsgsLoading(true);
     const token = getStoredToken();
     fetch(`${BASE_URL}/messages?limit=10`, {
       headers: { Authorization: token ? `Bearer ${token}` : '' },
     })
       .then(r => r.ok ? r.json() : Promise.resolve({ messages: [] }))
-      .then(d => setMessages(d.messages ?? []))
+      .then(d => { if (fetchId === msgsFetchIdRef.current) setMessages(d.messages ?? []); })
       .catch(() => {})
-      .finally(() => setMsgsLoading(false));
+      .finally(() => { if (fetchId === msgsFetchIdRef.current) setMsgsLoading(false); });
+  }
+
+  // Fetch once on mount too (not just on panel open) so the topbar icon's
+  // unread-reply dot is visible without the admin having to open the panel
+  // first — same "badge visible before interaction" behavior as the
+  // notifications bell above.
+  useEffect(() => {
+    fetchMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!messagesOpen) return;
+    fetchMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messagesOpen]);
 
   const displayName = profile?.full_name ?? user?.fullName ?? user?.name ?? 'Admin';
@@ -643,13 +703,15 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
                 onClick={() => { setMessagesOpen(o => !o); setNotifOpen(false); setProfileOpen(false); }}
               >
                 <IconMessage />
+                {messages.some(m => m.hasUnreadReply) && <span className="mn-notif-dot" aria-hidden="true" style={{ background: '#dc2626' }} />}
               </button>
               {messagesOpen && (
                 <MessagesPanel
                   items={messages}
                   loading={msgsLoading}
-                  onCompose={() => { setMessagesOpen(false); navigate('/users'); }}
+                  onCompose={() => { setMessagesOpen(false); setComposeOpen(true); }}
                   onViewAll={() => { setMessagesOpen(false); navigate('/users'); }}
+                  onOpenThread={(id) => { setMessagesOpen(false); setThreadMessageId(id); }}
                 />
               )}
             </div>
@@ -719,6 +781,23 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
             <button onClick={() => setQaToast(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: 0, fontSize: 16, lineHeight: 1 }}>×</button>
           </div>
         )}
+
+        {threadMessageId && (
+          <MessageThreadModal
+            messageId={threadMessageId}
+            onClose={() => setThreadMessageId(null)}
+            onChanged={fetchMessages}
+            showToast={showToast}
+          />
+        )}
+        {composeOpen && (
+          <SendMessageModal
+            onClose={() => setComposeOpen(false)}
+            onSuccess={() => { setComposeOpen(false); fetchMessages(); }}
+            showToast={showToast}
+          />
+        )}
+        <ToastContainer toasts={toasts} onDismiss={dismiss} />
       </div>
     </>
   );

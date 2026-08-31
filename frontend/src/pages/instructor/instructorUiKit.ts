@@ -37,3 +37,15 @@ export function statusBadgeStyle(status: string): CSSProperties {
   const c = STATUS_COLORS[status] ?? { bg: '#f1f5f9', fg: '#64748b' };
   return { padding: '3px 8px', borderRadius: 999, fontSize: 10, fontWeight: 700, background: c.bg, color: c.fg, whiteSpace: 'nowrap' };
 }
+
+const MESSAGE_TYPE_COLORS: Record<string, string> = { DIRECT: '#2563eb', WARNING: '#dc2626', POLICY_UPDATE: '#7c3aed', ANNOUNCEMENT: '#16a34a', FEEDBACK: '#a16207' };
+export function messageTypeBadgeStyle(type: string): CSSProperties {
+  const c = MESSAGE_TYPE_COLORS[type] ?? '#64748b';
+  return { padding: '2px 9px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: `${c}1a`, color: c, whiteSpace: 'nowrap' };
+}
+
+const PRIORITY_COLORS: Record<string, string> = { LOW: '#64748b', NORMAL: '#2563eb', HIGH: '#c2410c', URGENT: '#dc2626' };
+export function priorityBadgeStyle(priority: string): CSSProperties {
+  const c = PRIORITY_COLORS[priority] ?? '#64748b';
+  return { padding: '2px 9px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: `${c}1a`, color: c, whiteSpace: 'nowrap' };
+}

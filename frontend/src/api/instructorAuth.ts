@@ -74,3 +74,24 @@ export async function apiInstructorLogout(token: string): Promise<void> {
   // Best-effort — clear local state regardless of whether the server responds.
   await instructorFetch('/logout', { method: 'POST', headers: bearer(token) }).catch(() => {});
 }
+
+export interface ChangePasswordResult {
+  success: boolean;
+  message: string;
+  errors?: string[];
+}
+
+// Does NOT throw on a validation/wrong-password failure — the backend
+// returns { success: false, message } with a 400, which the Settings page
+// needs to show inline, not as a thrown error. Only a genuine transport/
+// session failure throws.
+export async function apiInstructorChangePassword(token: string, currentPassword: string, newPassword: string): Promise<ChangePasswordResult> {
+  const res = await fetch(`${INSTRUCTOR_API}/password`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...bearer(token) },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+  if (res.status === 401) throw new Error('Your session has expired — please log in again.');
+  const body = await res.json().catch(() => ({ success: false, message: 'Request failed' }));
+  return body as ChangePasswordResult;
+}

@@ -28,14 +28,14 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/instructor/profile',       label: 'My Profile',       Icon: UserIcon,        builtThisPhase: true },
   { to: '/instructor/courses',       label: 'My Courses',       Icon: BookOpen,        builtThisPhase: true },
   { to: '/instructor/live-sessions', label: 'My Live Sessions', Icon: Video,           builtThisPhase: true },
-  { to: '/instructor/students',      label: 'My Students',      Icon: Users,           builtThisPhase: false },
-  { to: '/instructor/reviews',       label: 'My Reviews',       Icon: Star,            builtThisPhase: false },
-  { to: '/instructor/certifications',label: 'My Certifications',Icon: Award,           builtThisPhase: false },
-  { to: '/instructor/competencies',  label: 'My Competencies',  Icon: Target,          builtThisPhase: false },
-  { to: '/instructor/earnings',      label: 'My Earnings',      Icon: Wallet,          builtThisPhase: false },
-  { to: '/instructor/messages',      label: 'Messages',         Icon: MessageSquare,   builtThisPhase: false },
-  { to: '/instructor/reports',       label: 'My Reports',       Icon: BarChart3,       builtThisPhase: false },
-  { to: '/instructor/settings',      label: 'Settings',         Icon: SettingsIcon,    builtThisPhase: false },
+  { to: '/instructor/students',      label: 'My Students',      Icon: Users,           builtThisPhase: true },
+  { to: '/instructor/reviews',       label: 'My Reviews',       Icon: Star,            builtThisPhase: true },
+  { to: '/instructor/certifications',label: 'My Certifications',Icon: Award,           builtThisPhase: true },
+  { to: '/instructor/competencies',  label: 'My Competencies',  Icon: Target,          builtThisPhase: true },
+  { to: '/instructor/earnings',      label: 'My Earnings',      Icon: Wallet,          builtThisPhase: true },
+  { to: '/instructor/messages',      label: 'Messages',         Icon: MessageSquare,   builtThisPhase: true },
+  { to: '/instructor/reports',       label: 'My Reports',       Icon: BarChart3,       builtThisPhase: true },
+  { to: '/instructor/settings',      label: 'Settings',         Icon: SettingsIcon,    builtThisPhase: true },
 ];
 
 interface Props {

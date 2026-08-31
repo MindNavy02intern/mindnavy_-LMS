@@ -1,5 +1,5 @@
-const { validateInstructorLoginInput } = require("../validators/instructorAuth.validator");
-const { loginInstructor, logoutInstructor } = require("../services/instructorAuth.service");
+const { validateInstructorLoginInput, validateChangeInstructorPasswordInput } = require("../validators/instructorAuth.validator");
+const { loginInstructor, logoutInstructor, changeInstructorPassword } = require("../services/instructorAuth.service");
 const { invalidateCachedInstructorSession } = require("../middlewares/instructorAuth.middleware");
 
 function extractRequestMeta(req) {
@@ -64,6 +64,34 @@ async function instructorLogoutController(req, res) {
   }
 }
 
+async function instructorChangePasswordController(req, res) {
+  try {
+    const validation = validateChangeInstructorPasswordInput(req.body);
+    if (!validation.isValid) {
+      return res.status(400).json({ success: false, message: validation.errors[0], errors: validation.errors });
+    }
+
+    const { ipAddress, userAgent } = extractRequestMeta(req);
+
+    const result = await changeInstructorPassword({
+      instructorId: req.instructor.id,
+      currentPassword: validation.data.currentPassword,
+      newPassword: validation.data.newPassword,
+      ipAddress,
+      userAgent,
+    });
+
+    if (!result.success) {
+      return res.status(400).json(result);
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in instructorChangePasswordController:", error.message);
+    return res.status(500).json({ success: false, message: "Internal server error." });
+  }
+}
+
 async function instructorMeController(req, res) {
   return res.status(200).json({
     success: true,
@@ -76,4 +104,5 @@ module.exports = {
   instructorLoginController,
   instructorLogoutController,
   instructorMeController,
+  instructorChangePasswordController,
 };

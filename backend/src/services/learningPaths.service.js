@@ -241,4 +241,7 @@ module.exports = {
   addItem,
   removeItem,
   reorder,
+  // Reused by instructorLearningPaths.service (Phase 4) — same title/status
+  // resolution for polymorphic path items, not forked.
+  resolveItems,
 };

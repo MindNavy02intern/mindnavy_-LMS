@@ -553,6 +553,19 @@ async function markNotificationRead(id) {
   return mapLog((await attachUserNames([l]))[0]);
 }
 
+// ── Self-service ownership guard (Phase 6) ──────────────────────────────────────
+//
+// markNotificationRead(id) above has NO ownership check — safe for the admin
+// console (a trusted operator can act on any row) but not for instructor
+// self-service, where any authenticated instructor could otherwise mark ANY
+// other user's notification read by guessing/iterating ids. This wrapper adds
+// exactly that check before delegating to the same underlying write.
+async function markMyNotificationRead(userId, id) {
+  const log = await getLogOrThrow(id);
+  if (log.userId !== userId) throw domainError("NOTIFICATION_NOT_FOUND"); // indistinguishable from missing
+  return markNotificationRead(id);
+}
+
 async function markAllRead(userId) {
   const where = { channel: "IN_APP", status: { notIn: ["OPENED", "CLICKED"] }, ...(userId ? { userId } : {}) };
   const result = await prisma.notificationLog.updateMany({ where, data: { status: "OPENED", openedAt: new Date() } });
@@ -878,7 +891,7 @@ module.exports = {
   // automations
   listAutomations, getAutomationOrThrow, createAutomation, updateAutomation, setAutomationStatus, deleteAutomation,
   // in-app
-  listInAppNotifications, sendInAppNotification, markNotificationRead, markAllRead, deleteNotification,
+  listInAppNotifications, sendInAppNotification, markNotificationRead, markMyNotificationRead, markAllRead, deleteNotification,
   // logs
   listLogs, retryDelivery,
   // preferences
