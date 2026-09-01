@@ -109,22 +109,37 @@ async function notifyLiveSessionStarted(session) {
 // updatedAt on ENDED also timestamps the LM activity feed's "session completed"
 // entries correctly (it reads updatedAt).
 async function syncStatuses() {
-  await safe(() => prisma.$executeRaw`
-    UPDATE "live_sessions" SET "status" = 'ENDED', "updatedAt" = NOW()
-    WHERE "status" <> 'ENDED' AND ("startTime" + make_interval(mins => "durationMin")) <= NOW()`, 0);
+  // The three UPDATEs run in PARALLEL, not in sequence. Their WHERE clauses are
+  // provably disjoint, so no row can be touched by more than one of them and
+  // the result is identical to running them one after another:
+  //   ended:    end <= now                     (any status but ENDED)
+  //   live:     start <= now AND end >  now     (UPCOMING only)
+  //   unlive:   start >  now                    (LIVE only — implies end > now)
+  // A row with end <= now cannot also have start > now, and the live/unlive
+  // pair is split on start <= now vs start > now.
+  //
+  // This matters because syncStatuses() runs on EVERY session read, and the DB
+  // is remote: three sequential round trips cost ~3x one. The dashboard alone
+  // was paying that twice per load.
+  //
+  // The middle statement uses RETURNING (a $queryRaw, not $executeRaw) so we
+  // know exactly which rows just transitioned INTO live — its WHERE clause only
+  // ever matches a row once (status flips away from UPCOMING immediately), so
+  // this can't double-fire the trigger for the same session on a later sync.
+  const [, justWentLive] = await Promise.all([
+    safe(() => prisma.$executeRaw`
+      UPDATE "live_sessions" SET "status" = 'ENDED', "updatedAt" = NOW()
+      WHERE "status" <> 'ENDED' AND ("startTime" + make_interval(mins => "durationMin")) <= NOW()`, 0),
 
-  // RETURNING (not a plain $executeRaw) so we know exactly which rows just
-  // transitioned INTO live — the WHERE clause below only ever matches a row
-  // once (status flips away from UPCOMING immediately), so this can't
-  // double-fire the trigger for the same session on a later sync.
-  const justWentLive = await safe(() => prisma.$queryRaw`
-    UPDATE "live_sessions" SET "status" = 'LIVE', "updatedAt" = NOW()
-    WHERE "status" = 'UPCOMING' AND "startTime" <= NOW() AND ("startTime" + make_interval(mins => "durationMin")) > NOW()
-    RETURNING "id", "title", "courseId"`, []);
+    safe(() => prisma.$queryRaw`
+      UPDATE "live_sessions" SET "status" = 'LIVE', "updatedAt" = NOW()
+      WHERE "status" = 'UPCOMING' AND "startTime" <= NOW() AND ("startTime" + make_interval(mins => "durationMin")) > NOW()
+      RETURNING "id", "title", "courseId"`, []),
 
-  await safe(() => prisma.$executeRaw`
-    UPDATE "live_sessions" SET "status" = 'UPCOMING', "updatedAt" = NOW()
-    WHERE "status" = 'LIVE' AND "startTime" > NOW()`, 0);
+    safe(() => prisma.$executeRaw`
+      UPDATE "live_sessions" SET "status" = 'UPCOMING', "updatedAt" = NOW()
+      WHERE "status" = 'LIVE' AND "startTime" > NOW()`, 0),
+  ]);
 
   for (const session of justWentLive) notifyLiveSessionStarted(session).catch(() => {});
 }
@@ -185,6 +200,17 @@ async function listSessions({ status, courseId, instructorId } = {}) {
     [],
   );
   return rows.map(mapSession);
+}
+
+// Count-only path for callers that need a number, not rows. The Dashboard's
+// "live sessions running" KPI used to call listSessions({}) and .filter() the
+// result — that pulled up to 500 rows with two joins across the network to
+// discard all but a count, once in /dashboard/core and again in
+// /dashboard/admin-widgets. Status is still synced first, so the number is
+// exactly the one listSessions() would have produced.
+async function countSessionsByStatus(status) {
+  await syncStatuses();
+  return safe(() => prisma.liveSession.count({ where: { status } }), 0);
 }
 
 async function getSession(id) {
@@ -369,6 +395,7 @@ async function markAttendance(sessionId, records, adminId) {
 
 module.exports = {
   listSessions,
+  countSessionsByStatus,
   getSession,
   createSession,
   updateSession,

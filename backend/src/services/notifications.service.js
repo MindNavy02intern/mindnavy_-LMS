@@ -281,19 +281,37 @@ async function deliverToRecipients({ recipients, title, body, priority, sourceTy
     const overflow = eligible.slice(EMAIL_BLAST_CAP);
     const exempt = bypassPreferences || isQuietHoursExempt({ priority, sourceType });
 
+    // Deferred, not dropped — the retry sweep (server.js, notifications.service
+    // .retryPendingDeliveries) picks QUIET_HOURS rows back up once the window
+    // ends, same PENDING lane BATCH_CAP overflow already uses below.
+    //
+    // Split out of the send loop and written with ONE createMany: these rows are
+    // never emailed now, so unlike the send path below they don't need their id
+    // back, and creating them one-per-recipient inside the loop cost a network
+    // round trip each. A blast that lands inside quiet hours used to pay
+    // EMAIL_BLAST_CAP sequential INSERTs before it did anything else.
+    // ONE evaluation per recipient against ONE fixed timestamp. Calling
+    // isWithinQuietHours() twice (once to build each list) would default `now`
+    // to a fresh Date each time, so a recipient evaluated either side of a
+    // quiet-hours boundary could land in neither list and be silently dropped.
+    const deferred = [];
+    const sendNow  = [];
+    const at = new Date();
     for (const r of toSend) {
-      // Deferred, not dropped — the retry sweep (server.js, notifications.service
-      // .retryPendingDeliveries) picks QUIET_HOURS rows back up once the window
-      // ends, same PENDING lane BATCH_CAP overflow already uses below.
-      if (!exempt && isWithinQuietHours(prefMap.get(r.id))) {
-        await prisma.notificationLog.create({
-          data: {
-            userId: r.id, channel: "EMAIL", status: "PENDING", subject: title, body, priority,
-            sourceType, sourceId, metadata: { reason: "QUIET_HOURS" },
-          },
-        });
-        continue;
-      }
+      if (!exempt && isWithinQuietHours(prefMap.get(r.id), at)) deferred.push(r);
+      else sendNow.push(r);
+    }
+
+    if (deferred.length > 0) {
+      await prisma.notificationLog.createMany({
+        data: deferred.map(r => ({
+          userId: r.id, channel: "EMAIL", status: "PENDING", subject: title, body, priority,
+          sourceType, sourceId, metadata: { reason: "QUIET_HOURS" },
+        })),
+      });
+    }
+
+    for (const r of sendNow) {
       // Log row created BEFORE sending — its id is embedded in the tracking
       // pixel/links, so it has to exist first.
       const log = await prisma.notificationLog.create({

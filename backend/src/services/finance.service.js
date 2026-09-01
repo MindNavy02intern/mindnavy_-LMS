@@ -586,30 +586,79 @@ async function calculatePayouts({ periodStart, periodEnd }, adminId) {
     [],
   );
 
-  const created = [];
-  for (const inst of instructors) {
-    const courses = await prisma.course.findMany({ where: { instructorId: inst.userId }, select: { id: true } });
-    const courseIds = courses.map((c) => c.id);
-    if (courseIds.length === 0) continue;
+  if (instructors.length === 0) {
+    await financeAuditLog(adminId, "PAYOUT_CALCULATED", { count: 0, periodStart: iso(periodStart), periodEnd: iso(periodEnd) });
+    return { created: 0, payouts: [] };
+  }
 
-    const agg = await prisma.payment.aggregate({
-      where: { courseId: { in: courseIds }, status: "SUCCESSFUL", createdAt: { gte: periodStart, lte: periodEnd } },
-      _sum: { amount: true },
-    });
-    const gross = agg._sum.amount ?? 0;
+  // Batched, not per-instructor. This loop used to run three queries for every
+  // instructor (courses → payment aggregate → existing-payout check) plus a
+  // create; against a remote DB that is ~4 network round trips each, so 50
+  // instructors meant 200 sequential round trips and a multi-second request.
+  // The three reads below cover ALL instructors at once and the grouping is
+  // done in memory, which is exact — no sampling, no behaviour change.
+  const instructorIds = instructors.map((i) => i.userId);
+
+  const [allCourses, existingPayouts] = await Promise.all([
+    safe(() => prisma.course.findMany({
+      where: { instructorId: { in: instructorIds } },
+      select: { id: true, instructorId: true },
+    }), []),
+    safe(() => prisma.instructorPayout.findMany({
+      where: { instructorId: { in: instructorIds }, periodStart, periodEnd },
+      select: { instructorId: true },
+    }), []),
+  ]);
+
+  const alreadyPaid = new Set(existingPayouts.map((p) => p.instructorId));
+  const courseIdsByInstructor = new Map();
+  for (const c of allCourses) {
+    if (!courseIdsByInstructor.has(c.instructorId)) courseIdsByInstructor.set(c.instructorId, []);
+    courseIdsByInstructor.get(c.instructorId).push(c.id);
+  }
+
+  // One grouped SUM over every relevant course instead of one aggregate per
+  // instructor. Postgres does the arithmetic; we just bucket the result.
+  const grossByCourse = await safe(() => prisma.payment.groupBy({
+    by: ["courseId"],
+    where: {
+      courseId: { in: allCourses.map((c) => c.id) },
+      status: "SUCCESSFUL",
+      createdAt: { gte: periodStart, lte: periodEnd },
+    },
+    _sum: { amount: true },
+  }), []);
+  const grossByCourseId = new Map(grossByCourse.map((g) => [g.courseId, g._sum.amount ?? 0]));
+
+  const toCreate = [];
+  for (const inst of instructors) {
+    if (alreadyPaid.has(inst.userId)) continue;             // idempotent — same rule as before
+    const courseIds = courseIdsByInstructor.get(inst.userId);
+    if (!courseIds || courseIds.length === 0) continue;
+
+    let gross = 0;
+    for (const id of courseIds) gross += grossByCourseId.get(id) ?? 0;
     if (gross <= 0) continue;
 
     const amount = round2(gross * (inst.revenueShareBps / 10000));
     if (amount <= 0) continue;
 
-    const existing = await prisma.instructorPayout.findFirst({ where: { instructorId: inst.userId, periodStart, periodEnd } });
-    if (existing) continue;
-
-    const payout = await prisma.instructorPayout.create({
-      data: { instructorId: inst.userId, amount, currency: "USD", status: "PENDING", revenueShareBps: inst.revenueShareBps, periodStart, periodEnd },
+    toCreate.push({
+      instructorId: inst.userId,
+      amount,
+      currency: "USD",
+      status: "PENDING",
+      revenueShareBps: inst.revenueShareBps,
+      periodStart,
+      periodEnd,
     });
-    created.push(payout);
   }
+
+  // createManyAndReturn gives us the created rows (needed for the response)
+  // in a single statement, instead of one create() round trip per payout.
+  const created = toCreate.length
+    ? await prisma.instructorPayout.createManyAndReturn({ data: toCreate })
+    : [];
 
   await financeAuditLog(adminId, "PAYOUT_CALCULATED", { count: created.length, periodStart: iso(periodStart), periodEnd: iso(periodEnd) });
   const userMap = await resolveUsers(created.map((p) => p.instructorId));
@@ -823,17 +872,27 @@ async function getTrend(model, whereExtra, amountField, period, dateField = "cre
   return { available: true, labels, values };
 }
 
+// Revenue split by course category. Aggregated per course IN POSTGRES, then
+// folded into categories here — the number of courses is bounded, the number of
+// payments is not. The previous version pulled every SUCCESSFUL payment row
+// ever made into Node to sum them in a loop, which is fine on an empty
+// payments table and ruinous on a real one.
 async function getRevenueByCategory() {
-  const rows = await safe(
-    () => prisma.payment.findMany({ where: { status: "SUCCESSFUL", courseId: { not: null } }, select: { amount: true, courseId: true } }),
+  const byCourse = await safe(
+    () => prisma.payment.groupBy({
+      by: ["courseId"],
+      where: { status: "SUCCESSFUL", courseId: { not: null } },
+      _sum: { amount: true },
+    }),
     [],
   );
-  if (rows.length === 0) return { available: true, items: [] };
-  const courseMap = await resolveCourses(rows.map((r) => r.courseId));
+  if (byCourse.length === 0) return { available: true, items: [] };
+
+  const courseMap = await resolveCourses(byCourse.map((r) => r.courseId));
   const byCat = new Map();
-  for (const r of rows) {
+  for (const r of byCourse) {
     const cat = courseMap.get(r.courseId)?.category ?? "Uncategorized";
-    byCat.set(cat, (byCat.get(cat) ?? 0) + r.amount);
+    byCat.set(cat, (byCat.get(cat) ?? 0) + (r._sum.amount ?? 0));
   }
   return { available: true, items: [...byCat.entries()].map(([name, value]) => ({ name, value: round2(value) })) };
 }
@@ -846,19 +905,30 @@ async function getSubscriptionBreakdown() {
   return { available: true, items: rows.map((r) => ({ name: r.planType, value: r._count._all })) };
 }
 
+// Top 5 courses by lifetime successful revenue. Sums, sorts AND limits in
+// Postgres — the old version loaded every SUCCESSFUL payment row into Node,
+// summed them in a Map and sorted the whole thing just to keep 5 entries.
+const TOP_COURSES_BY_REVENUE_LIMIT = 5;
+
 async function getTopCoursesByRevenue() {
   const rows = await safe(
-    () => prisma.payment.findMany({ where: { status: "SUCCESSFUL", courseId: { not: null } }, select: { amount: true, courseId: true } }),
+    () => prisma.payment.groupBy({
+      by: ["courseId"],
+      where: { status: "SUCCESSFUL", courseId: { not: null } },
+      _sum: { amount: true },
+      orderBy: { _sum: { amount: "desc" } },
+      take: TOP_COURSES_BY_REVENUE_LIMIT,
+    }),
     [],
   );
   if (rows.length === 0) return { available: true, items: [] };
+
   const courseMap = await resolveCourses(rows.map((r) => r.courseId));
-  const byCourse = new Map();
-  for (const r of rows) byCourse.set(r.courseId, (byCourse.get(r.courseId) ?? 0) + r.amount);
-  const items = [...byCourse.entries()]
-    .map(([courseId, value]) => ({ courseId, title: courseMap.get(courseId)?.title ?? null, value: round2(value) }))
-    .sort((a, b) => b.value - a.value)
-    .slice(0, 5);
+  const items = rows.map((r) => ({
+    courseId: r.courseId,
+    title:    courseMap.get(r.courseId)?.title ?? null,
+    value:    round2(r._sum.amount ?? 0),
+  }));
   return { available: true, items };
 }
 

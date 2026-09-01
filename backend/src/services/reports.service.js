@@ -67,9 +67,21 @@ function buildTrendBuckets(gte, lte) {
   return buckets;
 }
 
-// Count rows per bucket for a model+dateField, one query per bucket (bounded
-// by buildTrendBuckets' cap — at most ~13 buckets for a quarter). Optional
+// Count rows per bucket for a model+dateField, ONE QUERY PER BUCKET. Optional
 // extra `where` merged into every bucket query.
+//
+// COST WARNING — the bucket count is not as small as it looks. buildTrendBuckets
+// only switches to a weekly step above 62 days, so a quarter really is ~13
+// buckets, but the common 30-day range is 30 buckets and a 62-day range is 62.
+// getLearnerAnalytics calls this three times, so that endpoint alone issues ~90
+// COUNT queries per request. They run in parallel, so the latency is far below
+// 90 round trips, but it is still ~100 statements against the DB to draw one
+// chart, and it is the main reason GET /reports/learners sits near a second.
+//
+// Fixing it properly means one grouped query per series (date_trunc + GROUP BY,
+// which Prisma can't express without raw SQL for an arbitrary `where`), or
+// capping the bucket count and accepting coarser chart granularity. Both are
+// judgement calls about the product, so neither is done here.
 async function countByBuckets(model, dateField, buckets, where = {}) {
   const counts = await Promise.all(
     buckets.map((b) => safe(() => model.count({ where: { ...where, [dateField]: { gte: b.from, lt: b.to } } }), 0)),

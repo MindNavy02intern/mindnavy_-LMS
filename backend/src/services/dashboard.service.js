@@ -1,6 +1,9 @@
 const prisma = require("../config/prisma");
 const { Prisma } = require("@prisma/client");
-const { listSessions: listLiveSessions } = require("./liveSessions.service");
+const {
+  listSessions: listLiveSessions,
+  countSessionsByStatus: countLiveSessionsByStatus,
+} = require("./liveSessions.service");
 // Total Revenue / Active Subscriptions are OWNED here (IMPACT_MAP §4a) but
 // COMPUTED by finance.service — the same aggregate finance.service's own
 // getStats() calls, so the two endpoints can never drift (R4, blueprint 09 §1
@@ -134,7 +137,7 @@ async function getDashboardCore(admin) {
     activeSubscriptions,
     certificatesIssued,
     recentActivitiesRaw,
-    liveSessionRows,
+    liveSessionsRunning,
     notificationsRaw,
     unreadNotificationsCount,
     pendingInstructorApps,
@@ -159,10 +162,13 @@ async function getDashboardCore(admin) {
         admin: { select: { fullName: true } },
       },
     }).catch(() => []),
-    // Real live sessions — same status-synced query GET /live-sessions uses
+    // Real live sessions — same status-synced source GET /live-sessions uses
     // (LIVE_SESSIONS_CONTRACT.md). Was previously counting app-user LOGIN
     // sessions, unrelated to actual live classes (fixed 2026-07-27).
-    listLiveSessions({}).catch(() => []),
+    // COUNT, not a row fetch: this KPI is a single number, and listSessions()
+    // was shipping up to 500 rows with two joins across the network just to
+    // .filter().length them here.
+    countLiveSessionsByStatus("LIVE").catch(() => 0),
     // Notifications preview — was reading AuditLog (fake: isRead hardcoded
     // false, title derived from admin *actions*, not actual notifications).
     // Real source is NotificationLog{channel:IN_APP} — the same table the
@@ -181,8 +187,6 @@ async function getDashboardCore(admin) {
     // reused here, not redefined, so this count can't drift from that module's.
     prisma.instructorApplication.count({ where: { status: { in: ["PENDING", "CHANGES_REQUESTED"] } } }).catch(() => 0),
   ]);
-
-  const liveSessionsRunning = liveSessionRows.filter((s) => s.status === "LIVE").length;
 
   return {
     welcome: {
@@ -208,8 +212,11 @@ async function getDashboardCore(admin) {
       activeSubscriptions,
       certificatesIssued,
       // Real LiveSession count (status LIVE). NOTE: this is a SEPARATE query
-      // from getDashboardAdminWidgets' activeCount below — both filter the
-      // same table via the same status-derivation logic, but core and
+      // from getDashboardAdminWidgets' activeCount below — that one filters
+      // rows it already needs for the calendar/items widgets, this one is a
+      // plain COUNT, but both run after the same syncStatuses() so they derive
+      // from identical status logic. Core and
+      // admin-widgets are independent HTTP endpoints with no shared
       // admin-widgets are independent HTTP endpoints with no shared
       // request-scoped cache, so the two numbers could theoretically differ
       // by whatever a session's status changes in the gap between the two
@@ -300,7 +307,7 @@ async function getDashboardAnalytics(filters = {}) {
     rawCompletedTrend,
     retentionEligibleCount,
     retentionRetainedCount,
-    enrollmentsWithCourse,
+    enrollmentGroups,
   ] = await Promise.all([
     prisma.appUser.groupBy({ by: ["role"],              _count: { _all: true }, where: { status: { not: "ARCHIVED" }, ...scope } }),
     prisma.appUser.groupBy({ by: ["department"],        _count: { _all: true }, where: { department: { not: null }, ...scope } }),
@@ -347,8 +354,16 @@ async function getDashboardAnalytics(filters = {}) {
     // Course Completion's averageCompletion/categories from ONE real query —
     // same "one datum, one owner" principle as elsewhere on this dashboard,
     // so the two widgets can never show two different numbers for the same thing.
-    prisma.courseEnrollment.findMany({
-      select: { status: true, courseId: true, course: { select: { title: true, category: true } } },
+    //
+    // GROUPED, not a row dump. This was previously a findMany with no `where`
+    // and no `take` that fetched EVERY enrollment row ever created, each with a
+    // course join, on every /dashboard/analytics request — the single
+    // worst-scaling query in the app. Counting per (courseId, status) is the
+    // only thing the consumers below actually need, and the result set is
+    // bounded by the number of courses rather than by enrollment volume.
+    prisma.courseEnrollment.groupBy({
+      by: ["courseId", "status"],
+      _count: { _all: true },
     }).catch(() => []),
   ]);
 
@@ -422,25 +437,43 @@ async function getDashboardAnalytics(filters = {}) {
     : null;
 
   // Course Analytics + Course Completion — both derived from the SAME
-  // enrollmentsWithCourse rows fetched above (single source, can't drift).
-  const totalEnrollments     = enrollmentsWithCourse.length;
-  const completedEnrollments = enrollmentsWithCourse.filter((e) => e.status === "COMPLETED").length;
+  // enrollmentGroups aggregate fetched above (single source, can't drift).
+  //
+  // Titles/categories are looked up for the distinct course ids that actually
+  // appear in the aggregate — one bounded query instead of the join that used
+  // to ride along on every enrollment row.
+  const enrolledCourseIds = [...new Set(enrollmentGroups.map((g) => g.courseId).filter(Boolean))];
+  const enrolledCourses = enrolledCourseIds.length
+    ? await prisma.course.findMany({
+        where: { id: { in: enrolledCourseIds } },
+        select: { id: true, title: true, category: true },
+      }).catch(() => [])
+    : [];
+  const courseById = new Map(enrolledCourses.map((c) => [c.id, c]));
+
+  let totalEnrollments = 0;
+  let completedEnrollments = 0;
+  const courseEnrollCounts = {}; // courseId -> { count, title }
+  const categoryStats = {};      // category -> { total, completed }
+  for (const g of enrollmentGroups) {
+    const n = g._count._all;
+    totalEnrollments += n;
+    if (g.status === "COMPLETED") completedEnrollments += n;
+
+    if (g.courseId) {
+      const c = courseEnrollCounts[g.courseId] ??= { count: 0, title: courseById.get(g.courseId)?.title ?? null };
+      c.count += n;
+    }
+    const cat = courseById.get(g.courseId)?.category ?? "Uncategorized";
+    const s = categoryStats[cat] ??= { total: 0, completed: 0 };
+    s.total += n;
+    if (g.status === "COMPLETED") s.completed += n;
+  }
+
   const averageCompletionRate = totalEnrollments > 0
     ? Math.round((completedEnrollments / totalEnrollments) * 1000) / 10
     : null;
 
-  const courseEnrollCounts = {}; // courseId -> { count, title }
-  const categoryStats = {};      // category -> { total, completed }
-  for (const e of enrollmentsWithCourse) {
-    if (e.courseId) {
-      const c = courseEnrollCounts[e.courseId] ??= { count: 0, title: e.course?.title ?? null };
-      c.count += 1;
-    }
-    const cat = e.course?.category ?? "Uncategorized";
-    const s = categoryStats[cat] ??= { total: 0, completed: 0 };
-    s.total += 1;
-    if (e.status === "COMPLETED") s.completed += 1;
-  }
   const mostPopularCourse = Object.values(courseEnrollCounts)
     .sort((a, b) => b.count - a.count)[0]?.title ?? null;
   const completionCategories = Object.entries(categoryStats)

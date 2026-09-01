@@ -254,19 +254,22 @@ async function getStats() {
   const now = new Date();
   const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  const integrations = await listIntegrations();
+  // All four reads go out together. listIntegrations() used to be awaited on
+  // its own line first, which cost an extra serial round trip to a remote DB
+  // for no reason — none of the counts below depend on its result.
+  const [integrations, apiUsageToday, webhookActivityToday, syncsToday] = await Promise.all([
+    listIntegrations(),
+    safe(() => prisma.integrationLog.count({ where: { type: "API_CALL", createdAt: { gte: startToday } } }), 0),
+    safe(() => prisma.integrationLog.count({ where: { type: "WEBHOOK", createdAt: { gte: startToday } } }), 0),
+    safe(() => prisma.dataSync.count({ where: { startedAt: { gte: startToday } } }), 0),
+  ]);
+
   const activeCount = integrations.filter((i) => i.status === "CONNECTED").length;
   const errorCount  = integrations.filter((i) => i.status === "ERROR").length;
 
   const realSlugs = Object.keys(REAL_PROVIDERS);
   const connectedRealCount = integrations.filter((i) => REAL_PROVIDERS[i.slug] && i.status === "CONNECTED").length;
   const healthScore = realSlugs.length ? Math.round((connectedRealCount / realSlugs.length) * 100) : null;
-
-  const [apiUsageToday, webhookActivityToday, syncsToday] = await Promise.all([
-    safe(() => prisma.integrationLog.count({ where: { type: "API_CALL", createdAt: { gte: startToday } } }), 0),
-    safe(() => prisma.integrationLog.count({ where: { type: "WEBHOOK", createdAt: { gte: startToday } } }), 0),
-    safe(() => prisma.dataSync.count({ where: { startedAt: { gte: startToday } } }), 0),
-  ]);
 
   return {
     activeIntegrations: metric(activeCount),
@@ -286,36 +289,39 @@ async function getAnalytics() {
     days.push(d);
   }
   const labels = days.map((d) => d.toLocaleDateString(undefined, { month: "short", day: "numeric" }));
-  const values = await Promise.all(days.map((d) => {
+  // Both 7-day series fire as ONE batch of 14, not two sequential batches of
+  // 7 — the webhook series never depended on the API_CALL series. (WEBHOOK
+  // backs the Dashboard tab's "Webhook Activity" bar chart: daily call volume,
+  // not just a rate.)
+  const dayCount = (type, d) => {
     const next = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
-    return safe(() => prisma.integrationLog.count({ where: { type: "API_CALL", createdAt: { gte: d, lt: next } } }), 0);
-  }));
-  // Same 7-day shape as apiUsageTrend, WEBHOOK type — backs the Dashboard
-  // tab's "Webhook Activity" bar chart (daily call volume, not just a rate).
-  const webhookValues = await Promise.all(days.map((d) => {
-    const next = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
-    return safe(() => prisma.integrationLog.count({ where: { type: "WEBHOOK", createdAt: { gte: d, lt: next } } }), 0);
-  }));
-
+    return safe(() => prisma.integrationLog.count({ where: { type, createdAt: { gte: d, lt: next } } }), 0);
+  };
   const since30d = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-  const [webhookTotal, webhookSuccess] = await Promise.all([
+  // Everything this endpoint needs that doesn't depend on another result goes
+  // out in ONE batch. These used to be three sequential await stages (day
+  // series → webhook totals → top integrations), each paying its own network
+  // round trip to a remote DB for no reason.
+  const [values, webhookValues, webhookTotal, webhookSuccess, topGroups] = await Promise.all([
+    Promise.all(days.map((d) => dayCount("API_CALL", d))),
+    Promise.all(days.map((d) => dayCount("WEBHOOK", d))),
     safe(() => prisma.integrationLog.count({ where: { type: "WEBHOOK", createdAt: { gte: since30d } } }), 0),
     safe(() => prisma.integrationLog.count({ where: { type: "WEBHOOK", status: "SUCCESS", createdAt: { gte: since30d } } }), 0),
+    // orderBy must reference the SAME field named in _count (Prisma requires
+    // the aggregate shape to match) — _count.integrationId here, not _all.
+    safe(() => prisma.integrationLog.groupBy({
+      by: ["integrationId"],
+      where: { createdAt: { gte: since30d } },
+      _count: { integrationId: true },
+      orderBy: { _count: { integrationId: "desc" } },
+      take: 5,
+    }), []),
   ]);
+
   const webhookSuccessRate = webhookTotal > 0
     ? metric(Math.round((webhookSuccess / webhookTotal) * 100))
     : unavailable("No webhook activity in the last 30 days.");
-
-  // orderBy must reference the SAME field named in _count (Prisma requires
-  // the aggregate shape to match) — _count.integrationId here, not _all.
-  const topGroups = await safe(() => prisma.integrationLog.groupBy({
-    by: ["integrationId"],
-    where: { createdAt: { gte: since30d } },
-    _count: { integrationId: true },
-    orderBy: { _count: { integrationId: "desc" } },
-    take: 5,
-  }), []);
   let topIntegrations;
   if (topGroups.length === 0) {
     topIntegrations = { available: false, reason: "No usage recorded in the last 30 days.", items: [] };

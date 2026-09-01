@@ -53,6 +53,24 @@ const { checkExpiringSubscriptions } = require("./src/services/finance.service")
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+// Proxy awareness — OFF by default, opt in with TRUST_PROXY in .env.
+//
+// Deployed behind nginx / a load balancer / a PaaS router, every request
+// arrives from the proxy's own address, so req.ip is that one address for the
+// entire user base. The IP-keyed limiters (login, OTP, the two /api/public/*
+// surfaces) would then share a single bucket across all users and start 429ing
+// everyone — the classic "the site randomly stops letting people log in".
+//
+// Left off by default on purpose: trusting X-Forwarded-For when NOT actually
+// behind a proxy is worse than the problem it fixes, because any client can
+// then forge the header and reset its own rate-limit counter. Set TRUST_PROXY
+// to the number of proxies in front of this server (usually 1), or to a
+// specific address/CIDR — never to `true` in production.
+if (process.env.TRUST_PROXY) {
+  const raw = process.env.TRUST_PROXY;
+  app.set("trust proxy", /^\d+$/.test(raw) ? Number(raw) : raw);
+}
+
 // Middlewares
 const corsOptions = {
   origin: /^http:\/\/localhost(:\d+)?$/,
