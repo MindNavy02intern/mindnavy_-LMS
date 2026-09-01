@@ -24,7 +24,19 @@ async function sendMessage(req, res) {
 async function getMessages(req, res) {
   const recipientId = req.query.recipientId;
 
-  if (!recipientId || typeof recipientId !== "string" || !UUID_REGEX.test(recipientId.trim())) {
+  // No recipientId → the caller wants their own outbox (e.g. the admin
+  // topbar's Messages panel), not one user's inbox.
+  if (!recipientId) {
+    try {
+      const result = await messagesService.getSentMessages(req.admin.id, req.query);
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error("[messages] getSentMessages error:", error.message, error.stack);
+      return res.status(500).json({ success: false, message: "Failed to fetch messages." });
+    }
+  }
+
+  if (typeof recipientId !== "string" || !UUID_REGEX.test(recipientId.trim())) {
     return res.status(400).json({ success: false, message: "recipientId query param must be a valid UUID." });
   }
 

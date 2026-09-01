@@ -97,6 +97,40 @@ async function sendAdminMessage(body, admin = {}) {
   };
 }
 
+// Outbox — messages this admin has sent, across all recipients. Distinct from
+// getAdminMessages below (one recipient's inbox): there is no admin-facing
+// "inbox" concept in this schema (AdminMessage is one-way admin→user), so a
+// personal admin message feed can only ever be "what I sent", not "what I
+// received".
+async function getSentMessages(adminId, query = {}) {
+  const page     = Math.max(1, parseInt(query.page) || 1);
+  const rawLimit = parseInt(query.limit);
+  const limit    = isNaN(rawLimit) || rawLimit < 1 || rawLimit > 50 ? 10 : rawLimit;
+  const skip     = (page - 1) * limit;
+
+  const [total, rows] = await Promise.all([
+    prisma.adminMessage.count({ where: { senderAdminId: adminId } }),
+    prisma.adminMessage.findMany({
+      where:   { senderAdminId: adminId },
+      orderBy: { createdAt: "desc" },
+      skip,
+      take:    limit,
+      select:  { ...MESSAGE_SELECT, receiverUser: { select: { fullName: true } } },
+    }),
+  ]);
+
+  return {
+    success:    true,
+    messages:   rows.map((m) => ({ ...mapMessage(m), receiverName: m.receiverUser?.fullName ?? null })),
+    pagination: {
+      page,
+      limit,
+      total,
+      pages: total === 0 ? 0 : Math.ceil(total / limit),
+    },
+  };
+}
+
 async function getAdminMessages(recipientId, query = {}) {
   const receiver = await prisma.appUser.findUnique({
     where:  { id: recipientId },
@@ -132,4 +166,4 @@ async function getAdminMessages(recipientId, query = {}) {
   };
 }
 
-module.exports = { sendAdminMessage, getAdminMessages };
+module.exports = { sendAdminMessage, getAdminMessages, getSentMessages };

@@ -232,7 +232,7 @@ function LearningActivityChart({ data }: { data: LearningActivityItem[] }) {
         Appears once courses and enrollments are configured.
       </p>
       <button
-        onClick={() => navigate('/courses')}
+        onClick={() => navigate('/learning-management?tab=courses')}
         style={{
           padding: '5px 12px', background: '#3b82f6', color: 'white',
           border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '0.72rem',
@@ -252,6 +252,10 @@ function LearningActivityChart({ data }: { data: LearningActivityItem[] }) {
   const W = 500, H = 130, PAD_L = 34, PAD_B = 22, PAD_T = 8, PAD_R = 8;
   const cW = W - PAD_L - PAD_R, cH = H - PAD_B - PAD_T;
   const n = data.length;
+  // Cap X-axis labels at ~8 regardless of range length (a 30/90-day window
+  // otherwise renders one label per day and they overlap into mush).
+  const MAX_LABELS = 8;
+  const labelStep = Math.max(1, Math.ceil(n / MAX_LABELS));
   const toX = (i: number) => PAD_L + (i / (n - 1)) * cW;
   const toY = (v: number) => PAD_T + cH - (v / maxV) * cH;
   const ptE = enrolled.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
@@ -288,7 +292,9 @@ function LearningActivityChart({ data }: { data: LearningActivityItem[] }) {
       <circle cx={toX(n - 1)} cy={toY(enrolled[n - 1])}  r="3" fill="#2563eb" />
       <circle cx={toX(n - 1)} cy={toY(completed[n - 1])} r="3" fill="#16a34a" />
       {labels.map((lbl, i) => (
-        <text key={lbl} x={toX(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="Inter,sans-serif">{lbl}</text>
+        (i % labelStep === 0 || i === n - 1) && (
+          <text key={i} x={toX(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="Inter,sans-serif">{lbl}</text>
+        )
       ))}
     </svg>
   );
@@ -892,7 +898,10 @@ export default function DashboardPage() {
     if (isRefresh) setRefreshing(true);
     else { setLoading(true); setError(null); }
     try {
-      const d = await getDashboardCore();
+      const d = await getDashboardCore({
+        dateFrom: appliedFilters.dateFrom || null,
+        dateTo:   appliedFilters.dateTo   || null,
+      });
       setData(d);
       setError(null);
     } catch {
@@ -901,7 +910,7 @@ export default function DashboardPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [appliedFilters]);
 
   const fetchAnalytics = useCallback(async () => {
     setAnalyticsLoading(true);
@@ -1164,10 +1173,10 @@ export default function DashboardPage() {
           ) : perfOverview ? (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               {[
-                { label: 'Avg. Score',   value: `${perfOverview.averageScore.toFixed(1)}%`,    color: '#2563eb' },
-                { label: 'Pass Rate',    value: `${perfOverview.passRate.toFixed(1)}%`,         color: '#16a34a' },
-                { label: 'Engagement',   value: `${perfOverview.engagement.toFixed(1)}%`,       color: '#8b5cf6' },
-                { label: 'Satisfaction', value: `${perfOverview.satisfaction.toFixed(1)}/5`,    color: '#f59e0b' },
+                { label: 'Avg. Score',   value: perfOverview.averageScore != null ? `${perfOverview.averageScore.toFixed(1)}%` : 'Not available yet', color: '#2563eb' },
+                { label: 'Pass Rate',    value: perfOverview.passRate     != null ? `${perfOverview.passRate.toFixed(1)}%`     : 'Not available yet', color: '#16a34a' },
+                { label: 'Engagement',   value: perfOverview.engagement   != null ? `${perfOverview.engagement.toFixed(1)}%`   : 'Not available yet', color: '#8b5cf6' },
+                { label: 'Satisfaction', value: perfOverview.satisfaction != null ? `${perfOverview.satisfaction.toFixed(1)}/5`: 'Not available yet', color: '#f59e0b' },
               ].map(m => (
                 <div key={m.label} style={{ background: '#f8fafc', borderRadius: 8, padding: '8px 10px' }}>
                   <div style={{ fontSize: '0.625rem', color: '#64748b', marginBottom: 4 }}>{m.label}</div>

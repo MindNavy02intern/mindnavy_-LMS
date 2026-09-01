@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import AdminLayout from '../../layouts/AdminLayout';
 import { useTabParam } from '../../hooks/useTabParam';
 import { useToast, ToastContainer } from '../../components/users/Toast';
@@ -55,6 +56,19 @@ export default function NotificationsPage() {
   const [announcementOpen, setAnnouncementOpen] = useState(false);
   const [templateOpen, setTemplateOpen] = useState(false);
   const [automationOpen, setAutomationOpen] = useState(false);
+
+  // Deep link from Quick Actions (?modal=send) — same query-param-opens-modal
+  // convention as /users?modal=addUser. Only 'modal' is cleared so the
+  // ?tab= this page's own tab state lives in is left untouched.
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    if (searchParams.get('modal') === 'send') {
+      setSendOpen(true);
+      const next = new URLSearchParams(searchParams);
+      next.delete('modal');
+      setSearchParams(next, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   const [refreshSignal, setRefreshSignal] = useState(0);
   function bumpRefresh() { setRefreshSignal(s => s + 1); }

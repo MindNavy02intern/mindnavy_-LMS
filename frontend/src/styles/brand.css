@@ -21,6 +21,11 @@
   --mn-blue-600: #0284c7;
   --mn-blue-glow: rgba(14, 165, 233, 0.14);
 
+  /* Admin-configurable brand primary — overridden at runtime via
+     applyPrimaryColor() (src/lib/theme.ts) from SystemSettings.primaryColor */
+  --color-primary: var(--mn-blue-500);
+  --color-primary-glow: var(--mn-blue-glow);
+
   /* Accent — Teal */
   --mn-teal-400: #22d3ee;
   --mn-teal-500: #06b6d4;
@@ -200,8 +205,8 @@ a { color: inherit; }
 .mn-btn-primary {
   display: block;
   width: 100%;
-  background: linear-gradient(135deg, var(--mn-blue-600) 0%, var(--mn-blue-500) 100%);
-  border: 1px solid rgba(14, 165, 233, 0.25);
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
   border-radius: var(--mn-r-sm);
   color: #fff;
   font-family: inherit;
@@ -215,8 +220,8 @@ a { color: inherit; }
 }
 
 .mn-btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, var(--mn-blue-500) 0%, var(--mn-teal-500) 100%);
-  box-shadow: 0 0 24px var(--mn-blue-glow), 0 4px 16px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.1);
+  box-shadow: 0 0 24px var(--color-primary-glow), 0 4px 16px rgba(0, 0, 0, 0.35);
   transform: translateY(-1px);
 }
 
@@ -258,9 +263,9 @@ a { color: inherit; }
 }
 
 .mn-btn-outline:hover {
-  border-color: var(--mn-blue-500);
-  color: var(--mn-blue-400);
-  background: var(--mn-blue-glow);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-glow);
 }
 
 /* ── Alerts ─────────────────────────────────────────────────── */
@@ -333,7 +338,7 @@ a { color: inherit; }
 }
 
 .mn-nav-link.active {
-  background: #2563eb;
+  background: var(--color-primary);
   color: #ffffff;
   border-color: transparent;
 }
@@ -662,8 +667,8 @@ a { color: inherit; }
 .mn-spinner {
   width: 38px;
   height: 38px;
-  border: 3px solid rgba(14, 165, 233, 0.12);
-  border-top-color: var(--mn-blue-500);
+  border: 3px solid var(--color-primary-glow);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: mn-spin 0.65s linear infinite;
 }
@@ -1000,7 +1005,7 @@ a { color: inherit; }
 .mn-resend-btn {
   background: transparent;
   border: none;
-  color: var(--mn-blue-400);
+  color: var(--color-primary);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -1279,7 +1284,7 @@ a { color: inherit; }
 
 .mn-btn-primary:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 0 28px rgba(14, 165, 233, 0.3), 0 6px 18px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 28px var(--color-primary-glow), 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 .mn-btn-primary:active:not(:disabled) {
@@ -1301,7 +1306,7 @@ a { color: inherit; }
 
 .mn-nav-link.active::before { content: none; }
 
-.mn-nav-link.active { box-shadow: 0 2px 8px rgba(37,99,235,0.35); }
+.mn-nav-link.active { box-shadow: 0 2px 8px var(--color-primary-glow); }
 
 /* ── Nav badge (notification count) ────────────────────────── */
 
@@ -1646,9 +1651,9 @@ a { color: inherit; }
 }
 
 .mn-filter-btn.active {
-  background: var(--mn-blue-glow);
-  border-color: rgba(14,165,233,0.25);
-  color: var(--mn-blue-400);
+  background: var(--color-primary-glow);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 /* ── Auth page animation ─────────────────────────────────────── */
@@ -1832,9 +1837,9 @@ a { color: inherit; }
   border-color: #e5e7eb;
 }
 .mn-main-light .mn-btn-outline:hover {
-  background: #eff6ff;
-  border-color: #2563eb;
-  color: #2563eb;
+  background: var(--color-primary-glow);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 .mn-main-light .mn-btn-ghost {
   color: #374151;
@@ -1848,8 +1853,8 @@ a { color: inherit; }
 
 /* Spinner */
 .mn-main-light .mn-spinner {
-  border-color: rgba(37,99,235,0.12);
-  border-top-color: #2563eb;
+  border-color: var(--color-primary-glow);
+  border-top-color: var(--color-primary);
 }
 
 /* Empty state */
@@ -1925,9 +1930,9 @@ a { color: inherit; }
   white-space: nowrap;
 }
 .mn-topbar-qa-btn:hover {
-  background: #eff6ff;
-  border-color: #2563eb;
-  color: #2563eb;
+  background: var(--color-primary-glow);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .mn-topbar-profile {
@@ -2068,7 +2073,7 @@ a { color: inherit; }
   line-height: 1.4;
   transition: background 0.12s ease;
 }
-.mn-qa-dropdown-item:hover { background: #f8fafc; color: #2563eb; }
+.mn-qa-dropdown-item:hover { background: #f8fafc; color: var(--color-primary); }
 
 /* ═══════════════════════════════════════════════════════════════
    DASHBOARD PAGE — new light components
@@ -2126,7 +2131,7 @@ a { color: inherit; }
   transition: var(--mn-t);
   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
-.mn-db-refresh-btn:hover:not(:disabled) { background: #eff6ff; border-color: #2563eb; color: #2563eb; }
+.mn-db-refresh-btn:hover:not(:disabled) { background: var(--color-primary-glow); border-color: var(--color-primary); color: var(--color-primary); }
 .mn-db-refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* ── Light KPI cards ────────────────────────────────────────── */
@@ -2244,7 +2249,7 @@ a { color: inherit; }
   border: none;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #2563eb;
+  color: var(--color-primary);
   cursor: pointer;
   padding: 0;
   font-family: inherit;
@@ -2401,10 +2406,10 @@ a { color: inherit; }
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 .mn-db-qa-btn:hover {
-  background: #eff6ff;
-  border-color: #93c5fd;
+  background: var(--color-primary-glow);
+  border-color: var(--color-primary);
   transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(37,99,235,0.1);
+  box-shadow: 0 4px 12px var(--color-primary-glow);
   text-decoration: none;
 }
 
@@ -2421,8 +2426,8 @@ a { color: inherit; }
   transition: background 0.18s ease, border-color 0.18s ease;
 }
 .mn-db-qa-btn:hover .mn-db-qa-icon {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   color: #ffffff;
 }
 
@@ -2433,7 +2438,7 @@ a { color: inherit; }
   text-align: center;
   line-height: 1.3;
 }
-.mn-db-qa-btn:hover .mn-db-qa-label { color: #1d4ed8; }
+.mn-db-qa-btn:hover .mn-db-qa-label { color: var(--color-primary); }
 
 /* ── Skeleton loading ───────────────────────────────────────── */
 
@@ -2703,8 +2708,8 @@ a { color: inherit; }
 }
 
 .mn-quick-action-btn:hover {
-  background: var(--mn-blue-glow);
-  border-color: rgba(14, 165, 233, 0.22);
+  background: var(--color-primary-glow);
+  border-color: var(--color-primary);
   transform: translateY(-2px);
   text-decoration: none;
 }
@@ -2722,7 +2727,7 @@ a { color: inherit; }
   letter-spacing: 0.02em;
 }
 
-.mn-quick-action-btn:hover .mn-qa-label { color: var(--mn-blue-400); }
+.mn-quick-action-btn:hover .mn-qa-label { color: var(--color-primary); }
 
 /* ── System health ──────────────────────────────────────────── */
 
