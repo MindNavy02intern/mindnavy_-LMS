@@ -25,7 +25,7 @@ export default function CreateEditAutomationModal({ mode, automation, onClose, o
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    listTemplates({ status: 'ACTIVE', limit: 100 }).then(res => setTemplates(res.items)).catch(() => {});
+    listTemplates({ status: 'ACTIVE', limit: 100 }).then(res => setTemplates(res.items)).catch(err => console.error(err));
   }, []);
 
   function toggleChannel(c: NotificationChannelType) {

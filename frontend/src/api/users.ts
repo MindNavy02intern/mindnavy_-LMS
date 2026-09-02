@@ -20,6 +20,7 @@ import type {
   UserDataExport,
 } from '../types/users';
 import { getStoredToken } from './adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
@@ -87,7 +88,7 @@ export async function getUsers(params: UsersParams = {}): Promise<UsersResponse>
   try {
     const headers: Record<string, string> = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(url, { headers });
+    const res = await fetchWithRetry(url, { headers });
     if (res.ok) return await res.json() as UsersResponse;
     const body = await res.json().catch(() => null);
     throw new ApiError(res.status, (body as { message?: string })?.message ?? `HTTP ${res.status}`);
@@ -113,7 +114,7 @@ async function actionFetch<T = ActionResponse>(
   if (body !== undefined) headers['Content-Type'] = 'application/json';
 
   try {
-    const res = await fetch(url, {
+    const res = await fetchWithRetry(url, {
       method,
       headers,
       ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
@@ -171,7 +172,7 @@ export async function getUserDetails(userId: string): Promise<UserDetailsRespons
   try {
     const headers: Record<string, string> = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(url, { headers });
+    const res = await fetchWithRetry(url, { headers });
     if (res.ok) return await res.json() as UserDetailsResponse;
     const body = await res.json().catch(() => null);
     throw new ApiError(res.status, (body as { message?: string })?.message ?? `HTTP ${res.status}`);
@@ -191,7 +192,7 @@ export async function importUsers(file: File): Promise<ImportResult> {
   try {
     const importHeaders: Record<string, string> = {};
     if (token) importHeaders['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(`${BASE_URL}/users/import`, {
+    const res = await fetchWithRetry(`${BASE_URL}/users/import`, {
       method: 'POST',
       headers: importHeaders,
       body: formData,
@@ -216,7 +217,7 @@ export async function bulkAction(body: {
   try {
     const bulkHeaders: Record<string, string> = { 'Content-Type': 'application/json' };
     if (token) bulkHeaders['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(`${BASE_URL}/users/bulk-action`, {
+    const res = await fetchWithRetry(`${BASE_URL}/users/bulk-action`, {
       method:  'POST',
       headers: bulkHeaders,
       body: JSON.stringify(body),
@@ -247,7 +248,7 @@ export async function exportAllUsers(params: ExportParams = {}): Promise<{ users
   try {
     const headers: Record<string, string> = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(url, { headers });
+    const res = await fetchWithRetry(url, { headers });
     if (res.ok) return await res.json() as { users: User[]; total: number };
     const body = await res.json().catch(() => null);
     throw new ApiError(res.status, (body as { message?: string })?.message ?? `HTTP ${res.status}`);
@@ -277,7 +278,7 @@ export async function getInvitations(params: InvitationParams = {}): Promise<Inv
   try {
     const headers: Record<string, string> = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(`${BASE_URL}/invitations?${qs.toString()}`, { headers });
+    const res = await fetchWithRetry(`${BASE_URL}/invitations?${qs.toString()}`, { headers });
     if (res.ok) return await res.json() as InvitationsResponse;
     const body = await res.json().catch(() => null);
     throw new ApiError(res.status, (body as { message?: string })?.message ?? `HTTP ${res.status}`);
@@ -310,7 +311,7 @@ export async function getAnalytics(): Promise<AnalyticsResponse> {
   try {
     const analyticsHeaders: Record<string, string> = {};
     if (token) analyticsHeaders['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(`${BASE_URL}/users/analytics?_t=${Date.now()}`, {
+    const res = await fetchWithRetry(`${BASE_URL}/users/analytics?_t=${Date.now()}`, {
       headers: analyticsHeaders,
     });
     if (res.ok) {
@@ -332,7 +333,7 @@ async function getFetch<T>(url: string): Promise<T> {
   try {
     const headers: Record<string, string> = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(url, { headers });
+    const res = await fetchWithRetry(url, { headers });
     if (res.ok) return await res.json() as T;
     const body = await res.json().catch(() => null);
     throw new ApiError(res.status, (body as { message?: string })?.message ?? `HTTP ${res.status}`);

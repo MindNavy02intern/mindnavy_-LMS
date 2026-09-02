@@ -36,8 +36,8 @@ export default function DashboardTab({ refreshSignal }: { refreshSignal: number 
 
   useEffect(() => { fetchData(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [range, refreshSignal]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('financeUpdated', fetchData);
+    return () => window.removeEventListener('financeUpdated', fetchData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [range]);
 

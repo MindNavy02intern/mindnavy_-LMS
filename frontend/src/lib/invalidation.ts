@@ -1233,38 +1233,76 @@ export const INVALIDATION_MAP: Record<MutationName, (ctx?: MutationCtx) => Query
 // which query-key domains are being invalidated. Remove per-component as each
 // migrates to useQuery + QueryClientProvider.
 
+// Domain (queryKey[0]) -> the granular event(s) it fires. A domain not
+// listed here falls through to the 'analyticsUpdated' catch-all (still
+// correct for genuinely cross-cutting consumers like ReportsOverviewTab/
+// AuditLogsTab, which intentionally need to know about almost anything).
+// IMPORTANT: this only ever sees a mutation's OWN keys (see invalidateFor
+// below) — §2 DEFAULT_KEYS (activity/notifications/dashboard.stats, added
+// to nearly every mutation) are deliberately excluded from this computation,
+// otherwise every domain would still resolve through 'notifications' or
+// 'dashboard' and the catch-all would never actually narrow. This was the
+// real mechanical cause of the "one click = 5-12 calls" bug: DEFAULT_KEYS
+// guaranteed an else-bucket domain (and therefore analyticsUpdated) on
+// literally every mutation, regardless of what the mutation actually was.
+const DOMAIN_EVENTS: Record<string, string[]> = {
+  org:                    ['organizationUpdated', 'userDataChanged'],
+  groups:                 ['groupsUpdated', 'userDataChanged'],
+  roles:                  ['rolesUpdated'],
+  'role-templates':       ['rolesUpdated'],
+  'role-assignments':     ['rolesUpdated'],
+  'permission-matrix':    ['rolesUpdated'],
+  policies:               ['rolesUpdated'],
+  users:                  ['userDataChanged'],
+  admins:                 ['userDataChanged'],
+  students:               ['userDataChanged'],
+  enrollments:            ['userDataChanged'],
+  billing:                ['userDataChanged'],
+  'support-tickets':      ['userDataChanged'],
+  learners:               ['learnersUpdated', 'userDataChanged'],
+  instructors:            ['instructorsUpdated'],
+  'instructor-applications': ['instructorsUpdated'],
+  finance:                ['financeUpdated'],
+  plans:                  ['financeUpdated'],
+  subscriptions:          ['financeUpdated'],
+  invoices:               ['financeUpdated'],
+  payouts:                ['financeUpdated'],
+  coupons:                ['financeUpdated'],
+  tax:                    ['financeUpdated'],
+  gateways:               ['financeUpdated'],
+  transactions:           ['financeUpdated'],
+  competencies:           ['competenciesUpdated'],
+  integrations:           ['integrationsUpdated'],
+  'api-keys':             ['integrationsUpdated'],
+  webhooks:               ['integrationsUpdated'],
+  campaigns:              ['notificationsUpdated'],
+  'notification-templates': ['notificationsUpdated'],
+  notifications:          ['notificationsUpdated'],
+  reports:                ['reportsUpdated'],
+  'report-schedules':     ['reportsUpdated'],
+  courses:                ['coursesUpdated'],
+  categories:             ['coursesUpdated'],
+  'learning-paths':       ['coursesUpdated'],
+  quizzes:                ['coursesUpdated'],
+  assignments:            ['coursesUpdated'],
+  'content-library':      ['coursesUpdated'],
+  certificates:           ['certificatesUpdated'],
+  'certificate-templates': ['certificatesUpdated'],
+  attendance:             ['attendanceUpdated'],
+  settings:               ['settingsUpdated'],
+};
+
 function dispatchBridgeEvents(keys: QueryKey[]): void {
   const toDispatch = new Set<string>();
 
   for (const key of keys) {
     const domain = key[0] as string;
-
-    if (domain === 'org') {
-      toDispatch.add('organizationUpdated');
-      toDispatch.add('userDataChanged');
-      toDispatch.add('analyticsUpdated');
-    } else if (domain === 'groups') {
-      toDispatch.add('groupsUpdated');
-      toDispatch.add('userDataChanged');
-      toDispatch.add('analyticsUpdated');
-    } else if (
-      domain === 'roles' || domain === 'role-templates' ||
-      domain === 'role-assignments' || domain === 'permission-matrix' ||
-      domain === 'policies'
-    ) {
-      toDispatch.add('rolesUpdated');
-      toDispatch.add('analyticsUpdated');
-    } else if (
-      domain === 'users' || domain === 'admins' ||
-      domain === 'students' || domain === 'enrollments' ||
-      domain === 'billing' || domain === 'support-tickets'
-    ) {
-      toDispatch.add('userDataChanged');
-      toDispatch.add('analyticsUpdated');
+    const mapped = DOMAIN_EVENTS[domain];
+    if (mapped) {
+      mapped.forEach(event => toDispatch.add(event));
     } else {
-      // dashboard, courses, categories, learning-paths, certificates,
-      // activity, notifications, approvals, tasks, finance, integrations,
-      // settings, security, competencies, instructors, live-sessions, etc.
+      // dashboard, activity, approvals, tasks, security, live-sessions, etc. —
+      // no dedicated consumer narrow enough to warrant its own event yet.
       toDispatch.add('analyticsUpdated');
     }
   }
@@ -1305,5 +1343,6 @@ export function invalidateFor(
   allKeys.forEach(key => queryClient.invalidateQueries({ queryKey: key }));
 
   // Bridge: notify raw-fetch components via custom events during migration.
-  dispatchBridgeEvents(allKeys);
+  // Deliberately extraKeys, NOT allKeys — see DOMAIN_EVENTS comment above.
+  dispatchBridgeEvents(extraKeys);
 }

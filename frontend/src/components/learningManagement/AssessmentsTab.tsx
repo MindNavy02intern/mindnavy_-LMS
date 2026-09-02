@@ -1189,7 +1189,7 @@ export default function AssessmentsTab({ openCreateOnMount }: AssessmentsTabProp
           const map: Record<string, string> = {};
           for (const c of r.courses) map[c.id] = c.title;
           setCourseTitles(map);
-        }).catch(() => {});
+        }).catch(err => console.error(err));
       }
     } catch (err) {
       if (err instanceof QuizApiError && err.status === 401) { navigate('/login'); return; }

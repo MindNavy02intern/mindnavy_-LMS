@@ -21,7 +21,7 @@ export default function PaymentTab({ showToast, refreshSignal }: Props) {
     setLoading(true);
     Promise.all([listIntegrations(), getFinanceStats()])
       .then(([rows, stats]) => { if (!cancelled) { setItems(rows.filter(r => r.category === 'PAYMENT')); setFinance(stats); } })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

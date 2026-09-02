@@ -103,8 +103,8 @@ export default function TaxManagementTab({ showToast, refreshSignal, autoOpenCre
 
   useEffect(() => { fetchList(); }, [fetchList, refreshSignal]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchList);
-    return () => window.removeEventListener('analyticsUpdated', fetchList);
+    window.addEventListener('financeUpdated', fetchList);
+    return () => window.removeEventListener('financeUpdated', fetchList);
   }, [fetchList]);
 
   async function handleDelete(rule: TaxRule) {

@@ -3,6 +3,7 @@
 // USE_MOCK flag, same fetch wrapper shape, Bearer auth.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   Enrollment,
   EnrollmentListData,
@@ -34,7 +35,7 @@ async function enrollFetch<T>(
   body?:  unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/enrollments${path}`, {
+  const res = await fetchWithRetry(`${BASE}/enrollments${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

@@ -89,7 +89,7 @@ export default function StorageTab({ showToast, refreshSignal, onBumpRefresh }: 
     setLoading(true);
     listIntegrations()
       .then(rows => { if (!cancelled) setSupabase(rows.find(r => r.slug === 'supabase') ?? null); })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

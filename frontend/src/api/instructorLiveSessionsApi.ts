@@ -5,6 +5,7 @@
 
 import { getStoredInstructorToken } from './instructorAuth';
 import { InstructorApiError } from '../types/instructors';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   LiveSession,
   LiveSessionListParams,
@@ -22,7 +23,7 @@ async function instructorLiveSessionsFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

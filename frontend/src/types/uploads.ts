@@ -31,11 +31,10 @@ export interface UploadConfirmResponse {
 
 // Typed API error so callers can branch on status code without parsing strings.
 export class UploadApiError extends Error {
-  constructor(
-    public readonly status: number,
-    message: string,
-  ) {
+  readonly status: number;
+  constructor(status: number, message: string) {
     super(message);
+    this.status = status;
     this.name = 'UploadApiError';
   }
 }

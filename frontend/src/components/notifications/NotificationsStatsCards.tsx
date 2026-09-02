@@ -102,8 +102,8 @@ export default function NotificationsStatsCards({ refreshSignal }: { refreshSign
         .finally(() => { if (!cancelled) setLoading(false); });
     }
     fetchStats();
-    window.addEventListener('analyticsUpdated', fetchStats);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', fetchStats); };
+    window.addEventListener('notificationsUpdated', fetchStats);
+    return () => { cancelled = true; window.removeEventListener('notificationsUpdated', fetchStats); };
   }, [refreshSignal]);
 
   if (error) {

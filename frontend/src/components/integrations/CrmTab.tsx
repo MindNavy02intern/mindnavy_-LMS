@@ -22,7 +22,7 @@ export default function CrmTab({ showToast, refreshSignal }: Props) {
     setLoading(true);
     listIntegrations()
       .then(rows => { if (!cancelled) setItems(rows.filter(r => r.category === 'CRM')); })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

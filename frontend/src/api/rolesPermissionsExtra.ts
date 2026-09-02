@@ -2,6 +2,7 @@
 // had zero backend (DEFERRED_ITEMS.md). Same fetch/error shape as
 // rolesPage.ts / accessPoliciesPage.ts.
 import { getStoredToken } from './adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
@@ -18,7 +19,7 @@ export class RolesPermissionsExtraError extends Error {
 
 async function apiFetch<T>(path: string, method = 'GET', body?: unknown): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

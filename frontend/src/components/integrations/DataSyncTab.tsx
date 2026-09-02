@@ -40,7 +40,7 @@ export default function DataSyncTab({ showToast, refreshSignal, onBumpRefresh }:
         setConnected(conn);
         if (conn.length > 0 && !targetSlug) setTargetSlug(conn[0].slug);
       })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps

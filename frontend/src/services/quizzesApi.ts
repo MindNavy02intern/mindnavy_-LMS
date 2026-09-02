@@ -9,6 +9,7 @@
 // validators}/quizzes.*.js (verified live against a running server).
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   Quiz,
   QuizDetail,
@@ -43,7 +44,7 @@ async function quizFetch<T>(
   body?:  unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/quizzes${path}`, {
+  const res = await fetchWithRetry(`${BASE}/quizzes${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

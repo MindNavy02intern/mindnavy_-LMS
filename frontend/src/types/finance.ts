@@ -157,7 +157,14 @@ export interface CreateCouponRequest {
   code: string; type: CouponType; value: number;
   maxUses?: number; minPurchaseAmount?: number; applicableCourseIds?: string[]; expiresAt?: string;
 }
-export type UpdateCouponRequest = Partial<Omit<CreateCouponRequest, 'code'>>;
+// maxUses/minPurchaseAmount/expiresAt: omitted = leave unchanged, null =
+// clear the field — matches backend finance.validator.js's tri-state
+// handling (body.field === null ? null : parsed), not a plain Partial.
+export type UpdateCouponRequest = Partial<Omit<CreateCouponRequest, 'code' | 'maxUses' | 'minPurchaseAmount' | 'expiresAt'>> & {
+  maxUses?: number | null;
+  minPurchaseAmount?: number | null;
+  expiresAt?: string | null;
+};
 
 // ── Tax Rules ─────────────────────────────────────────────────────────────
 

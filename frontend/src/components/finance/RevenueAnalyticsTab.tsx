@@ -31,8 +31,8 @@ export default function RevenueAnalyticsTab({ refreshSignal }: { refreshSignal: 
 
   useEffect(() => { fetchData(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [period, refreshSignal]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('financeUpdated', fetchData);
+    return () => window.removeEventListener('financeUpdated', fetchData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 

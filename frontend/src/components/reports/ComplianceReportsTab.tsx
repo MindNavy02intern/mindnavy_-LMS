@@ -40,7 +40,7 @@ export default function ComplianceReportsTab({ showToast }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => { getDepartments({ limit: 100 }).then(res => setDepartments(res.departments.map(d => ({ id: d.id, name: d.name })))).catch(() => {}); }, []);
+  useEffect(() => { getDepartments({ limit: 100 }).then(res => setDepartments(res.data.map(d => ({ id: d.id, name: d.name })))).catch(err => console.error(err)); }, []);
 
   const fetchData = useCallback(() => {
     setLoading(true);
@@ -53,9 +53,16 @@ export default function ComplianceReportsTab({ showToast }: Props) {
   }, [departmentId]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
+  // Compliance Violations = USER_SUSPENDED audit events; At-risk = learners
+  // AT_RISK_THRESHOLD proxy — needs both domains, not the old
+  // 'analyticsUpdated' catch-all.
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('userDataChanged', fetchData);
+    window.addEventListener('learnersUpdated', fetchData);
+    return () => {
+      window.removeEventListener('userDataChanged', fetchData);
+      window.removeEventListener('learnersUpdated', fetchData);
+    };
   }, [fetchData]);
 
   return (

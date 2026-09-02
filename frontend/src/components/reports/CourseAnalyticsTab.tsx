@@ -56,8 +56,8 @@ export default function CourseAnalyticsTab({ showToast }: Props) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('coursesUpdated', fetchData);
+    return () => window.removeEventListener('coursesUpdated', fetchData);
   }, [fetchData]);
 
   return (

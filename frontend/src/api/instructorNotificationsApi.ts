@@ -2,6 +2,7 @@
 // /api/instructor/notifications.
 
 import { getStoredInstructorToken } from './instructorAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   InstructorNotification, ListMyNotificationsResult,
   NotificationPreferences, NotificationPreferencesUpdate,
@@ -20,7 +21,7 @@ export class InstructorNotificationsApiError extends Error {
 
 async function notificationsFetch<T>(path: string, method: 'GET' | 'PATCH' = 'GET', body?: unknown): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),

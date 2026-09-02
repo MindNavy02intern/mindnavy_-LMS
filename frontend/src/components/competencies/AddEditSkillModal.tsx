@@ -45,7 +45,7 @@ export default function AddEditSkillModal({ mode, skill, onClose, onSuccess, sho
   const [submitting,  setSubmitting]  = useState(false);
 
   useEffect(() => {
-    listSkillCategories().then(tree => setCategories(flattenCategories(tree))).catch(() => {});
+    listSkillCategories().then(tree => setCategories(flattenCategories(tree))).catch(err => console.error(err));
   }, []);
 
   useEffect(() => {

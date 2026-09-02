@@ -13,5 +13,7 @@ router.get("/", requireInstructorAuth, coursesReadRateLimiter, c.listStudents);
 router.get("/:id", requireInstructorAuth, coursesReadRateLimiter, c.getStudent);
 router.get("/:id/assessments", requireInstructorAuth, coursesReadRateLimiter, c.getAssessments);
 router.get("/:id/attendance", requireInstructorAuth, coursesReadRateLimiter, c.getAttendance);
+router.get("/:id/certificates", requireInstructorAuth, coursesReadRateLimiter, c.getCertificates);
+router.get("/:id/activity", requireInstructorAuth, coursesReadRateLimiter, c.getActivity);
 
 module.exports = router;

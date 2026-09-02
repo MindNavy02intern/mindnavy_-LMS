@@ -87,7 +87,7 @@ export default function InstructorsPage() {
   // normally fetches tabCounts) isn't mounted while the Pending tab is
   // showing, so pull a fresh count directly.
   function refreshTabCountsInBackground() {
-    listInstructors({ tab: 'all', limit: 1 }).then(res => setTabCounts(res.tabCounts)).catch(() => {});
+    listInstructors({ tab: 'all', limit: 1 }).then(res => setTabCounts(res.tabCounts)).catch(err => console.error(err));
   }
 
   function badgeFor(key: PageTab): number | undefined {

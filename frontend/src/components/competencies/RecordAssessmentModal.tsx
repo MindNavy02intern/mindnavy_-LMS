@@ -41,7 +41,7 @@ export default function RecordAssessmentModal({ skillId, skillName, onClose, onS
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!skillId) listSkills({ limit: 100 }).then(res => setSkills(res.skills)).catch(() => {});
+    if (!skillId) listSkills({ limit: 100 }).then(res => setSkills(res.skills)).catch(err => console.error(err));
   }, [skillId]);
 
   // Prefill from Settings' "Default assessment type" — best-effort, falls
@@ -51,7 +51,7 @@ export default function RecordAssessmentModal({ skillId, skillName, onClose, onS
     let cancelled = false;
     getCompetencySettings()
       .then(s => { if (!cancelled && !typeTouchedRef.current) setType(s.defaultAssessmentType); })
-      .catch(() => {});
+      .catch(err => console.error(err));
     return () => { cancelled = true; };
   }, []);
 
@@ -67,7 +67,7 @@ export default function RecordAssessmentModal({ skillId, skillName, onClose, onS
     const t = setTimeout(() => {
       getUsers({ search: userSearch.trim(), limit: 8 })
         .then(res => { if (!cancelled) setUserOptions(res.users.map(u => ({ id: u.id, fullName: u.fullName, email: u.email }))); })
-        .catch(() => {});
+        .catch(err => console.error(err));
     }, 250);
     return () => { cancelled = true; clearTimeout(t); };
   }, [userSearch]);

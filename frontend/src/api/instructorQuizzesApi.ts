@@ -5,6 +5,7 @@
 // the payload — it's forced server-side from the URL's :id.
 
 import { getStoredInstructorToken } from './instructorAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   Quiz,
   QuizDetail,
@@ -33,7 +34,7 @@ async function quizFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

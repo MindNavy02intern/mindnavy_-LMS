@@ -27,13 +27,14 @@ export function FeatureFlagsProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     function load() {
-      getFeatureFlags().then(setFlags).catch(() => {}).finally(() => setLoading(false));
+      getFeatureFlags().then(setFlags).catch(err => console.error(err)).finally(() => setLoading(false));
     }
     load();
-    // Same bridge event every other stats/settings-driven panel in this app
-    // listens to (AdminLayout's unread badge, Dashboard, Reports tabs, ...).
-    window.addEventListener('analyticsUpdated', load);
-    return () => window.removeEventListener('analyticsUpdated', load);
+    // Narrowed from the old 'analyticsUpdated' catch-all — feature flags
+    // only change via featureToggle.set (queryKeys.settings('features')),
+    // so 'settingsUpdated' is the correct, precise signal.
+    window.addEventListener('settingsUpdated', load);
+    return () => window.removeEventListener('settingsUpdated', load);
   }, []);
 
   return (

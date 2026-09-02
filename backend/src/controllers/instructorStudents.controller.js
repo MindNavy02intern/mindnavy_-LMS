@@ -101,9 +101,31 @@ const getAttendance = run(async (req, res) => {
   return res.json({ success: true, data: result });
 });
 
+const getCertificates = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "studentId");
+  if (idErr) return badRequest(res, idErr);
+  const result = await svc.getMyStudentCertificates(req.instructor.id, req.params.id, {
+    page: num(req.query.page),
+    limit: num(req.query.limit),
+  });
+  return res.json({ success: true, data: result });
+});
+
+const getActivity = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "studentId");
+  if (idErr) return badRequest(res, idErr);
+  const result = await svc.getMyStudentActivity(req.instructor.id, req.params.id, {
+    page: num(req.query.page),
+    limit: num(req.query.limit),
+  });
+  return res.json({ success: true, data: result });
+});
+
 module.exports = {
   listStudents,
   getStudent,
   getAssessments,
   getAttendance,
+  getCertificates,
+  getActivity,
 };

@@ -3,6 +3,7 @@
 
 import { getStoredInstructorToken } from './instructorAuth';
 import type { InstructorMessage, InstructorMessageReply, ListMyMessagesResult } from '../types/instructorMessages';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const BASE = import.meta.env.VITE_INSTRUCTOR_API_BASE_URL2 ?? 'http://localhost:5001/api/instructor';
 
@@ -17,7 +18,7 @@ export class InstructorMessagesApiError extends Error {
 
 async function messagesFetch<T>(path: string, method: 'GET' | 'PATCH' | 'POST' = 'GET', body?: unknown): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),

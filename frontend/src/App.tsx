@@ -1,8 +1,9 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import ProtectedRoute from './routes/ProtectedRoute';
 import InstructorProtectedRoute from './routes/InstructorProtectedRoute';
 import { InstructorAuthProvider } from './context/InstructorAuthContext';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const LoginPage          = lazy(() => import('./pages/LoginPage'));
 const SignupPage         = lazy(() => import('./pages/SignupPage'));
@@ -83,9 +84,13 @@ function PageLoader() {
   );
 }
 
-export default function App() {
+// Keyed by pathname so navigating away from a route that crashed remounts a
+// fresh ErrorBoundary automatically, instead of the error staying stuck
+// until the "Retry" button is clicked.
+function AppRoutes() {
+  const location = useLocation();
   return (
-    <BrowserRouter>
+    <ErrorBoundary key={location.pathname}>
       <Suspense fallback={<PageLoader />}>
       <Routes>
         {/* Root → redirect to dashboard (ProtectedRoute redirects to /login if not signed in) */}
@@ -373,6 +378,14 @@ export default function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
