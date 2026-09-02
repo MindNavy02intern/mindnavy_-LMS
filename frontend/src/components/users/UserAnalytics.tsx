@@ -39,8 +39,8 @@ export default function UserAnalytics() {
 
   useEffect(() => {
     const handler = () => fetch();
-    window.addEventListener('analyticsUpdated', handler);
-    return () => window.removeEventListener('analyticsUpdated', handler);
+    window.addEventListener('userDataChanged', handler);
+    return () => window.removeEventListener('userDataChanged', handler);
   }, [fetch]);
 
   if (error) {

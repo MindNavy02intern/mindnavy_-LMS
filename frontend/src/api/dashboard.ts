@@ -1,4 +1,5 @@
 import { getStoredToken } from './adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   AdminWidgetsResponse,
   DashboardAnalyticsResponse,
@@ -20,7 +21,7 @@ export async function getDashboardCore(params: DashboardCoreParams = {}): Promis
   if (params.dateFrom) qs.set('dateFrom', params.dateFrom);
   if (params.dateTo)   qs.set('dateTo',   params.dateTo);
   qs.set('_t', String(Date.now()));
-  const res = await fetch(`${BASE_URL}/dashboard/core?${qs.toString()}`, {
+  const res = await fetchWithRetry(`${BASE_URL}/dashboard/core?${qs.toString()}`, {
     headers: { Authorization: token ? `Bearer ${token}` : '' },
   });
   if (!res.ok) {
@@ -47,7 +48,7 @@ export async function getDashboardAnalytics(
   if (params.dateTo)       qs.set('dateTo',       params.dateTo);
   if (params.departmentId) qs.set('departmentId', params.departmentId);
   const query = qs.toString();
-  const res = await fetch(
+  const res = await fetchWithRetry(
     `${BASE_URL}/dashboard/analytics${query ? `?${query}` : ''}`,
     { headers: { Authorization: token ? `Bearer ${token}` : '' } },
   );
@@ -77,7 +78,7 @@ export async function getAdminWidgets(
   if (params.departmentId) qs.set('departmentId', params.departmentId);
   if (params.courseId)     qs.set('courseId',     params.courseId);
   const query = qs.toString();
-  const res = await fetch(
+  const res = await fetchWithRetry(
     `${BASE_URL}/dashboard/admin-widgets${query ? `?${query}` : ''}`,
     { headers: { Authorization: token ? `Bearer ${token}` : '' } },
   );

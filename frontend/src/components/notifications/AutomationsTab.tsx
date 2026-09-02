@@ -27,16 +27,16 @@ export default function AutomationsTab({ showToast, refreshSignal, onBumpRefresh
       setLoading(true);
       listAutomations({ limit: 100 })
         .then(res => { if (!cancelled) setItems(res.items); })
-        .catch(() => {})
+        .catch(err => console.error(err))
         .finally(() => { if (!cancelled) setLoading(false); });
     }
     load();
     // sentCount increments server-side from source services this tab has no
     // other signal for (a user registering, an enrollment completing, ...) —
     // without this, an already-open tab shows a stale count until remounted.
-    window.addEventListener('analyticsUpdated', load);
+    window.addEventListener('notificationsUpdated', load);
     window.addEventListener('userDataChanged', load);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', load); window.removeEventListener('userDataChanged', load); };
+    return () => { cancelled = true; window.removeEventListener('notificationsUpdated', load); window.removeEventListener('userDataChanged', load); };
   }, [refreshSignal]);
 
   async function handleToggle(a: NotificationAutomation) {

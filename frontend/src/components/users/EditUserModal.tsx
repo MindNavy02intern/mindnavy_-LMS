@@ -68,7 +68,7 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
     (() => setGroupsLoading(true))();
     groupsAPI.listGroups({ limit: 200, status: 'ACTIVE' })
       .then(res => setGroups(res.data.map(g => ({ id: g.id, name: g.name, dept: g.department?.name ?? null }))))
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => setGroupsLoading(false));
 
     (() => setManagersLoading(true))();
@@ -83,7 +83,7 @@ export default function EditUserModal({ userId, initialData, onClose, onSuccess,
           r.value.users.forEach(u => { if (!seen.has(u.id)) { seen.add(u.id); combined.push({ id: u.id, fullName: u.fullName, role: u.role }); } });
       });
       setManagers(combined);
-    }).catch(() => {})
+    }).catch(err => console.error(err))
       .finally(() => setManagersLoading(false));
   }, []);
 

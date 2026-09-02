@@ -87,8 +87,8 @@ export default function PayoutsTab({ showToast, refreshSignal, autoOpenCalculate
   useEffect(() => { fetchList(); }, [fetchList, refreshSignal]);
   useEffect(() => { setPage(1); }, [status]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchList);
-    return () => window.removeEventListener('analyticsUpdated', fetchList);
+    window.addEventListener('financeUpdated', fetchList);
+    return () => window.removeEventListener('financeUpdated', fetchList);
   }, [fetchList]);
 
   async function runAction(action: (id: string) => Promise<unknown>, p: InstructorPayout, mutation: 'payout.approve' | 'payout.hold' | 'payout.complete', successMsg: string) {

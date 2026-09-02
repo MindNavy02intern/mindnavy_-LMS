@@ -688,7 +688,7 @@ export default function ContentLibraryTab({ openUploadOnMount }: ContentLibraryT
   }
 
   useEffect(() => {
-    listCourses({ limit: 200 }).then((r) => setCourses(r.courses.filter((c) => c.status !== 'Archived'))).catch(() => {});
+    listCourses({ limit: 200 }).then((r) => setCourses(r.courses.filter((c) => c.status !== 'Archived'))).catch(err => console.error(err));
   }, []);
 
   const load = useCallback(async () => {

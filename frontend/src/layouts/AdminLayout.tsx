@@ -448,19 +448,21 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
       applyPrimaryColor(s.primaryColor);
       applyLogo(s.logoUrl);
       applyFavicon(s.faviconUrl);
-    }).catch(() => {});
+    }).catch(err => console.error(err));
   }, []);
 
   // Sidebar badge — real unread count from the in-app notifications feed
-  // (Notifications module, channel=IN_APP). Refetches on every mutation via
-  // the same 'analyticsUpdated' bridge every other stats panel listens to.
+  // (Notifications module, channel=IN_APP). Narrowed from the old
+  // 'analyticsUpdated' catch-all to 'notificationsUpdated' — this only
+  // needs to refetch when an actual notification/campaign mutation ran,
+  // not on every unrelated mutation in the app.
   useEffect(() => {
     function fetchUnread() {
-      listNotifications({ read: false, limit: 1 }).then(res => setUnreadCount(res.total)).catch(() => {});
+      listNotifications({ read: false, limit: 1 }).then(res => setUnreadCount(res.total)).catch(err => console.error(err));
     }
     fetchUnread();
-    window.addEventListener('analyticsUpdated', fetchUnread);
-    return () => window.removeEventListener('analyticsUpdated', fetchUnread);
+    window.addEventListener('notificationsUpdated', fetchUnread);
+    return () => window.removeEventListener('notificationsUpdated', fetchUnread);
   }, []);
 
   // "Mark all read" — real PATCH /notifications/read-all (no userId = every
@@ -504,7 +506,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
         type:      'system',
         createdAt: n.createdAt,
       }))))
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => setNotifsLoading(false));
   }, [notifOpen]);
 
@@ -528,7 +530,7 @@ export default function AdminLayout({ children, pageTitle: _pageTitle = 'Dashboa
     })
       .then(r => r.ok ? r.json() : Promise.resolve({ messages: [] }))
       .then(d => { if (fetchId === msgsFetchIdRef.current) setMessages(d.messages ?? []); })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (fetchId === msgsFetchIdRef.current) setMsgsLoading(false); });
   }
 

@@ -48,7 +48,7 @@ export default function GenerateApiKeyModal({ onClose, onSuccess, showToast }: P
 
   function handleCopy() {
     if (!createdKey) return;
-    navigator.clipboard.writeText(createdKey).then(() => setCopied(true)).catch(() => {});
+    navigator.clipboard.writeText(createdKey).then(() => setCopied(true)).catch(err => console.error(err));
   }
 
   function handleDone() {

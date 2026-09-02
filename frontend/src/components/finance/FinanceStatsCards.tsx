@@ -92,8 +92,8 @@ export default function FinanceStatsCards({ refreshSignal }: { refreshSignal: nu
         .finally(() => { if (!cancelled) setLoading(false); });
     }
     fetchStats();
-    window.addEventListener('analyticsUpdated', fetchStats);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', fetchStats); };
+    window.addEventListener('financeUpdated', fetchStats);
+    return () => { cancelled = true; window.removeEventListener('financeUpdated', fetchStats); };
   }, [refreshSignal]);
 
   if (error) return <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, padding: '12px 16px', fontSize: 13, color: '#b91c1c' }}>{error}</div>;

@@ -271,7 +271,7 @@ export default function EnrollmentsTab() {
   }
 
   useEffect(() => {
-    listCourses({ limit: 200 }).then((r) => setCourses(r.courses)).catch(() => {});
+    listCourses({ limit: 200 }).then((r) => setCourses(r.courses)).catch(err => console.error(err));
   }, []);
 
   const load = useCallback(async () => {

@@ -66,8 +66,8 @@ export default function AssessmentReportsTab({ showToast }: Props) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('coursesUpdated', fetchData);
+    return () => window.removeEventListener('coursesUpdated', fetchData);
   }, [fetchData]);
 
   const donutData = data && data.passRate.available ? [

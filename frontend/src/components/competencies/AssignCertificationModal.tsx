@@ -42,8 +42,8 @@ export default function AssignCertificationModal({ skillId, skillName, onClose, 
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!skillId) listSkills({ limit: 100 }).then(res => setSkills(res.skills)).catch(() => {});
-    listFrameworks({ limit: 100, status: 'ACTIVE' }).then(res => setFrameworks(res.frameworks)).catch(() => {});
+    if (!skillId) listSkills({ limit: 100 }).then(res => setSkills(res.skills)).catch(err => console.error(err));
+    listFrameworks({ limit: 100, status: 'ACTIVE' }).then(res => setFrameworks(res.frameworks)).catch(err => console.error(err));
   }, [skillId]);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function AssignCertificationModal({ skillId, skillName, onClose, 
     const t = setTimeout(() => {
       getUsers({ search: userSearch.trim(), limit: 8 })
         .then(res => { if (!cancelled) setUserOptions(res.users.map(u => ({ id: u.id, fullName: u.fullName, email: u.email }))); })
-        .catch(() => {});
+        .catch(err => console.error(err));
     }, 250);
     return () => { cancelled = true; clearTimeout(t); };
   }, [userSearch]);

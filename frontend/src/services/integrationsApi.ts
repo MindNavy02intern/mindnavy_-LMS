@@ -2,6 +2,7 @@
 // fetch-wrapper convention as notificationsApi.ts.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   IntegrationsApiError,
   type ActionResult,
@@ -31,7 +32,7 @@ async function integrationsFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ async function integrationsAction<T>(
   body?: unknown,
 ): Promise<ActionResult<T>> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

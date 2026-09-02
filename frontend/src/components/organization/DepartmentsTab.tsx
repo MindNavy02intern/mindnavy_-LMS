@@ -56,7 +56,7 @@ function DepartmentModal({ initial, branches, onClose, onSaved, showToast }: Mod
   useEffect(() => {
     getUsers({ limit: 100 })
       .then(r => setUsers(r.users.map(u => ({ id: u.id, fullName: u.fullName, email: u.email }))))
-      .catch(() => {});
+      .catch(err => console.error(err));
   }, []);
 
   const set = (k: keyof CreateDepartmentBody) =>
@@ -319,7 +319,7 @@ export default function DepartmentsTab({ showToast }: Props) {
   useEffect(() => {
     getBranches({ limit: 100 })
       .then(r => setBranches(r.data.map(b => ({ id: b.id, name: b.name }))))
-      .catch(() => {});
+      .catch(err => console.error(err));
   }, []);
 
   const load = useCallback(() => {

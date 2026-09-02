@@ -1,3 +1,4 @@
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 // Instructor auth API — separate from adminAuth.ts by design (Section 0 of
 // INSTRUCTOR_DASHBOARD_BLUEPRINT.docx): a different audience, a different
 // backend session table (AppUserSession, not AdminSession), and a different
@@ -44,7 +45,7 @@ export function removeInstructorToken(): void {
 
 async function instructorFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
   const { headers: optHeaders, ...rest } = options;
-  const res = await fetch(`${INSTRUCTOR_API}${path}`, {
+  const res = await fetchWithRetry(`${INSTRUCTOR_API}${path}`, {
     ...rest,
     headers: { 'Content-Type': 'application/json', ...optHeaders },
   });
@@ -72,7 +73,7 @@ export async function apiGetInstructorMe(token: string): Promise<{ instructor: I
 
 export async function apiInstructorLogout(token: string): Promise<void> {
   // Best-effort — clear local state regardless of whether the server responds.
-  await instructorFetch('/logout', { method: 'POST', headers: bearer(token) }).catch(() => {});
+  await instructorFetch('/logout', { method: 'POST', headers: bearer(token) }).catch(err => console.error(err));
 }
 
 export interface ChangePasswordResult {
@@ -86,7 +87,7 @@ export interface ChangePasswordResult {
 // needs to show inline, not as a thrown error. Only a genuine transport/
 // session failure throws.
 export async function apiInstructorChangePassword(token: string, currentPassword: string, newPassword: string): Promise<ChangePasswordResult> {
-  const res = await fetch(`${INSTRUCTOR_API}/password`, {
+  const res = await fetchWithRetry(`${INSTRUCTOR_API}/password`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json', ...bearer(token) },
     body: JSON.stringify({ currentPassword, newPassword }),

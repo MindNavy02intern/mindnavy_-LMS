@@ -35,7 +35,7 @@ export default function TemplatesTab({ showToast, refreshSignal, onBumpRefresh, 
     setLoading(true);
     listTemplates({ type: type || undefined, category: category || undefined, search: search || undefined, page, limit })
       .then(res => { if (!cancelled) { setItems(res.items); setTotal(res.total); } })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [type, category, search, page, refreshSignal]);

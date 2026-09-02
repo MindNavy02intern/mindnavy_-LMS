@@ -77,9 +77,15 @@ export default function LearningProgressTab({ showToast }: Props) {
   }, [dateRange, customFrom, customTo]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
+  // Combines learner + course analytics (Promise.all above) — needs both
+  // domains' events, not the old 'analyticsUpdated' catch-all.
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('learnersUpdated', fetchData);
+    window.addEventListener('coursesUpdated', fetchData);
+    return () => {
+      window.removeEventListener('learnersUpdated', fetchData);
+      window.removeEventListener('coursesUpdated', fetchData);
+    };
   }, [fetchData]);
 
   const progressItems = learner ? Object.entries(learner.progressDistribution) : [];

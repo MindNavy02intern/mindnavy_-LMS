@@ -122,7 +122,7 @@ export default function CompanyRolesTab({ showToast }: { showToast: (type: Toast
   }, [showToast]);
 
   useEffect(() => { fetchList(); }, [fetchList]);
-  useEffect(() => { getCompanyRolePermissionCatalog().then(setCatalog).catch(() => {}); }, []);
+  useEffect(() => { getCompanyRolePermissionCatalog().then(setCatalog).catch(err => console.error(err)); }, []);
 
   const handleSuccess = () => { setCreateOpen(false); setEditRole(null); fetchList(); };
 

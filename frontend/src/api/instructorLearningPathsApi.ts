@@ -4,6 +4,7 @@
 
 import { getStoredInstructorToken } from './instructorAuth';
 import type { MyLearningPathRow, MyLearningPathDetail } from '../types/instructorLearningPaths';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const BASE = import.meta.env.VITE_INSTRUCTOR_API_BASE_URL2 ?? 'http://localhost:5001/api/instructor';
 
@@ -18,7 +19,7 @@ export class InstructorLearningPathsApiError extends Error {
 
 async function pathsFetch<T>(path: string): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
   });
 

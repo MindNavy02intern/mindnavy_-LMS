@@ -15,7 +15,7 @@ export default function MarketplaceTab({ showToast, refreshSignal, onNavigate }:
     setLoading(true);
     listIntegrations()
       .then(rows => { if (!cancelled) setItems(rows); })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

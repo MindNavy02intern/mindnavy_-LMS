@@ -62,7 +62,7 @@ export default function CreateEditAnnouncementModal({ mode, announcement, onClos
   useEffect(() => {
     if (audience !== 'CUSTOM' && audience !== 'DEPARTMENTS' && audience !== 'GROUPS') return;
     if (audience === 'DEPARTMENTS' && targetSearch.trim().length === 0) {
-      getDepartments({ limit: 20 }).then(res => setTargetOptions(res.data.map(d => ({ id: d.id, label: d.name })))).catch(() => {});
+      getDepartments({ limit: 20 }).then(res => setTargetOptions(res.data.map(d => ({ id: d.id, label: d.name })))).catch(err => console.error(err));
       return;
     }
     if (targetSearch.trim().length < 2) { setTargetOptions([]); return; }
@@ -71,13 +71,13 @@ export default function CreateEditAnnouncementModal({ mode, announcement, onClos
       if (audience === 'CUSTOM') {
         getUsers({ search: targetSearch.trim(), limit: 8 }).then(res => {
           if (!cancelled) setTargetOptions(res.users.map(u => ({ id: u.id, label: `${u.fullName} (${u.email})` })));
-        }).catch(() => {});
+        }).catch(err => console.error(err));
       } else if (audience === 'DEPARTMENTS') {
         getDepartments({ search: targetSearch.trim(), limit: 10 }).then(res => {
           if (!cancelled) setTargetOptions(res.data.map(d => ({ id: d.id, label: d.name })));
-        }).catch(() => {});
+        }).catch(err => console.error(err));
       } else if (audience === 'GROUPS') {
-        fetchGroups(targetSearch.trim()).then(opts => { if (!cancelled) setTargetOptions(opts); }).catch(() => {});
+        fetchGroups(targetSearch.trim()).then(opts => { if (!cancelled) setTargetOptions(opts); }).catch(err => console.error(err));
       }
     }, 250);
     return () => { cancelled = true; clearTimeout(t); };

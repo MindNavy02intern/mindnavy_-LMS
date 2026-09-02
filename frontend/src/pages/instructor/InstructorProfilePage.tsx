@@ -352,7 +352,7 @@ export function CertificationsTab() {
     try {
       let path: string | undefined;
       if (file) {
-        const signed = await signMyCertificationUpload({ fileName: file.name });
+        const signed = await signMyCertificationUpload({ fileName: file.name, fileType: file.type });
         await uploadToSignedUrl(signed.uploadUrl, file);
         path = signed.path;
       }

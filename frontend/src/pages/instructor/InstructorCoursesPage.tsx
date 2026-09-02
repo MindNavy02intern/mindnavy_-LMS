@@ -6,6 +6,7 @@ import { listMyCourses, createMyCourse, submitMyCourse, archiveMyCourse } from '
 import { CourseApiError, type CourseListRow, type CourseStatusFilter, type CourseStatusCounts } from '../../types/courses';
 import { listMyLearningPaths, getMyLearningPath, InstructorLearningPathsApiError } from '../../api/instructorLearningPathsApi';
 import type { MyLearningPathRow, MyLearningPathDetail } from '../../types/instructorLearningPaths';
+import InstructorCourseViewModal from './InstructorCourseViewModal';
 
 type TabKey = 'All' | 'Draft' | 'Pending' | 'Published' | 'Archived' | 'Rejected';
 const TABS: { key: TabKey; label: string; status: CourseStatusFilter; countKey: keyof CourseStatusCounts }[] = [
@@ -37,6 +38,7 @@ export default function InstructorCoursesPage() {
   const [busyId, setBusyId] = useState<string | null>(null);
 
   const [showCreate, setShowCreate] = useState(false);
+  const [viewCourseId, setViewCourseId] = useState<string | null>(null);
 
   const load = () => {
     (() => setLoading(true))();
@@ -179,6 +181,9 @@ export default function InstructorCoursesPage() {
                     <td style={TD}>{new Date(c.updatedAt).toLocaleDateString()}</td>
                     <td style={TD}>
                       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                        <button type="button" disabled={busy} aria-label="View course details" title="View" style={disabledStyle({ ...BTN_SECONDARY, padding: '7px 10px' }, busy)} onClick={() => setViewCourseId(c.id)}>
+                          👁
+                        </button>
                         <button type="button" disabled={busy} style={disabledStyle(BTN_SECONDARY, busy)} onClick={() => navigate(`/instructor/courses/${c.id}/builder`)}>
                           Edit
                         </button>
@@ -203,6 +208,13 @@ export default function InstructorCoursesPage() {
       </div>
 
       {showCreate && <CreateCourseModal onClose={() => setShowCreate(false)} onCreated={(id) => navigate(`/instructor/courses/${id}/builder`)} />}
+      {viewCourseId && (
+        <InstructorCourseViewModal
+          courseId={viewCourseId}
+          onClose={() => setViewCourseId(null)}
+          onEdit={(id) => navigate(`/instructor/courses/${id}/builder`)}
+        />
+      )}
       </>
       )}
     </InstructorLayout>

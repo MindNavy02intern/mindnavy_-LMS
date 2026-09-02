@@ -1,3 +1,4 @@
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 // Admin auth API — JWT-based, talks to Express backend at VITE_API_BASE_URL
 //
 // Token lifecycle:
@@ -42,7 +43,7 @@ export function removeToken(): void {
 
 async function adminFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
   const { headers: optHeaders, ...rest } = options;
-  const res = await fetch(`${ADMIN_API}${path}`, {
+  const res = await fetchWithRetry(`${ADMIN_API}${path}`, {
     ...rest,
     headers: { 'Content-Type': 'application/json', ...optHeaders },
   });
@@ -83,7 +84,7 @@ export async function apiGetMe(token: string): Promise<{ admin: AdminUser }> {
 
 export async function apiLogout(token: string): Promise<void> {
   // Best-effort — we clear local state regardless of whether the server responds
-  await adminFetch('/logout', { method: 'POST', headers: bearer(token) }).catch(() => {});
+  await adminFetch('/logout', { method: 'POST', headers: bearer(token) }).catch(err => console.error(err));
 }
 
 // ── Password reset ────────────────────────────────────────────────────────────

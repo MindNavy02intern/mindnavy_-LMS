@@ -2,6 +2,7 @@
 // All writes go to the real backend; flip USE_MOCK to true for offline dev.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   CourseBuilderApiError,
   type CourseSection,
@@ -21,7 +22,7 @@ async function builderFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

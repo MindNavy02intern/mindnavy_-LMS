@@ -42,7 +42,7 @@ export default function AnnouncementsTab({ showToast, refreshSignal, onBumpRefre
     setLoading(true);
     listAnnouncements({ status: status || undefined, type: type || undefined, search: search || undefined, page, limit })
       .then(res => { if (!cancelled) { setItems(res.items); setTotal(res.total); } })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [status, type, search, page, refreshSignal]);

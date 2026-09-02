@@ -29,10 +29,10 @@ function TeamModal({ initial, onClose, onSaved, showToast }: { initial?: Team | 
   useEffect(() => {
     getDepartments({ limit: 100 })
       .then(r => setDepts(r.data.map(d => ({ id: d.id, name: d.name }))))
-      .catch(() => {});
+      .catch(err => console.error(err));
     getUsers({ limit: 100 })
       .then(r => setUsers(r.users.map(u => ({ id: u.id, fullName: u.fullName }))))
-      .catch(() => {});
+      .catch(err => console.error(err));
   }, []);
 
   const set = (k: keyof CreateTeamBody) =>
@@ -255,7 +255,7 @@ export default function TeamsTab({ showToast }: Props) {
   useEffect(() => {
     getDepartments({ limit: 100 })
       .then(r => setDepts(r.data.map(d => ({ id: d.id, name: d.name }))))
-      .catch(() => {});
+      .catch(err => console.error(err));
   }, []);
 
   const load = useCallback(() => {

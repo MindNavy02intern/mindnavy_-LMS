@@ -760,9 +760,9 @@ function IssuedCertificatesSection({
   useEffect(() => { load(); }, [load]);
 
   useEffect(() => {
-    listCourses({ limit: 200 }).then((r) => setCourses(r.courses)).catch(() => {});
-    getUsers({ limit: 200 }).then((r) => setUsers(r.users)).catch(() => {});
-    listTemplates().then(setTemplates).catch(() => {});
+    listCourses({ limit: 200 }).then((r) => setCourses(r.courses)).catch(err => console.error(err));
+    getUsers({ limit: 200 }).then((r) => setUsers(r.users)).catch(err => console.error(err));
+    listTemplates().then(setTemplates).catch(err => console.error(err));
   }, []);
 
   function handleFilterChange(next: { courseId?: string; userId?: string; status?: '' | CertificateListFilter }) {

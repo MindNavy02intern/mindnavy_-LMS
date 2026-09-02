@@ -1,9 +1,20 @@
+const prisma = require("../config/prisma");
 const coursesService = require("./courses.service");
 const courseWorkflowService = require("./courseWorkflow.service");
 const courseBuilderService = require("./courseBuilder.service");
+const quizzesService = require("./quizzes.service");
 const uploadsService = require("./uploads.service");
 const { assertOwnsCourse, assertOwnsSection, assertOwnsLesson } = require("../utils/ownershipGuard");
 const { forceOwnInstructorId } = require("../utils/selfScope");
+
+async function safe(fn, fallback) {
+  try {
+    return await fn();
+  } catch (err) {
+    console.error("[instructorCourses.service] query failed:", err.message);
+    return fallback;
+  }
+}
 
 // ── Instructor self-service Courses layer ────────────────────────────────────
 //
@@ -86,6 +97,103 @@ async function updateMySettings(instructorId, courseId, data) {
 async function getMyPreview(instructorId, courseId) {
   await assertOwnsCourse(courseId, instructorId);
   return courseWorkflowService.getPreview(courseId);
+}
+
+// ── Read-only "View" detail (Instructor Dashboard Course View) ─────────────────
+//
+// Distinct from getMyPreview above — that endpoint is the course-builder
+// wizard's Preview step (course + sections only) and is live-consumed there;
+// this assembles the FULL read-only detail surface (sections+lessons, full
+// quiz question lists, enrollment stats, recent enrollments, approved
+// reviews, an enrollment trend) in one call for the new eye-icon "View" page.
+// Every sub-query is independently `safe()`-wrapped so one failing piece
+// (e.g. no quiz attached) degrades to an empty/zero value rather than 500ing
+// the whole detail view — same defensive shape courses.service.js itself uses.
+//
+// Reviews: InstructorReview.status APPROVED only — PENDING/FLAGGED/REMOVED
+// stay in the admin moderation queue (InstructorReviewsTab); an instructor's
+// own course-detail read is not a moderation surface.
+async function getMyCourseDetail(instructorId, courseId) {
+  await assertOwnsCourse(courseId, instructorId);
+
+  const course = await coursesService.getCourse(courseId);
+  if (!course) throw domainError("COURSE_NOT_FOUND", 404);
+
+  const [sections, quizRows, enrollments, reviews] = await Promise.all([
+    safe(() => courseBuilderService.listSections(courseId), []),
+    safe(() => quizzesService.listQuizzes({ courseId }), []),
+    safe(() => prisma.courseEnrollment.findMany({
+      where: { courseId },
+      select: { id: true, userId: true, progress: true, status: true, createdAt: true, completedAt: true, user: { select: { fullName: true, email: true } } },
+    }), []),
+    safe(() => prisma.instructorReview.findMany({
+      where: { courseId, status: "APPROVED" },
+      orderBy: { createdAt: "desc" },
+      select: { id: true, rating: true, comment: true, createdAt: true, student: { select: { fullName: true } } },
+    }), []),
+  ]);
+
+  // Full question list per attached quiz (listQuizzes returns metadata only).
+  const quizzes = await Promise.all(quizRows.map((q) => safe(() => quizzesService.getQuiz(q.id), null)));
+
+  const totalStudents = enrollments.length;
+  const completedCount = enrollments.filter((e) => e.status === "COMPLETED").length;
+  const completionRate = totalStudents ? Math.round((completedCount / totalStudents) * 100) : 0;
+  const avgProgress = totalStudents ? Math.round(enrollments.reduce((sum, e) => sum + e.progress, 0) / totalStudents) : 0;
+
+  const recentEnrollments = [...enrollments]
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .slice(0, 10)
+    .map((e) => ({
+      id: e.id,
+      studentName: e.user?.fullName ?? null,
+      studentEmail: e.user?.email ?? null,
+      enrolledAt: e.createdAt.toISOString(),
+      progress: e.progress,
+      status: e.status,
+      completedAt: e.completedAt ? e.completedAt.toISOString() : null,
+    }));
+
+  // Enrollment trend — weekly buckets over the last 12 weeks, in memory
+  // (course-scoped, bounded row count — no need for a raw groupBy query).
+  const WEEKS = 12;
+  const now = new Date();
+  const weekStart = (d) => {
+    const x = new Date(d);
+    x.setHours(0, 0, 0, 0);
+    x.setDate(x.getDate() - x.getDay());
+    return x.getTime();
+  };
+  const buckets = new Map();
+  for (let i = WEEKS - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i * 7);
+    buckets.set(weekStart(d), 0);
+  }
+  for (const e of enrollments) {
+    const key = weekStart(e.createdAt);
+    if (buckets.has(key)) buckets.set(key, buckets.get(key) + 1);
+  }
+  const enrollmentTrend = [...buckets.entries()].map(([weekStartMs, count]) => ({
+    weekStart: new Date(weekStartMs).toISOString(),
+    count,
+  }));
+
+  return {
+    course,
+    sections,
+    quizzes: quizzes.filter(Boolean),
+    stats: { totalStudents, completionRate, avgProgress },
+    recentEnrollments,
+    reviews: reviews.map((r) => ({
+      id: r.id,
+      rating: r.rating,
+      comment: r.comment,
+      studentName: r.student?.fullName ?? null,
+      createdAt: r.createdAt.toISOString(),
+    })),
+    enrollmentTrend,
+  };
 }
 
 async function submitMyCourse(instructorId, courseId) {
@@ -195,6 +303,7 @@ module.exports = {
   restoreMyCourse,
   updateMySettings,
   getMyPreview,
+  getMyCourseDetail,
   submitMyCourse,
   listMySections,
   createMySection,

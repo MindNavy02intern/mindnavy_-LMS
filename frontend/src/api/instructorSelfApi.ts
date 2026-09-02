@@ -5,6 +5,7 @@
 // api/instructorAuth.ts — a DIFFERENT token from the admin one, see Phase 1).
 
 import { getStoredInstructorToken } from './instructorAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   InstructorApiError,
   type InstructorDetail,
@@ -34,7 +35,7 @@ async function instructorSelfFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -118,6 +119,6 @@ export function createMyCertification(body: CreateCertificationRequest): Promise
 // Raw upload PUT to the signed storage URL — same pattern as the admin
 // upload flow (fetch, no library), used by both documents and certifications.
 export async function uploadToSignedUrl(uploadUrl: string, file: File): Promise<void> {
-  const res = await fetch(uploadUrl, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
+  const res = await fetchWithRetry(uploadUrl, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
   if (!res.ok) throw new InstructorApiError(res.status, 'File upload failed — please try again.');
 }

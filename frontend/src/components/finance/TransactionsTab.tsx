@@ -37,8 +37,8 @@ export default function TransactionsTab({ refreshSignal }: { refreshSignal: numb
   useEffect(() => { fetchList(); }, [fetchList, refreshSignal]);
   useEffect(() => { setPage(1); }, [type, dateFrom, dateTo]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchList);
-    return () => window.removeEventListener('analyticsUpdated', fetchList);
+    window.addEventListener('financeUpdated', fetchList);
+    return () => window.removeEventListener('financeUpdated', fetchList);
   }, [fetchList]);
 
   const pages = Math.max(1, Math.ceil(total / limit));

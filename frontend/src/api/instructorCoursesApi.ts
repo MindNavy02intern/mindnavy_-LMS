@@ -16,8 +16,14 @@ import {
   type UpdateSettingsPayload,
   type CourseSettingsResponse,
   type SubmitCourseResponse,
+  type CourseEnrollmentStats,
+  type CourseRecentEnrollment,
+  type CourseReview,
+  type CourseEnrollmentTrendPoint,
 } from '../types/courses';
 import type { CourseSection, CreateLessonPayload, UpdateLessonPayload } from '../types/courseBuilder';
+import type { QuizDetail } from '../types/quizzes';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const BASE = import.meta.env.VITE_INSTRUCTOR_API_BASE_URL2 ?? 'http://localhost:5001/api/instructor';
 
@@ -27,7 +33,7 @@ async function instructorCoursesFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -98,6 +104,22 @@ export function updateMyCourseSettings(id: string, body: UpdateSettingsPayload):
 
 export function getMyCoursePreview(id: string): Promise<{ course: CourseDetail; sections: CourseSection[] }> {
   return instructorCoursesFetch(`/courses/${encodeURIComponent(id)}/preview`);
+}
+
+// Read-only "View" detail (eye icon) — everything the wizard's Preview
+// doesn't have: full quiz question lists, enrollment stats, recent
+// enrollments, approved reviews, an enrollment trend.
+export interface CourseDetailView {
+  course:           CourseDetail;
+  sections:         CourseSection[];
+  quizzes:          QuizDetail[];
+  stats:            CourseEnrollmentStats;
+  recentEnrollments: CourseRecentEnrollment[];
+  reviews:          CourseReview[];
+  enrollmentTrend:  CourseEnrollmentTrendPoint[];
+}
+export function getMyCourseDetail(id: string): Promise<CourseDetailView> {
+  return instructorCoursesFetch(`/courses/${encodeURIComponent(id)}/detail`);
 }
 
 export function submitMyCourse(id: string): Promise<SubmitCourseResponse> {

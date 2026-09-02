@@ -71,7 +71,7 @@ export default function LearnerAnalyticsTab({ showToast }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => { getDepartments({ limit: 100 }).then(res => setDepartments(res.departments.map(d => d.name))).catch(() => {}); }, []);
+  useEffect(() => { getDepartments({ limit: 100 }).then(res => setDepartments(res.data.map(d => d.name))).catch(err => console.error(err)); }, []);
 
   const isCustomIncomplete = dateRange === 'custom' && (!customFrom || !customTo);
 
@@ -90,9 +90,16 @@ export default function LearnerAnalyticsTab({ showToast }: Props) {
   }, [dateRange, customFrom, customTo, department, cohort]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
+  // Learner analytics depends on both learner rows and general user state
+  // (department/cohort filters read off User) — two events, not the old
+  // 'analyticsUpdated' catch-all.
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('learnersUpdated', fetchData);
+    window.addEventListener('userDataChanged', fetchData);
+    return () => {
+      window.removeEventListener('learnersUpdated', fetchData);
+      window.removeEventListener('userDataChanged', fetchData);
+    };
   }, [fetchData]);
 
   const progressItems = data ? Object.entries(data.progressDistribution).map(([name, count]) => ({ name, count })) : [];

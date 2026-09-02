@@ -7,8 +7,10 @@
 // ThumbnailUpload.tsx). This module only covers sign / confirm / delete.
 
 import { getStoredToken } from './adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   UploadApiError,
+  type UploadKind,
   type UploadSignRequest,
   type UploadSignResponse,
   type UploadConfirmRequest,
@@ -42,7 +44,7 @@ function mockDelay<T>(data: T, ms = 80): Promise<T> {
 
 async function uploadFetch<T>(path: string, options: RequestInit): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',

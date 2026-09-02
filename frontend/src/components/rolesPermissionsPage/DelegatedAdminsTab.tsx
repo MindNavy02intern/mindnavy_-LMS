@@ -114,8 +114,8 @@ export default function DelegatedAdminsTab({ showToast }: { showToast: (type: To
 
   useEffect(() => { fetchList(); }, [fetchList]);
   useEffect(() => {
-    getAdminDirectory().then(setAdmins).catch(() => {});
-    listCompanyRoles({ limit: 50, status: 'ACTIVE' }).then(res => setRoles(res.data)).catch(() => {});
+    getAdminDirectory().then(setAdmins).catch(err => console.error(err));
+    listCompanyRoles({ limit: 50, status: 'ACTIVE' }).then(res => setRoles(res.data)).catch(err => console.error(err));
   }, []);
 
   const handleGrantSuccess = () => { setGrantOpen(false); fetchList(); };

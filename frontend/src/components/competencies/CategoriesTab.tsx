@@ -105,8 +105,8 @@ export default function CategoriesTab({ showToast, refreshSignal }: Props) {
 
   useEffect(() => { load(); }, [load, refreshSignal]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', load);
-    return () => window.removeEventListener('analyticsUpdated', load);
+    window.addEventListener('competenciesUpdated', load);
+    return () => window.removeEventListener('competenciesUpdated', load);
   }, [load]);
 
   function toggleExpand(id: string) {

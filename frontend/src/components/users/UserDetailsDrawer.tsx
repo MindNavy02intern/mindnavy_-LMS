@@ -241,7 +241,7 @@ export default function UserDetailsDrawer({ userId, onClose, showToast, onUserUp
   const refetch = () => {
     getUserDetails(userId)
       .then(d => setData(d))
-      .catch(() => {});
+      .catch(err => console.error(err));
   };
 
   const handleSuccess = () => { onUserUpdated(); refetch(); };

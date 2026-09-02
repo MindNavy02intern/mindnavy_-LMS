@@ -38,7 +38,7 @@ export default function InstructorLiveSessionsPage() {
 
   useEffect(load, [tab]);
   useEffect(() => {
-    listMyCourses({ status: 'All', limit: 100 }).then((res) => setMyCourses(res.courses)).catch(() => {});
+    listMyCourses({ status: 'All', limit: 100 }).then((res) => setMyCourses(res.courses)).catch(err => console.error(err));
   }, []);
 
   const handleEnd = async (session: LiveSession) => {

@@ -36,7 +36,7 @@ export default function UserProgressTab({ refreshSignal }: { refreshSignal: numb
     const t = setTimeout(() => {
       getUsers({ search: search.trim(), limit: 8 })
         .then(res => { if (!cancelled) setOptions(res.users.map(u => ({ id: u.id, fullName: u.fullName, email: u.email, avatar: u.avatar }))); })
-        .catch(() => {});
+        .catch(err => console.error(err));
     }, 250);
     return () => { cancelled = true; clearTimeout(t); };
   }, [search, selected]);
@@ -54,10 +54,10 @@ export default function UserProgressTab({ refreshSignal }: { refreshSignal: numb
   useEffect(() => {
     if (!selected) return;
     function onUpdate() {
-      if (selected) getUserSkills(selected.id).then(setSkills).catch(() => {});
+      if (selected) getUserSkills(selected.id).then(setSkills).catch(err => console.error(err));
     }
-    window.addEventListener('analyticsUpdated', onUpdate);
-    return () => window.removeEventListener('analyticsUpdated', onUpdate);
+    window.addEventListener('competenciesUpdated', onUpdate);
+    return () => window.removeEventListener('competenciesUpdated', onUpdate);
   }, [selected]);
 
   const tracked = skills.filter(s => !s.missing);

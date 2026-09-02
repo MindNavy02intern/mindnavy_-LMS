@@ -5,6 +5,7 @@ import type {
   VerifyOtpResponse,
 } from '../types/device';
 import { apiSendOtp, apiVerifyOtp, getStoredToken } from './adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const ADMIN_API = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
@@ -14,7 +15,7 @@ function authHeaders(): Record<string, string> {
 }
 
 async function apiCall<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const res = await fetch(`${ADMIN_API}${path}`, {
+  const res = await fetchWithRetry(`${ADMIN_API}${path}`, {
     headers: authHeaders(),
     ...options,
     // Merge headers so authHeaders() is always present but options.headers can extend

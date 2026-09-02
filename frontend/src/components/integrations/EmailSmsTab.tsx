@@ -90,7 +90,7 @@ export default function EmailSmsTab({ showToast, refreshSignal, onBumpRefresh }:
         setSendgrid(rows.find(r => r.slug === 'sendgrid') ?? null);
         setTwilio(rows.find(r => r.slug === 'twilio') ?? null);
       })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

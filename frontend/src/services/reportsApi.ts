@@ -2,6 +2,7 @@
 // mock flag — same convention as competenciesApi.ts).
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   ReportsApiError,
   type AssessmentReports,
@@ -33,7 +34,7 @@ const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/adm
 
 async function reportsFetch<T>(path: string): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
 
@@ -58,7 +59,7 @@ async function reportsFetch<T>(path: string): Promise<T> {
 // method/body for the Scheduled Reports CRUD endpoints below.
 async function reportsRequest<T>(path: string, method: string, body?: unknown): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -218,7 +219,7 @@ export interface ExportReportParams extends DateRangeParams {
 export async function downloadReportExport(params: ExportReportParams): Promise<void> {
   const token = getStoredToken();
   const qs = buildQuery({ ...dateRangeParams(params), type: params.type, format: params.format });
-  const res = await fetch(`${BASE}/reports/export?${qs}`, {
+  const res = await fetchWithRetry(`${BASE}/reports/export?${qs}`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
 
@@ -318,7 +319,7 @@ export function runSavedReport(id: string): Promise<SavedReportRunResult> {
 // certificatesApi.ts's downloadCertificatePdf / financeApi.ts's invoice PDF).
 export async function exportSavedReportCsv(id: string): Promise<Blob> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/reports/saved/${id}/export`, {
+  const res = await fetchWithRetry(`${BASE}/reports/saved/${id}/export`, {
     method: 'POST',
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });

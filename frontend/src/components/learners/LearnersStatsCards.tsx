@@ -110,8 +110,8 @@ export default function LearnersStatsCards() {
     // 'learners' falls through invalidation.ts's dispatchBridgeEvents else
     // branch, so every learner mutation fires this — same raw-fetch bridge
     // every other stats panel in the app listens to.
-    window.addEventListener('analyticsUpdated', fetchStats);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', fetchStats); };
+    window.addEventListener('learnersUpdated', fetchStats);
+    return () => { cancelled = true; window.removeEventListener('learnersUpdated', fetchStats); };
   }, []);
 
   if (error) {

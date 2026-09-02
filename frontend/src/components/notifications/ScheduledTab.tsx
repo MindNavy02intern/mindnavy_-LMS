@@ -30,7 +30,7 @@ export default function ScheduledTab({ showToast, refreshSignal, onBumpRefresh }
     setLoading(true);
     listAnnouncements({ status: 'SCHEDULED', limit: 100 })
       .then(res => { if (!cancelled) setItems(res.items); })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

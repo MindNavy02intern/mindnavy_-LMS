@@ -2,6 +2,7 @@
 // exactly: same fetch wrapper shape, same error class pattern. Real backend only.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   LearnerApiError,
   type ActionResponse,
@@ -48,7 +49,7 @@ async function learnersFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

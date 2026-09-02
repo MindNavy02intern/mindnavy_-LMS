@@ -55,7 +55,7 @@ export default function CompetencyListTab({ onOpenCompetency, onEditSkill, onCre
   const [busyId, setBusyId] = useState<string | null>(null);
 
   useEffect(() => {
-    listSkillCategories().then(tree => setCategories(flattenCategories(tree))).catch(() => {});
+    listSkillCategories().then(tree => setCategories(flattenCategories(tree))).catch(err => console.error(err));
   }, [refreshSignal]);
 
   const fetchList = useCallback(() => {
@@ -77,8 +77,8 @@ export default function CompetencyListTab({ onOpenCompetency, onEditSkill, onCre
   useEffect(() => { setPage(1); }, [search, categoryId, level, status]);
 
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchList);
-    return () => window.removeEventListener('analyticsUpdated', fetchList);
+    window.addEventListener('competenciesUpdated', fetchList);
+    return () => window.removeEventListener('competenciesUpdated', fetchList);
   }, [fetchList]);
 
   async function toggleArchive(skill: Skill) {

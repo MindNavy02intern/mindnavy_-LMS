@@ -46,8 +46,8 @@ export default function ScheduledReportsSection({ showToast }: Props) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('reportsUpdated', fetchData);
+    return () => window.removeEventListener('reportsUpdated', fetchData);
   }, [fetchData]);
 
   function openCreate() { setEditing(null); setModalOpen(true); }

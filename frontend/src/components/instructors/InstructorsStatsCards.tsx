@@ -113,8 +113,8 @@ export default function InstructorsStatsCards() {
     // branch, so every instructor mutation (verify/suspend/reactivate/delete/
     // create/application-approve) fires this — same raw-fetch bridge every
     // other stats/analytics panel in the app listens to.
-    window.addEventListener('analyticsUpdated', fetchStats);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', fetchStats); };
+    window.addEventListener('instructorsUpdated', fetchStats);
+    return () => { cancelled = true; window.removeEventListener('instructorsUpdated', fetchStats); };
   }, []);
 
   if (error) {

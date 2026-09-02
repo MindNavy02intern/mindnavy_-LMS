@@ -183,6 +183,13 @@ const getPreview = run(async (req, res) => {
   return res.json({ success: true, data: preview });
 });
 
+const getCourseDetail = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "courseId");
+  if (idErr) return badRequest(res, idErr);
+  const detail = await svc.getMyCourseDetail(req.instructor.id, req.params.id);
+  return res.json({ success: true, data: detail });
+});
+
 const submitCourse = run(async (req, res) => {
   const idErr = validateId(req.params.id, "courseId");
   if (idErr) return badRequest(res, idErr);
@@ -307,6 +314,7 @@ module.exports = {
   restoreCourse,
   updateSettings,
   getPreview,
+  getCourseDetail,
   submitCourse,
   listSections,
   createSection,

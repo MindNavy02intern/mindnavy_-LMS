@@ -2,6 +2,7 @@
 // (no mock flag — same convention as financeApi.ts / competenciesApi.ts).
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   SettingsApiError,
   type BackupPayload,
@@ -22,7 +23,7 @@ async function settingsFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -105,7 +106,7 @@ export function disableMaintenance(): Promise<SystemSettings> {
 // the full envelope rather than unwrapping `.data`.
 export async function sendTestEmail(to?: string): Promise<TestEmailResult> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/system-settings/test-email`, {
+  const res = await fetchWithRetry(`${BASE}/system-settings/test-email`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     body: JSON.stringify({ to: to || undefined }),
@@ -145,7 +146,7 @@ export function confirmBrandingUpload(kind: 'logo' | 'favicon', path: string): P
 export async function uploadBrandingAsset(kind: 'logo' | 'favicon', file: File): Promise<string> {
   const { uploadUrl, path, maxBytes } = await signBrandingUpload(kind, file.name);
   if (file.size > maxBytes) throw new SettingsApiError(400, `File exceeds the ${Math.round(maxBytes / 1024 / 1024)}MB limit.`);
-  const putRes = await fetch(uploadUrl, { method: 'PUT', headers: { 'Content-Type': file.type || 'application/octet-stream' }, body: file });
+  const putRes = await fetchWithRetry(uploadUrl, { method: 'PUT', headers: { 'Content-Type': file.type || 'application/octet-stream' }, body: file });
   if (!putRes.ok) throw new SettingsApiError(putRes.status, 'Upload to storage failed.');
   const { url } = await confirmBrandingUpload(kind, path);
   return url;

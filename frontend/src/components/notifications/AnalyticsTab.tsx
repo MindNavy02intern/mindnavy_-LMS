@@ -22,7 +22,7 @@ export default function AnalyticsTab({ refreshSignal }: { refreshSignal: number 
     setLoading(true);
     Promise.all([getNotificationsAnalytics(), getNotificationsStats()])
       .then(([a, s]) => { if (!cancelled) { setAnalytics(a); setStats(s); } })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

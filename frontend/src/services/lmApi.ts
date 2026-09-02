@@ -5,6 +5,7 @@
 // code in this file or in the widgets needs to change.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   ApiResult,
   LmStats,
@@ -36,7 +37,7 @@ export class LmApiError extends Error {
 
 async function lmFetch<T>(path: string): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     headers: {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),

@@ -100,3 +100,40 @@ export interface ListStudentAttendanceResult {
   summary:    AttendanceSummary;
   pagination: Pagination;
 }
+
+// Certificates issued for THIS instructor's courses only.
+export type StudentCertificateStatus = 'active' | 'revoked' | 'expired';
+
+export interface StudentCertificate {
+  id:               string;
+  courseId:         string;
+  courseTitle:      string | null;
+  verificationCode: string;
+  status:           StudentCertificateStatus;
+  issuedAt:         string | null;
+  revokedAt:        string | null;
+  expiresAt:        string | null;
+}
+
+export interface ListStudentCertificatesResult {
+  certificates: StudentCertificate[];
+  pagination:   Pagination;
+}
+
+// Activity — quiz attempts + live-session attendance for THIS instructor's
+// content only. Login events are deliberately excluded (not content-scoped
+// to any one instructor) — see instructorStudents.service.js's
+// getMyStudentActivity comment.
+export type StudentActivityType = 'quiz_attempt' | 'session_attended';
+
+export interface StudentActivityEvent {
+  id:        string;
+  type:      StudentActivityType;
+  title:     string;
+  createdAt: string;
+}
+
+export interface ListStudentActivityResult {
+  events:     StudentActivityEvent[];
+  pagination: Pagination;
+}

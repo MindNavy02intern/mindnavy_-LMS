@@ -9,6 +9,7 @@
 // in this app and is enforced by UpdateTemplatePayload's shape (no Partial<>).
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   CertificateTemplate,
   CreateTemplatePayload,
@@ -35,7 +36,7 @@ async function templatesFetch<T>(
   body?:  unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/certificate-templates${path}`, {
+  const res = await fetchWithRetry(`${BASE}/certificate-templates${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

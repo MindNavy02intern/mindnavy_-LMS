@@ -184,7 +184,7 @@ function LessonFormModal({ modal, courseId, onClose, onSaved, onPartialSave }: L
     // item's own originating course) is expected and silently ignored.
     linkContentToCourse(item.id, courseId)
       .then(() => invalidateFor(appQueryClient, 'content.linkCourse', { courseId }))
-      .catch(() => {});
+      .catch(err => console.error(err));
     setVideoInputMode('url');
   }
 

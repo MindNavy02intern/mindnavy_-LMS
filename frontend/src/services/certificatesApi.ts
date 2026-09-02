@@ -6,6 +6,7 @@
 // never carry the Bearer header and would just 401.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   Certificate,
   CertificatesPage,
@@ -33,7 +34,7 @@ async function certFetch<T>(
   body?:  unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/certificates${path}`, {
+  const res = await fetchWithRetry(`${BASE}/certificates${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -135,7 +136,7 @@ export async function setCertificateExpiry(id: string, expiresAt: string | null)
 
 export async function downloadCertificatePdf(id: string): Promise<Blob> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/certificates/${id}/pdf`, {
+  const res = await fetchWithRetry(`${BASE}/certificates/${id}/pdf`, {
     headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
   });
 

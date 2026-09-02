@@ -181,8 +181,8 @@ export default function InstructorsAnalyticsSection() {
   useEffect(() => { fetch(); }, [fetch]);
 
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetch);
-    return () => window.removeEventListener('analyticsUpdated', fetch);
+    window.addEventListener('instructorsUpdated', fetch);
+    return () => window.removeEventListener('instructorsUpdated', fetch);
   }, [fetch]);
 
   if (error) {

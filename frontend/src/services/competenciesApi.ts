@@ -2,6 +2,7 @@
 // flag — same convention as instructorsApi.ts/learnersApi.ts once shipped).
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   CompetenciesApiError,
   type Assessment,
@@ -52,7 +53,7 @@ async function competenciesFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -271,7 +272,7 @@ export async function importSkills(file: File): Promise<SkillImportResult> {
   const formData = new FormData();
   formData.append('file', file);
 
-  const res = await fetch(`${BASE}/competencies/skills/import`, {
+  const res = await fetchWithRetry(`${BASE}/competencies/skills/import`, {
     method: 'POST',
     headers: token ? { Authorization: `Bearer ${token}` } : {},
     body: formData,

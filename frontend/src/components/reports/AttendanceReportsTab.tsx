@@ -68,8 +68,8 @@ export default function AttendanceReportsTab({ showToast }: Props) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('attendanceUpdated', fetchData);
+    return () => window.removeEventListener('attendanceUpdated', fetchData);
   }, [fetchData]);
 
   return (

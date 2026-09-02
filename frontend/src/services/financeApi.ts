@@ -2,6 +2,7 @@
 // same convention as competenciesApi.ts).
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   FinanceApiError,
   type CalculatePayoutsResult,
@@ -35,7 +36,7 @@ async function financeFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -61,9 +62,11 @@ async function financeFetch<T>(
   return json.data as T;
 }
 
-function qs(params: Record<string, string | number | undefined>): string {
+function qs<T extends object>(params: T): string {
   const q = new URLSearchParams();
-  for (const [k, v] of Object.entries(params)) if (v !== undefined && v !== '') q.set(k, String(v));
+  for (const [k, v] of Object.entries(params as Record<string, string | number | undefined>)) {
+    if (v !== undefined && v !== '') q.set(k, String(v));
+  }
   const s = q.toString();
   return s ? `?${s}` : '';
 }
@@ -99,7 +102,7 @@ export function requestPaymentRefund(id: string, body: { amount: number; reason:
 
 export async function exportPaymentsCsv(params: PaymentListParams = {}): Promise<string> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/finance/payments/export${qs(params)}`, {
+  const res = await fetchWithRetry(`${BASE}/finance/payments/export${qs(params)}`, {
     headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
   });
   if (!res.ok) throw new FinanceApiError(res.status, 'Failed to export payments.');
@@ -162,7 +165,7 @@ export function sendInvoice(id: string): Promise<Invoice> {
 // Same pattern as certificatesApi.ts's downloadCertificatePdf.
 export async function downloadInvoicePdf(id: string): Promise<Blob> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/finance/invoices/${encodeURIComponent(id)}/download`, {
+  const res = await fetchWithRetry(`${BASE}/finance/invoices/${encodeURIComponent(id)}/download`, {
     headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
   });
 

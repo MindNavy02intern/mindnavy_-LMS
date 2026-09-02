@@ -53,12 +53,12 @@ export default function DashboardTab({ refreshSignal, onNavigate }: Props) {
           setRecentLogs(logs.items);
           setActiveAutomations(autos.items);
         })
-        .catch(() => {})
+        .catch(err => console.error(err))
         .finally(() => { if (!cancelled) setLoading(false); });
     }
     load();
-    window.addEventListener('analyticsUpdated', load);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', load); };
+    window.addEventListener('notificationsUpdated', load);
+    return () => { cancelled = true; window.removeEventListener('notificationsUpdated', load); };
   }, [refreshSignal]);
 
   if (loading && !analytics) {

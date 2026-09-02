@@ -21,7 +21,7 @@ export default function EmergencyAlertsTab({ showToast, refreshSignal, onBumpRef
     setLoading(true);
     listEmergencyAlerts({ limit: 50 })
       .then(res => { if (!cancelled) setItems(res.items); })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

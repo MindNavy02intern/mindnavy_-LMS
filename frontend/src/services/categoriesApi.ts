@@ -4,8 +4,10 @@
 
 import { getStoredToken } from '../api/adminAuth';
 import { appQueryClient, invalidateFor } from '../lib/invalidation';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   CategoryApiError,
+  type CategoryErrorCode,
   type CategoryNode,
   type CreateCategoryPayload,
   type UpdateCategoryPayload,
@@ -23,7 +25,7 @@ async function categoriesFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +46,7 @@ async function categoriesFetch<T>(
       res.status === 500 ? 'Something went wrong on the server.' :
       json.message ?? `HTTP ${res.status}`;
     // Surface the backend error code so the UI can render exact messages.
-    const errorCode = (json as { errorCode?: string }).errorCode as Parameters<typeof CategoryApiError.prototype.constructor>[2] | undefined;
+    const errorCode = (json as { errorCode?: string }).errorCode as CategoryErrorCode | undefined;
     throw new CategoryApiError(res.status, msg, errorCode);
   }
 

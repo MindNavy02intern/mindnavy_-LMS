@@ -28,7 +28,7 @@ export default function InAppTab({ showToast, refreshSignal, onBumpRefresh, onSe
     setLoading(true);
     listLogs({ channel: 'IN_APP', dateFrom: dateFrom || undefined, dateTo: dateTo || undefined, page, limit })
       .then(res => { if (!cancelled) { setItems(res.items); setTotal(res.total); } })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [page, dateFrom, dateTo, refreshSignal]);

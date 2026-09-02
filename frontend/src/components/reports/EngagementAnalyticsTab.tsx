@@ -64,6 +64,10 @@ export default function EngagementAnalyticsTab({ showToast }: Props) {
   }, [dateRange, customFrom, customTo]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
+  // Engagement metrics span logins, course progress, and attendance across
+  // the whole app — deliberately keeps the broad 'analyticsUpdated'
+  // catch-all rather than narrowing to one domain (same reasoning as
+  // ReportsOverviewTab.tsx).
   useEffect(() => {
     window.addEventListener('analyticsUpdated', fetchData);
     return () => window.removeEventListener('analyticsUpdated', fetchData);

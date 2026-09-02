@@ -36,7 +36,7 @@ function ZoomCard({ item, showToast, onBumpRefresh }: { item: Integration; showT
         setDurationMin(s.zoomDefaultDuration);
         setRecordingEnabled(s.zoomRecordingEnabled);
       })
-      .catch(() => {});
+      .catch(err => console.error(err));
     return () => { cancelled = true; };
   }, []);
 
@@ -167,7 +167,7 @@ export default function VideoTab({ showToast, refreshSignal, onBumpRefresh }: Pr
     setLoading(true);
     listIntegrations()
       .then(rows => { if (!cancelled) setZoom(rows.find(r => r.slug === 'zoom') ?? null); })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

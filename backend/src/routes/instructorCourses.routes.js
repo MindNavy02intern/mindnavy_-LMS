@@ -31,6 +31,11 @@ router.post("/:id/restore", requireInstructorAuth, adminUserActionRateLimiter, c
 //    this page anywhere"). ─────────────────────────────────────────────────
 router.patch("/:id/settings", requireInstructorAuth, adminUserActionRateLimiter, c.updateSettings);
 router.get("/:id/preview", requireInstructorAuth, coursesReadRateLimiter, c.getPreview);
+// Read-only "View" detail (Instructor Dashboard eye icon) — course + sections
+// + full quiz question lists + enrollment stats/recent enrollments/reviews/
+// trend in one call. Distinct from /preview above (the builder wizard's
+// Preview step, course+sections only).
+router.get("/:id/detail", requireInstructorAuth, coursesReadRateLimiter, c.getCourseDetail);
 router.post("/:id/submit", requireInstructorAuth, adminUserActionRateLimiter, c.submitCourse);
 
 // ── Sections ──────────────────────────────────────────────────────────────────

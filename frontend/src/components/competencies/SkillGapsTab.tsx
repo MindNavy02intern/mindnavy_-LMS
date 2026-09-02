@@ -34,7 +34,7 @@ export default function SkillGapsTab({ refreshSignal }: { refreshSignal: number 
   const [frameworkId, setFrameworkId] = useState('');
   const [departmentId, setDepartmentId] = useState('');
 
-  useEffect(() => { listFrameworks({ limit: 100 }).then(res => setFrameworks(res.frameworks)).catch(() => {}); }, [refreshSignal]);
+  useEffect(() => { listFrameworks({ limit: 100 }).then(res => setFrameworks(res.frameworks)).catch(err => console.error(err)); }, [refreshSignal]);
 
   const fetchGaps = useCallback(() => {
     setLoading(true);
@@ -47,8 +47,8 @@ export default function SkillGapsTab({ refreshSignal }: { refreshSignal: number 
 
   useEffect(() => { fetchGaps(); }, [fetchGaps, refreshSignal]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchGaps);
-    return () => window.removeEventListener('analyticsUpdated', fetchGaps);
+    window.addEventListener('competenciesUpdated', fetchGaps);
+    return () => window.removeEventListener('competenciesUpdated', fetchGaps);
   }, [fetchGaps]);
 
   return (

@@ -56,8 +56,8 @@ export default function CertificationsTab({ showToast, refreshSignal }: Props) {
   useEffect(() => { fetchList(); }, [fetchList, refreshSignal]);
   useEffect(() => { setPage(1); }, [status]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchList);
-    return () => window.removeEventListener('analyticsUpdated', fetchList);
+    window.addEventListener('competenciesUpdated', fetchList);
+    return () => window.removeEventListener('competenciesUpdated', fetchList);
   }, [fetchList]);
 
   async function handleVerify(cert: CompetencyCertification) {

@@ -108,8 +108,8 @@ export default function CompetenciesStatsCards() {
     // 'competencies' domain falls through invalidation.ts's dispatchBridgeEvents
     // else branch, so every skill/framework/category/assessment mutation fires
     // this — same raw-fetch bridge every other stats panel in the app listens to.
-    window.addEventListener('analyticsUpdated', fetchStats);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', fetchStats); };
+    window.addEventListener('competenciesUpdated', fetchStats);
+    return () => { cancelled = true; window.removeEventListener('competenciesUpdated', fetchStats); };
   }, []);
 
   if (error) {

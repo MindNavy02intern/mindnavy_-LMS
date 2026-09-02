@@ -75,12 +75,12 @@ export default function DashboardTab({ showToast, refreshSignal, onBumpRefresh }
           setAnalytics(a);
           setRecentLogs(logs.items);
         })
-        .catch(() => {})
+        .catch(err => console.error(err))
         .finally(() => { if (!cancelled) setLoading(false); });
     }
     load();
-    window.addEventListener('analyticsUpdated', load);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', load); };
+    window.addEventListener('integrationsUpdated', load);
+    return () => { cancelled = true; window.removeEventListener('integrationsUpdated', load); };
   }, [refreshSignal]);
 
   if (loading && integrations.length === 0) {

@@ -2,6 +2,7 @@
 // fetch-wrapper convention as competenciesApi.ts.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   NotificationsApiError,
   type Announcement,
@@ -40,7 +41,7 @@ async function notificationsFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
