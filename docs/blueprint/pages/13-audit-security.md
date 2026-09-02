@@ -1,5 +1,5 @@
 # 13 · Audit & Security — `/trusted-devices`
-Doc: Audit & Security §1–§20 · Entities: sinks (audit/security events) + SECURITY actions · Status: `[partial]` — `TrustedDevicesPage.tsx` at `/trusted-devices` `[built]` (shows trusted login devices, revoke device); full Audit & Security suite (audit log table, security dashboard, threat monitor, compliance reports) `[planned]`. Backend `AuditLog` model exists; `/audit-logs` endpoint missing (Hassan to add).
+Doc: Audit & Security §1–§20 · Entities: sinks (audit/security events) + SECURITY actions · Status: `[partial]` — `TrustedDevicesPage.tsx` at `/trusted-devices` `[built]` (shows trusted login devices, revoke device); full Audit & Security suite (audit log table, security dashboard, threat monitor, compliance reports) `[planned]`. Backend `AuditLog` model exists and is read via `GET /reports/audit` (`reports.service.getAuditReports`) — the ONE owner of that query (R4). No `/audit-logs` endpoint exists or will be added; any surface needing audit rows reuses `/reports/audit` with its `actions` CSV filter (see IMPACT_MAP "Audit & Security", DEFERRED_ITEMS 2026-08-17).
 
 **Module nature:** ~90% read/monitoring surfaces over backend-written logs. The few mutations are security responses. Frontend never fabricates log entries (IMPACT §5.10).
 
