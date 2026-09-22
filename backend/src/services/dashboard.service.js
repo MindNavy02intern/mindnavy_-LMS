@@ -342,7 +342,7 @@ async function getDashboardAnalytics(filters = {}) {
     rawCompletedTrend,
     retentionEligibleCount,
     retentionRetainedCount,
-    enrollmentsWithCourse,
+    enrollmentGroups,
     quizAgg,
     quizPassCount,
   ] = await Promise.all([
@@ -394,12 +394,13 @@ async function getDashboardAnalytics(filters = {}) {
     // Filtered by the same scope (department + enrollment date) as every
     // other Analytics widget — was unfiltered (2026-08-20 fix), so a date
     // range never changed either card's numbers.
-    prisma.courseEnrollment.findMany({
+    prisma.courseEnrollment.groupBy({
+      by: ["status", "courseId"],
+      _count: { _all: true },
       where: {
         ...(hasDateRange && { createdAt: scope.createdAt }),
         ...(scope.department && { user: { department: scope.department } }),
       },
-      select: { status: true, courseId: true, course: { select: { title: true, category: true } } },
     }).catch(() => []),
     prisma.quizAttempt.aggregate({ where: quizWhere, _avg: { score: true }, _count: { _all: true } }).catch(() => ({ _avg: { score: null }, _count: { _all: 0 } })),
     // Passing convention: same 60% default reports.service's getAssessmentReports uses.
