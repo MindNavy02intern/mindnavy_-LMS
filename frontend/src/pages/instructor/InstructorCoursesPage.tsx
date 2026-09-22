@@ -4,6 +4,8 @@ import InstructorLayout from './InstructorLayout';
 import { LABEL, INPUT, BTN_PRIMARY, BTN_SECONDARY, ERROR_BANNER, TH, TD, disabledStyle, statusBadgeStyle } from './instructorUiKit';
 import { listMyCourses, createMyCourse, submitMyCourse, archiveMyCourse } from '../../api/instructorCoursesApi';
 import { CourseApiError, type CourseListRow, type CourseStatusFilter, type CourseStatusCounts } from '../../types/courses';
+import { listMyLearningPaths, getMyLearningPath, InstructorLearningPathsApiError } from '../../api/instructorLearningPathsApi';
+import type { MyLearningPathRow, MyLearningPathDetail } from '../../types/instructorLearningPaths';
 
 type TabKey = 'All' | 'Draft' | 'Pending' | 'Published' | 'Archived' | 'Rejected';
 const TABS: { key: TabKey; label: string; status: CourseStatusFilter; countKey: keyof CourseStatusCounts }[] = [
@@ -21,8 +23,11 @@ const TABS: { key: TabKey; label: string; status: CourseStatusFilter; countKey: 
 // gate; the backend is the real enforcement point either way.
 const SELF_ARCHIVABLE = new Set<CourseListRow['status']>(['Draft', 'Pending']);
 
+type PageView = 'courses' | 'paths';
+
 export default function InstructorCoursesPage() {
   const navigate = useNavigate();
+  const [view, setView] = useState<PageView>('courses');
   const [tab, setTab] = useState<TabKey>('All');
   const [search, setSearch] = useState('');
   const [courses, setCourses] = useState<CourseListRow[]>([]);
@@ -81,9 +86,31 @@ export default function InstructorCoursesPage() {
           <h1 className="mn-db-welcome-title">My Courses</h1>
           <p className="mn-db-welcome-sub">Author, submit, and manage the courses you teach</p>
         </div>
-        <button type="button" style={BTN_PRIMARY} onClick={() => setShowCreate(true)}>+ Create Course</button>
+        {view === 'courses' && <button type="button" style={BTN_PRIMARY} onClick={() => setShowCreate(true)}>+ Create Course</button>}
       </div>
 
+      {/* View toggle — Learning Paths is read-only visibility, not a course sub-tab */}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+        <button
+          type="button"
+          onClick={() => setView('courses')}
+          style={view === 'courses' ? BTN_PRIMARY : BTN_SECONDARY}
+        >
+          My Courses
+        </button>
+        <button
+          type="button"
+          onClick={() => setView('paths')}
+          style={view === 'paths' ? BTN_PRIMARY : BTN_SECONDARY}
+        >
+          Learning Paths
+        </button>
+      </div>
+
+      {view === 'paths' ? (
+        <LearningPathsSection />
+      ) : (
+      <>
       {error && <div style={{ ...ERROR_BANNER, marginBottom: 14 }}>{error}</div>}
 
       {/* Tabs */}
@@ -176,7 +203,134 @@ export default function InstructorCoursesPage() {
       </div>
 
       {showCreate && <CreateCourseModal onClose={() => setShowCreate(false)} onCreated={(id) => navigate(`/instructor/courses/${id}/builder`)} />}
+      </>
+      )}
     </InstructorLayout>
+  );
+}
+
+// ── Learning Paths (read-only visibility) ───────────────────────────────────────
+// Not in the instructor blueprint — built per explicit task spec. Instructors
+// don't create/edit paths (admin-only concept); this only shows which paths
+// contain their own courses, and where.
+
+function LearningPathsSection() {
+  const [paths, setPaths] = useState<MyLearningPathRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [openPathId, setOpenPathId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    listMyLearningPaths()
+      .then((rows) => { setPaths(rows); setError(null); })
+      .catch((err: unknown) => setError(err instanceof InstructorLearningPathsApiError ? err.message : 'Failed to load learning paths.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <>
+    <div className="mn-db-card">
+      {error && <div style={{ ...ERROR_BANNER, marginBottom: 12 }}>{error}</div>}
+      {loading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 24 }}><div className="mn-spinner" /></div>
+      ) : paths.length === 0 ? (
+        <p style={{ fontSize: 12, color: '#94a3b8', textAlign: 'center', padding: '20px 0' }}>
+          None of your courses are in a learning path yet.
+        </p>
+      ) : (
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ background: '#f8fafc' }}>
+              <th style={TH}>Path Name</th>
+              <th style={TH}>Total Items</th>
+              <th style={TH}>Your Course(s)</th>
+              <th style={TH}>Position</th>
+              <th style={TH} />
+            </tr>
+          </thead>
+          <tbody>
+            {paths.map((p) => (
+              <tr key={p.id} style={{ cursor: 'pointer' }} onClick={() => setOpenPathId(p.id)}>
+                <td style={TD}>{p.title}</td>
+                <td style={TD}>{p.itemCount}</td>
+                <td style={TD}>{p.myCourses.map((c) => c.courseTitle ?? '—').join(', ')}</td>
+                <td style={TD}>{p.myCourses.map((c) => `#${c.position}`).join(', ')}</td>
+                <td style={TD}><button type="button" style={BTN_SECONDARY} onClick={() => setOpenPathId(p.id)}>View sequence</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+
+    {/* Rendered as a sibling, NOT a child, of .mn-db-card — that card's entrance
+        animation ends on `transform: translateY(0)` (fill-mode "both" keeps it
+        applied forever), which makes the card a CSS containing block for any
+        `position: fixed` descendant, trapping this modal inside the card's
+        small box instead of the viewport. Same bug/fix as QuestionEditor in
+        InstructorQuizStep.tsx and LessonModal in InstructorCourseBuilderPage.tsx. */}
+    {openPathId && <LearningPathDetailModal pathId={openPathId} onClose={() => setOpenPathId(null)} />}
+    </>
+  );
+}
+
+function LearningPathDetailModal({ pathId, onClose }: { pathId: string; onClose: () => void }) {
+  const [detail, setDetail] = useState<MyLearningPathDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    getMyLearningPath(pathId)
+      .then((d) => { setDetail(d); setError(null); })
+      .catch((err: unknown) => setError(err instanceof InstructorLearningPathsApiError ? err.message : 'Failed to load path.'))
+      .finally(() => setLoading(false));
+  }, [pathId]);
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={onClose} />
+      <div role="dialog" aria-label="Learning path sequence" style={{ position: 'relative', width: '100%', maxWidth: 520, maxHeight: '85vh', display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: 12, boxShadow: '0 20px 60px rgba(0,0,0,0.22)', overflow: 'hidden' }}>
+        <div style={{ padding: '14px 18px', borderBottom: '1px solid #e5e7eb', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: '#111827' }}>{detail?.title ?? 'Learning Path'}</h3>
+          <button type="button" style={BTN_SECONDARY} onClick={onClose}>Close</button>
+        </div>
+        <div style={{ padding: '14px 18px', overflowY: 'auto' }}>
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}><div className="mn-spinner" /></div>
+          ) : error ? (
+            <div style={ERROR_BANNER}>{error}</div>
+          ) : detail ? (
+            <>
+              {detail.description && <p style={{ fontSize: 12, color: '#64748b', marginTop: 0 }}>{detail.description}</p>}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {detail.items.map((it, idx) => (
+                  <div
+                    key={it.id}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px',
+                      border: it.isMine ? '2px solid #2563eb' : '1px solid #e5e7eb',
+                      background: it.isMine ? '#eff6ff' : '#fff',
+                      borderRadius: 8,
+                    }}
+                  >
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#94a3b8', minWidth: 20 }}>{idx + 1}.</span>
+                    <span style={{ padding: '2px 6px', borderRadius: 4, fontSize: 9, fontWeight: 700, background: '#eef2ff', color: '#4338ca' }}>
+                      {it.itemType === 'COURSE' ? 'COURSE' : it.itemType === 'LIVE_SESSION' ? 'LIVE SESSION' : 'QUIZ'}
+                    </span>
+                    <span style={{ flex: 1, fontSize: 13, color: it.missing ? '#94a3b8' : '#374151', fontStyle: it.missing ? 'italic' : 'normal' }}>
+                      {it.missing ? 'Item no longer exists' : (it.title ?? '—')}
+                    </span>
+                    {it.isMine && <span style={{ fontSize: 10, fontWeight: 700, color: '#2563eb' }}>YOUR COURSE</span>}
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : null}
+        </div>
+      </div>
+    </div>
   );
 }
 

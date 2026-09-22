@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   listMyQuizzes, createMyQuiz, updateMyQuiz, deleteMyQuiz,
   getMyQuiz, createMyQuestion, updateMyQuestion, deleteMyQuestion,
+  reorderMyQuestions,
   InstructorQuizApiError,
 } from '../../api/instructorQuizzesApi';
 import type {
@@ -49,6 +50,7 @@ function emptyPairs(): MatchingPair[] { return [{ left: '', right: '' }, { left:
 
 interface QuizFormValues {
   title: string;
+  description: string;
   passingGrade: number;
   attemptsUnlimited: boolean;
   attemptsAllowed: number;
@@ -66,6 +68,7 @@ function QuizForm({
   onCancel: () => void;
 }) {
   const [title, setTitle] = useState(initial.title);
+  const [description, setDescription] = useState(initial.description);
   const [passingGrade, setPassingGrade] = useState(initial.passingGrade);
   const [attemptsUnlimited, setAttemptsUnlimited] = useState(initial.attemptsUnlimited);
   const [attemptsAllowed, setAttemptsAllowed] = useState(initial.attemptsAllowed);
@@ -78,6 +81,7 @@ function QuizForm({
   async function handleSubmit() {
     if (!title.trim()) { setError('Title is required.'); return; }
     if (title.trim().length > 200) { setError('Title must be at most 200 characters.'); return; }
+    if (description.length > 2000) { setError('Description must be at most 2000 characters.'); return; }
     if (!Number.isInteger(passingGrade) || passingGrade < 0 || passingGrade > 100) {
       setError('Passing grade must be an integer between 0 and 100.'); return;
     }
@@ -89,7 +93,7 @@ function QuizForm({
     }
     setSaving(true); setError(null);
     try {
-      await onSave({ title: title.trim(), passingGrade, attemptsUnlimited, attemptsAllowed, timeLimitNone, timeLimit, randomizeQuestions });
+      await onSave({ title: title.trim(), description, passingGrade, attemptsUnlimited, attemptsAllowed, timeLimitNone, timeLimit, randomizeQuestions });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Save failed.');
     } finally {
@@ -105,6 +109,11 @@ function QuizForm({
         <div style={{ gridColumn: '1 / -1' }}>
           <label style={LABEL}>Title *</label>
           <input style={INPUT} value={title} onChange={(e) => setTitle(e.target.value)} maxLength={200} placeholder="e.g. Module 1 Quiz" autoFocus />
+        </div>
+        <div style={{ gridColumn: '1 / -1' }}>
+          <label style={LABEL}>Description</label>
+          <textarea style={{ ...INPUT, resize: 'vertical' }} rows={3} value={description}
+            onChange={(e) => setDescription(e.target.value)} placeholder="Optional overview of this quiz…" />
         </div>
         <div>
           <label style={LABEL}>Passing grade (%)</label>
@@ -162,6 +171,10 @@ function QuestionEditor({
   const [type, setType] = useState<QuestionType>(existing?.type ?? 'MULTIPLE_CHOICE');
   const [prompt, setPrompt] = useState(existing?.prompt ?? '');
   const [points, setPoints] = useState(existing?.points ?? 1);
+
+  const promptRef  = useRef<HTMLDivElement>(null);
+  const optionsRef = useRef<HTMLDivElement>(null);
+  const pointsRef  = useRef<HTMLDivElement>(null);
 
   const [options, setOptions] = useState<string[]>(
     existing && (existing.type === 'MULTIPLE_CHOICE' || existing.type === 'MULTI_SELECT') ? existing.data.options : emptyOptions(),
@@ -253,7 +266,14 @@ function QuestionEditor({
 
   async function handleSave() {
     const errors = validate();
-    if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; }
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      // Never a silent no-op: scroll the first invalid field into view even
+      // if it's currently off-screen below the fold.
+      const target = errors.prompt ? promptRef.current : errors.options ? optionsRef.current : pointsRef.current;
+      target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     setFieldErrors({}); setSaving(true); setSaveError(null);
     try {
       const payload = { type, data: buildData(), prompt: prompt.trim(), points } as CreateQuestionPayload;
@@ -300,7 +320,7 @@ function QuestionEditor({
             </div>
           </div>
 
-          <div>
+          <div ref={promptRef}>
             <label style={LABEL}>Prompt *</label>
             <textarea style={{ ...INPUT, resize: 'vertical' }} rows={2} value={prompt} maxLength={2000}
               onChange={(e) => { setPrompt(e.target.value); setFieldErrors((p) => ({ ...p, prompt: undefined })); }} />
@@ -309,7 +329,7 @@ function QuestionEditor({
 
           {/* Per-type answer data */}
           {(type === 'MULTIPLE_CHOICE' || type === 'MULTI_SELECT') && (
-            <div>
+            <div ref={optionsRef}>
               <label style={LABEL}>Options {type === 'MULTIPLE_CHOICE' ? '(select the correct one)' : '(check all correct answers)'}</label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {options.map((opt, idx) => (
@@ -345,7 +365,7 @@ function QuestionEditor({
           )}
 
           {type === 'FILL_IN_BLANK' && (
-            <div>
+            <div ref={optionsRef}>
               <label style={LABEL}>Correct answer (exact match) *</label>
               <input style={INPUT} value={correctAnswer} maxLength={500}
                 onChange={(e) => { setCorrectAnswer(e.target.value); setFieldErrors((p) => ({ ...p, options: undefined })); }} />
@@ -354,7 +374,7 @@ function QuestionEditor({
           )}
 
           {type === 'MATCHING' && (
-            <div>
+            <div ref={optionsRef}>
               <label style={LABEL}>Pairs</label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {pairs.map((p, idx) => (
@@ -379,7 +399,7 @@ function QuestionEditor({
             <p style={{ fontSize: 12, color: '#94a3b8' }}>Essay questions are graded manually — no answer key needed.</p>
           )}
 
-          <div>
+          <div ref={pointsRef}>
             <label style={LABEL}>Points</label>
             <input style={{ ...INPUT, maxWidth: 100 }} type="number" min={1} max={100} value={points}
               onChange={(e) => { setPoints(Number(e.target.value)); setFieldErrors((p) => ({ ...p, points: undefined })); }} />
@@ -450,10 +470,15 @@ function QuizDetailView({
     [reordered[index], reordered[target]] = [reordered[target], reordered[index]];
     setBusy(true);
     try {
-      await Promise.all(reordered.map((q, i) => updateMyQuestion(courseId, quizId, q.id, { order: i })));
-      load();
+      // One atomic bulk call — never N individual PATCHes, which could leave
+      // question order inconsistent on a partial failure.
+      const updated = await reorderMyQuestions(courseId, quizId, {
+        items: reordered.map((q, i) => ({ id: q.id, order: i })),
+      });
+      setQuiz(updated);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Reorder failed.');
+      load(); // restore from server on error
     } finally {
       setBusy(false);
     }
@@ -464,6 +489,7 @@ function QuizDetailView({
   if (!quiz) return null;
 
   return (
+    <>
     <div className="mn-db-card">
       <div className="mn-db-card-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
@@ -479,6 +505,10 @@ function QuizDetailView({
           <button type="button" style={BTN_DANGER} onClick={onDeleteQuiz}>Delete Quiz</button>
         </div>
       </div>
+
+      {quiz.description && (
+        <p style={{ margin: '0 0 12px', fontSize: 12, color: '#475569' }}>{quiz.description}</p>
+      )}
 
       {quiz.questions.length === 0 ? (
         <p style={{ fontSize: 12, color: '#94a3b8', padding: '10px 0' }}>No questions yet — add one below.</p>
@@ -503,17 +533,24 @@ function QuizDetailView({
       )}
 
       <button type="button" style={{ ...BTN_SECONDARY, marginTop: 12 }} onClick={() => setQuestionModal({ mode: 'create' })}>+ Add Question</button>
-
-      {questionModal && (
-        <QuestionEditor
-          courseId={courseId}
-          quizId={quizId}
-          existing={questionModal.mode === 'edit' ? questionModal.question : null}
-          onClose={() => setQuestionModal(null)}
-          onSaved={() => { setQuestionModal(null); load(); }}
-        />
-      )}
     </div>
+
+    {/* Rendered as a sibling, NOT a child, of .mn-db-card: that card's entrance
+        animation ends on `transform: translateY(0)` (fill-mode "both" keeps it
+        applied forever), which makes the card a CSS containing block for any
+        `position: fixed` descendant — trapping this modal inside the card's
+        small box instead of the viewport. Same fix already applied to
+        LessonModal in InstructorCourseBuilderPage.tsx. */}
+    {questionModal && (
+      <QuestionEditor
+        courseId={courseId}
+        quizId={quizId}
+        existing={questionModal.mode === 'edit' ? questionModal.question : null}
+        onClose={() => setQuestionModal(null)}
+        onSaved={() => { setQuestionModal(null); load(); }}
+      />
+    )}
+    </>
   );
 }
 
@@ -542,6 +579,7 @@ export default function InstructorQuizStep({ courseId, onBack, onNext }: Props) 
   async function handleCreate(v: QuizFormValues) {
     await createMyQuiz(courseId, {
       title: v.title,
+      description: v.description.trim() || null,
       passingGrade: v.passingGrade,
       attemptsAllowed: v.attemptsUnlimited ? null : v.attemptsAllowed,
       timeLimit: v.timeLimitNone ? null : v.timeLimit,
@@ -554,6 +592,7 @@ export default function InstructorQuizStep({ courseId, onBack, onNext }: Props) 
   async function handleEdit(quizId: string, v: QuizFormValues) {
     await updateMyQuiz(courseId, quizId, {
       title: v.title,
+      description: v.description.trim() || null,
       passingGrade: v.passingGrade,
       attemptsAllowed: v.attemptsUnlimited ? null : v.attemptsAllowed,
       timeLimit: v.timeLimitNone ? null : v.timeLimit,
@@ -587,7 +626,7 @@ export default function InstructorQuizStep({ courseId, onBack, onNext }: Props) 
     return (
       <QuizForm
         mode="create"
-        initial={{ title: '', passingGrade: 60, attemptsUnlimited: true, attemptsAllowed: 1, timeLimitNone: true, timeLimit: 30, randomizeQuestions: false }}
+        initial={{ title: '', description: '', passingGrade: 60, attemptsUnlimited: true, attemptsAllowed: 1, timeLimitNone: true, timeLimit: 30, randomizeQuestions: false }}
         onSave={handleCreate}
         onCancel={() => setView({ kind: 'list' })}
       />
@@ -600,7 +639,7 @@ export default function InstructorQuizStep({ courseId, onBack, onNext }: Props) 
       <QuizForm
         mode="edit"
         initial={{
-          title: q.title, passingGrade: q.passingGrade,
+          title: q.title, description: q.description ?? '', passingGrade: q.passingGrade,
           attemptsUnlimited: q.attemptsAllowed == null, attemptsAllowed: q.attemptsAllowed ?? 1,
           timeLimitNone: q.timeLimit == null, timeLimit: q.timeLimit ?? 30,
           randomizeQuestions: q.randomizeQuestions,
@@ -649,7 +688,12 @@ export default function InstructorQuizStep({ courseId, onBack, onNext }: Props) 
           <div>
             {quizzes.map((q, idx) => (
               <div key={q.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 4px', borderBottom: idx < quizzes.length - 1 ? '1px solid #f1f5f9' : undefined }}>
-                <span style={{ flex: 1, fontSize: 13, fontWeight: 600, color: '#374151' }}>{q.title}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#374151' }}>{q.title}</div>
+                  {q.description && (
+                    <div style={{ fontSize: 11, color: '#94a3b8', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.description}</div>
+                  )}
+                </div>
                 <span style={{ fontSize: 11, color: '#94a3b8' }}>{q.questionCount} question{q.questionCount !== 1 ? 's' : ''}</span>
                 <button type="button" style={{ ...BTN_SECONDARY, padding: '4px 10px' }} onClick={() => setView({ kind: 'detail', quizId: q.id })}>Manage</button>
                 <button type="button" style={{ ...BTN_DANGER, padding: '4px 10px' }} onClick={() => handleDelete(q)}>Delete</button>

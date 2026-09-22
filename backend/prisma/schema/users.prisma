@@ -25,6 +25,7 @@ model AppUser {
   departmentId             String?
   teamId                   String?
   receivedMessages         AdminMessage[]            @relation("UserReceivedMessages")
+  sentMessageReplies       AdminMessageReply[]       @relation("UserSentMessageReplies")
   sessions                 AppUserSession[]
   notes                    UserNote[]                @relation("UserNotes")
   orgBranch                Branch?                   @relation("AppUserBranch", fields: [branchId], references: [id])

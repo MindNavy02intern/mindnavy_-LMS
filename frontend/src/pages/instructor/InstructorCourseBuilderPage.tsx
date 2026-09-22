@@ -28,6 +28,13 @@ import type { CourseSection, Lesson, LessonType } from '../../types/courseBuilde
 // this page loads (created from the My Courses list), so there is no
 // "save draft first" ordering constraint to enforce between steps.
 
+function isValidUrl(url: string): boolean {
+  try {
+    const u = new URL(url.trim());
+    return u.protocol === 'http:' || u.protocol === 'https:';
+  } catch { return false; }
+}
+
 type StepKey = 'basic' | 'content' | 'quiz' | 'settings' | 'preview' | 'submit';
 const STEPS: { key: StepKey; label: string }[] = [
   { key: 'basic', label: '1. Basic Info' },
@@ -393,14 +400,28 @@ function LessonModal({ courseId, sectionId, lesson, onClose, onSaved }: {
     setSaving(true);
     setErr(null);
     try {
-      const body = {
-        title: title.trim(),
-        type,
-        content: content.trim() || undefined,
-        durationMin: durationMin ? Number(durationMin) : undefined,
-      };
-      if (lesson) await updateMyLesson(courseId, sectionId, lesson.id, body);
-      else await createMyLesson(courseId, sectionId, body);
+      const trimmedContent = content.trim();
+      const durationVal = durationMin ? Number(durationMin) : undefined;
+      // Upload File mode: any stale text left in `content` (e.g. leftover TEXT
+      // body, or a not-yet-valid URL) must NOT be sent as-is — null it out so the
+      // lesson saves with pending content, then the upload pipeline fills it in.
+      const videoUploadPending = type === 'VIDEO_URL' && videoMode === 'file' && !isValidUrl(trimmedContent);
+
+      if (lesson) {
+        await updateMyLesson(courseId, sectionId, lesson.id, {
+          title: title.trim(),
+          type,
+          content: videoUploadPending ? null : (trimmedContent || null),
+          durationMin: durationVal,
+        });
+      } else {
+        await createMyLesson(courseId, sectionId, {
+          title: title.trim(),
+          type,
+          ...(trimmedContent ? { content: trimmedContent } : {}),
+          durationMin: durationVal,
+        });
+      }
       onSaved();
     } catch (e) {
       setErr(e instanceof CourseApiError ? e.message : 'Save failed.');

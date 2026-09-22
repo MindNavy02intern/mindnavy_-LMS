@@ -52,4 +52,22 @@ async function getMessages(req, res) {
   }
 }
 
-module.exports = { sendMessage, getMessages };
+async function getThread(req, res) {
+  const { id } = req.params;
+  if (!UUID_REGEX.test(id.trim())) {
+    return res.status(400).json({ success: false, message: "Message id must be a valid UUID." });
+  }
+
+  try {
+    const result = await messagesService.getMessageThread(req.admin.id, id.trim());
+    return res.status(200).json(result);
+  } catch (error) {
+    if (error.statusCode === 404) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    console.error("[messages] getThread error:", error.message, error.stack);
+    return res.status(500).json({ success: false, message: "Failed to fetch thread." });
+  }
+}
+
+module.exports = { sendMessage, getMessages, getThread };

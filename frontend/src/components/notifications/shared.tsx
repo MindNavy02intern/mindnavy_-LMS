@@ -36,6 +36,16 @@ export function PriorityBadge({ priority }: { priority: string }) {
   );
 }
 
+const MESSAGE_TYPE_COLOR: Record<string, string> = { DIRECT: '#2563eb', WARNING: '#dc2626', POLICY_UPDATE: '#7c3aed', ANNOUNCEMENT: '#16a34a', FEEDBACK: '#a16207' };
+export function MessageTypeBadge({ messageType }: { messageType: string }) {
+  const color = MESSAGE_TYPE_COLOR[messageType] ?? '#64748b';
+  return (
+    <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 9px', borderRadius: 999, background: `${color}1a`, color }}>
+      {messageType.replace('_', ' ')}
+    </span>
+  );
+}
+
 const ANNOUNCEMENT_STATUS_COLOR: Record<string, string> = { DRAFT: '#64748b', SCHEDULED: '#a16207', SENT: '#16a34a', CANCELLED: '#dc2626' };
 export function AnnouncementStatusBadge({ status }: { status: string }) {
   const color = ANNOUNCEMENT_STATUS_COLOR[status] ?? '#64748b';

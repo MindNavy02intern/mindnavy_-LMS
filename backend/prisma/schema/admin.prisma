@@ -449,6 +449,11 @@ enum AuditAction {
   USER_DELETION_REQUESTED
   ADMIN_PROFILE_UPDATED
   ADMIN_PASSWORD_CHANGED
+  // Instructor Dashboard Phase 6 — self-service password change (AppUser,
+  // current-password-verified), same dedicated-value precedent as
+  // ADMIN_PASSWORD_CHANGED above rather than reusing the admin-initiated
+  // USER_PASSWORD_RESET (different actor, different guarantee).
+  INSTRUCTOR_PASSWORD_CHANGED
   // Real TOTP-based MFA (SecurityTab.tsx toggle) — per-admin secret on
   // AdminUser, distinct from SystemSettings.mfaEnabled (that's an org-wide
   // policy flag, not a per-admin enrollment state).

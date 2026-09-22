@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const prisma = require("../config/prisma");
 const { generateSessionToken, getSessionExpiryDate } = require("../utils/token");
+const { clearAllCachedInstructorSessions } = require("../middlewares/instructorAuth.middleware");
 
 // Mirrors admin.service.js's loginAdmin() shape exactly (lockout window,
 // LoginAttempt/AuditLog trail, generic non-leaking error messages) — see
@@ -32,17 +33,27 @@ async function recordLoginAttempt({ email, status, reason = null, ipAddress = nu
   });
 }
 
+// Best-effort — same convention every other service's auditLog() helper in
+// this codebase already follows (learners/instructors/notifications/etc.):
+// a failed audit write must never break the actual login/logout/password
+// mutation it's describing. This function was the one outlier without a
+// try/catch, which only ever went unnoticed because every prior call site
+// used an enum value already present in the generated Prisma Client.
 async function createAuditLog({ instructorId = null, action, details = null, ipAddress = null, userAgent = null }) {
-  await prisma.auditLog.create({
-    data: {
-      adminId: null,
-      targetUserId: instructorId,
-      action,
-      details,
-      ipAddress,
-      userAgent,
-    },
-  });
+  try {
+    await prisma.auditLog.create({
+      data: {
+        adminId: null,
+        targetUserId: instructorId,
+        action,
+        details,
+        ipAddress,
+        userAgent,
+      },
+    });
+  } catch (err) {
+    console.error(`[instructorAuth.service] audit log error (${action}):`, err.message);
+  }
 }
 
 async function isInstructorLoginBlocked({ email }) {
@@ -214,6 +225,55 @@ async function logoutInstructor({ instructorId, sessionId, ipAddress, userAgent 
   return { success: true, message: "Logged out." };
 }
 
+// Mirrors admin.service.js's changeAdminPassword exactly: bcrypt.compare the
+// current password, hash+store the new one, then revoke every active
+// AppUserSession for this user (including the one making this call) and
+// clear the in-memory session cache — same "any password change invalidates
+// every session, compromise-safe by default" rule admin's own self-service
+// password change already applies. The frontend signs the caller out and
+// redirects to /instructor/login immediately after a success response
+// (Part 4), so revoking the calling session too (rather than carving out an
+// exception for it) matches what the user actually sees either way.
+async function changeInstructorPassword({ instructorId, currentPassword, newPassword, ipAddress, userAgent }) {
+  const user = await prisma.appUser.findUnique({ where: { id: instructorId } });
+  if (!user || !user.passwordHash) {
+    return { success: false, message: "Instructor not found." };
+  }
+
+  const isCurrentValid = await bcrypt.compare(currentPassword, user.passwordHash);
+  if (!isCurrentValid) {
+    await createAuditLog({
+      instructorId,
+      action: "FAILED_LOGIN",
+      details: { reason: "INVALID_CURRENT_PASSWORD_ON_CHANGE" },
+      ipAddress,
+      userAgent,
+    });
+    return { success: false, message: "Current password is incorrect." };
+  }
+
+  const newPasswordHash = await bcrypt.hash(newPassword, 12);
+
+  await prisma.appUser.update({ where: { id: instructorId }, data: { passwordHash: newPasswordHash } });
+
+  await prisma.appUserSession.updateMany({
+    where: { userId: instructorId, revokedAt: null },
+    data: { revokedAt: new Date() },
+  });
+
+  clearAllCachedInstructorSessions();
+
+  await createAuditLog({
+    instructorId,
+    action: "INSTRUCTOR_PASSWORD_CHANGED",
+    details: {},
+    ipAddress,
+    userAgent,
+  });
+
+  return { success: true, message: "Password changed successfully. Please log in again." };
+}
+
 // Deliberately narrow — same fields the admin /me endpoint exposes on
 // req.admin, scoped to what an instructor session actually needs client-side.
 // Full profile (bio/specialization/etc.) is a Phase-2 concern (My Profile
@@ -233,5 +293,6 @@ module.exports = {
   hashToken,
   loginInstructor,
   logoutInstructor,
+  changeInstructorPassword,
   instructorSummary,
 };

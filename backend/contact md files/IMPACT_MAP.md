@@ -926,3 +926,146 @@ generic `SESSION_CREATED`/`SESSION_REVOKED`/`FAILED_LOGIN` values with
   — every existing admin course/live-session/document/certification write
   endpoint remains exactly as open as it was before this pass. Phase 3 (see
   blueprint Section 2.3/2.4) is what actually closes that exposure.
+
+*2026-08-29 — Instructor Dashboard build complete, Phases 2–6 (Phase 1 above
+was auth). Documentation gap found while writing this entry: Phases 2 and 3
+(My Profile, My Courses/Course Builder/My Live Sessions) were built in prior
+sessions but never got their own IMPACT_MAP rows — confirmed by grepping this
+file for "Phase 2"/"Phase 3" before writing this paragraph, not assumed. What
+follows summarizes them from what's verifiable in the current codebase
+(existence + shape), and documents Phases 4–6 first-hand in full — those were
+built and verified live in this pass. Full spec: INSTRUCTOR_DASHBOARD_BLUEPRINT.docx.*
+
+- **Phase 2 (My Profile, verified present, not re-documented in depth)**:
+  `instructorProfile.{service,controller,routes}.js` at `/api/instructor/profile`
+  — self-scoped profile read/update, Documents tab (`instructorDocuments.service.js`,
+  sign→PUT→confirm), Certifications tab (`instructorCertifications.service.js`,
+  same upload pattern). All confirmed self-scoped via `req.instructor.id`, no
+  `:id` param trusted from the client.
+- **Phase 3 (My Courses, verified present, not re-documented in depth)**:
+  `instructorCourses.service.js` + `instructorQuizzes.service.js` at
+  `/api/instructor/courses` — full course builder (sections/lessons/quizzes/
+  questions/reorder) reusing the admin `courseBuilder.service.js`/
+  `quizzes.service.js` write paths with `ownershipGuard.js`'s
+  `assertOwnsCourse/Section/Lesson/Quiz` guards wired in (the Phase 1 entry
+  above notes these guards were built but NOT yet wired — confirmed now
+  wired). `instructorLiveSessions.service.js` at `/api/instructor/live-sessions`
+  similarly guarded via `assertOwnsLiveSession`. `instructorSelf.service.js`
+  backs the Dashboard KPIs/enrollment-trend/activity feed, reusing
+  `instructorsService.getInstructor()` wholesale per R4 rather than
+  reimplementing its aggregates.
+- **Phase 4 (My Students + Learning Paths visibility — Appendix A #6/#7)**:
+  new `instructorStudents.service.js` — "my students" computed by
+  `getOwnedCourses(instructorId)` (new helper added to `ownershipGuard.js`,
+  reused by every phase after this one) → `CourseEnrollment WHERE courseId
+  IN (ownIds)`. Detail/assessments/attendance are separately-scoped reads
+  (own courses/quizzes/sessions only), never the student's full
+  cross-instructor history — this is the exact leak blueprint 2.5 warned
+  reusing the learner-scoped admin endpoints as-is would cause. **Real bug
+  found + fixed during this pass**: the list query had no `role: LEARNER`
+  filter while the detail endpoint did, so a non-learner `AppUser` with a
+  stray `CourseEnrollment` row (test/seed data) appeared in the list but
+  404'd on click — fixed by aligning both queries' definition of "a student."
+  New `instructorLearningPaths.service.js` (Appendix A gap not numbered —
+  built per explicit task spec, not in the blueprint) reuses
+  `learningPaths.service.resolveItems()` verbatim; visibility = path
+  contains ≥1 owned course, detail shows the full sequence with `isMine`
+  flagged per item (other instructors' items expose title/status only, the
+  same minimal shape admin's own view already returns).
+- **Phase 5 (Reviews/Competencies/Earnings/Reports — Appendix A #10/#11, part
+  of #8)**: `instructorReviews.service.js` gained `listMyReviews`/
+  `getMyReviewStats` (reused `listReviews` in place, added the "REMOVED
+  always hidden" rule the admin console legitimately doesn't need). New
+  `instructorCompetencies.service.js` closes gap #10 (reverse skill→course
+  lookup never existed in either direction before this). New
+  `instructorEarnings.service.js` closes the read half of gap #8 (summary +
+  payout history, self-scoped `InstructorPayout.instructorId` — the
+  per-payout breakdown recompute sub-gap is still open, see below). New
+  `instructorReports.service.js` closes gap #11, reusing the same
+  completion-rate/attendance-rate formulas `reports.service.getInstructorAnalytics`
+  and `instructorSelf.service.js` already established, scoped to one
+  instructor instead of a global top-N array. **Real bug found + fixed**:
+  `LearningPathDetailModal` and (separately, in a later bug-report pass)
+  `QuestionEditor` were both rendered as children of a `.mn-db-card` div —
+  that card's entrance animation (`animation: mn-slide-up ... both`) leaves a
+  permanent non-`none` `transform`, which makes it a CSS containing block for
+  any `position: fixed` descendant, trapping both modals inside the card's
+  small box instead of the viewport. Fixed by rendering both as siblings
+  instead — the same pattern `LessonModal`/`StudentPanel` already used
+  correctly elsewhere in this phase's own pages.
+- **Phase 6 FINAL (Messages & Notifications + Account Settings — Appendix A
+  #5/#14/#15)**: `messages.service.js` gained `markMyMessageRead` (closes gap
+  #14 — `MessageStatus.READ` existed on the model, nothing ever wrote it,
+  admin console included). `notifications.service.js` gained
+  `markMyNotificationRead` (ownership-checked wrapper — the admin-console
+  `markNotificationRead` has none, correct for a trusted operator, not for
+  instructor self-service). `instructorAuth.service.js` gained
+  `changeInstructorPassword` (closes gap #5, mirrors `admin.service.js`'s
+  `changeAdminPassword` exactly: bcrypt-verify current, hash+store new,
+  revoke every `AppUserSession` for the account including the one making the
+  call, clear the session cache). New `instructorSessions.service.js` closes
+  gap #15 (list/revoke own sessions; revoking the CURRENT session is blocked
+  server-side — "use Sign Out instead" — a different rule from the password-
+  change revoke-all, which intentionally includes the current session).
+  **Schema change**: `AuditAction` gained `INSTRUCTOR_PASSWORD_CHANGED` (no
+  existing value fit — mirrors `ADMIN_PASSWORD_CHANGED`'s own dedicated-value
+  precedent). `npx prisma db push` still needed against the target DB for
+  this audit row to persist; the password-change feature itself works
+  regardless (see next point). **Real bug found + fixed**: that schema edit,
+  before being pushed, exposed a real pre-existing defect —
+  `instructorAuth.service.js`'s `createAuditLog` had no try/catch, unlike
+  every other service's audit helper in this codebase, so the not-yet-valid
+  enum value crashed the whole password-change request with a 500 even
+  though the password/session mutations had already committed. Fixed the
+  actual inconsistency (added the same best-effort try/catch every other
+  audit helper already has) rather than avoiding the new enum value.
+  MFA and Avatar (gaps #16/#17) are deliberate "Coming Soon" placeholders —
+  no backend exists for either, for any actor, confirmed by code read; not
+  built here per explicit scope decision, not a missed gap.
+- **All 12 sidebar pages now real** (`InstructorLayout.tsx` NAV_ITEMS,
+  `App.tsx` routes) — including `/instructor/certifications`, which was
+  *not* explicitly scoped to any phase's task text but was found still
+  showing "Coming Soon" during Phase 6's final wiring pass despite its
+  underlying feature (teaching-credential upload/list) already existing as a
+  tab inside `/instructor/profile` since Phase 2. Exposed as its own page
+  (`InstructorCertificationsPage.tsx`) reusing that exact tab component
+  rather than forking it, so the sidebar link finally matches reality.
+- **Appendix A status after this pass** (18-item gap list): #1–7, #9–11,
+  #14–15 resolved. #8 partially resolved (summary + list shipped; per-payout
+  breakdown recompute still open — no per-course/per-payment line-item is
+  persisted anywhere for `InstructorPayout`, same gap the blueprint
+  documented). #12 (Content Library owner-scoping) and #13 (instructor-facing
+  quiz-grading endpoint) remain fully open — no phase touched either. #16
+  (MFA) and #17 (Avatar) are deliberate scope-out decisions, not bugs. #18
+  (the two documented UI/copy discrepancies — `Instructor.rating` hard-null
+  vs live `avgRating`; the admin Suspend dialog's stale "courses stay
+  published" copy) are both ADMIN-side display issues, not instructor-
+  dashboard endpoints — neither was in scope for any of Phases 1–6 and both
+  remain open.
+- **Admin-side reply loop (2026-08-31)**: the loop admin→instructor was
+  one-way in the UI even after instructor replies started persisting
+  (`AdminMessageReply`, previous change) — nothing on the admin side
+  surfaced them beyond a count+preview in the topbar outbox dropdown
+  (`AdminLayout.tsx` `MessagesPanel`). Added `GET
+  /api/admin/messages/:id/thread` (`messages.service.getMessageThread`,
+  scoped to `senderAdminId` like every other ownership check in that file)
+  returning the original message + its replies chronologically, and made it
+  the "read" action for replies (mirrors `markMyMessageRead`: viewing =
+  reading, no separate endpoint). New surface: `MessageThreadModal`
+  (`frontend/src/components/messages/`), opened by clicking a row in the
+  existing outbox dropdown — conversation view, "N new reply" indicator,
+  "Reply" button that reuses `SendMessageModal` to send a fresh
+  `AdminMessage` to the same recipient (not a write into
+  `AdminMessageReply` — that model stays instructor-only by the schema's
+  own explicit one-way design, see messages.prisma:30-38). **Schema
+  change**: `AdminMessageReply` gained `readAt DateTime?` to back the
+  unread indicator — `npx prisma generate` + `npx prisma db push` still
+  needed against the target DB (same pre-existing gap this repo already
+  flags for every new Prisma field; the rest of the feature degrades
+  safely via `repliesFor`'s existing try/catch until then). Not wired
+  through `invalidation.ts` — this whole panel was already plain
+  `fetch`/local `useState`, not react-query, before this change; kept
+  consistent with that, not a new inconsistency. No §5 entity table exists
+  for Messages (none of §5.1–§5.14 cover it) — this entry is the only
+  record of the mutation/surface per the "keep the maps alive" rule, not a
+  new formal entity section.

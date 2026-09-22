@@ -324,7 +324,7 @@ function DocumentsTab() {
 
 // ── Certifications tab ────────────────────────────────────────────────────────
 
-function CertificationsTab() {
+export function CertificationsTab() {
   const [certifications, setCertifications] = useState<InstructorCertification[]>([]);
   const [loading, setLoading] = useState(true);
   const [showUpload, setShowUpload] = useState(false);

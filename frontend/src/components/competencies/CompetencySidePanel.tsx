@@ -17,6 +17,7 @@ import { CompetenciesApiError } from '../../types/competencies';
 import type { SkillDetail, CompetencyCertification, CertificationStatus } from '../../types/competencies';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import AssignCertificationModal from './AssignCertificationModal';
+import AssignCourseModal from './AssignCourseModal';
 
 const LEVEL_COLOR: Record<string, string> = {
   BEGINNER: '#94a3b8', INTERMEDIATE: '#3b82f6', ADVANCED: '#6366f1', EXPERT: '#f59e0b', CERTIFIED: '#16a34a',
@@ -86,6 +87,7 @@ export default function CompetencySidePanel({
   const [unlinkingId, setUnlinkingId] = useState<string | null>(null);
   const [certs, setCerts] = useState<CompetencyCertification[]>([]);
   const [assignCertOpen, setAssignCertOpen] = useState(false);
+  const [assignCourseOpen, setAssignCourseOpen] = useState(false);
   const [, setSearchParams] = useSearchParams();
 
   function goToImportExport() {
@@ -186,7 +188,13 @@ export default function CompetencySidePanel({
           </div>
 
           <div style={SECTION}>
-            <div style={SECTION_TITLE}>Linked Courses</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+              <div style={{ ...SECTION_TITLE, marginBottom: 0 }}>Linked Courses</div>
+              <button type="button" onClick={() => setAssignCourseOpen(true)}
+                style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, fontWeight: 600, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                <Plus size={12} strokeWidth={2.5} /> Assign
+              </button>
+            </div>
             {detail.linkedCourses.length === 0 ? (
               <div style={{ fontSize: 12, color: '#94a3b8' }}>No courses assigned yet.</div>
             ) : (
@@ -291,6 +299,16 @@ export default function CompetencySidePanel({
           skillName={detail.name}
           onClose={() => setAssignCertOpen(false)}
           onSuccess={() => { setAssignCertOpen(false); fetchDetail(); }}
+          showToast={showToast}
+        />
+      )}
+
+      {assignCourseOpen && detail && (
+        <AssignCourseModal
+          skillId={detail.id}
+          skillName={detail.name}
+          onClose={() => setAssignCourseOpen(false)}
+          onSuccess={() => { setAssignCourseOpen(false); fetchDetail(); }}
           showToast={showToast}
         />
       )}
