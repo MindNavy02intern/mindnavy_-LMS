@@ -48,8 +48,8 @@ export default function AssessmentsTab({ showToast, refreshSignal }: Props) {
   useEffect(() => { fetchList(); }, [fetchList, refreshSignal]);
   useEffect(() => { setPage(1); }, [type, passed]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchList);
-    return () => window.removeEventListener('analyticsUpdated', fetchList);
+    window.addEventListener('competenciesUpdated', fetchList);
+    return () => window.removeEventListener('competenciesUpdated', fetchList);
   }, [fetchList]);
 
   return (

@@ -2,6 +2,7 @@
 // Real backend only (no mock flag — backend shipped 2026-08-03, 89/89 smoke green).
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   InstructorApiError,
   type ActionResponse,
@@ -41,7 +42,7 @@ async function instructorsFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

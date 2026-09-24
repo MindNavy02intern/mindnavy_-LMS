@@ -90,8 +90,8 @@ export default function IntegrationsStatsCards({ refreshSignal }: { refreshSigna
         .finally(() => { if (!cancelled) setLoading(false); });
     }
     fetchStats();
-    window.addEventListener('analyticsUpdated', fetchStats);
-    return () => { cancelled = true; window.removeEventListener('analyticsUpdated', fetchStats); };
+    window.addEventListener('integrationsUpdated', fetchStats);
+    return () => { cancelled = true; window.removeEventListener('integrationsUpdated', fetchStats); };
   }, [refreshSignal]);
 
   if (error) {

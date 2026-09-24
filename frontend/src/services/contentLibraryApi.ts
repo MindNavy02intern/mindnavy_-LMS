@@ -5,6 +5,7 @@
 // /uploads ones.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   ContentItem,
   ContentListData,
@@ -39,7 +40,7 @@ async function contentFetch<T>(
   body?:  unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/content${path}`, {
+  const res = await fetchWithRetry(`${BASE}/content${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

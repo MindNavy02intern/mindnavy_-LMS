@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import InstructorLayout from './InstructorLayout';
-import { LABEL, INPUT, BTN_SECONDARY, ERROR_BANNER, TH, TD, statusBadgeStyle } from './instructorUiKit';
+import { INPUT, BTN_SECONDARY, ERROR_BANNER, TH, TD, statusBadgeStyle } from './instructorUiKit';
 import {
   listMyStudents, getMyStudent, getMyStudentAssessments, getMyStudentAttendance,
+  getMyStudentCertificates, getMyStudentActivity,
   InstructorStudentsApiError,
 } from '../../api/instructorStudentsApi';
 import type {
   StudentEnrollmentRow, MyCourseOption, StudentDetail, StudentAssessment,
   StudentAttendanceRecord, AttendanceSummary, EnrollmentStatus,
+  StudentCertificate, StudentActivityEvent,
 } from '../../types/instructorStudents';
 
 // Mirrors InstructorCoursesPage.tsx's shell (mn-db-welcome header, mn-db-card
@@ -143,7 +145,9 @@ export default function InstructorStudentsPage() {
 
 // ── Side panel — Student in My Course(s) ────────────────────────────────────────
 
-type PanelTab = 'courses' | 'assessments' | 'attendance';
+type PanelTab = 'courses' | 'assessments' | 'attendance' | 'certificates' | 'activity';
+
+const CERT_STATUS_COLOR: Record<string, string> = { active: '#15803d', revoked: '#b91c1c', expired: '#94a3b8' };
 
 function StudentPanel({ studentId, onClose }: { studentId: string; onClose: () => void }) {
   const [tab, setTab] = useState<PanelTab>('courses');
@@ -159,6 +163,14 @@ function StudentPanel({ studentId, onClose }: { studentId: string; onClose: () =
   const [attendanceSummary, setAttendanceSummary] = useState<AttendanceSummary | null>(null);
   const [attendanceLoading, setAttendanceLoading] = useState(false);
   const [attendanceError, setAttendanceError] = useState<string | null>(null);
+
+  const [certificates, setCertificates] = useState<StudentCertificate[] | null>(null);
+  const [certificatesLoading, setCertificatesLoading] = useState(false);
+  const [certificatesError, setCertificatesError] = useState<string | null>(null);
+
+  const [activity, setActivity] = useState<StudentActivityEvent[] | null>(null);
+  const [activityLoading, setActivityLoading] = useState(false);
+  const [activityError, setActivityError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -182,6 +194,20 @@ function StudentPanel({ studentId, onClose }: { studentId: string; onClose: () =
         .then((res) => { setAttendance(res.records); setAttendanceSummary(res.summary); setAttendanceError(null); })
         .catch((err: unknown) => setAttendanceError(err instanceof InstructorStudentsApiError ? err.message : 'Failed to load attendance.'))
         .finally(() => setAttendanceLoading(false));
+    }
+    if (tab === 'certificates' && certificates === null && !certificatesLoading) {
+      setCertificatesLoading(true);
+      getMyStudentCertificates(studentId)
+        .then((res) => { setCertificates(res.certificates); setCertificatesError(null); })
+        .catch((err: unknown) => setCertificatesError(err instanceof InstructorStudentsApiError ? err.message : 'Failed to load certificates.'))
+        .finally(() => setCertificatesLoading(false));
+    }
+    if (tab === 'activity' && activity === null && !activityLoading) {
+      setActivityLoading(true);
+      getMyStudentActivity(studentId)
+        .then((res) => { setActivity(res.events); setActivityError(null); })
+        .catch((err: unknown) => setActivityError(err instanceof InstructorStudentsApiError ? err.message : 'Failed to load activity.'))
+        .finally(() => setActivityLoading(false));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab, studentId]);
@@ -214,7 +240,7 @@ function StudentPanel({ studentId, onClose }: { studentId: string; onClose: () =
             </div>
 
             <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #e5e7eb' }}>
-              {(['courses', 'assessments', 'attendance'] as PanelTab[]).map((t) => (
+              {(['courses', 'assessments', 'activity', 'certificates', 'attendance'] as PanelTab[]).map((t) => (
                 <button
                   key={t}
                   type="button"
@@ -271,6 +297,54 @@ function StudentPanel({ studentId, onClose }: { studentId: string; onClose: () =
                       <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>
                         {a.status}{a.score != null ? ` · Score ${a.score}${a.passingGrade != null ? ` (pass ${a.passingGrade})` : ''}` : ' · Not graded yet'}
                         {' · Attempt #'}{a.attemptNo}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )
+            )}
+
+            {tab === 'certificates' && (
+              certificatesLoading ? (
+                <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}><div className="mn-spinner" /></div>
+              ) : certificatesError ? (
+                <div style={ERROR_BANNER}>{certificatesError}</div>
+              ) : !certificates || certificates.length === 0 ? (
+                <p style={{ fontSize: 12, color: '#94a3b8' }}>No certificates issued for your courses yet.</p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {certificates.map((c) => (
+                    <div key={c.id} style={{ border: '1px solid #e5e7eb', borderRadius: 8, padding: '10px 12px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: '#374151' }}>{c.courseTitle ?? '—'}</span>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: CERT_STATUS_COLOR[c.status] ?? '#64748b' }}>{c.status.toUpperCase()}</span>
+                      </div>
+                      <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>
+                        Issued {c.issuedAt ? new Date(c.issuedAt).toLocaleDateString() : '—'}
+                        {c.expiresAt ? ` · Expires ${new Date(c.expiresAt).toLocaleDateString()}` : ''}
+                      </div>
+                      <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 2, fontFamily: 'monospace' }}>{c.verificationCode}</div>
+                    </div>
+                  ))}
+                </div>
+              )
+            )}
+
+            {tab === 'activity' && (
+              activityLoading ? (
+                <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}><div className="mn-spinner" /></div>
+              ) : activityError ? (
+                <div style={ERROR_BANNER}>{activityError}</div>
+              ) : !activity || activity.length === 0 ? (
+                <p style={{ fontSize: 12, color: '#94a3b8' }}>No activity on your courses/sessions yet.</p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {activity.map((e) => (
+                    <div key={e.id} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: e.type === 'quiz_attempt' ? '#7c3aed' : '#16a34a', marginTop: 5, flexShrink: 0 }} />
+                      <div>
+                        <div style={{ fontSize: 12.5, color: '#374151' }}>{e.title}</div>
+                        <div style={{ fontSize: 10.5, color: '#94a3b8' }}>{new Date(e.createdAt).toLocaleString()}</div>
                       </div>
                     </div>
                   ))}

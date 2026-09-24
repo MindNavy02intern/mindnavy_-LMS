@@ -1,4 +1,5 @@
 import { getStoredToken } from './adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   RolePageStats,
   RolePage,
@@ -33,7 +34,7 @@ export class RolesPageError extends Error {
 
 async function apiFetch<T>(path: string, method = 'GET', body?: unknown): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

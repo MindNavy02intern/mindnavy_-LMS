@@ -182,7 +182,7 @@ const InstructorsTable = forwardRef<InstructorsTableHandle, Props>(function Inst
     // ranking that backs ?tab=top, per contract — one definition everywhere.
     listInstructors({ tab: 'top', limit: 10 })
       .then(res => setTopIds(new Set(res.instructors.map(i => i.id))))
-      .catch(() => {});
+      .catch(err => console.error(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, serverTab, filterInvitedOnly, sort, search, specialization, categoryId]);
 
@@ -190,7 +190,7 @@ const InstructorsTable = forwardRef<InstructorsTableHandle, Props>(function Inst
   useImperativeHandle(ref, () => ({ refetch: fetchList }), [fetchList]);
 
   useEffect(() => {
-    listCategories().then(setCategories).catch(() => {});
+    listCategories().then(setCategories).catch(err => console.error(err));
   }, []);
 
   useEffect(() => {

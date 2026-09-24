@@ -52,6 +52,10 @@ export default function AuditLogsTab({ showToast }: Props) {
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData]);
+  // Audit logs record admin actions across every module — genuinely needs
+  // to know about ANY mutation, so it deliberately keeps the broad
+  // 'analyticsUpdated' catch-all rather than narrowing to one domain (same
+  // reasoning as ReportsOverviewTab.tsx).
   useEffect(() => {
     window.addEventListener('analyticsUpdated', fetchData);
     return () => window.removeEventListener('analyticsUpdated', fetchData);

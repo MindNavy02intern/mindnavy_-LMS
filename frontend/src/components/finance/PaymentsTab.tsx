@@ -119,8 +119,8 @@ export default function PaymentsTab({ showToast, refreshSignal }: Props) {
   useEffect(() => { fetchList(); }, [fetchList, refreshSignal]);
   useEffect(() => { setPage(1); }, [search, status, method, dateFrom, dateTo]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchList);
-    return () => window.removeEventListener('analyticsUpdated', fetchList);
+    window.addEventListener('financeUpdated', fetchList);
+    return () => window.removeEventListener('financeUpdated', fetchList);
   }, [fetchList]);
 
   async function handleExport() {

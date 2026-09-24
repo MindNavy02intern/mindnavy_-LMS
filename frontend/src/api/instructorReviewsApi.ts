@@ -3,6 +3,7 @@
 
 import { getStoredInstructorToken } from './instructorAuth';
 import type { ListMyReviewsResult, MyReviewStats, ReviewStatus } from '../types/instructorReviews';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const BASE = import.meta.env.VITE_INSTRUCTOR_API_BASE_URL2 ?? 'http://localhost:5001/api/instructor';
 
@@ -17,7 +18,7 @@ export class InstructorReviewsApiError extends Error {
 
 async function reviewsFetch<T>(path: string): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
   });
 

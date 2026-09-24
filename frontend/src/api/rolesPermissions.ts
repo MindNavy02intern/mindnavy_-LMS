@@ -1,4 +1,5 @@
 import { getStoredToken } from './adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 
@@ -22,7 +23,7 @@ async function apiCall(endpoint: string, method = 'GET', body?: unknown): Promis
   if (body !== undefined) options.body = JSON.stringify(body);
 
   try {
-    const res = await fetch(`${BASE_URL}${endpoint}`, options);
+    const res = await fetchWithRetry(`${BASE_URL}${endpoint}`, options);
     const json = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));
     if (!res.ok) {
       throw new RolesApiError(res.status, (json as { message?: string }).message ?? `HTTP ${res.status}`);

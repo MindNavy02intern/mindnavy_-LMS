@@ -159,6 +159,35 @@ export interface UnpublishCourseResponse {
   status: 'Draft';
 }
 
+// GET /api/instructor/courses/:id/detail — the read-only "View" page's single
+// aggregated response (Instructor Dashboard Course View). Distinct from the
+// wizard's /preview (course+sections only).
+export interface CourseEnrollmentStats {
+  totalStudents:  number;
+  completionRate: number; // 0-100, rounded
+  avgProgress:    number; // 0-100, rounded
+}
+export interface CourseRecentEnrollment {
+  id:            string;
+  studentName:   string | null;
+  studentEmail:  string | null;
+  enrolledAt:    string; // ISO
+  progress:      number;
+  status:        string;
+  completedAt:   string | null;
+}
+export interface CourseReview {
+  id:          string;
+  rating:      number;
+  comment:     string | null;
+  studentName: string | null;
+  createdAt:   string; // ISO
+}
+export interface CourseEnrollmentTrendPoint {
+  weekStart: string; // ISO, Sunday-start
+  count:     number;
+}
+
 // Error thrown by every coursesApi / courseWizardApi function on non-2xx
 export class CourseApiError extends Error {
   status: number;

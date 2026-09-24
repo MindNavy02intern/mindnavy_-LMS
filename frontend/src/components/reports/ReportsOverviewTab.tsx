@@ -127,7 +127,7 @@ export default function ReportsOverviewTab({ showToast }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getDepartments({ limit: 100 }).then(res => setDepartments(res.departments.map(d => d.name))).catch(() => {});
+    getDepartments({ limit: 100 }).then(res => setDepartments(res.data.map(d => d.name))).catch(err => console.error(err));
   }, []);
 
   const rangeParams = { dateRange, dateFrom: dateRange === 'custom' ? customFrom : undefined, dateTo: dateRange === 'custom' ? customTo : undefined };

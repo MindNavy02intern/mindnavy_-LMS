@@ -4,11 +4,14 @@
 // comment for why).
 
 import { getStoredInstructorToken } from './instructorAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   ListMyStudentsResult,
   StudentDetail,
   ListStudentAssessmentsResult,
   ListStudentAttendanceResult,
+  ListStudentCertificatesResult,
+  ListStudentActivityResult,
   EnrollmentStatus,
 } from '../types/instructorStudents';
 
@@ -25,7 +28,7 @@ export class InstructorStudentsApiError extends Error {
 
 async function studentsFetch<T>(path: string): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
   });
 
@@ -72,4 +75,12 @@ export function getMyStudentAssessments(id: string, params: { page?: number; lim
 
 export function getMyStudentAttendance(id: string, params: { page?: number; limit?: number } = {}): Promise<ListStudentAttendanceResult> {
   return studentsFetch<ListStudentAttendanceResult>(`/students/${encodeURIComponent(id)}/attendance${qs(params)}`);
+}
+
+export function getMyStudentCertificates(id: string, params: { page?: number; limit?: number } = {}): Promise<ListStudentCertificatesResult> {
+  return studentsFetch<ListStudentCertificatesResult>(`/students/${encodeURIComponent(id)}/certificates${qs(params)}`);
+}
+
+export function getMyStudentActivity(id: string, params: { page?: number; limit?: number } = {}): Promise<ListStudentActivityResult> {
+  return studentsFetch<ListStudentActivityResult>(`/students/${encodeURIComponent(id)}/activity${qs(params)}`);
 }

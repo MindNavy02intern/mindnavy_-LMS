@@ -4,6 +4,7 @@
 // Mock data matches every shape field-by-field (title/status/startTime/missing).
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   LearningPath,
   LearningPathDetail,
@@ -37,7 +38,7 @@ async function lpFetch<T>(
   body?:   unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/learning-paths${path}`, {
+  const res = await fetchWithRetry(`${BASE}/learning-paths${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

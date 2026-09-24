@@ -30,7 +30,7 @@ export default function LogsTab({ refreshSignal }: Props) {
   const limit = 20;
 
   useEffect(() => {
-    listIntegrations().then(setIntegrations).catch(() => {});
+    listIntegrations().then(setIntegrations).catch(err => console.error(err));
   }, []);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function LogsTab({ refreshSignal }: Props) {
       page, limit,
     })
       .then(res => { if (!cancelled) { setItems(res.items); setTotal(res.total); } })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [integrationId, type, status, dateFrom, dateTo, page, refreshSignal]);

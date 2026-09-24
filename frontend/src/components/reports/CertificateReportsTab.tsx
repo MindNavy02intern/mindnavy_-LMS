@@ -2,7 +2,7 @@
 // Verification-requests stays an honest em-dash (no verification-page-hit
 // tracking exists). Expired/Expiring Soon are real counts (Certificate.expiresAt).
 
-import { useCallback, useEffect, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { getCertificateReports } from '../../services/reportsApi';
 import { ReportsApiError } from '../../types/reports';
@@ -65,8 +65,8 @@ export default function CertificateReportsTab({ showToast }: Props) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchData);
-    return () => window.removeEventListener('analyticsUpdated', fetchData);
+    window.addEventListener('certificatesUpdated', fetchData);
+    return () => window.removeEventListener('certificatesUpdated', fetchData);
   }, [fetchData]);
 
   return (

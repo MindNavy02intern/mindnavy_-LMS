@@ -32,7 +32,7 @@ export default function ChannelLogsTab({ channel, refreshSignal, banner }: Props
     setLoading(true);
     listLogs({ channel, status: status || undefined, dateFrom: dateFrom || undefined, dateTo: dateTo || undefined, page, limit })
       .then(res => { if (!cancelled) { setItems(res.items); setTotal(res.total); } })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [channel, status, dateFrom, dateTo, page, refreshSignal]);

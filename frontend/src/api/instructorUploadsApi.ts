@@ -5,6 +5,7 @@
 // the request body (unlike admin's UploadSignRequest/UploadConfirmRequest).
 
 import { getStoredInstructorToken } from './instructorAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   UploadApiError,
   type UploadKind,
@@ -16,7 +17,7 @@ const BASE = import.meta.env.VITE_INSTRUCTOR_API_BASE_URL2 ?? 'http://localhost:
 
 async function uploadFetch<T>(path: string, options: RequestInit): Promise<T> {
   const token = getStoredInstructorToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',

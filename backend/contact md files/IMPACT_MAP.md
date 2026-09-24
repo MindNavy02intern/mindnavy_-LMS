@@ -574,12 +574,21 @@ this codebase) sends due reports itself — that's a system-authored
 mutation ID either.
 
 Every tab that reads live data (all except Export Center and Custom
-Reports) self-fetches on mount and listens for the app-wide
-`analyticsUpdated` bridge event — the Overview tab in particular aggregates
-too many domains (users/learners/instructors/courses/certificates/
-live-sessions/audit) for any single mutation ID to name them all, so it
-rides the same catch-all event every other module's mutations already
-dispatch rather than needing a bespoke invalidation list.
+Reports) self-fetches on mount. As of the 2026-09-02 granular-events pass
+(see §6), most tabs listen for the specific domain event matching their own
+data (`LearnerAnalyticsTab`/`LearningProgressTab` → `learnersUpdated` (+
+`coursesUpdated` for the latter), `InstructorAnalyticsTab` →
+`instructorsUpdated`, `CourseAnalyticsTab`/`AssessmentReportsTab` →
+`coursesUpdated`, `CertificateReportsTab` → `certificatesUpdated`,
+`AttendanceReportsTab` → `attendanceUpdated`, `ComplianceReportsTab` →
+`userDataChanged` + `learnersUpdated`, `ScheduledReportsSection` →
+`reportsUpdated`) instead of the old catch-all. Three tabs deliberately keep
+listening to the broad `analyticsUpdated` event because they genuinely
+aggregate across nearly every module and narrowing them would mean going
+stale rather than going faster: `ReportsOverviewTab` (users/learners/
+instructors/courses/certificates/live-sessions/audit), `AuditLogsTab`
+(records admin actions across every module), `EngagementAnalyticsTab`
+(logins + course progress + attendance).
 
 ---
 
@@ -589,6 +598,12 @@ dispatch rather than needing a bespoke invalidation list.
 - `src/lib/invalidation.ts` — `INVALIDATION_MAP: Record<MutationName, () => QueryKey[]>` that mirrors §5 1:1, plus `invalidateFor(queryClient, mutationName, ctx)` which applies the row + §2 defaults.
 - Every `useMutation.onSuccess` calls `invalidateFor(...)`. Ad-hoc `queryClient.invalidateQueries` calls outside `invalidation.ts` are forbidden (lint/review check).
 - Adding a mutation = one row here (§5) + one entry in `INVALIDATION_MAP`. They must match; drift between file and map is a review blocker.
+
+**Bridge events (2026-09-02 update — perf pass Priority 2).** `invalidation.ts`'s `dispatchBridgeEvents` used to receive `allKeys` (the mutation's own keys PLUS the §2 defaults — `activity`/`notifications`/`dashboard.stats`, added to nearly every mutation), which meant an else-bucket domain — and therefore the `analyticsUpdated` catch-all — fired on literally every mutation regardless of what it actually was: 44 components listened to that one event, so one button click fanned out into 5-12 unrelated refetches. Fixed two ways:
+1. `invalidateFor` now passes `dispatchBridgeEvents` the mutation's own `extraKeys` only, never the defaults-merged `allKeys` — a domain only counts as "touched" if the mutation's OWN `INVALIDATION_MAP` row actually names it.
+2. `DOMAIN_EVENTS` (replacing the old 4-branch if/else) now maps every major domain to its own event: `financeUpdated`, `competenciesUpdated`, `instructorsUpdated`, `integrationsUpdated`, `learnersUpdated`, `notificationsUpdated`, `reportsUpdated`, `coursesUpdated`, `certificatesUpdated`, `attendanceUpdated`, `settingsUpdated` — alongside the pre-existing `organizationUpdated`/`groupsUpdated`/`rolesUpdated`/`userDataChanged`. A domain with no dedicated event still falls through to `analyticsUpdated` (dashboard/activity/approvals/tasks/security/live-sessions — no narrow consumer needed one yet).
+
+All 41 of the 44 listening components were repointed to the narrow event matching their own data; 3 (`ReportsOverviewTab`, `AuditLogsTab`, `EngagementAnalyticsTab`, all in §5.11b above) deliberately kept the broad catch-all since they're genuinely cross-cutting. Adding a new domain: add a row to `DOMAIN_EVENTS`, then point the consuming component(s) at the new event name instead of `analyticsUpdated` — don't add a component to the catch-all unless it genuinely needs to react to almost anything.
 
 ## 7. PLAYWRIGHT REFLECTION TESTS (extends stats-consistency suite)
 

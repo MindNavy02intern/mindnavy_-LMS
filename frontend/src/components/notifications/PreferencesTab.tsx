@@ -49,7 +49,7 @@ export default function PreferencesTab({ showToast }: { showToast: (type: 'succe
     const t = setTimeout(() => {
       getUsers({ search: search.trim(), limit: 8 }).then(res => {
         if (!cancelled) setOptions(res.users.map(u => ({ id: u.id, fullName: u.fullName, email: u.email })));
-      }).catch(() => {});
+      }).catch(err => console.error(err));
     }, 250);
     return () => { cancelled = true; clearTimeout(t); };
   }, [search]);

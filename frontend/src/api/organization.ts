@@ -16,6 +16,7 @@ import type {
 } from '../types/organization';
 import { getStoredToken } from './adminAuth';
 import { ApiError } from './users';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const ORG_URL = `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin'}/organization`;
 
@@ -27,7 +28,7 @@ async function orgFetch<T>(url: string, init?: RequestInit): Promise<T> {
   if (init?.body) headers['Content-Type'] = 'application/json';
 
   try {
-    const res = await fetch(url, { ...init, headers: { ...headers, ...(init?.headers as Record<string, string> ?? {}) } });
+    const res = await fetchWithRetry(url, { ...init, headers: { ...headers, ...(init?.headers as Record<string, string> ?? {}) } });
     if (res.ok) return await res.json() as T;
     const body = await res.json().catch(() => null);
     throw new ApiError(res.status, (body as { message?: string })?.message ?? `HTTP ${res.status}`);

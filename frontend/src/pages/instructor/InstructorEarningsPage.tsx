@@ -48,7 +48,7 @@ export default function InstructorEarningsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getMyEarningsSummary().then(setSummary).catch(() => {});
+    getMyEarningsSummary().then(setSummary).catch(err => console.error(err));
   }, []);
 
   useEffect(() => {

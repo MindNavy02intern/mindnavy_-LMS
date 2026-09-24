@@ -277,9 +277,106 @@ async function getMyStudentAttendance(instructorId, studentId, { page, limit } =
   };
 }
 
+// ── Certificates: issued for MY courses only ────────────────────────────────────
+
+async function getMyStudentCertificates(instructorId, studentId, { page, limit } = {}) {
+  const { ownIds } = await assertMyStudent(instructorId, studentId);
+
+  const { skip, take, page: p, limit: l } = paginate(page, limit);
+  const where = { userId: studentId, courseId: { in: ownIds } };
+
+  const [total, rows] = await Promise.all([
+    safe(() => prisma.certificate.count({ where }), 0),
+    safe(() => prisma.certificate.findMany({
+      where, orderBy: { issuedAt: "desc" }, skip, take,
+      select: {
+        id: true, courseId: true, verificationCode: true,
+        issuedAt: true, revokedAt: true, expiresAt: true,
+        course: { select: { title: true } },
+      },
+    }), []),
+  ]);
+
+  return {
+    certificates: rows.map((c) => ({
+      id:               c.id,
+      courseId:         c.courseId,
+      courseTitle:      c.course?.title ?? null,
+      verificationCode: c.verificationCode,
+      status:           c.revokedAt ? "revoked" : c.expiresAt && c.expiresAt.getTime() <= Date.now() ? "expired" : "active",
+      issuedAt:         iso(c.issuedAt),
+      revokedAt:        iso(c.revokedAt),
+      expiresAt:        iso(c.expiresAt),
+    })),
+    pagination: buildPagination(total, p, l),
+  };
+}
+
+// ── Activity: quiz attempts + session attendance for MY content only ───────────
+// Deliberately excludes login events (AppUserSession) — a login is an
+// account-level event with no course/instructor link, so it isn't "this
+// instructor's content" activity; showing it here would leak a student's
+// platform-wide usage pattern to every instructor they have a single class
+// with. Mirrors learners.service.js's getLearnerActivity shape (merge +
+// sort + paginate in memory) but scoped to the two content-linked types.
+
+async function getMyStudentActivity(instructorId, studentId, { page, limit } = {}) {
+  const { ownIds } = await assertMyStudent(instructorId, studentId);
+
+  const myQuizzes = await safe(() => prisma.quiz.findMany({ where: { courseId: { in: ownIds } }, select: { id: true } }), []);
+  const quizIds = myQuizzes.map((q) => q.id);
+  const mySessions = await safe(() => prisma.liveSession.findMany({ where: { instructorId }, select: { id: true } }), []);
+  const sessionIds = mySessions.map((s) => s.id);
+
+  const FETCH_WINDOW = 200; // bounded, same shape as learners.service.js's own window
+  const [attempts, attendance] = await Promise.all([
+    quizIds.length
+      ? safe(() => prisma.quizAttempt.findMany({
+          where: { userId: studentId, quizId: { in: quizIds } },
+          orderBy: { createdAt: "desc" }, take: FETCH_WINDOW,
+          select: { id: true, createdAt: true, status: true, score: true, quiz: { select: { title: true } } },
+        }), [])
+      : [],
+    sessionIds.length
+      ? safe(() => prisma.sessionAttendance.findMany({
+          where: { userId: studentId, sessionId: { in: sessionIds } },
+          orderBy: { createdAt: "desc" }, take: FETCH_WINDOW,
+          select: { id: true, createdAt: true, status: true, session: { select: { title: true } } },
+        }), [])
+      : [],
+  ]);
+
+  const events = [
+    ...attempts.map((a) => ({
+      id: `quiz_attempt:${a.id}`,
+      type: "quiz_attempt",
+      title: `Attempted quiz "${a.quiz?.title ?? 'Untitled'}"${a.score != null ? ` — scored ${a.score}` : ''}`,
+      createdAt: a.createdAt,
+    })),
+    ...attendance.map((r) => ({
+      id: `session_attended:${r.id}`,
+      type: "session_attended",
+      title: r.status === "PRESENT" ? `Attended "${r.session?.title ?? 'session'}"`
+        : r.status === "LATE" ? `Joined late to "${r.session?.title ?? 'session'}"`
+        : `Marked ${r.status.toLowerCase()} for "${r.session?.title ?? 'session'}"`,
+      createdAt: r.createdAt,
+    })),
+  ].sort((a, b) => b.createdAt - a.createdAt);
+
+  const { skip, take, page: p, limit: l } = paginate(page, limit);
+  const pageEvents = events.slice(skip, skip + take);
+
+  return {
+    events: pageEvents.map((e) => ({ id: e.id, type: e.type, title: e.title, createdAt: iso(e.createdAt) })),
+    pagination: buildPagination(events.length, p, l),
+  };
+}
+
 module.exports = {
   listMyStudents,
   getMyStudent,
   getMyStudentAssessments,
   getMyStudentAttendance,
+  getMyStudentCertificates,
+  getMyStudentActivity,
 };

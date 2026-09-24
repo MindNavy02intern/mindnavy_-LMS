@@ -58,7 +58,7 @@ export default function AuthSsoTab({ refreshSignal }: Props) {
     setLoading(true);
     listIntegrations()
       .then(rows => { if (!cancelled) setItems(rows.filter(r => r.category === 'AUTH')); })
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [refreshSignal]);

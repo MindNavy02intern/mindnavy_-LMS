@@ -370,18 +370,18 @@ export default function CompetenciesOverviewTab({
     setFrameworksLoading(true);
     listFrameworks({ limit: 5 })
       .then(res => setFrameworks(res.frameworks))
-      .catch(() => {})
+      .catch(err => console.error(err))
       .finally(() => setFrameworksLoading(false));
   }, []);
 
   useEffect(() => { fetchAnalytics(); fetchFrameworks(); }, [fetchAnalytics, fetchFrameworks, refreshSignal]);
 
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchAnalytics);
-    window.addEventListener('analyticsUpdated', fetchFrameworks);
+    window.addEventListener('competenciesUpdated', fetchAnalytics);
+    window.addEventListener('competenciesUpdated', fetchFrameworks);
     return () => {
-      window.removeEventListener('analyticsUpdated', fetchAnalytics);
-      window.removeEventListener('analyticsUpdated', fetchFrameworks);
+      window.removeEventListener('competenciesUpdated', fetchAnalytics);
+      window.removeEventListener('competenciesUpdated', fetchFrameworks);
     };
   }, [fetchAnalytics, fetchFrameworks]);
 

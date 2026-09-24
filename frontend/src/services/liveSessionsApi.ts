@@ -7,6 +7,7 @@
 // Callers must branch on LiveSessionApiError.status to tell these apart.
 
 import { getStoredToken } from '../api/adminAuth';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import type {
   LiveSession,
   LiveSessionListParams,
@@ -39,7 +40,7 @@ async function lsFetch<T>(
   body?:  unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}/live-sessions${path}`, {
+  const res = await fetchWithRetry(`${BASE}/live-sessions${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

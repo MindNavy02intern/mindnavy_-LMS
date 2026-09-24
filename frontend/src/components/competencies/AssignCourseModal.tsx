@@ -41,7 +41,7 @@ export default function AssignCourseModal({ skillId, skillName, onClose, onSucce
     const t = setTimeout(() => {
       listCourses({ search: search.trim() || undefined, limit: 8 })
         .then(res => { if (!cancelled) setOptions(res.courses.map(c => ({ id: c.id, title: c.title }))); })
-        .catch(() => {});
+        .catch(err => console.error(err));
     }, 250);
     return () => { cancelled = true; clearTimeout(t); };
   }, [search]);

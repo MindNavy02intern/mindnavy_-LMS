@@ -69,14 +69,14 @@ export default function FrameworksTab({ onCreateFramework, onEditFramework, show
   useEffect(() => { fetchList(); }, [fetchList, refreshSignal]);
   useEffect(() => { fetchDetail(); }, [fetchDetail, refreshSignal]);
   // Backend caps limit at 100 (competencies.validator MAX.limit) — matches it.
-  useEffect(() => { listSkills({ limit: 100, status: 'ACTIVE' }).then(res => setAllSkills(res.skills)).catch(() => {}); }, [refreshSignal]);
+  useEffect(() => { listSkills({ limit: 100, status: 'ACTIVE' }).then(res => setAllSkills(res.skills)).catch(err => console.error(err)); }, [refreshSignal]);
 
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetchList);
-    window.addEventListener('analyticsUpdated', fetchDetail);
+    window.addEventListener('competenciesUpdated', fetchList);
+    window.addEventListener('competenciesUpdated', fetchDetail);
     return () => {
-      window.removeEventListener('analyticsUpdated', fetchList);
-      window.removeEventListener('analyticsUpdated', fetchDetail);
+      window.removeEventListener('competenciesUpdated', fetchList);
+      window.removeEventListener('competenciesUpdated', fetchDetail);
     };
   }, [fetchList, fetchDetail]);
 

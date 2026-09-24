@@ -10,6 +10,7 @@
 // no error path here beyond a genuine network failure.
 
 import type { VerifyResult } from '../types/certificates';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 // Derived from the same VITE_API_BASE_URL every other service uses (so a
 // deployment override follows one host, not two) — swapped to the public
@@ -35,7 +36,7 @@ export async function verifyCertificate(code: string): Promise<VerifyResult> {
 
   let res: Response;
   try {
-    res = await fetch(`${BASE}/certificates/verify/${encodeURIComponent(code)}`);
+    res = await fetchWithRetry(`${BASE}/certificates/verify/${encodeURIComponent(code)}`);
   } catch {
     throw new PublicCertificateApiError('Network error — please check your connection.');
   }

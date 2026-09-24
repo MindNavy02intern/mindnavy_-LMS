@@ -7,6 +7,7 @@
 import { getStoredToken } from '../api/adminAuth';
 import { appQueryClient, invalidateFor } from '../lib/invalidation';
 import type { MutationCtx } from '../lib/invalidation';
+import { fetchWithRetry } from '../lib/fetchWithRetry';
 import {
   CourseApiError,
   type ApproveCourseResponse,
@@ -30,7 +31,7 @@ async function wizardFetch<T>(
   body?: unknown,
 ): Promise<T> {
   const token = getStoredToken();
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetchWithRetry(`${BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

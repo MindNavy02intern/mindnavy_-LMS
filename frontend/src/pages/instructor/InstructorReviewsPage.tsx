@@ -36,7 +36,7 @@ export default function InstructorReviewsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getMyReviewStats().then(setStats).catch(() => {});
+    getMyReviewStats().then(setStats).catch(err => console.error(err));
   }, []);
 
   useEffect(() => {

@@ -262,8 +262,8 @@ export default function LearnersAnalyticsSection() {
 
   useEffect(() => { fetch(); }, [fetch]);
   useEffect(() => {
-    window.addEventListener('analyticsUpdated', fetch);
-    return () => window.removeEventListener('analyticsUpdated', fetch);
+    window.addEventListener('learnersUpdated', fetch);
+    return () => window.removeEventListener('learnersUpdated', fetch);
   }, [fetch]);
 
   if (error) {
