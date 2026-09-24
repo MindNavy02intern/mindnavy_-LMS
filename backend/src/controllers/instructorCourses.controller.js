@@ -20,6 +20,11 @@ const {
   validateConfirm,
   validateDelete,
 } = require("../validators/uploads.validator");
+const {
+  validateDesignSign,
+  validateDesignConfirm,
+  validateDesignPosition,
+} = require("../validators/certificateDesign.validator");
 
 // Error-code union of courses.controller + courseWorkflow.controller +
 // courseBuilder.controller + the new ownership/business-rule codes this
@@ -294,6 +299,38 @@ const deleteUpload = run(async (req, res) => {
   return res.json({ success: true, message: "File deleted.", data });
 });
 
+// ── Certificate design ────────────────────────────────────────────────────────
+// Same sign→PUT→confirm shape as the Uploads section above, dedicated to the
+// custom certificate image (courseId forced into the body from the URL, same
+// "force before validate" rule as signUpload/confirmUpload).
+
+const signCertificateDesign = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "courseId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateDesignSign(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const data = await svc.signMyCertificateDesign(req.instructor.id, req.params.id, v.data);
+  return res.json({ success: true, message: "Signed upload URL issued.", data });
+});
+
+const confirmCertificateDesign = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "courseId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateDesignConfirm(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const data = await svc.confirmMyCertificateDesign(req.instructor.id, req.params.id, v.data);
+  return res.json({ success: true, message: "Certificate design uploaded.", data });
+});
+
+const setCertificateDesignPosition = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "courseId");
+  if (idErr) return badRequest(res, idErr);
+  const v = validateDesignPosition(req.body);
+  if (!v.isValid) return badRequest(res, v.errors[0]);
+  const data = await svc.setMyCertificateDesignPosition(req.instructor.id, req.params.id, v.data);
+  return res.json({ success: true, message: "Certificate name position saved.", data });
+});
+
 // ── Reorder ────────────────────────────────────────────────────────────────────
 
 const reorder = run(async (req, res) => {
@@ -326,5 +363,8 @@ module.exports = {
   signUpload,
   confirmUpload,
   deleteUpload,
+  signCertificateDesign,
+  confirmCertificateDesign,
+  setCertificateDesignPosition,
   reorder,
 };

@@ -402,7 +402,17 @@ async function reissueCertificate(id, { templateId }, adminId) {
 async function getCertificateForPdf(id) {
   const c = await prisma.certificate.findUnique({
     where: { id },
-    select: { ...CERT_SELECT, template: { select: { name: true, layout: true } } },
+    select: {
+      ...CERT_SELECT,
+      template: { select: { name: true, layout: true } },
+      course: {
+        select: {
+          title: true,
+          customCertificateImageUrl: true, certificateNameX: true, certificateNameY: true,
+          certificateNameFontSize: true, certificateNameColor: true,
+        },
+      },
+    },
   });
   if (!c) throw domainError("CERT_NOT_FOUND");
   if (c.revokedAt) throw domainError("CERT_REVOKED");
@@ -414,12 +424,26 @@ async function getCertificateForPdf(id) {
     await prisma.certificate.update({ where: { id }, data: { verificationCode: code } });
   }
 
+  // Instructor-uploaded custom design takes priority over the template/
+  // DEFAULT_LAYOUT — independent of templateId, which stays whatever the
+  // issuance call set it to (null for every auto-issued certificate).
+  const customDesign = c.course?.customCertificateImageUrl
+    ? {
+        imageUrl: c.course.customCertificateImageUrl,
+        nameX:    c.course.certificateNameX ?? 0.5,
+        nameY:    c.course.certificateNameY ?? 0.5,
+        fontSize: c.course.certificateNameFontSize ?? 28,
+        color:    c.course.certificateNameColor ?? "#000000",
+      }
+    : null;
+
   return {
     studentName:      c.metadata?.studentName ?? c.user?.fullName ?? null,
     courseTitle:      c.metadata?.courseTitle ?? c.course?.title ?? null,
     issuedAt:         c.issuedAt,
     verificationCode: code,
     layout:           c.template?.layout ?? null,
+    customDesign,
   };
 }
 

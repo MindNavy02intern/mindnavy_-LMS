@@ -84,4 +84,28 @@ function validateReplyInput(body) {
   return errors;
 }
 
-module.exports = { validateSendAdminMessageInput, validateReplyInput };
+// Instructor-initiated fresh message to admin (this task). Subject is
+// REQUIRED here (unlike admin's own optional subject) — with no admin
+// picking a recipient/context, a real subject line is what makes the
+// auto-created thread meaningful in the designated admin's outbox.
+function validateStartThreadInput(body) {
+  const errors = [];
+  const { subject, body: msgBody } = body || {};
+
+  if (!subject || typeof subject !== "string" || !subject.trim()) {
+    errors.push("subject is required.");
+  } else if (subject.trim().length > 150) {
+    errors.push("subject must not exceed 150 characters.");
+  }
+
+  if (!msgBody || typeof msgBody !== "string" || !msgBody.trim()) {
+    errors.push("Message body is required.");
+    return errors;
+  }
+  if (msgBody.trim().length < 10) errors.push("Message body must be at least 10 characters.");
+  if (msgBody.trim().length > 2000) errors.push("Message body must not exceed 2000 characters.");
+
+  return errors;
+}
+
+module.exports = { validateSendAdminMessageInput, validateReplyInput, validateStartThreadInput };

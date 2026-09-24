@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const prisma = require("../config/prisma");
 const { getProvider } = require("./storage");
 const { ALLOWED_MIME } = require("../validators/instructorDocuments.validator");
+const notificationsService = require("./notifications.service");
 
 // ── Instructor documents service (sign → direct upload → confirm) ───────────────
 //
@@ -234,6 +235,18 @@ async function confirmDocumentUpload(instructorId, { path, fileName, type, expir
 
   await auditLog(adminId, "INSTRUCTOR_DOCUMENT_UPLOADED", {
     instructorId, documentId: doc.id, type, fileName: doc.fileName,
+  });
+
+  // Real gap fixed: upload only ever audit-logged before — nothing alerted
+  // admin a new document needs review. Same notifyAdmins pattern as course
+  // submission (see courseWorkflow.service.js submitCourse).
+  const instructor = await prisma.appUser.findUnique({ where: { id: instructorId }, select: { fullName: true } });
+  await notificationsService.notifyAdmins({
+    title:      "New instructor document needs review",
+    body:       `${instructor?.fullName ?? "An instructor"} uploaded a ${type.replace(/_/g, " ").toLowerCase()} document ("${doc.fileName}") for review.`,
+    priority:   "NORMAL",
+    sourceType: "SYSTEM",
+    sourceId:   doc.id,
   });
 
   return mapDocument(doc);

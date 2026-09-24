@@ -91,8 +91,9 @@ interface MsgPanelItem {
   priority:     string;
   status:       string;
   createdAt:    string;
-  readAt:       string | null;
-  receiverName: string | null;
+  readAt:        string | null;
+  receiverName:  string | null;
+  receiverEmail: string | null;
   // Instructor (AppUser) replies — a separate AdminMessageReply row per
   // reply, never a reversed AdminMessage (that model stays strictly
   // admin->user). This panel is a compact "sent" list, not a full thread
@@ -288,7 +289,9 @@ function MessagesPanel({ items, loading, onCompose, onViewAll, onOpenThread }: {
                 </div>
               )}
               {msg.receiverName && (
-                <div style={{ fontSize: '0.66rem', color: '#94a3b8', marginBottom: 2 }}>To: {msg.receiverName}</div>
+                <div style={{ fontSize: '0.66rem', color: '#94a3b8', marginBottom: 2 }}>
+                  To: {msg.receiverName}{msg.receiverEmail ? ` · ${msg.receiverEmail}` : ''}
+                </div>
               )}
               <div style={{ fontSize: '0.72rem', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {msg.body.slice(0, 60)}{msg.body.length > 60 ? '…' : ''}

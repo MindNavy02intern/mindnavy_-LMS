@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const prisma = require("../config/prisma");
 const { getProvider } = require("./storage");
 const { ALLOWED_MIME } = require("../validators/instructorCertifications.validator");
+const notificationsService = require("./notifications.service");
 
 // ── Instructor certifications service (teaching certs/licences/degrees) ──────────
 //
@@ -179,6 +180,17 @@ async function createCertification(instructorId, { name, issuer, type, path }, a
   });
 
   await auditLog(adminId, "INSTRUCTOR_CERTIFICATION_UPLOADED", { instructorId, certificationId: cert.id, name, type });
+
+  // Real gap fixed: only ever audit-logged before — same notifyAdmins
+  // pattern as course submission / document upload.
+  const instructor = await prisma.appUser.findUnique({ where: { id: instructorId }, select: { fullName: true } });
+  await notificationsService.notifyAdmins({
+    title:      "New instructor certification needs review",
+    body:       `${instructor?.fullName ?? "An instructor"} uploaded a certification ("${name}") for review.`,
+    priority:   "NORMAL",
+    sourceType: "SYSTEM",
+    sourceId:   cert.id,
+  });
 
   return mapCertification(cert, null);
 }

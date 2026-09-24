@@ -27,6 +27,18 @@ model Course {
   seoTitle           String?
   seoDescription     String?
 
+  // Instructor-uploaded custom certificate design — owned exclusively by
+  // PATCH /api/instructor/courses/:id/certificate-design/*. Only meaningful
+  // when certificateEnabled is true; certificatePdf.service.js falls back to
+  // DEFAULT_LAYOUT when customCertificateImageUrl is null. nameX/nameY are
+  // 0-1 fractions of the image's width/height (not pixels), so the overlay
+  // position stays correct regardless of the image's native resolution.
+  customCertificateImageUrl String?
+  certificateNameX          Float?
+  certificateNameY          Float?
+  certificateNameFontSize   Int?
+  certificateNameColor      String?
+
   // Approval workflow (submit → approve/reject). reviewedById = deciding admin;
   // rejectionReason is cleared again on resubmit/approve.
   // submittedAt is stamped on every DRAFT→PENDING transition (including a

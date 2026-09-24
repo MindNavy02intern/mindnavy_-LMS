@@ -20,6 +20,9 @@ import {
   type CourseRecentEnrollment,
   type CourseReview,
   type CourseEnrollmentTrendPoint,
+  type CertificateDesignResponse,
+  type CertificateDesignSignResponse,
+  type CertificateDesignPositionPayload,
 } from '../types/courses';
 import type { CourseSection, CreateLessonPayload, UpdateLessonPayload } from '../types/courseBuilder';
 import type { QuizDetail } from '../types/quizzes';
@@ -156,6 +159,22 @@ export function updateMyLesson(courseId: string, sectionId: string, lessonId: st
 
 export function deleteMyLesson(courseId: string, sectionId: string, lessonId: string): Promise<{ id: string }> {
   return instructorCoursesFetch(`/courses/${encodeURIComponent(courseId)}/sections/${encodeURIComponent(sectionId)}/lessons/${encodeURIComponent(lessonId)}`, 'DELETE');
+}
+
+// ── Certificate design (custom image + name overlay position) ───────────────
+// Same sign→PUT-direct-to-storage→confirm shape as the generic course
+// uploads above, dedicated to the custom certificate image.
+
+export function signMyCertificateDesign(courseId: string, payload: { fileName: string; fileType: string }): Promise<CertificateDesignSignResponse> {
+  return instructorCoursesFetch(`/courses/${encodeURIComponent(courseId)}/certificate-design/sign`, 'POST', payload);
+}
+
+export function confirmMyCertificateDesign(courseId: string, path: string): Promise<CertificateDesignResponse> {
+  return instructorCoursesFetch(`/courses/${encodeURIComponent(courseId)}/certificate-design/confirm`, 'POST', { path });
+}
+
+export function setMyCertificateDesignPosition(courseId: string, body: CertificateDesignPositionPayload): Promise<CertificateDesignResponse> {
+  return instructorCoursesFetch(`/courses/${encodeURIComponent(courseId)}/certificate-design/position`, 'PATCH', body);
 }
 
 // ── Reorder ────────────────────────────────────────────────────────────────────

@@ -527,6 +527,28 @@ async function listInAppNotifications({ userId, read, page = 1, limit = 20 } = {
   return { items: (await attachUserNames(rows)).map(mapLog), total, page, limit };
 }
 
+// ── Notify admins (instructor-action-needs-review alerts) ──────────────────────
+//
+// NotificationLog.userId is nullable and every admin-facing read of this feed
+// (admin's own topbar bell, InAppTab.tsx) queries with NO userId filter —
+// i.e. it already shows every system-wide row, not one user's inbox. A
+// userId:null row is therefore the correct "broadcast to admins" shape with
+// zero schema change: it's invisible to instructor/learner self-service reads
+// (those always filter `userId: req.instructor.id`/`req.user.id`), and shows
+// up for every admin viewing the shared feed. This is the ONE place that
+// creates such a row — every "an instructor did X, an admin should know"
+// call site (course submission, document/certification upload, application
+// submission) goes through this function so the shape stays consistent.
+async function notifyAdmins({ title, body, priority = "NORMAL", sourceType = "MANUAL", sourceId = null }) {
+  await safe(() => prisma.notificationLog.create({
+    data: {
+      userId: null, channel: "IN_APP", status: "SENT",
+      subject: title, body, priority, sourceType, sourceId,
+      sentAt: new Date(),
+    },
+  }), null);
+}
+
 async function sendInAppNotification({ userIds, title, body, type, priority }, adminId) {
   const users = await prisma.appUser.findMany({ where: { id: { in: userIds } }, select: { id: true } });
   if (users.length === 0) throw domainError("USERS_NOT_FOUND");
@@ -581,12 +603,14 @@ async function deleteNotification(id, adminId) {
 
 // ── Delivery logs (any channel) ──────────────────────────────────────────────
 
-async function listLogs({ channel, status, userId, dateFrom, dateTo, page = 1, limit = 20 } = {}) {
+async function listLogs({ channel, status, userId, dateFrom, dateTo, read, page = 1, limit = 20 } = {}) {
   const where = {
     ...(channel ? { channel } : {}),
     ...(status ? { status } : {}),
     ...(userId ? { userId } : {}),
     ...(dateFrom || dateTo ? { createdAt: { ...(dateFrom ? { gte: dateFrom } : {}), ...(dateTo ? { lte: dateTo } : {}) } } : {}),
+    ...(read === true ? { status: { in: ["OPENED", "CLICKED"] } } : {}),
+    ...(read === false ? { status: { notIn: ["OPENED", "CLICKED"] } } : {}),
   };
   const [rows, total] = await safe(
     () => Promise.all([
@@ -892,6 +916,7 @@ module.exports = {
   listAutomations, getAutomationOrThrow, createAutomation, updateAutomation, setAutomationStatus, deleteAutomation,
   // in-app
   listInAppNotifications, sendInAppNotification, markNotificationRead, markMyNotificationRead, markAllRead, deleteNotification,
+  notifyAdmins,
   // logs
   listLogs, retryDelivery,
   // preferences

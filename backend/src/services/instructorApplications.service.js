@@ -1,5 +1,6 @@
 const prisma = require("../config/prisma");
 const { sendMail } = require("../utils/mailer");
+const notificationsService = require("./notifications.service");
 
 // ── Instructor Applications service ─────────────────────────────────────────────
 //
@@ -153,11 +154,30 @@ async function submitApplication(data) {
       select: { id: true },
     });
     await auditLog(null, "INSTRUCTOR_APPLICATION_SUBMITTED", { applicationId: updated.id, email: data.email, resubmitted: true });
+    // Real gap fixed: only ever audit-logged before — same notifyAdmins
+    // pattern as course submission / document / certification upload. This
+    // one arrives unauthenticated (pre-instructor applicant, not an
+    // existing instructor's action), but it's the same "admin needs to
+    // review this" gap class.
+    await notificationsService.notifyAdmins({
+      title:      "Instructor application resubmitted",
+      body:       `${data.fullName ?? data.email} resubmitted their instructor application after requested changes.`,
+      priority:   "NORMAL",
+      sourceType: "SYSTEM",
+      sourceId:   updated.id,
+    });
     return { accepted: true, applicationId: updated.id, duplicate: false };
   }
 
   const created = await prisma.instructorApplication.create({ data, select: { id: true } });
   await auditLog(null, "INSTRUCTOR_APPLICATION_SUBMITTED", { applicationId: created.id, email: data.email, resubmitted: false });
+  await notificationsService.notifyAdmins({
+    title:      "New instructor application",
+    body:       `${data.fullName ?? data.email} applied to become an instructor.`,
+    priority:   "NORMAL",
+    sourceType: "SYSTEM",
+    sourceId:   created.id,
+  });
   return { accepted: true, applicationId: created.id, duplicate: false };
 }
 
