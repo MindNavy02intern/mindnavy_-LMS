@@ -55,6 +55,13 @@ router.post("/:id/uploads/sign", requireInstructorAuth, adminUserActionRateLimit
 router.post("/:id/uploads/confirm", requireInstructorAuth, adminUserActionRateLimiter, c.confirmUpload);
 router.delete("/:id/uploads", requireInstructorAuth, adminUserActionRateLimiter, c.deleteUpload);
 
+// ── Certificate design — custom image + name overlay position, same
+//    sign→PUT→confirm pattern as Uploads above, scoped to the caller's own
+//    course. ───────────────────────────────────────────────────────────────
+router.post("/:id/certificate-design/sign", requireInstructorAuth, adminUserActionRateLimiter, c.signCertificateDesign);
+router.post("/:id/certificate-design/confirm", requireInstructorAuth, adminUserActionRateLimiter, c.confirmCertificateDesign);
+router.patch("/:id/certificate-design/position", requireInstructorAuth, adminUserActionRateLimiter, c.setCertificateDesignPosition);
+
 // ── Quizzes — reuses /api/admin/quizzes' service, self-scoped to a quiz
 //    attached to one of the caller's own courses. ──────────────────────────────
 router.get("/:id/quizzes", requireInstructorAuth, coursesReadRateLimiter, q.listQuizzes);

@@ -2,7 +2,7 @@
 // Read + mark-read only.
 
 import { getStoredInstructorToken } from './instructorAuth';
-import type { InstructorMessage, InstructorMessageReply, ListMyMessagesResult } from '../types/instructorMessages';
+import type { InstructorMessage, InstructorMessageReply, InstructorMessageThread, ListMyMessagesResult } from '../types/instructorMessages';
 import { fetchWithRetry } from '../lib/fetchWithRetry';
 
 const BASE = import.meta.env.VITE_INSTRUCTOR_API_BASE_URL2 ?? 'http://localhost:5001/api/instructor';
@@ -46,6 +46,21 @@ export function markMyMessageRead(id: string): Promise<InstructorMessage> {
   return messagesFetch<InstructorMessage>(`/messages/${encodeURIComponent(id)}/read`, 'PATCH');
 }
 
+export function markAllMyMessagesRead(): Promise<{ updated: number }> {
+  return messagesFetch<{ updated: number }>('/messages/read-all', 'PATCH');
+}
+
 export function replyToMessage(originalMessageId: string, body: string): Promise<InstructorMessageReply> {
   return messagesFetch<InstructorMessageReply>('/messages/reply', 'POST', { originalMessageId, body });
+}
+
+export function getMyMessageThread(id: string): Promise<InstructorMessageThread> {
+  return messagesFetch<InstructorMessageThread>(`/messages/${encodeURIComponent(id)}/thread`);
+}
+
+// Fresh instructor-initiated message to admin — recipient is never a free
+// pick (self-scoped to a single designated admin server-side), so this only
+// ever takes subject+body.
+export function startMyMessageThread(subject: string, body: string): Promise<{ message: InstructorMessage; reply: InstructorMessageReply }> {
+  return messagesFetch('/messages', 'POST', { subject, body });
 }

@@ -3,6 +3,7 @@ const { Prisma } = require("@prisma/client");
 const prisma = require("../config/prisma");
 const coursesService = require("./courses.service");
 const courseBuilderService = require("./courseBuilder.service");
+const notificationsService = require("./notifications.service");
 
 // ── Course Wizard workflow service (settings · preview · submit · approve/reject) ──
 //
@@ -104,6 +105,7 @@ async function getPreview(id) {
 async function submitCourse(id, adminId) {
   const course = await getCourseOrThrow(id, {
     id: true, status: true, title: true, description: true, thumbnail: true,
+    instructor: { select: { fullName: true } },
   });
 
   if (course.status !== "DRAFT") {
@@ -145,6 +147,19 @@ async function submitCourse(id, adminId) {
   if (count === 0) throw domainError("STATE_CHANGED");
 
   await auditLog(adminId, "COURSE_SUBMITTED", { courseId: id, title: course.title });
+
+  // Real gap fixed: submission only ever changed status + audit-logged
+  // before — nothing alerted admin. Broadcast row (userId:null), same
+  // pattern every instructor-action-needs-review call site now uses — see
+  // notifications.service.js's notifyAdmins header comment.
+  await notificationsService.notifyAdmins({
+    title:      "Course submitted for review",
+    body:       `${course.instructor?.fullName ?? "An instructor"} submitted "${course.title}" for approval.`,
+    priority:   "NORMAL",
+    sourceType: "SYSTEM",
+    sourceId:   id,
+  });
+
   return { id, status: "Pending" };
 }
 

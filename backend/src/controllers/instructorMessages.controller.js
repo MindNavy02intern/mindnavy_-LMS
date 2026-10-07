@@ -1,5 +1,5 @@
 const svc = require("../services/messages.service");
-const { validateReplyInput } = require("../validators/messages.validator");
+const { validateReplyInput, validateStartThreadInput } = require("../validators/messages.validator");
 
 // Instructor self-service Messages (blueprint 2.10) — AdminMessage where
 // receiverUserId = req.instructor.id. Read + mark-read, plus reply (this
@@ -17,7 +17,11 @@ function notFound(res, msg = "Not found.") {
 
 function serverError(res, err) {
   console.error("[InstructorMessagesController]", err);
-  if (typeof err.statusCode === "number" && err.statusCode >= 400 && err.statusCode < 500) {
+  // <500 (validation/not-found) and the explicit 503 startMyMessageThread
+  // throws when no admin account exists to receive messages — both are
+  // deliberate domain errors with a real message worth surfacing verbatim,
+  // unlike an actual unhandled crash.
+  if (typeof err.statusCode === "number" && err.statusCode >= 400 && (err.statusCode < 500 || err.statusCode === 503)) {
     return res.status(err.statusCode).json({ success: false, message: err.message });
   }
   if (err.code === "P2021" || err.code === "P2022") {
@@ -61,6 +65,29 @@ const markRead = run(async (req, res) => {
   return res.json({ success: true, message: "Message marked as read.", data: message });
 });
 
+const markAllRead = run(async (req, res) => {
+  const result = await svc.markAllMyMessagesRead(req.instructor.id);
+  return res.json({ success: true, message: "Marked all as read.", data: result });
+});
+
+const getThread = run(async (req, res) => {
+  const idErr = validateId(req.params.id, "messageId");
+  if (idErr) return notFound(res, idErr);
+  const result = await svc.getMyMessageThread(req.instructor.id, req.params.id);
+  return res.json({ success: true, data: result });
+});
+
+const startThread = run(async (req, res) => {
+  const errors = validateStartThreadInput(req.body || {});
+  if (errors.length > 0) return badRequest(res, errors[0]);
+
+  const result = await svc.startMyMessageThread(req.instructor.id, {
+    subject: req.body.subject,
+    body:    req.body.body,
+  });
+  return res.status(201).json({ success: true, message: "Message sent.", data: result });
+});
+
 const reply = run(async (req, res) => {
   const errors = validateReplyInput(req.body || {});
   if (errors.length > 0) return badRequest(res, errors[0]);
@@ -75,5 +102,8 @@ const reply = run(async (req, res) => {
 module.exports = {
   listMessages,
   markRead,
+  markAllRead,
+  getThread,
+  startThread,
   reply,
 };

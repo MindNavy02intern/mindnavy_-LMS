@@ -1,5 +1,10 @@
 const prisma = require("../config/prisma");
 
+// senderAdmin/receiverUser (name + email) are part of the BASE select now,
+// not bolted on per-caller — every message view (admin outbox, admin thread,
+// instructor inbox, instructor thread) must clearly show who sent it and who
+// received it, not just an id (Part 3 gap: neither side showed the OTHER
+// party's email, and the instructor side showed no sender info at all).
 const MESSAGE_SELECT = {
   id:             true,
   receiverUserId: true,
@@ -10,6 +15,8 @@ const MESSAGE_SELECT = {
   status:         true,
   readAt:         true,
   createdAt:      true,
+  senderAdmin:    { select: { fullName: true, email: true } },
+  receiverUser:   { select: { fullName: true, email: true } },
 };
 
 function makeError(message, statusCode) {
@@ -45,6 +52,10 @@ function mapMessage(m) {
     status:         m.status.toLowerCase(),
     readAt:         m.readAt ? m.readAt.toISOString() : null,
     createdAt:      m.createdAt.toISOString(),
+    senderName:     m.senderAdmin?.fullName ?? null,
+    senderEmail:    m.senderAdmin?.email ?? null,
+    receiverName:   m.receiverUser?.fullName ?? null,
+    receiverEmail:  m.receiverUser?.email ?? null,
   };
 }
 
@@ -144,7 +155,7 @@ async function getSentMessages(adminId, query = {}) {
       orderBy: { createdAt: "desc" },
       skip,
       take:    limit,
-      select:  { ...MESSAGE_SELECT, receiverUser: { select: { fullName: true } } },
+      select:  MESSAGE_SELECT,
     }),
   ]);
 
@@ -163,7 +174,6 @@ async function getSentMessages(adminId, query = {}) {
       const last = forThisMessage[forThisMessage.length - 1] ?? null;
       return {
         ...mapMessage(m),
-        receiverName:    m.receiverUser?.fullName ?? null,
         repliesCount:    forThisMessage.length,
         lastReply:       last ? mapReply(last) : null,
         hasUnreadReply:  forThisMessage.some((r) => !r.readAt),
@@ -235,7 +245,7 @@ async function getAdminMessages(recipientId, query = {}) {
 async function getMessageThread(adminId, messageId) {
   const message = await prisma.adminMessage.findUnique({
     where:  { id: messageId },
-    select: { ...MESSAGE_SELECT, senderAdminId: true, receiverUser: { select: { fullName: true } } },
+    select: { ...MESSAGE_SELECT, senderAdminId: true },
   });
   if (!message || message.senderAdminId !== adminId) throw makeError("Message not found.", 404);
 
@@ -252,8 +262,35 @@ async function getMessageThread(adminId, messageId) {
 
   return {
     success: true,
-    message: { ...mapMessage(message), receiverName: message.receiverUser?.fullName ?? null },
+    message: mapMessage(message),
     replies: replies.map((r) => mapReply(unreadIds.includes(r.id) ? { ...r, readAt: now } : r)),
+  };
+}
+
+// ── Instructor-side thread view (mirrors getMessageThread above, opposite
+// direction: scoped to receiverUserId, not senderAdminId) ──────────────────────
+//
+// Opening the thread is the "read" action, matching markMyMessageRead's own
+// semantics — no separate endpoint needed.
+async function getMyMessageThread(userId, messageId) {
+  const message = await prisma.adminMessage.findUnique({
+    where:  { id: messageId },
+    select: MESSAGE_SELECT,
+  });
+  if (!message || message.receiverUserId !== userId) throw makeError("Message not found.", 404);
+
+  if (message.status !== "READ") {
+    const now = new Date();
+    await prisma.adminMessage.update({ where: { id: messageId }, data: { status: "READ", readAt: now } });
+    message.status = "READ";
+    message.readAt = now;
+  }
+
+  const replies = await repliesFor([messageId]);
+  return {
+    success: true,
+    message: mapMessage(message),
+    replies: replies.map(mapReply),
   };
 }
 
@@ -312,4 +349,84 @@ async function markMyMessageRead(userId, messageId) {
   return mapMessage(updated);
 }
 
-module.exports = { sendAdminMessage, getAdminMessages, getSentMessages, getMessageThread, markMyMessageRead, createReply };
+// ── Instructor-initiated fresh message (this task) ──────────────────────────────
+//
+// AdminMessage.senderAdminId is a REQUIRED, non-nullable FK to AdminUser —
+// deliberately one-way by design (see createReply's own header comment above)
+// and not something this task should weaken with a schema change just to let
+// an instructor "send" one directly. Instead: auto-create a placeholder
+// AdminMessage from a single designated admin (the earliest-created ACTIVE
+// admin — this codebase has no "Support/Admin Team" account concept to route
+// to instead, see the report this task was built from), then attach the
+// instructor's actual words as an AdminMessageReply on it — the exact same
+// shape createReply already produces for replies to an admin-started thread,
+// so every existing read/list/thread/unread-badge code path handles it with
+// zero special-casing. KNOWN LIMITATION: only that one designated admin sees
+// these threads in their own outbox (getSentMessages is scoped to
+// senderAdminId) — a real shared inbox all admins can see would need actual
+// schema work, out of scope here.
+async function pickDesignatedAdmin() {
+  const admin = await prisma.adminUser.findFirst({
+    where:   { status: "ACTIVE" },
+    orderBy: { createdAt: "asc" },
+    select:  { id: true },
+  });
+  if (!admin) throw makeError("No admin account is available to receive messages right now.", 503);
+  return admin;
+}
+
+async function startMyMessageThread(instructorId, { subject, body }) {
+  const trimmedSubject = subject.trim();
+  const trimmedBody    = body.trim();
+
+  const [designatedAdmin, instructor] = await Promise.all([
+    pickDesignatedAdmin(),
+    prisma.appUser.findUnique({ where: { id: instructorId }, select: { fullName: true } }),
+  ]);
+
+  const placeholder = await prisma.adminMessage.create({
+    data: {
+      senderAdminId:  designatedAdmin.id,
+      receiverUserId: instructorId,
+      subject:        trimmedSubject,
+      body:           `${instructor?.fullName ?? "This instructor"} started this conversation — see their message below.`,
+      messageType:    "DIRECT",
+      priority:       "NORMAL",
+      // Pre-marked read: the instructor authored this placeholder themselves
+      // (indirectly), there's nothing here for them to be notified about.
+      status:  "READ",
+      readAt:  new Date(),
+    },
+    select: MESSAGE_SELECT,
+  });
+
+  const reply = await prisma.adminMessageReply.create({
+    data: { messageId: placeholder.id, userId: instructorId, body: trimmedBody },
+  });
+
+  await createUserAuditLog(null, "INSTRUCTOR_MESSAGE_STARTED", {
+    userId:          instructorId,
+    messageId:       placeholder.id,
+    designatedAdminId: designatedAdmin.id,
+    subject:         trimmedSubject,
+  });
+
+  return { message: mapMessage(placeholder), reply: mapReply(reply) };
+}
+
+// Bulk mark-as-read (Messages tab "Mark all read", matching Notifications
+// tab's own markAllRead). Scoped to receiverUserId — never touches another
+// user's messages. No audit log, same precedent markMyMessageRead documents
+// (high-frequency, low-value read-state toggles).
+async function markAllMyMessagesRead(userId) {
+  const result = await prisma.adminMessage.updateMany({
+    where: { receiverUserId: userId, status: { not: "READ" } },
+    data: { status: "READ", readAt: new Date() },
+  });
+  return { updated: result.count };
+}
+
+module.exports = {
+  sendAdminMessage, getAdminMessages, getSentMessages, getMessageThread, getMyMessageThread,
+  markMyMessageRead, markAllMyMessagesRead, createReply, startMyMessageThread,
+};

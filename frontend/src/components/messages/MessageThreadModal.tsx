@@ -15,6 +15,7 @@ interface ThreadMessage {
   priority:       string;
   createdAt:      string;
   receiverName:   string | null;
+  receiverEmail:  string | null;
 }
 
 interface ThreadReply {
@@ -97,7 +98,7 @@ export default function MessageThreadModal({ messageId, onClose, onChanged, show
             </div>
             {thread?.message.receiverName && (
               <p style={{ margin: '3px 0 0', fontSize: 12, color: '#6b7280' }}>
-                With <strong>{thread.message.receiverName}</strong>
+                With <strong>{thread.message.receiverName}</strong>{thread.message.receiverEmail ? ` · ${thread.message.receiverEmail}` : ''}
               </p>
             )}
           </div>

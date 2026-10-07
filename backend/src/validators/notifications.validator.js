@@ -397,11 +397,15 @@ function validateLogsQuery(query = {}) {
   const dateTo   = readDate(read("dateTo"), "dateTo", errors);
   const page  = readInt(query.page, "page", 1, 1000000, errors);
   const limit = readInt(query.limit, "limit", 1, MAX.limit, errors);
+  // Read/unread filter — additive, only the instructor topbar badge uses it
+  // today (accurate unread total via ?read=false&limit=1); admin's own
+  // InAppTab.tsx filters read/unread client-side and never sends this.
+  const readFlag = query.read === "true" ? true : query.read === "false" ? false : undefined;
 
   return {
     isValid: errors.length === 0,
     errors,
-    data: { channel, status, userId, dateFrom, dateTo, page: page ?? 1, limit: limit ?? 20 },
+    data: { channel, status, userId, dateFrom, dateTo, read: readFlag, page: page ?? 1, limit: limit ?? 20 },
   };
 }
 

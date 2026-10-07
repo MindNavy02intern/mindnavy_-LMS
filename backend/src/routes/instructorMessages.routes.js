@@ -8,7 +8,10 @@ const { coursesReadRateLimiter, adminUserActionRateLimiter } = require("../middl
 const router = express.Router();
 
 router.get("/", requireInstructorAuth, coursesReadRateLimiter, c.listMessages);
+router.post("/", requireInstructorAuth, adminUserActionRateLimiter, c.startThread);
 router.post("/reply", requireInstructorAuth, adminUserActionRateLimiter, c.reply);
+router.patch("/read-all", requireInstructorAuth, adminUserActionRateLimiter, c.markAllRead);
 router.patch("/:id/read", requireInstructorAuth, adminUserActionRateLimiter, c.markRead);
+router.get("/:id/thread", requireInstructorAuth, coursesReadRateLimiter, c.getThread);
 
 module.exports = router;

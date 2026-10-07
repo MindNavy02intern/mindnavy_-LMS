@@ -1,5 +1,5 @@
 const svc = require("../services/notifications.service");
-const { validatePreferencesUpdate } = require("../validators/notifications.validator");
+const { validatePreferencesUpdate, validateLogsQuery } = require("../validators/notifications.validator");
 
 // Instructor self-service Notifications + Preferences (blueprint 2.10 + 2.12).
 // Every handler is scoped to req.instructor.id — never a client-suppliable
@@ -47,14 +47,17 @@ function validateId(id, label) {
 
 // ── In-app notification feed ────────────────────────────────────────────────────
 
+// Reuses the same svc.listLogs the admin console's InAppTab.tsx itself calls
+// (channel:'IN_APP') rather than the narrower listInAppNotifications — that's
+// where date-range filtering actually lives (listInAppNotifications has no
+// dateFrom/dateTo at all). channel/userId are forced AFTER spreading the
+// parsed query, so a client-sent channel or userId can never override them —
+// self-scoped to this instructor's own IN_APP rows only, same convention as
+// every other instructor endpoint.
 const listNotifications = run(async (req, res) => {
-  const { page, limit, read } = req.query;
-  const result = await svc.listInAppNotifications({
-    userId: req.instructor.id,
-    read: read === "true" ? true : read === "false" ? false : undefined,
-    page: page ? Number(page) : undefined,
-    limit: limit ? Number(limit) : undefined,
-  });
+  const parsed = validateLogsQuery(req.query);
+  if (!parsed.isValid) return badRequest(res, parsed.errors[0]);
+  const result = await svc.listLogs({ ...parsed.data, channel: "IN_APP", userId: req.instructor.id });
   return res.json({ success: true, data: result });
 });
 

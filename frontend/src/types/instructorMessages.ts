@@ -25,6 +25,16 @@ export interface InstructorMessage {
   readAt:         string | null;
   createdAt:      string;
   replies:        InstructorMessageReply[];
+  // Who sent it — every message view must show name + email, not just an id.
+  senderName:     string | null;
+  senderEmail:    string | null;
+}
+
+// Single-message thread view (GET /messages/:id/thread) — same message shape
+// plus its full reply list, no count/preview truncation.
+export interface InstructorMessageThread {
+  message: InstructorMessage;
+  replies: InstructorMessageReply[];
 }
 
 export interface Pagination {

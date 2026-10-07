@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { getMyCourse, updateMyCourseSettings } from '../../api/instructorCoursesApi';
 import { CourseApiError, type CourseSettings, type CourseVisibility, type UpdateSettingsPayload } from '../../types/courses';
 import { LABEL, INPUT, BTN_PRIMARY, BTN_SECONDARY, ERROR_BANNER, disabledStyle } from './instructorUiKit';
+import InstructorCertificateDesignSection from './InstructorCertificateDesignSection';
 
 interface Props {
   courseId: string;
@@ -211,6 +212,17 @@ export default function InstructorSettingsStep({ courseId, onBack, onNext }: Pro
             Enable drip content (release lessons sequentially)
           </label>
         </div>
+
+        {form.certificateEnabled && origSettings.current && (
+          <InstructorCertificateDesignSection
+            courseId={courseId}
+            initialImageUrl={origSettings.current.customCertificateImageUrl}
+            initialNameX={origSettings.current.certificateNameX}
+            initialNameY={origSettings.current.certificateNameY}
+            initialFontSize={origSettings.current.certificateNameFontSize}
+            initialColor={origSettings.current.certificateNameColor}
+          />
+        )}
 
         {/* SEO */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>

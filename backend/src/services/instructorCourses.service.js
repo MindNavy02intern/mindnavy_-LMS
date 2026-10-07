@@ -4,6 +4,7 @@ const courseWorkflowService = require("./courseWorkflow.service");
 const courseBuilderService = require("./courseBuilder.service");
 const quizzesService = require("./quizzes.service");
 const uploadsService = require("./uploads.service");
+const certificateDesignService = require("./certificateDesign.service");
 const { assertOwnsCourse, assertOwnsSection, assertOwnsLesson } = require("../utils/ownershipGuard");
 const { forceOwnInstructorId } = require("../utils/selfScope");
 
@@ -284,6 +285,23 @@ async function deleteMyUpload(instructorId, courseId, data) {
   return uploadsService.deleteUpload(data);
 }
 
+// ── Certificate design (custom image + name overlay position) ───────────────
+
+async function signMyCertificateDesign(instructorId, courseId, data) {
+  await assertOwnsCourse(courseId, instructorId);
+  return certificateDesignService.signDesignUpload(courseId, data);
+}
+
+async function confirmMyCertificateDesign(instructorId, courseId, data) {
+  await assertOwnsCourse(courseId, instructorId);
+  return certificateDesignService.confirmDesignUpload(courseId, data);
+}
+
+async function setMyCertificateDesignPosition(instructorId, courseId, data) {
+  await assertOwnsCourse(courseId, instructorId);
+  return certificateDesignService.setPosition(courseId, data);
+}
+
 // ── Reorder (bulk) ──────────────────────────────────────────────────────────
 // courseBuilderService.reorder() already verifies every referenced section/
 // lesson id belongs to the given courseId internally (SECTION_NOT_IN_COURSE /
@@ -315,5 +333,8 @@ module.exports = {
   signMyUpload,
   confirmMyUpload,
   deleteMyUpload,
+  signMyCertificateDesign,
+  confirmMyCertificateDesign,
+  setMyCertificateDesignPosition,
   reorderMyCourse,
 };

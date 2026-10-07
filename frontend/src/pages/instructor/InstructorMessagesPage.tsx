@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import InstructorLayout from './InstructorLayout';
 import { INPUT, ERROR_BANNER, messageTypeBadgeStyle, priorityBadgeStyle } from './instructorUiKit';
-import { listMyMessages, markMyMessageRead, replyToMessage, InstructorMessagesApiError } from '../../api/instructorMessagesApi';
+import { listMyMessages, markMyMessageRead, markAllMyMessagesRead, replyToMessage, InstructorMessagesApiError } from '../../api/instructorMessagesApi';
 import { listMyNotifications, markMyNotificationRead, markAllMyNotificationsRead, InstructorNotificationsApiError } from '../../api/instructorNotificationsApi';
 import type { InstructorMessage } from '../../types/instructorMessages';
 import type { InstructorNotification } from '../../types/instructorNotifications';
@@ -28,12 +28,34 @@ function timeAgo(iso: string): string {
   return d.toLocaleDateString();
 }
 
+// Absolute timestamp — mirrors admin's components/notifications/shared.tsx
+// fmtDate() exactly (same format, independently defined here since instructor
+// pages deliberately don't cross-import admin's dark-themed shared module —
+// see instructorUiKit.ts's own header comment on why).
+function fmtDate(iso: string | null): string {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+type ReadFilter = 'all' | 'read' | 'unread';
+const NOTIF_LIMIT = 20;
+
 export default function InstructorMessagesPage() {
   const [tab, setTab] = useState<Tab>('messages');
   const [messages, setMessages] = useState<InstructorMessage[]>([]);
   const [notifications, setNotifications] = useState<InstructorNotification[]>([]);
+  const [notifTotal, setNotifTotal] = useState(0);
+  const [notifPage, setNotifPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Notifications tab filters — search/read-filter are client-side over the
+  // loaded page (mirrors admin's InAppTab.tsx exactly: it does the same, only
+  // dateFrom/dateTo/pagination are server-side there too).
+  const [notifSearch, setNotifSearch] = useState('');
+  const [notifReadFilter, setNotifReadFilter] = useState<ReadFilter>('all');
+  const [notifDateFrom, setNotifDateFrom] = useState('');
+  const [notifDateTo, setNotifDateTo] = useState('');
 
   const loadMessages = () => {
     setLoading(true);
@@ -45,8 +67,8 @@ export default function InstructorMessagesPage() {
 
   const loadNotifications = () => {
     setLoading(true);
-    listMyNotifications()
-      .then((res) => { setNotifications(res.items); setError(null); })
+    listMyNotifications({ dateFrom: notifDateFrom || undefined, dateTo: notifDateTo || undefined, page: notifPage, limit: NOTIF_LIMIT })
+      .then((res) => { setNotifications(res.items); setNotifTotal(res.total); setError(null); })
       .catch((err: unknown) => setError(err instanceof InstructorNotificationsApiError ? err.message : 'Failed to load notifications.'))
       .finally(() => setLoading(false));
   };
@@ -54,10 +76,22 @@ export default function InstructorMessagesPage() {
   useEffect(() => {
     if (tab === 'messages') loadMessages();
     else loadNotifications();
-  }, [tab]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab, notifPage, notifDateFrom, notifDateTo]);
+
+  const filteredNotifications = notifications.filter((n) => {
+    if (notifReadFilter === 'read' && !n.read) return false;
+    if (notifReadFilter === 'unread' && n.read) return false;
+    if (notifSearch.trim()) {
+      const q = notifSearch.trim().toLowerCase();
+      if (!n.subject?.toLowerCase().includes(q) && !n.body.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
 
   const unreadMessages = messages.filter((m) => m.status !== 'read').length;
   const unreadNotifications = notifications.filter((n) => !n.read).length;
+  const notifPages = Math.max(1, Math.ceil(notifTotal / NOTIF_LIMIT));
 
   async function handleOpenMessage(m: InstructorMessage) {
     if (m.status === 'read') return;
@@ -87,12 +121,21 @@ export default function InstructorMessagesPage() {
     }
   }
 
-  async function handleMarkAllRead() {
+  async function handleMarkAllNotificationsRead() {
     try {
       await markAllMyNotificationsRead();
       loadNotifications();
     } catch (err) {
       setError(err instanceof InstructorNotificationsApiError ? err.message : 'Failed to mark all as read.');
+    }
+  }
+
+  async function handleMarkAllMessagesRead() {
+    try {
+      await markAllMyMessagesRead();
+      loadMessages();
+    } catch (err) {
+      setError(err instanceof InstructorMessagesApiError ? err.message : 'Failed to mark all as read.');
     }
   }
 
@@ -132,15 +175,38 @@ export default function InstructorMessagesPage() {
 
       {error && <div style={{ ...ERROR_BANNER, marginBottom: 14 }}>{error}</div>}
 
-      <div className="mn-db-card">
-        {tab === 'notifications' && unreadNotifications > 0 && (
-          <div style={{ marginBottom: 10, display: 'flex', justifyContent: 'flex-end' }}>
-            <button type="button" onClick={handleMarkAllRead} style={{ fontSize: 12, fontWeight: 600, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer' }}>
+      {tab === 'notifications' && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 12 }}>
+          <input
+            style={{ ...INPUT, flex: 1, minWidth: 180 }}
+            placeholder="Search title or body…"
+            value={notifSearch}
+            onChange={(e) => setNotifSearch(e.target.value)}
+          />
+          <select aria-label="Filter by read status" style={INPUT} value={notifReadFilter} onChange={(e) => setNotifReadFilter(e.target.value as ReadFilter)}>
+            <option value="all">All</option>
+            <option value="unread">Unread</option>
+            <option value="read">Read</option>
+          </select>
+          <input aria-label="From date" style={INPUT} type="date" value={notifDateFrom} onChange={(e) => { setNotifDateFrom(e.target.value); setNotifPage(1); }} />
+          <input aria-label="To date" style={INPUT} type="date" value={notifDateTo} onChange={(e) => { setNotifDateTo(e.target.value); setNotifPage(1); }} />
+          {unreadNotifications > 0 && (
+            <button type="button" onClick={handleMarkAllNotificationsRead} style={{ fontSize: 12, fontWeight: 600, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}>
               Mark all read
             </button>
-          </div>
-        )}
+          )}
+        </div>
+      )}
 
+      {tab === 'messages' && unreadMessages > 0 && (
+        <div style={{ marginBottom: 10, display: 'flex', justifyContent: 'flex-end' }}>
+          <button type="button" onClick={handleMarkAllMessagesRead} style={{ fontSize: 12, fontWeight: 600, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer' }}>
+            Mark all read
+          </button>
+        </div>
+      )}
+
+      <div className="mn-db-card">
         {loading ? (
           <div style={{ display: 'flex', justifyContent: 'center', padding: 24 }}><div className="mn-spinner" /></div>
         ) : tab === 'messages' ? (
@@ -159,31 +225,56 @@ export default function InstructorMessagesPage() {
               ))}
             </div>
           )
-        ) : notifications.length === 0 ? (
-          <p style={{ fontSize: 12, color: '#94a3b8', textAlign: 'center', padding: '30px 0' }}>You're all caught up.</p>
+        ) : filteredNotifications.length === 0 ? (
+          <p style={{ fontSize: 12, color: '#94a3b8', textAlign: 'center', padding: '30px 0' }}>
+            {notifications.length === 0 ? "You're all caught up." : 'No notifications match these filters.'}
+          </p>
         ) : (
-          <div>
-            {notifications.map((n, idx) => (
-              <div
-                key={n.id}
-                onClick={() => handleOpenNotification(n)}
-                style={{
-                  display: 'flex', gap: 10, padding: '12px 4px', cursor: n.read ? 'default' : 'pointer',
-                  borderBottom: idx < notifications.length - 1 ? '1px solid #f1f5f9' : undefined,
-                  background: n.read ? 'transparent' : '#eff6ff',
-                }}
-              >
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: n.read ? 'transparent' : '#2563eb', marginTop: 5, flexShrink: 0 }} />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
-                    <span style={{ fontSize: 13, fontWeight: n.read ? 500 : 700, color: '#0f172a' }}>{n.subject ?? '(No subject)'}</span>
-                    <span style={{ fontSize: 11, color: '#94a3b8', flexShrink: 0 }}>{timeAgo(n.createdAt)}</span>
+          <>
+            <div>
+              {filteredNotifications.map((n, idx) => (
+                <div
+                  key={n.id}
+                  onClick={() => handleOpenNotification(n)}
+                  style={{
+                    display: 'flex', gap: 10, padding: '12px 4px', cursor: n.read ? 'default' : 'pointer',
+                    borderBottom: idx < filteredNotifications.length - 1 ? '1px solid #f1f5f9' : undefined,
+                    background: n.read ? 'transparent' : '#eff6ff',
+                  }}
+                >
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: n.read ? 'transparent' : '#2563eb', marginTop: 5, flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'center' }}>
+                      <span style={{ fontSize: 13, fontWeight: n.read ? 500 : 700, color: '#0f172a' }}>{n.subject ?? '(No subject)'}</span>
+                      <span style={{ fontSize: 11, color: '#94a3b8', flexShrink: 0 }}>{fmtDate(n.sentAt ?? n.createdAt)}</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4, flexWrap: 'wrap' }}>
+                      <span style={priorityBadgeStyle(n.priority)}>{n.priority}</span>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: n.read ? '#16a34a' : '#c2410c' }}>{n.read ? 'Read' : 'Unread'}</span>
+                      <span style={{ fontSize: 10.5, color: '#94a3b8' }}>{timeAgo(n.createdAt)}</span>
+                    </div>
+                    <p style={{ margin: '4px 0 0', fontSize: 12, color: '#64748b' }}>{n.body}</p>
+                    {!n.read && (
+                      <button
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); handleOpenNotification(n); }}
+                        style={{ marginTop: 4, fontSize: 11, fontWeight: 600, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                      >
+                        Mark read
+                      </button>
+                    )}
                   </div>
-                  <p style={{ margin: '4px 0 0', fontSize: 12, color: '#64748b' }}>{n.body}</p>
                 </div>
+              ))}
+            </div>
+            {notifPages > 1 && (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 10, paddingTop: 12, fontSize: 12, color: '#64748b' }}>
+                <span>Page {notifPage} of {notifPages} · {notifTotal} total</span>
+                <button type="button" disabled={notifPage <= 1} onClick={() => setNotifPage((p) => p - 1)} style={{ padding: '4px 10px', fontSize: 12, fontWeight: 600, fontFamily: 'inherit', background: '#fff', border: '1px solid #e5e7eb', borderRadius: 6, cursor: notifPage <= 1 ? 'default' : 'pointer', opacity: notifPage <= 1 ? 0.5 : 1 }}>Prev</button>
+                <button type="button" disabled={notifPage >= notifPages} onClick={() => setNotifPage((p) => p + 1)} style={{ padding: '4px 10px', fontSize: 12, fontWeight: 600, fontFamily: 'inherit', background: '#fff', border: '1px solid #e5e7eb', borderRadius: 6, cursor: notifPage >= notifPages ? 'default' : 'pointer', opacity: notifPage >= notifPages ? 0.5 : 1 }}>Next</button>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </InstructorLayout>
@@ -233,6 +324,11 @@ function MessageRow({ message, isLast, onOpen, onReply }: {
             <span style={{ fontSize: 13, fontWeight: message.status === 'read' ? 500 : 700, color: '#0f172a' }}>{message.subject ?? '(No subject)'}</span>
             <span style={{ fontSize: 11, color: '#94a3b8', flexShrink: 0 }}>{timeAgo(message.createdAt)}</span>
           </div>
+          {message.senderName && (
+            <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 1 }}>
+              From: {message.senderName}{message.senderEmail ? ` · ${message.senderEmail}` : ''}
+            </div>
+          )}
           {(message.messageType !== 'DIRECT' || message.priority !== 'NORMAL') && (
             <div style={{ display: 'flex', gap: 5, marginTop: 4 }}>
               {message.messageType !== 'DIRECT' && <span style={messageTypeBadgeStyle(message.messageType)}>{message.messageType.replace('_', ' ')}</span>}

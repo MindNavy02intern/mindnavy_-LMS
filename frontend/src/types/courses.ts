@@ -45,6 +45,13 @@ export interface CourseSettings {
   accessRules:        AccessRules | null;
   seoTitle:           string | null;       // max 70
   seoDescription:     string | null;       // max 200
+  // Instructor-uploaded custom certificate design — read-only here; written
+  // only via POST/PATCH /courses/:id/certificate-design/* (sign/confirm/position).
+  customCertificateImageUrl: string | null;
+  certificateNameX:          number | null; // 0-1 fraction of image width
+  certificateNameY:          number | null; // 0-1 fraction of image height
+  certificateNameFontSize:   number | null;
+  certificateNameColor:      string | null; // hex, e.g. "#111111"
 }
 
 // GET /courses list row (table display). No createdAt here — only CourseDetail
@@ -130,6 +137,32 @@ export interface UpdateSettingsPayload {
   accessRules?:        AccessRules | null;
   seoTitle?:           string | null;
   seoDescription?:     string | null;
+}
+
+// Shared response shape for confirm-upload and set-position on the
+// certificate design endpoints — both return the same 5-field slice.
+export interface CertificateDesignResponse {
+  customCertificateImageUrl: string | null;
+  certificateNameX:          number | null;
+  certificateNameY:          number | null;
+  certificateNameFontSize:   number | null;
+  certificateNameColor:      string | null;
+}
+
+// POST /courses/:id/certificate-design/sign response
+export interface CertificateDesignSignResponse {
+  uploadUrl: string;
+  path:      string;
+  maxBytes:  number;
+  expiresIn: number;
+}
+
+// PATCH /courses/:id/certificate-design/position body
+export interface CertificateDesignPositionPayload {
+  nameX:     number; // 0-1
+  nameY:     number; // 0-1
+  fontSize?: number;
+  color?:    string; // hex
 }
 
 // POST /courses/:id/submit response

@@ -89,6 +89,10 @@ const FULL_SELECT = {
   visibility: true, certificateEnabled: true, dripContentEnabled: true,
   accessRules: true, seoTitle: true, seoDescription: true,
   categoryId: true,
+  // Custom certificate design — read-only here; written only via the
+  // dedicated /certificate-design/* endpoints (certificateDesign.service.js).
+  customCertificateImageUrl: true, certificateNameX: true, certificateNameY: true,
+  certificateNameFontSize: true, certificateNameColor: true,
 };
 
 function mapRow(c, enrolledCount = 0) {
@@ -135,6 +139,11 @@ function mapFull(c, enrolledCount = 0) {
       accessRules:        c.accessRules ?? null,
       seoTitle:           c.seoTitle ?? null,
       seoDescription:     c.seoDescription ?? null,
+      customCertificateImageUrl: c.customCertificateImageUrl ?? null,
+      certificateNameX:          c.certificateNameX ?? null,
+      certificateNameY:          c.certificateNameY ?? null,
+      certificateNameFontSize:   c.certificateNameFontSize ?? null,
+      certificateNameColor:      c.certificateNameColor ?? null,
     },
     // rejectionReason / submittedAt / reviewedAt / isRejected come from mapRow —
     // one definition, so the list row and the detail can never disagree.

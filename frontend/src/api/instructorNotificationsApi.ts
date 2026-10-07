@@ -40,8 +40,23 @@ async function notificationsFetch<T>(path: string, method: 'GET' | 'PATCH' = 'GE
   return json.data as T;
 }
 
-export function listMyNotifications(): Promise<ListMyNotificationsResult> {
-  return notificationsFetch<ListMyNotificationsResult>('/notifications');
+export interface ListMyNotificationsParams {
+  dateFrom?: string; // YYYY-MM-DD
+  dateTo?:   string; // YYYY-MM-DD
+  read?:     boolean;
+  page?:     number;
+  limit?:    number;
+}
+
+export function listMyNotifications(params: ListMyNotificationsParams = {}): Promise<ListMyNotificationsResult> {
+  const qs = new URLSearchParams();
+  if (params.dateFrom) qs.set('dateFrom', params.dateFrom);
+  if (params.dateTo) qs.set('dateTo', params.dateTo);
+  if (params.read !== undefined) qs.set('read', String(params.read));
+  if (params.page !== undefined) qs.set('page', String(params.page));
+  if (params.limit !== undefined) qs.set('limit', String(params.limit));
+  const suffix = qs.toString() ? `?${qs.toString()}` : '';
+  return notificationsFetch<ListMyNotificationsResult>(`/notifications${suffix}`);
 }
 
 export function markMyNotificationRead(id: string): Promise<InstructorNotification> {
