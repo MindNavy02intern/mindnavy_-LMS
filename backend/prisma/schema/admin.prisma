@@ -34,6 +34,8 @@ model AdminUser {
 model AdminSession {
   id           String    @id @default(uuid())
   adminId      String
+  // SHA-256 hex of the Bearer token (utils/token.js hashSessionToken) — the
+  // raw token is never stored. Column name kept to avoid a migration.
   sessionToken String    @unique
   ipAddress    String?
   userAgent    String?

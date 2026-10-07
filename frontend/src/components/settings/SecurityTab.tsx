@@ -1,12 +1,22 @@
 // Security tab (?tab=security).
+//
+// Every control here reflects what the backend actually enforces
+// (settings.service.js getSecurityPolicy): minimum password length (12 is the
+// built-in floor — the setting can only raise it), the inactivity session
+// timeout, and the failed-login lockout. Rules the backend always applies are
+// shown locked on; features it doesn't enforce yet are marked Coming soon
+// rather than offered as switches that do nothing.
 
-import { useCallback, useState, type KeyboardEvent } from 'react';
-import { X, ShieldCheck } from 'lucide-react';
+import { useCallback, useState } from 'react';
+import { ShieldCheck } from 'lucide-react';
 import { updateSystemSettings } from '../../services/settingsApi';
 import { SettingsApiError } from '../../types/settings';
 import type { SystemSettings } from '../../types/settings';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import { Card, FormGrid, Field, FULL_INPUT, BTN_SECONDARY, SaveBar, ToggleRow, ComingSoonBadge, useSaveAllListener } from './_shared';
+
+// Mirrors backend utils/passwordPolicy.js PASSWORD_MIN_LENGTH_FLOOR.
+const PASSWORD_MIN_LENGTH_FLOOR = 12;
 
 interface Props {
   settings: SystemSettings;
@@ -15,38 +25,23 @@ interface Props {
 }
 
 export default function SecurityTab({ settings, onSaved, showToast }: Props) {
-  const [passwordMinLength, setPasswordMinLength] = useState(String(settings.passwordMinLength));
-  const [passwordRequireUppercase, setPasswordRequireUppercase] = useState(settings.passwordRequireUppercase);
-  const [passwordRequireNumbers, setPasswordRequireNumbers] = useState(settings.passwordRequireNumbers);
-  const [passwordRequireSymbols, setPasswordRequireSymbols] = useState(settings.passwordRequireSymbols);
+  // A stored value below the floor (the old default was 8) is never what's
+  // enforced — show and save the effective minimum instead.
+  const [passwordMinLength, setPasswordMinLength] = useState(
+    String(Math.max(PASSWORD_MIN_LENGTH_FLOOR, settings.passwordMinLength)),
+  );
   const [sessionTimeoutMinutes, setSessionTimeoutMinutes] = useState(String(settings.sessionTimeoutMinutes));
   const [maxLoginAttempts, setMaxLoginAttempts] = useState(String(settings.maxLoginAttempts));
-  const [ipRestrictionEnabled, setIpRestrictionEnabled] = useState(settings.ipRestrictionEnabled);
-  const [ips, setIps] = useState<string[]>(settings.allowedIPs);
-  const [ipInput, setIpInput] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [testResult, setTestResult] = useState<string | null>(null);
-
-  function addIp() {
-    const v = ipInput.trim();
-    if (!v) return;
-    if (!/^(\d{1,3}\.){3}\d{1,3}(\/\d{1,2})?$/.test(v)) { showToast('error', `"${v}" is not a valid IP or CIDR range.`); return; }
-    setIps(prev => prev.includes(v) ? prev : [...prev, v]);
-    setIpInput('');
-  }
-  function onIpKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addIp(); }
-  }
 
   const handleSave = useCallback(async () => {
     setSubmitting(true);
     try {
       const updated = await updateSystemSettings({
-        passwordMinLength: Number(passwordMinLength) || 8,
-        passwordRequireUppercase, passwordRequireNumbers, passwordRequireSymbols,
+        passwordMinLength: Math.max(PASSWORD_MIN_LENGTH_FLOOR, Number(passwordMinLength) || 0),
         sessionTimeoutMinutes: Number(sessionTimeoutMinutes) || 60,
         maxLoginAttempts: Number(maxLoginAttempts) || 5,
-        ipRestrictionEnabled, allowedIPs: ips,
       });
       invalidateFor(appQueryClient, 'settings.update', { domain: 'security' });
       onSaved(updated);
@@ -56,18 +51,15 @@ export default function SecurityTab({ settings, onSaved, showToast }: Props) {
     } finally {
       setSubmitting(false);
     }
-  }, [passwordMinLength, passwordRequireUppercase, passwordRequireNumbers, passwordRequireSymbols, sessionTimeoutMinutes, maxLoginAttempts, ipRestrictionEnabled, ips, onSaved, showToast]);
+  }, [passwordMinLength, sessionTimeoutMinutes, maxLoginAttempts, onSaved, showToast]);
 
   useSaveAllListener(handleSave);
 
   function handleTestConfig() {
-    const rules = [`min ${passwordMinLength} chars`];
-    if (passwordRequireUppercase) rules.push('uppercase required');
-    if (passwordRequireNumbers) rules.push('numbers required');
-    if (passwordRequireSymbols) rules.push('symbols required');
     setTestResult(
-      `Password policy: ${rules.join(', ')}. Session timeout: ${sessionTimeoutMinutes}m. ` +
-      `Max login attempts: ${maxLoginAttempts}. IP restriction: ${ipRestrictionEnabled ? `ON (${ips.length} rule${ips.length === 1 ? '' : 's'})` : 'OFF'}.`
+      `Password policy: min ${passwordMinLength} chars, uppercase, lowercase, number and symbol required. ` +
+      `Sessions end after ${sessionTimeoutMinutes} min of inactivity (max 24h per sign-in). ` +
+      `Accounts lock for 15 min after ${maxLoginAttempts} failed logins.`
     );
   }
 
@@ -75,23 +67,23 @@ export default function SecurityTab({ settings, onSaved, showToast }: Props) {
     <form onSubmit={e => { e.preventDefault(); handleSave(); }}>
       <Card title="Password Policy">
         <FormGrid>
-          <Field label="Minimum Length">
-            <input style={FULL_INPUT} type="number" min={6} max={64} value={passwordMinLength} onChange={e => setPasswordMinLength(e.target.value)} />
+          <Field label="Minimum Length" hint={`At least ${PASSWORD_MIN_LENGTH_FLOOR} — raise it for a stricter policy.`}>
+            <input style={FULL_INPUT} type="number" min={PASSWORD_MIN_LENGTH_FLOOR} max={64} value={passwordMinLength} onChange={e => setPasswordMinLength(e.target.value)} />
           </Field>
         </FormGrid>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 16 }}>
-          <ToggleRow label="Require Uppercase" checked={passwordRequireUppercase} onChange={setPasswordRequireUppercase} />
-          <ToggleRow label="Require Numbers" checked={passwordRequireNumbers} onChange={setPasswordRequireNumbers} />
-          <ToggleRow label="Require Symbols" checked={passwordRequireSymbols} onChange={setPasswordRequireSymbols} />
+          <ToggleRow label="Require Uppercase & Lowercase" checked onChange={() => {}} disabled disabledHint="Always required" />
+          <ToggleRow label="Require Numbers" checked onChange={() => {}} disabled disabledHint="Always required" />
+          <ToggleRow label="Require Symbols" checked onChange={() => {}} disabled disabledHint="Always required" />
         </div>
       </Card>
 
       <Card title="Session & Login">
         <FormGrid>
-          <Field label="Session Timeout (minutes)">
+          <Field label="Session Timeout (minutes)" hint="Signs out after this long without activity. Sessions never last more than 24h.">
             <input style={FULL_INPUT} type="number" min={5} max={1440} value={sessionTimeoutMinutes} onChange={e => setSessionTimeoutMinutes(e.target.value)} />
           </Field>
-          <Field label="Max Login Attempts">
+          <Field label="Max Login Attempts" hint="Failed logins allowed before a 15-minute lockout.">
             <input style={FULL_INPUT} type="number" min={3} max={20} value={maxLoginAttempts} onChange={e => setMaxLoginAttempts(e.target.value)} />
           </Field>
         </FormGrid>
@@ -101,23 +93,7 @@ export default function SecurityTab({ settings, onSaved, showToast }: Props) {
       </Card>
 
       <Card title="IP Restriction">
-        <ToggleRow label="Restrict Admin Access by IP" checked={ipRestrictionEnabled} onChange={setIpRestrictionEnabled} />
-        {ipRestrictionEnabled && (
-          <div style={{ marginTop: 14 }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
-              {ips.map(ip => (
-                <span key={ip} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 8px', borderRadius: 6, background: '#f1f5f9', fontSize: 12, color: '#374151' }}>
-                  {ip}
-                  <button type="button" onClick={() => setIps(prev => prev.filter(x => x !== ip))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', display: 'flex' }}><X size={11} /></button>
-                </span>
-              ))}
-            </div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <input style={FULL_INPUT} value={ipInput} onChange={e => setIpInput(e.target.value)} onKeyDown={onIpKeyDown} placeholder="203.0.113.0/24 — press Enter to add" />
-              <button type="button" onClick={addIp} style={{ ...FULL_INPUT, width: 'auto', cursor: 'pointer', fontWeight: 600 }}>Add</button>
-            </div>
-          </div>
-        )}
+        <ToggleRow label={<>Restrict Admin Access by IP <ComingSoonBadge /></>} description="Limit admin sign-in to listed IP ranges. Not enforced yet." checked={false} onChange={() => {}} disabled disabledHint="Coming soon" />
       </Card>
 
       <Card title="Test Configuration">

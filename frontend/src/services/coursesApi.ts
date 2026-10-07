@@ -186,6 +186,12 @@ const MOCK_SETTINGS_DEFAULT = {
   accessRules:        null,
   seoTitle:           null,
   seoDescription:     null,
+  // No custom certificate design until one is uploaded (null = not set).
+  customCertificateImageUrl: null,
+  certificateNameX:          null,
+  certificateNameY:          null,
+  certificateNameFontSize:   null,
+  certificateNameColor:      null,
 };
 
 const MOCK_DETAIL: CourseDetail = {

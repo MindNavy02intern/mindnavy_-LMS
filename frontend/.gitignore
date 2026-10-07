@@ -27,3 +27,5 @@ dist-ssr
 /test-results/
 /playwright-report/
 tests/setup/.auth.json
+# Local E2E login credentials (playwright.config.ts) — never commit, repo is public
+tests/.env.e2e

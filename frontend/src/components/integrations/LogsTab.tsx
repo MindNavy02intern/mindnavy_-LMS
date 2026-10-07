@@ -3,6 +3,7 @@ import { Download } from 'lucide-react';
 import { listLogs, listIntegrations } from '../../services/integrationsApi';
 import type { Integration, IntegrationLogEntry, IntegrationLogStatus, IntegrationLogType } from '../../types/integrations';
 import { CARD, EMPTY, TH, TD, INPUT, BTN_SECONDARY, LogStatusBadge, fmtDate, Pager } from './shared';
+import { neutralizeFormula } from '../../lib/csv';
 
 interface Props { refreshSignal: number }
 
@@ -12,7 +13,7 @@ const STATUSES: IntegrationLogStatus[] = ['SUCCESS', 'FAILED', 'PENDING'];
 function toCsv(rows: IntegrationLogEntry[]): string {
   const header = ['Integration', 'Type', 'Status', 'Endpoint', 'Response', 'Duration (ms)', 'Date'];
   const lines = rows.map(r => [r.integrationName, r.type, r.status, r.endpoint ?? '', r.responseCode ?? '', r.durationMs ?? '', r.createdAt]
-    .map(v => `"${String(v).replace(/"/g, '""')}"`).join(','));
+    .map(v => `"${neutralizeFormula(String(v)).replace(/"/g, '""')}"`).join(','));
   return [header.join(','), ...lines].join('\n');
 }
 

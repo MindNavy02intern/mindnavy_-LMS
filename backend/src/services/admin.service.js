@@ -2,7 +2,8 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const { authenticator } = require("otplib");
 const prisma = require("../config/prisma");
-const { generateSessionToken, getSessionExpiryDate } = require("../utils/token");
+const { generateSessionToken, hashSessionToken, sessionExpiry } = require("../utils/token");
+const { getSecurityPolicy } = require("./settings.service");
 const { clearAllCachedSessions } = require("../middlewares/auth.middleware");
 
 const {
@@ -12,9 +13,9 @@ const {
   getOtpExpiryDate,
 } = require("../utils/otp");
 const { sendOtpEmail } = require("../utils/mailer");
+const { isDevMode } = require("../config/runtime");
 
 const INVALID_LOGIN_MESSAGE = "Invalid email or password.";
-const MAX_FAILED_LOGIN_ATTEMPTS = 5;
 const FAILED_LOGIN_WINDOW_MINUTES = 15;
 const TRUSTED_DEVICE_DAYS = 30; // matches OtpVerificationModal's "Trust this device for 30 days" copy
 
@@ -83,24 +84,28 @@ async function createAuditLog({
 
 async function isLoginTemporarilyBlocked({ email }) {
   // In development the lockout is disabled so failed-attempt loops during
-  // testing don't lock out the developer. Production behaviour is unchanged.
-  if (process.env.NODE_ENV !== "production") return false;
+  // testing don't lock out the developer. Only an explicit
+  // NODE_ENV=development turns it off (config/runtime.js) — unset means strict.
+  if (isDevMode()) return false;
 
   const windowStart = new Date();
   windowStart.setMinutes(windowStart.getMinutes() - FAILED_LOGIN_WINDOW_MINUTES);
 
-  const failedAttemptsCount = await prisma.loginAttempt.count({
-    where: {
-      email,
-      status: "FAILED",
-      reason: "INVALID_CREDENTIALS",
-      createdAt: {
-        gte: windowStart,
+  const [failedAttemptsCount, { maxLoginAttempts }] = await Promise.all([
+    prisma.loginAttempt.count({
+      where: {
+        email,
+        status: "FAILED",
+        reason: "INVALID_CREDENTIALS",
+        createdAt: {
+          gte: windowStart,
+        },
       },
-    },
-  });
+    }),
+    getSecurityPolicy(), // System Settings > Security "Max Login Attempts" (cached)
+  ]);
 
-  return failedAttemptsCount >= MAX_FAILED_LOGIN_ATTEMPTS;
+  return failedAttemptsCount >= maxLoginAttempts;
 }
 
 async function loginAdmin({ email, password, ipAddress, userAgent }) {
@@ -203,6 +208,7 @@ async function loginAdmin({ email, password, ipAddress, userAgent }) {
   // the log only ever records a FULLY completed (or fully failed) login.
   if (admin.mfaEnabled) {
     const mfaToken = crypto.randomBytes(32).toString("hex");
+    pruneChallenges(pendingMfaLogins);
     pendingMfaLogins.set(mfaToken, {
       adminId: admin.id, email, ipAddress, userAgent,
       expiresAt: Date.now() + MFA_LOGIN_WINDOW_MS,
@@ -210,7 +216,7 @@ async function loginAdmin({ email, password, ipAddress, userAgent }) {
     return { success: true, mfaRequired: true, mfaToken };
   }
 
-  return issueSession(admin, { email, ipAddress, userAgent });
+  return finishLogin(admin, { email, ipAddress, userAgent });
 }
 
 // Shared tail of a successful login (with or without MFA) — session row,
@@ -218,12 +224,17 @@ async function loginAdmin({ email, password, ipAddress, userAgent }) {
 // frontend's AuthContext expects.
 async function issueSession(admin, { email, ipAddress, userAgent }) {
   const sessionToken = generateSessionToken();
-  const expiresAt = getSessionExpiryDate();
+  // "Session Timeout" from System Settings, measured from activity — the auth
+  // middleware slides it forward while the session is in use (utils/token.js).
+  const { sessionTimeoutMinutes } = await getSecurityPolicy();
+  const expiresAt = sessionExpiry({ createdAt: Date.now(), idleMinutes: sessionTimeoutMinutes });
 
+  // Only the hash is persisted; the raw token goes back to the client once,
+  // below, and is never stored server-side (auth.middleware hashes on lookup).
   const session = await prisma.adminSession.create({
     data: {
       adminId: admin.id,
-      sessionToken,
+      sessionToken: hashSessionToken(sessionToken),
       ipAddress,
       userAgent,
       expiresAt,
@@ -291,6 +302,23 @@ async function issueSession(admin, { email, ipAddress, userAgent }) {
 const pendingMfaLogins = new Map();
 const MFA_LOGIN_WINDOW_MS = 5 * 60 * 1000;
 
+// Both in-memory login challenge maps (this one and pendingDeviceLogins below)
+// gain an entry on every correct password. Entries were only removed when
+// redeemed, so abandoned ones piled up forever. Called before each insert:
+// drop expired entries, then — if a password spray still has the map full of
+// live ones — evict the oldest (Map preserves insertion order).
+const MAX_PENDING_CHALLENGES = 1000;
+
+function pruneChallenges(map) {
+  const now = Date.now();
+  for (const [key, entry] of map) {
+    if (entry.expiresAt < now) map.delete(key);
+  }
+  while (map.size >= MAX_PENDING_CHALLENGES) {
+    map.delete(map.keys().next().value);
+  }
+}
+
 async function completeMfaLogin({ mfaToken, code, ipAddress, userAgent }) {
   const pending = pendingMfaLogins.get(mfaToken);
   pendingMfaLogins.delete(mfaToken);
@@ -314,7 +342,112 @@ async function completeMfaLogin({ mfaToken, code, ipAddress, userAgent }) {
     return { success: false, message: "Invalid authentication code." };
   }
 
-  return issueSession(admin, { email: admin.email, ipAddress, userAgent });
+  // TOTP proves the account; the new-device check below still applies on top
+  // of it, exactly as it did when the device step lived only in the frontend.
+  return finishLogin(admin, { email: admin.email, ipAddress, userAgent });
+}
+
+// ── New-device verification (email OTP) — server-enforced ────────────────────
+//
+// Every successful credential check (password, or password + TOTP) ends here.
+// A device already trusted for this admin gets a session straight away. An
+// unrecognised device gets NO session — only a short-lived verificationToken
+// that can do exactly two things: request the email code and submit it.
+// The real session token is issued only after the code verifies.
+//
+// This replaces the old shape, where login always issued a full session and
+// /verify-device was a frontend screen: any client holding the password could
+// skip it by calling the API directly, or just by refreshing the page.
+//
+// Same in-memory, restart-clears pattern as pendingMfaLogins above: a restart
+// just sends the admin back to the password step. Nothing is written to
+// LoginAttempt/AuditLog for the pending state; the existing OTP_SENT /
+// OTP_VERIFIED / ADMIN_LOGIN rows record the outcome, so no new AuditAction
+// enum values (and no migration) are needed.
+const pendingDeviceLogins = new Map();
+const DEVICE_LOGIN_WINDOW_MS = 10 * 60 * 1000; // matches the OTP code lifetime
+const MAX_DEVICE_LOGIN_ATTEMPTS = 10;          // per ticket, on top of the per-code OTP cap
+
+function getPendingDeviceLogin(verificationToken) {
+  if (typeof verificationToken !== "string") return null;
+  const entry = pendingDeviceLogins.get(verificationToken);
+  if (!entry) return null;
+  if (entry.expiresAt < Date.now()) {
+    pendingDeviceLogins.delete(verificationToken);
+    return null;
+  }
+  return entry;
+}
+
+const DEVICE_LOGIN_EXPIRED = {
+  success: false,
+  code: "VERIFICATION_EXPIRED",
+  message: "Your verification session has expired. Please sign in again.",
+};
+
+async function finishLogin(admin, { email, ipAddress, userAgent }) {
+  const { requiresVerification } = await checkDeviceTrust({ adminId: admin.id, ipAddress, userAgent });
+  if (!requiresVerification) {
+    return issueSession(admin, { email, ipAddress, userAgent });
+  }
+
+  pruneChallenges(pendingDeviceLogins);
+  const verificationToken = crypto.randomBytes(32).toString("hex");
+  pendingDeviceLogins.set(verificationToken, {
+    adminId: admin.id,
+    attempts: 0,
+    inFlight: false,
+    expiresAt: Date.now() + DEVICE_LOGIN_WINDOW_MS,
+  });
+
+  // email is echoed only so the verify screen can say where the code went —
+  // the caller just proved they know this account's password.
+  return {
+    success: true,
+    deviceVerificationRequired: true,
+    verificationToken,
+    email: admin.email,
+  };
+}
+
+async function sendDeviceLoginOtp({ verificationToken, ipAddress, userAgent }) {
+  const pending = getPendingDeviceLogin(verificationToken);
+  if (!pending) return DEVICE_LOGIN_EXPIRED;
+  return sendAdminOtp({ adminId: pending.adminId, ipAddress, userAgent });
+}
+
+async function completeDeviceLogin({ verificationToken, code, trustDevice, ipAddress, userAgent }) {
+  const pending = getPendingDeviceLogin(verificationToken);
+  if (!pending) return DEVICE_LOGIN_EXPIRED;
+
+  // One verification at a time per ticket, so two parallel correct submits
+  // can't each mint a session.
+  if (pending.inFlight) {
+    return { success: false, message: "Verification already in progress. Please wait." };
+  }
+  pending.attempts += 1;
+  if (pending.attempts > MAX_DEVICE_LOGIN_ATTEMPTS) {
+    pendingDeviceLogins.delete(verificationToken);
+    return DEVICE_LOGIN_EXPIRED;
+  }
+
+  pending.inFlight = true;
+  try {
+    // Reuses the exact OTP check the trusted-devices flow uses: hashed code,
+    // expiry, atomic per-code attempt cap, and the optional TrustedDevice row.
+    const result = await verifyAdminOtp({ adminId: pending.adminId, code, trustDevice, ipAddress, userAgent });
+    if (!result.success) return result; // ticket stays usable for another try
+
+    pendingDeviceLogins.delete(verificationToken);
+
+    const admin = await prisma.adminUser.findUnique({ where: { id: pending.adminId } });
+    if (!admin || admin.status !== "ACTIVE") {
+      return { success: false, message: "Access denied." };
+    }
+    return issueSession(admin, { email: admin.email, ipAddress, userAgent });
+  } finally {
+    pending.inFlight = false;
+  }
 }
 
 async function logoutAdmin({ adminId, sessionId, ipAddress, userAgent }) {
@@ -411,7 +544,7 @@ async function sendAdminOtp({ adminId, ipAddress, userAgent }) {
     // SMTP not configured yet → dev fallback: code on the server console.
     // In production (or on a real send failure) the user must be told —
     // silently succeeding would strand them on the OTP screen.
-    if (delivery.reason === "NOT_CONFIGURED" && process.env.NODE_ENV !== "production") {
+    if (delivery.reason === "NOT_CONFIGURED" && isDevMode()) {
       console.log("DEV OTP CODE:", otpCode);
     } else {
       return {
@@ -711,7 +844,7 @@ async function forgotAdminPassword({ email, ipAddress, userAgent }) {
   const delivery = await sendOtpEmail(admin.email, resetCode, "PASSWORD_RESET");
 
   if (!delivery.sent) {
-    if (delivery.reason === "NOT_CONFIGURED" && process.env.NODE_ENV !== "production") {
+    if (delivery.reason === "NOT_CONFIGURED" && isDevMode()) {
       console.log("DEV PASSWORD RESET CODE:", resetCode);
     } else {
       console.error("[admin.service] password reset email failed to send (adminId:", admin.id + ")");
@@ -968,6 +1101,8 @@ async function changeAdminPassword({ adminId, currentPassword, newPassword, ipAd
 module.exports = {
   loginAdmin,
   completeMfaLogin,
+  sendDeviceLoginOtp,
+  completeDeviceLogin,
   logoutAdmin,
   sendAdminOtp,
   verifyAdminOtp,
@@ -978,4 +1113,8 @@ module.exports = {
   resetAdminPassword,
   updateAdminProfile,
   changeAdminPassword,
+  // Exported for scripts/trustTestDevice.js so the dev script derives the
+  // fingerprint exactly the way login checks it — one formula, no drift.
+  computeDeviceFingerprint,
+  TRUSTED_DEVICE_DAYS,
 };

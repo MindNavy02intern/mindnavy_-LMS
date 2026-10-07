@@ -1,3 +1,14 @@
+// Built-in minimum. System Settings > Security "Minimum Length" can RAISE it,
+// never lower it — settings.service pushes the configured value in whenever it
+// (re)loads settings, so this stays a plain synchronous check for the
+// validators. Until settings have loaded (or if they can't), the floor applies.
+const PASSWORD_MIN_LENGTH_FLOOR = 12;
+let configuredMinLength = PASSWORD_MIN_LENGTH_FLOOR;
+
+function setConfiguredPasswordMinLength(value) {
+  configuredMinLength = Math.max(PASSWORD_MIN_LENGTH_FLOOR, Number(value) || 0);
+}
+
 function validatePasswordStrength(password) {
   const errors = [];
 
@@ -8,8 +19,8 @@ function validatePasswordStrength(password) {
 
   // Validate the exact string that will be hashed — no trimming, so the
   // password checked here is byte-for-byte the one bcrypt stores.
-  if (password.length < 12) {
-    errors.push("Password must be at least 12 characters.");
+  if (password.length < configuredMinLength) {
+    errors.push(`Password must be at least ${configuredMinLength} characters.`);
   }
 
   if (!/[A-Z]/.test(password)) {
@@ -32,5 +43,7 @@ function validatePasswordStrength(password) {
 }
 
 module.exports = {
+  PASSWORD_MIN_LENGTH_FLOOR,
+  setConfiguredPasswordMinLength,
   validatePasswordStrength,
 };

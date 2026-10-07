@@ -18,9 +18,35 @@ export interface AdminUser {
   mfaEnabled?: boolean;
 }
 
+/** A real session — the only shape that carries a token. */
+export interface SessionResult {
+  token: string;
+  admin: AdminUser;
+  mfaRequired?: false;
+  deviceVerificationRequired?: false;
+}
+
+/**
+ * Credentials were right but this browser isn't a trusted device. There is
+ * NO session yet: verificationToken can only request and submit the email
+ * code (apiSendDeviceLoginOtp / apiVerifyDeviceLogin), and is never stored
+ * as the auth token.
+ */
+export interface DeviceVerificationChallenge {
+  deviceVerificationRequired: true;
+  verificationToken: string;
+  /** Where the code was sent — shown on the verify screen. */
+  email: string;
+  mfaRequired?: false;
+}
+
 export type LoginResult =
-  | { token: string; admin: AdminUser; mfaRequired?: false }
-  | { mfaRequired: true; mfaToken: string };
+  | SessionResult
+  | { mfaRequired: true; mfaToken: string; deviceVerificationRequired?: false }
+  | DeviceVerificationChallenge;
+
+/** What the TOTP step can return: a session, or (new browser) the device step. */
+export type MfaLoginResult = SessionResult | DeviceVerificationChallenge;
 
 const ADMIN_API = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5001/api/admin';
 const TOKEN_KEY = 'mn_admin_token';
@@ -70,11 +96,34 @@ export async function apiLogin(
 
 // Second step of login when the admin has TOTP MFA enabled — takes the
 // short-lived mfaToken from apiLogin's mfaRequired response + a 6-digit
-// authenticator code, returns the same shape a normal login would.
-export async function apiVerifyMfaLogin(mfaToken: string, code: string): Promise<{ token: string; admin: AdminUser }> {
+// authenticator code. Returns a session, or — on a browser that isn't
+// trusted yet — the same device-verification challenge a password login can.
+export async function apiVerifyMfaLogin(mfaToken: string, code: string): Promise<MfaLoginResult> {
   return adminFetch('/auth/mfa/login-verify', {
     method: 'POST',
     body: JSON.stringify({ mfaToken, code }),
+  });
+}
+
+// ── New-device login step (server-enforced) ───────────────────────────────────
+// Used only while a DeviceVerificationChallenge is pending. No Authorization
+// header — no session exists yet; the verificationToken goes in the body.
+
+export async function apiSendDeviceLoginOtp(verificationToken: string): Promise<void> {
+  await adminFetch('/login/device/send-otp', {
+    method: 'POST',
+    body: JSON.stringify({ verificationToken }),
+  });
+}
+
+export async function apiVerifyDeviceLogin(
+  verificationToken: string,
+  code: string,
+  trustDevice: boolean,
+): Promise<SessionResult> {
+  return adminFetch('/login/device/verify', {
+    method: 'POST',
+    body: JSON.stringify({ verificationToken, code, trustDevice }),
   });
 }
 

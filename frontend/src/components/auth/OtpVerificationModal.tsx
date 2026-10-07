@@ -41,6 +41,8 @@ export default function OtpVerificationModal({
   onClose,
   onSuccess,
   email,
+  onSend,
+  onVerify,
 }: OtpVerificationProps) {
   // OTP digit array — each slot holds one character
   const [digits, setDigits] = useState<string[]>(Array(OTP_LENGTH).fill(''));
@@ -74,7 +76,7 @@ export default function OtpVerificationModal({
       setCountdown(RESEND_COOLDOWN);
     })();
 
-    sendOtp({ email }).catch(() => {
+    (onSend ? onSend() : sendOtp({ email })).catch(() => {
       // Non-fatal — user can click Resend if it didn't arrive
       console.warn('[OTP] Initial send failed, user can retry.');
     });
@@ -82,7 +84,7 @@ export default function OtpVerificationModal({
     // Focus the first box after the modal animates in
     const t = setTimeout(() => inputRefs.current[0]?.focus(), 150);
     return () => clearTimeout(t);
-  }, [isOpen, email]);
+  }, [isOpen, email, onSend]);
 
   // ── Auto-navigate after success ─────────────────────────────
   useEffect(() => {
@@ -144,22 +146,33 @@ export default function OtpVerificationModal({
     setStatus('loading');
     setError(null);
 
+    const rejectCode = (message: string) => {
+      setStatus('error');
+      setError(message);
+      setAttemptsLeft((prev) => prev - 1);
+      // Clear the boxes so the user can type a fresh code
+      setDigits(Array(OTP_LENGTH).fill(''));
+      setTimeout(() => inputRefs.current[0]?.focus(), 50);
+    };
+
     try {
-      const result = await verifyOtp({ code, trustDevice });
+      const result = onVerify ? await onVerify(code, trustDevice) : await verifyOtp({ code, trustDevice });
 
       if (result.success) {
         setStatus('success');
       } else {
-        setStatus('error');
-        setError(result.message);
-        setAttemptsLeft((prev) => prev - 1);
-        // Clear the boxes so the user can type a fresh code
-        setDigits(Array(OTP_LENGTH).fill(''));
-        setTimeout(() => inputRefs.current[0]?.focus(), 50);
+        rejectCode(result.message);
       }
-    } catch {
-      setStatus('error');
-      setError('Connection error. Please check your network and try again.');
+    } catch (err) {
+      // The API helpers throw on any non-2xx, so a wrong/expired code lands
+      // here with the server's own message. Only a true network failure
+      // (fetch throws TypeError) is a connection problem.
+      if (err instanceof Error && !(err instanceof TypeError) && err.message) {
+        rejectCode(err.message);
+      } else {
+        setStatus('error');
+        setError('Connection error. Please check your network and try again.');
+      }
     }
   };
 
@@ -171,7 +184,10 @@ export default function OtpVerificationModal({
     setDigits(Array(OTP_LENGTH).fill(''));
 
     try {
-      await sendOtp({ email });
+      await (onSend ? onSend() : sendOtp({ email }));
+    } catch {
+      // Same as the initial send — non-fatal, the user can retry after the cooldown.
+      console.warn('[OTP] Resend failed, user can retry.');
     } finally {
       setIsSending(false);
       setCountdown(RESEND_COOLDOWN);

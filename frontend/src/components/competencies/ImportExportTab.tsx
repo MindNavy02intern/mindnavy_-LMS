@@ -12,6 +12,7 @@ import { exportSkills, importSkills } from '../../services/competenciesApi';
 import { CompetenciesApiError } from '../../types/competencies';
 import type { Skill, SkillImportResult } from '../../types/competencies';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
+import { neutralizeFormula } from '../../lib/csv';
 
 interface Props {
   showToast: (type: 'success' | 'error', message: string) => void;
@@ -26,7 +27,7 @@ const REQUIRED_IMPORT_HEADERS = ['Name'];
 
 function csvEscape(val: unknown): string {
   if (val === null || val === undefined) return '';
-  const s = String(val);
+  const s = neutralizeFormula(String(val));
   if (s.includes(',') || s.includes('"') || s.includes('\n')) return `"${s.replace(/"/g, '""')}"`;
   return s;
 }

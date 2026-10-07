@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import LoginForm from '../components/auth/LoginForm';
-import { apiCheckDevice, getStoredToken } from '../api/adminAuth';
 
 export default function LoginPage() {
   const { user, enterDemoMode } = useAuth();
@@ -13,24 +12,12 @@ export default function LoginPage() {
     if (user) navigate('/dashboard', { replace: true });
   }, [user, navigate]);
 
-  // After a real (non-demo) login, ask the backend whether this browser is a
-  // trusted device before landing on the dashboard. Demo mode has no token
-  // and never goes through this — enterDemoMode's own effect above handles it.
-  async function handleLoginSuccess() {
-    const token = getStoredToken();
-    if (token) {
-      try {
-        const { requiresVerification } = await apiCheckDevice(token);
-        if (requiresVerification) {
-          navigate('/verify-device');
-          return;
-        }
-      } catch {
-        // Device-check failing shouldn't lock a correctly-authenticated admin
-        // out of the dashboard — fall through to the normal destination.
-      }
-    }
-    navigate('/dashboard');
+  // The server decides whether this browser is trusted, as part of login
+  // itself (admin.service.js finishLogin). An untrusted browser gets no
+  // session at all — only the email-code step — so there is nothing to
+  // "fall through" to the dashboard with. Demo mode never reaches this.
+  function handleLoginSuccess({ deviceVerificationRequired }: { deviceVerificationRequired: boolean }) {
+    navigate(deviceVerificationRequired ? '/verify-device' : '/dashboard');
   }
 
   return (

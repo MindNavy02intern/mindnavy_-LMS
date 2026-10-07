@@ -1,6 +1,7 @@
 const {
   validateAdminLoginInput,
   validateAdminOtpInput,
+  validateDeviceLoginInput,
   validateForgotPasswordInput,
   validateResetPasswordInput,
   validateUpdateAdminProfileInput,
@@ -10,6 +11,8 @@ const {
 
 const {
   loginAdmin,
+  sendDeviceLoginOtp,
+  completeDeviceLogin,
   logoutAdmin,
   sendAdminOtp,
   verifyAdminOtp,
@@ -23,6 +26,11 @@ const {
 } = require("../services/admin.service");
 
 const { invalidateCachedSession } = require("../middlewares/auth.middleware");
+// req.ip via the TRUST_PROXY setting — never the raw X-Forwarded-For header,
+// which the client controls (see utils/clientIp.js). The IP feeds the
+// trusted-device fingerprint, so a forgeable value would let a caller skip
+// new-device verification.
+const { getClientIp } = require("../utils/clientIp");
 
 async function adminLoginController(req, res) {
   try {
@@ -36,10 +44,7 @@ async function adminLoginController(req, res) {
       });
     }
 
-    const forwardedFor = req.headers["x-forwarded-for"];
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
     const userAgent = req.headers["user-agent"] || null;
 
     const result = await loginAdmin({
@@ -60,12 +65,69 @@ async function adminLoginController(req, res) {
   }
 }
 
+// ── New-device login step (no session exists yet) ────────────────────────────
+// Login returned { deviceVerificationRequired, verificationToken } instead of a
+// session token. These two endpoints are the only things that ticket can do;
+// both are deliberately NOT behind requireAdminAuth, same as the TOTP
+// /auth/mfa/login-verify step, and each has a pre-auth rate limiter.
+
+async function adminDeviceLoginSendOtpController(req, res) {
+  try {
+    const validation = validateDeviceLoginInput(req.body, { requireCode: false });
+    if (!validation.isValid) {
+      return res.status(400).json({ success: false, message: validation.errors[0], errors: validation.errors });
+    }
+
+    const result = await sendDeviceLoginOtp({
+      verificationToken: validation.data.verificationToken,
+      ipAddress: getClientIp(req),
+      userAgent: req.headers["user-agent"] || null,
+    });
+
+    if (!result.success) {
+      const status = result.code === "VERIFICATION_EXPIRED" ? 401
+        : result.code === "EMAIL_SEND_FAILED" ? 502
+        : 403;
+      return res.status(status).json({ success: false, code: result.code, message: result.message });
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in adminDeviceLoginSendOtpController:", error.message);
+    return res.status(500).json({ success: false, message: "Internal server error." });
+  }
+}
+
+async function adminDeviceLoginVerifyController(req, res) {
+  try {
+    const validation = validateDeviceLoginInput(req.body, { requireCode: true });
+    if (!validation.isValid) {
+      return res.status(400).json({ success: false, message: validation.errors[0], errors: validation.errors });
+    }
+
+    const result = await completeDeviceLogin({
+      verificationToken: validation.data.verificationToken,
+      code: validation.data.code,
+      trustDevice: validation.data.trustDevice,
+      ipAddress: getClientIp(req),
+      userAgent: req.headers["user-agent"] || null,
+    });
+
+    if (!result.success) {
+      const status = result.code === "VERIFICATION_EXPIRED" ? 401 : 400;
+      return res.status(status).json(result);
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in adminDeviceLoginVerifyController:", error.message);
+    return res.status(500).json({ success: false, message: "Internal server error." });
+  }
+}
+
 async function adminLogoutController(req, res) {
   try {
-    const forwardedFor = req.headers["x-forwarded-for"];
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
     const userAgent = req.headers["user-agent"] || null;
 
     const token = req.headers.authorization?.split(" ")[1];
@@ -95,10 +157,7 @@ async function adminMeController(req, res) {
 
 async function adminSendOtpController(req, res) {
   try {
-    const forwardedFor = req.headers["x-forwarded-for"];
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
     const userAgent = req.headers["user-agent"] || null;
 
     const result = await sendAdminOtp({
@@ -132,10 +191,7 @@ async function adminVerifyOtpController(req, res) {
       });
     }
 
-    const forwardedFor = req.headers["x-forwarded-for"];
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
     const userAgent = req.headers["user-agent"] || null;
 
     const result = await verifyAdminOtp({
@@ -159,10 +215,7 @@ async function adminVerifyOtpController(req, res) {
 
 async function adminCheckDeviceController(req, res) {
   try {
-    const forwardedFor = req.headers["x-forwarded-for"];
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
     const userAgent = req.headers["user-agent"] || null;
 
     const result = await checkDeviceTrust({ adminId: req.admin.id, ipAddress, userAgent });
@@ -201,11 +254,7 @@ async function adminRevokeTrustedDeviceController(req, res) {
       });
     }
 
-    const forwardedFor = req.headers["x-forwarded-for"];
-
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
 
     const userAgent = req.headers["user-agent"] || null;
 
@@ -242,11 +291,7 @@ async function adminForgotPasswordController(req, res) {
       });
     }
 
-    const forwardedFor = req.headers["x-forwarded-for"];
-
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
 
     const userAgent = req.headers["user-agent"] || null;
 
@@ -278,11 +323,7 @@ async function adminResetPasswordController(req, res) {
       });
     }
 
-    const forwardedFor = req.headers["x-forwarded-for"];
-
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
 
     const userAgent = req.headers["user-agent"] || null;
 
@@ -316,10 +357,7 @@ async function adminUpdateProfileController(req, res) {
       return res.status(400).json({ success: false, message: validation.errors[0], errors: validation.errors });
     }
 
-    const forwardedFor = req.headers["x-forwarded-for"];
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
     const userAgent = req.headers["user-agent"] || null;
 
     const result = await updateAdminProfile({
@@ -343,10 +381,7 @@ async function adminChangePasswordController(req, res) {
       return res.status(400).json({ success: false, message: validation.errors[0], errors: validation.errors });
     }
 
-    const forwardedFor = req.headers["x-forwarded-for"];
-    const ipAddress = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+    const ipAddress = getClientIp(req);
     const userAgent = req.headers["user-agent"] || null;
 
     const result = await changeAdminPassword({
@@ -370,6 +405,8 @@ async function adminChangePasswordController(req, res) {
 
 module.exports = {
   adminLoginController,
+  adminDeviceLoginSendOtpController,
+  adminDeviceLoginVerifyController,
   adminMeController,
   adminLogoutController,
   adminSendOtpController,

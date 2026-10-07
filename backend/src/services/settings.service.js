@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const prisma = require("../config/prisma");
 const { getProvider } = require("./storage");
 const { isMailerConfigured, sendMail } = require("../utils/mailer");
+const { PASSWORD_MIN_LENGTH_FLOOR, setConfiguredPasswordMinLength } = require("../utils/passwordPolicy");
 
 // ── System Settings — single row, mirrors CompetencySettings/FinanceSettings/
 // HierarchySettings (lazy-create-on-read, flat config fields). Unlike those,
@@ -61,19 +62,34 @@ async function getSystemSettings() {
   return getOrCreateSettings();
 }
 
-// ── Feature flags (gating) ───────────────────────────────────────────────────
+// ── Cached settings row (feature flags + security policy) ────────────────────
 //
-// Cached 60s so a hot write path (POST /live-sessions, POST /certificates)
-// doesn't take a DB round trip on every single request just to check one
-// boolean — invalidated immediately on updateSystemSettings so a toggle flip
-// takes effect right away instead of waiting out the cache window.
+// Cached 60s so hot paths — gated writes (POST /live-sessions, POST
+// /certificates) and every login / session check — don't take a DB round
+// trip per request just to read a few columns. Invalidated immediately by
+// every write below that can change them, so a change takes effect right away
+// instead of waiting out the window. One row serves both consumers.
 const FEATURE_FLAG_FIELDS = [
   "liveSessionsEnabled", "certificatesModuleEnabled", "marketplaceEnabled",
   "aiEnabled", "gamificationEnabled", "scormModuleEnabled", "mobileAppEnabled",
 ];
-const FEATURE_FLAGS_CACHE_MS = 60_000;
-let featureFlagsCache = null;
-let featureFlagsCacheAt = 0;
+const SETTINGS_CACHE_MS = 60_000;
+let settingsCache = null;
+let settingsCacheAt = 0;
+
+// The password floor lives in utils/passwordPolicy (its validators are
+// synchronous), so the configured value is pushed there on every load/write.
+function applySettings(settings) {
+  settingsCache = settings;
+  settingsCacheAt = Date.now();
+  setConfiguredPasswordMinLength(settings.passwordMinLength);
+  return settings;
+}
+
+async function getCachedSettings() {
+  if (settingsCache && Date.now() - settingsCacheAt < SETTINGS_CACHE_MS) return settingsCache;
+  return applySettings(await getOrCreateSettings());
+}
 
 function pickFeatureFlags(settings) {
   const flags = {};
@@ -82,11 +98,24 @@ function pickFeatureFlags(settings) {
 }
 
 async function getCachedFeatureFlags() {
-  if (featureFlagsCache && Date.now() - featureFlagsCacheAt < FEATURE_FLAGS_CACHE_MS) return featureFlagsCache;
-  const settings = await getOrCreateSettings();
-  featureFlagsCache = pickFeatureFlags(settings);
-  featureFlagsCacheAt = Date.now();
-  return featureFlagsCache;
+  return pickFeatureFlags(await getCachedSettings());
+}
+
+function clampInt(value, min, max, fallback) {
+  const n = Number(value);
+  return Number.isInteger(n) ? Math.min(max, Math.max(min, n)) : fallback;
+}
+
+// The security settings actually enforced by login (admin + instructor) and
+// the session middlewares. Bounds match settings.validator.js; passwordMinLength
+// can only raise the built-in floor, never lower it.
+async function getSecurityPolicy() {
+  const s = await getCachedSettings();
+  return {
+    passwordMinLength:     Math.max(PASSWORD_MIN_LENGTH_FLOOR, s.passwordMinLength || 0),
+    maxLoginAttempts:      clampInt(s.maxLoginAttempts, 3, 20, 5),
+    sessionTimeoutMinutes: clampInt(s.sessionTimeoutMinutes, 5, 1440, 60),
+  };
 }
 
 async function getFeatureFlags() {
@@ -102,7 +131,7 @@ async function updateSystemSettings(data, adminId) {
   if (changedFields.length > 0) {
     await auditLog(adminId, "SYSTEM_SETTINGS_UPDATED", { fields: changedFields });
   }
-  featureFlagsCache = null; // force a fresh read next gated request/GET /features call
+  applySettings(result); // new flags / security policy take effect immediately
   return result;
 }
 
@@ -204,6 +233,7 @@ async function restoreFromBackup(config, adminId) {
   const result = await prisma.systemSettings.update({ where: { id: before.id }, data: { ...config, updatedById: adminId ?? null } });
   const changedFields = await writeConfigLogs(before, config, adminId);
   await auditLog(adminId, "SYSTEM_SETTINGS_RESTORED", { fields: changedFields });
+  applySettings(result); // a restore can change feature flags + security policy too
   return result;
 }
 
@@ -268,6 +298,7 @@ module.exports = {
   getSystemSettings,
   getFeatureFlags,
   getCachedFeatureFlags,
+  getSecurityPolicy,
   updateSystemSettings,
   listConfigLogs,
   enableMaintenance,

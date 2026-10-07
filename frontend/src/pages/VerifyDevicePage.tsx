@@ -1,50 +1,64 @@
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import OtpVerificationModal from '../components/auth/OtpVerificationModal';
+import { apiSendDeviceLoginOtp, apiVerifyDeviceLogin, type SessionResult } from '../api/adminAuth';
+import type { VerifyOtpResponse } from '../types/device';
 
 /**
- * VerifyDevicePage — Device recognition flow screen.
+ * VerifyDevicePage — new-device step of admin sign-in (server-enforced).
  *
- * This page is the landing point when the backend detects a login from an
- * unrecognised device and requires OTP verification before granting access.
- *
- * Wired end-to-end (LoginPage.tsx + admin.service.js checkDeviceTrust/
- * verifyAdminOtp):
- *   1. After login succeeds, LoginPage calls GET /api/admin/devices/check.
- *   2. If the response is { requiresVerification: true }, it redirects here
- *      instead of /dashboard.
- *   3. POST /api/admin/otp/send is called automatically when this page mounts
- *      (inside OtpVerificationModal).
- *   4. On successful OTP → navigate to /dashboard. Checking "Trust this
- *      device" persists a TrustedDevice row so future logins from the same
+ *   1. The admin's credentials were accepted, but the server didn't recognise
+ *      this browser, so POST /api/admin/login answered
+ *      { deviceVerificationRequired, verificationToken } — and issued NO
+ *      session. LoginPage sends the admin here.
+ *   2. The code is requested with POST /api/admin/login/device/send-otp
+ *      (automatically when the modal opens) using that verificationToken.
+ *   3. POST /api/admin/login/device/verify returns the real session only when
+ *      the code is right. "Trust this device" makes future logins from this
  *      browser/network skip this page.
- *   5. On close / cancel → sign out and navigate to /login.
+ *   4. Cancel → the pending verification is dropped; back to /login.
  *
- * Remaining gap (not closed by the above): the login token issued at step 0
- * is a normal AdminSession token regardless of whether this page is ever
- * reached — there is no separate "verified" session state, so this is a
- * client-side UX gate, not a server-enforced one. Closing that gap would mean
- * reworking AdminSession itself; out of scope here.
- * TODO: BACKEND — the backend should return a verified-session token here.
- *
- * The OtpVerificationModal is always open on this page (isOpen={true}).
- * The brand background is shown behind the modal's dark overlay for visual polish.
+ * The verificationToken lives only in AuthContext memory. Refreshing this page
+ * loses it and sends the admin back to sign in — there is no stored session to
+ * fall through to, which is what closes the old "refresh to skip" gap.
  */
 export default function VerifyDevicePage() {
-  const { user, signOut } = useAuth();
+  const { pendingDeviceVerification, acceptSession, cancelDeviceVerification } = useAuth();
   const navigate = useNavigate();
+  // Held until the success animation finishes, then committed in handleSuccess.
+  const [session, setSession] = useState<SessionResult | null>(null);
 
-  const handleClose = async () => {
-    // Closing the verification modal cancels the login attempt
-    // TODO: BACKEND — optionally call /api/auth/session/invalidate here
-    await signOut();
+  const verificationToken = pendingDeviceVerification?.verificationToken;
+
+  // Stable per ticket — the modal re-sends whenever this function changes.
+  const handleSend = useCallback(async () => {
+    if (!verificationToken) return;
+    await apiSendDeviceLoginOtp(verificationToken);
+  }, [verificationToken]);
+
+  const handleVerify = useCallback(async (code: string, trustDevice: boolean): Promise<VerifyOtpResponse> => {
+    if (!verificationToken) {
+      return { success: false, message: 'Your verification session has expired. Please sign in again.' };
+    }
+    // Throws with the server's message on a wrong/expired code (the modal shows it).
+    const result = await apiVerifyDeviceLogin(verificationToken, code, trustDevice);
+    setSession(result);
+    return { success: true, message: 'Verified.' };
+  }, [verificationToken]);
+
+  const handleSuccess = () => {
+    if (session) acceptSession(session);
+    navigate('/dashboard', { replace: true });
+  };
+
+  const handleClose = () => {
+    cancelDeviceVerification();
     navigate('/login', { replace: true });
   };
 
-  const handleSuccess = () => {
-    // TODO: BACKEND — the backend should return a verified-session token here
-    navigate('/dashboard', { replace: true });
-  };
+  // Arrived without a pending login (direct visit, refresh) → nothing to verify.
+  if (!pendingDeviceVerification && !session) return <Navigate to="/login" replace />;
 
   return (
     // Brand background is visible through the modal's translucent overlay
@@ -55,7 +69,9 @@ export default function VerifyDevicePage() {
         isOpen={true}
         onClose={handleClose}
         onSuccess={handleSuccess}
-        email={user?.email ?? 'your registered email'}
+        email={pendingDeviceVerification?.email ?? session?.admin.email ?? 'your registered email'}
+        onSend={handleSend}
+        onVerify={handleVerify}
       />
     </div>
   );

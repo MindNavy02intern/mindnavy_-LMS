@@ -1,6 +1,7 @@
 const prisma = require("../config/prisma");
 const { fireAutomationTrigger } = require("./automationTriggers.service");
 const { sendMail } = require("../utils/mailer");
+const { neutralizeFormula } = require("../utils/csv");
 const settingsService = require("./settings.service");
 
 // ── Finance service — Payments, Subscriptions, Invoices, Transactions,
@@ -208,7 +209,9 @@ async function requestRefund(id, { amount, reason }, adminId) {
 
 async function exportPaymentsCsv(filters) {
   const { items } = await listPayments({ ...filters, page: 1, limit: 5000, offset: 0 });
-  const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  // Always-quoted format kept as-is; neutralizeFormula adds the shared
+  // spreadsheet-formula guard (utils/csv.js) — user names / course titles land here.
+  const esc = (v) => `"${neutralizeFormula(String(v ?? "")).replace(/"/g, '""')}"`;
   const header = ["Transaction ID", "User", "Course", "Amount", "Currency", "Method", "Status", "Date"].join(",");
   const rows = items.map((p) => [p.id, p.userName ?? p.userId, p.courseTitle ?? "", p.amount, p.currency, p.method, p.status, p.createdAt].map(esc).join(","));
   return [header, ...rows].join("\n");

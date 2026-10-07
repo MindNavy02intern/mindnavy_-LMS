@@ -1,15 +1,17 @@
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const prisma = require("../config/prisma");
-const { generateSessionToken, getSessionExpiryDate } = require("../utils/token");
+const { generateSessionToken, sessionExpiry } = require("../utils/token");
+const { getSecurityPolicy } = require("./settings.service");
 const { clearAllCachedInstructorSessions } = require("../middlewares/instructorAuth.middleware");
+const { isDevMode } = require("../config/runtime");
 
 // Mirrors admin.service.js's loginAdmin() shape exactly (lockout window,
 // LoginAttempt/AuditLog trail, generic non-leaking error messages) — see
 // audit notes for the two deliberate deviations:
-//  1. AppUserSession.tokenHash is stored hashed (sha256 of the raw token),
-//     unlike AdminSession.sessionToken which stores the raw token in
-//     plaintext — this follows what the column name already says.
+//  1. AppUserSession.tokenHash is stored hashed (sha256 of the raw token).
+//     AdminSession.sessionToken now uses the same scheme too (it used to hold
+//     the raw token; see utils/token.js hashSessionToken).
 //  2. No new AuditAction/OtpPurpose enum values were added. LoginAttempt and
 //     AuditLog are both already actor-agnostic (adminId is nullable on both,
 //     AuditLog has a separate targetUserId) — reused as-is with adminId:null
@@ -18,7 +20,6 @@ const { clearAllCachedInstructorSessions } = require("../middlewares/instructorA
 //     minting INSTRUCTOR_LOGIN/INSTRUCTOR_LOGOUT. Zero schema migration.
 
 const INVALID_LOGIN_MESSAGE = "Invalid email or password.";
-const MAX_FAILED_LOGIN_ATTEMPTS = 5;
 const FAILED_LOGIN_WINDOW_MINUTES = 15;
 
 function hashToken(rawToken) {
@@ -58,22 +59,27 @@ async function createAuditLog({ instructorId = null, action, details = null, ipA
 
 async function isInstructorLoginBlocked({ email }) {
   // Same dev-only carve-out as admin's isLoginTemporarilyBlocked — disabled
-  // outside production so local/Playwright retries never lock out testing.
-  if (process.env.NODE_ENV !== "production") return false;
+  // only when NODE_ENV=development is set explicitly (config/runtime.js), so
+  // local/Playwright retries never lock out testing but a deploy that forgot
+  // NODE_ENV still gets the lockout.
+  if (isDevMode()) return false;
 
   const windowStart = new Date();
   windowStart.setMinutes(windowStart.getMinutes() - FAILED_LOGIN_WINDOW_MINUTES);
 
-  const failedAttemptsCount = await prisma.loginAttempt.count({
-    where: {
-      email,
-      status: "FAILED",
-      reason: "INVALID_CREDENTIALS",
-      createdAt: { gte: windowStart },
-    },
-  });
+  const [failedAttemptsCount, { maxLoginAttempts }] = await Promise.all([
+    prisma.loginAttempt.count({
+      where: {
+        email,
+        status: "FAILED",
+        reason: "INVALID_CREDENTIALS",
+        createdAt: { gte: windowStart },
+      },
+    }),
+    getSecurityPolicy(), // System Settings > Security "Max Login Attempts" (cached)
+  ]);
 
-  return failedAttemptsCount >= MAX_FAILED_LOGIN_ATTEMPTS;
+  return failedAttemptsCount >= maxLoginAttempts;
 }
 
 async function loginInstructor({ email, password, ipAddress, userAgent }) {
@@ -172,7 +178,10 @@ async function loginInstructor({ email, password, ipAddress, userAgent }) {
 
 async function issueInstructorSession(user, { email, ipAddress, userAgent }) {
   const rawToken = generateSessionToken();
-  const expiresAt = getSessionExpiryDate();
+  // Same inactivity timeout as admin sessions; instructorAuth.middleware
+  // slides it forward while the session is in use (utils/token.js).
+  const { sessionTimeoutMinutes } = await getSecurityPolicy();
+  const expiresAt = sessionExpiry({ createdAt: Date.now(), idleMinutes: sessionTimeoutMinutes });
 
   const session = await prisma.appUserSession.create({
     data: {

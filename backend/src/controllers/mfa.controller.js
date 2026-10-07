@@ -1,5 +1,6 @@
 const svc = require("../services/mfa.service");
 const { completeMfaLogin } = require("../services/admin.service");
+const { getClientIp } = require("../utils/clientIp");
 const { validateMfaVerify, validateMfaDisable, validateMfaLoginVerify } = require("../validators/mfa.validator");
 
 function badRequest(res, msg) {
@@ -56,10 +57,9 @@ const loginVerify = run(async (req, res) => {
   const v = validateMfaLoginVerify(req.body);
   if (!v.isValid) return badRequest(res, v.errors[0]);
 
-  const forwardedFor = req.headers["x-forwarded-for"];
-  const ipAddress = Array.isArray(forwardedFor)
-    ? forwardedFor[0]
-    : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+  // req.ip, not the client-controlled X-Forwarded-For header — this IP feeds
+  // the trusted-device fingerprint in finishLogin (utils/clientIp.js).
+  const ipAddress = getClientIp(req);
   const userAgent = req.headers["user-agent"] || null;
 
   const result = await completeMfaLogin({ mfaToken: v.data.mfaToken, code: v.data.code, ipAddress, userAgent });

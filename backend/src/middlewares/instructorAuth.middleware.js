@@ -1,5 +1,7 @@
 const crypto = require("crypto");
 const prisma = require("../config/prisma");
+const { sessionExpiry } = require("../utils/token");
+const { getSecurityPolicy } = require("../services/settings.service");
 
 // Mirrors auth.middleware.js's requireAdminAuth exactly in shape (in-memory
 // session cache, revoked/expiry/status checks, req.<actor> attachment) with
@@ -133,9 +135,20 @@ async function requireInstructorAuth(req, res, next) {
       verificationState: session.user.verificationState,
     };
 
+    // Inactivity timeout — same rule as admin sessions (auth.middleware.js):
+    // slide the expiry forward on use, never past 24h after sign-in. Rides on
+    // the lastUsedAt write below, so it costs no extra query.
+    let expiresAt = session.expiresAt;
+    try {
+      const { sessionTimeoutMinutes } = await getSecurityPolicy();
+      expiresAt = sessionExpiry({ createdAt: session.createdAt, idleMinutes: sessionTimeoutMinutes });
+    } catch (err) {
+      console.error("Instructor session timeout check skipped:", err.message);
+    }
+
     const instructorSession = {
       id: session.id,
-      expiresAt: session.expiresAt,
+      expiresAt,
     };
 
     setCachedSession(token, { instructor, instructorSession });
@@ -147,7 +160,7 @@ async function requireInstructorAuth(req, res, next) {
     // elsewhere in this codebase for non-critical writes (never awaited
     // ahead of the response, a failure here must not fail the request).
     prisma.appUserSession
-      .update({ where: { id: session.id }, data: { lastUsedAt: new Date() } })
+      .update({ where: { id: session.id }, data: { lastUsedAt: new Date(), expiresAt } })
       .catch((err) => console.error("Failed to update instructor session lastUsedAt:", err.message));
 
     next();

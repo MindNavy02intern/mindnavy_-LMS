@@ -1,12 +1,13 @@
 const { validateInstructorLoginInput, validateChangeInstructorPasswordInput } = require("../validators/instructorAuth.validator");
 const { loginInstructor, logoutInstructor, changeInstructorPassword } = require("../services/instructorAuth.service");
 const { invalidateCachedInstructorSession } = require("../middlewares/instructorAuth.middleware");
+const { getClientIp } = require("../utils/clientIp");
 
 function extractRequestMeta(req) {
-  const forwardedFor = req.headers["x-forwarded-for"];
-  const ipAddress = Array.isArray(forwardedFor)
-    ? forwardedFor[0]
-    : forwardedFor?.split(",")[0]?.trim() || req.ip || null;
+  // req.ip via TRUST_PROXY, never the client-controlled X-Forwarded-For
+  // header — otherwise login-attempt and audit IPs could be forged
+  // (utils/clientIp.js).
+  const ipAddress = getClientIp(req);
   const userAgent = req.headers["user-agent"] || null;
   return { ipAddress, userAgent };
 }

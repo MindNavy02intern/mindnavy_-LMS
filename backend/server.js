@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 require("dotenv").config();
 
 const adminRoutes = require("./src/routes/admin.routes");
@@ -63,6 +64,7 @@ const { blockDuringMaintenance } = require("./src/middlewares/maintenanceMode.mi
 const { runDueReports: runDueScheduledReports } = require("./src/services/scheduledReports.service");
 const { sendDueAnnouncements, retryPendingDeliveries } = require("./src/services/notifications.service");
 const { checkExpiringSubscriptions } = require("./src/services/finance.service");
+const { getSecurityPolicy } = require("./src/services/settings.service");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -85,9 +87,27 @@ if (process.env.TRUST_PROXY) {
   app.set("trust proxy", /^\d+$/.test(raw) ? Number(raw) : raw);
 }
 
+// Security headers (helmet): nosniff, frame-ancestors/X-Frame-Options, HSTS,
+// referrer policy, a locked-down CSP for anything this server itself renders,
+// and same-origin Cross-Origin-Resource-Policy. This server only returns JSON,
+// CSV, PDFs and one tracking pixel — the SPA is served separately and must set
+// its own CSP at its host. The SPA reads everything here via fetch() (CORS
+// mode), which CORP doesn't restrict; the one no-cors consumer, the email
+// tracking pixel, opts out per-response in track.controller.js.
+app.use(helmet());
+
 // Middlewares
+// Allowed browser origins. CORS_ORIGINS is a comma-separated list of exact
+// origins (scheme + host + optional port, no path), e.g.
+//   CORS_ORIGINS=https://admin.mindnavy.com,https://instructor.mindnavy.com
+// Exact string matches only — no wildcards, no suffix matching. Unset keeps
+// the local-development default (any http://localhost port).
+const corsOrigins = (process.env.CORS_ORIGINS || "")
+  .split(",")
+  .map((o) => o.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
 const corsOptions = {
-  origin: /^http:\/\/localhost(:\d+)?$/,
+  origin: corsOrigins.length > 0 ? corsOrigins : /^http:\/\/localhost(:\d+)?$/,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -258,6 +278,9 @@ app.use((error, req, res, next) => {
 
 const server = app.listen(PORT, () => {
   console.log(`Server is alive on http://localhost:${PORT}`);
+  // Prime the settings cache so the configured password minimum applies from
+  // the first request after a restart (until then the built-in floor does).
+  getSecurityPolicy().catch((err) => console.error("[settings] security policy preload failed:", err.message));
 });
 
 // Background job: auto-expire temporary/emergency role assignments whose

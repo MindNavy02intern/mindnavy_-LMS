@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { exportAllUsers } from '../../api/users';
 import type { ExportParams } from '../../api/users';
 import type { User } from '../../types/users';
+import { neutralizeFormula } from '../../lib/csv';
 
 interface Props {
   onClose:       () => void;
@@ -31,7 +32,7 @@ type FieldKey  = keyof User;
 
 function csvEscape(val: unknown): string {
   if (val === null || val === undefined) return '';
-  const s = String(val);
+  const s = neutralizeFormula(String(val));
   if (s.includes(',') || s.includes('"') || s.includes('\n')) {
     return `"${s.replace(/"/g, '""')}"`;
   }

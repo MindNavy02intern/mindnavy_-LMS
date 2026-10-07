@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { useAuth } from '../../AuthContext';
 
 interface Props {
-  onSuccess: () => void;
+  /**
+   * Credentials accepted. deviceVerificationRequired = this browser isn't
+   * trusted yet: no session exists, the caller must send the admin to the
+   * email-code step instead of the dashboard.
+   */
+  onSuccess: (outcome: { deviceVerificationRequired: boolean }) => void;
 }
 
 export default function LoginForm({ onSuccess }: Props) {
@@ -28,7 +33,7 @@ export default function LoginForm({ onSuccess }: Props) {
         setMfaToken(result.mfaToken);
         return;
       }
-      onSuccess();
+      onSuccess({ deviceVerificationRequired: result.deviceVerificationRequired });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Sign-in failed. Please try again.');
     } finally {
@@ -42,8 +47,8 @@ export default function LoginForm({ onSuccess }: Props) {
     setError(null);
     setLoading(true);
     try {
-      await completeMfaLogin(mfaToken, mfaCode.trim());
-      onSuccess();
+      const outcome = await completeMfaLogin(mfaToken, mfaCode.trim());
+      onSuccess(outcome);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Invalid code. Please try again.');
     } finally {

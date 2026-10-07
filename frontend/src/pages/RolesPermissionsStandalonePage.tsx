@@ -372,6 +372,11 @@ export default function RolesPermissionsStandalonePage() {
             <p style={{ margin: '4px 0 0', fontSize: 12.5, color: '#6b7280' }}>
               Manage roles, permissions, access policies and control system access
             </p>
+            {/* Honest status: the backend stores this configuration but no
+                request is checked against it yet (every admin has full access). */}
+            <div role="note" style={{ marginTop: 10, padding: '8px 12px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 8, fontSize: 12.5, color: '#92400e' }}>
+              Configuration only — roles, permissions, access policies and delegated admins are saved here but not enforced yet. Every admin currently has full access.
+            </div>
           </div>
           <div style={{ display: 'flex', gap: 8, flexShrink: 0, paddingTop: 2 }}>
             <button

@@ -13,7 +13,7 @@ import {
   signMyCertificateDesign, confirmMyCertificateDesign, setMyCertificateDesignPosition,
 } from '../../api/instructorCoursesApi';
 import { CourseApiError, type CertificateDesignSignResponse } from '../../types/courses';
-import { LABEL, BTN_PRIMARY, BTN_SECONDARY, ERROR_BANNER, disabledStyle } from './instructorUiKit';
+import { LABEL, BTN_PRIMARY, ERROR_BANNER, disabledStyle } from './instructorUiKit';
 
 const ALLOWED_MIME = ['image/jpeg', 'image/png', 'image/webp'] as const;
 const ALLOWED_EXT = '.jpg, .jpeg, .png, .webp';

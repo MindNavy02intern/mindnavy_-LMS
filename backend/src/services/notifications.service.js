@@ -1,5 +1,6 @@
 const prisma = require("../config/prisma");
 const { sendMail, isMailerConfigured } = require("../utils/mailer");
+const { signTrackedUrl } = require("../utils/trackingLinks");
 
 // ── Notifications service ─────────────────────────────────────────────────────
 //
@@ -105,8 +106,14 @@ function trackingPixelHtml(logId) {
 // Simple, safe href rewrite — every href in this codebase's email bodies is a
 // plain absolute http(s) URL (no templating engine, no relative links), so a
 // regex is sufficient without pulling in an HTML parser dependency.
+// Each link is signed (utils/trackingLinks.js) so the public click endpoint
+// only ever redirects to destinations this server put in the email.
 function wrapLinksForTracking(html, logId) {
-  return html.replace(/href="(https?:\/\/[^"]+)"/g, (_, url) => `href="${trackingBaseUrl()}/api/track/click/${logId}?url=${encodeURIComponent(url)}"`);
+  return html.replace(/href="(https?:\/\/[^"]+)"/g, (match, url) => {
+    const sig = signTrackedUrl(logId, url);
+    if (!sig) return match; // no signing secret → leave the link untracked rather than unsafe
+    return `href="${trackingBaseUrl()}/api/track/click/${logId}?url=${encodeURIComponent(url)}&sig=${sig}"`;
+  });
 }
 
 function trackedHtml(bodyHtml, logId) {

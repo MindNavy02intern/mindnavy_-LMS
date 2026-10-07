@@ -101,6 +101,13 @@ export async function updateSettings(
       accessRules:        payload.accessRules         ?? null,
       seoTitle:           payload.seoTitle            ?? null,
       seoDescription:     payload.seoDescription      ?? null,
+      // Certificate design is written only via /certificate-design/*, never
+      // by PATCH /settings, so the mock reflects "not set".
+      customCertificateImageUrl: null,
+      certificateNameX:          null,
+      certificateNameY:          null,
+      certificateNameFontSize:   null,
+      certificateNameColor:      null,
       updatedAt:          now,
     });
   }
@@ -149,6 +156,11 @@ export async function getPreview(courseId: string): Promise<CoursePreviewData> {
           accessRules:        null,
           seoTitle:           null,
           seoDescription:     null,
+          customCertificateImageUrl: null,
+          certificateNameX:          null,
+          certificateNameY:          null,
+          certificateNameFontSize:   null,
+          certificateNameColor:      null,
         },
         rejectionReason: null,
         reviewedAt:      null,

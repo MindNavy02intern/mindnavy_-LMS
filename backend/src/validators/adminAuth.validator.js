@@ -155,9 +155,39 @@ function validateChangeAdminPasswordInput(body) {
   };
 }
 
+// New-device login step (admin.service.js finishLogin): the short-lived
+// verificationToken from the login response, plus — for the verify call — the
+// same code/trustDevice pair validateAdminOtpInput checks. The token is
+// exactly 32 random bytes as hex, so anything else is rejected before it can
+// reach the in-memory lookup.
+function validateDeviceLoginInput(body, { requireCode }) {
+  const errors = [];
+  const verificationToken = typeof body?.verificationToken === "string" ? body.verificationToken.trim() : "";
+
+  if (!/^[0-9a-f]{64}$/.test(verificationToken)) {
+    errors.push("A valid verification token is required.");
+  }
+
+  let code;
+  let trustDevice = false;
+  if (requireCode) {
+    const otp = validateAdminOtpInput(body);
+    errors.push(...otp.errors);
+    code = otp.data.code;
+    trustDevice = otp.data.trustDevice;
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    data: { verificationToken, code, trustDevice },
+  };
+}
+
 module.exports = {
   validateAdminLoginInput,
   validateAdminOtpInput,
+  validateDeviceLoginInput,
   validateForgotPasswordInput,
   validateResetPasswordInput,
   validateUpdateAdminProfileInput,

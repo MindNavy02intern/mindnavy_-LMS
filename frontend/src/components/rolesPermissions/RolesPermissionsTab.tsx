@@ -32,6 +32,10 @@ const RolesPermissionsTab: React.FC = () => {
 
   return (
     <div style={{ width: '100%' }}>
+      {/* Same honest status as RolesPermissionsStandalonePage — stored, not enforced yet. */}
+      <div role="note" style={{ marginBottom: 16, padding: '8px 12px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 8, fontSize: 12.5, color: '#92400e' }}>
+        Configuration only — roles and permissions are saved here but not enforced yet. Every admin currently has full access.
+      </div>
       {/* Pill-style subtab bar */}
       <div style={{ display: 'flex', gap: '4px', marginBottom: '24px', padding: '4px', backgroundColor: '#f1f5f9', borderRadius: '24px', width: 'fit-content' }}>
         {pillBtn(0, 'Roles', '🔑')}

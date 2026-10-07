@@ -4,6 +4,7 @@ import { listLogs, retryDelivery } from '../../services/notificationsApi';
 import { appQueryClient, invalidateFor } from '../../lib/invalidation';
 import type { NotificationChannelType, NotificationLogEntry, NotificationLogStatus } from '../../types/notifications';
 import { CARD, EMPTY, TH, TD, INPUT, BTN_SECONDARY, ChannelBadge, LogStatusBadge, fmtDate, Pager } from './shared';
+import { neutralizeFormula } from '../../lib/csv';
 
 const CHANNELS: NotificationChannelType[] = ['EMAIL', 'PUSH', 'SMS', 'IN_APP'];
 const STATUSES: NotificationLogStatus[] = ['SENT', 'FAILED', 'PENDING', 'BOUNCED', 'OPENED', 'CLICKED'];
@@ -51,7 +52,7 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 
 function toCsv(rows: NotificationLogEntry[]): string {
   const header = ['Channel', 'User', 'Subject', 'Status', 'Sent At'];
-  const lines = rows.map(r => [r.channel, r.userName ?? '', r.subject ?? '', r.status, r.sentAt ?? ''].map(v => `"${String(v).replace(/"/g, '""')}"`).join(','));
+  const lines = rows.map(r => [r.channel, r.userName ?? '', r.subject ?? '', r.status, r.sentAt ?? ''].map(v => `"${neutralizeFormula(String(v)).replace(/"/g, '""')}"`).join(','));
   return [header.join(','), ...lines].join('\n');
 }
 

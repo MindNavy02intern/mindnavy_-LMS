@@ -43,6 +43,15 @@ export interface OtpVerificationProps {
   onSuccess: () => void;
   /** The email address the OTP code is sent to */
   email: string;
+  /**
+   * Overrides how the code is requested / checked. Omitted → the signed-in
+   * admin's session endpoints (/otp/send, /otp/verify), used by
+   * TrustedDevicesPage. VerifyDevicePage passes the pre-session login-step
+   * versions instead, since no session exists yet at that point.
+   * onSend must be referentially stable (useCallback) — it's an effect dependency.
+   */
+  onSend?: () => Promise<void>;
+  onVerify?: (code: string, trustDevice: boolean) => Promise<VerifyOtpResponse>;
 }
 
 /** Payload sent to POST /api/auth/otp/send */

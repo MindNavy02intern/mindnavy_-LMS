@@ -6,9 +6,10 @@ import { Download } from 'lucide-react';
 import { getConfigLogs } from '../../services/settingsApi';
 import { SettingsApiError, type SystemConfigLog } from '../../types/settings';
 import { Card, FULL_INPUT, BTN_SECONDARY, ErrorBanner, Skeleton } from './_shared';
+import { neutralizeFormula } from '../../lib/csv';
 
 function toCsvValue(v: string): string {
-  return `"${v.replace(/"/g, '""')}"`;
+  return `"${neutralizeFormula(v).replace(/"/g, '""')}"`;
 }
 
 export default function ConfigLogsTab() {

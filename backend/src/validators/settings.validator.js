@@ -2,6 +2,8 @@
 // finance.validator.js: each function returns { isValid, errors, data };
 // every field is read individually so nothing arbitrary reaches Prisma.
 
+const { PASSWORD_MIN_LENGTH_FLOOR } = require("../utils/passwordPolicy");
+
 const MAX = {
   short:  120,
   medium: 500,
@@ -120,7 +122,8 @@ function validateSettingsUpdate(body = {}) {
   if (body.progressTrackingEnabled !== undefined) data.progressTrackingEnabled = readBool(body.progressTrackingEnabled, "progressTrackingEnabled", errors);
 
   // Security
-  if (body.passwordMinLength        !== undefined) data.passwordMinLength        = readInt(body.passwordMinLength, "passwordMinLength", 6, 64, errors);
+  // 12 = utils/passwordPolicy's built-in floor; the setting can only raise it.
+  if (body.passwordMinLength        !== undefined) data.passwordMinLength        = readInt(body.passwordMinLength, "passwordMinLength", PASSWORD_MIN_LENGTH_FLOOR, 64, errors);
   if (body.passwordRequireUppercase !== undefined) data.passwordRequireUppercase = readBool(body.passwordRequireUppercase, "passwordRequireUppercase", errors);
   if (body.passwordRequireNumbers   !== undefined) data.passwordRequireNumbers   = readBool(body.passwordRequireNumbers, "passwordRequireNumbers", errors);
   if (body.passwordRequireSymbols   !== undefined) data.passwordRequireSymbols   = readBool(body.passwordRequireSymbols, "passwordRequireSymbols", errors);

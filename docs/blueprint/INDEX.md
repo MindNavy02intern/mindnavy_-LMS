@@ -24,6 +24,7 @@ Do NOT read all blueprint files on every task. Route:
 | Integrations, API keys, webhooks, sync | `pages/11-integrations.md` |
 | Settings (general, branding, security, auth, storage, feature toggles…) | `pages/12-system-settings.md` |
 | Audit logs, security dashboard, threats, devices, compliance | `pages/13-audit-security.md` |
+| Learner portal, learner login, course player, taking quizzes, learner dashboard, catalog, "user page" | `pages/14-learner-portal.md` |
 
 **Always also read:** the IMPACT_MAP §5 rows for every entity the task touches. If a task spans modules (e.g. "enrolling a student affects revenue"), read both files.
 
@@ -50,6 +51,15 @@ Shared admin sidebar. Routes are **placeholders** — before using a route in co
 | 13 | Audit & Security | `/trusted-devices` *(only trusted-devices section built; full audit suite planned)* | 13 |
 
 Login flow (pre-app): login page → session check → credentials → account states (invalid/suspended/valid) → trusted device → OTP → session → dashboard. Auth surfaces live outside the sidebar; auth mutations are session-local (no IMPACT rows except audit backend-side).
+
+---
+
+## SELF-SERVICE PORTALS (separate apps, outside the admin sidebar)
+
+| Portal | Routes | Who | Status | Spec |
+|---|---|---|---|---|
+| Instructor portal | `/instructor/*` | AppUser `role = INSTRUCTOR` | `[built]` | `INSTRUCTOR_DASHBOARD_BLUEPRINT.pdf` (repo root) |
+| Learner portal | `/learn/*` | AppUser `role = LEARNER` | `[planned]` | `pages/14-learner-portal.md` |
 
 ---
 

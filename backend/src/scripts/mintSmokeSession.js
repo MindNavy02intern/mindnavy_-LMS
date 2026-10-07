@@ -13,6 +13,7 @@ require("dotenv").config();
 
 const crypto = require("crypto");
 const prisma = require("../config/prisma");
+const { hashSessionToken } = require("../utils/token");
 
 async function main() {
   const admin = await prisma.adminUser.findFirst({
@@ -30,7 +31,9 @@ async function main() {
   await prisma.adminSession.create({
     data: {
       adminId:      admin.id,
-      sessionToken: token,
+      // Hashed like every real session (auth.middleware looks up by hash);
+      // the raw token is only printed below for the smoke-test runner.
+      sessionToken: hashSessionToken(token),
       expiresAt:    new Date(Date.now() + ttlMin * 60 * 1000),
       userAgent:    "smoke-test",
     },

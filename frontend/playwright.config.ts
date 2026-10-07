@@ -1,10 +1,28 @@
+/// <reference types="node" />
 import { defineConfig } from '@playwright/test'
+import { fileURLToPath } from 'node:url'
+
+// Admin login for the suite comes from the environment, never from the repo
+// (this repository is public). Put them in frontend/tests/.env.e2e (gitignored):
+//   E2E_ADMIN_EMAIL=...
+//   E2E_ADMIN_PASSWORD=...
+// or export them in your shell. The file is optional — shell values work too.
+try {
+  process.loadEnvFile(fileURLToPath(new URL('./tests/.env.e2e', import.meta.url)))
+} catch {
+  // no file — fall back to the shell environment
+}
 
 export default defineConfig({
   testDir: './tests',
 
   use: {
     baseURL: 'http://localhost:5173',
+    // Fixed browser identity so the backend can recognise the test browser as
+    // a trusted device (new-device verification is server-enforced). Run
+    // `npm run trust:test-device` in backend/ once; must match TEST_USER_AGENT
+    // in backend/src/scripts/trustTestDevice.js.
+    userAgent: 'MindNavy-Playwright',
   },
 
   projects: [

@@ -1,4 +1,6 @@
 const prisma = require("../config/prisma");
+const { hashSessionToken, sessionExpiry } = require("../utils/token");
+const { getSecurityPolicy } = require("../services/settings.service");
 
 const SESSION_CACHE   = new Map();
 const CACHE_TTL_MS    = 60 * 1000;
@@ -60,10 +62,11 @@ async function requireAdminAuth(req, res, next) {
       return next();
     }
 
-    // Cache miss: validate against DB
+    // Cache miss: validate against DB. The column holds the SHA-256 of the
+    // token (utils/token.js hashSessionToken), never the token itself.
     const session = await prisma.adminSession.findUnique({
       where: {
-        sessionToken: token,
+        sessionToken: hashSessionToken(token),
       },
       include: {
         admin: true,
@@ -110,9 +113,29 @@ async function requireAdminAuth(req, res, next) {
       mfaEnabled: session.admin.mfaEnabled,
     };
 
+    // Inactivity timeout (System Settings > Security "Session Timeout"): this
+    // request is activity, so slide the expiry forward — never past 24h after
+    // sign-in (utils/token.js sessionExpiry). Only reached on a cache miss, so
+    // at most one background write per session per CACHE_TTL_MS; the request
+    // never waits on it. Lowering the setting also shortens live sessions here.
+    let expiresAt = session.expiresAt;
+    try {
+      const { sessionTimeoutMinutes } = await getSecurityPolicy();
+      const next = sessionExpiry({ createdAt: session.createdAt, idleMinutes: sessionTimeoutMinutes });
+      if (Math.abs(next.getTime() - expiresAt.getTime()) > CACHE_TTL_MS) {
+        expiresAt = next;
+        prisma.adminSession
+          .update({ where: { id: session.id }, data: { expiresAt: next } })
+          .catch((err) => console.error("Failed to extend admin session:", err.message));
+      }
+    } catch (err) {
+      // Settings unreadable — keep the stored expiry rather than fail the request.
+      console.error("Admin session timeout check skipped:", err.message);
+    }
+
     const adminSession = {
       id:        session.id,
-      expiresAt: session.expiresAt,
+      expiresAt,
     };
 
     setCachedSession(token, { admin, adminSession });

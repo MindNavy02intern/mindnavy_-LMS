@@ -2,6 +2,8 @@ const express = require("express");
 
 const {
   adminLoginController,
+  adminDeviceLoginSendOtpController,
+  adminDeviceLoginVerifyController,
   adminMeController,
   adminLogoutController,
   adminSendOtpController,
@@ -22,6 +24,16 @@ const { adminLoginRateLimiter, otpRequestRateLimiter } = require("../middlewares
 const router = express.Router();
 
 router.post("/login", adminLoginRateLimiter, adminLoginController);
+
+// New-device step of login. When /login answers { deviceVerificationRequired,
+// verificationToken } there is NO session yet — these two calls are the only
+// thing that ticket can do, so they're deliberately not behind
+// requireAdminAuth (same as /auth/mfa/login-verify). Pre-auth, IP-keyed
+// limiters: sending reuses the OTP-send limiter, verifying reuses the login
+// limiter since it's the same brute-force surface.
+router.post("/login/device/send-otp", otpRequestRateLimiter, adminDeviceLoginSendOtpController);
+router.post("/login/device/verify", adminLoginRateLimiter, adminDeviceLoginVerifyController);
+
 router.get("/me", requireAdminAuth, adminMeController);
 router.patch("/me", requireAdminAuth, adminUpdateProfileController);
 router.post("/logout", requireAdminAuth, adminLogoutController);
@@ -33,11 +45,10 @@ router.post("/change-password", requireAdminAuth, adminLoginRateLimiter, adminCh
 router.post("/otp/send", requireAdminAuth, otpRequestRateLimiter, adminSendOtpController);
 router.post("/otp/verify", requireAdminAuth, adminVerifyOtpController);
 
-// Called right after login (LoginPage) to decide whether to route the admin
-// to /verify-device before the dashboard. Real path is /api/admin/devices/check
-// — the "/api/devices/check" mentioned in old frontend TODO comments was
-// aspirational shorthand, same as those comments' "/api/auth/otp/*" (the real
-// otp routes above have always lived under /api/admin too).
+// Session-authenticated device check. No longer part of login (the server now
+// decides that itself in admin.service.js finishLogin); kept for an already
+// signed-in admin, alongside /otp/send + /otp/verify above, which
+// TrustedDevicesPage uses to trust the current browser.
 router.get("/devices/check", requireAdminAuth, adminCheckDeviceController);
 
 router.get(

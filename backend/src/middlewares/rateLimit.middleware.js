@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const rateLimit = require("express-rate-limit");
 const { ipKeyGenerator } = require("express-rate-limit");
+const { isDevMode } = require("../config/runtime");
 
 // ── Keying strategy ───────────────────────────────────────────────────────────
 //
@@ -51,7 +52,9 @@ function adminKeyGenerator(req, res) {
 // requireAdminAuth on an API where the caller already has full admin read
 // access. The job is to stop a runaway loop or a scripted scrape, which the
 // values below still do comfortably.
-const isProd = process.env.NODE_ENV === "production";
+// Strict unless NODE_ENV is explicitly "development" (config/runtime.js) — an
+// unset NODE_ENV used to fall through to the loose dev ceilings.
+const isProd = !isDevMode();
 
 // Login attempts — pre-auth, IP-keyed, deliberately tight.
 //
@@ -189,7 +192,7 @@ const adminUsersImportRateLimiter = rateLimit({
 // prod, raised in dev for repeated Playwright auth.setup.ts runs).
 const instructorLoginRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: process.env.NODE_ENV !== "production" ? 200 : 20,
+  limit: isDevMode() ? 200 : 20,
   standardHeaders: true,
   legacyHeaders: false,
   message: {

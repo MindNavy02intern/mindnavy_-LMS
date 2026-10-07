@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import {
   type AdminUser,
+  type SessionResult,
   apiGetMe,
   apiLogin,
   apiLogout,
@@ -18,10 +19,23 @@ interface AuthContextType {
   loading: boolean;
   /** True when the demo admin session is active (DEV only). */
   isDemoMode: boolean;
-  /** Returns { mfaRequired: true, mfaToken } instead of signing in when the admin has TOTP MFA enabled — caller must then call completeMfaLogin(). */
-  login: (email: string, password: string) => Promise<{ mfaRequired: boolean; mfaToken?: string }>;
-  /** Second step of a login that returned mfaRequired — verifies the 6-digit code and completes sign-in. */
-  completeMfaLogin: (mfaToken: string, code: string) => Promise<void>;
+  /**
+   * Returns { mfaRequired: true, mfaToken } when the admin has TOTP MFA enabled — caller must then call completeMfaLogin().
+   * Returns { deviceVerificationRequired: true } when this browser isn't trusted yet — no session exists; caller sends the
+   * admin to /verify-device, which completes sign-in through pendingDeviceVerification.
+   */
+  login: (email: string, password: string) => Promise<{ mfaRequired: boolean; mfaToken?: string; deviceVerificationRequired: boolean }>;
+  /** Second step of a login that returned mfaRequired — verifies the 6-digit code. May still require the device step. */
+  completeMfaLogin: (mfaToken: string, code: string) => Promise<{ deviceVerificationRequired: boolean }>;
+  /**
+   * Set while a login is waiting on the new-device email code. Held in memory only (never localStorage), so a page
+   * refresh drops it and the admin starts again from the password — there is no session to fall back on.
+   */
+  pendingDeviceVerification: { verificationToken: string; email: string } | null;
+  /** Completes sign-in with a session returned by the device-verification step. */
+  acceptSession: (session: SessionResult) => void;
+  /** Abandons a pending device verification (e.g. the admin closed the code dialog). */
+  cancelDeviceVerification: () => void;
   signOut: () => Promise<void>;
   /** Activates the mock admin session for frontend testing (DEV only, no-op in production). */
   enterDemoMode: () => void;
@@ -69,6 +83,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const [pendingDeviceVerification, setPendingDeviceVerification] =
+    useState<{ verificationToken: string; email: string } | null>(null);
 
   // Ref so the demo flag is readable inside async callbacks without stale closure
   const isDemoRef = useRef(false);
@@ -106,22 +122,42 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .finally(() => setLoading(false));
   }, []);
 
+  // ── acceptSession ─────────────────────────────────────────────────────────
+  // The single place a real session token is stored — reached only once the
+  // server has actually issued one (trusted device, or device code verified).
+  const acceptSession = (session: SessionResult) => {
+    storeToken(session.token);
+    setUser(session.admin);
+    setProfile(mapAdminToProfile(session.admin));
+    setPendingDeviceVerification(null);
+  };
+
+  const cancelDeviceVerification = () => setPendingDeviceVerification(null);
+
   // ── login ─────────────────────────────────────────────────────────────────
-  const login = async (email: string, password: string): Promise<{ mfaRequired: boolean; mfaToken?: string }> => {
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<{ mfaRequired: boolean; mfaToken?: string; deviceVerificationRequired: boolean }> => {
     const result = await apiLogin(email, password);
-    if (result.mfaRequired) return { mfaRequired: true, mfaToken: result.mfaToken };
-    storeToken(result.token);
-    setUser(result.admin);
-    setProfile(mapAdminToProfile(result.admin));
-    return { mfaRequired: false };
+    if (result.mfaRequired) return { mfaRequired: true, mfaToken: result.mfaToken, deviceVerificationRequired: false };
+    if (result.deviceVerificationRequired) {
+      setPendingDeviceVerification({ verificationToken: result.verificationToken, email: result.email });
+      return { mfaRequired: false, deviceVerificationRequired: true };
+    }
+    acceptSession(result);
+    return { mfaRequired: false, deviceVerificationRequired: false };
   };
 
   // ── completeMfaLogin ─────────────────────────────────────────────────────────
-  const completeMfaLogin = async (mfaToken: string, code: string): Promise<void> => {
-    const { token, admin } = await apiVerifyMfaLogin(mfaToken, code);
-    storeToken(token);
-    setUser(admin);
-    setProfile(mapAdminToProfile(admin));
+  const completeMfaLogin = async (mfaToken: string, code: string): Promise<{ deviceVerificationRequired: boolean }> => {
+    const result = await apiVerifyMfaLogin(mfaToken, code);
+    if (result.deviceVerificationRequired) {
+      setPendingDeviceVerification({ verificationToken: result.verificationToken, email: result.email });
+      return { deviceVerificationRequired: true };
+    }
+    acceptSession(result);
+    return { deviceVerificationRequired: false };
   };
 
   // ── signOut ───────────────────────────────────────────────────────────────
@@ -141,6 +177,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     removeToken();
     setUser(null);
     setProfile(null);
+    setPendingDeviceVerification(null);
   };
 
   // ── updateProfile ─────────────────────────────────────────────────────────
@@ -173,7 +210,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, isDemoMode, login, completeMfaLogin, signOut, enterDemoMode, updateProfile, refreshUser }}>
+    <AuthContext.Provider
+      value={{
+        user, profile, loading, isDemoMode, login, completeMfaLogin,
+        pendingDeviceVerification, acceptSession, cancelDeviceVerification,
+        signOut, enterDemoMode, updateProfile, refreshUser,
+      }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );
